@@ -24,12 +24,12 @@ public class UserController {
 	@RequestMapping(value = "/}", method = RequestMethod.GET)
 	public String  index() {
 
-		 return "redirect:/index.html";
+		 return "redirect:/login.html";
     }
 	@RequestMapping("login")
 	public String  main(Model model) {
 
-		 return "index";
+		 return "login";
     }
 	@RequestMapping("hello")
     public ModelAndView hello(){
