@@ -1,0 +1,1321 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+
+<!-- Custom CSS -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS -->
+<link href="css/font-awesome.css" rel="stylesheet"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- side nav css file -->
+<link href='css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+<!-- //side nav css file -->
+ 
+ <!-- js-->
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/modernizr.custom.js"></script>
+
+<!--webfonts-->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="js/Chart.js"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="js/metisMenu.min.js"></script>
+<script src="js/custom.js"></script>
+<link href="css/custom.css" rel="stylesheet">
+<!--//Metis Menu -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 295px;
+}
+</style>
+<!--pie-chart --><!-- index page sales reviews visitors pie chart -->
+<script src="js/pie-chart.js" type="text/javascript"></script>
+
+ <!--bootstrap样式-->
+    <link href="assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
+ <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#demo-pie-1').pieChart({
+                barColor: '#2dde98',
+                trackColor: '#eee',
+                lineCap: 'round',
+                lineWidth: 8,
+                onStep: function (from, to, percent) {
+                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
+                }
+            });
+
+            $('#demo-pie-2').pieChart({
+                barColor: '#8e43e7',
+                trackColor: '#eee',
+                lineCap: 'butt',
+                lineWidth: 8,
+                onStep: function (from, to, percent) {
+                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
+                }
+            });
+
+            $('#demo-pie-3').pieChart({
+                barColor: '#ffc168',
+                trackColor: '#eee',
+                lineCap: 'square',
+                lineWidth: 8,
+                onStep: function (from, to, percent) {
+                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
+                }
+            });
+
+           
+        });
+
+    </script>
+<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->
+
+	<!-- requried-jsfiles-for owl -->
+					<link href="css/owl.carousel.css" rel="stylesheet">
+					<script src="js/owl.carousel.js"></script>
+						<script>
+							$(document).ready(function() {
+								$("#owl-demo").owlCarousel({
+									items : 3,
+									lazyLoad : true,
+									autoPlay : true,
+									pagination : true,
+									nav:true,
+								});
+							});
+						</script>
+					<!-- //requried-jsfiles-for owl -->
+</head> 
+<body class="cbp-spmenu-push">
+	<div class="main-content">
+	<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+		<!--left-fixed -navigation-->
+		<aside class="sidebar-left">
+      <nav class="navbar navbar-inverse">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            
+            </button>
+            <h1><a class="navbar-brand" href="index.html"><span class="dashboard_text"></span></a></h1>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="sidebar-menu">
+               <li class="treeview">
+                <a href="待办任务BPM.html">
+                <i class="fa fa-dashboard"></i> 
+				<span>待办任务</span>
+				<span style="font-size:12px">To-do tasks</span>
+                </a>
+				
+              </li>
+              <li class="treeview">
+                <a href="主界面BPM.html">
+                <i class="fa fa-dashboard"></i> 
+				<span>新建订单</span>
+				<span style="font-size:12px">Create Order</span>
+                </a>				
+              </li>
+			 
+			   <li class="treeview">
+                <a href="我的订单BPM.html">
+                <i class="fa fa-dashboard"></i> 
+				<span>订单管理</span>
+				<span style="font-size:12px">Order</span>
+                </a>
+              </li>
+			  <li class="treeview">
+                <a href="我的合同BPM.html">
+                <i class="fa fa-laptop"></i>
+                <span>合同管理 </span>
+				<span style="font-size:12px">Contract</span>
+                </a>
+              </li>
+              <li class="treeview">
+                <a href="特批发货BPM.html">
+                <i class="fa fa-pie-chart"></i>
+                <span>特批发货</span>
+				<span style="font-size:12px">Special Delivery</span>
+                </a>
+              </li>
+              <li class="treeview">
+              <li class="treeview">
+                <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>报表管理 </span>
+				<span style="font-size:12px">Report</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="购销明细报表BPM.html"><i class="fa fa-angle-right"></i> <span>购销明细报表</span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
+                  <li><a href="投标跟踪表BPM.html"><i class="fa fa-angle-right"></i> <span>投标跟踪表</span><span style="font-size:12px">Bid tracking report</span> </a></li>
+                </ul>
+              </li>
+			  
+              <li class="treeview">
+                <a href="#">
+                <i class="fa fa-edit"></i> 
+				<span>系统管理</span>
+				<span style="font-size:12px">System</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="人员管理BPM.html"><i class="fa fa-angle-right"></i>人员管理<span style="font-size:12px">Personnel management</span> </a></li>
+				  <li><a href="参数设置BPM.html"><i class="fa fa-angle-right"></i>参数设置 <span style="font-size:12px">Parameter Settings</span></a></li>
+				  <li><a href="角色管理BPM.html"><i class="fa fa-angle-right"></i>角色管理 <span style="font-size:12px">Role management</span></a></li>
+                </ul>
+              </li>
+              
+          </div>
+          <!-- /.navbar-collapse -->
+      </nav>
+    </aside>
+	</div>
+		<!--left-fixed -navigation-->
+		
+		<!-- header-starts -->
+		<div class="sticky-header header-section ">
+			<div class="header-left">
+				<!--toggle button start-->
+				<button id="showLeftPush"><i class="fa fa-bars "></i></button>
+				<!--toggle button end-->
+				<div class="profile_details_left"><!--notifications of menu start -->
+					<div class="clearfix "> </div>
+				
+						<div class="btn-group" style="margin-top: 15px;margin-bottom:10px;font-size:12px;">
+						  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							权限 permission <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu">
+							<li><a href="权限申请.html">权限申请apply for permission</a></li>
+							<li><a href="权限审批.html">权限审批 permissions approval</a></li>
+						  </ul>
+						</div>
+				</div>
+				<!--notification menu end -->
+				<div class="clearfix"> </div>
+			</div>
+			<div class="header-right">			
+				<div class="profile_details">		
+					<ul>
+						<li class="dropdown profile_details_drop">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<div class="profile_img">	
+									
+									<div class="user-name">
+										<p>Admin Name</p>
+										<span>Administrator</span>
+									</div>
+									<div class="clearfix"></div>	
+								</div>	
+							</a>
+							
+						</li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>				
+			</div>
+			<div class="clearfix"> </div>	
+		</div>
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="row navbar-fixed-top" style="margin-top: 70px;">
+				<div class="col-xs-12 col-md-6"></div>
+				<div class="col-xs-12 col-md-6">
+					<div class="btn-group pull-right" role="group">
+						<button type="button" class="btn btn-primary btn-sm" style="color: rgb(227, 197, 197); background-color: rgb(124, 168, 207);"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-warning btn-sm" mc-ace="~" style="background-color: rgb(237, 163, 54);"><i class="glyphicon glyphicon-minus"></i></button>
+					</div>
+				</div>
+			</div>
+			<div id="accordion-magical-coder-auto-id-1563932805146" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 10px; margin-left: 20px; margin-right: 20px;">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1563932805146" href="#collapseOne-magical-coder-auto-id-1563932797163" aria-expanded="true" class="">客户基本信息 Basic information</a>
+						</h4>
+					</div>
+					<div id="collapseOne-magical-coder-auto-id-1563932797163" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: auto;">
+
+							<div class="row">
+								<div class="col-md-3 col-xs-3">
+									签约单位 Contract unit
+								</div>
+
+								<div class="col-md-3 col-xs-3">
+									性质分类 Classification
+								</div>
+								<div class="col-md-3 col-xs-3">
+									店名 customer name
+								</div>
+								<div class="col-md-3 col-xs-3">
+									项目报备编号 report number
+								</div>
+
+								<div class="col-md-3 col-xs-3">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="请输入关键词">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">搜索 <span class="caret"></span></button>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<li class=""><a href="#">链接1</a></li>
+												<li role="separator" class="divider"></li>
+												<li class=""><a href="#">链接2</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3 col-xs-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-md-3 col-xs-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-md-3 col-xs-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+
+								<div class="col-md-3 col-xs-3">
+									客户经理 Customer manager
+								</div>
+								<div class="col-md-3 col-xs-3">
+									客户经理电话 Customer manager Tel
+								</div>
+								<div class="col-md-3 col-xs-3">
+									是否改造店 Renovation store
+								</div>
+								<div class="col-md-3 col-xs-3">
+									终端客户性质 customer nature
+								</div> 
+								<div class="col-md-3 col-xs-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+
+								<div class="col-md-3 col-xs-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-md-3 col-xs-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-md-3 col-xs-3">
+
+									<select class="form-control">
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-md-3 col-xs-3">
+									是否便利店 convenience store
+								</div>
+								<div class="col-md-9 col-xs-9">
+									是否新客户 new customer
+								</div>
+
+								<div class="col-md-3 col-xs-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-md-3 col-xs-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-md-6 col-xs-6">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a class="" role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1563932805146" href="#collapseTwo-magical-coder-auto-id-1563932802146" aria-expanded="true">合同基本信息 Contract basic information</a>
+						</h4>
+					</div>
+					<div id="collapseTwo-magical-coder-auto-id-1563932802146" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: auto;">
+
+							<div class="row">
+								<div class="col-xs-12 col-md-3">
+									流水号 code
+								</div>
+								<div class="col-xs-12 col-md-3">
+									合同号 contract no
+								</div>
+								<div class="col-xs-12 col-md-3">
+									销售类型 Sales type
+								</div>
+								<div class="col-xs-12 col-md-3">
+									税率 Rate
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-xs-12 col-md-3">
+									国际贸易条件 international trade
+								</div>
+								<div class="col-xs-12 col-md-3">
+									原币合同金额 Contract amount
+								</div>
+								<div class="col-xs-12 col-md-3">
+									合同金额 Contract amount
+								</div>
+								<div class="col-xs-12 col-md-3">
+									币种 currency
+								</div>
+								<div class="col-xs-12 col-md-2" style="padding-right: 1px;">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="padding-top: 10px;">
+								<div class="col-xs-12 col-md-3">
+									汇率 exchange rate
+								</div>
+								<div class="col-xs-12 col-md-3">
+									合同管理员 Contract administrator
+								</div>
+								<div class="col-xs-12 col-md-3">
+									录入日期 Date of entry
+								</div>
+								<div class="col-xs-12 col-md-3">
+									购销明细金额合计 Aggregate amount
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="accordion-magical-coder-auto-id-1563934090535" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 20px; margin-right: 20px;">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1563934090535" href="#collapseOne-magical-coder-auto-id-1563934089362" aria-expanded="true" class="">合同详细信息 Contract details</a>
+						</h4>
+					</div>
+					<div id="collapseOne-magical-coder-auto-id-1563934089362" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: auto;">
+
+							<div class="row">
+								<div class="col-xs-12 col-md-3">
+									大区 area
+								</div>
+								<div class="col-xs-12 col-md-3">
+									中心 center
+								</div>
+								<div class="col-xs-12 col-md-3">
+									保修年限 warranty period
+								</div>
+								<div class="col-xs-12 col-md-3">
+									安装方式 installation
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-xs-12 col-md-6">
+									地区 Region
+								</div>
+								<div class="col-xs-12 col-md-3">
+									到货地址 Address
+								</div>
+								<div class="col-xs-12 col-md-3">
+									收货方式 Receiving way
+								</div>
+								<div class="col-xs-12 col-md-2" style="padding-left: 12px; padding-right: 1px;">
+									<select class="form-control">
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-2" style="padding-left: 1px; padding-right: 1px;">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-2" style="padding-left: 1px;">
+									<select class="form-control" style="padding-left: 0px;">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-xs-12 col-md-3">
+									运输类型 Type of transportation
+								</div>
+								<div class="col-xs-12 col-md-3">
+									授权人1及身份证号 Id number 1
+								</div>
+								<div class="col-xs-12 col-md-3">
+									授权人1电话 Tel 1
+								</div>
+								<div class="col-xs-12 col-md-3">
+									授权人2及身份证号 Id number 2
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<select class="form-control">
+										<option value="1" class="">1</option>
+										<option value="2" class="">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-xs-12 col-md-3">
+									授权人2电话 Tel 2
+								</div>
+								<div class="col-xs-12 col-md-3">
+									授权人3及身份证号 Id number 3
+								</div>
+								<div class="col-xs-12 col-md-3">
+									授权人3电话 Tel 3
+								</div>
+								<div class="col-xs-12 col-md-3">
+									是否全部为散件 All in bulk
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<select class="form-control">
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-xs-12 col-md-3">
+									标准折扣 standard discount
+								</div>
+								<div class="col-xs-12 col-md-9">
+									外销运费 Export freight
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-12 col-md-3"></div>
+								<div class="col-xs-12 col-md-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a class="collapsed" role="button" data-toggle="collapse"  href="#collapseTwo-magical-coder-auto-id-1563934090763" aria-expanded="false">结算方式 Method of payment</a>
+						</h4>
+					</div>
+					<div id="collapseTwo-magical-coder-auto-id-1563934090763" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
+						<div class="panel-body" style="height: auto;">
+
+							<div class="row" style="margin-bottom: 15px;">
+								<div class="col-xs-12 col-md-12">
+									结算方式 Method of payment
+								</div>
+								<div class="col-xs-12 col-md-12">
+									<textarea class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							
+							<div class="container" id="box" style="width:100%;">
+										 <table class="table table-bordered table-hover">
+											 <tr>
+												 <th class="text-center" style="width: 5%;">行号</th>
+												 <th class="text-center" style="width: 10%;">回款类型</th>
+												 <th class="text-center" style="width: 10%;">回款起始时间</th>
+																 <th class="text-center" style="width: 10%;">预算回款金额</th>
+												 <th class="text-center" style="width: 15%;">预算回款金额（原币）</th>
+												 <th class="text-center" style="width: 10%;">所占比例</th>
+												 <th class="text-center" style="width: 10%;">备注</th>
+																 <th class="text-center" style="width: 10%;"><input type="button"  value="+" class="btn btn-primary" v-on:click="add()"/></th>
+											 </tr>
+											 <tr class="text-center" v-for="item in myData">
+																<td>1</td>
+																<td>
+																		<select id="fab" name="fab" style="width:90%">
+																		<option value="1">全款</option>
+																		<option value="2">部分还款</option>
+							
+																		</select>
+																</td>
+																<td>
+																	<input type="text" id="weight" name="weight" style="width:90%"/>
+																	
+																</td>
+																<td>
+																	<input type="text" id="unit" name="unit" style="width:90%"/>
+																</td>
+																<td>
+																	<input type="text" id="price" name="peice" style="width:90%"/>
+																</td>
+																<td>
+																	<input type="text" id="price" name="peice" style="width:90%"/>
+																</td>
+																<td>
+																	<input type="text" id="price" name="peice" style="width:90%"/>
+																</td>
+																<td>
+																	 <button class="btn btn-del btn-sm" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=$index">X</button>
+																</td>
+											 </tr>
+										 </table>
+										 
+									 </div>  
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="accordion-magical-coder-auto-id-1563936365767" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 20px; margin-right: 20px;">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a role="button"    >调研表相关内容 Research table related content</a>
+						</h4>
+					</div>
+					<div class="panel-collapse collapse in" role="tabpanel" >
+						<div class="panel-body" style="height: auto;">
+
+							<div class="row">
+								<div class="col-xs-12 col-md-4">
+									柜体控制阀件是否甲供
+								</div>
+								<div class="col-xs-12 col-md-4">
+									分体柜是否远程监控
+								</div>
+								<div class="col-xs-12 col-md-4">
+									立柜柜体是否在地下室
+								</div>
+								<div class="col-xs-12 col-md-4">
+									<select class="form-control">
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-4">
+									<select class="form-control">
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-md-4">
+									<select class="form-control">
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a class="" role="button" data-toggle="collapse"  href="#collapseTwo-magical-coder-auto-id-1563936364515" aria-expanded="true">购销明细 Purchase and sale subsidiary</a>
+						</h4>
+					</div>
+					<div id="collapseTwo-magical-coder-auto-id-1563936364515" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: auto;">
+
+							<div class="row">
+								<div class="col-xs-3 col-md-3">
+									工厂最早交货时间 delivery time
+								</div>
+								<div class="col-xs-9 col-md-9">
+									要求发货时间 Required delivery time
+								</div>
+								<div class="col-xs-3 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-3 col-md-3">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+								</div>
+								<div class="col-xs-3 col-md-3"></div>
+								<div class="col-xs-3 col-md-3">
+									<select class="form-control" >
+																	 <option value="1">history2019001</option>
+														</select>
+								</div>
+							</div>
+							<div class="row">
+
+
+							</div>
+							<div class="row" style="margin-top: 15px;">
+
+
+							</div>
+
+							<div class="magicalcoder-tmp-wrap" >
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">柜体</a></li><li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">机组</a></li><li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
+									<li role="presentation" class=""><a href="#_magicalcoderTag2-magical-coder-auto-id-1565062571302" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">冷凝器</a></li>
+									<li role="presentation" class=""><a href="#_magicalcoderTag3-magical-coder-auto-id-1565062575037" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">散件</a></li>
+									<li role="presentation" class=""><a href="#_magicalcoderTag4-magical-coder-auto-id-1565062576052" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">其他</a></li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="_magicalcoderTag1-magical-coder-auto-id-1565062574969" style="height: auto;">
+												<div class="table-responsive">
+													<table class="table">
+														<thead>
+														<tr class="">
+															<th class="text-center" style="width: 10%;"><input type="button"  value="+" class="btn btn-primary" v-on:click="add()"/></th>
+															<th class=""><div style="width:60px;">行号</div></th><th class=""><div style="width:60px;">调研表</div></th><th class=""><div style="width:160px;">规格型号</div></th><th class=""><div style="width:60px;">专用号</div></th><th class=""><div style="width:60px;">物料属性</div></th>
+															<th class=""><div style="width:60px;">类型</div></th>
+															<th class=""><div style="width:60px;">数量</div></th><th class=""><div style="width:60px;">计量单位</div></th><th class=""><div style="width:100px;">产品实卖价</div></th><th class=""><div style="width:150px;">产品实卖金额</div></th><th class=""><div style="width:100px;">产品转移价</div></th><th class=""><div style="width:130px;">可选项实卖价</div></th><th class=""><div style="width:120px;">可选项实卖金额</div></th><th class=""><div style="width:120px;">可选项转移价</div></th><th class=""><div style="width:100px;">B2C预估价</div></th><th class=""><div style="width:100px;">B2C预估金额</div></th><th class=""><div style="width:100px;">B2C预估成本</div></th><th class=""><div style="width:100px;">实卖价合计</div></th><th class=""><div style="width:100px;">实卖金额合计</div></th><th class=""><div style="width:100px;">转移价合计</div></th><th class=""><div style="width:100px;">市场零售价</div></th><th class=""><div style="width:120px;">市场零售金额</div></th><th class=""><div style="width:60px;">折扣率</div></th><th class=""><div style="width:100px;">行项目类别</div></th><th class=""><div style="width:60px;">需求计划</div></th><th class=""><div style="width:60px;">生产周期</div></th><th class=""><div style="width:160px;">工厂最早交货时间</div></th><th class=""><div style="width:120px;">生产开始时间</div></th>
+															<th class=""><div style="width:120px;">要求发货时间</div></th><th class=""><div style="width:80px;">地址</div></th>
+															<th class=""><div style="width:60px;">入库时间</div></th><th class=""><div style="width:60px;">采购周期</div></th><th class=""><div style="width:60px;">B2C备注</div></th><th class=""><div style="width:60px;">特殊备注</div></th>
+														</tr>
+														</thead>
+														<tbody>
+														<tr class="">
+																<td>
+																	 <button class="btn btn-del btn-sm" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=$index">X</button>
+																</td>
+															<td class="">1</td>
+															<td class=""></td>
+															<td class="">
+																<div class="input-group" mc-ace="~">
+																	<input type="text" class="form-control" placeholder="请输入关键词">
+																	<div class="input-group-btn">
+																		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">搜索 <span class="caret"></span></button>
+																	</div>
+																</div>
+															</td><td class=""></td><td class=""></td><td class=""></td><td class=""><input type="text" class="form-control" aria-describedby="emailHelp" mc-ace="~"></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""><input type="text" class="form-control" aria-describedby="emailHelp" mc-ace="~"></td>
+															<td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""><input type="text" class="form-control" aria-describedby="emailHelp" mc-ace="~"></td>
+															<td class=""><select class="form-control" mc-ace="~">
+																<option value="1" class="">1</option>
+																<option value="2" class="">2</option>
+															</select></td>
+															<td class="">
+																<select class="form-control" mc-ace="~">
+																	<option value="1" class="">1</option>
+																	<option value="2" class="">2</option>
+																</select>
+															</td><td class=""></td><td class=""> <input type="text" class="form-control"> </td><td class=""></td>
+															<td class=""><input type="text" id="weight" name="weight" style="width:100%"/></td>
+															<td class="">
+																<select class="form-control">
+																		<option value="1">市南区</option>
+																		<option value="2">李沧区</option>
+																</select></td>
+															<td class=""></td><td class=""></td><td class=""><textarea class="form-control" rows="1"></textarea></td><td class=""><textarea class="form-control" rows="1"></textarea></td>
+														</tr>
+														</tbody>
+													</table>
+												</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="_magicalcoderTag2-magical-coder-auto-id-1565062571302">
+
+									</div>
+									<div role="tabpanel" class="tab-pane" id="_magicalcoderTag3-magical-coder-auto-id-1565062575037">
+
+									</div>
+									<div role="tabpanel" class="tab-pane" id="_magicalcoderTag4-magical-coder-auto-id-1565062576052" style="height: 194px;">
+
+									</div>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-md-12">
+									备注 Remark
+								</div>
+								<div class="col-xs-12 col-md-12">
+									<textarea class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="accordion-magical-coder-auto-id-1563938424372" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 20px; margin-right: 20px;">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a role="button" href="#collapseOne-magical-coder-auto-id-1563938421442" aria-expanded="true" class="">信息查看 Check the information</a>
+						</h4>
+					</div>
+					<div id="collapseOne-magical-coder-auto-id-1563938421442" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: auto;" mc-ace="~">
+
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;">
+								查看毛利表 Gross profit table
+							</button><div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064086809" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+											<h4 class="modal-title" id="myModalLabel">毛利表信息 Gross profit table</h4>
+										</div>
+										<div class="modal-body">
+											<div id="accordion-magical-coder-auto-id-1564367406503" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">
+													<div class="panel panel-default">
+														<div class="panel-heading" role="tab">
+															<h4 class="panel-title">
+																<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseOne-magical-coder-auto-id-1564367403401" aria-expanded="true" class="">基本信息 basic information</a>
+															</h4>
+														</div>
+														<div id="collapseOne-magical-coder-auto-id-1564367403401" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+															<div class="panel-body" style="height: auto;">
+
+															<div class="row">
+													<div class="col-md-3 col-xs-3">需求流水号</div>
+													<div class="col-md-3 col-xs-3">合同号</div><div class="col-md-3 col-xs-3">合同名称</div><div class="col-md-3 col-xs-3">合同金额</div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div>
+												</div><div class="row" style="margin-top: 4px;">
+													<div class="col-xs-6 col-md-3">性质分类</div>
+													<div class="col-xs-6 col-md-3">版本号</div><div class="col-xs-6 col-md-3">操作人</div><div class="col-xs-6 col-md-3">操作时间</div><div class="col-xs-6 col-md-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-xs-6 col-md-3"><select class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select></div><div class="col-xs-6 col-md-3"><select class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select></div><div class="col-xs-6 col-md-3"><select class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select></div>
+												</div></div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading" role="tab">
+															<h4 class="panel-title">
+																<a class="" role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseTwo-magical-coder-auto-id-1564367403394" aria-expanded="true">
+																	明细信息 detail information
+																</a>
+															</h4>
+														</div>
+														<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+															<div class="panel-body" style="height: auto;" >
+
+															<div class="table-responsive">
+													<table class="table">
+														<thead>
+														<tr class="">
+															<th class="">产品名称</th><th class="">金额</th><th class="">不含税金额</th><th class="">成本</th>
+															<th class="">毛利</th>
+															<th class="">毛利率</th>
+														</tr>
+														</thead>
+														<tbody>
+														<tr>
+															<td class="">整机柜</td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+														</tr>
+														<tr>
+															<td class="">分体柜</td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+														</tr>
+														<tr>
+															<td class="">机组</td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+															<td class=""></td>
+														</tr>
+														<tr>
+															<td class="">冷凝器</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">散件</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">冷库</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">B2C</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">其他项目收费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">可选项</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">安装费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">材料费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">电气费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">维保费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">运费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">预提备件费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">不可预估项</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+														</tr>
+														<tr>
+															<td class="">合计</td> <td class="">0.00</td> <td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td>
+														</tr>
+														</tbody>
+													</table>
+												</div></div>
+														</div>
+													</div>
+												</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">关闭 close</button>
+											<button type="button" class="btn btn-primary">导出 export</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
+								查看合同 Look at the contract
+							</button><div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+											<h4 class="modal-title" id="myModalLabel">合同信息 contract information</h4>
+										</div>
+										<div class="modal-body">
+											还没制作合同 We haven't made the contract yet
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">关闭 close</button>
+											<button type="button" class="btn btn-primary">保存 save</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div id="accordion-magical-coder-auto-id-1563939513569" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 20px; margin-right: 20px;">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a role="button"  href="#collapseOne-magical-coder-auto-id-1563939519614" aria-expanded="true" class="">附件信息 Attachment information</a>
+						</h4>
+					</div>
+					<div id="collapseOne-magical-coder-auto-id-1563939519614" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: 83px;">
+
+							<div class="row">
+								<div class="col-xs-12 col-md-12">
+									客户确认资料 Customer data
+								</div>
+								<div class="col-xs-12 col-md-12">
+									<input type="file" class="form-control-file">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;">保存 save</button><button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;">提交 submit</button><button type="button" class="btn pull-right btn-warning">返回 back</button>
+				
+		</div>
+
+	<!-- new added graphs chart js-->
+	
+    <script src="js/Chart.bundle.js"></script>
+    <script src="js/utils.js"></script>
+	<div id="footer" class="container" >
+            <div class="col-xs-6 pull-left" style="text-align: right; font-size:12px;">2019 © 海尔开利销售工具管理系统.Haier Carrier Selling Tool</div>
+            <div class="col-xs-6" style="float: right; text-align: right;font-size:12px;">Version 1.0</div>
+        </div>
+	<script>
+        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var color = Chart.helpers.color;
+        var barChartData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: 'Dataset 1',
+                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+                ]
+            }, {
+                label: 'Dataset 2',
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                borderWidth: 1,
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+                ]
+            }]
+
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Bar Chart'
+                    }
+                }
+            });
+
+        };
+
+        document.getElementById('randomizeData').addEventListener('click', function() {
+            var zero = Math.random() < 0.2 ? true : false;
+            barChartData.datasets.forEach(function(dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return zero ? 0.0 : randomScalingFactor();
+                });
+
+            });
+            window.myBar.update();
+        });
+
+        var colorNames = Object.keys(window.chartColors);
+        document.getElementById('addDataset').addEventListener('click', function() {
+            var colorName = colorNames[barChartData.datasets.length % colorNames.length];;
+            var dsColor = window.chartColors[colorName];
+            var newDataset = {
+                label: 'Dataset ' + barChartData.datasets.length,
+                backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+                borderColor: dsColor,
+                borderWidth: 1,
+                data: []
+            };
+
+            for (var index = 0; index < barChartData.labels.length; ++index) {
+                newDataset.data.push(randomScalingFactor());
+            }
+
+            barChartData.datasets.push(newDataset);
+            window.myBar.update();
+        });
+
+        document.getElementById('addData').addEventListener('click', function() {
+            if (barChartData.datasets.length > 0) {
+                var month = MONTHS[barChartData.labels.length % MONTHS.length];
+                barChartData.labels.push(month);
+
+                for (var index = 0; index < barChartData.datasets.length; ++index) {
+                    //window.myBar.addData(randomScalingFactor(), index);
+                    barChartData.datasets[index].data.push(randomScalingFactor());
+                }
+
+                window.myBar.update();
+            }
+        });
+
+        document.getElementById('removeDataset').addEventListener('click', function() {
+            barChartData.datasets.splice(0, 1);
+            window.myBar.update();
+        });
+
+        document.getElementById('removeData').addEventListener('click', function() {
+            barChartData.labels.splice(-1, 1); // remove the label first
+
+            barChartData.datasets.forEach(function(dataset, datasetIndex) {
+                dataset.data.pop();
+            });
+
+            window.myBar.update();
+        });
+    </script>
+	<!-- new added graphs chart js-->
+	
+	<!-- Classie --><!-- for toggle left push menu script -->
+		<script src="js/classie.js"></script>
+		<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				showLeftPush = document.getElementById( 'showLeftPush' ),
+				body = document.body;
+				
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+				disableOther( 'showLeftPush' );
+			};
+			
+
+			function disableOther( button ) {
+				if( button !== 'showLeftPush' ) {
+					classie.toggle( showLeftPush, 'disabled' );
+				}
+			}
+		</script>
+	<!-- //Classie --><!-- //for toggle left push menu script -->
+		
+	<!--scrolling js-->
+	<script src="js/jquery.nicescroll.js"></script>
+	<script src="js/scripts.js"></script>
+	<!--//scrolling js-->
+	
+	<script>
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Bar Chart'
+                    }
+                }
+            });
+
+        };
+
+        document.getElementById('randomizeData').addEventListener('click', function() {
+            var zero = Math.random() < 0.2 ? true : false;
+            barChartData.datasets.forEach(function(dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return zero ? 0.0 : randomScalingFactor();
+                });
+
+            });
+            window.myBar.update();
+        });
+
+        var colorNames = Object.keys(window.chartColors);
+        document.getElementById('addDataset').addEventListener('click', function() {
+            var colorName = colorNames[barChartData.datasets.length % colorNames.length];;
+            var dsColor = window.chartColors[colorName];
+            var newDataset = {
+                label: 'Dataset ' + barChartData.datasets.length,
+                backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+                borderColor: dsColor,
+                borderWidth: 1,
+                data: []
+            };
+
+            for (var index = 0; index < barChartData.labels.length; ++index) {
+                newDataset.data.push(randomScalingFactor());
+            }
+
+            barChartData.datasets.push(newDataset);
+            window.myBar.update();
+        });
+
+        document.getElementById('addData').addEventListener('click', function() {
+            if (barChartData.datasets.length > 0) {
+                var month = MONTHS[barChartData.labels.length % MONTHS.length];
+                barChartData.labels.push(month);
+
+                for (var index = 0; index < barChartData.datasets.length; ++index) {
+                    //window.myBar.addData(randomScalingFactor(), index);
+                    barChartData.datasets[index].data.push(randomScalingFactor());
+                }
+
+                window.myBar.update();
+            }
+        });
+
+        document.getElementById('removeDataset').addEventListener('click', function() {
+            barChartData.datasets.splice(0, 1);
+            window.myBar.update();
+        });
+
+        document.getElementById('removeData').addEventListener('click', function() {
+            barChartData.labels.splice(-1, 1); // remove the label first
+
+            barChartData.datasets.forEach(function(dataset, datasetIndex) {
+                dataset.data.pop();
+            });
+
+            window.myBar.update();
+        });
+    </script>
+	<!-- new added graphs chart js-->
+	
+	<!-- Classie --><!-- for toggle left push menu script -->
+		<script src="js/classie.js"></script>
+		<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				showLeftPush = document.getElementById( 'showLeftPush' ),
+				body = document.body;
+				
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+				disableOther( 'showLeftPush' );
+			};
+			
+
+			function disableOther( button ) {
+				if( button !== 'showLeftPush' ) {
+					classie.toggle( showLeftPush, 'disabled' );
+				}
+			}
+		</script>
+	<!-- //Classie --><!-- //for toggle left push menu script -->
+		
+	<!--scrolling js-->
+	<script src="js/jquery.nicescroll.js"></script>
+	<script src="js/scripts.js"></script>
+	<!--//scrolling js-->
+	
+	<!-- side nav js -->
+	<script src='js/SidebarNav.min.js' type='text/javascript'></script>
+	<script>
+      $('.sidebar-menu').SidebarNav()
+    </script>
+	<!-- //side nav js -->
+	
+	<!-- for index page weekly sales java script -->
+	<script src="js/SimpleChart.js"></script>
+   <script src="js/bootstrap.js"> </script>
+	<!-- //Bootstrap Core JavaScript -->
+</body>
+</html>
