@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+  <h2>角色列表</h2>
+  <div>
+     <ul>
+         <li  th:each="role:${list}">
+              <span th:text="${role.id}"></span>-
+             <span th:text="${role.name}"></span>-
+         </li>
+     </ul>
+   </div>
+</body>
+</html>
