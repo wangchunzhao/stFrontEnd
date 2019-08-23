@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 //@Api(value = "User Manager")
 public class UserController {
 
-	@RequestMapping(value = "index}", method = RequestMethod.GET)
+	@RequestMapping(value = "/}", method = RequestMethod.GET)
 	public String  index() {
 
 		 return "redirect:/index.html";
