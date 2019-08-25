@@ -1,0 +1,54 @@
+/*招聘*/
+*{
+	margin: 0;
+	padding: 0;
+}
+.join_zp{
+	width: auto;
+	text-align: center;
+	margin: auto;
+}
+.join_zp .join_zp_t{
+
+	height: auto;
+	line-height: auto;
+}
+.join_zp .join_zp_c{
+
+	cursor: pointer;
+	height: auto;
+}
+.join_zp .join_zp_c:hover{
+	color: #bd0000;
+}
+.join_zp .join_zp_n{
+	text-align: left;
+	background-color: #ebedef;
+
+	display: none;
+}
+.join_zp .join_zp_n td{
+	padding-bottom: auto;
+}
+.join_zp_n .join_ms{
+	width: auto;
+	height:auto;
+	margin: 0 auto;
+	padding-left: 20px;
+}
+.join_zp_n .join_ms i{
+	display: inline-block;
+
+	background-color: #fc9151;
+	margin-right: 10px;
+}
+.join_zp_n .join_cn{
+	width: auto;
+	margin: 0 auto;
+	background-color: #fff;
+	padding-left: 20px;
+
+}
+.join_zp .join_active{
+	display: table-row;
+}
