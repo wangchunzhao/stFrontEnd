@@ -21,15 +21,15 @@ import org.springframework.web.servlet.ModelAndView;
 //@Api(value = "User Manager")
 public class UserController {
 
-//	@RequestMapping(value = "/}", method = RequestMethod.GET)
-//	public String  index() {
-//
-//		 return "redirect:/index.html";
-//    }
-//	@RequestMapping("login")
-//	public String  main(Model model) {
-//		 return "login";
-//    }
+	@RequestMapping(value = "index}", method = RequestMethod.GET)
+	public String  index() {
+
+		 return "redirect:index.html";
+    }
+	@RequestMapping("login")
+	public String  main(Model model) {
+		 return "login";
+    }
 	@RequestMapping("hello")
     public ModelAndView hello(){
         ModelAndView modelAndView = new ModelAndView();
@@ -41,10 +41,10 @@ public class UserController {
         return modelAndView;
     }
 	
-//	@GetMapping(value = "home")
-//    public void homePage(HttpServletResponse response)throws IOException{
-//        response.sendRedirect("/index.html");
-////        return "index";
-//    }
+	@GetMapping(value = "home")
+    public void homePage(HttpServletResponse response)throws IOException{
+        response.sendRedirect("index.html");
+//        return "index";
+    }
 
 }
