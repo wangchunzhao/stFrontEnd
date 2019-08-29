@@ -1,103 +1,108 @@
 package com.qhc.steigenberger.controller;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.service.RoleWsService;
-
-import reactor.core.publisher.Mono;
+import com.qhc.steigenberger.service.RoleServiceI;
 
 @Controller
 @RequestMapping("/role")
 public class RoleController {
-	
+
 	@Autowired
-	RoleWsService wsService;
-	
+	RoleServiceI roleServiceImpl;
+
 	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
 	public static String URL = "role/roleList/";
 
-	@RequestMapping("/roleList")
-	public String roleList(Model model) {
-		System.out.println("---------in roleController----------------");
-		
-		Integer id = 0;
-		List<Role> list = wsService.getAll(BASE_URL, URL, id, Role.class);
-		model.addAttribute("list", list);
-		
-//		System.out.println(list.size()+"-------------------------");		
-		return "systemManage/roleList2";
-	}
-	
-	
-	@RequestMapping(value="/roleInfo",method = RequestMethod.POST)
-	@ResponseBody
-	public String roleInfo(HttpServletRequest request) {
-		
-		Integer id = Integer.valueOf(request.getAttribute("role_id").toString());
-		List<Role> list = wsService.getAll(BASE_URL, URL, id, Role.class);
-		Role r = new Role();
-		if(!list.isEmpty()) {
-			r=list.get(0);
-		}
-		String json="";
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			json = mapper.writeValueAsString(r);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	
-		return json.toString();
-	}
-	
-	@RequestMapping(value="/submitRole",method = RequestMethod.POST)
-	@ResponseBody
-	public String submitRole(HttpServletRequest request) {
-		String baseUrl = "http://127.0.0.1:8801/frye/";
-//		WebClient webClient = WebClient.create(baseUrl);
-		
-		WebClient webClient = WebClient.builder()
-	            .baseUrl(baseUrl)
-	            .defaultHeader(HttpHeaders.USER_AGENT,"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)")
-	            .defaultCookie("ACCESS_TOKEN", "test_token").build();
-		
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-		
-		String name = request.getParameter("name");
-		String id = request.getParameter("id");
-		map.add("name", name);
-		map.add("id", id);
-		Mono<Role> response = webClient.post().uri("role/addRole")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .body(BodyInserters.fromFormData(map))
-                .retrieve()
-                .bodyToMono(Role.class).timeout(Duration.of(10, ChronoUnit.SECONDS));
+	@RequestMapping("/index")
+	public String index(@RequestParam(defaultValue = "0") Integer one,
+			@RequestParam(defaultValue = "1", name = "number") Integer number,
+			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
+			Role entity, 
+			Model model,
+			HttpServletRequest request) {
 
-        Role demoObj = response.block();
-//		
-        System.out.println(demoObj.getName());
-	
-		return "success";
+		HttpSession session = request.getSession();
+		// 有存在session的情况
+		if (entity == null && session.getAttribute("entity") != null) {
+
+			if (one == 1) {
+				session.removeAttribute("entity");
+			} else {
+				entity = (Role) session.getAttribute("entity");
+			}
+		}
+		// 有存在带查询条件其session中没有值
+		else if (entity != null && session.getAttribute("entity") == null) {
+			session.setAttribute("entity", entity);
+		}
+		// 有存在带查询条件其session中有值
+		else if (entity != null && session.getAttribute("entity") != null) {
+			session.setAttribute("entity", entity);
+		}
+
+		model.addAttribute("pageInfo", roleServiceImpl.selectAndPage(number, pageSize, entity));
+		return "systemManage/roleManage";
 	}
-	
+
+	@PostMapping("/add")
+	@ResponseBody
+	public JsonResult add(@RequestParam(defaultValue = "0") Integer one, 
+			@RequestBody Role role,
+			HttpServletRequest request) {
+		if(one==1) {
+            request.getSession().removeAttribute("entity");
+	     }
+		// 判断是否有ID ,
+		// 1.没有就是新增操作
+		// 2.如果存在，就是更新操作
+		String msg = "";
+		int status = 0;
+		String result = roleServiceImpl.saveRoleInfo(role);
+		if (result != null && !"".equals(result)) {
+			status = 200;
+			msg = "操作成功！";
+		} else {
+			status = 500;
+			msg = "操作失败";
+		}
+		return JsonResult.build(status, "角色" + msg, "");
+
+		/*
+		 * else { HttpSession session=request.getSession(); Users users=(Users)
+		 * session.getAttribute("users"); role.setCreateTime(new Date());
+		 * role.setCreater(users.getUserId()); return roleServiceImpl.add(role); }
+		 */
+	}
+
+
+	@RequestMapping("/remove")
+	@ResponseBody
+	public  JsonResult remove(int id) {
+		String msg="";
+		int st=0;
+		
+		boolean flag = roleServiceImpl.remove(id);
+		if(flag) {
+			msg="操作成功";
+			st=200;
+		}else {
+			msg="操作失败";
+			st=500;
+		}
+	   return JsonResult.build(st,msg, null); 
+	}
+
 }
