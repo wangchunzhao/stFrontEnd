@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.service.RoleServiceI;
 
 
 
@@ -16,6 +17,11 @@ import com.qhc.steigenberger.domain.Role;
 @RequestMapping("/permission")
 public class PermissionApplyController {
 	
+	@Autowired
+	RoleServiceI roleServiceImpl;
+
+	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
+	public static String URL = "role/roleList/";
 
 	@RequestMapping("/permissionApply")
 	public String roleList(Model model) {
