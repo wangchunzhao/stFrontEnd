@@ -45,6 +45,7 @@ public interface RoleServiceI{
 	 */
 	boolean remove(int id);
 	
+	
 	/**
 	 * 不分页查询全部数据
 	 * @return
