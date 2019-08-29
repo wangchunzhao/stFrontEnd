@@ -49,6 +49,7 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	
 	@Override
 	public boolean remove(int id) {
+		
 		String str = delete(BASEURL+"role/delete?id="+id);
 		if("false".equals(str)) {
 			return false;
