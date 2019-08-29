@@ -3,21 +3,24 @@
  */
 package com.qhc.steigenberger.domain;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Component;
 
 @Component
-public class Role {
+public class Role implements Serializable{
 	
-    private Integer id;
-    private String name;
+    public int id;
+    
+    public String name;
 	
 	
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

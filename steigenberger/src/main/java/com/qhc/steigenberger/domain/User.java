@@ -3,14 +3,23 @@
  */
 package com.qhc.steigenberger.domain;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Component;
 
+
+
 @Component
-public class User {
+public class User implements Serializable{
 	
-    private int id;
-    private String user_mail;
-    private boolean active;
+	
+    public int id;
+	
+    public String userMail;
+	
+    public String userIdentity;
+	
+    public int isActive;
 	
 	
 	
@@ -22,21 +31,33 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUser_mail() {
-		return user_mail;
+	public String getUserMail() {
+		return userMail;
 	}
 
-	public void setUser_mail(String user_mail) {
-		this.user_mail = user_mail;
+	public void setUserMail(String userMail) {
+		this.userMail = userMail;
 	}
 
-	public boolean getActive() {
-		return active;
+	public String getUserIdentity() {
+		return userIdentity;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setUserIdentity(String userIdentity) {
+		this.userIdentity = userIdentity;
 	}
+
+	public int getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
+
+
+
 
 
 }
+
