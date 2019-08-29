@@ -20,9 +20,38 @@ public class User implements Serializable{
     public String userIdentity;
 	
     public int isActive;
+    
+    public String userName;
+	
+    public String region;
+    
+    public String roleNames;
 	
 	
-	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(String roleNames) {
+		this.roleNames = roleNames;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public int getId() {
 		return id;
 	}
