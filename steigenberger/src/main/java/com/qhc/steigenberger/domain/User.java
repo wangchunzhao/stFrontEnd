@@ -13,7 +13,12 @@ import org.springframework.stereotype.Component;
 public class User implements Serializable{
 	
 	
-    public int id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public int id;
 	
     public String userMail;
 	
