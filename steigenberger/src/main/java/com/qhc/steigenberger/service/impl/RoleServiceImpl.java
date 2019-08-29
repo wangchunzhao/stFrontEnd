@@ -57,9 +57,13 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 		}
 	}
 
-	@Override
+	/**
+	 * 不分页查询全部
+	 */
 	public List<Role> findAll() {
+		
 		String url ="operation/findAll";
+		
 		return  findAll(BASEURL, url,Operations.class);
 	}
 }
