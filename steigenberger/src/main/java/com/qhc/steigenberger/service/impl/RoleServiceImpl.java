@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.service.RoleServiceI;
 import com.qhc.steigenberger.service.WebServcieTool;
@@ -56,5 +57,10 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 		}
 	}
 
+	@Override
+	public List<Role> findAll() {
+		String url ="operation/findAll";
+		return  findAll(BASEURL, url,Operations.class);
+	}
 }
 
