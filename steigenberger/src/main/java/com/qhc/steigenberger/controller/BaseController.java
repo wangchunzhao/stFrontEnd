@@ -58,7 +58,7 @@ public abstract class BaseController extends WebServcieTool<User>{
             session.setAttribute("region", account.getRegion());
             session.setAttribute("userIdentity", account.getUserIdentity());
             session.setAttribute("userMail", account.userMail);
-            session.setAttribute("roleNames", account.getRoleNames());
+            session.setAttribute("roleNames", account.getRolesName());
         }
     }
 
