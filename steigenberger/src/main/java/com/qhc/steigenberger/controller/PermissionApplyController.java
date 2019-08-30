@@ -2,7 +2,10 @@ package com.qhc.steigenberger.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +28,17 @@ public class PermissionApplyController {
 
 	@RequestMapping("/permissionApply")
 	public String roleList(Model model) {
-		List<Role> role = roleServiceImpl.findAll();
+//		List<Role> role = roleServiceImpl.findAll();
 	 
-		System.out.println(role.size()+"aaa12345");
+//		System.out.println(role.size()+"aaa12345");
+		return "permission/permissionApply";
+	}
+	
+	@RequestMapping("/adduser")
+	public String adduser(HttpServletRequest request) {
+		String userName = request.getParameter("username");
+	 
+		System.out.println(userName+"aaa12345");
 		return "permission/permissionApply";
 	}
 	
