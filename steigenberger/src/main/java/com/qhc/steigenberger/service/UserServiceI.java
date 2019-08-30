@@ -43,5 +43,10 @@ package com.qhc.steigenberger.service;
 		 */
 		boolean delete(int id);
 		
+		/**
+		 * select by identity
+		 * @param str
+		 * @return
+		 */
 		public User selectUserIdentity(String str);
 }
