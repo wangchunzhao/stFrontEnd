@@ -25,9 +25,9 @@ public class PermissionApplyController {
 
 	@RequestMapping("/permissionApply")
 	public String roleList(Model model) {
-		
+		List<Role> role = roleServiceImpl.findAll();
 	 
-		
+		System.out.println(role.size()+"aaa123455");
 		return "permission/permissionApply";
 	}
 	

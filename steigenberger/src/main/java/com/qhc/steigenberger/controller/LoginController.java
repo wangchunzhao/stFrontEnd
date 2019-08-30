@@ -55,7 +55,7 @@ public class LoginController {
         	env.put(Context.PROVIDER_URL, url);//Url
         	try {
         		ctx = new InitialDirContext(env);// 初始化上下文
-        		modelAndView.setViewName("login");
+        		modelAndView.setViewName("loginSucess");
         		System.out.println("身份验证成功!");
         		} catch (AuthenticationException e) {
         			modelAndView.addObject("msg","身份验证失败!");
