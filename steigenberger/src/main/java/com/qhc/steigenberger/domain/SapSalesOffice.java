@@ -10,7 +10,12 @@ import java.io.Serializable;
  */
 public class SapSalesOffice implements Serializable{
 	
-    private String code;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String code;
 	
     private String name;
 	

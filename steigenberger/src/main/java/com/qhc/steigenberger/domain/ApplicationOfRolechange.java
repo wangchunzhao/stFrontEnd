@@ -5,7 +5,12 @@ import java.util.Date;
 
 public class ApplicationOfRolechange implements Serializable{
 	
-    private Integer id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
 	private String creator;
 	

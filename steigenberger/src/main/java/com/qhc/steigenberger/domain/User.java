@@ -5,22 +5,25 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 
-
 @Component
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
 	public int id;
+	
     public String userMail;
+    
     public String userIdentity;
+    
     public int isActive;
+    
     public String userName;
     
     private Set<ApplicationOfRolechange> apps;
 	
-	
    	public String rolesName;
+   	
    	private String region;
 	
 
