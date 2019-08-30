@@ -27,7 +27,7 @@ public class PermissionApplyController {
 	public String roleList(Model model) {
 		List<Role> role = roleServiceImpl.findAll();
 	 
-		System.out.println(role.size()+"aaa123455");
+		System.out.println(role.size()+"aaa12345");
 		return "permission/permissionApply";
 	}
 	
