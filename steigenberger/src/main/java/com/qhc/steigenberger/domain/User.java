@@ -1,10 +1,7 @@
-/**
- * 
- */
 package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
-
+import java.util.Set;
 import org.springframework.stereotype.Component;
 
 
@@ -12,41 +9,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class User implements Serializable{
 	
-	
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public int id;
-	
     public String userMail;
-	
     public String userIdentity;
-	
     public int isActive;
-    
     public String userName;
-	
-    public String region;
     
-    public String roleNames;
+    private Set<ApplicationOfRolechange> apps;
 	
 	
+   	public String rolesName;
+   	private String region;
+	
+
+
+	public Set<ApplicationOfRolechange> getApps() {
+		return apps;
+	}
+
+	public void setApps(Set<ApplicationOfRolechange> apps) {
+		this.apps = apps;
+	}
+
 	public String getRegion() {
 		return region;
 	}
 
 	public void setRegion(String region) {
 		this.region = region;
-	}
-
-	public String getRoleNames() {
-		return roleNames;
-	}
-
-	public void setRoleNames(String roleNames) {
-		this.roleNames = roleNames;
 	}
 
 	public String getUserName() {
@@ -87,6 +79,14 @@ public class User implements Serializable{
 
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getRolesName() {
+		return rolesName;
+	}
+
+	public void setRolesName(String rolesName) {
+		this.rolesName = rolesName;
 	}
 
 

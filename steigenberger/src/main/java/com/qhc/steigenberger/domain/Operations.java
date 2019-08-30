@@ -1,6 +1,8 @@
 package com.qhc.steigenberger.domain;
 
-public class Operations {
+import java.io.Serializable;
+
+public class Operations implements Serializable{
 	
     private String id;
 	
