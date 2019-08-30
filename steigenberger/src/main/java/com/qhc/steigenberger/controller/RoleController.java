@@ -1,7 +1,5 @@
 package com.qhc.steigenberger.controller;
 
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,6 @@ public class RoleController {
 	@Autowired
 	OperationServiceI operationServiceImpl;
 
-	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
-	public static String URL = "role/roleList/";
 
 	@RequestMapping("/index")
 	public String index(@RequestParam(defaultValue = "0") Integer one,
@@ -84,11 +80,6 @@ public class RoleController {
 		}
 		return JsonResult.build(status, "角色" + msg, "");
 
-		/*
-		 * else { HttpSession session=request.getSession(); Users users=(Users)
-		 * session.getAttribute("users"); role.setCreateTime(new Date());
-		 * role.setCreater(users.getUserId()); return roleServiceImpl.add(role); }
-		 */
 	}
 
 
