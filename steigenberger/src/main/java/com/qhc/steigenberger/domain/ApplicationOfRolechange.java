@@ -32,11 +32,11 @@ public class ApplicationOfRolechange implements Serializable{
 	
 
     
-	 private User user = new User();
-	 
-	 private Role role = new Role();
-	 
-	 private SapSalesOffice sapSales = new SapSalesOffice();
+//	 private User user = new User();
+//	 
+//	 private Role role = new Role();
+//	 
+//	 private SapSalesOffice sapSales = new SapSalesOffice();
     
 
     public String getCreator() {
@@ -119,29 +119,6 @@ public class ApplicationOfRolechange implements Serializable{
 		this.isactive = isactive;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public SapSalesOffice getSapSales() {
-		return sapSales;
-	}
-
-	public void setSapSales(SapSalesOffice sapSales) {
-		this.sapSales = sapSales;
-	}
     
     
 }
