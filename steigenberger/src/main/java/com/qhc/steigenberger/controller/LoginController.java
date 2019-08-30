@@ -30,7 +30,7 @@ public class LoginController {
     public ModelAndView login() {
     	return new ModelAndView("login");
     }
-	
+	//登陆验证
     @RequestMapping(value = "loginIn")
     public ModelAndView loginIn(HttpServletRequest request) {
 
