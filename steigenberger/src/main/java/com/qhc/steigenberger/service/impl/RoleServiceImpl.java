@@ -9,6 +9,7 @@ import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.service.RoleServiceI;
 import com.qhc.steigenberger.service.WebServcieTool;
+import com.qhc.steigenberger.util.CommonConstant;
 
 @Service
 public class RoleServiceImpl extends WebServcieTool<Role> implements RoleServiceI{
@@ -24,7 +25,7 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 //		}else {
 			url="role/findAll";
 //		}
-		List<Role> list=findAll(BASEURL, url,Role.class);
+		List<Role> list=findAll(CommonConstant.BASEURL, CommonConstant.URl_ROLE_FINDALL,Role.class);
 		PageInfo<Role> pageInfo=new PageInfo<Role>(list);
 		return pageInfo;
 	}
@@ -32,25 +33,25 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	@Override
 	public Role selectRoleInfo(int id) {
 		
-		return findOne(BASEURL+"role/findById?id="+id,Role.class);
+		return findOne(CommonConstant.BASEURL+CommonConstant.URl_ROLE_FINDBYID+"?id="+id,Role.class);
 	}
 
 	@Override
 	public String saveRoleInfo(Role role) {
 		
-		return postInfo(role,BASEURL+"role/add",Role.class);
+		return postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_ADD,Role.class);
 	}
 	
 	@Override
 	public String updateRoleInfo(Role role) {
 		
-		return postInfo(role,BASEURL+"role/update",Role.class);
+		return postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_UPDATE,Role.class);
 	}
 	
 	@Override
 	public boolean remove(int id) {
 		
-		String str = delete(BASEURL+"role/delete?id="+id);
+		String str = delete(CommonConstant.BASEURL+CommonConstant.URl_ROLE_DELETE+"?id="+id);
 		if("false".equals(str)) {
 			return false;
 		}else {
