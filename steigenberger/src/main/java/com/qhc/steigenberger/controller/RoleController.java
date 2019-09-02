@@ -1,5 +1,6 @@
 package com.qhc.steigenberger.controller;
 
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -152,5 +153,10 @@ public class RoleController {
 	   return JsonResult.build(st,msg, null); 
 	}
 	
-
+	@PostMapping("/list")
+	@ResponseBody
+	public JsonResult roleList() {
+		List<Role> role = roleServiceImpl.findAll();
+		return JsonResult.build(200,"success", role);
+	}
 }

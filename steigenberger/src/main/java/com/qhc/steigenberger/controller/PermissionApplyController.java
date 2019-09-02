@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.RoleServiceI;
+import com.qhc.steigenberger.service.SapSalesOfficeServicel;
 import com.qhc.steigenberger.service.UserServiceI;
 
 
@@ -34,42 +36,49 @@ public class PermissionApplyController extends BaseController{
 	
 	@Autowired
 	UserServiceI userServiceImpl;
-
-	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
 	
+	@Autowired
+	SapSalesOfficeServicel sapSalesOfficeServicel;	
 	
 	@RequestMapping("/permissionApply")
-	public String roleList(Model model) {
-		
-//		List<Role> role = roleServiceImpl.findAll();
-	 
-//		System.out.println(role.size()+"aaa12345");
+	public String permissionApply() {
+
 		return "permission/permissionApply";
 	}
 	
+	@PostMapping("/sapSalesOfficelist")
+	@ResponseBody
+	public JsonResult roleList() {
+		List<SapSalesOffice> role = sapSalesOfficeServicel.findAll();
+		return JsonResult.build(200,"success", role);
+	}
+	
+	
+	//新增用户
 	@PostMapping("/adduser")
 	@ResponseBody
 	public JsonResult adduser(HttpServletRequest request) {
+		//获取表单数据
 		String userName = request.getParameter("username");
 		String useremil = request.getParameter("useremil");
 		String userid = request.getParameter("userid");
 		String roleName = request.getParameter("roleName");
 		String area = request.getParameter("area");
 		String isactive = request.getParameter("status");
-		
-		User usersession = getAccount(request);
+		//获取域用户
+//		User usersession = getAccount(request);
 		
 		User user = new User();
 		user.setUserMail(useremil);
-		user.setIsActive(1);
+		user.setIsActive(Integer.parseInt(isactive));
 		user.setUserName(userName);
-		user.setUserIdentity(usersession.getUserIdentity());
+		user.setUserIdentity(userid);
 		
-		System.out.println(usersession.getUserIdentity());
+//		System.out.println(usersession.getUserIdentity());
 		System.out.println("12345678");
 		String msg = "";
 		int status = 0;
-		String result = "";
+		String result = userServiceImpl.updateUserInfo(user);
 		if (result != null && !"".equals(result)) {
 			status = 200;
 			msg = "操作成功！";
