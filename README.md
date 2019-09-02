@@ -1,5 +1,4 @@
 # steigenberger
-web with html and thymeleaf for project ST
+web with html and thymeleaf of project ST
 <br/>
 thymeleaf in web
-hello
