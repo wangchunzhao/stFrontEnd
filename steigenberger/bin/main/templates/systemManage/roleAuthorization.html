@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="fullscreen-bg" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('角色授权')" >
+<meta charset="UTF-8">
+</head>
+<body>
+    <div class="panel">
+   
+     <div class="panel-body">
+      <a>角色授权</a>
+      <hr>
+         <form action=""  role="form"  class="form">
+         	<input type="hidden" th:value="${map?.roleId}" id="roleId"/>
+         <div class="row">
+               <div class="col-md-6"    style="height:60px;">               
+                   <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
+						     
+						     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
+						     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
+                     		 <label   th:text="${operation.name}" ></label>
+                      </div>                         
+            
+            </div>
+		</div>         
+            <div class="form-group text-righ">						    
+						      <button type="submit"   class="submit btn btn-primary pull-right ">授权</button>
+						 </div>
+						 
+         </form>
+       </div>
+     </div>
+	<script type="text/javascript" th:inline="javascript">
+	var ctxPath  = [[@{/}]];
+	$(".form").on("submit",function(e){
+    	e.preventDefault();
+    	var oid = new Array();
+    	var val=$(".checkbox-inline :checked");
+    	val.each(function(i){
+    		oid[i] = $(this).val();
+		  });   	
+
+    	var oids = oid.join(",");
+    	var roleId = $("#roleId").val();    
+    	roleId=parseInt(roleId);
+    	var data={id:roleId,name:oids};
+    	console.log(data);
+    	console.log(typeof oids);
+    	 
+    	$.ajax({  type:"post",
+	      		   url: ctxPath+'role/updateAuthorization',
+	      		   contentType:'application/json;charset=utf-8',
+	      		   data:JSON.stringify(data),
+	      		   success: function(data){	     	      			
+	       		     if(data.status>200){
+ 	       		    	toastr.warning(data.msg);  
+ 	       		    setTimeout(function(){
+ 	       		    	window.location.reload();
+ 	       		     },2000);
+ 	       		       }
+ 	       		    else{
+ 	       		    	toastr.success(data.msg);
+ 	       		       setTimeout(function(){
+ 	       		    	window.location.href = ctxPath+"/role/index";
+ 	       		        },2000);
+ 	       		      } 				 
+	      		}});
+    	
+       	});
+	</script>
+</body>
+</html>
