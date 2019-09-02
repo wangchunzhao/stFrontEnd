@@ -25,7 +25,7 @@ public class PermissionApplyController {
 
 	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
 	
-
+	
 	@RequestMapping("/permissionApply")
 	public String roleList(Model model) {
 //		List<Role> role = roleServiceImpl.findAll();
@@ -36,9 +36,9 @@ public class PermissionApplyController {
 	
 	@RequestMapping("/adduser")
 	public String adduser(HttpServletRequest request) {
-		String userName = request.getParameter("username");
+//		String userName = request.getParameter("username");
 	 
-		System.out.println(userName+"aaa12345");
+		System.out.println("aaa12345");
 		return "permission/permissionApply";
 	}
 	
