@@ -1,12 +1,16 @@
 package com.qhc.steigenberger.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.service.OperationServiceI;
 import com.qhc.steigenberger.service.RoleServiceI;
 import com.qhc.steigenberger.service.WebServcieTool;
 import com.qhc.steigenberger.util.CommonConstant;
@@ -14,17 +18,12 @@ import com.qhc.steigenberger.util.CommonConstant;
 @Service
 public class RoleServiceImpl extends WebServcieTool<Role> implements RoleServiceI{
 	
-	static String BASEURL = "http://localhost:8801/frye/";
+	@Autowired
+	OperationServiceI operationServiceImpl;
 
+	
 	public PageInfo<Role> selectAndPage(int pageNum, int pageSize, Role role) {
 		PageHelper.startPage(pageNum, pageSize);
-		String url = "";
-//		String rolename = role.getName();
-//		if(rolename!=null) {
-//			url="role/findAll?name="+rolename;
-//		}else {
-			url="role/findAll";
-//		}
 		List<Role> list=findAll(CommonConstant.BASEURL, CommonConstant.URl_ROLE_FINDALL,Role.class);
 		PageInfo<Role> pageInfo=new PageInfo<Role>(list);
 		return pageInfo;
@@ -38,21 +37,39 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 
 	@Override
 	public String saveRoleInfo(Role role) {
-		
-		return postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_ADD,Role.class);
+		String result = null;
+		try {
+			result = postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_ADD,Role.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override
 	public String updateRoleInfo(Role role) {
 		
-		return postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_UPDATE,Role.class);
+		String result = null;
+		try {
+			result = postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_UPDATE,Role.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override
 	public boolean remove(int id) {
 		
-		String str = delete(CommonConstant.BASEURL+CommonConstant.URl_ROLE_DELETE+"?id="+id);
-		if("false".equals(str)) {
+		String result = null;
+		try {
+			result = delete(CommonConstant.BASEURL+CommonConstant.URl_ROLE_DELETE+"?id="+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(result!=null&&"false".equals(result)) {
 			return false;
 		}else {
 			return true;
@@ -64,9 +81,41 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	 */
 	public List<Role> findAll() {
 		
-		String url ="operation/findAll";
+		return  findAll(CommonConstant.BASEURL, CommonConstant.URl_ROLE_FINDALL,Role.class);
+	}
+
+	@Override
+	public Map<String, Object> findInfos(int roleId) {
+		Map<String, Object> map=new HashMap<>();
+		Role role = findOne(CommonConstant.BASEURL+CommonConstant.URl_ROLE_FINDBYID+"/"+roleId, Role.class);
+		Set<Operations> operations = role.getOperations();
+		List<Operations> operationsAll = operationServiceImpl.findAll();
+		if(!operations.isEmpty()) {
+			for(Operations operation:operationsAll) {
+				for(Operations op: operations) {
+					if(op.getId().equals(operation.getId())) {
+						operation.setSelected(true);
+					}
+				}
+			}
+		}
+
+		map.put("roleId", roleId);				
+		map.put("operationsAll", operationsAll);
+		return map;
+	}
+	
+	
+	public String updateRoleOperation(Role role) {
 		
-		return  findAll(BASEURL, url,Operations.class);
+		String result = null;
+		try {
+			result = postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_UPDATE_OPERATIONS,Role.class);
+		} catch (Exception e) {
+			result = null;
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
 

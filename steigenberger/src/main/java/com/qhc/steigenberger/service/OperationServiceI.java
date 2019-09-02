@@ -6,5 +6,7 @@ import com.qhc.steigenberger.domain.Operations;
 
 
 public interface OperationServiceI{
+	
 	List<Operations> findAll();
+	
 }

@@ -2,6 +2,8 @@ package com.qhc.steigenberger.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.service.RoleServiceI;
 import com.qhc.steigenberger.service.UserServiceI;
 
 //import io.swagger.annotations.Api;
@@ -28,6 +32,8 @@ import com.qhc.steigenberger.service.UserServiceI;
 public class UserController {
 	@Autowired
 	UserServiceI userServiceImpl;
+	@Autowired
+	RoleServiceI roleServiceImpl;
 
 	@RequestMapping("/index")
 	public String index(@RequestParam(defaultValue = "0") int one, 
@@ -53,9 +59,14 @@ public class UserController {
 			session.setAttribute("entity", entity);
 		}
 
+		model.addAttribute("user1", entity);
+		//result list
 		PageInfo<User> pageInfo = userServiceImpl.selectAndPage(number, pageSize, entity);
-		// 返回分页后的数据
 		model.addAttribute("pageInfo", pageInfo);
+		
+		//roles list
+		List<Role> roleList = roleServiceImpl.findAll();
+		model.addAttribute("roleList", roleList);
 		return "systemManage/userManage";
 	}
 
@@ -83,11 +94,24 @@ public class UserController {
 		}
 		return JsonResult.build(status, "角色" + msg, "");
 
-		/*
-		 * else { HttpSession session=request.getSession(); Users users=(Users)
-		 * session.getAttribute("users"); role.setCreateTime(new Date());
-		 * role.setCreater(users.getUserId()); return roleServiceImpl.add(role); }
-		 */
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public JsonResult update( @RequestBody User user, HttpServletRequest request) {
+		
+		String msg = "";
+		int status = 0;
+		String result = userServiceImpl.updateUserInfo(user);
+		if (result != null && !"".equals(result)) {
+			status = 200;
+			msg = "更新操作成功!";
+		} else {
+			status = 500;
+			msg = "操作失败";
+		}
+		return JsonResult.build(status, "角色" + msg, "");
+
 	}
 
 	@RequestMapping("/delete")

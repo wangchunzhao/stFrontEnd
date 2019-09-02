@@ -11,6 +11,8 @@ public class CommonConstant {
 	public static final String URl_ROLE_UPDATE = "role/update";
 	public static final String URl_ROLE_DELETE = "role/delete";
 	
+	public static final String URl_ROLE_UPDATE_OPERATIONS = "role/updateRoleOperations";
+	
 	
 	//user
 	public static final String URL_USER_ADD = "user/add";

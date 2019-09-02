@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.UserServiceI;
 import com.qhc.steigenberger.service.WebServcieTool;
@@ -17,10 +16,13 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 	public PageInfo<User> selectAndPage(int pageNum, int pageSize, User user) {
 		PageHelper.startPage(pageNum, pageSize);
 		Integer isActive = user.getIsActive();
-		String userMail = user.getUserMail();
-		String userIdentity = user.getUserIdentity();
+		String userName = user.getUserName()==null?"":user.getUserName();
+		String userMail = user.getUserMail()==null?"":user.getUserMail();
+		String rolesName = user.getRolesName()==null?"":user.getRolesName();
 		
-		String url = "user/findAll?userMail="+userMail+"&isActive="+isActive+"&userIdentity="+userIdentity;
+//		String url = "user/findAll?userMail="+userMail+"&isActive="+isActive+"&userIdentity="+userIdentity;
+//		List<User> list=findAll(CommonConstant.BASEURL, url,User.class);
+		String url = "user/findByMultipleConditions?userName="+userName+"&userMail="+userMail+"&isActive="+isActive+"&rolesName="+rolesName;
 		List<User> list=findAll(CommonConstant.BASEURL, url,User.class);
 		PageInfo<User> pageInfo=new PageInfo<>(list);
 		return pageInfo;
@@ -35,19 +37,39 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 	@Override
 	public String saveUserInfo(User user) {
 		
-		return postInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+		String result = null;
+		try {
+			result = postInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override
 	public String updateUserInfo(User user) {
 		
-		return postInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+		String result = null;
+		try {
+			result = postInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override
 	public boolean delete(int id) {
-		String str = delete(CommonConstant.BASEURL+"user/delete?id="+id);
-		if("false".equals(str)) {
+		
+		String result = null;
+		try {
+			result = delete(CommonConstant.BASEURL+"user/delete?id="+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(result!=null&&"false".equals(result)) {
 			return false;
 		}else {
 			return true;

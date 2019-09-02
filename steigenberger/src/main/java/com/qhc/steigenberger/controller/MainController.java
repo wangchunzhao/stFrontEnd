@@ -14,13 +14,9 @@ public class MainController {
 	@RequestMapping("/main")
     public String index(Model model,HttpServletRequest request) {		
 		 HttpSession session =request.getSession();			
-    	return "main";
+    	return "loginSuccess";
      }	
 	
-	@RequestMapping("/mainPlat")
-    public String mainPlat(Model model,HttpServletRequest request) {		
-    	return "systemManage/mainPlat";
-     }	
       
       @GetMapping("/")
 	  public String   hello() {

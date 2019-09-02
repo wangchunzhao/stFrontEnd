@@ -1,9 +1,9 @@
 package com.qhc.steigenberger.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
-import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.Role;
 
 
@@ -51,4 +51,8 @@ public interface RoleServiceI{
 	 * @return
 	 */
 	List<Role> findAll();
+
+	public Map<String, Object> findInfos(int id);
+
+	public String updateRoleOperation(Role role);
 }
