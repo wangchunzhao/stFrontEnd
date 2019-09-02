@@ -48,7 +48,7 @@ public abstract class BaseController extends WebServcieTool<User>{
      * @param account
      */
     public void setAccount(HttpServletRequest request,String name) {
-    	User account = findOne(CommonConstant.BASEURL+"user/findById/"+name,User.class);
+    	User account = findOne(CommonConstant.BASEURL+"user/findByUserIdentity/"+name,User.class);
         HttpSession session = request.getSession();
         if (account != null) {
             session.setAttribute(ACCOUNT, account);
