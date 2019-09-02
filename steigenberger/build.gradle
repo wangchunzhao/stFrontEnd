@@ -5,6 +5,7 @@ plugins {
 	id 'war'
 }
 
+
 group = 'com.qhc'
 version = '2.0.1'
 sourceCompatibility = '1.8'
