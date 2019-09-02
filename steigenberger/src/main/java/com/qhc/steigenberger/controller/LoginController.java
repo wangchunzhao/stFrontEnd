@@ -23,7 +23,7 @@ import com.qhc.steigenberger.service.RoleServiceI;
 import com.qhc.steigenberger.service.UserServiceI;
 
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 	
 	@Autowired
 	UserServiceI userServiceImpl;
@@ -68,6 +68,7 @@ public class LoginController {
             	env.put(Context.PROVIDER_URL, url);//Url
             	try {
             		ctx = new InitialDirContext(env);// 初始化上下文
+//            		setAccount(request,userName);
             		modelAndView.setViewName("loginSucess");
             		System.out.println("身份验证成功!");
             		} catch (AuthenticationException e) {
