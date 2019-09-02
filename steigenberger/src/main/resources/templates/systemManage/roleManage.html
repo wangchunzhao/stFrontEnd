@@ -1,104 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common::head('角色管理')">
+<head th:replace="common::head('角色管理 Role management')">
 <meta charset="utf-8" />
 </head>
 <body>
 	<div class="panel">
-		<div class="panel-heading">
-
-			<form role="form" class="form-inline">
-				<div class="input-group">
-					<input type="text" value="" name="roleName"
-						class="form-control searchVal" placeholder="按角色名查找">
-					<div class="input-group-btn">
-						<span class="btn btn-primary" id="search"><i
-							class="glyphicon glyphicon-search"></i></span>
+	<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+		<div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">用户查询 role query</a>
+            </h4>
+        </div>
+        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel-body" style="height: auto;">
+				<form action="">
+	                 <div class="row">   
+						<div class="col-md-3 col-xs-3"> 状态 status </div>
 					</div>
-				</div>
-				<div class="input-group">
-					<a href="#" class="add  btn btn-primary"><i
-						class="glyphicon glyphicon-plus"></i>创建角色</a>
-				</div>
-			</form>
-		</div>
+					<div class="row">
+	                   <div class="col-md-3 col-xs-3">
+	                        <select class="form-control  searchVal2" name="" th:value="${role?.isActive}">
+	                        		<option value="2">请选择</option>
+									<option value="1" th:selected="${role?.isActive }==1">停用</option>
+									<option value="0" th:selected="${role?.isActive }==0">启用</option>
+								</select>
+	                    </div>
+	                </div>
+                </form>
+                <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;" id="btn_select">查询select</button>
+            </div>
+        </div>
+    </div>
+        </div>
 		<div class="panel-body">
 			<table class="table table-bordered table-responsive">
-				<caption>角色列表</caption>
+				<caption>用户列表</caption>
 				<thead>
 					<tr>
 						<th>编号</th>
-						<th>角色名</th>
-						<!-- <th>描述</th>
-				      <th>创建人</th>
-				      <th>创建时间</th> -->
-						<th>操作</th>
+						<th>角色名称 Role name</th>
+						<th>状态 Status</th>
+						<th>操作 Operation</th>
 					</tr>
 				</thead>
 				<tbody>
 					<th:block th:if="${pageInfo.list != null}">
 						<tr th:each="role,roleStart: ${pageInfo.list}">
 							<td th:text="${roleStart.count}">560001</td>
-							<td th:text="${role.name}">Tanmay</td>
-							<td><a class="update" th:href="@{/role/add(id=${role?.id})}"
-								style="color: green; margin-right: 20px;" th:title="${role.id}"><i
-									class="glyphicon glyphicon-refresh"></i>编辑</a> <a
-								th:href="|/role/allot?id=${role.id}|">分配权限</a></td>
+							<td th:text="${role?.name}" value="${role?.name}">Bangalore</td>
+							<td th:text="${role.isActive>0?'禁用' :'启用'}" th:style="${role.isActive>0?'color:red' :'color:green'}" >560001</td>
+							<td>
+									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="update" th:title="${role.id}"
+									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 10px; padding: 3px 10px;">
+                                    		edit
+                                </button>
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="update_auth" th:title="${role.id}"
+									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 10px; padding: 3px 10px;">
+                                    		 Role Authorization
+                                </button>
+							</td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
 
-			<nav aria-label="Page navigation">
-				<ul class="pagination">
-					<th:block th:if="${!pageInfo.isFirstPage}">
-						<li><a href="#" aria-label="Previous"
-							th:href="@{/role/index(number=${pageInfo.prePage})}"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-					</th:block>
-					<th:block th:each="nums:${pageInfo.navigatepageNums}">
-						<li th:class="${nums==pageInfo.pageNum? 'active' : ''}"><a
-							href="#" th:href="@{/role/index(number=${nums})}"
-							th:text="${nums}">1</a></li>
-					</th:block>
-
-					<th:block th:if="${!pageInfo.isLastPage}">
-						<li><a href="#" aria-label="Next"
-							th:href="@{/role/index(number=${pageInfo.nextPage})}"> <span
-								aria-hidden="true">&raquo;</span>
-						</a></li>
-					</th:block>
-
-				</ul>
-			</nav>
+			<div th:include="page :: pager" th:remove="tag"></div> 
 		</div>
 	</div>
-	<!-- 角色操作模态框 -->
+	</div>
+	<!-- 操作模态框 -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<p class="modal-title" id="myModalLabel">添加角色</p>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<p class="modal-title" id="myModalLabel">Edit</p>
 				</div>
 				<div class="modal-body">
-					<form action="" method="post" class="form rolefrom">
+					<form action="" method="post" class="form roleform">
 						<div class="form-group">
 							<input type="number" class="form-control id hidden">
 						</div>
+						
 						<div class="form-group">
-							<label for="name">角色名称</label> <input type="text"
-								class="form-control name" placeholder="请输入名称">
+							<label for="name">角色 Role name</label> 
+							<input type="text" class="form-control  name" name="" disabled="disabled">
 						</div>
-						<!-- <div class="form-group">
-							<label for="name">角色描述</label>
-							<input type="text" class="form-control desc"   name="" placeholder="请输入名称">
-						</div> -->
+						
+						<div class="form-group">
+							<label for="name">状态 status</label>
+							<div class="input-group">
+								<select class="form-control  isActive" name="isActive">
+									<option value="1" >停用</option>
+									<option value="0" >启用</option>
+								</select>
+							</div>
+						</div>
+						
 						<div class="form-group text-righ">
-							<button type="submit" class="submit btn btn-primary pull-right ">添加</button>
+							<button type="submit" class="submit btn btn-primary pull-right ">保存</button>
 						</div>
 						<div class="clearfix"></div>
 					</form>
@@ -109,40 +112,46 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-
-	<script type="text/javascript">  
+	<script type="text/javascript">
 	var ctxPath  = [[@{/}]];
       $(function(){
-    	  $(".update, .add").on("click",function(){
-    		 if($(this).attr("class")=='update'){
-    			var id= $(this).attr("title");
-    			var name=$(this).parent().siblings("td:eq(1)").text();
-    			var description=$(this).parent().siblings("td:eq(2)").text();
-    			$(".rolefrom .id").val(id);
-    			$(".rolefrom .name").val(name);
-    			/* $(".rolefrom .desc").val(description);  */
-    			$(".rolefrom  .submit").text("更新");
-    		  }
+    	  $("#update").on("click",function(){
+    		 	var id= $(this).attr("title");
+	  			var rolename=$(this).parent().siblings("td:eq(1)").text();
+	  			var isActive=$(this).parent().siblings("td:eq(2)").text();
+    		 	
+	  			$(".roleform .id").val(id);
+	  			$(".roleform .name").val(rolename);
+	  			if(isActive=="启用"){
+	  				$(".roleform .isActive").val(0); 
+	  			}else{
+	  				$(".roleform .isActive").val(1);
+	  			}
+	  			$(".roleform .submit").text("更新");
     		  $("#myModal").modal("show");   		  
     		 return false;
     	  });
     	  
-    	  $(".rolefrom").on("submit",function(e){
+    	  $(".roleform").on("submit",function(e){
     		  e.preventDefault();
-    		  var url=ctxPath+"role/add";
-    		  var roleId=null;
-    		  if($(".rolefrom .id").val()!=null){
-    			 roleId=parseInt($(".rolefrom .id").val());
+    		  var url=ctxPath+"/role/update";
+    		  var id=null;
+    		  if($(".roleform .id").val()!=null){
+    			 id=parseInt($(".roleform .id").val());
     		     }    		  
-    		  var roleName=$(".rolefrom .name").val();
-    		  /* var description=$(".rolefrom .desc").val();  */
+    		  var name=$(".roleform .name").val(); 
+    		  var isActive=$(".roleform .isActive").val();
     		
-    		  var date={id:roleId,name:roleName/* ,description:description */}
+    		  var data={
+    				  id:id,
+    				  name:name,
+    				  isActive:isActive
+    				  }
     		  $.ajax(
     		      		{type:"POST",
     		      		   url: url,
     		      		   contentType:'application/json;charset=utf-8',
-    		      		   data:JSON.stringify(date),
+    		      		   data:JSON.stringify(data),
     		      		   success: function(data){	  
     		      			 showmsg(data);	     
     		      		   },
@@ -150,27 +159,27 @@
     		      	        console.log(xhr);
     		      	    } });
     	     });
-    	  $(".remove").on("click",function(){
-      	    var url=ctxPath+$(this).attr("href");
-      	    var id=$(this).attr("title");
-      	  
-	      	  $.ajax(
-	      		{type:"get",
-	      		   url: url,
-	      		   contentType:'application/json;charset=utf-8',
-	      		   data:{id:id},
-	      		   success: function(data){	  
-	      			 showmsg(data);	     
-	      		   }});
-	      	     return false;
-	              });
     	  
-    	  $("#search").on("click",function(){
-    		      var roleName=$(".searchVal").val();
-    		      window.location.href = ctxPath+"/role/index?roleName="+roleName; 
-    		      return false;
-    	      });
+	    	  $("#btn_select").on("click",function(){
+	    	      var name=$(".searchVal1").val();
+	    	      var isActive=$(".searchVal2").val();
+	    	      window.location.href = ctxPath+"/role/index?name="+name+"&isActive="+isActive; 
+	    	      return false;
+	          });
+	    	  $("#update_auth").on("click",function(){
+	    		  var id= $(this).attr("title");
+	    	      window.location.href = ctxPath+"/role/authorization?id="+id; 
+	    	      return false;
+	          });
+    	  
           });
+      
+	      $("#btn_reset").on("click",function(){
+		      $(".searchVal1").val('');
+		      $(".searchVal2").val('');
+		      return false;
+	      });
+      
        
       function showmsg(data){
     	  if(data.status>200){
@@ -198,7 +207,9 @@
     	        hideEasing: "linear",  
     	        showMethod: "fadeIn",  
     	        hideMethod: "fadeOut"  
-    	    };  
+    	    }; 
+      
+      
     </script>
 </body>
 </html>

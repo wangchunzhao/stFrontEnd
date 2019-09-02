@@ -1,65 +1,112 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head  >
-	<title>sellingtool</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<!-- VENDOR CSS -->
-	<link  type="text/css" rel="stylesheet" th:href="@{assets/vendor/bootstrap/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{assets/vendor/font-awesome/css/font-awesome.min.css}">
-	<link rel="stylesheet" th:href="@{assets/vendor/linearicons/style.css}">
-	<link rel="stylesheet" th:href="@{assets/vendor/chartist/css/chartist-custom.css}">
+<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(title)"   th:with="portUrl=${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'}">
+    <meta charset="utf-8"/>
+    <title th:text="${title}"></title>
+<meta name="keywords" content="" />
+<base th:href="@{/}">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' />
+
+<!-- Custom CSS -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS -->
+<link href="./css/font-awesome.css" rel="stylesheet"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- side nav css file -->
+<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+<!-- //side nav css file -->
+ <script src="./js/SidebarNav.min.js"></script>
+ <!-- js-->
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script src="./js/modernizr.custom.js"></script>
+
+<!--webfonts-->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="./js/Chart.js"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="./js/metisMenu.min.js"></script>
+<script src="./js/custom.js"></script>
+<link href="./css/custom.css" rel="stylesheet">
+<!--//Metis Menu -->
+
+<!--pie-chart --><!-- index page sales reviews visitors pie chart -->
+<script src="./js/pie-chart.js" type="text/javascript"></script>
+<link href="./assets/bootstrap.css" rel="stylesheet">
+<script th:src="@{|${portUrl}assets/vendor/toastr/toastr.min.js|}"></script>
 	
-	<!-- MAIN CSS -->
-	<link rel="stylesheet" th:href="@{assets/css/main.css}">
-	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-	<link rel="stylesheet" th:href="@{assets/css/demo.css}">
-	<!-- GOOGLE FONTS -->
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
-	<!-- ICONS -->
-	<link rel="apple-touch-icon" sizes="76x76" th:href="@{assets/img/apple-icon.png}">
-	<link rel="icon" type="image/png" sizes="96x96" th:href="@{assets/img/favicon.png}">
-</head>
-
-<body>
-    
-	<div id="wrapper">
-	    <div th:include="common::navbar" ></div>
-	    <div th:include="common::sidebar" ></div>
-		<!-- MAIN -->
-		<div class="main">
-			<!-- MAIN CONTENT -->
-			<div class="main-content">
-				<div class="container-fluid">
-					<iframe id="myIfram"  name="myIfram"  scrolling="no"  width="100%"    frameborder="0">
-					
-					</iframe>											 					
-				</div>
+</head> 
+<body class="cbp-spmenu-push">
+	<div class="main-content">
+		<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>
+		<div class="sticky-header header-section " th:replace="head::head">	</div>
+	
+		<!-- main content start-->
+		
+			<div id="page-wrapper" >
+				<iframe id="myIfram"  name="myIfram"  scrolling="no"  width="100%"   frameborder="0"></iframe>
+				<!-- <div id="myIfram"></div> -->
 			</div>
-			<!-- END MAIN CONTENT -->
-		</div>
-		<!-- END MAIN -->
-		<div class="clearfix"></div>		
-		<th:block th:include="common::footer"/>
+	</div>		
+
+	<!-- new added graphs chart js-->
+	<div id="footer" class="container" th:replace="foot::foot"></div>
+    
+		<script type="text/javascript" language="javascript">
+			/* function changeFrameHeight(){
+				var ifm= document.getElementById("myIfram");
+				ifm.height=document.documentElement.clientHeight-56;
+			}
+			window.onresize=function(){ changeFrameHeight();}
+			$(function(){changeFrameHeight();}); */
+			
+			$(window.parent.document).find("#myIfram").load(function(){
+				var main = $(window.parent.document).find("#myIfram");
+				var thisheight = $(document).height()+30;
+				main.height(thisheight);
+			});
+		</script>
+		<script src="./js/classie.js"></script>
+		<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				showLeftPush = document.getElementById( 'showLeftPush' ),
+				body = document.body;
 				
-	</div>
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+				disableOther( 'showLeftPush' );
+			};
+			
 
-	<script th:src="@{assets/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{assets/vendor/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
-	<script th:src="@{assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js}"></script>
-	<script th:src="@{assets/vendor/chartist/js/chartist.min.js}"></script>
-	<script th:src="@{assets/scripts/klorofil-common.js}"></script>	
-	<script type="text/javascript">
-	setInterval ("changeHeight()", 1000);       
-    function changeHeight(){
-    	 var mainheight = $("#myIfram").contents().find("body").height(); 
-    	 if($("#myIfram").height()!=mainheight){        		 
-    		 $("#myIfram").height(mainheight<480 ?480 :mainheight);         		         	    
-    	  }
-    }
-	</script>
+			function disableOther( button ) {
+				if( button !== 'showLeftPush' ) {
+					classie.toggle( showLeftPush, 'disabled' );
+				}
+			}
+		</script>	
+	<!--scrolling js-->
+	<script src="./js/jquery.nicescroll.js"></script>
+	<script src="./js/scripts.js"></script>
+	<!--//scrolling js-->
+	
+	<!-- side nav js -->
+	<script src='./js/SidebarNav.min.js' type='text/javascript'></script>
+	<script>
+      $('.sidebar-menu').SidebarNav()
+    </script>	
+	<script src="./js/SimpleChart.js"></script>
+    <script src="./js/bootstrap.js"> </script>	
 </body>
-
 </html>
