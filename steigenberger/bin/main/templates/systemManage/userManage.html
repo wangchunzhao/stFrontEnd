@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head('用户管理')">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="panel">
+	<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+		<div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">用户查询 User query</a>
+            </h4>
+        </div>
+        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel-body" style="height: auto;">
+				<form action="">
+	                <div class="row">
+	                    <div class="col-md-3 col-xs-3">
+	                       	 用户名称 user name
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        	用户邮箱 user main
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        	角色 role
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        	状态 status
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" class="form-control searchVal1" id="searchVal1" th:value="${user1?.userName}">
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" class="form-control searchVal2" id="searchVal2" th:value="${user1?.userMail}">
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                    
+	                        <select class="form-control  searchVal3" name="" th:value="${user1?.rolesName}">
+									<option value="">请选择</option>
+	                        		<option  th:each="role:${roleList}" th:value="${role.id}" th:text="${role.name}" th:selected="${user1.rolesName eq role.id}"></option>
+								</select>
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <select class="form-control  searchVal4" name="" th:value="${user1?.isActive}">
+	                        		<option value="2">请选择</option>
+									<option value="1" th:selected="${user1?.isActive }==1">停用</option>
+									<option value="0" th:selected="${user1?.isActive }==0">启用</option>
+								</select>
+	                    </div>
+						<div class="col-md-3 col-xs-3">
+	                        
+	                    </div>
+	                </div>
+                </form>
+                <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;" id="btn_select">查询select</button><button type="button" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;" id="btn_reset">重置reset</button>
+            </div>
+        </div>
+    </div>
+        </div>
+		<div class="panel-body">
+			<table class="table table-bordered table-responsive">
+				<caption>用户列表</caption>
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>用户名</th>
+						<th>邮箱</th>
+						<th>域账号</th>
+						<th>角色</th>
+						<th>区域</th>
+						<th>账号状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:if="${pageInfo.list != null}">
+						<tr th:each="user,userStart: ${pageInfo.list}">
+							<td th:text="${userStart.count}">560001</td>
+							<td th:text="${user.userName}">Bangalore</td>
+							<td th:text="${user.userMail}">Bangalore</td>
+							<td th:text="${user.userIdentity}">560001</td>
+							<td th:text="${user.rolesName}">Bangalore</td>
+							<td th:text="${user.region}">Bangalore</td>
+							<td th:text="${user.isActive>0?'禁用' :'启用'}" th:style="${user.isActive>0?'color:red' :'color:green'}">560001</td>
+							<td>
+							<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">
+									<i class="glyphicon glyphicon-refresh"></i>编辑</a>  -->
+									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="update" th:title="${user.id}"
+									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 10px; padding: 3px 10px;">
+                                    		编辑 edit
+                                </button>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<th:block th:if="${!pageInfo.isFirstPage}">
+						<li><a href="#" aria-label="Previous"
+							th:href="@{/user/index(number=${pageInfo.prePage})}"> <span
+								aria-hidden="true">&laquo;</span>
+						</a></li>
+					</th:block>
+					<th:block th:each="nums:${pageInfo.navigatepageNums}">
+						<li th:class="${nums==pageInfo.pageNum? 'active' : ''}"><a
+							href="#" th:href="@{/user/index(number=${nums})}"
+							th:text="${nums}">1</a></li>
+					</th:block>
+
+					<th:block th:if="${!pageInfo.isLastPage}">
+						<li><a href="#" aria-label="Next"
+							th:href="@{/user/index(number=${pageInfo.nextPage})}"> <span
+								aria-hidden="true">&raquo;</span>
+						</a></li>
+					</th:block>
+
+				</ul>
+			</nav>
+		</div>
+	</div>
+	</div>
+	<!-- 操作模态框 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<p class="modal-title" id="myModalLabel">编辑</p>
+				</div>
+				<div class="modal-body">
+					<form action="" method="post" class="form userform">
+						<div class="form-group">
+							<input type="number" class="form-control id hidden">
+						</div>
+						<div class="form-group">
+							<label for="name">用户名</label> 
+							<input type="text" class="form-control userName" name="userName" placeholder="请输入名称">
+						</div>
+						
+						<div class="form-group">
+						<label for="name">角色</label>
+							<div class="input-group">
+								<select class="form-control  rolesName" name="" >
+	                        		<option  th:each="role:${roleList}" th:value="${role.id}" th:text="${role.name}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name">状态</label>
+							<div class="input-group">
+								<select class="form-control  isActive" name="isActive">
+									<option value="1" >停用</option>
+									<option value="0" >启用</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="name">邮箱</label> 
+							<input type="text" class="form-control userMail" name="userMail" placeholder="" disabled="disabled">
+						</div>
+						<div class="form-group">
+							<label for="name">域账号</label> 
+							<input type="text" class="form-control userIdentity" name="userIdentity" placeholder="" disabled="disabled">
+						</div>
+						<div class="form-group">
+							<label for="name">区域</label> 
+							<input type="text" class="form-control region" name="region" placeholder="" disabled="disabled">
+						</div>
+						
+						<div class="form-group text-righ">
+							<button type="submit" class="submit btn btn-primary pull-right ">保存</button>
+						</div>
+						<div class="clearfix"></div>
+					</form>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<script type="text/javascript">
+	var ctxPath  = [[@{/}]];
+      $(function(){
+    	  $("#update").on("click",function(){
+    		 	var id= $(this).attr("title");
+	  			var userName=$(this).parent().siblings("td:eq(1)").text();
+	  			var userMail=$(this).parent().siblings("td:eq(2)").text();
+	  			var userIdentity=$(this).parent().siblings("td:eq(3)").text();
+	  			var rolesName=$(this).parent().siblings("td:eq(4)").text();
+	  			var region=$(this).parent().siblings("td:eq(5)").text();
+	  			var isActive=$(this).parent().siblings("td:eq(6)").text();
+	  			$(".userform .id").val(id);
+	  			$(".userform .userName").val(userName);
+	  			$(".userform .userMail").val(userMail);
+	  			$(".userform .userIdentity").val(userIdentity);
+	  			$(".userform .region").val(region);
+	  			$(".userform .rolesName").val(rolesName);
+	  			if(isActive=="启用"){
+	  				$(".userform .isActive").val(0); 
+	  			}else{
+	  				$(".userform .isActive").val(1);
+	  			}
+	  			
+	  			$(".userform .submit").text("更新");
+    		  $("#myModal").modal("show");   		  
+    		 return false;
+    	  });
+    	  
+    	  $(".userform").on("submit",function(e){
+    		  e.preventDefault();
+    		  var url=ctxPath+"/user/update";
+    		  var id=null;
+    		  if($(".userform .id").val()!=null){
+    			 id=parseInt($(".userform .id").val());
+    		     }    		  
+    		  var userName=$(".userform .userName").val(); 
+    		  var userMail=$(".userform .userMail").val(); 
+    		  var userIdentity=$(".userform .userIdentity").val(); 
+    		  var region=$(".userform .region").val(); 
+    		  var rolesName=$(".userform .rolesName").val();
+    		  var isActive=$(".userform .isActive").val();
+    		
+    		  var data={
+    				  id:id,
+    				  rolesName:rolesName,
+    				  userName:userName,
+    				  isActive:isActive,
+    				  region:region,
+    				  userIdentity:userIdentity,
+    				  userMail:userMail,
+    				  rolesName:rolesName
+    				  }
+    		  $.ajax(
+    		      		{type:"POST",
+    		      		   url: url,
+    		      		   contentType:'application/json;charset=utf-8',
+    		      		   data:JSON.stringify(data),
+    		      		   success: function(data){	  
+    		      			 showmsg(data);	     
+    		      		   },
+    		      		  error: function (xhr) {
+    		      	        console.log(xhr);
+    		      	    } });
+    	     });
+    	  
+	    	  $("#btn_select").on("click",function(){
+	    	      var userName=$(".searchVal1").val();
+	    	      var userMail=$(".searchVal2").val();
+	    	      var rolesName=$(".searchVal3").val();
+	    	      var isActive=$(".searchVal4").val();
+	    	      window.location.href = ctxPath+"/user/index?userMail="+userMail+"&rolesName="+rolesName+"&isActive="+isActive+"&userName="+userName; 
+	    	      return false;
+	          });
+    	  
+          });
+      
+	      $("#btn_reset").on("click",function(){
+		      $(".searchVal1").val('');
+		      $(".searchVal2").val('');
+		      $(".searchVal3").val('');
+		      $(".searchVal4").val(2);
+		      return false;
+	      });
+      
+       
+      function showmsg(data){
+    	  if(data.status>200){
+		    	toastr.warning(data.msg);  
+		       }
+		    else{
+		    	toastr.success(data.msg);
+		      }
+		 setTimeout(function(){
+			window.location.reload();	      				 
+		    },1000);
+      }
+      
+      toastr.options = {  
+    	        closeButton: false,  
+    	        debug: false,  
+    	        progressBar: false,  
+    	        positionClass: "toast-bottom-center",  
+    	        onclick: null,  
+    	        showDuration: "300",  
+    	        hideDuration: "1000",  
+    	        timeOut: "2000",  
+    	        extendedTimeOut: "1000",  
+    	        showEasing: "swing",  
+    	        hideEasing: "linear",  
+    	        showMethod: "fadeIn",  
+    	        hideMethod: "fadeOut"  
+    	    };  
+    </script>
+</body>
+</html>
