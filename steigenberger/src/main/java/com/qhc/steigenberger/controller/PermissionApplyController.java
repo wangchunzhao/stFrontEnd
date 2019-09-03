@@ -85,9 +85,9 @@ public class PermissionApplyController extends BaseController{
 		System.out.println("12345678");
 		String msg = "";
 		int status = 0;
-		Boolean result1 = addStatus(user,applicationOfRolechange);
-		String result = userServiceImpl.updateUserInfo(user);
-		if (result != null && !"".equals(result)) {
+		Boolean result = addStatus(user,applicationOfRolechange);
+//		String result = userServiceImpl.updateUserInfo(user);
+		if (result) {
 			status = 200;
 			msg = "操作成功！";
 		} else {
@@ -98,13 +98,23 @@ public class PermissionApplyController extends BaseController{
 	}
 	
 	public Boolean addStatus(User user,ApplicationOfRolechange applicationOfRolechange) {
+		Boolean bol = false;
 		try {
 			String result = userServiceImpl.updateUserInfo(user);
-			applicationOfRolechangeServiceImpl.add(applicationOfRolechange);
+			if (result != null && !"".equals(result)) {
+				String addresult = applicationOfRolechangeServiceImpl.add(applicationOfRolechange);
+				if (addresult != null && !"".equals(addresult)) {
+					bol = true;
+				}else {
+					bol = false;
+				}
+			} else {
+				bol = false;
+			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.getStackTrace();
 		}
-		return true;
+		return bol;
 	}
 	
 	
