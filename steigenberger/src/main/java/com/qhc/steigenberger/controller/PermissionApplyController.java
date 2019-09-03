@@ -20,6 +20,7 @@ import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.service.ApplicationOfRolechangeService;
 import com.qhc.steigenberger.service.RoleServiceI;
 import com.qhc.steigenberger.service.SapSalesOfficeServicel;
 import com.qhc.steigenberger.service.UserServiceI;
@@ -38,7 +39,10 @@ public class PermissionApplyController extends BaseController{
 	UserServiceI userServiceImpl;
 	
 	@Autowired
-	SapSalesOfficeServicel sapSalesOfficeServicel;	
+	SapSalesOfficeServicel sapSalesOfficeServicel;
+	
+	@Autowired
+	ApplicationOfRolechangeService applicationOfRolechangeServiceImpl;
 	
 	@RequestMapping("/permissionApply")
 	public String permissionApply() {
@@ -74,10 +78,14 @@ public class PermissionApplyController extends BaseController{
 		user.setUserName(userName);
 		user.setUserIdentity(userid);
 		
+		ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
+		
+		
 //		System.out.println(usersession.getUserIdentity());
 		System.out.println("12345678");
 		String msg = "";
 		int status = 0;
+		Boolean result1 = addStatus(user,applicationOfRolechange);
 		String result = userServiceImpl.updateUserInfo(user);
 		if (result != null && !"".equals(result)) {
 			status = 200;
@@ -87,6 +95,16 @@ public class PermissionApplyController extends BaseController{
 			msg = "操作失败";
 		}
 		return JsonResult.build(status, "角色" + msg, "");
+	}
+	
+	public Boolean addStatus(User user,ApplicationOfRolechange applicationOfRolechange) {
+		try {
+			String result = userServiceImpl.updateUserInfo(user);
+			applicationOfRolechangeServiceImpl.add(applicationOfRolechange);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return true;
 	}
 	
 	
