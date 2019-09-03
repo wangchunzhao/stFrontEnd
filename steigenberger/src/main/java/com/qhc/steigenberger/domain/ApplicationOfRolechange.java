@@ -10,7 +10,7 @@ public class ApplicationOfRolechange implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	private int id;
 
 	private String creator;
 	
@@ -22,13 +22,13 @@ public class ApplicationOfRolechange implements Serializable{
 	
 	private String approverFact;
 	
-    private Integer bUsersId;
+    private int bUsersId;
 
     private int isactive;
 
     private String attachedCode;//区域编码
 
-    private Integer bRolesId;
+    private int bRolesId;
 	
 
     
@@ -63,11 +63,11 @@ public class ApplicationOfRolechange implements Serializable{
         this.approverFact = approverFact == null ? null : approverFact.trim();
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -87,11 +87,11 @@ public class ApplicationOfRolechange implements Serializable{
         this.approvalTime = approvalTime;
     }
 
-    public Integer getbUsersId() {
+    public int getbUsersId() {
         return bUsersId;
     }
 
-    public void setbUsersId(Integer bUsersId) {
+    public void setbUsersId(int bUsersId) {
         this.bUsersId = bUsersId;
     }
 
@@ -103,11 +103,11 @@ public class ApplicationOfRolechange implements Serializable{
         this.attachedCode = attachedCode == null ? null : attachedCode.trim();
     }
 
-    public Integer getbRolesId() {
+    public int getbRolesId() {
         return bRolesId;
     }
 
-    public void setbRolesId(Integer bRolesId) {
+    public void setbRolesId(int bRolesId) {
         this.bRolesId = bRolesId;
     }
 

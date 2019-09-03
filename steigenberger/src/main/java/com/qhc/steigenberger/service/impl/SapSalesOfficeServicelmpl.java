@@ -14,7 +14,7 @@ public class SapSalesOfficeServicelmpl extends WebServcieTool<SapSalesOffice> im
 
 	@Override
 	public List<SapSalesOffice> findAll() {
-		return  findAll(CommonConstant.BASEURL, CommonConstant.URl_ROLE_FINDALL,Role.class);
+		return  findAll(CommonConstant.BASEURL, "sapSalesOffice/findAll",SapSalesOffice.class);
 	}
 
 }

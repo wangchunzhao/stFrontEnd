@@ -61,6 +61,19 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 	}
 	
 	@Override
+	public User add(User user) {
+		
+		User result = null;
+		try {
+			result = addInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
 	public boolean delete(int id) {
 		
 		String result = null;

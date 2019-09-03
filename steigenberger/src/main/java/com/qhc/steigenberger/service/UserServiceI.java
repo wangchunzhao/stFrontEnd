@@ -36,6 +36,8 @@ package com.qhc.steigenberger.service;
 		 */
 		String updateUserInfo(User user);
 		
+		User add(User user);
+		
 		/**
 		  * 删除用户信息
 		 * @param user

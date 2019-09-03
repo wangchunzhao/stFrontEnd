@@ -83,4 +83,24 @@ public class WebServcieTool<T> {
 		String t = mono.block();
 		return t;
 	}
+	
+	
+	/**
+	 * post请求
+	  *  提交数据
+	  *  使用bean来post
+	 * @param url
+	 * @param T
+	 * @return
+	 */
+	public T addInfo(T t,String url,Class T) {
+		
+		@SuppressWarnings("unchecked")
+		Mono<T> resp = WebClient.create().post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Mono.just(t),T)
+                .retrieve().bodyToMono(T);
+		return resp.block();
+	}
 }

@@ -1,5 +1,7 @@
 package com.qhc.steigenberger.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +68,7 @@ public class PermissionApplyController extends BaseController{
 		String userName = request.getParameter("username");
 		String useremil = request.getParameter("useremil");
 		String userid = request.getParameter("userid");
-		String roleName = request.getParameter("roleName");
+		String roleId = request.getParameter("roleName");
 		String area = request.getParameter("area");
 		String isactive = request.getParameter("status");
 		//获取域用户
@@ -77,9 +79,17 @@ public class PermissionApplyController extends BaseController{
 		user.setIsActive(Integer.parseInt(isactive));
 		user.setUserName(userName);
 		user.setUserIdentity(userid);
+		 
 		
 		ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
-		
+		applicationOfRolechange.setCreator("admin");
+		applicationOfRolechange.setCreateTime(new Date(System.currentTimeMillis()));
+		applicationOfRolechange.setApprovalTime(new Date(System.currentTimeMillis()));
+		applicationOfRolechange.setApproverFact("admin");
+		applicationOfRolechange.setApproverRequired("admin");
+		applicationOfRolechange.setAttachedCode(area);
+		applicationOfRolechange.setIsactive(0);
+		applicationOfRolechange.setbRolesId(Integer.valueOf(roleId));
 		
 //		System.out.println(usersession.getUserIdentity());
 		System.out.println("12345678");
@@ -100,8 +110,10 @@ public class PermissionApplyController extends BaseController{
 	public Boolean addStatus(User user,ApplicationOfRolechange applicationOfRolechange) {
 		Boolean bol = false;
 		try {
-			String result = userServiceImpl.updateUserInfo(user);
+			User result = userServiceImpl.add(user);
 			if (result != null && !"".equals(result)) {
+				applicationOfRolechange.setbUsersId(result.getId());
+				
 				String addresult = applicationOfRolechangeServiceImpl.add(applicationOfRolechange);
 				if (addresult != null && !"".equals(addresult)) {
 					bol = true;
