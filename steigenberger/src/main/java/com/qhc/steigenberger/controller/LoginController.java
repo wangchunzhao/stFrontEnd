@@ -68,7 +68,7 @@ public class LoginController extends BaseController{
             	try {
             		ctx = new InitialDirContext(env);// 初始化上下文
 //            		setAccount(request,userName);
-            		modelAndView.setViewName("loginSucess");
+            		modelAndView.setViewName("main");
             		System.out.println("身份验证成功!");
             		} catch (AuthenticationException e) {
             			modelAndView.addObject("msg","身份验证失败!");
