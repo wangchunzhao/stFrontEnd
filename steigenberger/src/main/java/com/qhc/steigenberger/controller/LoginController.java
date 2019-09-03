@@ -54,7 +54,6 @@ public class LoginController extends BaseController{
         		modelAndView.addObject("msg","用户已被禁用!");
         		modelAndView.setViewName("login");
         	}else {
-        		
         		String host = "utccgl.com";//AD域IP，必须填写正确
             	String domain = "utccgl\\";//域名后缀，
             	String url = new String("ldap://" + host );//
@@ -98,7 +97,7 @@ public class LoginController extends BaseController{
 		} catch (Exception e) {
 			modelAndView.addObject("msg","无该用户信息，请联系管理员添加!");
 			modelAndView.setViewName("login");
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 
        return modelAndView;
