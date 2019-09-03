@@ -24,7 +24,7 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	
 	public PageInfo<Role> selectAndPage(int pageNum, int pageSize, Role role) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<Role> list=findAll(CommonConstant.BASEURL, CommonConstant.URl_ROLE_FINDALL,Role.class);
+		List<Role> list=findAll(CommonConstant.BASEURL,"roles?isActive="+role.getIsActive(),Role.class);
 		PageInfo<Role> pageInfo=new PageInfo<Role>(list);
 		return pageInfo;
 	}
@@ -36,10 +36,10 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	}
 
 	@Override
-	public String saveRoleInfo(Role role) {
-		String result = null;
+	public Role saveRoleInfo(Role role) {
+		Role result = null;
 		try {
-			result = postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_ADD,Role.class);
+			result = addInfo(role,CommonConstant.BASEURL+"roles",Role.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 		
 		String result = null;
 		try {
-			result = postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_UPDATE,Role.class);
+			result = postInfo(role,CommonConstant.BASEURL+"roles",Role.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -81,13 +81,13 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	 */
 	public List<Role> findAll() {
 		
-		return  findAll(CommonConstant.BASEURL, CommonConstant.URl_ROLE_FINDALL,Role.class);
+		return  findAll(CommonConstant.BASEURL, "roles?isActive=0",Role.class);
 	}
 
 	@Override
 	public Map<String, Object> findInfos(int roleId) {
 		Map<String, Object> map=new HashMap<>();
-		Role role = findOne(CommonConstant.BASEURL+CommonConstant.URl_ROLE_FINDBYID+"/"+roleId, Role.class);
+		Role role = findOne(CommonConstant.BASEURL+"roles/"+roleId, Role.class);
 		Set<Operations> operations = role.getOperations();
 		List<Operations> operationsAll = operationServiceImpl.findAll();
 		if(!operations.isEmpty()) {
@@ -106,11 +106,11 @@ public class RoleServiceImpl extends WebServcieTool<Role> implements RoleService
 	}
 	
 	
-	public String updateRoleOperation(Role role) {
+	public Role updateRoleOperation(Role role) {
 		
-		String result = null;
+		Role result = null;
 		try {
-			result = postInfo(role,CommonConstant.BASEURL+CommonConstant.URl_ROLE_UPDATE_OPERATIONS,Role.class);
+			result = addInfo(role,CommonConstant.BASEURL+"roles/permessions",Role.class);
 		} catch (Exception e) {
 			result = null;
 			e.printStackTrace();

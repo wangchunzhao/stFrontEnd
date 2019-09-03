@@ -52,11 +52,11 @@
 							<td th:text="${role?.name}" value="${role?.name}">Bangalore</td>
 							<td th:text="${role.isActive>0?'禁用' :'启用'}" th:style="${role.isActive>0?'color:red' :'color:green'}" >560001</td>
 							<td>
-									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="update" th:title="${role.id}"
+									<button type="button" class="btn btn-primary btn-lg update" data-toggle="modal"  th:title="${role.id}"
 									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 10px; padding: 3px 10px;">
                                     		edit
                                 </button>
-                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="update_auth" th:title="${role.id}"
+                                <button type="button" class="btn btn-primary btn-lg update_auth" data-toggle="modal"   th:title="${role.id}"
 									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 10px; padding: 3px 10px;">
                                     		 Role Authorization
                                 </button>
@@ -139,7 +139,7 @@
 	<script type="text/javascript">
 	var ctxPath  = [[@{/}]];
       $(function(){
-    	  $("#update").on("click",function(){
+    	  $(".update").on("click",function(){
     		 	var id= $(this).attr("title");
 	  			var rolename=$(this).parent().siblings("td:eq(1)").text();
 	  			var isActive=$(this).parent().siblings("td:eq(2)").text();
@@ -190,7 +190,7 @@
 	    	      window.location.href = ctxPath+"/role/index?name="+name+"&isActive="+isActive; 
 	    	      return false;
 	          });
-	    	  $("#update_auth").on("click",function(){
+	    	  $(".update_auth").on("click",function(){
 	    		  var id= $(this).attr("title");
 	    	      window.location.href = ctxPath+"/role/authorization?id="+id; 
 	    	      return false;

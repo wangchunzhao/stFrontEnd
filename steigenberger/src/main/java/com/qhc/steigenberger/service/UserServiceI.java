@@ -34,7 +34,7 @@ package com.qhc.steigenberger.service;
 		 * @param user
 		 * @return
 		 */
-		String updateUserInfo(User user);
+		User updateUserInfo(User user);
 		
 		User add(User user);
 		

@@ -29,7 +29,7 @@ public interface RoleServiceI{
 	 * @param role
 	 * @return
 	 */
-	public String saveRoleInfo(Role role);
+	public Role saveRoleInfo(Role role);
 
 	/**
 	  * 修改保持角色信息
@@ -54,5 +54,5 @@ public interface RoleServiceI{
 
 	public Map<String, Object> findInfos(int id);
 
-	public String updateRoleOperation(Role role);
+	public Role updateRoleOperation(Role role);
 }

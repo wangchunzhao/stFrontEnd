@@ -22,16 +22,16 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 		
 //		String url = "user/findAll?userMail="+userMail+"&isActive="+isActive+"&userIdentity="+userIdentity;
 //		List<User> list=findAll(CommonConstant.BASEURL, url,User.class);
-		String url = "user/findByMultipleConditions?userName="+userName+"&userMail="+userMail+"&isActive="+isActive+"&rolesName="+rolesName;
+		String url = "users?isActive="+isActive+"&userName="+userName+"&rolesName="+rolesName+"&userMail="+userMail;
 		List<User> list=findAll(CommonConstant.BASEURL, url,User.class);
-		PageInfo<User> pageInfo=new PageInfo<>(list);
+		PageInfo<User> pageInfo=new PageInfo<User>(list);
 		return pageInfo;
 	}
 
 	@Override
 	public User selectUserInfo(int id) {
 		
-		return findOne(CommonConstant.BASEURL+"user/findById?id="+id,User.class);
+		return findOne(CommonConstant.BASEURL+"users/"+id,User.class);
 	}
 
 	@Override
@@ -48,11 +48,11 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 	}
 	
 	@Override
-	public String updateUserInfo(User user) {
+	public User updateUserInfo(User user) {
 		
-		String result = null;
+		User result = null;
 		try {
-			result = postInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+			result = addInfo(user,CommonConstant.BASEURL+"users",User.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 		
 		User result = null;
 		try {
-			result = addInfo(user,CommonConstant.BASEURL+"user/add",User.class);
+			result = addInfo(user,CommonConstant.BASEURL+"users",User.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

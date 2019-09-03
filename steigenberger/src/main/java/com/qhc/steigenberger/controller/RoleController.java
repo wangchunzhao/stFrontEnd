@@ -63,38 +63,15 @@ public class RoleController {
 		return "systemManage/roleManage";
 	}
 
-	@PostMapping("/add")
-	@ResponseBody
-	public JsonResult add(@RequestParam(defaultValue = "0") Integer one, 
-			@RequestBody Role role,
-			HttpServletRequest request) {
-		if(one==1) {
-            request.getSession().removeAttribute("entity");
-	     }
-		// 判断是否有ID ,
-		// 1.没有就是新增操作
-		// 2.如果存在，就是更新操作
-		String msg = "";
-		int status = 0;
-		String result = roleServiceImpl.saveRoleInfo(role);
-		if (result != null && !"".equals(result)) {
-			status = 200;
-			msg = "操作成功！";
-		} else {
-			status = 500;
-			msg = "操作失败";
-		}
-		return JsonResult.build(status, "角色" + msg, "");
-
-	}
+	
 	@PostMapping("/update")
 	@ResponseBody
 	public JsonResult update(@RequestBody Role role,HttpServletRequest request) {
 		String msg = "";
 		int status = 0;
-		String result = roleServiceImpl.saveRoleInfo(role);
+		Role result = roleServiceImpl.saveRoleInfo(role);
 	
-		if (result != null && !"".equals(result)) {
+		if (result != null) {
 			status = 200;
 			msg = "操作成功！";
 		} else {
@@ -122,9 +99,9 @@ public class RoleController {
 		
 		String msg = "";
 		int status = 0;
-		String result = roleServiceImpl.updateRoleOperation(role);//其中name存放的是权限的code字符串
+		Role result = roleServiceImpl.updateRoleOperation(role);//其中name存放的是权限的code字符串
 		
-		if (result != null && !"".equals(result)) {
+		if (result != null) {
 			
 			status = 200;
 			msg = "授权操作成功";
