@@ -37,4 +37,44 @@ public class MainController {
       public String tomain() {
     	  return "main";
       }
+      
+    @RequestMapping("/todo")
+  	public String todo() {
+  		return "todo/mytask";
+  	}
+    
+    @RequestMapping("/newOrder")
+  	public String newOrder() {
+  		return "newOrder/orderForm";
+  	}
+    
+    @RequestMapping("/orderManage")
+  	public String orderManage() {
+  		return "orderManage/myOrder";
+  	}
+    
+    @RequestMapping("/contract")
+  	public String contract() {
+  		return "contract/myContract";
+  	}
+    
+    @RequestMapping("/report1")
+  	public String report1() {
+  		return "report/orderDetail";
+  	}
+    
+    @RequestMapping("/report2")
+  	public String report2() {
+  		return "report/biddingDetail";
+  	}
+    
+    @RequestMapping("/newSpecial")
+  	public String newSpecial() {
+  		return "newOrder/specialOrder";
+  	}
+    
+    
+    
+    
+    
 }
