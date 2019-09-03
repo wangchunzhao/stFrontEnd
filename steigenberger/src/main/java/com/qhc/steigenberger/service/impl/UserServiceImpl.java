@@ -91,7 +91,7 @@ public class UserServiceImpl extends WebServcieTool<User> implements UserService
 
 	@Override
 	public User selectUserIdentity(String str) {
-		return findOne(CommonConstant.BASEURL+"users/user/"+str,User.class);
+		return findOne(CommonConstant.BASEURL+"users/"+str,User.class);
 	}
 
 }
