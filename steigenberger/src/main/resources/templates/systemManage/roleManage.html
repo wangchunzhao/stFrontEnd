@@ -67,7 +67,29 @@
 			</table>
 
 			<!-- <div th:include="page :: pager" th:remove="tag"></div>  -->
-			
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<th:block th:if="${!pageInfo.isFirstPage}">
+						<li><a href="#" aria-label="Previous"
+							th:href="@{/user/index(number=${pageInfo.prePage})}"> <span
+								aria-hidden="true">&laquo;</span>
+						</a></li>
+					</th:block>
+					<th:block th:each="nums:${pageInfo.navigatepageNums}">
+						<li th:class="${nums==pageInfo.pageNum? 'active' : ''}"><a
+							href="#" th:href="@{/user/index(number=${nums})}"
+							th:text="${nums}">1</a></li>
+					</th:block>
+
+					<th:block th:if="${!pageInfo.isLastPage}">
+						<li><a href="#" aria-label="Next"
+							th:href="@{/user/index(number=${pageInfo.nextPage})}"> <span
+								aria-hidden="true">&raquo;</span>
+						</a></li>
+					</th:block>
+
+				</ul>
+			</nav>
 			
 		</div>
 	</div>
