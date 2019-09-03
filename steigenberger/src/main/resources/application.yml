@@ -18,3 +18,8 @@ spring:
   devtools:
     restart:
       enabled: false
+qhc:     
+    frye: 
+        server: localhost
+        port: 8801
+        application: frye
