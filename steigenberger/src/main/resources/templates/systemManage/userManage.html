@@ -104,7 +104,7 @@
 	                </div>
 				</form>
                
-                <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;">查询select</button><button type="button" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;">重置reset</button><button type="button" class="btn btn-primary" style="margin-top: 10px;">新增new</button>
+                <button type="button" class="btn btn-primary" id="btn_select" style="margin-top: 10px; margin-right: 20px;">查询select</button><button type="button" id="btn_reset" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;">重置reset</button>
             </div>
         </div>
     </div>
@@ -179,7 +179,66 @@
 </div>
 		</div>
 <div id="footer" class="container" th:replace="foot::foot"></div>
-    
+ 
+ <div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1564365300654" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">编辑 Editing the role</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="" method="post" class="form userform">
+		                                            <div class="form-group">
+															<input type="number" class="form-control id hidden">
+														</div>
+													<div class="form-group">
+														<input type="number" class="form-control id hidden">
+													</div>
+													<div class="form-group">
+														<label for="name">用户名</label> 
+														<input type="text" class="form-control userName" name="userName" placeholder="请输入名称">
+													</div>
+													
+													<div class="form-group">
+													<label for="name">角色</label>
+														<div class="input-group">
+															<select class="form-control  rolesName" name="" >
+								                        		<option  th:each="role:${roleList}" th:value="${role.id}" th:text="${role.name}"></option>
+															</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="name">状态</label>
+														<div class="input-group">
+															<select class="form-control  isActive" name="isActive">
+																<option value="1" >停用</option>
+																<option value="0" >启用</option>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="name">邮箱</label> 
+														<input type="text" class="form-control userMail" name="userMail" placeholder="" disabled="disabled">
+													</div>
+													<div class="form-group">
+														<label for="name">域账号</label> 
+														<input type="text" class="form-control userIdentity" name="userIdentity" placeholder="" disabled="disabled">
+													</div>
+													<div class="form-group">
+														<label for="name">区域</label> 
+														<input type="text" class="form-control region" name="region" placeholder="" disabled="disabled">
+													</div>
+													
+													<div class="form-group text-righ">
+														<button type="submit" class="submit btn btn-primary pull-right ">保存</button>
+													</div>
+													<div class="clearfix"></div>
+												</form>
+                                        </div>
+                                    </div>
+                                </div>   
 	
 <script src="../js/classie.js"></script>
 <script>
@@ -223,12 +282,12 @@
 		  			}else{
 		  				$(".userform .isActive").val(1);
 		  			}
-		  			$(".userform .submit").text("更新");
+		  			
 		    	  });
 	    	  
 	    	  $(".userform").on("submit",function(e){
 	    		  e.preventDefault();
-	    		  var url=ctxPath+"/user/update";
+	    		  var url=ctxPath+"user/update";
 	    		  var id=null;
 	    		  if($(".userform .id").val()!=null){
 	    			 id=parseInt($(".userform .id").val());
@@ -268,7 +327,7 @@
 		    	      var userMail=$(".searchVal2").val();
 		    	      var rolesName=$(".searchVal3").val();
 		    	      var isActive=$(".searchVal4").val();
-		    	      window.location.href = ctxPath+"/user/index?userMail="+userMail+"&rolesName="+rolesName+"&isActive="+isActive+"&userName="+userName; 
+		    	      window.location.href = ctxPath+"user/index?userMail="+userMail+"&rolesName="+rolesName+"&isActive="+isActive+"&userName="+userName; 
 		    	      return false;
 		          });
 	    	  
@@ -283,33 +342,33 @@
 		      });
 	      
 	       
-	     /*  function showmsg(data){
-	    	  if(data.status>200){
-			    	toastr.warning(data.msg);  
-			       }
-			    else{
-			    	toastr.success(data.msg);
-			      }
-			 setTimeout(function(){
-				window.location.reload();	      				 
-			    },1000);
-	      }
-	      
-	      toastr.options = {  
-	    	        closeButton: false,  
-	    	        debug: false,  
-	    	        progressBar: false,  
-	    	        positionClass: "toast-bottom-center",  
-	    	        onclick: null,  
-	    	        showDuration: "300",  
-	    	        hideDuration: "1000",  
-	    	        timeOut: "2000",  
-	    	        extendedTimeOut: "1000",  
-	    	        showEasing: "swing",  
-	    	        hideEasing: "linear",  
-	    	        showMethod: "fadeIn",  
-	    	        hideMethod: "fadeOut"  
-	    	    };   */
+		      function showmsg(data){
+		    	  if(data.status>200){
+				    	toastr.warning(data.msg);  
+				       }
+				    else{
+				    	toastr.success(data.msg);
+				      }
+				 setTimeout(function(){
+					window.location.reload();	      				 
+				    },1000);
+		      }
+		      
+		      toastr.options = {  
+		    	        closeButton: false,  
+		    	        debug: false,  
+		    	        progressBar: false,  
+		    	        positionClass: "toast-bottom-center",  
+		    	        onclick: null,  
+		    	        showDuration: "300",  
+		    	        hideDuration: "1000",  
+		    	        timeOut: "2000",  
+		    	        extendedTimeOut: "1000",  
+		    	        showEasing: "swing",  
+		    	        hideEasing: "linear",  
+		    	        showMethod: "fadeIn",  
+		    	        hideMethod: "fadeOut"  
+		    	    }; 
 </script>	
 <!--scrolling js-->
 <script src="../js/jquery.nicescroll.js"></script>
