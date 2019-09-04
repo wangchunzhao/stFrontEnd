@@ -2,95 +2,62 @@ package com.qhc.steigenberger.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qhc.steigenberger.domain.RestPageRole;
+import com.qhc.steigenberger.domain.RestPageUser;
+import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.service.WebServcieTool;
 import com.qhc.steigenberger.util.CommonConstant;
 
 @Service
-public class UserService extends WebServcieTool<User>{
+public class UserService{
 	
-	public PageInfo<User> selectAndPage(int pageNum, int pageSize, User user) {
-		PageHelper.startPage(pageNum, pageSize);
-		Integer isActive = user.getIsActive();
-		String userName = user.getUserName()==null?"":user.getUserName();
-		String userMail = user.getUserMail()==null?"":user.getUserMail();
-		String rolesName = user.getRolesName()==null?"":user.getRolesName();
+	@Autowired
+	FryeService<User> fryeService;
+	
+	@Autowired
+	FryeService<RestPageUser> pageFryeService;
+	
+	private final static String URL_USERS_PAGEABLELIST = "users/paging";
+	
+	private final static String URL_USERS = "users";
+
+	public List<User> getList() {
+		return  fryeService.getListInfo(URL_USERS,User.class);
+	}
+	
+	public RestPageUser selectAndPage(int pageNum, int pageSize, User user) {
+		String url = URL_USERS_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize;
 		
-//		String url = "user/findAll?userMail="+userMail+"&isActive="+isActive+"&userIdentity="+userIdentity;
-//		List<User> list=findAll(CommonConstant.BASEURL, url,User.class);
-		String url = "users?isActive="+isActive+"&userName="+userName+"&rolesName="+rolesName+"&userMail="+userMail;
-		List<User> list=findAll(CommonConstant.BASEURL, url,User.class);
-		PageInfo<User> pageInfo=new PageInfo<User>(list);
-		return pageInfo;
+		return pageFryeService.getInfo(url, RestPageRole.class);
 	}
 
-	
-	public User selectUserInfo(int id) {
-		
-		return findOne(CommonConstant.BASEURL+"users/"+id,User.class);
-	}
 
-	
-	public String saveUserInfo(User user) {
+	public User saveUserInfo(User user) {
 		
-		String result = null;
-		try {
-			result = postInfo(user,CommonConstant.BASEURL+"user/add",User.class);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return result;
+		return fryeService.postInfo(user,URL_USERS, User.class);
 	}
 	
 	
 	public User updateUserInfo(User user) {
 		
-		User result = null;
-		try {
-			result = addInfo(user,CommonConstant.BASEURL+"users",User.class);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return result;
+		return fryeService.postInfo(user,URL_USERS, User.class);
 	}
 	
 	
 	public User add(User user) {
 		
-		User result = null;
-		try {
-			result = addInfo(user,CommonConstant.BASEURL+"users",User.class);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return result;
+		return fryeService.postInfo(user,URL_USERS, User.class);
 	}
 	
-	
-	public boolean delete(int id) {
-		
-		String result = null;
-		try {
-			result = delete(CommonConstant.BASEURL+"user/delete?id="+id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(result!=null&&"false".equals(result)) {
-			return false;
-		}else {
-			return true;
-		}
-	}
-
 	
 	public User selectUserIdentity(String str) {
-		return findOne(CommonConstant.BASEURL+"users/"+str,User.class);
+		String url = URL_USERS+"/"+str;
+		return fryeService.getInfo(url, User.class);
 	}
 
 }

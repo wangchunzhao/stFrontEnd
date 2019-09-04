@@ -1,23 +1,24 @@
 package com.qhc.steigenberger.service;
 
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qhc.steigenberger.domain.Operations;
-import com.qhc.steigenberger.service.WebServcieTool;
 
 @Service
-public class OperationService extends WebServcieTool<Operations>{
+public class OperationService{
 	
-	static String BASEURL = "http://localhost:8801/frye/";
-
+	@Autowired
+	FryeService<Operations> fryeService;
+	
+	private final static String URL_OPERATIONS = "operations";
 
 	
-	public List<Operations> findAll() {
+	public List<Operations> getList() {
 		
-		String url ="operations";
-		return  findAll(BASEURL, url,Operations.class);
+		return fryeService.getListInfo(URL_OPERATIONS, Operations.class);
 	}
+
 
 	
 }
