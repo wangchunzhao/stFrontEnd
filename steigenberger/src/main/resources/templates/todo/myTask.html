@@ -45,140 +45,13 @@
  
 </head> 
 <body class="cbp-spmenu-push">
-	<div class="main-content">
-	<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-		<!--left-fixed -navigation-->
-		<aside class="sidebar-left">
-      <nav class="navbar navbar-inverse">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            
-            </button>
-            <h1><a class="navbar-brand" href="index.html"><span class="dashboard_text"></span></a></h1>
-          </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="sidebar-menu">
-               <li class="treeview">
-                <a href="待办任务BPM.html">
-                <i class="fa fa-dashboard"></i> 
-				<span>待办任务</span>
-				<span style="font-size:12px">To-do tasks</span>
-                </a>
-				
-              </li>
-              <li class="treeview">
-                <a href="主界面BPM.html">
-                <i class="fa fa-dashboard"></i> 
-				<span>新建订单</span>
-				<span style="font-size:12px">Create Order</span>
-                </a>				
-              </li>
-			 
-			   <li class="treeview">
-                <a href="我的订单BPM.html">
-                <i class="fa fa-dashboard"></i> 
-				<span>订单管理</span>
-				<span style="font-size:12px">Order</span>
-                </a>
-              </li>
-			  <li class="treeview">
-                <a href="我的合同BPM.html">
-                <i class="fa fa-laptop"></i>
-                <span>合同管理 </span>
-				<span style="font-size:12px">Contract</span>
-                </a>
-              </li>
-              <li class="treeview">
-                <a href="特批发货BPM.html">
-                <i class="fa fa-pie-chart"></i>
-                <span>特批发货</span>
-				<span style="font-size:12px">Special Delivery</span>
-                </a>
-              </li>
-              <li class="treeview">
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-laptop"></i>
-                <span>报表管理 </span>
-				<span style="font-size:12px">Report</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="购销明细报表BPM.html"><i class="fa fa-angle-right"></i> <span>购销明细报表</span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
-                  <li><a href="投标跟踪表BPM.html"><i class="fa fa-angle-right"></i> <span>投标跟踪表</span><span style="font-size:12px">Bid tracking report</span> </a></li>
-                </ul>
-              </li>
-			  
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-edit"></i> 
-				<span>系统管理</span>
-				<span style="font-size:12px">System</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="人员管理BPM.html"><i class="fa fa-angle-right"></i>人员管理<span style="font-size:12px">Personnel management</span> </a></li>
-				  <li><a href="参数设置BPM.html"><i class="fa fa-angle-right"></i>参数设置 <span style="font-size:12px">Parameter Settings</span></a></li>
-				  <li><a href="角色管理BPM.html"><i class="fa fa-angle-right"></i>角色管理 <span style="font-size:12px">Role management</span></a></li>
-                </ul>
-              </li>
-              
-          </div>
-          <!-- /.navbar-collapse -->
-      </nav>
-    </aside>
-	</div>
-		<!--left-fixed -navigation-->
-		
-		<!-- header-starts -->
-		<div class="sticky-header header-section ">
-			<div class="header-left">
-				<!--toggle button start-->
-				<button id="showLeftPush"><i class="fa fa-bars "></i></button>
-				<!--toggle button end-->
-				<div class="profile_details_left"><!--notifications of menu start -->
-					<div class="clearfix "> </div>
-				
-						<div class="btn-group" style="margin-top: 15px;margin-bottom:10px;font-size:12px;">
-						  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							权限 permission <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu">
-							<li><a href="权限申请.html">权限申请apply for permission</a></li>
-							<li><a href="权限审批.html">权限审批 permissions approval</a></li>
-						  </ul>
-						</div>
-				</div>
-				<!--notification menu end -->
-				<div class="clearfix"> </div>
-			</div>
-			<div class="header-right">			
-				<div class="profile_details">		
-					<ul>
-						<li class="dropdown profile_details_drop">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<div class="profile_img">	
-									
-									<div class="user-name">
-										<p>Admin Name</p>
-										<span>Administrator</span>
-									</div>
-									<div class="clearfix"></div>	
-								</div>	
-							</a>
-							
-						</li>
-					</ul>
-				</div>
-				<div class="clearfix"> </div>				
-			</div>
-			<div class="clearfix"> </div>	
-		</div>
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+	
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
-			<div id="accordion-magical-coder-auto-id-1565331092357" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 40px; margin-right: 30px;">
+			<div id="accordion-magical-coder-auto-id-1565331092357" class="panel-group" role="tablist" aria-multiselectable="true" >
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -279,7 +152,7 @@
 		</div>
 
 	<!-- new added graphs chart js-->
-	
+<div id="footer" class="container" th:replace="foot::foot"></div>	
 <script src="../js/classie.js"></script>
 <script>
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
