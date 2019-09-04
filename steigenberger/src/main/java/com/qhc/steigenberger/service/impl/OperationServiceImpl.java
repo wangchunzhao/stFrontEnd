@@ -16,7 +16,7 @@ public class OperationServiceImpl extends WebServcieTool<Operations> implements 
 	@Override
 	public List<Operations> findAll() {
 		
-		String url ="operations/findAll";
+		String url ="operations";
 		return  findAll(BASEURL, url,Operations.class);
 	}
 

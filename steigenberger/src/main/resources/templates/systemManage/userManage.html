@@ -87,7 +87,7 @@
 							<td>
 							<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">
 									<i class="glyphicon glyphicon-refresh"></i>编辑</a>  -->
-									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="update" th:title="${user.id}"
+									<button type="button" class="btn btn-primary btn-lg update" data-toggle="modal"  th:title="${user.id}"
 									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 10px; padding: 3px 10px;">
                                     		编辑 edit
                                 </button>
@@ -189,7 +189,7 @@
 	<script type="text/javascript">
 	var ctxPath  = [[@{/}]];
       $(function(){
-    	  $("#update").on("click",function(){
+    	  $(".update").on("click",function(){
     		 	var id= $(this).attr("title");
 	  			var userName=$(this).parent().siblings("td:eq(1)").text();
 	  			var userMail=$(this).parent().siblings("td:eq(2)").text();
@@ -208,7 +208,6 @@
 	  			}else{
 	  				$(".userform .isActive").val(1);
 	  			}
-	  			
 	  			$(".userform .submit").text("更新");
     		  $("#myModal").modal("show");   		  
     		 return false;

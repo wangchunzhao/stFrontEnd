@@ -84,7 +84,7 @@ public class UserController {
 		// 2.如果存在，就是更新操作
 		String msg = "";
 		int status = 0;
-		String result = userServiceImpl.updateUserInfo(user);
+		User result = userServiceImpl.updateUserInfo(user);
 		if (result != null && !"".equals(result)) {
 			status = 200;
 			msg = "操作成功！";
@@ -102,8 +102,8 @@ public class UserController {
 		
 		String msg = "";
 		int status = 0;
-		String result = userServiceImpl.updateUserInfo(user);
-		if (result != null && !"".equals(result)) {
+		User result = userServiceImpl.updateUserInfo(user);
+		if (result != null) {
 			status = 200;
 			msg = "更新操作成功!";
 		} else {
