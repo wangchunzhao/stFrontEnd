@@ -12,7 +12,7 @@ import com.qhc.steigenberger.util.CommonConstant;
 public class SapSalesOfficeService extends WebServcieTool<SapSalesOffice>{
 
 	public List<SapSalesOffice> findAll() {
-		return  findAll(CommonConstant.BASEURL, "sapSalesOffice/findAll",SapSalesOffice.class);
+		return  findAll(CommonConstant.BASEURL, "sapSalesOffice",SapSalesOffice.class);
 	}
 
 }
