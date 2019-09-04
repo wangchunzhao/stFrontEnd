@@ -45,7 +45,7 @@ public class PermissionApplyController extends BaseController{
 	@PostMapping("/sapSalesOfficelist")
 	@ResponseBody
 	public JsonResult roleList() {
-		List<SapSalesOffice> role = sapSalesOfficeService.findAll();
+		List<SapSalesOffice> role = sapSalesOfficeService.getList();
 		return JsonResult.build(200,"success", role);
 	}
 	
@@ -104,8 +104,8 @@ public class PermissionApplyController extends BaseController{
 			if (result != null && !"".equals(result)) {
 				applicationOfRolechange.setbUsersId(result.getId());
 				
-				String addresult = applicationOfRolechangeService.add(applicationOfRolechange);
-				if (addresult != null && !"".equals(addresult)) {
+				ApplicationOfRolechange addresult = applicationOfRolechangeService.add(applicationOfRolechange);
+				if (addresult != null) {
 					bol = true;
 				}else {
 					bol = false;

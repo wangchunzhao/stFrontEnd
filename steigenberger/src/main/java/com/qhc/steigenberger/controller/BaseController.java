@@ -3,20 +3,25 @@ package com.qhc.steigenberger.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.service.WebServcieTool;
+import com.qhc.steigenberger.service.UserService;
 
 /**
  * 	用户session
  * @author lizuoshan
  *
  */
-public abstract class BaseController extends WebServcieTool<User>{
+public abstract class BaseController{
 
 	/**
 	  * 当前账号常量
 	 */
     private static final String ACCOUNT = "account";
+    
+    @Autowired
+    UserService userService;
  
  
     /**
@@ -46,8 +51,8 @@ public abstract class BaseController extends WebServcieTool<User>{
      * @param request
      * @param account
      */
-    public void setAccount(HttpServletRequest request,String name) {
-    	User account = findOne(""+"user/findByUserIdentity/"+name,User.class);
+    public void setAccount(HttpServletRequest request,String identityName) {
+    	User account = userService.selectUserIdentity(identityName);
         HttpSession session = request.getSession();
         if (account != null) {
             session.setAttribute(ACCOUNT, account);

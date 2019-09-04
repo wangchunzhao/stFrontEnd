@@ -3,18 +3,15 @@ package com.qhc.steigenberger.controller;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.service.OperationService;
@@ -38,7 +35,7 @@ public class RoleController {
 			HttpServletRequest request) {
 
 		model.addAttribute("pageInfo", roleService.selectAndPage(number, pageSize, entity));
-		model.addAttribute("operationList", operationService.findAll());
+		model.addAttribute("operationList", operationService.getList());
 		
 		return "systemManage/roleManage";
 	}
@@ -93,27 +90,10 @@ public class RoleController {
 
 	}
 	 
-	@RequestMapping("/remove")
-	@ResponseBody
-	public  JsonResult remove(int id) {
-		String msg="";
-		int st=0;
-		
-		boolean flag = roleService.remove(id);
-		if(flag) {
-			msg="操作成功";
-			st=200;
-		}else {
-			msg="操作失败";
-			st=500;
-		}
-	   return JsonResult.build(st,msg, null); 
-	}
-	
 	@PostMapping("/list")
 	@ResponseBody
 	public JsonResult roleList() {
-		List<Role> role = roleService.findAll();
+		List<Role> role = roleService.getListInfo();
 		return JsonResult.build(200,"success", role);
 	}
 }

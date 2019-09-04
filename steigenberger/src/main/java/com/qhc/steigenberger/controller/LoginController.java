@@ -1,21 +1,16 @@
 package com.qhc.steigenberger.controller;
 
-import java.util.Date;
 import java.util.Hashtable;
-
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.transform.Result;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.qhc.steigenberger.service.UserService;
 
 @Controller

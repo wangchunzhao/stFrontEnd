@@ -16,16 +16,13 @@ public class OperationController {
 	
 	@Autowired
 	OperationService operationService;
-	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
-	public static String URL = "role/roleList/";
-	
 
 	
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public Map<String,Object> findAll(){
 		Map<String,Object> m = new HashMap<String,Object>();
-		m.put("list", operationService.findAll());
+		m.put("list", operationService.getList());
 		return m;
 	}
 	

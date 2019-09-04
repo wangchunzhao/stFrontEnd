@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.RestPageUser;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.RoleService;
@@ -42,11 +43,11 @@ public class UserController {
 		
 		model.addAttribute("user1", entity);
 		//result list
-		PageInfo<User> pageInfo = userService.selectAndPage(number, pageSize, entity);
+		RestPageUser pageInfo = userService.selectAndPage(number, pageSize, entity);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		//roles list
-		List<Role> roleList = roleService.findAll();
+		List<Role> roleList = roleService.getListInfo();
 		model.addAttribute("roleList", roleList);
 		return "systemManage/userManage";
 	}
@@ -66,7 +67,7 @@ public class UserController {
 		String msg = "";
 		int status = 0;
 		User result = userService.updateUserInfo(user);
-		if (result != null && !"".equals(result)) {
+		if (result != null) {
 			status = 200;
 			msg = "操作成功！";
 		} else {
@@ -95,43 +96,5 @@ public class UserController {
 
 	}
 
-	@RequestMapping("/delete")
-	@ResponseBody
-	public JsonResult delete(int id) {
-		String msg = "";
-		int st = 0;
-
-		boolean flag = userService.delete(id);
-		if (flag) {
-			msg = "操作成功";
-			st = 200;
-		} else {
-			msg = "操作失败";
-			st = 500;
-		}
-		return JsonResult.build(st, msg, null);
-	}
-
-	@RequestMapping("login")
-	public String main(Model model) {
-		return "login";
-	}
-
-	@RequestMapping("hello")
-	public ModelAndView hello() {
-		ModelAndView modelAndView = new ModelAndView();
-		// 1.存数据
-		modelAndView.addObject("name", "name");
-		modelAndView.addObject("time", new Date());
-		// 2.指定视图
-		modelAndView.setViewName("hello");
-		return modelAndView;
-	}
-
-	@GetMapping(value = "home")
-	public void homePage(HttpServletResponse response) throws IOException {
-		response.sendRedirect("index.html");
-//        return "index";
-	}
 
 }
