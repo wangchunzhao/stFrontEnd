@@ -43,11 +43,13 @@ public class UserController {
 		
 		model.addAttribute("user1", entity);
 		//result list
-		RestPageUser pageInfo = userService.selectAndPage(number, pageSize, entity);
+//		RestPageUser pageInfo = userService.selectAndPage(number, pageSize, entity);
+		List<User> list = userService.getList(entity);
+		PageInfo<User> pageInfo=new PageInfo<>(list);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		//roles list
-		List<Role> roleList = roleService.getListInfo();
+		List<Role> roleList = roleService.getListInfo(new Role());
 		model.addAttribute("roleList", roleList);
 		return "systemManage/userManage";
 	}

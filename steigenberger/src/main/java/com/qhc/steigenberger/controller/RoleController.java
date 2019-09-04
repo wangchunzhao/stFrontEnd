@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.RoleService;
 
@@ -34,7 +37,12 @@ public class RoleController {
 			Model model,
 			HttpServletRequest request) {
 
-		model.addAttribute("pageInfo", roleService.selectAndPage(number, pageSize, entity));
+//		model.addAttribute("pageInfo", roleService.selectAndPage(number, pageSize, entity));
+		
+		List<Role> list = roleService.getListInfo(entity);
+		PageInfo<Role> pageInfo=new PageInfo<Role>(list);
+		model.addAttribute("pageInfo", pageInfo);
+		
 		model.addAttribute("operationList", operationService.getList());
 		
 		return "systemManage/roleManage";
@@ -90,10 +98,4 @@ public class RoleController {
 
 	}
 	 
-	@PostMapping("/list")
-	@ResponseBody
-	public JsonResult roleList() {
-		List<Role> role = roleService.getListInfo();
-		return JsonResult.build(200,"success", role);
-	}
 }
