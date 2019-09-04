@@ -54,7 +54,7 @@ public class FryeService<T> {
 	}
 
 	public void putJason(String path, T params) {
-		String url = config.getFryeServer()+path;
+		String url = config.getFryeURL()+path;
 		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -67,7 +67,7 @@ public class FryeService<T> {
 
 	public void postJason(String path, T params) {
 		
-		String url = config.getFryeServer()+path;
+		String url = config.getFryeURL()+path;
 		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -79,7 +79,7 @@ public class FryeService<T> {
 	}
 
 	public Date getLastUpdatedDate(String path,String params) {
-		String url = config.getFryeServer()+path;
+		String url = config.getFryeURL()+path;
 		WebClient webClient = getBuilder().baseUrl(url).build();
 		Mono<Date> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -91,7 +91,7 @@ public class FryeService<T> {
 	}
 	
 	public List<T> getListInfo(String path,Class T) {
-		String url = config.getFryeServer()+path;
+		String url = config.getFryeURL()+path;
 		WebClient webClient = WebClient.create(url);
 		Flux<T> userFlux = webClient.get().uri(url).retrieve().bodyToFlux(T);
 		List<T> list = userFlux.collectList().block();
@@ -106,7 +106,7 @@ public class FryeService<T> {
 	 * @return
 	 */
 	public T postInfo(T t,String path,Class T) {
-		String url = config.getFryeServer()+path;
+		String url = config.getFryeURL()+path;
 		@SuppressWarnings("unchecked")
 		Mono<T> resp = WebClient.create().post()
                 .uri(url)
@@ -123,7 +123,8 @@ public class FryeService<T> {
 	 * @param T
 	 * @return
 	 */
-	public T getInfo(String url,Class T) {
+	public T getInfo(String path,Class T) {
+		String url = config.getFryeURL()+path;
 		WebClient webClient = WebClient.create();
 		Mono<T> mono = webClient.get().uri(url).retrieve().bodyToMono(T);
 		T t = mono.block();

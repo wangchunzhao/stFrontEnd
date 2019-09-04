@@ -25,38 +25,38 @@ public class RoleService{
 	@Autowired
 	FryeService<RestPageRole> pageFryeService;
 	
-	private final static String URL_ROLES = "roles";
-	private final static String URL_ROLES_PAGEABLELIST = "roles/paging";
-	private final static String URL_ROLES_PERMESSION = "roles/permessions";
+	private final static String URL_ROLE = "role";
+	private final static String URL_ROLE_PAGEABLELIST = "role/paging";
+	private final static String URL_ROLE_PERMESSION = "role/permessions";
 	
 	public PageInfo<Role> selectAndPage(int pageNum, int pageSize, Role role) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<Role> list=fryeService.getListInfo(URL_ROLES, Role.class);
+		List<Role> list=fryeService.getListInfo(URL_ROLE, Role.class);
 		PageInfo<Role> pageInfo=new PageInfo<Role>(list);
 		return pageInfo;
 	}
 	
 	public RestPageRole getPageableList(int pageNum, int pageSize, Role role) {
-		String url = URL_ROLES_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize;
+		String url = URL_ROLE_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize;
 		
 		return pageFryeService.getInfo(url, RestPageRole.class);
 	}
 
 	
 	public Role selectRoleInfo(int id) {
-		String url = URL_ROLES+"/"+id;
+		String url = URL_ROLE+"/"+id;
 		return fryeService.getInfo(url, Role.class);
 	}
 
 	
 	public Role saveRoleInfo(Role role) {
-		return fryeService.postInfo(role,URL_ROLES, Role.class);
+		return fryeService.postInfo(role,URL_ROLE, Role.class);
 	}
 	
 	
 	public Role updateRoleInfo(Role role) {
 		
-		return fryeService.postInfo(role,URL_ROLES, Role.class);
+		return fryeService.postInfo(role,URL_ROLE, Role.class);
 	}
 	
 	
@@ -64,9 +64,9 @@ public class RoleService{
 	/**
 	 * 不分页查询全部
 	 */
-	public List<Role> getListInfo() {
-		
-		return fryeService.getListInfo(URL_ROLES,Role.class);
+	public List<Role> getListInfo(Role role) {
+		String url = URL_ROLE+"?isActive="+role.getIsActive();
+		return fryeService.getListInfo(url,Role.class);
 	}
 
 	
@@ -93,7 +93,7 @@ public class RoleService{
 	
 	public Role updateRoleOperation(Role role) {
 		
-		return fryeService.postInfo(role, URL_ROLES_PERMESSION, Role.class);
+		return fryeService.postInfo(role, URL_ROLE_PERMESSION, Role.class);
 	}
 }
 

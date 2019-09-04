@@ -22,41 +22,46 @@ public class UserService{
 	@Autowired
 	FryeService<RestPageUser> pageFryeService;
 	
-	private final static String URL_USERS_PAGEABLELIST = "users/paging";
+	private final static String URL_USER_PAGEABLELIST = "user/paging";
 	
-	private final static String URL_USERS = "users";
+	private final static String URL_USER = "user";
 
-	public List<User> getList() {
-		return  fryeService.getListInfo(URL_USERS,User.class);
+	public List<User> getList(User user) {
+		Integer isActive = user.getIsActive();
+		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
+		String userMail = user.getUserMail()==null?"":user.getUserMail();
+		String rolesName = user.getRolesName()==null?"":user.getRolesName();
+		String url = URL_USER+"?userIdentity"+userIdentity+"&userMail="+userMail+"&isActive="+isActive+"&rolesName="+rolesName;
+		return  fryeService.getListInfo(url,User.class);
 	}
 	
 	public RestPageUser selectAndPage(int pageNum, int pageSize, User user) {
-		String url = URL_USERS_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize;
+		String url = URL_USER_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize;
 		
-		return pageFryeService.getInfo(url, RestPageRole.class);
+		return pageFryeService.getInfo(url, RestPageUser.class);
 	}
 
 
 	public User saveUserInfo(User user) {
 		
-		return fryeService.postInfo(user,URL_USERS, User.class);
+		return fryeService.postInfo(user,URL_USER, User.class);
 	}
 	
 	
 	public User updateUserInfo(User user) {
 		
-		return fryeService.postInfo(user,URL_USERS, User.class);
+		return fryeService.postInfo(user,URL_USER, User.class);
 	}
 	
 	
 	public User add(User user) {
 		
-		return fryeService.postInfo(user,URL_USERS, User.class);
+		return fryeService.postInfo(user,URL_USER, User.class);
 	}
 	
 	
 	public User selectUserIdentity(String str) {
-		String url = URL_USERS+"/"+str;
+		String url = URL_USER+"/"+str;
 		return fryeService.getInfo(url, User.class);
 	}
 
