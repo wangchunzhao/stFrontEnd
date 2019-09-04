@@ -42,6 +42,7 @@ public class UserController {
 			HttpServletRequest request) {
 		
 		model.addAttribute("user1", entity);
+		
 		//result list
 //		RestPageUser pageInfo = userService.selectAndPage(number, pageSize, entity);
 		List<User> list = userService.getList(entity);

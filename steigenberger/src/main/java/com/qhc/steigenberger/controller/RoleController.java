@@ -87,7 +87,6 @@ public class RoleController {
 		Role result = roleService.updateRoleOperation(role);//其中name存放的是权限的code字符串
 		
 		if (result != null) {
-			
 			status = 200;
 			msg = "授权操作成功";
 		} else {
