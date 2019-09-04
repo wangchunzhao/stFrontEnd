@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.WebServcieTool;
-import com.qhc.steigenberger.util.CommonConstant;
 
 /**
  * 	用户session
@@ -48,7 +47,7 @@ public abstract class BaseController extends WebServcieTool<User>{
      * @param account
      */
     public void setAccount(HttpServletRequest request,String name) {
-    	User account = findOne(CommonConstant.BASEURL+"user/findByUserIdentity/"+name,User.class);
+    	User account = findOne(""+"user/findByUserIdentity/"+name,User.class);
         HttpSession session = request.getSession();
         if (account != null) {
             session.setAttribute(ACCOUNT, account);
@@ -61,5 +60,7 @@ public abstract class BaseController extends WebServcieTool<User>{
             session.setAttribute("roleNames", account.getRolesName());
         }
     }
+    
+    
 
 }

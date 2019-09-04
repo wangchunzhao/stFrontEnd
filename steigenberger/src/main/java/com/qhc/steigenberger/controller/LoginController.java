@@ -12,21 +12,17 @@ import javax.xml.transform.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.service.RoleServiceI;
-import com.qhc.steigenberger.service.UserServiceI;
+import com.qhc.steigenberger.service.UserService;
 
 @Controller
 public class LoginController extends BaseController{
 	
 	@Autowired
-	UserServiceI userServiceImpl;
+	UserService userService;
 	
 	@RequestMapping("/")
     public ModelAndView index() {
@@ -45,7 +41,7 @@ public class LoginController extends BaseController{
     	String userName = request.getParameter("username");//AD域认证，用户的登录UserName
     	String password = request.getParameter("password");//AD域认证，用户的登录PassWord
     	try {
-    		int isActive = userServiceImpl.selectUserIdentity(userName).getIsActive();
+    		int isActive = userService.selectUserIdentity(userName).getIsActive();
     		
     		if(userName=="" || password=="") {
         		modelAndView.addObject("msg","用户名或密码不能为空!");

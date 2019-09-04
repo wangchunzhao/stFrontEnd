@@ -3,11 +3,13 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class Settings implements Serializable{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String sValue;

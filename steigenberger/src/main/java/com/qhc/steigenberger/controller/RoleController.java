@@ -17,48 +17,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.service.OperationServiceI;
-import com.qhc.steigenberger.service.RoleServiceI;
+import com.qhc.steigenberger.service.OperationService;
+import com.qhc.steigenberger.service.RoleService;
 
 @Controller
 @RequestMapping("/role")
 public class RoleController {
 
 	@Autowired
-	RoleServiceI roleServiceImpl;
+	RoleService roleService;
 	@Autowired
-	OperationServiceI operationServiceImpl;
+	OperationService operationService;
 
 
 	@RequestMapping("/index")
-	public String index(@RequestParam(defaultValue = "0") Integer one,
-			@RequestParam(defaultValue = "1", name = "number") Integer number,
+	public String index(@RequestParam(defaultValue = "1", name = "number") Integer number,
 			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
 			Role entity, 
 			Model model,
 			HttpServletRequest request) {
 
-		HttpSession session = request.getSession();
-		// 有存在session的情况
-		if (entity == null && session.getAttribute("entity") != null) {
-
-			if (one == 1) {
-				session.removeAttribute("entity");
-			} else {
-				entity = (Role) session.getAttribute("entity");
-			}
-		}
-		// 有存在带查询条件其session中没有值
-		else if (entity != null && session.getAttribute("entity") == null) {
-			session.setAttribute("entity", entity);
-		}
-		// 有存在带查询条件其session中有值
-		else if (entity != null && session.getAttribute("entity") != null) {
-			session.setAttribute("entity", entity);
-		}
-
-		model.addAttribute("pageInfo", roleServiceImpl.selectAndPage(number, pageSize, entity));
-		model.addAttribute("operationList", operationServiceImpl.findAll());
+		model.addAttribute("pageInfo", roleService.selectAndPage(number, pageSize, entity));
+		model.addAttribute("operationList", operationService.findAll());
 		
 		return "systemManage/roleManage";
 	}
@@ -69,7 +49,7 @@ public class RoleController {
 	public JsonResult update(@RequestBody Role role,HttpServletRequest request) {
 		String msg = "";
 		int status = 0;
-		Role result = roleServiceImpl.saveRoleInfo(role);
+		Role result = roleService.saveRoleInfo(role);
 	
 		if (result != null) {
 			status = 200;
@@ -84,7 +64,7 @@ public class RoleController {
 	
 	 @GetMapping("/authorization")
 	 public String authorization(Model model,int id) {
-		   Map<String, Object>map= roleServiceImpl.findInfos(id);
+		   Map<String, Object>map= roleService.findInfos(id);
 		    model.addAttribute("map", map);
 		    return "systemManage/roleAuthorization"; 
 	  }
@@ -99,7 +79,7 @@ public class RoleController {
 		
 		String msg = "";
 		int status = 0;
-		Role result = roleServiceImpl.updateRoleOperation(role);//其中name存放的是权限的code字符串
+		Role result = roleService.updateRoleOperation(role);//其中name存放的是权限的code字符串
 		
 		if (result != null) {
 			
@@ -119,7 +99,7 @@ public class RoleController {
 		String msg="";
 		int st=0;
 		
-		boolean flag = roleServiceImpl.remove(id);
+		boolean flag = roleService.remove(id);
 		if(flag) {
 			msg="操作成功";
 			st=200;
@@ -133,7 +113,7 @@ public class RoleController {
 	@PostMapping("/list")
 	@ResponseBody
 	public JsonResult roleList() {
-		List<Role> role = roleServiceImpl.findAll();
+		List<Role> role = roleService.findAll();
 		return JsonResult.build(200,"success", role);
 	}
 }

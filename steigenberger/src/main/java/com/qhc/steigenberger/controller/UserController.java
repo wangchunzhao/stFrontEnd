@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,51 +20,33 @@ import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.service.RoleServiceI;
-import com.qhc.steigenberger.service.UserServiceI;
+import com.qhc.steigenberger.service.RoleService;
+import com.qhc.steigenberger.service.UserService;
 
 //import io.swagger.annotations.Api;
 
 @RequestMapping("user")
 @Controller
-//@Api(value = "User Manager")
 public class UserController {
 	@Autowired
-	UserServiceI userServiceImpl;
+	UserService userService;
 	@Autowired
-	RoleServiceI roleServiceImpl;
+	RoleService roleService;
 
 	@RequestMapping("/index")
-	public String index(@RequestParam(defaultValue = "0") int one, 
-			@RequestParam(defaultValue = "1",name="number") Integer number,
+	public String index(@RequestParam(defaultValue = "1",name="number") Integer number,
 			@RequestParam(defaultValue = "5",name="pageSize") Integer pageSize, 
 			User entity, 
 			Model model, 
 			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if (one == 1) {
-			session.removeAttribute("entity");
-		}
-		// 有存在session的情况
-		if (entity == null && session.getAttribute("entity") != null) {
-			entity = (User) session.getAttribute("entity");
-		}
-		// 有存在带查询条件其session中没有值
-		else if (entity != null && session.getAttribute("entity") == null) {
-			session.setAttribute("entity", entity);
-		}
-		// 有存在带查询条件其session中有值
-		else if (entity != null && session.getAttribute("entity") != null) {
-			session.setAttribute("entity", entity);
-		}
-
+		
 		model.addAttribute("user1", entity);
 		//result list
-		PageInfo<User> pageInfo = userServiceImpl.selectAndPage(number, pageSize, entity);
+		PageInfo<User> pageInfo = userService.selectAndPage(number, pageSize, entity);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		//roles list
-		List<Role> roleList = roleServiceImpl.findAll();
+		List<Role> roleList = roleService.findAll();
 		model.addAttribute("roleList", roleList);
 		return "systemManage/userManage";
 	}
@@ -84,7 +65,7 @@ public class UserController {
 		// 2.如果存在，就是更新操作
 		String msg = "";
 		int status = 0;
-		User result = userServiceImpl.updateUserInfo(user);
+		User result = userService.updateUserInfo(user);
 		if (result != null && !"".equals(result)) {
 			status = 200;
 			msg = "操作成功！";
@@ -102,7 +83,7 @@ public class UserController {
 		
 		String msg = "";
 		int status = 0;
-		User result = userServiceImpl.updateUserInfo(user);
+		User result = userService.updateUserInfo(user);
 		if (result != null) {
 			status = 200;
 			msg = "更新操作成功!";
@@ -120,7 +101,7 @@ public class UserController {
 		String msg = "";
 		int st = 0;
 
-		boolean flag = userServiceImpl.delete(id);
+		boolean flag = userService.delete(id);
 		if (flag) {
 			msg = "操作成功";
 			st = 200;

@@ -1,31 +1,21 @@
 package com.qhc.steigenberger.controller;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
-import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.ApplicationOfRolechangeService;
-import com.qhc.steigenberger.service.RoleServiceI;
-import com.qhc.steigenberger.service.SapSalesOfficeServicel;
-import com.qhc.steigenberger.service.UserServiceI;
+import com.qhc.steigenberger.service.RoleService;
+import com.qhc.steigenberger.service.SapSalesOfficeService;
+import com.qhc.steigenberger.service.UserService;
 
 
 
@@ -35,16 +25,16 @@ import com.qhc.steigenberger.service.UserServiceI;
 public class PermissionApplyController extends BaseController{
 	
 	@Autowired
-	RoleServiceI roleServiceImpl;
+	RoleService roleService;
 	
 	@Autowired
-	UserServiceI userServiceImpl;
+	UserService userService;
 	
 	@Autowired
-	SapSalesOfficeServicel sapSalesOfficeServicel;
+	SapSalesOfficeService sapSalesOfficeService;
 	
 	@Autowired
-	ApplicationOfRolechangeService applicationOfRolechangeServiceImpl;
+	ApplicationOfRolechangeService applicationOfRolechangeService;
 	
 	@RequestMapping("/permissionApply")
 	public String permissionApply() {
@@ -55,7 +45,7 @@ public class PermissionApplyController extends BaseController{
 	@PostMapping("/sapSalesOfficelist")
 	@ResponseBody
 	public JsonResult roleList() {
-		List<SapSalesOffice> role = sapSalesOfficeServicel.findAll();
+		List<SapSalesOffice> role = sapSalesOfficeService.findAll();
 		return JsonResult.build(200,"success", role);
 	}
 	
@@ -96,7 +86,7 @@ public class PermissionApplyController extends BaseController{
 		String msg = "";
 		int status = 0;
 		Boolean result = addStatus(user,applicationOfRolechange);
-//		String result = userServiceImpl.updateUserInfo(user);
+//		String result = userService.updateUserInfo(user);
 		if (result) {
 			status = 200;
 			msg = "操作成功！";
@@ -110,11 +100,11 @@ public class PermissionApplyController extends BaseController{
 	public Boolean addStatus(User user,ApplicationOfRolechange applicationOfRolechange) {
 		Boolean bol = false;
 		try {
-			User result = userServiceImpl.add(user);
+			User result = userService.add(user);
 			if (result != null && !"".equals(result)) {
 				applicationOfRolechange.setbUsersId(result.getId());
 				
-				String addresult = applicationOfRolechangeServiceImpl.add(applicationOfRolechange);
+				String addresult = applicationOfRolechangeService.add(applicationOfRolechange);
 				if (addresult != null && !"".equals(addresult)) {
 					bol = true;
 				}else {

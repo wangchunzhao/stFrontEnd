@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qhc.steigenberger.service.OperationServiceI;
+import com.qhc.steigenberger.service.OperationService;
 
 
 @Controller
@@ -15,7 +15,7 @@ import com.qhc.steigenberger.service.OperationServiceI;
 public class OperationController {
 	
 	@Autowired
-	OperationServiceI operationServiceImpl;
+	OperationService operationService;
 	public static String BASE_URL = "http://127.0.0.1:8801/frye/";
 	public static String URL = "role/roleList/";
 	
@@ -25,7 +25,7 @@ public class OperationController {
 	@ResponseBody
 	public Map<String,Object> findAll(){
 		Map<String,Object> m = new HashMap<String,Object>();
-		m.put("list", operationServiceImpl.findAll());
+		m.put("list", operationService.findAll());
 		return m;
 	}
 	
