@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.ApplicationOfRolechangeService;
@@ -44,9 +45,18 @@ public class PermissionApplyController extends BaseController{
 	
 	@PostMapping("/sapSalesOfficelist")
 	@ResponseBody
-	public JsonResult roleList() {
+	public JsonResult sapSalesOfficelist() {
 		List<SapSalesOffice> role = sapSalesOfficeService.getList();
 		return JsonResult.build(200,"success", role);
+	}
+	
+	@PostMapping("/roleList")
+	@ResponseBody
+	public JsonResult roleList() {
+		Role role = new Role();
+		role.setIsActive(1);
+		List<Role> rolelist = roleService.getListInfo(role);
+		return JsonResult.build(200,"success", rolelist);
 	}
 	
 	
@@ -66,7 +76,7 @@ public class PermissionApplyController extends BaseController{
 		
 		User user = new User();
 		user.setUserMail(useremil);
-		user.setIsActive(Integer.parseInt(isactive));
+		user.setIsActive(1);
 		user.setUserName(userName);
 		user.setUserIdentity(userid);
 		 
@@ -78,7 +88,7 @@ public class PermissionApplyController extends BaseController{
 		applicationOfRolechange.setApproverFact("admin");
 		applicationOfRolechange.setApproverRequired("admin");
 		applicationOfRolechange.setAttachedCode(area);
-		applicationOfRolechange.setIsactive(0);
+		applicationOfRolechange.setIsactive(1);
 		applicationOfRolechange.setbRolesId(Integer.valueOf(roleId));
 		
 //		System.out.println(usersession.getUserIdentity());
@@ -102,7 +112,7 @@ public class PermissionApplyController extends BaseController{
 		try {
 			User result = userService.add(user);
 			if (result != null && !"".equals(result)) {
-				applicationOfRolechange.setbUsersId(result.getId());
+				applicationOfRolechange.setbusersId(result.getId());
 				
 				ApplicationOfRolechange addresult = applicationOfRolechangeService.add(applicationOfRolechange);
 				if (addresult != null) {

@@ -22,7 +22,7 @@ public class ApplicationOfRolechange implements Serializable{
 	
 	private String approverFact;
 	
-    private int bUsersId;
+    private int busersId;
 
     private int isactive;
 
@@ -87,12 +87,12 @@ public class ApplicationOfRolechange implements Serializable{
         this.approvalTime = approvalTime;
     }
 
-    public int getbUsersId() {
-        return bUsersId;
+    public int getbusersId() {
+        return busersId;
     }
 
-    public void setbUsersId(int bUsersId) {
-        this.bUsersId = bUsersId;
+    public void setbusersId(int busersId) {
+        this.busersId = busersId;
     }
 
     public String getAttachedCode() {

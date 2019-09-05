@@ -41,7 +41,7 @@ public class LoginController extends BaseController{
     		if(userName=="" || password=="") {
         		modelAndView.addObject("msg","用户名或密码不能为空!");
         		modelAndView.setViewName("login");
-        	}else if(isActive ==1) {
+        	}else if(isActive ==0) {
         		modelAndView.addObject("msg","用户已被禁用!");
         		modelAndView.setViewName("login");
         	}else {

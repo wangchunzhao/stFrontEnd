@@ -5,14 +5,14 @@ $(function(){
 	
 	$('#roleName').on('change',function(){
 		if("1,2".indexOf($(this).val())>-1){
-			$('#area,#status').parents('.form-group').show();
+			$('#area').parents('.form-group').show();
 		}else{
-			$('#area,#status').parents('.form-group').hide();
+			$('#area').parents('.form-group').hide();
 		}
 	});
 	
 	function InitRoles(){
-		$.post('/steigenberger/role/list',null,function(ret){
+		$.post('/steigenberger/permission/roleList',null,function(ret){
 			if(ret.status==200){
 				for(var i in ret.data){
 					var item = ret.data[i];
