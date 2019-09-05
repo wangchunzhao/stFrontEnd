@@ -7,22 +7,48 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class Settings implements Serializable{
+public class Parameter implements Serializable{
 	
 	
 	private static final long serialVersionUID = 1L;
-	private String id;
+	private int id;
+	private String code;
 	private String sValue;
 	private Date enableDate;
 	private String comment;
 	private String operater;
 	private String optTime;
-	public String getId() {
+	
+	
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	private String preValue;
+	private String afterValue;
+	
+	
+	public String getPreValue() {
+		return preValue;
+	}
+	public void setPreValue(String preValue) {
+		this.preValue = preValue;
+	}
+	public String getAfterValue() {
+		return afterValue;
+	}
+	public void setAfterValue(String afterValue) {
+		this.afterValue = afterValue;
+	}
+
 	public String getsValue() {
 		return sValue;
 	}
