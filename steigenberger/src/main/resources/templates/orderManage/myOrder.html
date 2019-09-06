@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,17 +42,25 @@
 <!--pie-chart --><!-- index page sales reviews visitors pie chart -->
 <script src="../js/pie-chart.js" type="text/javascript"></script>
 <link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css"rel="stylesheet">
+<link href="http://www.jq22.com/jquery/font-awesome.4.6.0.css" rel="stylesheet">  
+
+<link rel="stylesheet" type="text/css" media="all" href="../bootstrap-date/daterangepicker/daterangepicker-bs3.css"/>
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/jquery.min.js"></script>
+		
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/moment.js"></script>
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/daterangepicker.js"></script>
  
 </head> 
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
-	<!-- //header-ends -->
-		<!-- main content start-->
+
 	
-		<div id="page-wrapper">
+<div id="page-wrapper">
 			
-<div id="accordion-magical-coder-auto-id-1565595642357" class="panel-group" role="tablist" aria-multiselectable="true" >
+<div id="accordion-magical-coder-auto-id-1565595642357" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 3%;">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
@@ -82,7 +90,7 @@
                         <input type="text" class="form-control">
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control">
+					   <input type="text" readonly name="reservation" id="reservation" class="form-control"  /> 
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <input type="text" class="form-control">
@@ -161,7 +169,7 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1565595638071" aria-expanded="false">订单列表</a>
+                <a class="collapsed" role="button" data-toggle="collapse"  aria-expanded="false" style="margin-left: 3%;">订单列表 ORDER LIST</a>
             </h4>
         </div>
         <div id="collapseTwo-magical-coder-auto-id-1565595638071" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
@@ -313,5 +321,12 @@
    
 <!--  js -->  
 <script src="../pageJs/permissionApply.js"></script>
+<script type="text/javascript">
+     $(document).ready(function() {
+        $('#reservation').daterangepicker(null, function(start, end, label) {
+          console.log(start.toISOString(), end.toISOString(), label);
+        });
+     });
+</script>
 </body>
 </html>
