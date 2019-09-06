@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.RoleService;
 
@@ -49,7 +47,7 @@ public class RoleController {
 	}
 
 	
-	@PostMapping("/update")
+	@RequestMapping("/update")
 	@ResponseBody
 	public JsonResult update(@RequestBody Role role,HttpServletRequest request) {
 		String msg = "";
@@ -74,14 +72,9 @@ public class RoleController {
 		    return "systemManage/roleAuthorization"; 
 	  }
 
-	@PostMapping("/updateAuthorization")
+	@RequestMapping("/updateAuthorization")
 	@ResponseBody
 	public JsonResult updateAuthorization(@RequestBody Role role,HttpServletRequest request) {
-		//role中的name实际上是operations，
-		
-		String operationIds=role.getName();
-		String[] operationArr = operationIds.split(",");
-		
 		String msg = "";
 		int status = 0;
 		Role result = roleService.updateRoleOperation(role);//其中name存放的是权限的code字符串

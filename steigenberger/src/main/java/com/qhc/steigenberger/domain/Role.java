@@ -21,10 +21,22 @@ public class Role implements Serializable{
 	
     public Set<ApplicationOfRolechange> apps;
 	
-	private Set<Operations> operations;
+	public Set<Operations> operations;
+	
+	public String operationIds;
+	
+	public boolean selected;
 	
 	
 	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
 	public int getIsActive() {
 		return isActive;
 	}
@@ -63,6 +75,14 @@ public class Role implements Serializable{
 
 	public void setOperations(Set<Operations> operations) {
 		this.operations = operations;
+	}
+
+	public String getOperationIds() {
+		return operationIds;
+	}
+
+	public void setOperationIds(String operationIds) {
+		this.operationIds = operationIds;
 	}
 
 

@@ -1,11 +1,16 @@
 package com.qhc.steigenberger.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qhc.steigenberger.domain.ApplicationOfRolechange;
+import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.RestPageRole;
 import com.qhc.steigenberger.domain.RestPageUser;
 import com.qhc.steigenberger.domain.Role;
@@ -21,6 +26,8 @@ public class UserService{
 	
 	@Autowired
 	FryeService<RestPageUser> pageFryeService;
+	@Autowired
+	RoleService roleService;
 	
 	/**
 	  * 当前账号session常量
@@ -70,6 +77,29 @@ public class UserService{
 	public User selectUserIdentity(String str) {
 		String url = URL_USER+"/"+str;
 		return fryeService.getInfo(url, User.class);
+	}
+
+	public Map<String, Object> findInfos(String userIdentity) {
+		Map<String, Object> map=new HashMap<>();
+		User user = selectUserIdentity(userIdentity);
+		Set<ApplicationOfRolechange> apps = user.getApps();
+		List<Role> rolesAll = roleService.getListInfo(new Role());
+		if(!rolesAll.isEmpty()) {
+			for(Role r:rolesAll) {
+				if(apps!=null&&apps.size()>0) {
+					for(ApplicationOfRolechange app: apps) {
+						if(app.getbRolesId()==r.getId()) {
+							r.setSelected(true);
+						}
+					}
+				}
+			}
+		}
+
+		map.put("userId", user.getId());				
+		map.put("user", user);				
+		map.put("rolesAll", rolesAll);
+		return map;
 	}
 
 }

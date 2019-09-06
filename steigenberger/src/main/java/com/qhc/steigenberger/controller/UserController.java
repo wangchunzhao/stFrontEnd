@@ -1,10 +1,13 @@
 package com.qhc.steigenberger.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.RoleService;
+import com.qhc.steigenberger.service.SapSalesOfficeService;
 import com.qhc.steigenberger.service.UserService;
 
 @RequestMapping("user")
@@ -24,6 +29,8 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	RoleService roleService;
+	@Autowired
+	SapSalesOfficeService sapSalesOfficeService;
 
 	@RequestMapping("/index")
 	public String index(@RequestParam(defaultValue = "1",name="number") Integer number,
@@ -106,5 +113,15 @@ public class UserController {
 		}
 		return JsonResult.build(status,msg, result.getOperationNames());
 
+	}
+	
+	
+	 @RequestMapping("/toUpdate")
+	public String toUpdate(Model model, String userIdentity) {
+		List<SapSalesOffice> officeList = sapSalesOfficeService.getList();
+		Map<String, Object> map = userService.findInfos(userIdentity);
+		model.addAttribute("map", map);
+		model.addAttribute("officeList", officeList);
+		return "systemManage/editUser";
 	}
 }

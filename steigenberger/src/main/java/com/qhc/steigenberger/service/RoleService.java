@@ -86,6 +86,7 @@ public class RoleService{
 		}
 
 		map.put("roleId", roleId);				
+		map.put("role", role);				
 		map.put("operationsAll", operationsAll);
 		return map;
 	}
@@ -93,7 +94,7 @@ public class RoleService{
 	
 	public Role updateRoleOperation(Role role) {
 		
-		return fryeService.postInfo(role, URL_ROLE_PERMESSION, Role.class);
+		return fryeService.postInfo(role, URL_ROLE, Role.class);
 	}
 }
 
