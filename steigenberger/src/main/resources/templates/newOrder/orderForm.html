@@ -61,12 +61,11 @@
                     </div>
                 </div>
         	</div>
-        	<span th:text="${msg}" style="color:red;font-size:20px"></span>
         	<div class="col-md-3 widget widget1">
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
                     <div class="stats">
-                      <span><a id="back" href="javascript:void(0)">经销商非标准折扣下单</a></span><br>
+                      <span><a onclick=" return doSomething()" href="/steigenberger/newOrder/standardDiscount">经销商非标准折扣下单</a></span><br>
 					  <span style="font-size:12px">Distributor non - standard discount order</span>
                     </div>
                 </div>
@@ -142,18 +141,33 @@
 <script >
 $(function () {
     $('#back').on('click', function () {
-    	$.post('/steigenberger/newOrder/standardDiscount',null,function(ret){
+ //   	alert("111");
+    	$.post('/steigenberger/newOrder/standardDiscount1',null,function(ret){
 			if(ret.status==200){
-				for(var i in ret.data){
-					var item = ret.data[i];
-					$('#roleName').append(BuildOption(item.name,item.id));
-				}
+				return false;
 			}else{
 				alert('角色列表请求错误！')
 			}
 		},'json');
     });
 });
+function doSomething(){
+	alert("aaaa");
+	 $.ajaxSettings.async = false;
+	var a =$.post('/steigenberger/newOrder/standardDiscount1',null,function(ret){
+		if(ret.status==200){
+			alert("bbb");
+			
+			return false;
+		}else{
+			alert('角色列表请求错误！')
+		}
+	},'json');
+	if(a.status==200){
+		return true;
+	}
+	
+}
 </script>
 </body>
 </html>
