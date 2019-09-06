@@ -30,6 +30,8 @@ public class UserService{
 	private final static String URL_USER_PAGEABLELIST = "user/paging";
 	
 	private final static String URL_USER = "user";
+	
+	public final static String SESSION_USERIDENTITY = "userIdentity";
 
 	public List<User> getList(User user) {
 		Integer isActive = user.getIsActive();

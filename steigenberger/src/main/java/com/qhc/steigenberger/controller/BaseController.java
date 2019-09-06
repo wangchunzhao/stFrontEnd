@@ -51,7 +51,7 @@ public abstract class BaseController{
     public void setAccount(HttpServletRequest request,String identityName) {
 //    	User account = userService.selectUserIdentity(identityName);
         HttpSession session = request.getSession();
-        session.setAttribute("userIdentity", identityName);
+        session.setAttribute(userService.SESSION_USERIDENTITY, identityName);
 //        if (account != null) {
 //            session.setAttribute(userService.ACCOUNT, account);
 //            session.setAttribute("userName", account.getUserName());
