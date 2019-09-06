@@ -60,6 +60,7 @@ public abstract class BaseController{
             session.setAttribute("userIdentity", account.getUserIdentity());
             session.setAttribute("userMail", account.userMail);
             session.setAttribute("roleNames", account.getRolesName());
+            session.setAttribute("operationNames", account.getOperationNames());
         }
     }
     

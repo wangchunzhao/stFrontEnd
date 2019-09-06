@@ -24,7 +24,9 @@ public class User implements Serializable{
 	
    	public String rolesName;
    	
-   	private String region;
+   	public String region;
+   	
+   	public String operationNames;
 	
 
 
@@ -90,6 +92,14 @@ public class User implements Serializable{
 
 	public void setRolesName(String rolesName) {
 		this.rolesName = rolesName;
+	}
+
+	public String getOperationNames() {
+		return operationNames;
+	}
+
+	public void setOperationNames(String operationNames) {
+		this.operationNames = operationNames;
 	}
 
 
