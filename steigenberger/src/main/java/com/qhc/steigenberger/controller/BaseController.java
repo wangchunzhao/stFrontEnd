@@ -49,19 +49,19 @@ public abstract class BaseController{
      * @param account
      */
     public void setAccount(HttpServletRequest request,String identityName) {
-    	User account = userService.selectUserIdentity(identityName);
+//    	User account = userService.selectUserIdentity(identityName);
         HttpSession session = request.getSession();
-        if (account != null) {
-            session.setAttribute(userService.ACCOUNT, account);
-            
-            session.setAttribute("userName", account.getUserName());
-            session.setAttribute("isActive", account.getIsActive());
-            session.setAttribute("region", account.getRegion());
-            session.setAttribute("userIdentity", account.getUserIdentity());
-            session.setAttribute("userMail", account.userMail);
-            session.setAttribute("roleNames", account.getRolesName());
-            session.setAttribute("operationNames", account.getOperationNames());
-        }
+        session.setAttribute("userIdentity", identityName);
+//        if (account != null) {
+//            session.setAttribute(userService.ACCOUNT, account);
+//            session.setAttribute("userName", account.getUserName());
+//            session.setAttribute("isActive", account.getIsActive());
+//            session.setAttribute("region", account.getRegion());
+//            session.setAttribute("userIdentity", account.getUserIdentity());
+//            session.setAttribute("userMail", account.userMail);
+//            session.setAttribute("roleNames", account.getRolesName());
+//            session.setAttribute("operationNames", account.getOperationNames());
+//        }
     }
     
     
