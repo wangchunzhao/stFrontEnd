@@ -30,6 +30,7 @@ public class User implements Serializable{
 	
 
 
+   	
 	public Set<ApplicationOfRolechange> getApps() {
 		return apps;
 	}
