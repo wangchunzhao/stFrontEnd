@@ -1,7 +1,7 @@
 package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -19,11 +19,28 @@ public class Parameter implements Serializable{
 	private String operater;
 	private String optTime;
 	
+	private String preValue;
+	private Date preEnableDate;
+	private String afterValue;
+	private Date afterEnableDate;
 	
-	public int getId() {
+	
+	public Date getPreEnableDate() {
+		return preEnableDate;
+	}
+	public void setPreEnableDate(Date preEnableDate) {
+		this.preEnableDate = preEnableDate;
+	}
+	public Date getAfterEnableDate() {
+		return afterEnableDate;
+	}
+	public void setAfterEnableDate(Date afterEnableDate) {
+		this.afterEnableDate = afterEnableDate;
+	}
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getCode() {
@@ -32,10 +49,6 @@ public class Parameter implements Serializable{
 	public void setCode(String code) {
 		this.code = code;
 	}
-	private String preValue;
-	private String afterValue;
-	
-	
 	public String getPreValue() {
 		return preValue;
 	}
@@ -78,6 +91,9 @@ public class Parameter implements Serializable{
 	}
 	public void setOptTime(String optTime) {
 		this.optTime = optTime;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

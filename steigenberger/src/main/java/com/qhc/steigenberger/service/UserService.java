@@ -22,6 +22,11 @@ public class UserService{
 	@Autowired
 	FryeService<RestPageUser> pageFryeService;
 	
+	/**
+	  * 当前账号session常量
+	 */
+	public static final String ACCOUNT = "account";
+	
 	private final static String URL_USER_PAGEABLELIST = "user/paging";
 	
 	private final static String URL_USER = "user";

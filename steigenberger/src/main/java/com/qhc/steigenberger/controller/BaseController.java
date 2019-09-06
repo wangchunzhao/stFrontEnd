@@ -15,10 +15,7 @@ import com.qhc.steigenberger.service.UserService;
  */
 public abstract class BaseController{
 
-	/**
-	  * 当前账号常量
-	 */
-    private static final String ACCOUNT = "account";
+	
     
     @Autowired
     UserService userService;
@@ -31,7 +28,7 @@ public abstract class BaseController{
      */
     public User getAccount(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        return (User) session.getAttribute(ACCOUNT);
+        return (User) session.getAttribute(userService.ACCOUNT);
     }
     
     /**
@@ -55,7 +52,7 @@ public abstract class BaseController{
     	User account = userService.selectUserIdentity(identityName);
         HttpSession session = request.getSession();
         if (account != null) {
-            session.setAttribute(ACCOUNT, account);
+            session.setAttribute(userService.ACCOUNT, account);
             
             session.setAttribute("userName", account.getUserName());
             session.setAttribute("isActive", account.getIsActive());

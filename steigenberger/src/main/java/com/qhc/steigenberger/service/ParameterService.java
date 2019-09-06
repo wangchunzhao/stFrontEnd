@@ -17,6 +17,7 @@ public class ParameterService{
 	FryeService<Parameter> fryeService;
 	
 	private final static String URL_SETTINGS = "parameterSettings";
+	public final static String CATCHE_SETTINGS_NAME = "catch_settings_name";
 
 	
 	/**
@@ -24,8 +25,13 @@ public class ParameterService{
 	 * @return
 	 */
 	public List<Parameter> getList() {
-		
-		return fryeService.getListInfo(URL_SETTINGS,Parameter.class);
+		List<Parameter> list = null;
+		try {
+			list =fryeService.getListInfo(URL_SETTINGS,Parameter.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	
@@ -36,6 +42,12 @@ public class ParameterService{
 	 * @return
 	 */
 	public Parameter updateInfo(Parameter Parameter) {
-		return fryeService.postInfo(Parameter, URL_SETTINGS, Parameter.class);
+		Parameter p = null;
+		try {
+			p =fryeService.postInfo(Parameter, URL_SETTINGS, Parameter.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
 	}
 }
