@@ -16,7 +16,7 @@ public class User implements Serializable{
     
     public String userIdentity;
     
-    public int isActive;
+    public int isActive=1;
     
     public String userName;
     
@@ -30,6 +30,7 @@ public class User implements Serializable{
 	
 
 
+   	
 	public Set<ApplicationOfRolechange> getApps() {
 		return apps;
 	}

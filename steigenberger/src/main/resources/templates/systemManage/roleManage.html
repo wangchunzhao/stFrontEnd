@@ -106,7 +106,7 @@
 						<tr th:each="role,roleStart: ${pageInfo.list}">
 							<td th:text="${roleStart.count}">560001</td>
 							<td th:text="${role?.name}" value="${role?.name}">Bangalore</td>
-							<td th:text="${role.isActive==0?'禁用' :'启用'}" th:style="${role.isActive==0?'color:red' :'color:green'}" >560001</td>
+							<td th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" >560001</td>
 							<td>
 									
                                 <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal" th:title="${role.id}"
@@ -178,8 +178,8 @@
 													</div>
 													<div class="col-xs-6">
 														<select class="form-control  isActive" name="isActive">
-															<option value="0" >停用</option>
 															<option value="1" >启用</option>
+															<option value="0" >停用</option>
 														</select>
 													</div>
 												</div>

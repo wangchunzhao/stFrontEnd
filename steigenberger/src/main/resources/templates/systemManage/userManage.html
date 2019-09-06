@@ -140,7 +140,7 @@
 									<td th:text="${user.userIdentity}">560001</td>
 									<td th:text="${user.rolesName}">Bangalore</td>
 									<td th:text="${user.region}">Bangalore</td>
-									<td th:text="${user.isActive>0?'禁用' :'启用'}" th:style="${user.isActive>0?'color:red' :'color:green'}">560001</td>
+									<td th:text="${user.isActive>0?'启用' :'禁用'}" th:style="${user.isActive>0?'color:green' :'color:red'}">560001</td>
 									<td>
 									<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">
 											<i class="glyphicon glyphicon-refresh"></i>编辑</a>  -->
