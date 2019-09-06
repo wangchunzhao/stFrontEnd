@@ -56,7 +56,7 @@
         		<div class="r3_counter_box" >
                     <i class="pull-left fa fa-dollar icon-rounded"></i>
                     <div class="stats">
-                      <span><a href="/steigenberger/newOrder/standardDiscount">经销商标准折扣下单</a></span><br>
+                      <span><a onclick="return doSomething()" href="/steigenberger/newOrder/standardDiscount">经销商标准折扣下单</a></span><br>
 					  <span style="font-size:12px">Dealer standard discount order</span>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
                     <div class="stats">
-                      <span><a onclick=" return doSomething()" href="/steigenberger/newOrder/standardDiscount">经销商非标准折扣下单</a></span><br>
+                      <span><a onclick="return doSomething()" href="/steigenberger/newOrder/standardDiscount">经销商非标准折扣下单</a></a></span><br>
 					  <span style="font-size:12px">Distributor non - standard discount order</span>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-money user2 icon-rounded"></i>
                     <div class="stats">
-                      <span>直签客户投标报价</span><br>
+                      <span><a onclick="return doSomething()" href="/steigenberger/newOrder/standardDiscount">直签客户投标报价</a></span><br>
 					  <span style="font-size:12px"> Direct sign customer tender offer</span>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
                     <div class="stats">
-                      <span>直签客户投标下单</span><br>
+                      <span><a onclick="return doSomething()" href="/steigenberger/newOrder/standardDiscount">直签客户投标下单</a></span><br>
 					  <span style="font-size:12px">Direct sign customer create order</span>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
         		<div class="r3_counter_box" >
                     <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
                     <div class="stats" >
-                      <span>备货</span><br>
+                      <span><a onclick="return doSomething()" href="/steigenberger/newOrder/standardDiscount">备货</a></span><br>
 					  <span style="font-size:12px;">Stock up</span>
                     </div>
                 </div>
@@ -139,32 +139,21 @@
    
 <!--  js -->  
 <script >
-$(function () {
-    $('#back').on('click', function () {
- //   	alert("111");
-    	$.post('/steigenberger/newOrder/standardDiscount1',null,function(ret){
-			if(ret.status==200){
-				return false;
-			}else{
-				alert('角色列表请求错误！')
-			}
-		},'json');
-    });
-});
 function doSomething(){
-	alert("aaaa");
 	 $.ajaxSettings.async = false;
-	var a =$.post('/steigenberger/newOrder/standardDiscount1',null,function(ret){
+	 var result = $.post('/steigenberger/newOrder/standardDiscount1',null,function(ret){
 		if(ret.status==200){
-			alert("bbb");
-			
-			return false;
+			return "success";
 		}else{
-			alert('角色列表请求错误！')
+			return "fail"
 		}
 	},'json');
-	if(a.status==200){
+	 
+	if(result.status==200){
 		return true;
+	}else{
+		alert("对不起，您没有下单权限");
+		return false;
 	}
 	
 }
