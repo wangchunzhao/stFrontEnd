@@ -64,18 +64,18 @@
 						<form action=""  role="form"  class="form">
 					         	<input type="hidden" th:value="${map?.roleId}" id="roleId"/>
 								         <div class="row">
-								               <div class="col-md-6"    style="height:60px;">               
-								                   <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
-														     
-														     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
-														     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
-								                     		 <label   th:text="${operation.name}" ></label>
-								                      </div>                         
+								               <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
+							               			<div class="col-md-12 col-xs-12"    style="height:60px;">               
+													     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
+													     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
+							                     		 <label   th:text="${operation.name}" ></label>
+							                      </div>                         
 								            
 								            </div>
 										</div>         
 								            <div class="form-group text-righ">						    
 											      <button type="submit"   class="submit btn btn-primary pull-right ">授权</button>
+											      <button type="button" class="btn btn-primary pull-right" id="btn_back">返回</button>
 											 </div>
 											 
 					         </form>
@@ -153,6 +153,10 @@
 	      		}});
     	
        	});
+	
+	 $(".form #btn_back").on("click",function(e){
+		 window.location.href = ctxPath+"/role/index";
+	    });
 	      
 </script>	
 <!--scrolling js-->
