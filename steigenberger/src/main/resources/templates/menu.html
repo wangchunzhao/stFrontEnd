@@ -7,12 +7,12 @@
       <nav class="navbar navbar-inverse">
           <div class="navbar-header">
             
-            <h1 style="color:#FFFFFF;">Haier <span ><img src="../images/logo.png"> </span></h1>
+            <h1 style="color:#FFFFFF;">Haier <span ><img src="./images/logo.png"> </span></h1>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="sidebar-menu">
-               <li class="treeview">
-                <a href="/steigenberger/main/todo">
+               <li class="treeview" >
+                <a href="/steigenberger/main/todo" id="todo">
                 <i class="fa fa-dashboard"></i> 
 				<span>待办任务</span>
 				<span style="font-size:12px">To-do tasks</span>
@@ -20,8 +20,8 @@
                 </a>
 				
               </li>
-              <li class="treeview">
-                <a href="/steigenberger/main/newOrder">
+              <li class="treeview" >
+                <a href="/steigenberger/main/newOrder" id="newOrder">
                 <i class="fa fa-dashboard"></i> 
 				<span>新建订单</span>
 				<span style="font-size:12px">Create Order</span>
@@ -30,8 +30,8 @@
 				
               </li>
 			 
-			   <li class="treeview">
-                <a href="/steigenberger/main/orderManage">
+			   <li class="treeview" >
+                <a href="/steigenberger/main/orderManage" id="orderManage">
                 <i class="fa fa-dashboard"></i> 
 				<span>订单管理</span>
 				<span style="font-size:12px">Order</span>
@@ -39,8 +39,8 @@
                 </a>
 				
               </li>
-			  <li class="treeview">
-                <a href="/steigenberger/main/contract">
+			  <li class="treeview"  i>
+                <a href="/steigenberger/main/contract" id="contract" >
                 <i class="fa fa-laptop"></i>
                 <span>合同管理 </span>
 				<span style="font-size:12px">Contract</span>
@@ -48,8 +48,8 @@
                 </a>
                 
               </li>
-              <li class="treeview">
-                <a href="/steigenberger/main/newSpecial">
+              <li class="treeview" >
+                <a href="/steigenberger/main/newSpecial" id="newSpecial">
                 <i class="fa fa-pie-chart"></i>
                 <span>特批发货</span>
 				<span style="font-size:12px">Special Delivery</span>
@@ -58,32 +58,30 @@
 					
               </li>
               <li class="treeview">
-              <li class="treeview">
-                <a href="#">
+              <li class="treeview" >
+                <a href="#" id="report">
                 <i class="fa fa-laptop"></i>
                 <span>报表管理 </span>
 				<span style="font-size:12px">Report</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="/steigenberger/main/report1"><i class="fa fa-angle-right"></i> <span>购销明细报表</span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
-                  <li><a href="/steigenberger/main/report2"><i class="fa fa-angle-right"></i> <span>投标跟踪表</span><span style="font-size:12px">Bid tracking report</span> </a></li>
+                  <li ><a href="/steigenberger/main/report1" id="report1"><i class="fa fa-angle-right"></i> <span>购销明细报表</span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
+                  <li ><a href="/steigenberger/main/report2" id="report2"><i class="fa fa-angle-right"></i> <span>投标跟踪表</span><span style="font-size:12px">Bid tracking report</span> </a></li>
                 </ul>
               </li>
 			  
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-edit"></i> 
-				<span>系统管理</span>
-				<span style="font-size:12px">System</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="/steigenberger/user/index" ><i class="fa fa-angle-right"></i>人员管理<span style="font-size:12px">Personnel manage</span> </a></li>
-                  <li><a href="/steigenberger/permission/permissionApply"><i class="fa fa-angle-right"></i>用户新增 <span style="font-size:12px">Add User</span></a></li>
-				  <li><a href="/steigenberger/parameterSetting/index"><i class="fa fa-angle-right"></i>参数设置 <span style="font-size:12px">Parameter Settings</span></a></li>
-				  <li><a href="/steigenberger/role/index"><i class="fa fa-angle-right"></i>角色管理 <span style="font-size:12px">Role manage</span></a></li>
-                </ul>
+              <li class="treeview" id="sys" style="display: ''" >
+	              		<a href="#">
+			                <i class="fa fa-edit"></i> 
+							<span>系统管理</span> <span style="font-size:12px">System</span><i class="fa fa-angle-left pull-right"></i>
+		                </a>
+		                <ul class="treeview-menu">
+		                  <li ><a href="/steigenberger/user/index" id="user"><i class="fa fa-angle-right"></i>人员管理<span style="font-size:12px">Personnel manage</span> </a></li>
+		                  <li ><a href="/steigenberger/permission/permissionApply" id="permission"><i class="fa fa-angle-right"></i>用户新增 <span style="font-size:12px">Add User</span></a></li>
+						  <li ><a href="/steigenberger/parameterSetting/index" id="parameterSetting"><i class="fa fa-angle-right"></i>参数设置 <span style="font-size:12px">Parameter Settings</span></a></li>
+						  <li ><a href="/steigenberger/role/index" id="role"><i class="fa fa-angle-right"></i>角色管理 <span style="font-size:12px">Role manage</span></a></li>
+		                </ul>
               </li>
               </ul>
           </div>

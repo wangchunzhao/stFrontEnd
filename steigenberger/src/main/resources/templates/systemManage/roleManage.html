@@ -109,14 +109,14 @@
 							<td th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" >560001</td>
 							<td>
 									
-                                <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal" th:title="${role.id}"
+                                <!-- <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal" th:title="${role.id}"
                                 data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
                                     		编辑 edit
-                                </button>
+                                </button> -->
                                 
-                                <button type="button" class="btn btn-primary btn-lg update_auth" data-toggle="modal"   th:title="${role.id}"
+                                <button type="button" class="btn btn-primary btn-lg update_auth"  th:title="${role.id}"
 									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
-                                    		授权 Auth
+                                    		<!-- 授权 Auth -->编辑 edit
                                 </button>
                                 
 							</td>
@@ -153,45 +153,45 @@
 	<!-- new added graphs chart js-->
 <div id="footer" class="container" th:replace="foot::foot"></div>
 
-<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1564365300654" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">编辑角色 Editing the role</h4>
-                                            </div>
-                                            <form action="" method="post" class="form roleform">
-                                            <div class="form-group">
-													<input type="number" class="form-control id hidden">
-												</div>
-                                            <div class="modal-body">
-                                                <div class="row" style="margin-left: 5px; margin-right: 5px;">
-													<div class="col-xs-6">
-														角色名称 role name
-													</div>
-													<div class="col-xs-6">
-														状态 status
-													</div>
-													<div class="col-xs-6">
-														<input type="text" class="form-control name" aria-describedby="emailHelp">
-													</div>
-													<div class="col-xs-6">
-														<select class="form-control  isActive" name="isActive">
-															<option value="1" >启用</option>
-															<option value="0" >停用</option>
-														</select>
-													</div>
-												</div>
-												
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭close</button>
-                                                <button type="submit" class="btn btn-primary">保存save</button>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+		<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1564365300654" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+                         <h4 class="modal-title" id="myModalLabel">编辑角色 Editing the role</h4>
+                     </div>
+                     <form action="" method="post" class="form roleform">
+                     <div class="form-group">
+						<input type="number" class="form-control id hidden">
+					</div>
+                    <div class="modal-body">
+                        <div class="row" style="margin-left: 5px; margin-right: 5px;">
+						<div class="col-xs-6">
+							角色名称 role name
+						</div>
+						<div class="col-xs-6">
+							状态 status
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control name">
+						</div>
+						<div class="col-xs-6">
+							<select class="form-control  isActive" name="isActive">
+								<option value="1" >启用</option>
+								<option value="0" >停用</option>
+							</select>
+						</div>
+					</div>
+					
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭close</button>
+                        <button type="submit" class="btn btn-primary">保存save</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     
 	
 <script src="../js/classie.js"></script>
@@ -289,20 +289,20 @@
 		      }
 		      
 		      toastr.options = {  
-		    	        closeButton: false,  
-		    	        debug: false,  
-		    	        progressBar: false,  
-		    	        positionClass: "toast-bottom-center",  
-		    	        onclick: null,  
-		    	        showDuration: "300",  
-		    	        hideDuration: "1000",  
-		    	        timeOut: "2000",  
-		    	        extendedTimeOut: "1000",  
-		    	        showEasing: "swing",  
-		    	        hideEasing: "linear",  
-		    	        showMethod: "fadeIn",  
-		    	        hideMethod: "fadeOut"  
-		    	    }; 
+	    	        closeButton: false,  
+	    	        debug: false,  
+	    	        progressBar: false,  
+	    	        positionClass: "toast-bottom-center",  
+	    	        onclick: null,  
+	    	        showDuration: "300",  
+	    	        hideDuration: "1000",  
+	    	        timeOut: "2000",  
+	    	        extendedTimeOut: "1000",  
+	    	        showEasing: "swing",  
+	    	        hideEasing: "linear",  
+	    	        showMethod: "fadeIn",  
+	    	        hideMethod: "fadeOut"  
+	    	    }; 
 			
 	      
 	      

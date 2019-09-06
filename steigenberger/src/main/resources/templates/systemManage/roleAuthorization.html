@@ -63,20 +63,44 @@
 		            <div class="panel-body" style="height: auto;">
 						<form action=""  role="form"  class="form">
 					         	<input type="hidden" th:value="${map?.roleId}" id="roleId"/>
-								         <div class="row">
-								               <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
-							               			<div class="col-md-12 col-xs-12"    style="height:60px;">               
-													     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
-													     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
-							                     		 <label   th:text="${operation.name}" ></label>
-							                      </div>                         
-								            
-								            </div>
-										</div>         
-								            <div class="form-group text-righ">						    
-											      <button type="submit"   class="submit btn btn-primary pull-right " style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px">授权</button>
-											      <button type="button" class="btn btn-primary pull-right" id="btn_back" style="font-size: 15px; padding: 3px 10px;float:right;margin-right:3px">返回</button>
-											 </div>
+					         		<div class="row">
+						                    <div class="col-xs-6">名称</div>
+						            </div>
+						            <div class="row">
+						                    <div class="col-xs-6">
+						                        <input type="text" class="form-control" id="name" th:value="${map?.role.name}" />
+						                    </div>
+						            </div>
+						            <div class="row">
+						                    <div class="col-xs-6"> 状态</div>
+						            </div>
+						            <div class="row">
+						                    <div class="col-xs-6">
+						                        <select class="form-control  isActive" id="isActive" th:value="${map?.role.isActive}">
+													<option value="1" th:selected="${map?.role.isActive}==1">启用</option>
+													<option value="0" th:selected="${map?.role.isActive}==0">停用</option>
+												</select>
+						                    </div>
+						             </div>
+					         	
+							         <div class="row">
+							         	<div class="col-xs-6"> 选择权限</div>
+							         </div>
+							         <div class="row">
+							               <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
+						               			<div class="col-md-6 col-xs-6"    style="height:60px;">               
+												     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
+												     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
+						                     		 <label   th:text="${operation.name}" ></label>
+						                      </div>                         
+							            
+							            </div>
+									</div>
+									         
+						            <div class="form-group text-righ">						    
+									      <button type="submit"   class="submit btn btn-primary pull-right " style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px">保存</button>
+									      <button type="button" class="btn btn-primary pull-right" id="btn_back" style="font-size: 15px; padding: 3px 10px;float:right;margin-right:3px">返回</button>
+									 </div>
 											 
 					         </form>
 		               
@@ -127,8 +151,10 @@
 
     	var oids = oid.join(",");
     	var roleId = $("#roleId").val();    
+    	var name = $("#name").val();    
+    	var isActive = $("#isActive").val();    
     	roleId=parseInt(roleId);
-    	var data={id:roleId,name:oids};
+    	var data={id:roleId,operationIds:oids,name:name,isActive:isActive};
     	console.log(data);
     	console.log(typeof oids);
     	 
