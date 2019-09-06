@@ -58,7 +58,7 @@ public class LoginController extends BaseController{
             	env.put(Context.PROVIDER_URL, url);//Url
             	try {
             		ctx = new InitialDirContext(env);// 初始化上下文
-//            		setAccount(request,userName);
+            		setAccount(request,userName);
             		modelAndView.setViewName("main");
             		System.out.println("身份验证成功!");
             		} catch (AuthenticationException e) {
