@@ -1,35 +1,122 @@
-<!DOCTYPE html>
-<html lang="en" class="fullscreen-bg" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common::head('角色授权')" >
-<meta charset="UTF-8">
-</head>
-<body>
-    <div class="panel">
-   
-     <div class="panel-body">
-      <a>角色授权</a>
-      <hr>
-         <form action=""  role="form"  class="form">
-         	<input type="hidden" th:value="${map?.roleId}" id="roleId"/>
-         <div class="row">
-               <div class="col-md-6"    style="height:60px;">               
-                   <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
-						     
-						     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
-						     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
-                     		 <label   th:text="${operation.name}" ></label>
-                      </div>                         
-            
-            </div>
-		</div>         
-            <div class="form-group text-righ">						    
-						      <button type="submit"   class="submit btn btn-primary pull-right ">授权</button>
-						 </div>
-						 
-         </form>
-       </div>
-     </div>
-	<script type="text/javascript" th:inline="javascript">
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- Bootstrap Core CSS -->
+<link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+
+<!-- Custom CSS -->
+<link href="../css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS -->
+<link href="../css/font-awesome.css" rel="stylesheet"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- side nav css file -->
+<link href='../css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+<!-- //side nav css file -->
+ 
+ <!-- js-->
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/modernizr.custom.js"></script>
+
+<!--webfonts-->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="../js/Chart.js"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="../js/metisMenu.min.js"></script>
+<script src="../js/custom.js"></script>
+<link href="../css/custom.css" rel="stylesheet">
+<!--//Metis Menu -->
+
+<!--pie-chart --><!-- index page sales reviews visitors pie chart -->
+<script src="../js/pie-chart.js" type="text/javascript"></script>
+<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<link  href="../assets/vendor/toastr/toastr.min.css" rel="stylesheet"/>
+<script src="../assets/vendor/toastr/toastr.min.js"></script>
+ 
+</head> 
+<body class="cbp-spmenu-push" style="width:100%;">
+	<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+		
+	<div id="page-wrapper" >
+		<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+		    <div class="panel panel-default">
+		        <div class="panel-heading" role="tab">
+		            <h4 class="panel-title">
+		                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">角色授权 roleAuthorization</a>
+		            </h4>
+		        </div>
+		        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+		            <div class="panel-body" style="height: auto;">
+						<form action=""  role="form"  class="form">
+					         	<input type="hidden" th:value="${map?.roleId}" id="roleId"/>
+								         <div class="row">
+								               <div class="col-md-6"    style="height:60px;">               
+								                   <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
+														     
+														     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
+														     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
+								                     		 <label   th:text="${operation.name}" ></label>
+								                      </div>                         
+								            
+								            </div>
+										</div>         
+								            <div class="form-group text-righ">						    
+											      <button type="submit"   class="submit btn btn-primary pull-right ">授权</button>
+											 </div>
+											 
+					         </form>
+		               
+		            </div>
+		        </div>
+		    </div>
+		    
+</div>
+</div>
+		
+		
+		
+		
+		
+		
+	<!-- new added graphs chart js-->
+<div id="footer" class="container" th:replace="foot::foot"></div>
+	
+<script src="../js/classie.js"></script>
+
+<script>
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+
+	function disableOther( button ) {
+		if( button !== 'showLeftPush' ) {
+			classie.toggle( showLeftPush, 'disabled' );
+		}
+	}
+	
+	
 	var ctxPath  = [[@{/}]];
 	$(".form").on("submit",function(e){
     	e.preventDefault();
@@ -66,6 +153,21 @@
 	      		}});
     	
        	});
-	</script>
+	      
+</script>	
+<!--scrolling js-->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!--//scrolling js-->
+
+<!-- side nav js -->
+<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+<script>
+     $('.sidebar-menu').SidebarNav()
+   </script>	
+<script src="../js/SimpleChart.js"></script>
+<script src="../js/bootstrap.js"> </script>	
+   
+<!--  js -->  
 </body>
 </html>
