@@ -18,9 +18,24 @@ spring:
   devtools:
     restart:
       enabled: false
+#mail
+  mail:
+     host: smtp.qq.com
+     username: 123@qq.com
+     password: 123123122qq
+     properties:
+           mail:
+              smtp:
+                auth: true
+                starttls:
+                    auth: true   
+   
 qhc:     
     frye: 
         protocal: http
         server: localhost
         port: 8801
         application: frye
+
+
+    
