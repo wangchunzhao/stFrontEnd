@@ -99,5 +99,21 @@ public class UserController {
 
 	}
 
+	@RequestMapping("/getOperations")
+	@ResponseBody
+	public JsonResult update(HttpServletRequest request) {
+		String userIdentity = (String)request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+		String msg = "";
+		int status = 0;
+		User result = userService.selectUserIdentity(userIdentity);
+		if (result.getOperationNames() != null) {
+			status = 200;
+			msg = "查询成功!";
+		} else {
+			status = 500;
+			msg = "查询失败";
+		}
+		return JsonResult.build(status,msg, result.getOperationNames());
 
+	}
 }
