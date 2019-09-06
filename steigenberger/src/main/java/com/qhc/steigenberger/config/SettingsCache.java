@@ -31,12 +31,10 @@ public class SettingsCache implements ApplicationRunner{
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		System.out.println("cache start----------------");
 		List<Parameter> ps = parameterService.getList();
 		map.put(parameterService.CATCHE_SETTINGS_NAME, ps);
 		cacheUtil.addCache(parameterService.CATCHE_SETTINGS_NAME, ps, new CacheConfModel());
 		
-		System.out.println("cache end----------------");
 	}
 
 	
