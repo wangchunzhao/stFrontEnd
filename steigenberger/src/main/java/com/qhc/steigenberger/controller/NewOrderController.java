@@ -34,7 +34,7 @@ public class NewOrderController {
 	public JsonResult permissionApply1(HttpServletRequest request) {
 		JsonResult jsonResult = null;
 		try {
-			String identityName = request.getSession().getAttribute("userIdentity").toString();
+			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
 			User user = userService.selectUserIdentity(identityName);
 			if(user.getRolesName().indexOf("1")>-1) {
 				jsonResult.build(200,"success", 1);
