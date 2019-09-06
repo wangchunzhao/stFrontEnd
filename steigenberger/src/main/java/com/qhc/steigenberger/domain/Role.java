@@ -20,7 +20,7 @@ public class Role implements Serializable{
     
     public String name;
     
-    public int isActive;
+    public int isActive=1;
 	
     public Set<ApplicationOfRolechange> apps;
 	
