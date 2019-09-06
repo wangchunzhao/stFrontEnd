@@ -92,7 +92,7 @@ public class UserController {
 
 	@RequestMapping("/getOperations")
 	@ResponseBody
-	public JsonResult update(HttpServletRequest request) {
+	public JsonResult getOperations(HttpServletRequest request) {
 		String userIdentity = (String)request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		String msg = "";
 		int status = 0;
