@@ -11,18 +11,18 @@ public class Parameter implements Serializable{
 	
 	
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private String code;
-	private String sValue;
-	private Date enableDate;
-	private String comment;
-	private String operater;
-	private String optTime;
+	public Integer id;
+	public String code;
+	public String sValue;
+	public Date enableDate;
+	public String comment;
+	public String operater;
+	public String optTime;
 	
-	private String preValue;
-	private Date preEnableDate;
-	private String afterValue;
-	private Date afterEnableDate;
+	public String preValue;
+	public Date preEnableDate;
+	public String afterValue;
+	public Date afterEnableDate;
 	
 	
 	public Date getPreEnableDate() {

@@ -13,15 +13,15 @@ import org.springframework.data.domain.Page;
  */
 public class RestPageRole implements Iterable<Role>, Serializable {
     private static final long serialVersionUID = -3720998571176536865L;
-    private List<Role> content = new ArrayList<>();
-    private long totalElements;
-    private int pageNumber;
-    private int pageSize;
-    private boolean first;
-    private boolean last;
-    private boolean empty;
-    private int totalPages;
-    private int numberOfElements;
+    public List<Role> content = new ArrayList<>();
+    public long totalElements;
+    public int pageNumber;
+    public int pageSize;
+    public boolean first;
+    public boolean last;
+    public boolean empty;
+    public int totalPages;
+    public int numberOfElements;
  
     public RestPageRole() {
     }

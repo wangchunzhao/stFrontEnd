@@ -50,7 +50,12 @@ public class UserService{
 	}
 	
 	public RestPageUser selectAndPage(int pageNum, int pageSize, User user) {
-		String url = URL_USER_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize;
+		int isActive = user.getIsActive();
+		String userMail = user.getUserMail()==null?"":user.getUserMail();
+		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
+
+		String url = URL_USER_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&isActive="+
+		isActive+"&userMail="+userMail+"&userIdentity="+userIdentity;
 		
 		return pageFryeService.getInfo(url, RestPageUser.class);
 	}

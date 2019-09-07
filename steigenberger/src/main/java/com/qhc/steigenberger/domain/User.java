@@ -24,27 +24,27 @@ public class User implements Serializable{
 	
    	public String rolesName;
    	
-   	public String region;
+   	public SapSalesOffice region;
    	
    	public String operationNames;
 	
 
 
    	
+	public SapSalesOffice getRegion() {
+		return region;
+	}
+
+	public void setRegion(SapSalesOffice region) {
+		this.region = region;
+	}
+
 	public Set<ApplicationOfRolechange> getApps() {
 		return apps;
 	}
 
 	public void setApps(Set<ApplicationOfRolechange> apps) {
 		this.apps = apps;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
 	}
 
 	public String getUserName() {

@@ -1,19 +1,21 @@
 package com.qhc.steigenberger.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.github.pagehelper.PageInfo;
+
+import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SapSalesOffice;
@@ -33,23 +35,20 @@ public class UserController {
 	SapSalesOfficeService sapSalesOfficeService;
 
 	@RequestMapping("/index")
-	public String index(@RequestParam(defaultValue = "1",name="number") Integer number,
-			@RequestParam(defaultValue = "5",name="pageSize") Integer pageSize, 
+	public String index(@RequestParam(defaultValue = "0", name = "page") Integer page,
+			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
 			User entity, 
-			Model model, 
+			Model model,
 			HttpServletRequest request) {
 		
 		model.addAttribute("user1", entity);
-		
 		//result list
-//		RestPageUser pageInfo = userService.selectAndPage(number, pageSize, entity);
-		List<User> list = userService.getList(entity);
-		PageInfo<User> pageInfo=new PageInfo<>(list);
-		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("datas", userService.selectAndPage(page, pageSize, entity));
+		model.addAttribute("currentPath", "/user/index");
 		
 		//roles list
-		List<Role> roleList = roleService.getListInfo(new Role());
-		model.addAttribute("roleList", roleList);
+//		List<Role> roleList = roleService.getListInfo(new Role());
+//		model.addAttribute("roleList", roleList);
 		return "systemManage/userManage";
 	}
 
@@ -85,6 +84,12 @@ public class UserController {
 		
 		String msg = "";
 		int status = 0;
+		ApplicationOfRolechange app = new ApplicationOfRolechange();
+		String creator = (String) request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+		app.setCreator(creator);
+		Set<ApplicationOfRolechange> set = new HashSet<ApplicationOfRolechange>();
+		set.add(app);
+		user.setApps(set);
 		User result = userService.updateUserInfo(user);
 		if (result != null) {
 			status = 200;
