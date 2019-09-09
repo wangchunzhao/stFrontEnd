@@ -9,6 +9,8 @@
 
 <!-- Bootstrap Core CSS -->
 <link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+<script src="../assets/drag/bootstrap-3.3.7/bootstrap/js/bootstrap.min.js"></script>
+<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="../css/style.css" rel='stylesheet' type='text/css' />
@@ -42,15 +44,17 @@
 <!--pie-chart --><!-- index page sales reviews visitors pie chart -->
 <script src="../js/pie-chart.js" type="text/javascript"></script>
 <link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
-
+<!--日期控件 -->
 <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css"rel="stylesheet">
 <link href="http://www.jq22.com/jquery/font-awesome.4.6.0.css" rel="stylesheet">  
-
 <link rel="stylesheet" type="text/css" media="all" href="../bootstrap-date/daterangepicker/daterangepicker-bs3.css"/>
-<script type="text/javascript" src="../bootstrap-date/daterangepicker/jquery.min.js"></script>
-		
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/jquery.min.js"></script>		
 <script type="text/javascript" src="../bootstrap-date/daterangepicker/moment.js"></script>
 <script type="text/javascript" src="../bootstrap-date/daterangepicker/daterangepicker.js"></script>
+<!--table控件 -->
+<link href="../bootstrap-table-master/dist/bootstrap-table.css" rel="stylesheet" media="screen">
+<script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
+<script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
  
 </head> 
 <body class="cbp-spmenu-push">
@@ -72,16 +76,16 @@
 
                 <div class="row">
                     <div class="col-md-3 col-xs-3">
-                        需求流水号 Code
+                       	 需求流水号 Code
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        合同号 contract code
+                        	合同号 contract code
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        创建日期 Creation time
+                       	 创建日期 Creation time
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        签约单位 Contract unit
+                       	 签约单位 Contract unit
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <input type="text" class="form-control">
@@ -99,27 +103,28 @@
                 </div>
                 <div class="row" style="margin-top: 2px;">
                     <div class="col-md-2 col-xs-2">
-                        性质分类 Classification
+                       	 性质分类 Classification
                     </div>
                     <div class="col-md-2 col-xs-2" mc-ace="~">
-                        订单类型 Order type
+                       	 订单类型 Order type
                     </div>
                     <div class="col-md-2 col-xs-2">
-                        是否年采 In mining
+                       	 是否年采 In mining
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        是否有B2C
+                       	 是否有B2C
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        是否特批折扣 special
+                        	是否特批折扣 special
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        状态 Status
+                       	 状态 Status
                     </div>
                     <div class="col-md-2 col-xs-2">
                         <select class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <option value="2">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-md-2 col-xs-2">
@@ -133,26 +138,30 @@
                     </div>
                     <div class="col-xs-3 col-md-2">
                         <select class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                        	<option value="2">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
                         <select class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <option value="2">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
                         <select class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <option value="2">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
                         <select class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <option value="2">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </div>
 
@@ -160,7 +169,8 @@
                 <div class="row" style="margin-top: 5px;">
                     <div class="col-xs-12 col-md-6"></div>
                     <div class="col-xs-12 col-md-6">
-                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 10px;">重置 reset</button><button type="button" class="btn pull-right btn-primary">查询 select</button>
+                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 10px;">重置 reset</button>
+                        <button type="button" class="btn pull-right btn-primary" id="search_btn">查询 select</button>
                     </div>
                 </div>
             </div>
@@ -174,110 +184,9 @@
         </div>
         <div id="collapseTwo-magical-coder-auto-id-1565595638071" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
             <div class="panel-body" style="height: auto;">
-
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr class="">
-                                <th class=""><div style="width:120px;">
-                                    流水号 Code
-                                </div>
-                                </th><th class=""><div style="width:180px;">
-                                        合同号 contract code
-                                    </div>
-                                </th><th class=""><div style="width:180px;">
-                                        签约单位 Contract unit
-                                    </div>
-                                </th><th class=""><div style="width:180px;">
-                                        订单类型 Order type
-                                    </div>
-                                </th><th class=""><div style="width:160px;">
-                                        是否年采 In mining
-                                    </div>
-                                </th><th class=""><div style="width:180px;">
-                                        是否有B2C 
-                                    </div>
-                                </th><th class=""><div style="width:250px;">
-                                        是否特批折扣 special discount
-                                    </div>
-                                </th><th class=""><div style="width:130px;">
-                                        折扣 discount
-                                    </div>
-                                </th>
-                                <th class=""><div style="width:160px;">
-                                    创建日期 Creation time
-                                </div>
-                                </th>
-                                <th class=""><div style="width:160px;">
-                                    状态 status
-                                </div>
-                                </th><th class=""><div style="width:460px;">
-                                        操作 operation
-                                    </div>
-                                </th><th class=""><div style="width:160px;">
-                                        SAP状态 SAP status
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="">
-                            <tr class="">
-                                <td class="">QHC20190800100</td>
-                                <td class=""></td>
-                                <td class="">Carrier Taiwan Co.,Ltd</td><td class="">经销商标准折扣下单</td><td class="">否</td><td class="">否</td><td class="">否</td><td class="">48</td><td class="">2019-08-05 14:17:39</td><td class="">客户经理定单提交成功</td>
-                                <td class=""><a href="经销商BPM.html" style="margin-right: 10px;">查看view</a><a href="/" style="margin-right: 10px;">复制copy</a><a href="查看购销明细差异BPM.html">查看差异表Differences view</a></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr class="">
-                                <td class="">QHC20190800101</td>
-                                <td class=""></td>
-                                <td class="">Carrier Taiwan Co.,Ltd</td><td class="">经销商标准折扣下单</td><td class="">否</td><td class="">否</td><td class="">否</td><td class="">48</td><td class="">2019-08-05 14:17:39</td><td class="">需求单新建保存</td>
-                                <td class=""><a href="经销商BPM.html" style="margin-right: 10px;">查看view</a><a href="经销商BPM.html" style="margin-right: 10px;">编辑edit</a><a href="/" style="margin-right: 10px;">删除delete</a><a href="/" style="margin-right: 10px;">复制copy</a><a href="查看购销明细差异BPM.html">查看差异表Differences view</a></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr class="">
-                                <td class="">QHC20190800102</td>
-                                <td class=""></td>
-                                <td class="">Carrier Taiwan Co.,Ltd</td><td class="">经销商标准折扣下单</td><td class="">否</td><td class="">否</td><td class="">否</td><td class="">48</td><td class="">2019-08-05 14:17:39</td><td class="">审批通过</td>
-                                <td class=""><a href="经销商BPM.html" style="margin-right: 10px;">查看view</a><a href="/" style="margin-right: 10px;">订单更改order change</a><a href="">订单取消Order cancellation</a></td>
-                                <td class=""></td>
-                            </tr>
-							<tr class="">
-                                <td class="">QHC20190800103</td>
-                                <td class=""></td>
-                                <td class="">Carrier Taiwan Co.,Ltd</td><td class="">直签客户投标报价</td><td class="">否</td><td class="">否</td><td class="">否</td><td class="">48</td><td class="">2019-08-05 14:17:39</td><td class="">投标审批通过</td>
-                                <td class=""><a href="经销商BPM.html" style="margin-right: 10px;">查看view</a><a href="/" style="margin-right: 10px;">是否中标winning</a><a href="">复制copy</a></td>
-                                <td class=""></td>
-                            </tr>
-							<tr class="">
-                                <td class="">QHC20190800104</td>
-                                <td class=""></td>
-                                <td class="">Carrier Taiwan Co.,Ltd</td><td class="">直签客户投标报价</td><td class="">否</td><td class="">否</td><td class="">否</td><td class="">48</td><td class="">2019-08-05 14:17:39</td><td class="">中标</td>
-                                <td class=""><a href="经销商BPM.html" style="margin-right: 10px;">查看view</a><a href="/" style="margin-right: 10px;">投标下单bid order</a><a href="">取消中标Cancel the bid</a></td>
-                                <td class=""></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <table id="mytab" class="table table-hover"></table>
                 </div>
-                <nav aria-label="分页" class="pull-right">
-                    <ul class="pagination">
-                        <li class="">
-                            <a href="#" aria-label="上一页">
-                                <span aria-hidden="true">«</span>
-                            </a>
-                        </li>
-                        <li class="disabled"><a href="#">1</a></li>
-                        <li class=""><a href="#">2</a></li>
-                        <li class="active"><a href="#">3</a></li>
-                        <li class=""><a href="#">4</a></li>
-                        <li class=""><a href="#">5</a></li>
-                        <li class="">
-                            <a href="#" aria-label="下一页">
-                                <span aria-hidden="true">»</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </div>
@@ -320,13 +229,7 @@
 <script src="../js/bootstrap.js"> </script>	
    
 <!--  js -->  
-<script src="../pageJs/permissionApply.js"></script>
-<script type="text/javascript">
-     $(document).ready(function() {
-        $('#reservation').daterangepicker(null, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
-        });
-     });
-</script>
+<script src="../pageJs/myOrder.js"></script>
+
 </body>
 </html>

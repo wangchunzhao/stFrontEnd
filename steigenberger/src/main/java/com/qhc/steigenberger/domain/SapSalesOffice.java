@@ -2,13 +2,15 @@ package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
 
+import com.qhc.steigenberger.util.Page;
+
 
 /**
  * 
  * @author lizuoshan
  *
  */
-public class SapSalesOffice implements Serializable{
+public class SapSalesOffice implements Serializable {
 	
     /**
 	 * 
