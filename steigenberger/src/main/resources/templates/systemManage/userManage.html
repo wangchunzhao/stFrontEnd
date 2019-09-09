@@ -8,7 +8,6 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
 <script src="../js/jquery-1.11.1.min.js"></script>
-<script src="../js/pie-chart.js" type="text/javascript"></script>
 <link href="../assets/bootstrap.css" rel="stylesheet">
 <link  href="../assets/vendor/toastr/toastr.min.css" rel="stylesheet"/>
 <script src="../assets/vendor/toastr/toastr.min.js"></script>
@@ -17,19 +16,17 @@
  var ctxPath  = [[@{/}]];
      $(function(){
     	  $("#btn_select").on("click",function(){
-    	      var userName=$(".searchVal1").val();
+    	      var userIdentity=$(".searchVal1").val();
     	      var userMail=$(".searchVal2").val();
-    	      var rolesName=$(".searchVal3").val();
-    	      var isActive=$(".searchVal4").val();
-    	      window.location.href = ctxPath+"user/index?userMail="+userMail+"&rolesName="+rolesName+"&isActive="+isActive+"&userName="+userName; 
+    	      var isActive=$(".searchVal3").val();
+    	      window.location.href = ctxPath+"user/index?userMail="+userMail+"&userIdentity="+userIdentity+"&isActive="+isActive; 
     	      return false;
           });
     	  
     	  $("#btn_reset").on("click",function(){
     	      $(".searchVal1").val('');
     	      $(".searchVal2").val('');
-    	      $(".searchVal3").val('');
-    	      $(".searchVal4").val(2);
+    	      $(".searchVal3").val(2);
     	      return false;
           });
     	  
@@ -98,7 +95,7 @@
 	                        <input type="text" class="form-control searchVal2" id="searchVal2" th:value="${user1?.userMail}">
 	                    </div>
 	                    <div class="col-md-4 col-xs-4">
-	                        <select class="form-control  searchVal4" name="" th:value="${user1?.isActive}">
+	                        <select class="form-control  searchVal3" name="" th:value="${user1?.isActive}">
 	                        		<option value="2">全选</option>
 									<option value="1" th:selected="${user1?.isActive }==1">启用</option>
 									<option value="0" th:selected="${user1?.isActive }==0">停用</option>
@@ -128,8 +125,8 @@
 								<th>用户名</th>
 								<th>邮箱</th>
 								<th>域账号</th>
-								<th>角色</th>
 								<th>区域</th>
+								<th>角色</th>
 								<th>账号状态</th>
 								<th>操作</th>
 							</tr>
@@ -141,8 +138,12 @@
 									<td th:text="${user.userName}">Bangalore</td>
 									<td th:text="${user.userMail}">Bangalore</td>
 									<td th:text="${user.userIdentity}">560001</td>
-									<td th:text="${user.rolesName}">Bangalore</td>
 									<td th:text="${user.region?.name}">Bangalore</td>
+								 	<td>
+									 <div th:each="role:${user.roles}">
+				                          <div th:text="${role.name }"></div>
+				                      </div>
+									</td>
 									<td th:text="${user.isActive>0?'启用' :'禁用'}" th:style="${user.isActive>0?'color:green' :'color:red'}">560001</td>
 									<td>
 									<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">

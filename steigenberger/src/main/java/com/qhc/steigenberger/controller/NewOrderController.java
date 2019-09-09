@@ -36,7 +36,7 @@ public class NewOrderController {
 		try {
 			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
 			User user = userService.selectUserIdentity(identityName);
-			if(user.getRolesName().indexOf("1")>-1) {
+			if(user.getRoles()!=null&user.getRoles().size()>0) {
 				jsonResult.build(200,"success", 1);
 			}else {
 				jsonResult.build(500,"fail", 1);

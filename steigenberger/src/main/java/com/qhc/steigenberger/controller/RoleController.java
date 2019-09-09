@@ -28,26 +28,15 @@ public class RoleController {
 	OperationService operationService;
 
 
-//	@RequestMapping("/index")
-//	public String index(@RequestParam(defaultValue = "1", name = "number") Integer number,
-//			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
-//			Role entity, 
-//			Model model,
-//			HttpServletRequest request) {
-//
-//		model.addAttribute("operationList", roleService.getListInfo(entity););
-//		return "systemManage/roleManage";
-//	}
-	
 	@RequestMapping("/index")
 	public String index(@RequestParam(defaultValue = "0", name = "page") Integer page,
 			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
 			Role entity, 
 			Model model,
 			HttpServletRequest request) {
-
+		model.addAttribute("role1", entity);
 		model.addAttribute("datas", roleService.getPageableList(page, pageSize, entity));
-		model.addAttribute("currentPath", "/role/index");
+		model.addAttribute("currentPath", "/role/index?isActive="+entity.getIsActive());
 		model.addAttribute("operationList", operationService.getList());
 		
 		return "systemManage/roleManage";
