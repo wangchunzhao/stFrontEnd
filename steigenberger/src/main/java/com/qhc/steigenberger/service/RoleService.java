@@ -73,7 +73,7 @@ public class RoleService{
 	public Map<String, Object> findInfos(int roleId) {
 		Map<String, Object> map=new HashMap<>();
 		Role role = selectRoleInfo(roleId);
-		Set<Operations> operations = role.getOperations();
+		List<Operations> operations = role.getOperations();
 		List<Operations> operationsAll = operationService.getList();
 		if(!operations.isEmpty()) {
 			for(Operations operation:operationsAll) {

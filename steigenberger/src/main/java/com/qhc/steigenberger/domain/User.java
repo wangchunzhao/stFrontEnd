@@ -1,7 +1,7 @@
 package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 
@@ -20,13 +20,13 @@ public class User implements Serializable{
     
     public String userName;
     
-    private Set<ApplicationOfRolechange> apps;
+    public List<ApplicationOfRolechange> apps;
 	
-   	public String rolesName;
+    public SapSalesOffice region;//区域
    	
-   	public SapSalesOffice region;
+   	public List<Role> roles;
    	
-   	public String operationNames;
+   	public List<Operations> operations;//区域下对应的权限
 	
 
 
@@ -37,14 +37,6 @@ public class User implements Serializable{
 
 	public void setRegion(SapSalesOffice region) {
 		this.region = region;
-	}
-
-	public Set<ApplicationOfRolechange> getApps() {
-		return apps;
-	}
-
-	public void setApps(Set<ApplicationOfRolechange> apps) {
-		this.apps = apps;
 	}
 
 	public String getUserName() {
@@ -87,20 +79,28 @@ public class User implements Serializable{
 		this.isActive = isActive;
 	}
 
-	public String getRolesName() {
-		return rolesName;
+	public List<Operations> getOperations() {
+		return operations;
 	}
 
-	public void setRolesName(String rolesName) {
-		this.rolesName = rolesName;
+	public void setOperations(List<Operations> operations) {
+		this.operations = operations;
 	}
 
-	public String getOperationNames() {
-		return operationNames;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setOperationNames(String operationNames) {
-		this.operationNames = operationNames;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public List<ApplicationOfRolechange> getApps() {
+		return apps;
+	}
+
+	public void setApps(List<ApplicationOfRolechange> apps) {
+		this.apps = apps;
 	}
 
 

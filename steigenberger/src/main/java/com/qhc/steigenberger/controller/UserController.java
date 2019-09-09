@@ -1,10 +1,8 @@
 package com.qhc.steigenberger.controller;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
-import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.RoleService;
@@ -44,11 +40,11 @@ public class UserController {
 		model.addAttribute("user1", entity);
 		//result list
 		model.addAttribute("datas", userService.selectAndPage(page, pageSize, entity));
-		model.addAttribute("currentPath", "/user/index");
+		String userMail = entity.getUserMail()==null?"":entity.getUserMail();
+		String userIdentity = entity.getUserIdentity()==null?"":entity.getUserIdentity();
+		String pp = "/user/index?isActive="+entity.getIsActive()+"&userMail="+userMail+"&userIdentity="+userIdentity;
+		model.addAttribute("currentPath", pp);
 		
-		//roles list
-//		List<Role> roleList = roleService.getListInfo(new Role());
-//		model.addAttribute("roleList", roleList);
 		return "systemManage/userManage";
 	}
 
@@ -87,9 +83,9 @@ public class UserController {
 		ApplicationOfRolechange app = new ApplicationOfRolechange();
 		String creator = (String) request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		app.setCreator(creator);
-		Set<ApplicationOfRolechange> set = new HashSet<ApplicationOfRolechange>();
-		set.add(app);
-		user.setApps(set);
+		List<ApplicationOfRolechange> list = new ArrayList<ApplicationOfRolechange>();
+		list.add(app);
+		user.setApps(list);
 		User result = userService.updateUserInfo(user);
 		if (result != null) {
 			status = 200;
@@ -98,7 +94,7 @@ public class UserController {
 			status = 500;
 			msg = "操作失败";
 		}
-		return JsonResult.build(status, "角色" + msg, "");
+		return JsonResult.build(status, "角色" + msg, result);
 
 	}
 
@@ -109,14 +105,14 @@ public class UserController {
 		String msg = "";
 		int status = 0;
 		User result = userService.selectUserIdentity(userIdentity);
-		if (result.getOperationNames() != null) {
+		if (result.getOperations() != null&&result.getOperations().size()>0) {
 			status = 200;
 			msg = "查询成功!";
 		} else {
 			status = 500;
 			msg = "查询失败";
 		}
-		return JsonResult.build(status,msg, result.getOperationNames());
+		return JsonResult.build(status,msg,result);
 
 	}
 	

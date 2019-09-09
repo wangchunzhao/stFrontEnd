@@ -3,20 +3,12 @@ package com.qhc.steigenberger.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
-import com.qhc.steigenberger.domain.Operations;
-import com.qhc.steigenberger.domain.RestPageRole;
 import com.qhc.steigenberger.domain.RestPageUser;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.util.CommonConstant;
 
 @Service
 public class UserService{
@@ -44,8 +36,7 @@ public class UserService{
 		Integer isActive = user.getIsActive();
 		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
 		String userMail = user.getUserMail()==null?"":user.getUserMail();
-		String rolesName = user.getRolesName()==null?"":user.getRolesName();
-		String url = URL_USER+"?userIdentity"+userIdentity+"&userMail="+userMail+"&isActive="+isActive+"&rolesName="+rolesName;
+		String url = URL_USER+"?userIdentity"+userIdentity+"&userMail="+userMail+"&isActive="+isActive;
 		return  fryeService.getListInfo(url,User.class);
 	}
 	
@@ -87,23 +78,21 @@ public class UserService{
 	public Map<String, Object> findInfos(String userIdentity) {
 		Map<String, Object> map=new HashMap<>();
 		User user = selectUserIdentity(userIdentity);
-		Set<ApplicationOfRolechange> apps = user.getApps();
+		List<Role> roleList = user.getRoles();
 		List<Role> rolesAll = roleService.getListInfo(new Role());
 		if(!rolesAll.isEmpty()) {
 			for(Role r:rolesAll) {
-				if(apps!=null&&apps.size()>0) {
-					for(ApplicationOfRolechange app: apps) {
-						if(app.getbRolesId()==r.getId()) {
+				if(roleList!=null&&roleList.size()>0) {
+					for(Role role: roleList) {
+						if(role.getId()==r.getId()) {
 							r.setSelected(true);
 						}
 					}
 				}
 			}
 		}
-
-		map.put("userId", user.getId());				
+		user.setRoles(rolesAll);
 		map.put("user", user);				
-		map.put("rolesAll", rolesAll);
 		return map;
 	}
 
