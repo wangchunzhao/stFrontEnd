@@ -144,22 +144,18 @@
 		                //alert("没有查到数据！");
 		            }
 		        }); 
-				
-				
 			});
+			
 			function changeFrameHeight(){
 			    var ifm= document.getElementById("myIfram"); 
 			    ifm.height=document.documentElement.clientHeight-150;
 
 			}
 
-			/* function show(){
-				window.location.href = ctxPath+"user/showUserProfile?userIdentity="+userIdentity; 
-			} */
 			window.onresize=function(){  
 			     changeFrameHeight();  
-
 			} 
+			
 	</script>
 </head> 
 <body class="cbp-spmenu-push">
@@ -168,7 +164,7 @@
 		<div class="sticky-header header-section " th:replace="head::head">	</div>
 		<!-- main content start-->
 			<div id="page-wrapper" >
-				<iframe id="myIfram"  name="myIfram"  scrolling="yes"  width="100%"  onload="changeFrameHeight()" frameborder="0"></iframe>
+				<iframe id="myIfram"  name="myIfram"  scrolling="yes"  width="100%" height="90%;" onload="changeFrameHeight()" frameborder="0"></iframe>
 			</div>
 	</div>		
 	<div id="footer" class="container" th:replace="foot::foot"></div>
