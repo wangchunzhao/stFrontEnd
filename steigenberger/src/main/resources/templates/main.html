@@ -63,9 +63,13 @@
 		            	console.log(result.data);
 		            	var user = result.data;
 		            	//profile赋值
-		            	$("#userId").text("id:"+user.id);
-		            	$("#userName").text("userName:"+user.userName);
-		            	$("#userIdentity").text("userIdentity:"+user.userIdentity);
+		            	//$("#userId").text("id:"+user.id);
+		            	//$("#userName").text("userName:"+user.userName);
+		            	//$("#userIdentity").text("userIdentity:"+user.userIdentity);
+		            	
+		            	$("#userId").text(user.id);
+		            	$("#userName").text(user.userName);
+		            	$("#userIdentity").text(user.userIdentity);
 		            	var roleList = user.roles;
 		            	var roleNames = "";
 		            	for(var i=0;i<roleList.length;i++){
@@ -75,7 +79,8 @@
 		            			roleNames+=roleList[i].name+",";
 		            		}
 		            	}
-		            	$("#userRoles").text("userRoles:"+roleNames);
+		            	//$("#userRoles").text("userRoles:"+roleNames);
+		            	$("#userRoles").text(roleNames);
 		            	
 		            	//判断权限
 		            	userIdentity = result.data.userIdentity;
