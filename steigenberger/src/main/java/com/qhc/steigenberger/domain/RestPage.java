@@ -2,18 +2,20 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-
 import org.springframework.data.domain.Page;
+ 
+
 
 
 /**
  * @Author lizuoshan
  */
-public class RestPageUser implements Iterable<User>, Serializable {
+public class RestPage<T> implements Serializable {
+	
     private static final long serialVersionUID = -3720998571176536865L;
-    private List<User> content = new ArrayList<>();
+    
+    private List<T> content = new ArrayList<>();
     private long totalElements;
     private int pageNumber;
     private int pageSize;
@@ -23,11 +25,11 @@ public class RestPageUser implements Iterable<User>, Serializable {
     private int totalPages;
     private int numberOfElements;
  
-    public RestPageUser() {
+    public RestPage() {
     }
  
     //只用把原来的page类放进来即可
-    public RestPageUser(Page<User> page) {
+    public RestPage(Page<T> page) {
         this.content = page.getContent();
         this.totalElements = page.getTotalElements();
         this.pageNumber = page.getPageable().getPageNumber();
@@ -56,12 +58,12 @@ public class RestPageUser implements Iterable<User>, Serializable {
     }
  
     //获取内容
-    public List<User> getContent() {
+    public List<T> getContent() {
         return Collections.unmodifiableList(content);
     }
  
     //设置内容
-    public void setContent(List<User> content) {
+    public void setContent(List<T> content) {
         this.content = content;
     }
  
@@ -140,10 +142,10 @@ public class RestPageUser implements Iterable<User>, Serializable {
         this.empty = empty;
     }
  
-    //迭代器
-    @Override
-    public Iterator<User> iterator() {
-        return getContent().iterator();
-    }
+//    //迭代器
+//    @Override
+//    public Iterator<Role> iterator() {
+//        return getContent().iterator();
+//    }
 
 }
