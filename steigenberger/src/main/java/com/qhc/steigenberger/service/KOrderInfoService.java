@@ -24,7 +24,7 @@ public class KOrderInfoService {
 		String contractUnit = kOrderInfo.getContractUnit()==null?"":kOrderInfo.getContractUnit();
 		
 		
-		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&b2c="+kOrderInfo.getB2c();
+		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&b2c="+kOrderInfo.getB2c()+"&createId="+kOrderInfo.getCreateId()+"&area="+kOrderInfo.getArea();
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
 

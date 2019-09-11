@@ -26,6 +26,8 @@ public class KOrderInfo extends Page implements Serializable {
 	private int status;
 	
 	private int sapStatus;
+	
+	private int createId;
 
 	public int getId() {
 		return id;
@@ -105,6 +107,14 @@ public class KOrderInfo extends Page implements Serializable {
 
 	public void setSapStatus(int sapStatus) {
 		this.sapStatus = sapStatus;
+	}
+
+	public int getCreateId() {
+		return createId;
+	}
+
+	public void setCreateId(int createId) {
+		this.createId = createId;
 	}
 	
 	

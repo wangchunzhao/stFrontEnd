@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.service.KOrderInfoService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
+import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.util.PageHelper;
 
 @Controller
@@ -25,13 +28,42 @@ public class KOrderInfoController extends BaseController{
 	@Autowired
 	KOrderInfoService kOrderInfoService;
 	
+	@Autowired
+	UserOperationInfoService userOperationInfoService;
+	
+	String allorder = "全部";
+	String self = "自己";
+	String benqu = "大区";
+	
+	
+	
 	@RequestMapping("/kOrderInfoList")
 	@ResponseBody
 	public PageHelper<KOrderInfo> getUserListPage(KOrderInfo kOrderInfo,HttpServletRequest request) {
+		PageHelper<KOrderInfo> pageHelper = null;
+		//取得session的用户域账号
+//		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		try {
+			User user = userService.selectUserIdentity("wangch");//identityName
+			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		
-	
-		// 查询当前页实体对象
-		PageHelper<KOrderInfo> pageHelper = kOrderInfoService.getList(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
+			for (int i = 0; i < userOperationInfoList.size(); i++) {
+				String operationName = userOperationInfoList.get(i).getOperationName();
+				if(operationName.equals(allorder)) {
+					break;
+				}else if(operationName.equals(benqu)) {
+					kOrderInfo.setArea(Integer.valueOf(userOperationInfoList.get(i).getAttachedCode()));
+					break;
+				}else {
+					kOrderInfo.setCreateId(user.id);
+				}
+			}
+			// 查询当前页实体对象
+			pageHelper = kOrderInfoService.getList(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return pageHelper;
 	}
 	
@@ -41,11 +73,6 @@ public class KOrderInfoController extends BaseController{
   	}
 	
 	
-	@RequestMapping("/getUserListPage")
-	@ResponseBody
-	public List<SapSalesOffice> getUserListPage1(SapSalesOffice sapSalesOffice,HttpServletRequest request){
-		List<SapSalesOffice> list = sapSalesOfficeService.getList();
-		return list;
-	}
+	
 
 }
