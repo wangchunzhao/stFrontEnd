@@ -47,7 +47,15 @@ public class RoleService{
 	}
 
 	
-	public Role saveRoleInfo(Role role) {
+	public Role saveRoleInfo(int id) {
+		Role role = selectRoleInfo(id);
+		int isActive=role.getIsActive();
+		if(isActive == 1) {
+			isActive = 0;
+		}else {
+			isActive= 1;
+		}
+		role.setIsActive(isActive);
 		return fryeService.postInfo(role,URL_ROLE, Role.class);
 	}
 	
