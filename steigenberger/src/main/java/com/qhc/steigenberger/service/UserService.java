@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
-import com.qhc.steigenberger.domain.RestPageUser;
+import com.qhc.steigenberger.domain.RestPage;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
 
@@ -17,7 +17,7 @@ public class UserService{
 	FryeService<User> fryeService;
 	
 	@Autowired
-	FryeService<RestPageUser> pageFryeService;
+	FryeService<RestPage> pageFryeService;
 	@Autowired
 	RoleService roleService;
 	
@@ -40,7 +40,7 @@ public class UserService{
 		return  fryeService.getListInfo(url,User.class);
 	}
 	
-	public RestPageUser selectAndPage(int pageNum, int pageSize, User user) {
+	public RestPage<User> selectAndPage(int pageNum, int pageSize, User user) {
 		int isActive = user.getIsActive();
 		String userMail = user.getUserMail()==null?"":user.getUserMail();
 		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
@@ -48,7 +48,7 @@ public class UserService{
 		String url = URL_USER_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&isActive="+
 		isActive+"&userMail="+userMail+"&userIdentity="+userIdentity;
 		
-		return pageFryeService.getInfo(url, RestPageUser.class);
+		return pageFryeService.getInfo(url, RestPage.class);
 	}
 
 

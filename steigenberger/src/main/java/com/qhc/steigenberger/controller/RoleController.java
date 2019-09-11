@@ -45,11 +45,10 @@ public class RoleController {
 	
 	@RequestMapping("/update")
 	@ResponseBody
-	public JsonResult update(@RequestBody Role role,HttpServletRequest request) {
+	public JsonResult update(@RequestParam Integer id,HttpServletRequest request) {
 		String msg = "";
 		int status = 0;
-		Role result = roleService.saveRoleInfo(role);
-	
+		Role result = roleService.saveRoleInfo(id);
 		if (result != null) {
 			status = 200;
 			msg = "操作成功！";

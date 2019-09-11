@@ -61,7 +61,9 @@
 						<tr th:each="role,roleStart: ${datas.content}">
 							<td th:text="${roleStart.count}">560001</td>
 							<td th:text="${role?.name}" value="${role?.name}">Bangalore</td>
-							<td th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" >560001</td>
+							<td >
+								<a href="javascript:void(0);" class="isActive" th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" th:onclick="'javascript:update('+${role.id}+')' "></a>
+							</td>
 							<td>
                                 <!-- <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal" th:title="${role.id}"
                                 data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
@@ -102,7 +104,7 @@
 	  			}
     	  });
     	  
-    	  $(".roleform").on("submit",function(e){
+    	/*   $(".roleform").on("submit",function(e){
     		  e.preventDefault();
     		  var url=ctxPath+"role/update";
     		  var id=null;
@@ -128,7 +130,8 @@
     		      		  error: function (xhr) {
     		      	        console.log(xhr);
     		      	    } });
-    	     });
+    	     }); */
+    	  
     	  
 	    	  $("#btn_select").on("click",function(){
 	    		  var name=$(".searchVal1").val();
@@ -143,6 +146,30 @@
 	          });
           });
       
+		function update(id){
+			var url=ctxPath+"role/update?id="+id;
+			 $.ajax(
+ 		      		{type:"GET",
+ 		      		   url: url,
+ 		      		   contentType:'application/json;charset=utf-8',
+ 		      		   success: function(data){	  
+ 		      			if(data.status>200){
+ 	 	       		    	toastr.warning(data.msg);  
+	 	 	       		    setTimeout(function(){
+	 	 	       		    	window.location.reload();
+	 	 	       		     },2000);
+ 	 	       		    }else{
+ 	 	       		    	toastr.success(data.msg);
+ 	 	       		        setTimeout(function(){
+ 	 	       		    	window.location.href = ctxPath+"/role/index";
+ 	 	       		        },2000);
+ 	 	       		    } 		
+ 		      		   },
+ 		      		  error: function (xhr) {
+ 		      	        console.log(xhr);
+ 		      	    } });
+	
+		}
 
 		function showmsg(data){
 	    	  if(data.status>200){

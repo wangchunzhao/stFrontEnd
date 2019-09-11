@@ -28,30 +28,21 @@
 					                        <input type="text" class="form-control" id="name" th:value="${map?.role.name}" />
 					                    </div>
 					            </div>
-					            <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
-					                    <div class="col-xs-12"> 状态</div>
-					            </div>
-					            <div class="row" style="padding: 3px 10px;margin-right:15px">
-					                    <div class="col-xs-12">
-					                        <select class="form-control  isActive" id="isActive" th:value="${map?.role.isActive}">
-												<option value="1" th:selected="${map?.role.isActive}==1">启用</option>
-												<option value="0" th:selected="${map?.role.isActive}==0">停用</option>
-											</select>
-					                    </div>
-					             </div>
-				         	
 						         <div class="row" style="width:200px;padding: 3px 10px;margin-top:15px;margin-right:15px">
 						         	<div class="col-xs-6"> 选择权限</div>
 						         </div>
-						         <div class="row" style="padding: 3px 10px;margin-left:10px;margin-right:20px;width:96%; height:200px; border:solid 1px #CCC;">
-						               <div  class="checkbox checkbox-inline checkbox-success"  th:each="operation,operationStart:${map?.operationsAll}" >                                          				   				       
-					               			<div class="col-md-6 col-xs-6"    style="height:50px;width:150px;padding: 3px 10px;float:left;margin-left:15px">               
-											     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
-											     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
-					                     		 <label   th:text="${operation.name}" ></label>
-					                      </div>                         
-						            	
-						            </div>
+						         <div class="row" style="padding: 3px 10px;margin-left:10px;margin-right:20px;width:96%; height:200px; border:solid 1px #CCC;overflow: auto;">
+									  <table class="table" >
+									  	<tr th:each="operation,operationStart:${map?.operationsAll}"  >
+									  		<td>
+										  		<div class="checkbox checkbox-inline checkbox-success">
+										  			<input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
+												     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
+						                     		 <label   th:text="${operation.name}" ></label>
+										  		</div>
+									  		</td>
+									  	</tr>
+									  </table>				               
 								</div>
 								         
 					            <div class="form-group text-righ" style="padding: 3px 10px;margin-top:65px;margin-right:15px">						    
@@ -81,7 +72,8 @@
     	//var oids = oid.join(",");
     	var roleId = $("#roleId").val();    
     	var name = $("#name").val();    
-    	var isActive = $("#isActive").val();    
+    	var isActive = $("#isActive").val();  
+    	
     	roleId=parseInt(roleId);
     	var data={id:roleId,operations:ops,name:name,isActive:isActive};
     	console.log(data);

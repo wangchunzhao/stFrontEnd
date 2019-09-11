@@ -3,15 +3,13 @@ package com.qhc.steigenberger.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.Operations;
-import com.qhc.steigenberger.domain.RestPageRole;
+import com.qhc.steigenberger.domain.RestPage;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.util.CommonConstant;
 
 @Service
 public class RoleService{
@@ -23,7 +21,7 @@ public class RoleService{
 	FryeService<Role> fryeService;
 	
 	@Autowired
-	FryeService<RestPageRole> pageFryeService;
+	FryeService<RestPage> pageFryeService;
 	
 	private final static String URL_ROLE = "role";
 	private final static String URL_ROLE_PAGEABLELIST = "role/paging";
@@ -36,10 +34,10 @@ public class RoleService{
 		return pageInfo;
 	}
 	
-	public RestPageRole getPageableList(int pageNum, int pageSize, Role role) {
+	public RestPage<Role> getPageableList(int pageNum, int pageSize, Role role) {
 		String url = URL_ROLE_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&isActive="+role.getIsActive();
 		
-		return pageFryeService.getInfo(url, RestPageRole.class);
+		return pageFryeService.getInfo(url, RestPage.class);
 	}
 
 	
@@ -49,7 +47,15 @@ public class RoleService{
 	}
 
 	
-	public Role saveRoleInfo(Role role) {
+	public Role saveRoleInfo(int id) {
+		Role role = selectRoleInfo(id);
+		int isActive=role.getIsActive();
+		if(isActive == 1) {
+			isActive = 0;
+		}else {
+			isActive= 1;
+		}
+		role.setIsActive(isActive);
 		return fryeService.postInfo(role,URL_ROLE, Role.class);
 	}
 	
