@@ -15,20 +15,31 @@
 				<!--notification menu end -->
 				<div class="clearfix"> </div>
 			</div>
-			<div class="header-right" style="margin-right: 25px;">
-			<div id="navbar-menu">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="./images/user1.png" class="img-circle" alt="Avatar"> <span th:text="${session.userIdentity}"></span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="javascript:void(0);"><i class="lnr lnr-user"></i> <span  style="color:#F2B33F">Id:</span><span id="userId" >My Profile</span></a></li>
-								<li><a href="javascript:void(0);"><i class="lnr lnr-envelope"></i> <span style="color:#F2B33F">userName:</span><span id="userName" >userName</span></a></li>
-								<li><a href="javascript:void(0);"><i class="lnr lnr-cog"></i> <span  style="color:#F2B33F">userIdentity:</span><span id="userIdentity" >userIdentity</span></a></li>
-								<li><a href="javascript:void(0);"><i class="lnr lnr-exit"></i> <span style="color:#F2B33F">roles:</span><span id="userRoles" >roles</span></a></li>
+			<div class="header-right" style="margin-right: 35px;">
+			<div class="profile_details">		
+					<ul>
+						<li class="dropdown profile_details_drop">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<div class="profile_img">	
+									<span class="prfil-img"><img src="images/2.jpg" alt=""> </span> 
+									<div class="user-name">
+										<img src="./images/user1.png" class="img-circle">
+										<span th:text="${session.userIdentity}"></span>
+									</div>
+									<i class="fa fa-angle-down lnr"></i>
+									<i class="fa fa-angle-up lnr"></i>
+									<div class="clearfix"></div>	
+								</div>	
+							</a>
+							<ul class="dropdown-menu drp-mnu">
+								<li> <a href="#"><i class="fa fa-user"></i> <span id="userName" >userIdentity</span></a> </li> 
+								<li> <a href="#"><i class="fa fa-suitcase"></i><span id="userIdentity" >userName</span></a> </li> 
+								<li> <a href="#"><i class="fa fa-cog"></i><span id="userRoles">roles</span></a> </li>
 							</ul>
 						</li>
 					</ul>
-				</div>			
+				</div>
+				
 				
 				<div class="clearfix"> </div>				
 			</div>
