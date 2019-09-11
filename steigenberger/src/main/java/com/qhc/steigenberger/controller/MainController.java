@@ -74,6 +74,12 @@ public class MainController {
   	}
     
     
+    @RequestMapping("/noAuthorization")
+    public String noAuthorization() {
+    	return "noAuthorization";
+    }
+    
+    
     
     
     
