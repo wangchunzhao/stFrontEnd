@@ -48,7 +48,8 @@
 <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css"rel="stylesheet">
 <link href="http://www.jq22.com/jquery/font-awesome.4.6.0.css" rel="stylesheet">  
 <link rel="stylesheet" type="text/css" media="all" href="../bootstrap-date/daterangepicker/daterangepicker-bs3.css"/>
-<script type="text/javascript" src="../bootstrap-date/daterangepicker/jquery.min.js"></script>		
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/jquery.min.js"></script>	
+<script src="../js/jquery-1.11.1.min.js"></script>	
 <script type="text/javascript" src="../bootstrap-date/daterangepicker/moment.js"></script>
 <script type="text/javascript" src="../bootstrap-date/daterangepicker/daterangepicker.js"></script>
 <!--table控件 -->
@@ -79,7 +80,7 @@
                        	 需求流水号 Code
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        	合同号 contract code
+                                                                                    合同号 contract code
                     </div>
                     <div class="col-md-3 col-xs-3">
                        	 创建日期 Creation time
@@ -88,24 +89,24 @@
                        	 签约单位 Contract unit
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="id">
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="contractNo">
                     </div>
                     <div class="col-md-3 col-xs-3">
 					   <input type="text" readonly name="reservation" id="reservation" class="form-control"  /> 
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="contractUnit" >
                     </div>
 
                 </div>
                 <div class="row" style="margin-top: 2px;">
                     <div class="col-md-2 col-xs-2">
-                       	 性质分类 Classification
+                       	 区域  Area
                     </div>
-                    <div class="col-md-2 col-xs-2" mc-ace="~">
+                    <div class="col-md-2 col-xs-2" >
                        	 订单类型 Order type
                     </div>
                     <div class="col-md-2 col-xs-2">
@@ -115,20 +116,21 @@
                        	 是否有B2C
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        	是否特批折扣 special
+                                                                                     是否特批折扣 special
                     </div>
                     <div class="col-xs-3 col-md-2">
                        	 状态 Status
                     </div>
                     <div class="col-md-2 col-xs-2">
-                        <select class="form-control">
-                            <option value="2">请选择</option>
+                        <select class="form-control" id="area">
+                            <option value="-1">请选择</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-md-2 col-xs-2">
-                        <select class="form-control">
+                        <select class="form-control" id="orderType">
+                        	<option value="-1">请选择</option>
                             <option value="1">经销商标准折扣下单</option>
                             <option value="2">经销商非标准折扣下单</option>
 							<option value="3">直签客户投标报价</option>
@@ -137,31 +139,38 @@
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        <select class="form-control">
-                        	<option value="2">请选择</option>
+                        <select class="form-control" id="id">
+                        	<option value="-1">请选择</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        <select class="form-control">
-                            <option value="2">请选择</option>
+                        <select class="form-control" id="b2c">
+                            <option value="-1">请选择</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        <select class="form-control">
-                            <option value="2">请选择</option>
+                        <select class="form-control" id="specialDiscount">
+                            <option value="-1">请选择</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
-                        <select class="form-control">
-                            <option value="2">请选择</option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
+                        <select class="form-control" id="status">
+                            <option value="-1">请选择</option>
+                            <option value="1">需求单新建保存</option>
+                            <option value="2">客户经理提交成功</option>
+                            <option value="3">B2C审核提交成功</option>
+                            <option value="4">工程人员提交成功</option>
+                            <option value="5">支持经理提交成功</option>
+                            <option value="6">订单审批通过</option>
+                            <option value="7">订单更改审批通过</option>
+                            <option value="8">订单更改保存</option>
+                            <option value="9">订单更改提交成功</option>
                         </select>
                     </div>
 
@@ -179,10 +188,10 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse"  aria-expanded="false" style="margin-left: 3%;">订单列表 ORDER LIST</a>
+                <a role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1565595638071" aria-expanded="true" class="">订单列表 ORDER LIST</a>
             </h4>
         </div>
-        <div id="collapseTwo-magical-coder-auto-id-1565595638071" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
+        <div id="collapseTwo-magical-coder-auto-id-1565595638071" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true" >
             <div class="panel-body" style="height: auto;">
                 <div class="table-responsive">
                     <table id="mytab" class="table table-hover"></table>
@@ -192,6 +201,7 @@
     </div>
 </div>
 </div>
+
 <div id="footer" class="container" th:replace="foot::foot"></div>
     
 	
