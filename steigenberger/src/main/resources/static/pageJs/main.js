@@ -40,39 +40,39 @@
 		            	   $('#todo').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("newOrder")==-1){ 
-			       			$('#newOrder').attr('href','javascript:void(0);');
+			       			$('#newOrder').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("orderManage")==-1){
-			       			$('#orderManage').attr('href','javascript:void(0);');
+			       			$('#orderManage').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("contract")==-1){
-			       			$('#contract').attr('href','javascript:void(0);');
+			       			$('#contract').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("newSpecial")==-1){
 			       			$('#newSpecial').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("report1")==-1){
-			       			$('#report1').attr('href','javascript:void(0);');
+			       			$('#report1').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("report2")==-1){
-			       			$('#report2').attr('href','javascript:void(0);');
+			       			$('#report2').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		
 			       		if(operationNames.indexOf("report1")==-1&&operationNames.indexOf("report2")==-1){
-			       			$('#report').attr('href','javascript:void(0);');
+			       			$('#report').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		
 			       		if(operationNames.indexOf("user")==-1){
-			       			$('#user').attr('href','javascript:void(0);');
+			       			$('#user').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("permission")==-1){
-			       			$('#permission').attr('href','javascript:void(0);');
+			       			$('#permission').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("parameterSetting")==-1){
-			       			$('#parameterSetting').attr('href','javascript:void(0);');
+			       			$('#parameterSetting').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("role")==-1){
-			       			$('#role').attr('href','javascript:void(0);');
+			       			$('#role').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		
 			       		if(operationNames.indexOf("user")==-1&&
