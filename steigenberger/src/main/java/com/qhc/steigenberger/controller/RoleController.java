@@ -1,18 +1,15 @@
 package com.qhc.steigenberger.controller;
 
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.github.pagehelper.PageInfo;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.service.OperationService;
@@ -72,7 +69,7 @@ public class RoleController {
 	public JsonResult updateAuthorization(@RequestBody Role role,HttpServletRequest request) {
 		String msg = "";
 		int status = 0;
-		Role result = roleService.updateRoleOperation(role);//其中name存放的是权限的code字符串
+		Role result = roleService.updateRoleOperation(role);
 		
 		if (result != null) {
 			status = 200;
@@ -82,7 +79,6 @@ public class RoleController {
 			msg = "授权操作失败";
 		}
 		return JsonResult.build(status, "角色" + msg, "");
-
 	}
 	 
 }
