@@ -139,22 +139,32 @@
    
 <!--  js -->  
 <script >
+
+
 function doSomething(){
-	 $.ajaxSettings.async = false;
-	 var result = $.post('/steigenberger/newOrder/createOrder',null,function(ret){
-		if(ret.status==200){
-			return "success";
-		}else{
-			return "fail"
-		}
-	},'json');
-	 
-	if(result.status==200){
-		return true;
-	}else{
-		alert("对不起，您没有下单权限");
-		return false;
-	}
+	
+	 var ret = false;
+	 $.ajax({
+		 url:'/steigenberger/newOrder/createOrder',
+		 data:{ menu:'下单'},
+		 dataType:'json',
+		 method:'POST',
+		 async:false,
+		 success:function(resp){
+			 console.log(resp);
+				if(resp.status==200){
+					 ret = true;
+				}else{
+					 alert("对不起，您没有下单权限");
+					 ret = false;
+				}
+		 },
+		 error:function(resp,status){
+			 console.log(resp);
+		 }
+	 });
+	
+	return ret;
 	
 }
 </script>

@@ -33,7 +33,7 @@ public class NewOrderController {
 	public String permissionApply() {
 		System.out.println("111111111");
 		
-		return "main";
+		return "newOrder/newOrder";
 	}
 	
 	
@@ -41,15 +41,15 @@ public class NewOrderController {
 	@PostMapping("/createOrder")
 	@ResponseBody
 	public JsonResult permissionApply1(HttpServletRequest request) {
-		JsonResult jsonResult = null;
+		
 		try {
-			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
-			User user = userService.selectUserIdentity(identityName);
+//			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			User user = userService.selectUserIdentity("wangch");
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for(int i = 0; i < userOperationInfoList.size(); i++) {
 				String operationName = userOperationInfoList.get(i).getOperationName();
 				if(operationName.equals(newOrder)) {
-					jsonResult.build(200,"success", 1);
+					return JsonResult.build(200, "success", null);
 				}
 			}
 //			if(user.getRoles()!=null&user.getRoles().size()>0) {
@@ -60,7 +60,7 @@ public class NewOrderController {
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
-		return jsonResult;
+		return JsonResult.build(401, "fail", null);
 	}
 
 }
