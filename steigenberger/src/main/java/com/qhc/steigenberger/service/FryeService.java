@@ -90,10 +90,16 @@ public class FryeService<T> {
 		return response.block();
 	}
 	
-	public List<T> getListInfo(String path,Class T) {
+	public List<T> getListInfo(String path,Class<T> T) {
 		String url = config.getFryeURL()+path;
 		WebClient webClient = WebClient.create(url);
-		Flux<T> userFlux = webClient.get().uri(url).retrieve().bodyToFlux(T);
+		Flux<T> userFlux = webClient.get()
+				.uri(url)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToFlux(T);
 		List<T> list = userFlux.collectList().block();
 		return list;
 	}
@@ -112,7 +118,11 @@ public class FryeService<T> {
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Mono.just(t),T)
-                .retrieve().bodyToMono(T);
+                .retrieve()
+                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+                .bodyToMono(T);
 		return resp.block();
 	}
 	
