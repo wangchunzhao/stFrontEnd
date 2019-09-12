@@ -70,13 +70,14 @@
 						         <div class="row" style="padding: 3px 10px;margin-left:10px;margin-right:20px;width:96%; height:200px; border:solid 1px #CCC;overflow: auto;">
 									  <table class="table" >
 									  	<tr th:each="operation,operationStart:${map?.operationsAll}"  >
-									  		<td>
+									  		<td style="width:40%;">
 										  		<div class="checkbox checkbox-inline checkbox-success">
 										  			<input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
 												     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
 						                     		 <label   th:text="${operation.name}" ></label>
 										  		</div>
 									  		</td>
+									  		<td th:text="${operation.description}"></td>
 									  	</tr>
 									  </table>				               
 								</div>
