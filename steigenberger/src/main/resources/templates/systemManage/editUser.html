@@ -64,11 +64,15 @@
 			  });   	
 	    	//var rids = rid.join(",");
 	    	var userId = $("#id").val();    
-	    	var userName = $("#userName").val();    
-	    	var userMail = $("#userMail").val();    
-	    	var userIdentity = $("#userIdentity").val();
+	    	var userName = $("#edituserName").val();    
+	    	var userMail = $("#edituserMail").val();    
+	    	var userIdentity = $("#edituserIdentity").val();
 	    	var regionCode = $("#region").val();  
 	    	var isActive = $("#isActive").val();    
+	    	
+	    	alert(userId+":userId");
+	    	alert("#userName:"+userName);
+	    	alert("#userIdentity:"+userIdentity);
 	    	
 	    	userId=parseInt(userId);
 	    	var data={id:userId,userName:userName,userMail:userMail,userIdentity:userIdentity,roles:ops,region:{code:regionCode},isActive:isActive};
@@ -117,13 +121,13 @@
 	                <form class="form" >
 	                	<input type="text" class="form-control id hidden" id="id" th:value="${map?.user.id}">
 	                    <div class="form-group">
-	                        <label for="exampleInputEmail1">申请人姓名</label>
-	                         <input type="text" class="form-control userName" id="userName" name="userName" th:value="${map?.user.userName}" required/>
+	                        <label>申请人姓名</label>
+	                         <input type="text" class="form-control" id="edituserName" name="userName" th:value="${map?.user.userName}" required/>
 	                    </div>
 	                    
 	                    <div class="form-group">
-	                        <label for="exampleInputEmail1">申请人邮箱</label>
-	                         <input type="text" class="form-control" id="userMail" name="userMail" th:value="${map?.user.userMail}" required/>
+	                        <label>申请人邮箱</label>
+	                         <input type="text" class="form-control" id="edituserMail" name="userMail" th:value="${map?.user.userMail}" required/>
 	                    </div>
 	                    
 	                    <div class="form-group">
@@ -132,8 +136,8 @@
 	                        </p>
 	                    </div>
 	                    <div class="form-group">
-	                        <label for="exampleInputEmail1">申请人域账号</label>
-	                         <input type="text" class="form-control" id="userIdentity" name="userIdentity" th:value="${map?.user.userIdentity}" required/>
+	                        <label>申请人域账号</label>
+	                         <input type="text" class="form-control" id="edituserIdentity" name="userIdentity" th:value="${map?.user.userIdentity}" required/>
 	                    </div>
 	                    <div class="form-group">
 	                        <label >请选择角色</label>
