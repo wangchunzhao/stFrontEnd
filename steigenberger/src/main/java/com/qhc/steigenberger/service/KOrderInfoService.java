@@ -22,9 +22,11 @@ public class KOrderInfoService {
 		
 		String contractNo = kOrderInfo.getContractNo()==null?"":kOrderInfo.getContractNo();
 		String contractUnit = kOrderInfo.getContractUnit()==null?"":kOrderInfo.getContractUnit();
+		String startTime = kOrderInfo.getStartTime()==null?"":kOrderInfo.getStartTime();
+		String endTime = kOrderInfo.getEndTime()==null?"":kOrderInfo.getEndTime();
 		
 		
-		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&b2c="+kOrderInfo.getB2c()+"&createId="+kOrderInfo.getCreateId()+"&area="+kOrderInfo.getArea();
+		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&startTime="+startTime+"&endTime="+endTime+"&b2c="+kOrderInfo.getB2c()+"&createId="+kOrderInfo.getCreateId()+"&area="+kOrderInfo.getArea();
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
 

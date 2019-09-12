@@ -39,7 +39,7 @@ var TableInit = function () {
 			        offset : params.offset, // SQL语句起始索引
 			        page: (params.offset / params.limit) + 1,   //当前页码
 		
-//			        id:$('#id').val(),
+			        id:$('#id').val(),
 			        contractNo:$('#contractNo').val(),
 			        contractUnit:$('#contractUnit').val(),
 			        area:$('#area').val(),

@@ -41,6 +41,15 @@ public class KOrderInfoController extends BaseController{
 	@ResponseBody
 	public PageHelper<KOrderInfo> getUserListPage(KOrderInfo kOrderInfo,HttpServletRequest request) {
 		PageHelper<KOrderInfo> pageHelper = null;
+		//获取页面时间段的查询条件
+		String createTime = request.getParameter("createTime1");
+		if(createTime !=null || !"".equals(createTime)) {
+			String startTime = createTime.substring(0, 10);
+			String endTime = createTime.substring(createTime.length()-10);
+			kOrderInfo.setStartTime(startTime);
+			kOrderInfo.setEndTime(endTime);
+		}
+		
 		//取得session的用户域账号
 //		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
 		try {

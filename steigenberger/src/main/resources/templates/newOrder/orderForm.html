@@ -141,7 +141,7 @@
 <script >
 function doSomething(){
 	 $.ajaxSettings.async = false;
-	 var result = $.post('/steigenberger/newOrder/standardDiscount1',null,function(ret){
+	 var result = $.post('/steigenberger/newOrder/createOrder',null,function(ret){
 		if(ret.status==200){
 			return "success";
 		}else{
