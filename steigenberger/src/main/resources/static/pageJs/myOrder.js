@@ -127,3 +127,31 @@ $('#search_btn').click(function() {
 		url : '/steigenberger/kOrderInfo/kOrderInfoList'
 	});
 })
+
+//重置按钮事件
+$('#resetBtn').click(function() {
+	$("#id").val("");
+	$("#contractNo").val("");
+	$("#reservation").val("");
+	$("#contractUnit").val("");
+	$("#area").val(-1);
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
