@@ -50,6 +50,9 @@ dependencies {
 	implementation "org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE"
 	
 	//
+	implementation "org.apache.poi:poi-ooxml:3.9"
+	
+	//
 	//compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	//annotationProcessor 'org.projectlombok:lombok'
