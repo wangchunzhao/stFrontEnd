@@ -36,8 +36,6 @@ public class NewOrderController {
 		return "newOrder/newOrder";
 	}
 	
-	
-	
 	@PostMapping("/createOrder")
 	@ResponseBody
 	public JsonResult permissionApply1(HttpServletRequest request) {
