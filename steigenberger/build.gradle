@@ -49,8 +49,12 @@ dependencies {
 	implementation "org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE"
 	implementation "org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE"
 	
-	//
+	//文件上传
 	implementation "org.apache.poi:poi-ooxml:3.9"
+//	implementation "commons-fileupload:commons-fileupload:1.4"
+//	implementation "org.apache.commons:commons-io:2.4"
+	
+	
 	
 	//
 	//compileOnly 'org.projectlombok:lombok'
