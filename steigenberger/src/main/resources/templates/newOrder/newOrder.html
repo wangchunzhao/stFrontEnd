@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -237,6 +238,7 @@
 		</div>
 		<!-- //header-ends -->
 		<!-- main content start-->
+		<form method="post" action="order/dealer">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -316,7 +318,10 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp">
 								</div>
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<select class="form-control">
+										<option value="1" class="">是</option>
+										<option value="0" class="">否</option>
+									</select>
 								</div>
 								<div class="col-md-3 col-xs-3">
 
@@ -1041,7 +1046,7 @@
 			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;">保存 save</button><button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;">提交 submit</button><button type="button" class="btn pull-right btn-warning">返回 back</button>
 				
 		</div>
-
+		</form>
 	<!-- new added graphs chart js-->
 	
     <script src="js/Chart.bundle.js"></script>
