@@ -4,7 +4,7 @@ package com.qhc.steigenberger.domain;
  * @author wang@dxc.com
  *
  */
-public class Clazz {
+public class CustomerClazz {
 	private String code;
 	private String name;
 

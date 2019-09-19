@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qhc.steigenberger.domain.Clazz;
+import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 
@@ -36,8 +36,8 @@ public class CustomerService {
 	 * 
 	 * @return
 	 */
-	public List<Clazz> customerClazz() {
-		return  fryeService.getListInfo(URL_CUSTOMER_CLASS,Clazz.class);
+	public List<CustomerClazz> customerClazz() {
+		return  fryeService.getListInfo(URL_CUSTOMER_CLASS,CustomerClazz.class);
 	}
 
 }
