@@ -26,7 +26,7 @@ public class KOrderInfoService {
 		String endTime = kOrderInfo.getEndTime()==null?"":kOrderInfo.getEndTime();
 		
 		
-		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&startTime="+startTime+"&endTime="+endTime+"&b2c="+kOrderInfo.getB2c()+"&createId="+kOrderInfo.getCreateId()+"&area="+kOrderInfo.getArea();
+		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&startTime="+startTime+"&endTime="+endTime+"&b2c="+kOrderInfo.getB2c()+"&createId="+kOrderInfo.getCreateId()+"&area="+kOrderInfo.getArea()+"&orderType="+kOrderInfo.getOrderType()+"&specialDiscount="+kOrderInfo.getSpecialDiscount()+"&status="+kOrderInfo.getStatus();
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
 

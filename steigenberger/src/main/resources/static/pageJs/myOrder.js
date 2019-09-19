@@ -135,6 +135,10 @@ $('#resetBtn').click(function() {
 	$("#reservation").val("");
 	$("#contractUnit").val("");
 	$("#area").val(-1);
+	$("#orderType").val(-1);
+	$("#b2c").val(-1);
+	$("#specialDiscount").val(-1);
+	$("#status").val(-1);
 })
 
 
