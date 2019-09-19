@@ -23,5 +23,10 @@ public class UserOperationInfoService {
 		return fryeService.getListInfo(url,UserOperationInfo.class);
     }
 	
+	public List<UserOperationInfo> findAll() {
+		String url =URL_KORDERS;
+		return fryeService.getListInfo(url,UserOperationInfo.class);
+    }
+	
 	
 }
