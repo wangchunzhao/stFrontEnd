@@ -20,6 +20,17 @@ public class BNotifyInforService {
 		
 	}
 	
+	//订单编号，客户经理，订单类型，签约人，发送人员组
+	public Boolean sendEmail(String id,String customerManage,String orderType,String contractUnit,int type) {
+		if(type == 1) {
+			
+		}
+		
+		
+		
+		
+		return true;
+	}
 	
 	
 }

@@ -58,9 +58,9 @@
 			       			$('#report2').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		
-			       		if(operationNames.indexOf("report1")==-1&&operationNames.indexOf("report2")==-1){
+			       		/*if(operationNames.indexOf("report1")==-1&&operationNames.indexOf("report2")==-1){
 			       			$('#report').attr('href',ctxPath+"main/noAuthorization");
-			       		}
+			       		}*/
 			       		
 			       		if(operationNames.indexOf("user")==-1){
 			       			$('#user').attr('href',ctxPath+"main/noAuthorization");
@@ -75,7 +75,7 @@
 			       			$('#role').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		
-			       		if(operationNames.indexOf("user")==-1&&
+			       		/*if(operationNames.indexOf("user")==-1&&
 			       				operationNames.indexOf("permission")==-1&&
 			       				operationNames.indexOf("parameterSetting")==-1&&
 			       				operationNames.indexOf("role")==-1
@@ -83,7 +83,7 @@
 			       			
 			       			//$('#sys').style="display:none";
 			       			$('#sys').attr('style',"display:none");
-			       		}
+			       		}*/
 		                
 		            },
 		            error : function() {

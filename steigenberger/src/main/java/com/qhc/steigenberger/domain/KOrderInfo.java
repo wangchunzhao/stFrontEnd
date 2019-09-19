@@ -7,31 +7,31 @@ import com.qhc.steigenberger.util.Page;
 
 public class KOrderInfo extends Page implements Serializable {
 	
-	private int id;
+	public int id;
 	
-	private String contractNo;
+	public String contractNo;
 	
-	private String contractUnit;
+	public String contractUnit;
 	
-	private int area;
+	public int area;
 	
-	private int orderType;
+	public int orderType;
 	
-	private int b2c;
+	public int b2c;
 	
-	private int specialDiscount;
+	public int specialDiscount;
 	
-	private Date createTime;
+	public Date createTime;
 	
-	private int status;
+	public int status;
 	
-	private int sapStatus;
+	public int sapStatus;
 	
-	private int createId;
+	public int createId;
 	
-	private String startTime;
+	public String startTime;
 	
-	private String endTime;
+	public String endTime;
 
 	public int getId() {
 		return id;
