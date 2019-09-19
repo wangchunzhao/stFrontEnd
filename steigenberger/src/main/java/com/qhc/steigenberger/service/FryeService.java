@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
  */
 @Service
 public class FryeService<T> {
-	
+
 	@Autowired
 	ApplicationConfig config;
 
@@ -54,7 +54,7 @@ public class FryeService<T> {
 	}
 
 	public void putJason(String path, T params) {
-		String url = config.getFryeURL()+path;
+		String url = config.getFryeURL() + path;
 		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -66,8 +66,8 @@ public class FryeService<T> {
 	}
 
 	public void postJason(String path, T params) {
-		
-		String url = config.getFryeURL()+path;
+
+		String url = config.getFryeURL() + path;
 		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -78,8 +78,8 @@ public class FryeService<T> {
 		response.block();
 	}
 
-	public Date getLastUpdatedDate(String path,String params) {
-		String url = config.getFryeURL()+path;
+	public Date getLastUpdatedDate(String path, String params) {
+		String url = config.getFryeURL() + path;
 		WebClient webClient = getBuilder().baseUrl(url).build();
 		Mono<Date> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -89,13 +89,11 @@ public class FryeService<T> {
 				.bodyToMono(Date.class);
 		return response.block();
 	}
-	
-	public List<T> getListInfo(String path,Class<T> T) {
-		String url = config.getFryeURL()+path;
+
+	public List<T> getListInfo(String path, Class<T> T) {
+		String url = config.getFryeURL() + path;
 		WebClient webClient = WebClient.create(url);
-		Flux<T> userFlux = webClient.get()
-				.uri(url)
-				.retrieve()
+		Flux<T> userFlux = webClient.get().uri(url).retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
@@ -103,38 +101,37 @@ public class FryeService<T> {
 		List<T> list = userFlux.collectList().block();
 		return list;
 	}
-	
+
 	/**
 	 * post请求返回一个对象
+	 * 
 	 * @param t
 	 * @param path
 	 * @param T
 	 * @return
 	 */
-	public T postInfo(T t,String path,Class T) {
-		String url = config.getFryeURL()+path;
+	public T postInfo(T t, String path, Class T) {
+		String url = config.getFryeURL() + path;
 		@SuppressWarnings("unchecked")
-		Mono<T> resp = WebClient.create().post()
-                .uri(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Mono.just(t),T)
-                .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+		Mono<T> resp = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
+				.body(Mono.just(t), T).retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
-                .bodyToMono(T);
+				.bodyToMono(T);
 		return resp.block();
 	}
-	
+
 	/**
 	 * get请求返回一个对象
+	 * 
 	 * @param t
 	 * @param path
 	 * @param T
 	 * @return
 	 */
-	public T getInfo(String path,Class T) {
-		String url = config.getFryeURL()+path;
+	public T getInfo(String path, Class T) {
+		String url = config.getFryeURL() + path;
 		WebClient webClient = WebClient.create();
 		Mono<T> mono = webClient.get().uri(url).retrieve().bodyToMono(T);
 		T t = mono.block();

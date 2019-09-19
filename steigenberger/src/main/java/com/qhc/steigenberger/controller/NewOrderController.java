@@ -29,11 +29,17 @@ public class NewOrderController {
 	
 	String newOrder="下订单";
 	
-	@RequestMapping("/standardDiscount")
+	@RequestMapping("standardDiscount")
 	public String permissionApply() {
-		System.out.println("111111111");
-		
+		System.out.println("newOrder/standardDiscount");
 		return "newOrder/newOrder";
+	}
+	
+	@RequestMapping("customers")
+	@ResponseBody
+	public JsonResult searchCustomer(String name) {
+		System.out.println("newOrder/standardDiscount");
+		return null;
 	}
 	
 	@PostMapping("/createOrder")
