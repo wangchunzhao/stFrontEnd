@@ -11,11 +11,11 @@ public class BNotifyInfor extends Page implements Serializable {
 	
 	private int hasSend;
 	
-	private int msg_to;
+	private String msg_to;
 	
-	private int msg_from;
+	private String msg_from;
 	
-	private int message;
+	private String message;
 
 	public int getId() {
 		return id;
@@ -33,28 +33,29 @@ public class BNotifyInfor extends Page implements Serializable {
 		this.hasSend = hasSend;
 	}
 
-	public int getMsg_to() {
+	public String getMsg_to() {
 		return msg_to;
 	}
 
-	public void setMsg_to(int msg_to) {
+	public void setMsg_to(String msg_to) {
 		this.msg_to = msg_to;
 	}
 
-	public int getMsg_from() {
+	public String getMsg_from() {
 		return msg_from;
 	}
 
-	public void setMsg_from(int msg_from) {
+	public void setMsg_from(String msg_from) {
 		this.msg_from = msg_from;
 	}
 
-	public int getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(int message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
+
 	
 }

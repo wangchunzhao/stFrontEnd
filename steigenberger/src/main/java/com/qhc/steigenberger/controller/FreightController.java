@@ -42,11 +42,11 @@ public class FreightController {
 	        	 List<List<String>> datas = ExcelUtil.readXlsx(excelFile.getInputStream());
 	     //TODO: 读到的数据都在datas里面，根据实际业务逻辑做相应处理<br>  
 	             // .............
-	        	 
-//	        	 FileHandleUtil.upload(excelFile.getInputStream(), "upload/", excelFile.getOriginalFilename());
-	         	
-
-	        	 
+	        	 //将文件上传到某个路径
+	        	 /*String fileName = excelFile.getOriginalFilename();
+	        	 String filePath = "D:\\";
+	             File dest = new File(filePath + fileName);
+	        	 excelFile.transferTo(dest);*/
 	        	 
 	        	 
 	             if(datas!=null && datas.size()>0){
