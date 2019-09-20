@@ -131,9 +131,8 @@
 								</div>
 								<div class="col-md-3 col-xs-3">
 
-									<select class="form-control">
-										<option value="1">500强</option>
-										<option value="2">2</option>
+									<select class="form-control" >
+										<option th:each="clazz : ${customer_classes}" th:value="${clazz.key}" th:text="${clazz.value}"></option>
 									</select>
 								</div>
 							</div>
@@ -193,9 +192,9 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
+									<select class="form-control">sales_type
+										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>
+										
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-3">

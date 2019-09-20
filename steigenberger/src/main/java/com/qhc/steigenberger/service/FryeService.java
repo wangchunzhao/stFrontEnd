@@ -5,6 +5,7 @@ package com.qhc.steigenberger.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -100,6 +101,20 @@ public class FryeService<T> {
 				.bodyToFlux(T);
 		List<T> list = userFlux.collectList().block();
 		return list;
+	}
+	/**
+	 * 
+	 */
+	public Map<String,String> getMapDate(String path) {
+		String url = config.getFryeURL() + path;
+		WebClient webClient = getBuilder().baseUrl(url).build();
+		Mono<Map> response = webClient.get().uri(url)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(Map.class);
+		return response.block();
 	}
 
 	/**

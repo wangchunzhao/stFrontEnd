@@ -4,6 +4,7 @@
 package com.qhc.steigenberger.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,11 @@ import com.qhc.steigenberger.domain.SapSalesOffice;
  *
  */
 @Service
-public class CustomerService {
+public class OrderService {
 	
-	private final static String URL_CUSTOMER = "newOrder/customers/";
-	private final static String URL_CUSTOMER_CLASS = "newOrder/customerClazz";
+	private final static String URL_CUSTOMER = "customer/customers/";
+	private final static String URL_CUSTOMER_CLASS = "customer/customerClass";
+	private final static String URL_SALES_TYPE = "order/salesType";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -29,15 +31,22 @@ public class CustomerService {
 	 * @param name customer name 
 	 * @return  customer list
 	 */
-	public List<Customer> searchCustomer(String name) {
+	public List<Customer> findCustomer(String name) {
 		return  fryeService.getListInfo(URL_CUSTOMER+name,Customer.class);
 	}
 	/**
 	 * 
-	 * @return
+	 * @return customer class map
 	 */
-	public List<CustomerClazz> customerClazz() {
-		return  fryeService.getListInfo(URL_CUSTOMER_CLASS,CustomerClazz.class);
+	public Map<String, String> getCustomerClazz() {
+		return  fryeService.getMapDate(URL_CUSTOMER_CLASS);
+	}
+	/**
+	 * 
+	 * @return sales type map
+	 */
+	public Map<String, String> getSalesType() {
+		return  fryeService.getMapDate(URL_SALES_TYPE);
 	}
 
 }

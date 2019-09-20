@@ -1,19 +1,24 @@
 package com.qhc.steigenberger.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
+import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
 
@@ -21,8 +26,14 @@ import com.qhc.steigenberger.service.UserService;
 @RequestMapping("newOrder")
 public class NewOrderController {
 	
+	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
+	private final static String SALES_TYPE = "sales_type";
+	
 	@Autowired
     UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
@@ -30,9 +41,14 @@ public class NewOrderController {
 	String newOrder="下订单";
 	
 	@RequestMapping("standardDiscount")
-	public String permissionApply() {
-		System.out.println("newOrder/standardDiscount");
-		return "newOrder/newOrder";
+	public ModelAndView  goDealerOrder() {
+		ModelAndView mv =new ModelAndView("newOrder/newOrder");
+		Map<String,String> customerClassMap = orderService.getCustomerClazz();
+		Map<String,String> salesTypeMap = orderService.getSalesType();
+		//
+		mv.addObject(CUSTOMER_CLASS_MAP,customerClassMap);
+		mv.addObject(SALES_TYPE,salesTypeMap);
+		return mv;
 	}
 	
 	@RequestMapping("customers")
