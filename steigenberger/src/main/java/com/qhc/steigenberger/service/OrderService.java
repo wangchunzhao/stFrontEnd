@@ -23,6 +23,7 @@ public class OrderService {
 	private final static String URL_CUSTOMER = "customer/customers/";
 	private final static String URL_CUSTOMER_CLASS = "customer/customerClass";
 	private final static String URL_SALES_TYPE = "order/salesType";
+	private final static String URL_CURRENCY = "currency";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -47,6 +48,13 @@ public class OrderService {
 	 */
 	public Map<String, String> getSalesType() {
 		return  fryeService.getMapDate(URL_SALES_TYPE);
+	}
+	/**
+	 * 
+	 * @return currency map
+	 */
+	public Map<String, String> getCurrency() {
+		return  fryeService.getMapDate(URL_CURRENCY);
 	}
 
 }

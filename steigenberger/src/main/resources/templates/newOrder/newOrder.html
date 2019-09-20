@@ -192,7 +192,7 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">sales_type
+									<select class="form-control">
 										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>
 										
 									</select>
@@ -234,8 +234,7 @@
 								</div>
 								<div class="col-xs-12 col-md-3">
 									<select class="form-control">
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
+										<option th:each="currency : ${currencies}" th:value="${currency.key}" th:text="${currency.value}"></option>
 									</select>
 								</div>
 							</div>

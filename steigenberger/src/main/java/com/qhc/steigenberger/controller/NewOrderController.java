@@ -27,7 +27,8 @@ import com.qhc.steigenberger.service.UserService;
 public class NewOrderController {
 	
 	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
-	private final static String SALES_TYPE = "sales_type";
+	private final static String SALES_TYPE_MAP = "sales_type";
+	private final static String CURRENCY_MAP = "currencies";
 	
 	@Autowired
     UserService userService;
@@ -45,9 +46,11 @@ public class NewOrderController {
 		ModelAndView mv =new ModelAndView("newOrder/newOrder");
 		Map<String,String> customerClassMap = orderService.getCustomerClazz();
 		Map<String,String> salesTypeMap = orderService.getSalesType();
+		Map<String,String> currencyMap = orderService.getCurrency();
 		//
 		mv.addObject(CUSTOMER_CLASS_MAP,customerClassMap);
-		mv.addObject(SALES_TYPE,salesTypeMap);
+		mv.addObject(SALES_TYPE_MAP,salesTypeMap);
+		mv.addObject(CURRENCY_MAP,currencyMap);
 		return mv;
 	}
 	
