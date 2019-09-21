@@ -24,6 +24,7 @@ public class OrderService {
 	private final static String URL_CUSTOMER_CLASS = "customer/customerClass";
 	private final static String URL_SALES_TYPE = "order/salesType";
 	private final static String URL_CURRENCY = "currency";
+	private final static String URL_INCOTERMS = "incoterms";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -55,6 +56,10 @@ public class OrderService {
 	 */
 	public Map<String, String> getCurrency() {
 		return  fryeService.getMapDate(URL_CURRENCY);
+	}
+	
+	public Map<String,String> getIncoterms(){
+		return fryeService.getMapDate(URL_INCOTERMS);
 	}
 
 }

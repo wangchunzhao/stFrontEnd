@@ -29,6 +29,7 @@ public class NewOrderController {
 	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
 	private final static String SALES_TYPE_MAP = "sales_type";
 	private final static String CURRENCY_MAP = "currencies";
+	private final static String INCOTERMS_MAP = "incoterms";
 	
 	@Autowired
     UserService userService;
@@ -47,10 +48,12 @@ public class NewOrderController {
 		Map<String,String> customerClassMap = orderService.getCustomerClazz();
 		Map<String,String> salesTypeMap = orderService.getSalesType();
 		Map<String,String> currencyMap = orderService.getCurrency();
+		Map<String,String> incotermMap = orderService.getIncoterms();
 		//
 		mv.addObject(CUSTOMER_CLASS_MAP,customerClassMap);
 		mv.addObject(SALES_TYPE_MAP,salesTypeMap);
 		mv.addObject(CURRENCY_MAP,currencyMap);
+		mv.addObject(INCOTERMS_MAP,incotermMap);
 		return mv;
 	}
 	
