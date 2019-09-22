@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.CustomerClazz;
+import com.qhc.steigenberger.domain.DealerOrder;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
@@ -31,6 +33,12 @@ public class NewOrderController {
 	private final static String CURRENCY_MAP = "currencies";
 	private final static String INCOTERMS_MAP = "incoterms";
 	
+	
+	//
+	private final static String PAGE_DEALER = "newOrder/newOrder";
+	//
+	private final static String FORM_ORDER_DEALER = "dealer";
+	
 	@Autowired
     UserService userService;
 	
@@ -44,7 +52,7 @@ public class NewOrderController {
 	
 	@RequestMapping("standardDiscount")
 	public ModelAndView  goDealerOrder() {
-		ModelAndView mv =new ModelAndView("newOrder/newOrder");
+		ModelAndView mv =new ModelAndView(PAGE_DEALER);
 		Map<String,String> customerClassMap = orderService.getCustomerClazz();
 		Map<String,String> salesTypeMap = orderService.getSalesType();
 		Map<String,String> currencyMap = orderService.getCurrency();
@@ -54,12 +62,20 @@ public class NewOrderController {
 		mv.addObject(SALES_TYPE_MAP,salesTypeMap);
 		mv.addObject(CURRENCY_MAP,currencyMap);
 		mv.addObject(INCOTERMS_MAP,incotermMap);
+		//
+		mv.addObject(FORM_ORDER_DEALER,new DealerOrder());
 		return mv;
+	}
+	@PostMapping("dealer")
+	@ResponseBody
+	public String  submitDlealerOrder(@ModelAttribute DealerOrder order) {
+		System.out.println("dealer");
+		return PAGE_DEALER;
 	}
 	
 	@RequestMapping("customers")
 	@ResponseBody
-	public JsonResult searchCustomer(String name) {
+	public JsonResult searchCustomer(String customerName) {
 		System.out.println("newOrder/standardDiscount");
 		return null;
 	}
