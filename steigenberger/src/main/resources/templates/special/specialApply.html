@@ -73,7 +73,6 @@
 			  var payAdvancePaymentTime=$(".form #payAdvancePaymentTime").val();
 			  var remark=$(".form #remark").val();
 			  var enclosurename=$(".form #myupload").val();
-			  alert(enclosurename);
 			  ordersId = parseInt(ordersId);
 			  var data={
 					  ordersId:ordersId,
@@ -142,6 +141,8 @@
                     <div class="col-xs-6">
                         <input type="text" class="form-control" readonly id="contractNo" th:value="${order?.contractNo}">
                     </div>
+                    
+                    <button type="button" class="btn btn-primary" id="btn_queryOrder" style="margin-top: 10px; margin-right: 20px;">查看订单详情</button>
                 </div>
             </div>
         </div>
