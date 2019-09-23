@@ -67,59 +67,59 @@
 	
 <div id="page-wrapper">
 			
-<div id="accordion-magical-coder-auto-id-123" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 3%;">
+<div id="accordion-magical-coder-auto-id-1565595642357" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-left: 3%;">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-123" aria-expanded="true" class="">查询列表 Query conditions</a>
+                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1565595641736" aria-expanded="true" class="">查询列表 Query conditions</a>
             </h4>
         </div>
-        <div id="collapseOne-magical-coder-auto-id-123" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+        <div id="collapseOne-magical-coder-auto-id-1565595641736" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;">
 
-                <div class="row">
-                    <div class="col-md-2 col-xs-2">
-                        	客户 customer
-                    </div>
-                    <div class="col-md-2 col-xs-2">
-                        	大区 area
-                    </div>
-                    <div class="col-md-8 col-xs-8">
-                        	创建日期 Creation time
-                    </div>
-                    <div class="col-md-2 col-xs-2">
-                        <select class="form-control" id="customer">
-                        	<option value="-1">请选择</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                <div class="row" style="margin-top: 2px;">
+                	<div class="col-md-4 col-xs-3">
+						 合同号 contract code
+					</div>
+					<div class="col-md-4 col-xs-3">
+						 需求创建日期 Creation time
+					</div>
+					<div class="col-md-4 col-xs-3">
+						状态 Status
+					</div>
+					
+					<div class="col-md-4 col-xs-3">
+						<input type="text" class="form-control" id="id">
+					</div>
+					<div class="col-md-4 col-xs-3">
+						<input type="text" readonly name="createTime1" id="createTime1" class="form-control"  /> 
+					</div>
+					<div class="col-md-4 col-xs-3">
+						<select class="form-control" id="status">
+                            <option value="6">订单审批通过</option>
+                            <option value="7">订单更改审批通过</option>
                         </select>
-                    </div>
-                    <div class="col-md-2 col-xs-2">
-                        <select class="form-control" id="area" >
-                       		<option value="-1">请选择</option>
-                       		<option  th:each="area:${areaList}" th:value="${area.code}"  th:text="${area.name}"></option>
-						</select>
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" readonly name="reservation" id="reservation" class="form-control"  /> 
-                    </div>
-                    
-                    <div class="col-xs-5 col-md-5 pull-right">
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="export_btn">导出export</button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="reset_btn">重置reset</button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="search_btn">查询select</button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="down_btn">下载 down</button>
-                    </div>
+					</div>
                 </div>
+                 <div class="row" style="margin-top: 2px;">
+                	 <div class="col-xs-12 col-md-3">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary " id="search_btn">select</button>
+	                        <button type="button" class="btn btn-primary " id="reset_btn" style="margin-left: 10px;">reset</button>
+	                    </div>
+					</div>
+                </div>
+               
+            </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-123" aria-expanded="true" class="">信息列表 Information list</a>
+                <a role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1565595638071" aria-expanded="true" class="">订单列表 ORDER LIST</a>
             </h4>
         </div>
-        <div id="collapseTwo-magical-coder-auto-id-123" class="panel-collapse collapse in" role="tablist" aria-expanded="true" >
+        <div id="collapseTwo-magical-coder-auto-id-1565595638071" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true" >
             <div class="panel-body" style="height: auto;">
                 <div class="table-responsive">
                     <table id="mytab" class="table table-hover"></table>
@@ -127,7 +127,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 
@@ -168,7 +167,7 @@
 <script src="../js/bootstrap.js"> </script>	
    
 <!--  js -->  
-<script src="../pageJs/biddingDetail.js"></script>
+<script src="../pageJs/specialList.js"></script>
 
 </body>
 </html>
