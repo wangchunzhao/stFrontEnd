@@ -20,21 +20,6 @@ public class FileUploadAndDown {
 	
 	public JsonResult upload(MultipartFile file, HttpSession session) {
 		JsonResult result = new JsonResult();
-//		if (file.isEmpty()) {
-//			result.setMsg("文件为空");
-//			result.setOk(null);
-//			return result;
-//		}
-		// 获取文件名
-//		String fileName = file.getOriginalFilename();
-//		// 获取文件的后缀名
-//		String suffixName = fileName.substring(fileName.lastIndexOf("."));
-//		// 文件上传后的路径
-//		String filePath = "D://test//";
-
-		// 解决中文问题，liunx下中文路径，图片显示问题
-		// fileName = UUID.randomUUID() + suffixName;
-//		File dest = new File(filePath + fileName);
 		
 		String realPath = session.getServletContext().getRealPath("upload");
         System.out.println("--------"+realPath);
