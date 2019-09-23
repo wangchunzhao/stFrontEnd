@@ -29,5 +29,10 @@ public class KOrderInfoService {
 		String url = URL_KORDERS_LIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&contractUnit="+contractUnit+"&startTime="+startTime+"&endTime="+endTime+"&b2c="+kOrderInfo.getB2c()+"&createId="+kOrderInfo.getCreateId()+"&area="+kOrderInfo.getArea()+"&orderType="+kOrderInfo.getOrderType()+"&specialDiscount="+kOrderInfo.getSpecialDiscount()+"&status="+kOrderInfo.getStatus();
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
+	
+	public KOrderInfo getInfoById(int orderId){
+		
+		return fryeService.getInfo(URL_KORDERS+"/"+orderId, KOrderInfo.class);
+	}
 
 }

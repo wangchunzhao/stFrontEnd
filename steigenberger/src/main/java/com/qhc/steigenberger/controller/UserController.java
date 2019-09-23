@@ -48,31 +48,6 @@ public class UserController {
 		return "systemManage/userManage";
 	}
 
-	@PostMapping("/add")
-	@ResponseBody
-	public JsonResult add(@RequestParam(defaultValue = "0",name="one") Integer one,
-			@RequestBody User user,
-			HttpServletRequest request) {
-		
-		if(one==1) {
-            request.getSession().removeAttribute("entity");
-	       }	
-		// 判断是否有ID ,
-		// 1.没有就是新增操作
-		// 2.如果存在，就是更新操作
-		String msg = "";
-		int status = 0;
-		User result = userService.updateUserInfo(user);
-		if (result != null) {
-			status = 200;
-			msg = "操作成功！";
-		} else {
-			status = 500;
-			msg = "操作失败";
-		}
-		return JsonResult.build(status, "角色" + msg, "");
-
-	}
 	
 	@PostMapping("/update")
 	@ResponseBody
