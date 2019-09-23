@@ -46,6 +46,7 @@
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<form method="post" action="#" th:action="@{dealer}" th:object="${dealerOrder}">
+		
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -89,13 +90,13 @@
 									</div>
 								</div>
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" >
 								</div>
 								<div class="col-md-3 col-xs-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
 								</div>
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" >
 								</div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
@@ -127,8 +128,8 @@
 								</div>
 								<div class="col-md-3 col-xs-3">
 
-									<select class="form-control" >
-										<option th:each="clazz : ${customer_classes}" th:value="${clazz.key}" th:text="${clazz.value}"></option>
+									<select class="form-control" th:field="*{customerNatureCode}">
+										<option th:each="clazz : ${customer_classes}" th:value="${clazz.key}" th:text="${clazz.value}" th:selected="${dealerOrder.customerNatureCode eq clazz.key}" ></option>
 									</select>
 								</div>
 							</div>
