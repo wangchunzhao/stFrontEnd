@@ -75,8 +75,28 @@ public class BNotifyInforService {
 		bNotifyInfor.setMsg_to(join);
 		bNotifyInfor.setMessage(content);
 		this.add(bNotifyInfor);
+	}
+	//签署合同发送邮件
+	public void sendContractEmail(int orderId,String versionId,String name,String emailTo) {
+		String[] array = new String[1];
+		array[0] = emailTo;
 		
-		
+		//准备信息发邮件
+		String title = versionId+"版合同已制作请上传签署";
+		String content = "尊敬的"+name+"版本号为"+versionId+"的合同于今日已制作完成，请查看附件；确认无误后请尽快上传到上上签平台，发起合同签署，请勿回复此邮件，谢谢";
+		Map<String, Object> map = new HashMap<>();
+		map.put("to", array);
+		map.put("title", title);
+		map.put("content", content);
+		emailTool.sendSimpleMail(map);
+		//存记录
+		BNotifyInfor bNotifyInfor = new BNotifyInfor();
+		bNotifyInfor.setId(orderId);
+		bNotifyInfor.setHasSend(1);
+		bNotifyInfor.setMsg_from("111");
+		bNotifyInfor.setMsg_to(emailTo);
+		bNotifyInfor.setMessage(content);
+		this.add(bNotifyInfor);
 	}
 	
 	
