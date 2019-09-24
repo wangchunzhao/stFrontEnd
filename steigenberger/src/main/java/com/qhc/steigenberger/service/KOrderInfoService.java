@@ -17,6 +17,7 @@ public class KOrderInfoService {
 	
 	private final static String URL_KORDERS = "kOrderInfo";
 	private final static String URL_KORDERS_LIST = "kOrderInfo/paging";
+	private final static String URL_KORDERS_LIST_SPECIAL = "kOrderInfo/pagingForSpecial";
 	
 	public PageHelper<KOrderInfo> getList(int pageNum, int pageSize,KOrderInfo kOrderInfo){
 		
@@ -33,6 +34,17 @@ public class KOrderInfoService {
 	public KOrderInfo getInfoById(int orderId){
 		
 		return fryeService.getInfo(URL_KORDERS+"/"+orderId, KOrderInfo.class);
+	}
+	
+public PageHelper<KOrderInfo> getListForSpecial(int pageNum, int pageSize,KOrderInfo kOrderInfo){
+		
+		String contractNo = kOrderInfo.getContractNo()==null?"":kOrderInfo.getContractNo();
+		String startTime = kOrderInfo.getStartTime()==null?"":kOrderInfo.getStartTime();
+		String endTime = kOrderInfo.getEndTime()==null?"":kOrderInfo.getEndTime();
+		
+		
+		String url = URL_KORDERS_LIST_SPECIAL+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&startTime="+startTime+"&endTime="+endTime+"&status="+kOrderInfo.getStatus();
+		return pageFryeService.getInfo(url, PageHelper.class);
 	}
 
 }
