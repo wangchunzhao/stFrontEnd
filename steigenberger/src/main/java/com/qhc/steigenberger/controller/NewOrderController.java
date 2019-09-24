@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.CustomerClazz;
-import com.qhc.steigenberger.domain.DealerOrder;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
+import com.qhc.steigenberger.domain.form.DealerOrderForm;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
@@ -37,7 +37,7 @@ public class NewOrderController {
 	//
 	private final static String PAGE_DEALER = "newOrder/newOrder";
 	//
-	private final static String FORM_ORDER_DEALER = "dealer";
+	private final static String FORM_ORDER_DEALER = "dealerOrder";
 	
 	@Autowired
     UserService userService;
@@ -63,14 +63,15 @@ public class NewOrderController {
 		mv.addObject(CURRENCY_MAP,currencyMap);
 		mv.addObject(INCOTERMS_MAP,incotermMap);
 		//
-		mv.addObject(FORM_ORDER_DEALER,new DealerOrder());
+		mv.addObject(FORM_ORDER_DEALER,new DealerOrderForm());
 		return mv;
 	}
 	@PostMapping("dealer")
 	@ResponseBody
-	public String  submitDlealerOrder(@ModelAttribute DealerOrder order) {
+	public ModelAndView  submitDlealerOrder(@ModelAttribute(value = "form") DealerOrderForm dealer, Model model) {
+		ModelAndView mv =new ModelAndView(PAGE_DEALER);
 		System.out.println("dealer");
-		return PAGE_DEALER;
+		return mv;
 	}
 	
 	@RequestMapping("customers")
