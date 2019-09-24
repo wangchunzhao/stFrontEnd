@@ -20,9 +20,9 @@ spring:
       enabled: false
 #mail
   mail:
-     host: smtp.qq.com
-     username: chunzhao.wang@carrier.com
-     password: Chn@0808
+     host: 159.82.101.253
+     username: ricoh-4000@carrier.utc.com
+     password: 
      properties:
            mail:
               smtp:

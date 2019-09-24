@@ -1,3 +1,100 @@
+$(function () {
+
+    //1.初始化Table
+    var oTable = new TableInit();
+    oTable.Init();
+
+});
+
+var TableInit = function () {
+	var oTableInit = new Object();
+	
+	oTableInit.Init = function () {
+		$('#mytab').bootstrapTable({
+			method : 'get',
+//			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
+			url : "/steigenberger/freight/bCityFreightList",//请求路径
+			striped : true, //是否显示行间隔色
+			toolbar: '#toolbar',
+			cache: false,
+			pagination: true,                   //是否显示分页（*）
+		    sortable: true,                     //是否启用排序
+		    clickToSelect: true,               //是否启用点击选中行
+		    sortOrder: "asc",                   //排序方式
+			pageNumber : 1, //初始化加载第一页
+			pagination : true,//是否分页
+			sidePagination : 'server',//server:服务器端分页|client：前端分页
+			pageSize : 1,//单页记录数
+			pageList : [ 10, 20, 30 ],//可选择单页记录数
+			showRefresh : false,//刷新按钮
+			queryParams : function (params) {
+			    var temp = {
+			        limit : params.limit, // 每页显示数量
+			        offset : params.offset, // SQL语句起始索引
+			        page: (params.offset / params.limit) + 1,   //当前页码
+		
+			        countyName:$('#countyName').val()
+			       
+			       // Tel:$('#search_tel').val()
+			    };
+			    return temp;
+			},
+			columns : [ {
+				title : '一级地',
+				field : 'provinceName',
+				sortable : true
+			}, {
+				title : '一级代码',
+				field : 'provinceCode',
+				sortable : true
+			},{
+				title : '二级地',
+				field : 'cityName',
+				sortable : true
+			},{
+				title : '二级代码',
+				field : 'cityCode',
+				sortable : true
+			},{
+				title : '三级地',
+				field : 'countyName',
+				sortable : true
+			},{
+				title : '三级代码',
+				field : 'countyCode',
+				sortable : true
+			},{
+				title : '价格',
+				field : 'price',
+				sortable : true
+			}]
+		})
+			};
+		return oTableInit;
+};
+ 
+
+ 
+//查询按钮事件
+$('#search_btn').click(function() {
+	$('#mytab').bootstrapTable('refresh', {
+		url : '/steigenberger/freight/bCityFreightList'
+	});
+})
+
+//重置按钮事件
+$('#resetBtn').click(function() {
+	
+})
+
+
+
+
+
+
+
+
+//上传
 initUpload("excelFile",  "/steigenberger/freight/upload");
     function initUpload(ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
@@ -44,3 +141,5 @@ initUpload("excelFile",  "/steigenberger/freight/upload");
         $('#excelFile').fileinput('enable');
         }
     });
+    
+    

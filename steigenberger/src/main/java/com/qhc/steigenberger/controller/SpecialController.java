@@ -19,8 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.SpecialDelivery;
+import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.service.KOrderInfoService;
 import com.qhc.steigenberger.service.SpecialDeliveryService;
+import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
 import com.qhc.steigenberger.util.FileUploadAndDown;
 import com.qhc.steigenberger.util.PageHelper;
@@ -37,6 +40,13 @@ public class SpecialController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserOperationInfoService userOperationInfoService;
+	
+	String allorder = "全部";
+	String self = "自己";
+	String benqu = "大区";
 	
 	public static String fileName;
 	
@@ -61,6 +71,21 @@ public class SpecialController {
 		}
 		
 		try {
+			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			User user = userService.selectUserIdentity(identityName);//identityName
+			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
+			
+			for (int i = 0; i < userOperationInfoList.size(); i++) {
+				String operationName = userOperationInfoList.get(i).getOperationName();
+				if(operationName.equals(allorder)) {
+					break;
+				}else if(operationName.equals(benqu)) {
+					kOrderInfo.setArea(Integer.valueOf(userOperationInfoList.get(i).getAttachedCode()));
+					break;
+				}else {
+					kOrderInfo.setCreateId(user.id);
+				}
+			}
 			// 查询当前页实体对象
 			pageHelper = kOrderInfoService.getListForSpecial(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
 			

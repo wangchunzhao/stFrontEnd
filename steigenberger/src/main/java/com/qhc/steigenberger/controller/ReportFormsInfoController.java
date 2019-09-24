@@ -22,8 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mangofactory.swagger.models.dto.Model;
 import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.domain.ReportFormsInfo;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.service.KOrderInfoService;
+import com.qhc.steigenberger.service.ReportFormsInfoService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.util.ExportExcel;
@@ -32,33 +34,29 @@ import com.qhc.steigenberger.util.PageHelper;
 
 @Controller
 @RequestMapping("/report")
-public class ReportController extends BaseController{
+public class ReportFormsInfoController{
 	
+	@Autowired
+	ReportFormsInfoService reportFormsInfoService;
+
 	@Autowired
 	SapSalesOfficeService sapSalesOfficeService;
-	
-	@Autowired
-	KOrderInfoService kOrderInfoService;
-	
-	@Autowired
-	UserOperationInfoService userOperationInfoService;
-	
 	
 	
 	@RequestMapping("/index")
 	@ResponseBody
-	public PageHelper<KOrderInfo> index(KOrderInfo kOrderInfo,HttpServletRequest request) {
-		PageHelper<KOrderInfo> pageHelper = new PageHelper<KOrderInfo>();
+	public PageHelper<ReportFormsInfo> index(ReportFormsInfo reportFormsInfo,HttpServletRequest request) {
+		PageHelper<ReportFormsInfo> pageHelper = new PageHelper<ReportFormsInfo>();
 		//获取页面时间段的查询条件
 		String createTime = request.getParameter("createTime1");
 		if(createTime !=null && !"".equals(createTime)) {
 			String startTime = createTime.substring(0, 10);
 			String endTime = createTime.substring(createTime.length()-10);
-			kOrderInfo.setStartTime(startTime);
-			kOrderInfo.setEndTime(endTime);
+			reportFormsInfo.setStartTime(startTime);
+			reportFormsInfo.setEndTime(endTime);
 		}
 		// 查询当前页实体对象
-		pageHelper = kOrderInfoService.getList(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
+		pageHelper = reportFormsInfoService.findByConditions(reportFormsInfo.getPage()-1, reportFormsInfo.getLimit(), reportFormsInfo);
 		return pageHelper;
 	}
 	
@@ -80,18 +78,18 @@ public class ReportController extends BaseController{
 	
 	@RequestMapping("/biddingDetailList")
 	@ResponseBody
-	public PageHelper<KOrderInfo> biddingDetailList(KOrderInfo kOrderInfo,HttpServletRequest request) {
-		PageHelper<KOrderInfo> pageHelper = new PageHelper<KOrderInfo>();
+	public PageHelper<ReportFormsInfo> biddingDetailList(ReportFormsInfo reportFormsInfo,HttpServletRequest request) {
+		PageHelper<ReportFormsInfo> pageHelper = new PageHelper<ReportFormsInfo>();
 		//获取页面时间段的查询条件
 		String createTime = request.getParameter("createTime1");
 		if(createTime !=null && !"".equals(createTime)) {
 			String startTime = createTime.substring(0, 10);
 			String endTime = createTime.substring(createTime.length()-10);
-			kOrderInfo.setStartTime(startTime);
-			kOrderInfo.setEndTime(endTime);
+			reportFormsInfo.setStartTime(startTime);
+			reportFormsInfo.setEndTime(endTime);
 		}
 		// 查询当前页实体对象
-		pageHelper = kOrderInfoService.getList(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
+		pageHelper = reportFormsInfoService.findByConditions(reportFormsInfo.getPage()-1, reportFormsInfo.getLimit(), reportFormsInfo);
 		return pageHelper;
 	}
 	
