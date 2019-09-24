@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +16,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.qhc.steigenberger.domain.BCityFreight;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.service.BCityFreightService;
 import com.qhc.steigenberger.util.ExcelUtil;
 import com.qhc.steigenberger.util.FileHandleUtil;
+import com.qhc.steigenberger.util.PageHelper;
 
 
 
 @Controller
 @RequestMapping("/freight")
 public class FreightController {
+	
+	@Autowired
+	BCityFreightService BCityFreightService;
 	
 	@RequestMapping("/index")
   	public String todo() {
@@ -37,10 +45,24 @@ public class FreightController {
 	         MultipartRequest multipartRequest=(MultipartRequest) request;
 	         MultipartFile excelFile=multipartRequest.getFile("excelFile");
 	         if(excelFile!=null){
+	        	 BCityFreight bCityFreight = new BCityFreight();
 	        	 //2007版本以下的excel用这个
 //	             List<List<String>> datas = ExcelUtil.readXls(excelFile.getInputStream());
 	        	 List<List<String>> datas = ExcelUtil.readXlsx(excelFile.getInputStream());
-	     //TODO: 读到的数据都在datas里面，根据实际业务逻辑做相应处理<br>  
+	        	 for (int i = 0; i < datas.size(); i++) {
+	        		 List<String> data = datas.get(i);
+	        		 for(int j = 0; j < data.size(); j++) {
+	        			bCityFreight.setProvinceName(data.get(0));
+	        			bCityFreight.setProvinceCode(data.get(1));
+        				bCityFreight.setCityName(data.get(2));
+        				bCityFreight.setCityCode(data.get(3));
+        				bCityFreight.setCountyName(data.get(4));
+        				bCityFreight.setCountyCode(data.get(5));
+        				bCityFreight.setPrice(Double.valueOf(data.get(6)));
+        				BCityFreightService.add(bCityFreight);
+	        		 }
+				}
+	     
 	             // .............
 	        	 //将文件上传到某个路径
 	        	 /*String fileName = excelFile.getOriginalFilename();
@@ -59,6 +81,15 @@ public class FreightController {
 	         return new JsonResult(false);
 	     }
 	     return new JsonResult(false);
+	 }
+	 
+	 @RequestMapping("/bCityFreightList")
+	 @ResponseBody
+	 public PageHelper<BCityFreight> getUserListPage(BCityFreight bCityFreight,HttpServletRequest request) {
+		 PageHelper<BCityFreight> pageHelper = null;
+		 pageHelper = BCityFreightService.getList(bCityFreight.getPage()-1, bCityFreight.getLimit(), bCityFreight);
+		 return pageHelper;
+		 
 	 }
 
 }
