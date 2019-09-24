@@ -18,12 +18,10 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.qhc.steigenberger.domain.BArea;
 import com.qhc.steigenberger.domain.BCity;
-import com.qhc.steigenberger.domain.BCityFreight;
 import com.qhc.steigenberger.domain.BProvince;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.service.BAreaService;
-import com.qhc.steigenberger.service.BCityFreightService;
 import com.qhc.steigenberger.service.BCityService;
 import com.qhc.steigenberger.service.BProvinceService;
 import com.qhc.steigenberger.util.ExcelUtil;
@@ -35,9 +33,6 @@ import com.qhc.steigenberger.util.PageHelper;
 @Controller
 @RequestMapping("/freight")
 public class FreightController {
-	
-	@Autowired
-	BCityFreightService BCityFreightService;
 	
 	@Autowired
 	BProvinceService bProvinceService;
@@ -108,13 +103,6 @@ public class FreightController {
 	     return new JsonResult(false);
 	 }
 	 
-	 @RequestMapping("/bCityFreightList")
-	 @ResponseBody
-	 public PageHelper<BCityFreight> getUserListPage(BCityFreight bCityFreight,HttpServletRequest request) {
-		 PageHelper<BCityFreight> pageHelper = null;
-		 pageHelper = BCityFreightService.getList(bCityFreight.getPage()-1, bCityFreight.getLimit(), bCityFreight);
-		 return pageHelper;
-		 
-	 }
+	 
 
 }
