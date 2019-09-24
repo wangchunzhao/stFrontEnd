@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SapSalesOffice;
-import com.qhc.steigenberger.domain.form.AbsOrderForm;
-import com.qhc.steigenberger.domain.form.DealerOrderForm;
+import com.qhc.steigenberger.domain.form.AbsOrder;
+import com.qhc.steigenberger.domain.form.DealerOrder;
 
 /**
  * @author wang@dxc.com
@@ -71,7 +71,7 @@ public class OrderService {
 	 * 
 	 * @param form : order
 	 */
-	public void saveOrder(AbsOrderForm form) {
+	public void saveOrder(AbsOrder form) {
 		fryeService.postJason(URL_ORDER, form.getClass());
 	}
 

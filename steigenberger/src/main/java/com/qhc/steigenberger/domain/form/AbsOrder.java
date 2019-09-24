@@ -11,10 +11,10 @@ import java.util.Map;
  * @author wang@dxc.com
  *
  */
-public abstract class AbsOrderForm {
-	public final String ORDER_TYPE_CODE_DEALER = "Z001";
-	public final String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
-	public final String ORDER_TYPE_CODE_BULK = "Z003";
+public abstract class AbsOrder {
+	public final static String ORDER_TYPE_CODE_DEALER = "Z001";
+	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
+	public final static String ORDER_TYPE_CODE_BULK = "Z003";
 	
 	private String orderType;
 	/**

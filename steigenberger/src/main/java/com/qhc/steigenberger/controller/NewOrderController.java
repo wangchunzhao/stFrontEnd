@@ -20,7 +20,8 @@ import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
-import com.qhc.steigenberger.domain.form.DealerOrderForm;
+import com.qhc.steigenberger.domain.form.AbsOrder;
+import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
@@ -67,18 +68,19 @@ public class NewOrderController {
 		mv.addObject(CURRENCY_MAP,currencyMap);
 		mv.addObject(INCOTERMS_MAP,incotermMap);
 		//
-		mv.addObject(FORM_ORDER_DEALER,new DealerOrderForm());
+		mv.addObject(FORM_ORDER_DEALER,new DealerOrder());
 		return mv;
 	}
 	@PostMapping("dealer")
 	@ResponseBody
-	public ModelAndView  submitDlealerOrder(@ModelAttribute DealerOrderForm form, Model model, @RequestParam(value="action", required=true) String action) {
+	public ModelAndView  submitDlealerOrder(@ModelAttribute DealerOrder form, Model model, @RequestParam(value="action", required=true) String action) {
 		
 		if(action.equals(FORM_SUBMIT))
 			form.setSubmit(true);
 		else 
 			form.setSubmit(false);
 		
+		form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
 		orderService.saveOrder(form);
 		
 		return this.goDealerOrder();
