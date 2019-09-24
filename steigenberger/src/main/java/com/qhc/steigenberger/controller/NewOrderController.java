@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +39,9 @@ public class NewOrderController {
 	private final static String PAGE_DEALER = "newOrder/newOrder";
 	//
 	private final static String FORM_ORDER_DEALER = "dealerOrder";
+	
+	//
+	private final static String FORM_SUBMIT="submit";
 	
 	@Autowired
     UserService userService;
@@ -68,10 +72,16 @@ public class NewOrderController {
 	}
 	@PostMapping("dealer")
 	@ResponseBody
-	public ModelAndView  submitDlealerOrder(@ModelAttribute(value = "form") DealerOrderForm dealer, Model model) {
-		ModelAndView mv =new ModelAndView(PAGE_DEALER);
-		System.out.println("dealer");
-		return mv;
+	public ModelAndView  submitDlealerOrder(@ModelAttribute DealerOrderForm form, Model model, @RequestParam(value="action", required=true) String action) {
+		
+		if(action.equals(FORM_SUBMIT))
+			form.setSubmit(true);
+		else 
+			form.setSubmit(false);
+		
+		orderService.saveOrder(form);
+		
+		return this.goDealerOrder();
 	}
 	
 	@RequestMapping("customers")

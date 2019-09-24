@@ -83,7 +83,7 @@
 
 								<div class="col-md-3 col-xs-3">
 									<div class="input-group">
-										<input type="text" class="form-control" placeholder="请输入关键词">
+										<input type="text" class="form-control" placeholder="请输入关键词" th:field="*{contracterCode}">
 										<div class="input-group-btn">
 											<select name="gid" id="gid" class="selectpicker" data-live-search="true"></select>
 										</div>
@@ -93,10 +93,10 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" >
 								</div>
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{customerName}">
 								</div>
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{recordCode}">
 								</div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
@@ -114,11 +114,11 @@
 									终端客户性质 customer nature
 								</div> 
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" >
 								</div>
 
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{salesTelnumber}">
 								</div>
 								<div class="col-md-3 col-xs-3">
 									<select class="form-control">
@@ -140,15 +140,14 @@
 								<div class="col-md-9 col-xs-9">
 									是否新客户 new customer
 								</div>
-
 								<div class="col-md-3 col-xs-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{isConvenientStore}">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
 								</div>
-								<div class="col-md-3 col-xs-3">
-									<select class="form-control">
+								<div class="col-md-3 col-xs-3" >
+									<select class="form-control" th:field="*{isNew}">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
@@ -183,19 +182,19 @@
 									税率 Rate
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractNumber}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{saleType}">
 										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>
 										
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{taxRate}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
@@ -215,21 +214,21 @@
 									币种 currency
 								</div>
 								<div class="col-xs-12 col-md-2" style="padding-right: 1px;">
-									<select class="form-control">
+									<select class="form-control" th:field="*{incoterm}">
 										<option th:each="incoterm : ${incoterms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{incotermContect}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractValue}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractRMBValue}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{currency}">
 										<option th:each="currency : ${currencies}" th:value="${currency.key}" th:text="${currency.value}"></option>
 									</select>
 								</div>
@@ -248,7 +247,7 @@
 									购销明细金额合计 Aggregate amount
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{currencyRate}">
 								</div>
 								<div class="col-xs-12 col-md-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
@@ -288,16 +287,16 @@
 									安装方式 installation
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{officeCode}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{groupCode}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{warrenty}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{installCode}">
 								</div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
@@ -311,28 +310,28 @@
 									收货方式 Receiving way
 								</div>
 								<div class="col-xs-12 col-md-2" style="padding-left: 12px; padding-right: 1px;">
-									<select class="form-control">
+									<select class="form-control" th:field="*{provinceCode}">
 										<option value="1">1</option>
 										<option value="2">2</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-2" style="padding-left: 1px; padding-right: 1px;">
-									<select class="form-control">
+									<select class="form-control" th:field="*{cityCode}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-2" style="padding-left: 1px;">
-									<select class="form-control" style="padding-left: 0px;">
+									<select class="form-control" style="padding-left: 0px;"  th:field="*{distinctCode}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{address}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{confirmTypeCode}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
@@ -352,19 +351,19 @@
 									授权人2及身份证号 Id number 2
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{transferTypeCode}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor1Id}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor1Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor2Id}">
 								</div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
@@ -381,16 +380,16 @@
 									是否全部为散件 All in bulk
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor2Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor3Id}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{isAllinBulk}">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
@@ -404,10 +403,10 @@
 									外销运费 Export freight
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{approvedDicount}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{freight}">
 								</div>
 								<div class="col-xs-12 col-md-3"></div>
 								<div class="col-xs-12 col-md-3"></div>
@@ -843,7 +842,7 @@
 				</div>
 
 			</div>
-			<button type="submit" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;">保存 save</button><button type="submit" class="btn btn-primary pull-right" style="margin-left: 30px;">提交 submit</button><button type="button" class="btn pull-right btn-warning">返回 back</button>
+			<button type="submit" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" name="save" value="save">保存 save</button><button type="submit" class="btn btn-primary pull-right" style="margin-left: 30px;" name="action" value="submit">提交 submit</button><button type="button" class="btn pull-right btn-warning">返回 back</button>
 				
 		</div>
 		</form>
