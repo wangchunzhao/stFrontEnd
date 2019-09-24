@@ -12,6 +12,11 @@ import java.util.Map;
  *
  */
 public abstract class AbsOrderForm {
+	public final String ORDER_TYPE_CODE_DEALER = "Z001";
+	public final String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
+	public final String ORDER_TYPE_CODE_BULK = "Z003";
+	
+	private String orderType;
 	/**
 	 * 客户基本信息 Basic information
 	 */
@@ -326,4 +331,11 @@ public abstract class AbsOrderForm {
 	public void setFreight(double freight) {
 		this.freight = freight;
 	}
+	public String getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+	
 }
