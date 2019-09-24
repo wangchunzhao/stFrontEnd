@@ -62,7 +62,7 @@ public class SpecialController {
 		
 		try {
 			// 查询当前页实体对象
-			pageHelper = kOrderInfoService.getList(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
+			pageHelper = kOrderInfoService.getListForSpecial(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
