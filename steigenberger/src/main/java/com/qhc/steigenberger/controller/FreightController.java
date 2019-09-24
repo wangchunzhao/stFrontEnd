@@ -16,10 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.qhc.steigenberger.domain.BArea;
+import com.qhc.steigenberger.domain.BCity;
 import com.qhc.steigenberger.domain.BCityFreight;
+import com.qhc.steigenberger.domain.BProvince;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.service.BAreaService;
 import com.qhc.steigenberger.service.BCityFreightService;
+import com.qhc.steigenberger.service.BCityService;
+import com.qhc.steigenberger.service.BProvinceService;
 import com.qhc.steigenberger.util.ExcelUtil;
 import com.qhc.steigenberger.util.FileHandleUtil;
 import com.qhc.steigenberger.util.PageHelper;
@@ -33,6 +39,16 @@ public class FreightController {
 	@Autowired
 	BCityFreightService BCityFreightService;
 	
+	@Autowired
+	BProvinceService bProvinceService;
+	
+	@Autowired
+	BCityService bCityService;
+	
+	@Autowired
+	BAreaService bAreaService;
+	
+	
 	@RequestMapping("/index")
   	public String todo() {
   		return "systemManage/freight";
@@ -45,21 +61,30 @@ public class FreightController {
 	         MultipartRequest multipartRequest=(MultipartRequest) request;
 	         MultipartFile excelFile=multipartRequest.getFile("excelFile");
 	         if(excelFile!=null){
-	        	 BCityFreight bCityFreight = new BCityFreight();
+	        	 BProvince bProvince = new BProvince();
+	        	 BCity bCity = new BCity();
+	        	 BArea bArea = new BArea();
 	        	 //2007版本以下的excel用这个
 //	             List<List<String>> datas = ExcelUtil.readXls(excelFile.getInputStream());
 	        	 List<List<String>> datas = ExcelUtil.readXlsx(excelFile.getInputStream());
 	        	 for (int i = 0; i < datas.size(); i++) {
 	        		 List<String> data = datas.get(i);
 	        		 for(int j = 0; j < data.size(); j++) {
-	        			bCityFreight.setProvinceName(data.get(0));
-	        			bCityFreight.setProvinceCode(data.get(1));
-        				bCityFreight.setCityName(data.get(2));
-        				bCityFreight.setCityCode(data.get(3));
-        				bCityFreight.setCountyName(data.get(4));
-        				bCityFreight.setCountyCode(data.get(5));
-        				bCityFreight.setPrice(Double.valueOf(data.get(6)));
-        				BCityFreightService.add(bCityFreight);
+	        			 bProvince.setName(data.get(0));
+	        			 bProvince.setCode(data.get(1));
+	        			 bProvinceService.add(bProvince);
+	        			 
+	        			 bCity.setbProvinceCode(data.get(1));
+	        			 bCity.setName(data.get(2));
+	        			 bCity.setCode(data.get(3));
+	        			 bCityService.add(bCity);
+	        			 
+	        			 bArea.setbCityCode(data.get(3));
+	        			 bArea.setName(data.get(4));
+	        			 bArea.setCode(data.get(5));
+	        			 bArea.setPrice(Double.valueOf(data.get(6)));
+	        			 bAreaService.add(bArea);
+	        			
 	        		 }
 				}
 	     
