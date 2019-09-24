@@ -42,7 +42,6 @@ public PageHelper<KOrderInfo> getListForSpecial(int pageNum, int pageSize,KOrder
 		String startTime = kOrderInfo.getStartTime()==null?"":kOrderInfo.getStartTime();
 		String endTime = kOrderInfo.getEndTime()==null?"":kOrderInfo.getEndTime();
 		
-		
 		String url = URL_KORDERS_LIST_SPECIAL+"?pageNo="+pageNum+"&pageSize="+pageSize+"&contractNo="+contractNo+"&startTime="+startTime+"&endTime="+endTime+"&status="+kOrderInfo.getStatus();
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
