@@ -23,7 +23,7 @@ public abstract class AbsOrder {
 	private String contracterCode;//签约单位 Contract unit
 	private String customerName;//店名 customer name
 	private int isConvenientStore;//是否便利店 convenience store
-	//private String salesCode;//客户经理 Customer manager
+	private String salesCode;//客户经理 Customer manager
 	private String salesTelnumber;//客户经理电话 Customer manager Tel
 	private int isNew;//是否新客户 new customer
 	/**
@@ -336,6 +336,12 @@ public abstract class AbsOrder {
 	}
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
+	}
+	public String getSalesCode() {
+		return salesCode;
+	}
+	public void setSalesCode(String salesCode) {
+		this.salesCode = salesCode;
 	}
 	
 }

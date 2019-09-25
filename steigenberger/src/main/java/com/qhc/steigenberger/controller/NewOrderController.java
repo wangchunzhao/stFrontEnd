@@ -73,15 +73,21 @@ public class NewOrderController {
 	}
 	@PostMapping("dealer")
 	@ResponseBody
-	public ModelAndView  submitDlealerOrder(@ModelAttribute DealerOrder form, Model model, @RequestParam(value="action", required=true) String action) {
-		
-		if(action.equals(FORM_SUBMIT))
-			form.setSubmit(true);
-		else 
-			form.setSubmit(false);
-		
-		form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
-		orderService.saveOrder(form);
+	public ModelAndView  submitDlealerOrder(@ModelAttribute DealerOrder form, Model model, @RequestParam(value="action", required=true) String action,HttpServletRequest request) {
+		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+		if(object!=null && object instanceof String) {
+			String domainId = (String)object;
+			form.setSalesCode(domainId);
+			//
+			if(action.equals(FORM_SUBMIT))
+				form.setSubmit(true);
+			else 
+				form.setSubmit(false);
+			
+			form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
+			orderService.saveOrder(form);
+			
+		}
 		
 		return this.goDealerOrder();
 	}

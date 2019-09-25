@@ -31,6 +31,8 @@ public class OrderService {
 	
 	@Autowired
 	private FryeService fryeService;
+	
+	
 	/**
 	 * 
 	 * @param name customer name 
@@ -72,7 +74,8 @@ public class OrderService {
 	 * @param form : order
 	 */
 	public void saveOrder(AbsOrder form) {
-		fryeService.postJason(URL_ORDER, form.getClass());
+		
+		fryeService.postJason(URL_ORDER, DealerOrder.class);
 	}
 
 }
