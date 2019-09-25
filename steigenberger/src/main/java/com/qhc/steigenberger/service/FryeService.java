@@ -20,6 +20,7 @@ import com.qhc.steigenberger.config.ApplicationConfig;
 import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
 import com.qhc.steigenberger.service.exception.URLNotFoundException;
 
+import net.minidev.json.JSONObject;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -102,10 +103,11 @@ public class FryeService<T> {
 		List<T> list = userFlux.collectList().block();
 		return list;
 	}
+	
 	/**
-	 * 
+	 * 得到一个map结果集
 	 */
-	public Map<String,String> getMapDate(String path) {
+	public Map<String,Object> getMapData(String path) {
 		String url = config.getFryeURL() + path;
 		WebClient webClient = getBuilder().baseUrl(url).build();
 		Mono<Map> response = webClient.get().uri(url)
@@ -116,6 +118,7 @@ public class FryeService<T> {
 				.bodyToMono(Map.class);
 		return response.block();
 	}
+	
 
 	/**
 	 * post请求返回一个对象
