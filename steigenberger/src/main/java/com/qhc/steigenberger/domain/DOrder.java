@@ -1,9 +1,12 @@
 package com.qhc.steigenberger.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import com.qhc.steigenberger.util.Page;
 
-public class DOrder {
+
+public class DOrder extends Page implements Serializable{
 	
 	public int id;
 	
@@ -28,6 +31,8 @@ public class DOrder {
 	private String	contractorClassName;
 	
 	private String	officeCode;
+	
+	private String contractSeqNumber;
 	
 	
 	
@@ -127,6 +132,14 @@ public class DOrder {
 
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
+	}
+
+	public String getContractSeqNumber() {
+		return contractSeqNumber;
+	}
+
+	public void setContractSeqNumber(String contractSeqNumber) {
+		this.contractSeqNumber = contractSeqNumber;
 	}
 	
 	

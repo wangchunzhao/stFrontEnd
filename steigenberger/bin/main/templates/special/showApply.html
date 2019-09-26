@@ -1,0 +1,183 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}"/>
+
+<!-- Custom CSS -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' th:href="@{/css/style.css}"/>
+
+<!-- font-awesome icons CSS -->
+<link href="./css/font-awesome.css" rel="stylesheet" th:href="@{/css/font-awesome.css}"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- js-->
+<script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
+
+<!--webfonts-->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="./css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+
+<!-- side nav css file -->
+<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css' th:href="@{/css/SidebarNav.min.css}"/>
+<!-- //side nav css file -->
+<script src="./js/SidebarNav.min.js" th:src="@{/js/SidebarNav.min.js}"></script>
+
+
+<script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
+<link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
+<script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+
+<!-- -date -->
+<script type="text/javascript" src="../bootstrap-date/build/js/moment-with-locales.min.js" th:src="@{/bootstrap-date/build/js/moment-with-locales.min.js}"></script>
+<!-- <link rel="stylesheet" href="../bootstrap-date/build/css/bootstrap.min.css"/> -->
+<link rel="stylesheet" href="../bootstrap-date/build/css/bootstrap-datetimepicker.min.css" th:href="@{/bootstrap-date/build/css/bootstrap-datetimepicker.min.css}"/>
+<script type="text/javascript" src="../bootstrap-date/build/js/bootstrap-datetimepicker.min.js" th:src="@{/bootstrap-date/build/js/bootstrap-datetimepicker.min.js}"></script>
+
+
+<script type="text/javascript">
+	var ctxPath  = [[@{/}]];
+	$(function(){
+		 $(".form #btn_back").on("click",function(e){
+			 window.location.href = ctxPath+"special/index";
+		 });
+	})
+ </script>
+<script src="../pageJs/main.js" type="text/javascript" ></script>	
+</head> 
+<body class="cbp-spmenu-push">
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+	
+<!-- main content start-->
+<div id="page-wrapper">
+	<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+		<div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a role="button"  href="#collapseOne-magical-coder-auto-id-1565240804186" aria-expanded="true" >基本信息 Basic information</a>
+            </h4>
+        </div>
+        <div id="collapseOne-magical-coder-auto-id-1565240804186" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel-body" style="height: auto;">
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        需求流水号 code
+                    </div>
+                    <div class="col-xs-6">
+                        合同号 contract code
+                    </div>
+                    
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" readonly th:value="${order?.sequenceNumber}">
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" readonly >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a class="" role="button" data-toggle="collapse"  href="#collapseTwo-magical-coder-auto-id-1565240802789" aria-expanded="true">特批信息 Special information</a>
+            </h4>
+        </div>
+        <div id="collapseTwo-magical-coder-auto-id-1565240802789" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel-body" style="height: auto;">
+				<form class="layui-form form" enctype="multipart/form-data" method="post" >
+                <div class="row">
+                    <div class="col-xs-6">
+                        收到电子定单或其他定单确认文件的时间 Order confirmation time
+                    </div>
+                    <div class="col-xs-6">
+                        有效期（合同中要求的完工日期）End Time
+                    </div>
+                    <div class="col-xs-6">
+	                    <textarea readonly class="form-control" rows="3" name="receiveMailTime" id="receiveMailTime" th:text="${apply?.receiveMailTime}"></textarea>
+                    </div>
+                    <div class="col-xs-6">
+                    	<textarea readonly class="form-control" rows="3" name="contractTime" id="contractTime" th:text="${apply?.contractTime}"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3px;">
+                    <div class="col-xs-6">
+                        预计合同原件、预付款到达时间 Arrival time of advance payment
+                    </div>
+                    <div class="col-xs-6">
+                        备注 Remark
+                    </div>
+                    <div class="col-xs-6" style="margin-top: 0px;">
+                    	<textarea readonly class="form-control" rows="3" name="payAdvancePaymentTime" id="payAdvancePaymentTime" th:text="${apply?.payAdvancePaymentTime}"></textarea>
+                    </div>
+                    <div class="col-xs-6">
+                        <textarea readonly class="form-control" rows="3" name="remark" id="remark" th:text="${apply?.remark}"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 2px;">
+                    <div class="col-xs-6 col-md-12">
+                        附件 Attachment file
+                    </div>
+                     <div class="col-xs-6 col-md-12">
+	                       <span th:text="${apply?.enclosureName}"></span>
+	                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6"></div>
+                    <div class="col-xs-6">
+	                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 15px;" id="btn_back">返回 back</button>
+	                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>	           
+	</div>
+</div>
+<script src="../js/classie.js"></script>
+<script>
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+
+	function disableOther( button ) {
+		if( button !== 'showLeftPush' ) {
+			classie.toggle( showLeftPush, 'disabled' );
+		}
+	}
+</script>	
+<!--scrolling js-->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!-- side nav js -->
+<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+<script>
+     $('.sidebar-menu').SidebarNav()
+   </script>	
+<script src="../js/SimpleChart.js"></script>
+<script src="../js/bootstrap.js"> </script>
+</body>
+</html>

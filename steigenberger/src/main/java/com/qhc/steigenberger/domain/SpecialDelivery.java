@@ -3,13 +3,12 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 
 /**
  * @author lizuoshan
  *
  */
-public class SpecialDelivery implements Serializable {
+public class SpecialDelivery implements Serializable{
 	
     
 	public Integer applyId;
@@ -21,41 +20,72 @@ public class SpecialDelivery implements Serializable {
     public Date applyTime;//申请时间
     
     public Date approvalTime;//通过时间
+	
+	private String receiveMailTime;
+	
+	private int applyStatus;
+	
+	private String contractTime;
+	
+	private String payAdvancePaymentTime;
+	
+	private String remark;
+	
+	private String enclosurePath;
+	
+	private String enclosureName;
     
-    public Integer ordersId;//订单id
-    
-	public Integer applyStatus;//申请状态
-
+	public Integer kOrderVersionId;
+	
 	public String startTime;
 	
 	public String endTime;
-	
-	private String receiveMailTime;
-	private String contractTime;
-	private String payAdvancePaymentTime;
-	private String remark;
-	private String enclosurePath;
-	private String enclosureName;
-	
-	
 
 	
 	
-
-	public String getEnclosurePath() {
-		return enclosurePath;
+	
+	
+	
+	
+	
+	public Integer getApplyId() {
+		return applyId;
 	}
 
-	public void setEnclosurePath(String enclosurePath) {
-		this.enclosurePath = enclosurePath;
+	public void setApplyId(Integer applyId) {
+		this.applyId = applyId;
 	}
 
-	public String getEnclosureName() {
-		return enclosureName;
+	public String getApplyer() {
+		return applyer;
 	}
 
-	public void setEnclosureName(String enclosureName) {
-		this.enclosureName = enclosureName;
+	public void setApplyer(String applyer) {
+		this.applyer = applyer;
+	}
+
+	public String getApprover() {
+		return approver;
+	}
+
+	public void setApprover(String approver) {
+		this.approver = approver;
+	}
+
+	public Date getApplyTime() {
+		return applyTime;
+	}
+
+	public void setApplyTime(Date applyTime) {
+		this.applyTime = applyTime;
+	}
+
+	public Date getApprovalTime() {
+		return approvalTime;
+	}
+
+	public void setApprovalTime(Date approvalTime) {
+		this.approvalTime = approvalTime;
 	}
 
 	public String getReceiveMailTime() {
@@ -64,6 +94,14 @@ public class SpecialDelivery implements Serializable {
 
 	public void setReceiveMailTime(String receiveMailTime) {
 		this.receiveMailTime = receiveMailTime;
+	}
+
+	public int getApplyStatus() {
+		return applyStatus;
+	}
+
+	public void setApplyStatus(int applyStatus) {
+		this.applyStatus = applyStatus;
 	}
 
 	public String getContractTime() {
@@ -90,53 +128,28 @@ public class SpecialDelivery implements Serializable {
 		this.remark = remark;
 	}
 
-	public Integer getApplyId() {
-		return applyId;
+	public String getEnclosurePath() {
+		return enclosurePath;
 	}
 
-	public void setApplyId(Integer applyId) {
-		this.applyId = applyId;
+	public void setEnclosurePath(String enclosurePath) {
+		this.enclosurePath = enclosurePath;
 	}
 
-	public String getApplyer() {
-		return applyer;
+	public String getEnclosureName() {
+		return enclosureName;
 	}
 
-	public void setApplyer(String applyer) {
-		this.applyer = applyer;
+	public void setEnclosureName(String enclosureName) {
+		this.enclosureName = enclosureName;
 	}
 
-	public String getApprover() {
-		return approver;
+	public Integer getkOrderVersionId() {
+		return kOrderVersionId;
 	}
 
-	public void setApprover(String approver) {
-		this.approver = approver;
-	}
-
-
-	public Date getApplyTime() {
-		return applyTime;
-	}
-
-	public void setApplyTime(Date applyTime) {
-		this.applyTime = applyTime;
-	}
-
-	public Date getApprovalTime() {
-		return approvalTime;
-	}
-
-	public void setApprovalTime(Date approvalTime) {
-		this.approvalTime = approvalTime;
-	}
-
-	public Integer getApplyStatus() {
-		return applyStatus;
-	}
-
-	public void setApplyStatus(Integer applyStatus) {
-		this.applyStatus = applyStatus;
+	public void setkOrderVersionId(Integer kOrderVersionId) {
+		this.kOrderVersionId = kOrderVersionId;
 	}
 
 	public String getStartTime() {
@@ -154,16 +167,11 @@ public class SpecialDelivery implements Serializable {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-
-	public Integer getOrdersId() {
-		return ordersId;
-	}
-
-	public void setOrdersId(Integer ordersId) {
-		this.ordersId = ordersId;
-	}
-
-
+	
+	
+	
+	
+	
 
 
 }

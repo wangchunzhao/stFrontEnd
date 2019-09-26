@@ -3,26 +3,26 @@ package com.qhc.steigenberger.controller;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.JsonResult;
-import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.SpecialDelivery;
+import com.qhc.steigenberger.domain.SpecialDeliveryVoInfo;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
-import com.qhc.steigenberger.service.KOrderInfoService;
+import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.SpecialDeliveryService;
+import com.qhc.steigenberger.service.SpecialDeliveryVoInfoService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
 import com.qhc.steigenberger.util.FileUploadAndDown;
@@ -36,10 +36,13 @@ public class SpecialController {
 	SpecialDeliveryService specialDeliveryService;
 	
 	@Autowired
-	KOrderInfoService kOrderInfoService;
+	SpecialDeliveryVoInfoService specialDeliveryVoInfoService;
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	OrderService orderService;
 	
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
@@ -59,15 +62,15 @@ public class SpecialController {
 	
 	@RequestMapping("/listData")
 	@ResponseBody
-	public PageHelper<KOrderInfo> getOrderListPage(KOrderInfo kOrderInfo,HttpServletRequest request) {
-		PageHelper<KOrderInfo> pageHelper = null;
+	public PageHelper<SpecialDeliveryVoInfo> getOrderListPage(SpecialDeliveryVoInfo sdv,HttpServletRequest request) {
+		PageHelper<SpecialDeliveryVoInfo> pageHelper = null;
 		//获取页面时间段的查询条件
 		String createTime = request.getParameter("createTime1");
 		if(createTime !=null && !"".equals(createTime)) {
 			String startTime = createTime.substring(0, 10);
 			String endTime = createTime.substring(createTime.length()-10);
-			kOrderInfo.setStartTime(startTime);
-			kOrderInfo.setEndTime(endTime);
+			sdv.setStartTime(startTime);
+			sdv.setEndTime(endTime);
 		}
 		
 		try {
@@ -76,18 +79,19 @@ public class SpecialController {
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
-				String operationName = userOperationInfoList.get(i).getOperationName();
+//				String operationName = userOperationInfoList.get(i).getOperationName();
+				String operationName = "全部";
 				if(operationName.equals(allorder)) {
 					break;
 				}else if(operationName.equals(benqu)) {
-					kOrderInfo.setArea(Integer.valueOf(userOperationInfoList.get(i).getAttachedCode()));
+					sdv.setOfficeCode(userOperationInfoList.get(i).getAttachedCode());
 					break;
 				}else {
-					kOrderInfo.setCreateId(user.id);
+					sdv.setOwnerDomainId(user.id+"");
 				}
 			}
 			// 查询当前页实体对象
-			pageHelper = kOrderInfoService.getListForSpecial(kOrderInfo.getPage()-1, kOrderInfo.getLimit(), kOrderInfo);
+			pageHelper = specialDeliveryVoInfoService.getListForSpecial(sdv.getPage()-1, sdv.getLimit(), sdv);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -119,12 +123,12 @@ public class SpecialController {
 	@ResponseBody
 	public JsonResult queryApplyListByOrderId(HttpServletRequest request) {
 		
-		String ordersId = request.getParameter("ordersId");
+		String kOrderVersionId = request.getParameter("kOrderVersionId");
 		// 1.没有就是新增操作
 		// 2.如果存在，就是更新操作
 		String msg = "";
 		int status = 0;
-		List<SpecialDelivery> result = specialDeliveryService.findListInfoByOrderId(Integer.valueOf(ordersId));
+		List<SpecialDelivery> result = specialDeliveryService.findListInfoByOrderId(Integer.valueOf(kOrderVersionId));
 		if (result != null) {
 			status = 200;
 			msg = "操作成功！";
@@ -137,10 +141,12 @@ public class SpecialController {
 	}
 	
 	@RequestMapping("/toAdd")
-	public ModelAndView toAdd(@RequestParam String orderId) {
-		KOrderInfo order = kOrderInfoService.getInfoById(Integer.valueOf(orderId));
+	public ModelAndView toAdd(@RequestParam Integer kOrderVersionId,String ordersId) {
+		
+		DOrder order = orderService.getInfoById(Integer.valueOf(ordersId));
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("order", order);
+		mv.addObject("kOrderVersionId", kOrderVersionId);
 		mv.setViewName("special/specialApply");
 		return mv;
 	}
@@ -148,7 +154,9 @@ public class SpecialController {
 	@RequestMapping("/toShow")
 	public ModelAndView toShow(@RequestParam String applyId) {
 		SpecialDelivery sd = specialDeliveryService.findInfoById(applyId);
-		KOrderInfo order = kOrderInfoService.getInfoById(sd.getOrdersId());
+		DOrder order = orderService.getInfoById(sd.getkOrderVersionId());
+		//todo，查询合同得到合同流水
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("order", order);
 		mv.addObject("apply", sd);
