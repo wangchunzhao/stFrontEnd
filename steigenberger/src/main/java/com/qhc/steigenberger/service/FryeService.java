@@ -20,7 +20,6 @@ import com.qhc.steigenberger.config.ApplicationConfig;
 import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
 import com.qhc.steigenberger.service.exception.URLNotFoundException;
 
-import net.minidev.json.JSONObject;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

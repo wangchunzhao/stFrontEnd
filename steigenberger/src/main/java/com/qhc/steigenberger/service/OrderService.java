@@ -14,6 +14,7 @@ import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
+import com.qhc.steigenberger.service.FryeService;
 
 /**
  * @author wang@dxc.com
@@ -46,28 +47,28 @@ public class OrderService {
 	 * @return customer class map
 	 */
 	public Map<String, String> getCustomerClazz() {
-		return  fryeService.getMapDate(URL_CUSTOMER_CLASS);
+		return  fryeService.getMapData(URL_CUSTOMER_CLASS);
 	}
 	/**
 	 * 
 	 * @return sales type map
 	 */
 	public Map<String, String> getSalesType() {
-		return  fryeService.getMapDate(URL_SALES_TYPE);
+		return  fryeService.getMapData(URL_SALES_TYPE);
 	}
 	/**
 	 * 
 	 * @return currency map
 	 */
 	public Map<String, String> getCurrency() {
-		return  fryeService.getMapDate(URL_CURRENCY);
+		return  fryeService.getMapData(URL_CURRENCY);
 	}
 	/**
 	 * 
 	 * @return
 	 */
 	public Map<String,String> getIncoterms(){
-		return fryeService.getMapDate(URL_INCOTERMS);
+		return fryeService.getMapData(URL_INCOTERMS);
 	}
 	/**
 	 * 
