@@ -20,6 +20,8 @@ public class User implements Serializable{
     
     public String userName;
     
+    public String tel;
+    
     public List<ApplicationOfRolechange> apps;
 	
     public SapSalesOffice region;//区域
@@ -103,8 +105,16 @@ public class User implements Serializable{
 		this.apps = apps;
 	}
 
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 
 
+	
 
 
 }

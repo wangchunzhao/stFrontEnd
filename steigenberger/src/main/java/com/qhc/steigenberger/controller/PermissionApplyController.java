@@ -71,6 +71,7 @@ public class PermissionApplyController extends BaseController{
 		String roleId = request.getParameter("roleName");
 		String area = request.getParameter("area");
 		String isactive = request.getParameter("status");
+		String tel = request.getParameter("tel");
 		//获取域用户
 //		User usersession = getAccount(request);
 		
@@ -79,6 +80,7 @@ public class PermissionApplyController extends BaseController{
 		user.setIsActive(1);
 		user.setUserName(userName);
 		user.setUserIdentity(userid);
+		user.setTel(tel);
 		 
 		
 		ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
@@ -92,7 +94,6 @@ public class PermissionApplyController extends BaseController{
 		applicationOfRolechange.setbRolesId(Integer.valueOf(roleId));
 		
 //		System.out.println(usersession.getUserIdentity());
-		System.out.println("12345678");
 		String msg = "";
 		int status = 0;
 		Boolean result = addStatus(user,applicationOfRolechange);
