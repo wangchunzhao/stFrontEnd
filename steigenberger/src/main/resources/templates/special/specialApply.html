@@ -73,12 +73,15 @@
 			  var payAdvancePaymentTime=$(".form #payAdvancePaymentTime").val();
 			  var remark=$(".form #remark").val();
 			  var enclosurename=$(".form #myupload").val();
+			  var kOrderVersionId=$(".form #kOrderVersionId").val();
 			  ordersId = parseInt(ordersId);
+			  kOrderVersionId = parseInt(kOrderVersionId);
 			  var data={
 					  ordersId:ordersId,
 					  receiveMailTime:receiveMailTime,
 					  contractTime:contractTime,
 					  payAdvancePaymentTime:payAdvancePaymentTime,
+					  kOrderVersionId:kOrderVersionId,
 					  remark:remark
 				}
 			$.ajax({  
@@ -136,10 +139,10 @@
                     </div>
                     
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" readonly id="ordersId" th:value="${order?.id}">
+                        <input type="text" class="form-control" readonly id="ordersId" th:value="${order?.sequenceNumber}">
                     </div>
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" readonly id="contractNo" th:value="${order?.contractNo}">
+                        <input type="text" class="form-control" readonly id="contractNo" >
                     </div>
                     
                     <button type="button" class="btn btn-primary" id="btn_queryOrder" style="margin-top: 10px; margin-right: 20px;">查看订单详情</button>
@@ -156,6 +159,7 @@
         <div id="collapseTwo-magical-coder-auto-id-1565240802789" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;">
 				<form class="layui-form form">
+					<input type="hidden" id="kOrderVersionId" th:value="${kOrderVersionId}" />
 	                <div class="row">
 	                    <div class="col-xs-6">
 	                        收到电子定单或其他定单确认文件的时间 Order confirmation time
