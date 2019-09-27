@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qhc.steigenberger.domain.CustomerClazz;
+import com.qhc.steigenberger.domain.DOrder;
+import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.FryeService;
@@ -29,11 +32,13 @@ public class OrderService {
 	private final static String URL_CURRENCY = "currency";
 	private final static String URL_INCOTERMS = "incoterms";
 	private final static String URL_ORDER = "order";
+	private final static String URL_D_ORDER = "dOrder";
 	
 	@Autowired
 	private FryeService fryeService;
 	
-	
+	@Autowired
+	FryeService<DOrder> dOrderervice;
 	/**
 	 * 
 	 * @param name customer name 
@@ -77,6 +82,11 @@ public class OrderService {
 	public void saveOrder(AbsOrder form) {
 		
 		fryeService.postJason(URL_ORDER, DealerOrder.class);
+	}
+	
+	public DOrder getInfoById(Integer orderId) {
+		
+		return dOrderervice.getInfo(URL_D_ORDER+"/"+orderId,DOrder.class);
 	}
 
 }

@@ -8,6 +8,7 @@ $(document).ready(function() {
 var applyListMap ={};
 var applyId;
 var orderId;
+var kOrderVersionId;
 
 $(function () {
     //1.初始化Table
@@ -41,32 +42,37 @@ var TableInit = function () {
 			        offset : params.offset, // SQL语句起始索引
 			        page: (params.offset / params.limit) + 1,   //当前页码
 		
-			        contractNo:$('#contractNo').val(),
+			        sequenceNumber:$('#sequenceNumber').val(),
 			        createTime1:$('#createTime1').val(),
-			        status:$('#status').val()
+			        orderTypeCode:$('#orderTypeCode').val()
 			    };
 			    return temp;
 			},
 			columns : [ {
-				title : '申请编号 Apply Num',
-				field : 'id',
+				title : '订单id',
+				field : 'kOrderId',
+				sortable : true,
+				visible: false
+			},{
+				title : '订单版本id',
+				field : 'kOrderVersionId',
 				sortable : true,
 				visible: false
 			},{
 				title : '合同号 Contract Code',
-				field : 'contractNo',
+				field : 'sequenceNumber',
 				sortable : true
 			},{
 				title : '签约单位 Contract Unit',
-				field : 'contractUnit',
+				field : 'contractorName',
 				sortable : true
 			},{
 				title : '性质分类 Classification',
-				field : 'orderType',
+				field : 'contractorClassName',
 				sortable : true
 			},{
 				title : '折扣 Discount',
-				field : 'specialDiscount',
+				field : 'distcount',
 				formatter : formatTrue,
 				sortable : true
 			},{
@@ -78,20 +84,20 @@ var TableInit = function () {
 				}
 			},{
 				title : '订单状态 Order Status',
-				field : 'status',
+				field : 'orderTypeCode',
 				sortable : true
 			},{
 				title: '申请号 applyId',
 	            field: 'applyId',
 	            align: 'center',
 	            width : 160,
-	            formatter: function (value, row, index) {// selNumber'+ row.id + '
+	            formatter: function (value, row, index) {// selNumber'+ row.kOrderId + '
 	            	var option;
 	            	//下拉框
 	            	$.ajax({
 	            		url: '/steigenberger/special/queryApplyListByOrderId',
 	                    type: "get",
-	                    data : {ordersId:row.id},
+	                    data : {kOrderVersionId:row.kOrderVersionId},
 	                    dataType: "json",
 	                    async : false,
 	                    success:function(data){
@@ -100,7 +106,7 @@ var TableInit = function () {
 	                    	if(result == '' ){
 	                    		headOption = headOption + "<option value ='-1'>填写申请</option>";
 	                    	}else{
-	                    		var key = row.id;
+	                    		var key = row.kOrderId;
 	                    		applyListMap[key] = result;
 	                    		console.log(applyListMap);
 	                    		$.each(data.data,function(i,obj){
@@ -108,8 +114,8 @@ var TableInit = function () {
 	                    		});
 	                    		headOption = headOption + "<option value='-2'>填写申请</option>";
 	                    	}
-	                    	var thisorderId = row.id;
-	                        option = '<select class="form-control" id="'+thisorderId+'" name="applyId" style="height:33px;"  onchange="changeStatus(this.id,this.value)">'+
+	                    	var thisorderId = row.kOrderId;
+	                        option = '<select class="form-control" id="'+thisorderId+'" name="'+row.kOrderVersionId+'" style="height:33px;"  onchange="changeStatus(this.id,this.value,this.name)">'+
 	                        headOption + '</select>';
 	                        
 	                      //  console.log(option);
@@ -119,7 +125,7 @@ var TableInit = function () {
 	            }
 	         },{
 				title : '申请单状态 Apply Status',
-				field : 'sapStatus',
+				field : 'applyStatus',
 				formatter : statusfun,
 			},  {
 				title : '操作 operation',
@@ -136,7 +142,8 @@ function changeDateFormatter(cellval){
 	return  date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
 }
 
-function changeStatus(rowid,value){
+function changeStatus(rowid,value,name){
+	kOrderVersionId = name;
 	orderId = rowid;
 	applyId = value;
 	var apply_opt_id="opt_"+rowid;
@@ -179,20 +186,20 @@ function formatTrue(value, row, index) {
 
 //操作
 function operation(value, row, index) {
-	var apply_opt_id="opt_"+row.id;
-	var show_opt_id="show_"+row.id;
+	var apply_opt_id="opt_"+row.kOrderId;
+	var show_opt_id="show_"+row.kOrderId;
 	var htm = '<button id="'+apply_opt_id+'" onclick="toAdd()" style="display:none;">特批申请</button> <button id="'+show_opt_id+'" style="display:none;" onclick="toShow()">查看申请</button>';
 	return htm;
 }
 function statusfun(value, row, index){
-	var status_id="status_"+row.id;
+	var status_id="status_"+row.kOrderId;
 	var htm = '<span id="'+status_id+'"></span>';
 	return htm;
 }
 
 function toAdd(){
 //	console.log(orderId);
-	window.location.href=ctxPath+"special/toAdd?orderId="+orderId;
+	window.location.href=ctxPath+"special/toAdd?kOrderVersionId="+kOrderVersionId+"&ordersId="+orderId;
 }
 
 function toShow(){
@@ -209,9 +216,9 @@ $('#search_btn').click(function() {
 
 //重置按钮事件
 $('#reset_btn').click(function() {
-	$("#contractNo").val("");
+	$("#sequenceNumber").val("");
 	$("#createTime1").val("");
-	$("#status").val("-1");
+	$("#orderTypeCode").val("-1");
 })
 
 
