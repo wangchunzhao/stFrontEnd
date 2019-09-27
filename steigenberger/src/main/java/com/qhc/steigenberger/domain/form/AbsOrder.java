@@ -82,9 +82,17 @@ public abstract class AbsOrder {
 	private List<String> attachedFileName;
 	//
 	private boolean isSubmit;
+	private String currentUser;//当前session用户
+	//
 	
 	public boolean isSubmit() {
 		return isSubmit;
+	}
+	public String getCurrentUser() {
+		return currentUser;
+	}
+	public void setCurrentUser(String currentUser) {
+		this.currentUser = currentUser;
 	}
 	public void setSubmit(boolean isSubmit) {
 		this.isSubmit = isSubmit;

@@ -77,7 +77,8 @@ public class NewOrderController {
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		if(object!=null && object instanceof String) {
 			String domainId = (String)object;
-			form.setSalesCode(domainId);
+			
+			form.setCurrentUser(domainId);
 			//
 			if(action.equals(FORM_SUBMIT))
 				form.setSubmit(true);
