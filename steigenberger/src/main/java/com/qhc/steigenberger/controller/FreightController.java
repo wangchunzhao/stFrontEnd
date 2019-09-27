@@ -1,6 +1,7 @@
 package com.qhc.steigenberger.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,13 +20,17 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.qhc.steigenberger.domain.BArea;
 import com.qhc.steigenberger.domain.BCity;
 import com.qhc.steigenberger.domain.BProvince;
+import com.qhc.steigenberger.domain.Freight;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.service.BAreaService;
 import com.qhc.steigenberger.service.BCityService;
 import com.qhc.steigenberger.service.BProvinceService;
 import com.qhc.steigenberger.util.ExcelUtil;
 import com.qhc.steigenberger.util.FileHandleUtil;
+import com.qhc.steigenberger.util.ObjectConvertUtils;
 import com.qhc.steigenberger.util.PageHelper;
 
 
@@ -78,6 +83,17 @@ public class FreightController {
 	        			 bArea.setName(data.get(4));
 	        			 bArea.setCode(data.get(5));
 	        			 bArea.setPrice(Double.valueOf(data.get(6)));
+	        			 bArea.setPrice1(Double.valueOf(data.get(7)));
+	        			 bArea.setPrice2(Double.valueOf(data.get(8)));
+	        			 bArea.setPrice3(Double.valueOf(data.get(9)));
+	        			 bArea.setPrice4(Double.valueOf(data.get(10)));
+	        			 bArea.setPrice5(Double.valueOf(data.get(11)));
+	        			 bArea.setPrice6(Double.valueOf(data.get(12)));
+	        			 bArea.setPrice7(Double.valueOf(data.get(13)));
+	        			 bArea.setPrice8(Double.valueOf(data.get(14)));
+	        			 bArea.setPrice9(Double.valueOf(data.get(15)));
+	        			 bArea.setPrice10(Double.valueOf(data.get(16)));
+	        			 bArea.setPrice11(Double.valueOf(data.get(17)));
 	        			 bAreaService.add(bArea);
 	        			
 	        		 }
@@ -90,7 +106,6 @@ public class FreightController {
 	             File dest = new File(filePath + fileName);
 	        	 excelFile.transferTo(dest);*/
 	        	 
-	        	 
 	             if(datas!=null && datas.size()>0){
 	                 return JsonResult.build(200,"success",1);
 	             }
@@ -102,6 +117,28 @@ public class FreightController {
 	     }
 	     return new JsonResult(false);
 	 }
+	 
+	 @RequestMapping("/List")
+	@ResponseBody
+	public PageHelper<Freight> getUserListPage(Freight freight,HttpServletRequest request) {
+		PageHelper<Freight> pageHelper = new PageHelper<Freight>();
+		
+		try {
+			List<List<Object>> list = bAreaService.getList(freight.getPage()-1, freight.getLimit(),freight).getRows();
+			List<Object[]> list1 = new ArrayList<Object[]>();
+			for (int i = 0; i < list.size(); i++) {
+				Object[] a= list.get(i).toArray();
+				list1.add(a);
+			}
+			List<Freight> testViews = ObjectConvertUtils.objectToBean(list1, Freight.class);
+			pageHelper.setRows(testViews);
+			pageHelper.setTotal(bAreaService.getList(freight.getPage()-1, freight.getLimit(),freight).getTotal());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageHelper;
+	}
 	 
 	 
 

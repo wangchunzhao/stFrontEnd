@@ -13,7 +13,7 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/freight/bCityFreightList",//请求路径
+			url : "/steigenberger/freight/List",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -33,7 +33,7 @@ var TableInit = function () {
 			        offset : params.offset, // SQL语句起始索引
 			        page: (params.offset / params.limit) + 1,   //当前页码
 		
-			        countyName:$('#countyName').val()
+			        name:$('#countyName').val()
 			       
 			       // Tel:$('#search_tel').val()
 			    };
@@ -41,31 +41,63 @@ var TableInit = function () {
 			},
 			columns : [ {
 				title : '一级地',
-				field : 'provinceName',
-				sortable : true
-			}, {
-				title : '一级代码',
-				field : 'provinceCode',
+				field : 'pname',
 				sortable : true
 			},{
 				title : '二级地',
-				field : 'cityName',
-				sortable : true
-			},{
-				title : '二级代码',
-				field : 'cityCode',
+				field : 'cname',
 				sortable : true
 			},{
 				title : '三级地',
-				field : 'countyName',
+				field : 'name',
 				sortable : true
 			},{
-				title : '三级代码',
-				field : 'countyCode',
-				sortable : true
-			},{
-				title : '价格',
+				title : '供应商<20m³单价',
 				field : 'price',
+				sortable : true
+			},{
+				title : '供应商<20m³送货费',
+				field : 'price1',
+				sortable : true
+			},{
+				title : '供应商>20<50m³单价',
+				field : 'price2',
+				sortable : true
+			},{
+				title : '供应商>20<50m³送货费',
+				field : 'price3',
+				sortable : true
+			},{
+				title : '供应商>=50m³单价',
+				field : 'price4',
+				sortable : true
+			},{
+				title : '供应商>50m³送货费',
+				field : 'price5',
+				sortable : true
+			},{
+				title : '客户<=20m³单价',
+				field : 'price6',
+				sortable : true
+			},{
+				title : '客户<=20m³送货费',
+				field : 'price7',
+				sortable : true
+			},{
+				title : '客户>20<50m³单价',
+				field : 'price8',
+				sortable : true
+			},{
+				title : '客户>20<50m³送货费',
+				field : 'price9',
+				sortable : true
+			},{
+				title : '客户>=50m³单价',
+				field : 'name10',
+				sortable : true
+			},{
+				title : '客户>=50m³送货费',
+				field : 'price11',
 				sortable : true
 			}]
 		})
