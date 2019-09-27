@@ -84,7 +84,7 @@ public class OrderService {
 		fryeService.postJason(URL_ORDER, DealerOrder.class);
 	}
 	
-	public DOrder getInfoById(Integer orderId) {
+	public DOrder getInfoById(String orderId) {
 		
 		return dOrderervice.getInfo(URL_D_ORDER+"/"+orderId,DOrder.class);
 	}

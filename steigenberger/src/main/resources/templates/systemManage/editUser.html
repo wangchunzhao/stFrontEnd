@@ -65,17 +65,18 @@
 	    	//var rids = rid.join(",");
 	    	var userId = $("#id").val();    
 	    	var userName = $("#edituserName").val();    
+	    	var tel = $("#tel").val();    
 	    	var userMail = $("#edituserMail").val();    
 	    	var userIdentity = $("#edituserIdentity").val();
 	    	var regionCode = $("#region").val();  
 	    	var isActive = $("#isActive").val();    
 	    	
-	    	alert(userId+":userId");
-	    	alert("#userName:"+userName);
-	    	alert("#userIdentity:"+userIdentity);
+	    	//alert(userId+":userId");
+	    	//alert("#userName:"+userName);
+	    	//alert("#userIdentity:"+userIdentity);
 	    	
 	    	userId=parseInt(userId);
-	    	var data={id:userId,userName:userName,userMail:userMail,userIdentity:userIdentity,roles:ops,region:{code:regionCode},isActive:isActive};
+	    	var data={id:userId,userName:userName,tel:tel,userMail:userMail,userIdentity:userIdentity,roles:ops,region:{code:regionCode},isActive:isActive};
 	    	$.ajax({  
 	    		   type:"post",
 	      		   url: ctxPath+'user/update',
@@ -125,6 +126,10 @@
 	                         <input type="text" class="form-control" id="edituserName" name="userName" th:value="${map?.user.userName}" required/>
 	                    </div>
 	                    
+	                    <div class="form-group">
+	                        <label>申请人电话</label>
+	                         <input type="text" class="form-control" id=tel name="tel" th:value="${map?.user.tel}" required/>
+	                    </div>
 	                    <div class="form-group">
 	                        <label>申请人邮箱</label>
 	                         <input type="text" class="form-control" id="edituserMail" name="userMail" th:value="${map?.user.userMail}" required/>

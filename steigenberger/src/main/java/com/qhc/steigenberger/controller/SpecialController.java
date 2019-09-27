@@ -141,9 +141,9 @@ public class SpecialController {
 	}
 	
 	@RequestMapping("/toAdd")
-	public ModelAndView toAdd(@RequestParam Integer kOrderVersionId,String ordersId) {
+	public ModelAndView toAdd(@RequestParam String kOrderVersionId,String ordersId) {
 		
-		DOrder order = orderService.getInfoById(Integer.valueOf(ordersId));
+		DOrder order = orderService.getInfoById(ordersId);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("order", order);
 		mv.addObject("kOrderVersionId", kOrderVersionId);

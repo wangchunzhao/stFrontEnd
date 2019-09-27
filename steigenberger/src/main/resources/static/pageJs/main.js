@@ -16,6 +16,7 @@
 		            	$("#userId").text(user.id);
 		            	$("#userName").text(user.userName);
 		            	$("#userIdentity").text(user.userIdentity);
+		            	$("#tel").text(user.tel);
 		            	var roleList = user.roles;
 		            	var roleNames = "";
 		            	for(var i=0;i<roleList.length;i++){
