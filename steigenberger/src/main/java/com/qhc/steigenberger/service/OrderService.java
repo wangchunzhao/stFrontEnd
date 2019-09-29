@@ -79,9 +79,9 @@ public class OrderService {
 	 * 
 	 * @param form : order
 	 */
-	public void saveOrder(AbsOrder form) {
-		
-		fryeService.postJason(URL_ORDER, DealerOrder.class);
+	public void saveOrder(DealerOrder form) {
+		fryeService.putJason(URL_ORDER, DealerOrder.class);
+		//fryeService.postJason(URL_ORDER, DealerOrder.class);
 	}
 	
 	public DOrder getInfoById(Integer orderId) {

@@ -24,6 +24,7 @@ public abstract class AbsOrder {
 	private String customerName;//店名 customer name
 	private int isConvenientStore;//是否便利店 convenience store
 	private String salesCode;//客户经理 Customer manager
+	private String salesName;//客户经理 Customer manager
 	private String salesTelnumber;//客户经理电话 Customer manager Tel
 	private int isNew;//是否新客户 new customer
 	/**
@@ -32,13 +33,13 @@ public abstract class AbsOrder {
 	private String sequenceNumber;//流水号 code
 	private String contractNumber;//合同号 contract no
 	private String saleType;//销售类型 Sales type
-	private String taxRate;//税率 Rate
+	private double taxRate;//税率 Rate
 	private String incoterm;//国际贸易条件 international trade
 	private String incotermContect;//国际贸易条件 international trade
 	private double contractValue;//原币合同金额 Contract amount
 	private double contractRMBValue;//合同金额 Contract amount
 	private String currency;//币种 currency
-	private double currencyRate;//汇率 exchange rate
+	private double currencyExchange;//汇率 exchange rate
 	//public abstract double getItemsAmount();//购销明细金额合计 Aggregate amount
 	/*
 	 * 合同详细信息 Contract details
@@ -60,13 +61,13 @@ public abstract class AbsOrder {
 	private String confirmTypeCode;//收货方式 Receiving way
 	private String transferTypeCode;//运输类型 Type of transportation
 	private double freight;//运费
-	private int isAllinBulk;//是否全部为散件
 	/**
 	 * 结算方式 Method of payment
 	 */
-	private List<AbsSettlement> settles;
+	//private List<AbsSettlement> settles;
 	/**
 	 * 调研表相关内容 Research table related content
+	 * SAP字段名：VBBKZ122，格式为：汉字：是/否，汉字：是/否，汉字：是/否
 	 */
 	private int isTerm1;//柜体控制阀件是否甲供
 	private int isTerm2;//分体柜是否远程监控
@@ -74,7 +75,7 @@ public abstract class AbsOrder {
 	/**
 	 * 购销明细 Purchase and sale subsidiar
 	 */
-	private List<ProductItem> items;//购销明细
+	//private List<ProductItem> items;//购销明细
 	private String comments;//备注
 	/**
 	 * 附件信息 Attachment information
@@ -146,10 +147,10 @@ public abstract class AbsOrder {
 	public void setSaleType(String saleType) {
 		this.saleType = saleType;
 	}
-	public String getTaxRate() {
+	public double getTaxRate() {
 		return taxRate;
 	}
-	public void setTaxRate(String taxRate) {
+	public void setTaxRate(double taxRate) {
 		this.taxRate = taxRate;
 	}
 	public String getIncoterm() {
@@ -182,11 +183,18 @@ public abstract class AbsOrder {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	public double getCurrencyRate() {
-		return currencyRate;
+
+	public double getCurrencyExchange() {
+		return currencyExchange;
 	}
-	public void setCurrencyRate(double currencyRate) {
-		this.currencyRate = currencyRate;
+	public void setCurrencyExchange(double currencyExchange) {
+		this.currencyExchange = currencyExchange;
+	}
+	public String getSalesName() {
+		return salesName;
+	}
+	public void setSalesName(String salesName) {
+		this.salesName = salesName;
 	}
 	public String getOfficeCode() {
 		return officeCode;
@@ -255,12 +263,7 @@ public abstract class AbsOrder {
 	public void setTransferTypeCode(String transferTypeCode) {
 		this.transferTypeCode = transferTypeCode;
 	}
-	public List<AbsSettlement> getSettles() {
-		return settles;
-	}
-	public void setSettles(List<AbsSettlement> settles) {
-		this.settles = settles;
-	}
+
 	public int getIsTerm1() {
 		return isTerm1;
 	}
@@ -279,12 +282,7 @@ public abstract class AbsOrder {
 	public void setIsTerm3(int isTerm3) {
 		this.isTerm3 = isTerm3;
 	}
-	public List<ProductItem> getItems() {
-		return items;
-	}
-	public void setItems(List<ProductItem> items) {
-		this.items = items;
-	}
+
 	public String getComments() {
 		return comments;
 	}
@@ -327,12 +325,7 @@ public abstract class AbsOrder {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getIsAllinBulk() {
-		return isAllinBulk;
-	}
-	public void setIsAllinBulk(int isAllinBulk) {
-		this.isAllinBulk = isAllinBulk;
-	}
+
 	public double getFreight() {
 		return freight;
 	}

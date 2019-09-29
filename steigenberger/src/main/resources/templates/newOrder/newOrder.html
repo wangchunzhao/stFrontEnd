@@ -247,7 +247,7 @@
 									购销明细金额合计 Aggregate amount
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{currencyRate}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{currencyExchange}">
 								</div>
 								<div class="col-xs-12 col-md-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
@@ -377,9 +377,6 @@
 									授权人3电话 Tel 3
 								</div>
 								<div class="col-xs-12 col-md-3">
-									是否全部为散件 All in bulk
-								</div>
-								<div class="col-xs-12 col-md-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor2Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
@@ -389,7 +386,7 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control" th:field="*{isAllinBulk}">
+									<select class="form-control">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>

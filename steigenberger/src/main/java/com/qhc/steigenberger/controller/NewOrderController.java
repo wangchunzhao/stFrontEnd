@@ -71,12 +71,14 @@ public class NewOrderController {
 		mv.addObject(FORM_ORDER_DEALER,new DealerOrder());
 		return mv;
 	}
+	
 	@PostMapping("dealer")
 	@ResponseBody
 	public ModelAndView  submitDlealerOrder(@ModelAttribute DealerOrder form, Model model, @RequestParam(value="action", required=true) String action,HttpServletRequest request) {
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
-		if(object!=null && object instanceof String) {
-			String domainId = (String)object;
+		//if(object!=null && object instanceof String) {
+		//	String domainId = (String)object;
+		String domainId = "wangch";
 			
 			form.setCurrentUser(domainId);
 			//
@@ -88,7 +90,7 @@ public class NewOrderController {
 			form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
 			orderService.saveOrder(form);
 			
-		}
+		//}
 		
 		return this.goDealerOrder();
 	}

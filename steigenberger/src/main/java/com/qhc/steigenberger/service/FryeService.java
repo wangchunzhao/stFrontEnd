@@ -55,9 +55,9 @@ public class FryeService<T> {
 	}
 
 	public void putJason(String path, T params) {
-		String url = config.getFryeURL() + path;
-		webClient = getBuilder().baseUrl(url).build();
-		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+
+		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
+		Mono<String> response = webClient.put().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
@@ -67,10 +67,9 @@ public class FryeService<T> {
 	}
 
 	public void postJason(String path, T params) {
-
-		String url = config.getFryeURL() + path;
-		webClient = getBuilder().baseUrl(url).build();
-		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+		
+		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
+		Mono<String> response = webClient.post().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
