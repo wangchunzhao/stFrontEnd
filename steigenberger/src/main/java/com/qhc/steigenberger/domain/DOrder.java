@@ -3,12 +3,15 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+
 import com.qhc.steigenberger.util.Page;
 
 
 public class DOrder extends Page implements Serializable{
 	
-	public int id;
+public String id;
 	
 	public String sequenceNumber;
 	
@@ -31,18 +34,12 @@ public class DOrder extends Page implements Serializable{
 	private String	contractorClassName;
 	
 	private String	officeCode;
-	
-	private String contractSeqNumber;
-	
-	
-	
-	
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -133,14 +130,8 @@ public class DOrder extends Page implements Serializable{
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
-
-	public String getContractSeqNumber() {
-		return contractSeqNumber;
-	}
-
-	public void setContractSeqNumber(String contractSeqNumber) {
-		this.contractSeqNumber = contractSeqNumber;
-	}
+	
+	
 	
 	
 

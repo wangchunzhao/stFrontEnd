@@ -35,7 +35,7 @@ public class SpecialDelivery implements Serializable{
 	
 	private String enclosureName;
     
-	public Integer kOrderVersionId;
+	public String kOrderVersionId;
 	
 	public String startTime;
 	
@@ -144,14 +144,6 @@ public class SpecialDelivery implements Serializable{
 		this.enclosureName = enclosureName;
 	}
 
-	public Integer getkOrderVersionId() {
-		return kOrderVersionId;
-	}
-
-	public void setkOrderVersionId(Integer kOrderVersionId) {
-		this.kOrderVersionId = kOrderVersionId;
-	}
-
 	public String getStartTime() {
 		return startTime;
 	}
@@ -166,6 +158,14 @@ public class SpecialDelivery implements Serializable{
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getkOrderVersionId() {
+		return kOrderVersionId;
+	}
+
+	public void setkOrderVersionId(String kOrderVersionId) {
+		this.kOrderVersionId = kOrderVersionId;
 	}
 	
 	
