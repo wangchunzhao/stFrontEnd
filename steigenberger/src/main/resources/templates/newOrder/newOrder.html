@@ -46,7 +46,11 @@
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<form method="post" action="#" th:action="@{dealer}" th:object="${dealerOrder}">
-		
+		<div>
+            <!--/*@thymesVar id="error" type=""*/-->
+            <span id="basic-addon0">&nbsp;</span>
+            <span style="font-size: 12px;color: red" th:text="${error}" aria-describedby="basic-addon0"></span>
+        <br />
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
