@@ -42,7 +42,10 @@ public class NewOrderController {
 	private final static String FORM_ORDER_DEALER = "dealerOrder";
 	
 	//
-	private final static String FORM_SUBMIT="submit";
+	private final static String FORM_SUBMIT= "submit";
+	private final static String FORM_SAVE= "save";
+	private final static String FORM_MARGIN="margin";
+	private final static String FORM_WTW_MARGIN="wtw";
 	
 	@Autowired
     UserService userService;
@@ -80,18 +83,26 @@ public class NewOrderController {
 		//	String domainId = (String)object;
 		String domainId = "wangch";
 			
-			form.setCurrentUser(domainId);
-			//
-			if(action.equals(FORM_SUBMIT))
-				form.setSubmit(true);
-			else 
-				form.setSubmit(false);
-			
-			form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
-			orderService.saveOrder(form);
-			
-		//}
-		
+		form.setCurrentUser(domainId);
+		int ac =Integer.parseInt(action);
+		//
+		switch(action) {
+			case FORM_WTW_MARGIN:
+				form.setSubmitType(4);
+				break;
+			case FORM_MARGIN:
+				form.setSubmitType(3);
+				break;
+			case FORM_SUBMIT:
+				form.setSubmitType(2);
+				break;
+			default:
+				form.setSubmitType(1);
+		}
+
+		form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
+		orderService.saveOrder(form);
+
 		return this.goDealerOrder();
 	}
 	

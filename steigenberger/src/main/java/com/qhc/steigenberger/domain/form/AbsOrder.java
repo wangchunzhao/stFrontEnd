@@ -82,21 +82,23 @@ public abstract class AbsOrder {
 	 */
 	private List<String> attachedFileName;
 	//
-	private boolean isSubmit;
+	private int submitType;
 	private String currentUser;//当前session用户
 	//
 	
-	public boolean isSubmit() {
-		return isSubmit;
-	}
+	
 	public String getCurrentUser() {
 		return currentUser;
 	}
 	public void setCurrentUser(String currentUser) {
 		this.currentUser = currentUser;
 	}
-	public void setSubmit(boolean isSubmit) {
-		this.isSubmit = isSubmit;
+
+	public int getSubmitType() {
+		return submitType;
+	}
+	public void setSubmitType(int submitType) {
+		this.submitType = submitType;
 	}
 	//
 	public String getContracterCode() {

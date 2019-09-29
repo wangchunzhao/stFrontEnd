@@ -653,7 +653,7 @@
 					<div id="collapseOne-magical-coder-auto-id-1563938421442" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 						<div class="panel-body" style="height: auto;" mc-ace="~">
 
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;">
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;"  name="save" value="margin">
 								查看毛利表 Gross profit table
 							</button><div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064086809" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
 								<div class="modal-dialog" role="document">
@@ -872,47 +872,7 @@
 <script src="../js/jquery.nicescroll.js"></script>
 <script src="../js/scripts.js"></script>
 <!--//scrolling js-->
-<script>
-$("#gid").on('shown.bs.select',function(e){
-    //获取下拉select里的输入框,提示一下搜索下拉
-    $(this).prev().find("input").attr('placeholder',"请输入公司名称搜索");
-    //绑定一下键盘输入
-    $(this).prev().find("input").keyup(function(){
-        //为select里的输入框绑定id,方便获取
-        $(this).prev().find("input").attr('id',"dangname");
-        var dangname = $(this).val();
-        var datas = {
-            'gname':dangname
-        };
-        setTimeout(function () {//延时2秒
-        	guestlist('#gid',datas);
-    	},2000);
-    })
-});
-function guestlist(obj,datas){
-    $(obj).empty();
-    $.ajax({
-        type: "post",
-        url:'',//查询url
-        data:datas,
-        async:false,
-        dataType: "json",
-        success: function(data){
-            if (data !='') {
-                var html = '';
-                $.each(data,function (index,ele) {
-                    html += '<option value="' + ele.id + '">' + ele.unitname+ '</option>';
-                });
-                $(obj).html(html);
-            }else {
-                $(obj).html('<option value="">请选择客户</option>');
-            }
-            //刷新select
-            $(obj).selectpicker('refresh');
-        }
-    });
-}
-</script>
+
 <!-- side nav js -->
 <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
 <script>
