@@ -31,10 +31,10 @@ public class BAreaService {
 		fryeService.putJason(URL_KORDERS, freight);
 	}
 	
-	public PageHelper getList(int pageNum, int pageSize,Freight freight){
+	public PageHelper getList(int pageNo, int pageSize,Freight freight){
 
 		String name = freight.getName()==null?"":freight.getName();
-		String url = URL_KORDERS+"?pageNo="+pageNum+"&pageSize="+pageSize+"&name="+name;
+		String url = URL_KORDERS+"/"+pageNo+"/"+pageSize;
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
 

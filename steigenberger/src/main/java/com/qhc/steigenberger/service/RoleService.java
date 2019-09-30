@@ -24,7 +24,6 @@ public class RoleService{
 	FryeService<RestPage> pageFryeService;
 	
 	private final static String URL_ROLE = "role";
-	private final static String URL_ROLE_PAGEABLELIST = "role/paging";
 	private final static String URL_ROLE_PERMESSION = "role/permessions";
 	
 	public PageInfo<Role> selectAndPage(int pageNum, int pageSize, Role role) {
@@ -35,7 +34,7 @@ public class RoleService{
 	}
 	
 	public RestPage<Role> getPageableList(int pageNum, int pageSize, Role role) {
-		String url = URL_ROLE_PAGEABLELIST+"?pageNo="+pageNum+"&pageSize="+pageSize+"&isActive="+role.getIsActive();
+		String url = URL_ROLE+"/"+pageNum+"/"+pageSize+"/"+role.getIsActive();
 		
 		return pageFryeService.getInfo(url, RestPage.class);
 	}
@@ -56,13 +55,13 @@ public class RoleService{
 			isActive= 1;
 		}
 		role.setIsActive(isActive);
-		return fryeService.postInfo(role,URL_ROLE, Role.class);
+		return fryeService.postInfo(role, URL_ROLE, Role.class);
 	}
 	
 	
 	public Role updateRoleInfo(Role role) {
 		
-		return fryeService.postInfo(role,URL_ROLE, Role.class);
+		return fryeService.postInfo(role, URL_ROLE, Role.class);
 	}
 	
 	
