@@ -67,6 +67,8 @@ public class FreightController {
 	        	 //2007版本以下的excel用这个
 //	             List<List<String>> datas = ExcelUtil.readXls(excelFile.getInputStream());
 	        	 List<List<String>> datas = ExcelUtil.readXlsx(excelFile.getInputStream());
+	        	 bAreaService.add(datas);
+/*	        	 
 	        	 for (int i = 0; i < datas.size(); i++) {
 	        		 List<String> data = datas.get(i);
 	        		 for(int j = 0; j < data.size(); j++) {
@@ -95,17 +97,14 @@ public class FreightController {
 	        			 bArea.setPrice10(Double.valueOf(data.get(16)));
 	        			 bArea.setPrice11(Double.valueOf(data.get(17)));
 	        			 bAreaService.add(bArea);
-	        			
 	        		 }
 				}
-	     
 	             // .............
 	        	 //将文件上传到某个路径
 	        	 /*String fileName = excelFile.getOriginalFilename();
 	        	 String filePath = "D:\\";
 	             File dest = new File(filePath + fileName);
 	        	 excelFile.transferTo(dest);*/
-	        	 
 	             if(datas!=null && datas.size()>0){
 	                 return JsonResult.build(200,"success",1);
 	             }
