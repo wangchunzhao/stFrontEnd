@@ -46,11 +46,7 @@
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<form method="post" action="#" th:action="@{dealer}" th:object="${dealerOrder}">
-		<div>
-            <!--/*@thymesVar id="error" type=""*/-->
-            <span id="basic-addon0">&nbsp;</span>
-            <span style="font-size: 12px;color: red" th:text="${error}" aria-describedby="basic-addon0"></span>
-        <br />
+		
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -67,7 +63,7 @@
 							<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1563932805146" href="#collapseOne-magical-coder-auto-id-1563932797163" aria-expanded="true" class="">客户基本信息 Basic information</a>
 						</h4>
 					</div>
-					<div id="collapseOne-magical-coder-auto-id-1563932797163" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+					<div id="grossProfit" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 						<div class="panel-body" style="height: auto;">
 
 							<div class="row">
@@ -251,7 +247,7 @@
 									购销明细金额合计 Aggregate amount
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{currencyExchange}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{currencyRate}">
 								</div>
 								<div class="col-xs-12 col-md-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
@@ -381,6 +377,9 @@
 									授权人3电话 Tel 3
 								</div>
 								<div class="col-xs-12 col-md-3">
+									是否全部为散件 All in bulk
+								</div>
+								<div class="col-xs-12 col-md-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor2Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
@@ -390,7 +389,7 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control">
+									<select class="form-control" th:field="*{isAllinBulk}">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
@@ -657,9 +656,10 @@
 					<div id="collapseOne-magical-coder-auto-id-1563938421442" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 						<div class="panel-body" style="height: auto;" mc-ace="~">
 
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;"  name="save" value="margin">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfit" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;">
 								查看毛利表 Gross profit table
-							</button><div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064086809" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+							</button>
+							<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064086809" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -705,86 +705,10 @@
 														</div>
 														<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 															<div class="panel-body" style="height: auto;" >
-
-															<div class="table-responsive">
-													<table class="table">
-														<thead>
-														<tr class="">
-															<th class="">产品名称</th><th class="">金额</th><th class="">不含税金额</th><th class="">成本</th>
-															<th class="">毛利</th>
-															<th class="">毛利率</th>
-														</tr>
-														</thead>
-														<tbody>
-														<tr>
-															<td class="">整机柜</td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-														</tr>
-														<tr>
-															<td class="">分体柜</td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-														</tr>
-														<tr>
-															<td class="">机组</td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-															<td class=""></td>
-														</tr>
-														<tr>
-															<td class="">冷凝器</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">散件</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">冷库</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">B2C</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">其他项目收费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">可选项</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">安装费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">材料费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">电气费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">维保费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">运费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">预提备件费</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">不可预估项</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
-														</tr>
-														<tr>
-															<td class="">合计</td> <td class="">0.00</td> <td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td>
-														</tr>
-														</tbody>
-													</table>
-												</div></div>
+																	<div class="table-responsive">
+													                    <table id="mytab" class="table table-hover"></table>
+													                </div>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -876,7 +800,47 @@
 <script src="../js/jquery.nicescroll.js"></script>
 <script src="../js/scripts.js"></script>
 <!--//scrolling js-->
-
+<script>
+$("#gid").on('shown.bs.select',function(e){
+    //获取下拉select里的输入框,提示一下搜索下拉
+    $(this).prev().find("input").attr('placeholder',"请输入公司名称搜索");
+    //绑定一下键盘输入
+    $(this).prev().find("input").keyup(function(){
+        //为select里的输入框绑定id,方便获取
+        $(this).prev().find("input").attr('id',"dangname");
+        var dangname = $(this).val();
+        var datas = {
+            'gname':dangname
+        };
+        setTimeout(function () {//延时2秒
+        	guestlist('#gid',datas);
+    	},2000);
+    })
+});
+function guestlist(obj,datas){
+    $(obj).empty();
+    $.ajax({
+        type: "post",
+        url:'',//查询url
+        data:datas,
+        async:false,
+        dataType: "json",
+        success: function(data){
+            if (data !='') {
+                var html = '';
+                $.each(data,function (index,ele) {
+                    html += '<option value="' + ele.id + '">' + ele.unitname+ '</option>';
+                });
+                $(obj).html(html);
+            }else {
+                $(obj).html('<option value="">请选择客户</option>');
+            }
+            //刷新select
+            $(obj).selectpicker('refresh');
+        }
+    });
+}
+</script>
 <!-- side nav js -->
 <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
 <script>
@@ -884,6 +848,8 @@
    </script>	
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>	
+<!--  js -->  
+<script src="../pageJs/newOrder.js"></script>
    
 </body>
 </html>
