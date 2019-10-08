@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.User;
@@ -72,6 +73,8 @@ public class NewOrderController {
 		mv.addObject(CURRENCY_MAP, currencyMap);
 		mv.addObject(INCOTERMS_MAP, incotermMap);
 		//
+		String s = this.searchCustomer("he");
+		//
 		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
 		return mv;
 	}
@@ -115,9 +118,9 @@ public class NewOrderController {
 
 	@RequestMapping("customers")
 	@ResponseBody
-	public JsonResult searchCustomer(String customerName) {
-		System.out.println("newOrder/standardDiscount");
-		return null;
+	public String searchCustomer(String customerName) {
+		List<Customer> cus = orderService.findCustomer(customerName);
+		return cus.toString();
 	}
 
 	@PostMapping("/createOrder")
