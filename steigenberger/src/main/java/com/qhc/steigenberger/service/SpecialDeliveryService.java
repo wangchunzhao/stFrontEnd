@@ -13,7 +13,7 @@ public class SpecialDeliveryService {
 	FryeService<SpecialDelivery> fryeService;
 	
 	private final static String URL_SD = "specialDelivery";
-	private final static String URL_SD_ORDER = "specialDelivery/order";
+	private final static String URL_SD_ORDER = "specialApply";
 	
 	
 
@@ -22,12 +22,12 @@ public class SpecialDeliveryService {
 	}
 	
 	public List<SpecialDelivery> findListInfoByOrderId(Integer orderId) {
-		return fryeService.getListInfo(URL_SD_ORDER+"/"+orderId,SpecialDelivery.class);
+		return fryeService.getListInfo(URL_SD+"/"+orderId,SpecialDelivery.class);
 	}
 
 	public SpecialDelivery findInfoById(String applyId) {
 		// TODO Auto-generated method stub
-		return fryeService.getInfo(URL_SD+"/"+applyId,SpecialDelivery.class);
+		return fryeService.getInfo(URL_SD_ORDER+"/"+applyId,SpecialDelivery.class);
 	}
 
 

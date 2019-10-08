@@ -26,9 +26,9 @@ public class SpecialDeliveryVoInfoService {
 		String ownerDomainId = sdv.getOwnerDomainId()==null?"":sdv.getOwnerDomainId();
 		String officeCode = sdv.getOfficeCode()==null?"":sdv.getOfficeCode();
 		
-		String url = SPECIAL_DELIVERY_VO_INFO+"?pageNo="+pageNum+"&pageSize="+pageSize+"&sequenceNumber="
-		+sequenceNumber+"&startTime="+startTime+"&endTime="
-				+endTime+"&orderTypeCode="+orderTypeCode+"&ownerDomainId="+ownerDomainId+"&officeCode="+officeCode;
+		String url = SPECIAL_DELIVERY_VO_INFO+"/"+pageNum+"/"+pageSize+"/"
+		+sequenceNumber+"/"+startTime+"/"
+				+endTime+"/"+orderTypeCode+"/"+ownerDomainId+"/"+officeCode;
 		return pageFryeService.getInfo(url, PageHelper.class);
 	}
 
