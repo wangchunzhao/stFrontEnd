@@ -33,6 +33,8 @@ public class OrderService {
 	private final static String URL_INCOTERMS = "incoterms";
 	private final static String URL_ORDER = "order";
 	private final static String URL_D_ORDER = "order/dOrder";
+	private final static String URL_SEPERATOR = ",";
+	private final static String URL_PARAMETER_SEPERATOR = "/";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -44,8 +46,8 @@ public class OrderService {
 	 * @param name customer name 
 	 * @return  customer list
 	 */
-	public List<Customer> findCustomer(String name) {
-		return  fryeService.getListInfo(URL_CUSTOMER+"/"+name,Customer.class);
+	public List<Customer> findCustomer(String name,int pageNo) {
+		return  fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),Customer.class);
 	}
 	/**
 	 * 

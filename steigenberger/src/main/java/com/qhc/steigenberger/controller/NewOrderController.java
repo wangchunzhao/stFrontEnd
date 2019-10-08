@@ -73,7 +73,7 @@ public class NewOrderController {
 		mv.addObject(CURRENCY_MAP, currencyMap);
 		mv.addObject(INCOTERMS_MAP, incotermMap);
 		//
-		String s = this.searchCustomer("he");
+		String s = this.searchCustomer("he",0);
 		//
 		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
 		return mv;
@@ -118,8 +118,8 @@ public class NewOrderController {
 
 	@RequestMapping("customers")
 	@ResponseBody
-	public String searchCustomer(String customerName) {
-		List<Customer> cus = orderService.findCustomer(customerName);
+	public String searchCustomer(String customerName,int pageNo) {
+		List<Customer> cus = orderService.findCustomer(customerName,pageNo);
 		return cus.toString();
 	}
 
