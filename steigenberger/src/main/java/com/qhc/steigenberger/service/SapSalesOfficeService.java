@@ -10,7 +10,7 @@ public class SapSalesOfficeService{
 	@Autowired
 	FryeService<SapSalesOffice> fryeService;
 	
-	private final static String URL_SAPSALEOFFICE = "sapSalesOffice";
+	private final static String URL_SAPSALEOFFICE = "location/sapSalesOffice";
 
 	public List<SapSalesOffice> getList() {
 		return  fryeService.getListInfo(URL_SAPSALEOFFICE,SapSalesOffice.class);
