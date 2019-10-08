@@ -1,9 +1,11 @@
 $(document).ready(function() {
-    $('#reservation').daterangepicker(null, function(start, end, label) {
+    $('#createTime').daterangepicker(null, function(start, end, label) {
       console.log(start.toISOString(), end.toISOString(), label);
     });
         
 });
+
+var queryType="byOrder";
 
 $(function () {
     //1.初始化Table
@@ -17,11 +19,13 @@ $(function () {
     $("#byOrder").on("click",function(){
      	$('#mtable').attr('style',"display:none;");
      	$('#otable').attr('style',"display:'';");
+     	queryType="byOrder";
      });
 
      $("#byMaterial").on("click",function(){
     	 $('#otable').attr('style',"display:none;");
       	$('#mtable').attr('style',"display:'';");
+      	queryType="byMaterial";
      });
     
 });
@@ -44,7 +48,7 @@ var TableInit = function () {
 			pageNumber : 1, //初始化加载第一页
 			pagination : true,//是否分页
 			sidePagination : 'server',//server:服务器端分页|client：前端分页
-			pageSize : 1,//单页记录数
+			pageSize : 10,//单页记录数
 			pageList : [ 10, 20, 30 ],//可选择单页记录数
 			showRefresh : false,//刷新按钮
 			queryParams : function (params) {
@@ -53,13 +57,15 @@ var TableInit = function () {
 			        offset : params.offset, // SQL语句起始索引
 			        page: (params.offset / params.limit) + 1,   //当前页码
 		
-			        contractNo:$('#contractNo').val(),
+			        queryType:queryType,
+			        sequenceNumber:$('#sequenceNumber').val(),
+			        contractorCode:$('#contractorCode').val(),
 			        contractUnit:$('#contractUnit').val(),
-			        area:$('#area').val(),
-			        orderType:$('#orderType').val(),
-			        specialDiscount:$('#specialDiscount').val(),
-			        createTime1:$('#reservation').val(),
-			        status:$('#status').val()
+			        createTime:$('#createTime').val(),
+			        contractorClassCode:$('#contractorClassCode').val(),
+			        isSpecialDiscount:$('#isSpecialDiscount').val(),
+			        orderTypeCode:$('#orderTypeCode').val(),
+			        officeCode:$('#officeCode').val()
 			
 			    };
 			    return temp;
@@ -256,7 +262,7 @@ var materialTableInit = function () {
 			pageNumber : 1, //初始化加载第一页
 			pagination : true,//是否分页
 			sidePagination : 'server',//server:服务器端分页|client：前端分页
-			pageSize : 1,//单页记录数
+			pageSize : 10,//单页记录数
 			pageList : [ 10, 20, 30 ],//可选择单页记录数
 			showRefresh : false,//刷新按钮
 			queryParams : function (params) {
@@ -264,51 +270,52 @@ var materialTableInit = function () {
 			        limit : params.limit, // 每页显示数量
 			        offset : params.offset, // SQL语句起始索引
 			        page: (params.offset / params.limit) + 1,   //当前页码
-		
-			        id:$('#id').val(),
-			        contractNo:$('#contractNo').val(),
+			        queryType:queryType,
+			        sequenceNumber:$('#sequenceNumber').val(),
+			        contractorCode:$('#contractorCode').val(),
 			        contractUnit:$('#contractUnit').val(),
-			        area:$('#area').val(),
-			        orderType:$('#orderType').val(),
-			        b2c:$('#b2c').val(),
-			        specialDiscount:$('#specialDiscount').val(),
-			        createTime1:$('#reservation').val(),
-			        status:$('#status').val()
-			       // Tel:$('#search_tel').val()
+			        createTime:$('#createTime').val(),
+			        contractorClassCode:$('#contractorClassCode').val(),
+			        isSpecialDiscount:$('#isSpecialDiscount').val(),
+			        orderTypeCode:$('#orderTypeCode').val(),
+			        officeCode:$('#officeCode').val()
 			    };
 			    return temp;
 			},
 			columns : [ {
-				title : '序号22222222222',
+				title : '序号',
 				field : 'id',
-				sortable : true
+				sortable : true,
+				formatter:function (value, row, index) {
+					return index + 1;
+				}
 			}, {
-				title : '单据编号',
-				field : 'contractNo',
+				title : '流水号',
+				field : 'sequenceNumber',
 				sortable : true
 			}, {
 				title : '签约人',
-				field : 'contractNo',
+				field : 'contractorName',
 				sortable : true
 			}, {
 				title : '区域',
-				field : 'area',
+				field : 'officeCode',
 				sortable : true
 			}, {
 				title : '中心',
-				field : 'contractNo',
+				field : 'groupName',
 				sortable : true
 			}, {
 				title : '签约日期',
-				field : 'contractNo',
+				field : 'createTime',
 				sortable : true
 			}, {
 				title : '合同号',
-				field : 'contractNo',
+				field : 'contractSeq',
 				sortable : true
 			},{
 				title : '客户编号',
-				field : 'contractUnit',
+				field : 'coustomerNo',
 				sortable : true
 			},{
 				title : '签约单位',
@@ -316,135 +323,139 @@ var materialTableInit = function () {
 				sortable : true
 			},{
 				title : '客户性质',
-				field : 'contractUnit',
+				field : 'contractorClassName',
 				sortable : true
 			},{
 				title : '店名',
-				field : 'contractUnit',
+				field : 'customerName',
 				sortable : true
 			},{
 				title : '终端客户性质',
-				field : 'orderType',
+				field : 'terminalIndustryCodeName',
 				sortable : true
 			},{
 				title : '是否特批折扣',
-				field : 'orderType',
+				field : 'isSpecialDiscount',
 				sortable : true
 			},{
 				title : '是否改造店',
-				field : 'orderType',
+				field : 'isRreformed',
 				sortable : true
 			},{
 				title : '合同金额',
-				field : 'orderType',
+				field : 'amount',
 				sortable : true
 			},{
 				title : '毛利率',
-				field : 'orderType',
+				field : 'grossProfit',
 				sortable : true
 			},{
 				title : '是否长期折扣',
-				field : 'orderType',
+				field : 'isLongTermDiscount',
 				sortable : true
 			},{
 				title : '折扣',
-				field : 'orderType',
+				field : 'discount',
 				sortable : true
 			},{
 				title : '产品规格型号',
-				field : 'orderType',
+				field : 'materialCode',
 				sortable : true
 			},{
 				title : '物料专用号',
-				field : 'orderType',
+				field : 'materialSpecificNumber',
 				sortable : true
 			},{
 				title : '物料属性',
-				field : 'orderType',
+				field : 'materialAttribute',
 				sortable : true
 			},{
 				title : '合同数量',
-				field : 'orderType',
+				field : 'quantity',
 				sortable : true
 			},{
 				title : '销售单价',
-				field : 'orderType',
+				field : 'price',
 				sortable : true
 			}, {
 				title : '销售金额',
-				field : 'contractNo',
+				field : 'amount',
 				sortable : true
 			}, {
 				title : '单位',
-				field : 'contractNo',
-				sortable : true
-			}, {
-				title : '合同号',
-				field : 'contractNo',
+				field : 'measureUnitName',
 				sortable : true
 			}, {
 				title : '到货地址',
-				field : 'contractNo',
+				field : 'receiverAddress',
 				sortable : true
 			}, {
 				title : '要求发货时间',
-				field : 'contractNo',
+				field : 'earliestDeliveryDate',
 				sortable : true
 			}, {
 				title : '安装公司',
-				field : 'contractNo',
+				field : 'installTermName',
 				sortable : true
 			}, {
 				title : '收货方式',
-				field : 'contractNo',
+				field : 'receiveType',
 				sortable : true
 			}, {
-				title : '授权人及身份证号',
-				field : 'contractNo',
+				title : '授权人及身份证号1',
+				field : 'contactor1Id',
 				sortable : true
 			}, {
-				title : '授权人电话',
-				field : 'contractNo',
+				title : '授权人电话1',
+				field : 'contactor1Tel',
 				sortable : true
 			}, {
+				title : '授权人及身份证号2',
+				field : 'contactor2Id',
+				sortable : true
+			}, {
+				title : '授权人电话2',
+				field : 'contactor2Tel',
+				sortable : true
+			}, {
+				title : '授权人及身份证号3',
+				field : 'contactor3Id',
+				sortable : true
+			}, {
+				title : '授权人电话3',
+				field : 'contactor3Tel',
+				sortable : true
+			},{
 				title : '收货人身份证号',
-				field : 'contractNo',
+				field : 'receiverID',
 				sortable : true
 			}, {
 				title : '结算方式',
-				field : 'contractNo',
+				field : 'settlementMethod',
 				sortable : true
 			}, {
 				title : '运费',
-				field : 'contractNo',
+				field : 'freight',
 				sortable : true
 			}, {
 				title : '保修期限（年）',
-				field : 'contractNo',
+				field : 'warranty',
 				sortable : true
-			}, {
-				title : '财务1审核人',
-				field : 'contractNo',
-				sortable : true
-			}, {
-				title : '财务2审核人',
-				field : 'contractNo',
-				sortable : true
-			}, {
+			},{
 				title : '币别',
-				field : 'contractNo',
+				field : 'currencyName',
 				sortable : true
 			}, {
 				title : '原币合同金额',
-				field : 'contractNo',
+				field : 'contractAmount',
 				sortable : true
 			}, {
 				title : '汇率',
-				field : 'contractNo',
+				field : 'exchange',
 				sortable : true
 			}, {
 				title : '是否新客户',
-				field : 'contractNo',
+				field : 'isNew',
 				sortable : true
 			}]
 		})
@@ -454,23 +465,7 @@ var materialTableInit = function () {
 
 
 
- 
-//value代表该列的值，row代表当前对象
-//{
-//		title : '性别',
-//		field : 'sex',
-//		formatter : formatSex,//对返回的数据进行处理再显示
-//	},
-function formatTrue(value, row, index) {
-	return value == 1 ? "是" : "否";
-	//或者 return row.sex == 1 ? "男" : "女";
-}
- 
-//删除、编辑操作
-function operation(value, row, index) {
-	var htm = "<button>删除</button><button>修改</button>"
-	return htm;
-}
+
  
 //查询按钮事件
 $('#byOrder').click(function() {
@@ -487,11 +482,15 @@ $('#byMaterial').click(function() {
 
 //重置按钮事件
 $('#resetBtn').click(function() {
-	$("#id").val("");
-	$("#contractNo").val("");
-	$("#reservation").val("");
+	$("#sequenceNumber").val("");
+	$("#contractorCode").val("");
 	$("#contractUnit").val("");
-	$("#area").val(-1);
+	$("#createTime").val("");
+	$("#contractorClassCode").val("");
+	$("#isSpecialDiscount").val("-1");
+	$("#orderTypeCode").val("");
+	$("#officeCode").val("");
+	
 })
 
 
