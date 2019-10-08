@@ -34,7 +34,7 @@ public class RoleService{
 	}
 	
 	public RestPage<Role> getPageableList(int pageNum, int pageSize, Role role) {
-		String url = URL_ROLE+"/"+pageNum+"/"+pageSize+"/"+role.getIsActive();
+		String url = URL_ROLE+"/"+pageNum+"/"+pageSize+"?isActive="+role.getIsActive();
 		
 		return pageFryeService.getInfo(url, RestPage.class);
 	}

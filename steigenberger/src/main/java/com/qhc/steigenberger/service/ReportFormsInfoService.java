@@ -30,15 +30,15 @@ public class ReportFormsInfoService {
 			String url = REPORT_FORMS_INFO
 					+"/"+pageNum
 					+"/"+pageSize
-					+"/"+sequenceNumber
-					+"/"+contractorCode
-					+"/"+contractUnit
-					+"/"+startTime
-					+"/"+endTime
-					+"/"+customerType
-					+"/"+reportFormsInfo.getIsLongTermDiscount()
-					+"/"+reportFormsInfo.getStatus()
-					+"/"+reportFormsInfo.getOfficeCode();
+					+"?sequenceNumber="+sequenceNumber
+					+"&contractorCode="+contractorCode
+					+"&contractUnit="+contractUnit
+					+"&startTime"+startTime
+					+"&endTime"+endTime
+					+"&customerType"+customerType
+					+"&isSpecialDiscount="+reportFormsInfo.getIsLongTermDiscount()
+					+"&orderTypeCode="+reportFormsInfo.getStatus()
+					+"&officeCode="+reportFormsInfo.getOfficeCode();
 			return fryeService.getInfo(url, PageHelper.class);
 	
 
