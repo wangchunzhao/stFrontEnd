@@ -19,7 +19,7 @@ public abstract class AbsOrder {
 	public final static String ORDER_TYPE_CODE_DEALER = "Z001";
 	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
 	public final static String ORDER_TYPE_CODE_BULK = "Z003";
-	@NotEmpty(message="order type 不能为空")
+	//@NotEmpty(message="order type 不能为空")
 	private String orderType;
 	/**
 	 * 客户基本信息 Basic information
@@ -35,7 +35,7 @@ public abstract class AbsOrder {
 	/**
 	 * 合同详细信息 Contract details
 	 */
-	@NotEmpty(message="流水号不能为空") 
+	//@NotEmpty(message="流水号不能为空") 
 	private String sequenceNumber;//流水号 code
 	private String contractNumber;//合同号 contract no
 	private String saleType;//销售类型 Sales type
