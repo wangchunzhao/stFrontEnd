@@ -1,6 +1,5 @@
 package com.qhc.steigenberger.service;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qhc.steigenberger.domain.ReportFormsInfo;
@@ -19,28 +18,27 @@ public class ReportFormsInfoService {
 	public PageHelper<ReportFormsInfo> findByConditions(int pageNum, int pageSize,ReportFormsInfo reportFormsInfo) {
 			
 		
-			String orderNumber = reportFormsInfo.getOrderNumber()==null?"":reportFormsInfo.getOrderNumber();
-			String contractNo = reportFormsInfo.getContractNo()==null?"":reportFormsInfo.getContractNo();
+			String sequenceNumber = reportFormsInfo.getSequenceNumber()==null?"":reportFormsInfo.getSequenceNumber();
+			String contractorCode = reportFormsInfo.getContractorCode()==null?"":reportFormsInfo.getContractorCode();
 			String contractUnit = reportFormsInfo.getContractUnit()==null?"":reportFormsInfo.getContractUnit();
 			String startTime = reportFormsInfo.getStartTime()==null?"":reportFormsInfo.getStartTime();
 			String endTime = reportFormsInfo.getEndTime()==null?"":reportFormsInfo.getEndTime();
 			
-			String customerType = reportFormsInfo.getCustomerNo()==null?"":reportFormsInfo.getCustomerNo();
-			
+			String customerType = reportFormsInfo.getContractorClassCode()==null?"":reportFormsInfo.getContractorClassCode();
 			
 			
 			String url = REPORT_FORMS_INFO
 					+"/"+pageNum
 					+"/"+pageSize
-					+"/"+orderNumber
-					+"/"+contractNo
+					+"/"+sequenceNumber
+					+"/"+contractorCode
 					+"/"+contractUnit
 					+"/"+startTime
 					+"/"+endTime
-					+"/"+reportFormsInfo.getCustomerType()
+					+"/"+customerType
 					+"/"+reportFormsInfo.getIsLongTermDiscount()
 					+"/"+reportFormsInfo.getStatus()
-					+"/"+reportFormsInfo.getArea();
+					+"/"+reportFormsInfo.getOfficeCode();
 			return fryeService.getInfo(url, PageHelper.class);
 	
 
