@@ -26,7 +26,7 @@ import com.qhc.steigenberger.service.FryeService;
 @Service
 public class OrderService {
 	
-	private final static String URL_CUSTOMER = "customer/customers/";
+	private final static String URL_CUSTOMER = "customer";
 	private final static String URL_CUSTOMER_CLASS = "customer/customerClass";
 	private final static String URL_SALES_TYPE = "order/salesType";
 	private final static String URL_CURRENCY = "currency";
@@ -45,7 +45,7 @@ public class OrderService {
 	 * @return  customer list
 	 */
 	public List<Customer> findCustomer(String name) {
-		return  fryeService.getListInfo(URL_CUSTOMER+name,Customer.class);
+		return  fryeService.getListInfo(URL_CUSTOMER+"/"+name,Customer.class);
 	}
 	/**
 	 * 
