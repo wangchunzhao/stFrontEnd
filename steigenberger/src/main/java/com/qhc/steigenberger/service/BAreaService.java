@@ -19,7 +19,7 @@ public class BAreaService {
 	@Autowired
 	FryeService<PageHelper> pageFryeService;
 	
-	private final static String URL_KORDERS = "freight";
+	private final static String URL_KORDERS = "location/freight";
 	
 	
 	

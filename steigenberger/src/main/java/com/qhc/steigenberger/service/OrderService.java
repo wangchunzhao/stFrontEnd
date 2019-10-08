@@ -32,7 +32,7 @@ public class OrderService {
 	private final static String URL_CURRENCY = "currency";
 	private final static String URL_INCOTERMS = "incoterms";
 	private final static String URL_ORDER = "order";
-	private final static String URL_D_ORDER = "dOrder";
+	private final static String URL_D_ORDER = "order/dOrder";
 	
 	@Autowired
 	private FryeService fryeService;
