@@ -14,7 +14,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
-			url : "/steigenberger/newOrder/getGrossProfitList",//请求路径
+			url : "/steigenberger/order/getGrossProfitList",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,

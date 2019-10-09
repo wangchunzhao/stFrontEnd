@@ -3,9 +3,11 @@ package com.qhc.steigenberger.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.Customer;
+import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SapSalesOffice;
@@ -31,11 +34,7 @@ import com.qhc.steigenberger.util.CacheUtil;
 @Controller
 public class MenuController {
 	
-	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
-	private final static String SALES_TYPE_MAP = "sales_type";
-	private final static String CURRENCY_MAP = "currencies";
-	private final static String INCOTERMS_MAP = "incoterms";
-
+	private final static String ORDER_OPTION = "order_option";
 	//
 	private final static String PAGE_DEALER = "newOrder/newOrder";
 	//
@@ -61,23 +60,33 @@ public class MenuController {
 	private final static String FORM_WTW_MARGIN = "wtw";
 
 	
-	@Autowired
-	private static OrderService orderService;
+	
+	
 	
 	@Autowired
-	private static  UserService userService;
+	private OrderService orderService;
+	
+	private static OrderService staticOrderService;
 	
 	@Autowired
-	private static ParameterService parameterService;
+	private UserService userService;
 	
 	@Autowired
-	private static  RoleService roleService;
+	private ParameterService parameterService;
 	
 	@Autowired
-	private static OperationService operationService;
+	private RoleService roleService;
 	
 	@Autowired
-	private static CacheUtil cacheUtil;
+	private OperationService operationService;
+	
+	@Autowired
+	private CacheUtil cacheUtil;
+	
+	@PostConstruct
+	public void init() {
+		staticOrderService = this.orderService;
+	}
 	
 	@RequestMapping("/specialApplication")
 	public String index() {
@@ -179,26 +188,23 @@ public class MenuController {
 	@RequestMapping("standardDiscount")
 	public static ModelAndView goDealerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER);
-		Map<String, String> customerClassMap = orderService.getCustomerClazz();
-		Map<String, String> salesTypeMap = orderService.getSalesType();
-		Map<String, String> currencyMap = orderService.getCurrency();
-		Map<String, String> incotermMap = orderService.getIncoterms();
+//		Map<String, String> customerClassMap =null;// orderService.getCustomerClazz();
+//		Map<String, String> salesTypeMap = null;//orderService.getSalesType();
+//		Map<String, String> currencyMap = null;//orderService.getCurrency();
+//		Map<String, String> incotermMap = null;//orderService.getIncoterms();
+
+		OrderOption oo = staticOrderService.getOrderOption();
+		mv.addObject(ORDER_OPTION,oo);
+//		//
+//		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
+//		mv.addObject(SALES_TYPE_MAP, salesTypeMap);
+//		mv.addObject(CURRENCY_MAP, currencyMap);
+//		mv.addObject(INCOTERMS_MAP, incotermMap);
+//		//
 		//
-		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
-		mv.addObject(SALES_TYPE_MAP, salesTypeMap);
-		mv.addObject(CURRENCY_MAP, currencyMap);
-		mv.addObject(INCOTERMS_MAP, incotermMap);
-		//
-		//
-		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
+//		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
 		return mv;
 	}
 	
-	@RequestMapping("customers")
-	@ResponseBody
-	public String searchCustomer(String customerName,int pageNo) {
-		List<Customer> cus = orderService.findCustomer(customerName,pageNo);
-		return cus.toString();
-	}
 
 }

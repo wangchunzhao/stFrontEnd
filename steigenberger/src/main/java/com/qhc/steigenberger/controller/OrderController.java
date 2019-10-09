@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,9 +29,10 @@ import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
+import com.qhc.steigenberger.util.PageHelper;
 
 @Controller
-@RequestMapping("newOrder")
+@RequestMapping("order")
 public class OrderController {
 
 	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
@@ -119,7 +121,7 @@ public class OrderController {
 	@RequestMapping("customers")
 	@ResponseBody
 	public String searchCustomer(String customerName,int pageNo) {
-		List<Customer> cus = orderService.findCustomer(customerName,pageNo);
+		PageHelper<Customer> cus = orderService.findCustomer(customerName,pageNo);
 		return cus.toString();
 	}
 
