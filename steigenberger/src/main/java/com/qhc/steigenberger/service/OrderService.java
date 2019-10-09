@@ -7,17 +7,28 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.domain.SalesGroup;
+import com.qhc.steigenberger.domain.SalesOrder;
+import com.qhc.steigenberger.config.ApplicationConfig;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SapSalesOffice;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.FryeService;
+import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
+import com.qhc.steigenberger.service.exception.URLNotFoundException;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * @author wang@dxc.com
@@ -35,6 +46,7 @@ public class OrderService {
 	private final static String URL_D_ORDER = "order/dOrder";
 	private final static String URL_SEPERATOR = ",";
 	private final static String URL_PARAMETER_SEPERATOR = "/";
+	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -88,6 +100,23 @@ public class OrderService {
 	public DOrder getInfoById(String orderId) {
 		
 		return dOrderervice.getInfo(URL_D_ORDER+"/"+orderId,DOrder.class);
+	}
+	
+	@Autowired
+	ApplicationConfig config;
+	
+	public List<SalesGroup> getGrossProfitList(SalesOrder salesOrder) {
+		
+		String url = config.getFryeURL() + URL_ABS_ORDER_SALESORDER;
+		@SuppressWarnings("unchecked")
+		Flux<SalesGroup> sgFlux = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
+				.body(Mono.just(salesOrder), SalesOrder.class).retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToFlux(SalesGroup.class);
+		return sgFlux.collectList().block();
+		
 	}
 
 }

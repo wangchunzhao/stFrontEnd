@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.SalesGroup;
+import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -48,6 +50,9 @@ public class NewOrderController {
 	private final static String FORM_SAVE = "save";
 	private final static String FORM_MARGIN = "margin";
 	private final static String FORM_WTW_MARGIN = "wtw";
+	private final static String FORM_GROSS_PROFIT = "grossProfit";
+	private final static String FORM_SUBMIT_TYPE_3 = "3";
+	private final static String FORM_SUBMIT_TYPE_4 = "4";
 
 	@Autowired
 	UserService userService;
@@ -73,9 +78,15 @@ public class NewOrderController {
 		mv.addObject(CURRENCY_MAP, currencyMap);
 		mv.addObject(INCOTERMS_MAP, incotermMap);
 		//
-		String s = this.searchCustomer("he",0);
+//		String s = this.searchCustomer("jack",0);
 		//
 		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
+		
+		SalesOrder salesOrder = new SalesOrder();
+		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
+		List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
+		mv.addObject(FORM_GROSS_PROFIT, list);
+		
 		return mv;
 	}
 
@@ -142,6 +153,27 @@ public class NewOrderController {
 //			}else {
 //				jsonResult.build(500,"fail", 1);
 //			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return JsonResult.build(401, "fail", null);
+	}
+	
+	@PostMapping("/getGrossProfitList")
+	@ResponseBody
+	public JsonResult getGrossProfitList(HttpServletRequest request,SalesOrder salesOrder) {
+		
+		try {
+			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			User user = userService.selectUserIdentity(identityName);
+			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.getId());
+			for(int i = 0; i < userOperationInfoList.size(); i++) {
+				String operationName = userOperationInfoList.get(i).getOperationName();
+				if(operationName.equals(newOrder)) {
+					List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
+					return JsonResult.build(200, "success", list);
+				}
+			}
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
