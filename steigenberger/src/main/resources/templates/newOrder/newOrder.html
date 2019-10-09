@@ -8,8 +8,6 @@
 <meta name="keywords" content="" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-<!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
 
 <!-- Custom CSS -->
 <link href="../css/style.css" rel='stylesheet' type='text/css' />
@@ -21,7 +19,7 @@
 <!-- side nav css file -->
 <link href='../css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
 <!-- //side nav css file -->
- 
+<link href="../bootstrap-table-master/dist/bootstrap-table.css" rel="stylesheet" media="screen">
  <!-- js-->
 <script src="../js/jquery-1.11.1.min.js"></script>
 <script src="../js/modernizr.custom.js"></script>
@@ -45,7 +43,7 @@
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
 		<!-- //header-ends -->
 		<!-- main content start-->
-		<form method="post" action="#" th:action="@{dealer}" th:object="${dealerOrder}">
+		<form method="post" role="form" action="#" th:action="@{dealer}" th:object="${dealerOrder}">
 		
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
@@ -67,94 +65,65 @@
 						<div class="panel-body" style="height: auto;">
 
 							<div class="row">
-								<div class="col-md-3 col-xs-3">
-									签约单位 Contract unit
-								</div>
-
-								<div class="col-md-3 col-xs-3">
-									性质分类 Classification
-								</div>
-								<div class="col-md-3 col-xs-3">
-									店名 customer name
-								</div>
-								<div class="col-md-3 col-xs-3">
-									项目报备编号 report number
-								</div>
-
-								<div class="col-md-3 col-xs-3">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="请输入关键词" th:field="*{contracterCode}">
-										<div class="input-group-btn">
-											<select name="gid" id="gid" class="selectpicker" data-live-search="true"></select>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
-								</div>
-								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{customerName}">
-								</div>
-								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{recordCode}">
-								</div>
+								<span class="col-md-1 control-label">签约单位</span>
+							    <div class="col-md-2">
+							    <div class="input-group">
+				                    <input type="text" class="form-control" disabled>
+				                    <span class="input-group-btn">
+				                        <button id="showCustomer" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">
+				                        	<span class="glyphicon glyphicon-search"></span>
+				                        </button>
+				                    </span>
+				                </div>
+							    </div>
+							    <span class="col-md-1 control-label">性质分类</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="" disabled>
+							    </div>
+							    <span class="col-md-1 control-label">店名</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="">
+							    </div>
+								<span class="col-md-1 control-label">项目报备编号</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="">
+							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
-
-								<div class="col-md-3 col-xs-3">
-									客户经理 Customer manager
-								</div>
-								<div class="col-md-3 col-xs-3">
-									客户经理电话 Customer manager Tel
-								</div>
-								<div class="col-md-3 col-xs-3">
-									是否改造店 Renovation store
-								</div>
-								<div class="col-md-3 col-xs-3">
-									终端客户性质 customer nature
-								</div> 
-								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{salesCode}">
-								</div>
-
-								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{salesTelnumber}">
-								</div>
-								<div class="col-md-3 col-xs-3">
-									<select class="form-control">
-										<option value="1" class="">是</option>
-										<option value="0" class="">否</option>
-									</select>
-								</div>
-								<div class="col-md-3 col-xs-3">
-
-									<select class="form-control" th:field="*{customerNatureCode}">
+								<span class="col-md-1 control-label">客户经理</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="" disabled>
+							    </div>
+							    <span class="col-md-1 control-label">客户经理电话</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="">
+							    </div>
+						    	<span class="col-md-1  control-label">是否改造店</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="" disabled>
+							    </div>
+								 <span class="col-md-1 control-label">终端客户性质</span>
+								<div class="col-md-2">
+							      <select class="form-control" th:field="*{customerNatureCode}">
 										<option th:each="clazz : ${customer_classes}" th:value="${clazz.key}" th:text="${clazz.value}" th:selected="${dealerOrder.customerNatureCode eq clazz.key}" ></option>
 									</select>
-								</div>
+							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
-								<div class="col-md-3 col-xs-3">
-									是否便利店 convenience store
-								</div>
-								<div class="col-md-9 col-xs-9">
-									是否新客户 new customer
-								</div>
-								<div class="col-md-3 col-xs-3">
-									<select class="form-control" th:field="*{isConvenientStore}">
+								<span class="col-md-1 control-label">便利店</span>
+								<div class="col-md-1">
+							      <select class="form-control">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
-								</div>
-								<div class="col-md-3 col-xs-3" >
-									<select class="form-control" th:field="*{isNew}">
+							    </div>
+							    <span class="col-md-1 control-label">新客户</span>
+								<div class="col-md-1">
+							      <select class="form-control">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
-								</div>
-								<div class="col-md-6 col-xs-6">
-
-								</div>
+							    </div>
 							</div>
 						</div>
 					</div>
@@ -182,10 +151,10 @@
 									税率 Rate
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}" disabled>
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractNumber}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractNumber}" disabled>
 								</div>
 								<div class="col-xs-12 col-md-3">
 									<select class="form-control" th:field="*{saleType}">
@@ -222,13 +191,13 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{incotermContect}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractValue}">
+									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" th:field="*{contractValue}" disabled>
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractRMBValue}">
+									<input type="text" class="form-control" id="contractAmount" aria-describedby="emailHelp" th:field="*{contractRMBValue}">
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<select class="form-control" th:field="*{currency}">
+									<select class="form-control" th:field="*{currency}" id="currency">
 										<option th:each="currency : ${currencies}" th:value="${currency.key}" th:text="${currency.value}"></option>
 									</select>
 								</div>
@@ -247,7 +216,7 @@
 									购销明细金额合计 Aggregate amount
 								</div>
 								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{currencyExchange}">
+									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" th:field="*{currencyExchange}" disabled>
 								</div>
 								<div class="col-xs-12 col-md-3">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
@@ -726,6 +695,7 @@
 															</div>
 															
 														</div>
+														</div>
 													</div>
 												</div>
 										</div>
@@ -787,7 +757,36 @@
 				
 		</div>
 		</form>
-	<!-- new added graphs chart js-->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+					<h4 class="modal-title" id="myModalLabel">请选择一个签约单位</h4>
+				</div>
+				<div class="modal-body">
+					<div class="panel-group">
+						<div class="panel-body">
+							<div class="row">
+								<span class="col-md-2">签约单位</span>
+								<div class="col-md-6">
+							      <input type="text" class="form-control" id="">
+							    </div>
+							    <button type="button" class="btn btn-default">
+							    	<span class="glyphicon glyphicon-search">查询</span>
+							    </button>
+							</div>
+							<table id="customerTab" class="table table-hover"></table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">确认</button>
+				</div>
+		    </div>
+		</div>
+	</div>
 	
    <div id="footer" class="container" th:replace="foot::foot"></div>
     
@@ -864,8 +863,10 @@ function guestlist(obj,datas){
    </script>	
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>	
+<script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
+<script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 <!--  js -->  
-<!-- <script src="../pageJs/newOrder.js"></script> -->
+<script src="../pageJs/newOrder.js"></script>
    
 </body>
 </html>
