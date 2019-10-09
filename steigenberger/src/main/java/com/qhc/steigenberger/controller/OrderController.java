@@ -31,7 +31,7 @@ import com.qhc.steigenberger.service.UserService;
 
 @Controller
 @RequestMapping("newOrder")
-public class NewOrderController {
+public class OrderController {
 
 	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
 	private final static String SALES_TYPE_MAP = "sales_type";
@@ -60,24 +60,24 @@ public class NewOrderController {
 
 	String newOrder = "下订单";
 
-	@RequestMapping("standardDiscount")
-	public ModelAndView goDealerOrder() {
-		ModelAndView mv = new ModelAndView(PAGE_DEALER);
-		Map<String, String> customerClassMap = orderService.getCustomerClazz();
-		Map<String, String> salesTypeMap = orderService.getSalesType();
-		Map<String, String> currencyMap = orderService.getCurrency();
-		Map<String, String> incotermMap = orderService.getIncoterms();
-		//
-		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
-		mv.addObject(SALES_TYPE_MAP, salesTypeMap);
-		mv.addObject(CURRENCY_MAP, currencyMap);
-		mv.addObject(INCOTERMS_MAP, incotermMap);
-		//
-		String s = this.searchCustomer("he",0);
-		//
-		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
-		return mv;
-	}
+//	@RequestMapping("standardDiscount")
+//	public ModelAndView goDealerOrder() {
+//		ModelAndView mv = new ModelAndView(PAGE_DEALER);
+//		Map<String, String> customerClassMap = orderService.getCustomerClazz();
+//		Map<String, String> salesTypeMap = orderService.getSalesType();
+//		Map<String, String> currencyMap = orderService.getCurrency();
+//		Map<String, String> incotermMap = orderService.getIncoterms();
+//		//
+//		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
+//		mv.addObject(SALES_TYPE_MAP, salesTypeMap);
+//		mv.addObject(CURRENCY_MAP, currencyMap);
+//		mv.addObject(INCOTERMS_MAP, incotermMap);
+//		//
+//		String s = this.searchCustomer("he",0);
+//		//
+//		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
+//		return mv;
+//	}
 
 	@PostMapping("dealer")
 	@ResponseBody
@@ -87,7 +87,7 @@ public class NewOrderController {
 
 		if (bindingResult.hasErrors()) {
 			model.addObject("error", bindingResult.getFieldError().getDefaultMessage());
-			return this.goDealerOrder();
+			return MenuController.goDealerOrder();
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		// if(object!=null && object instanceof String) {
@@ -113,7 +113,7 @@ public class NewOrderController {
 		form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
 		orderService.saveOrder(form);
 
-		return this.goDealerOrder();
+		return MenuController.goDealerOrder();
 	}
 
 	@RequestMapping("customers")

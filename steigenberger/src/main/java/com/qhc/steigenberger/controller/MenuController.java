@@ -62,22 +62,22 @@ public class MenuController {
 
 	
 	@Autowired
-	private OrderService orderService;
+	private static OrderService orderService;
 	
 	@Autowired
-	UserService userService;
+	private static  UserService userService;
 	
 	@Autowired
-	ParameterService parameterService;
+	private static ParameterService parameterService;
 	
 	@Autowired
-	RoleService roleService;
+	private static  RoleService roleService;
 	
 	@Autowired
-	OperationService operationService;
+	private static OperationService operationService;
 	
 	@Autowired
-	private CacheUtil cacheUtil;
+	private static CacheUtil cacheUtil;
 	
 	@RequestMapping("/specialApplication")
 	public String index() {
@@ -177,7 +177,7 @@ public class MenuController {
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
 	@RequestMapping("standardDiscount")
-	public ModelAndView goDealerOrder() {
+	public static ModelAndView goDealerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER);
 		Map<String, String> customerClassMap = orderService.getCustomerClazz();
 		Map<String, String> salesTypeMap = orderService.getSalesType();
@@ -189,7 +189,6 @@ public class MenuController {
 		mv.addObject(CURRENCY_MAP, currencyMap);
 		mv.addObject(INCOTERMS_MAP, incotermMap);
 		//
-		String s = this.searchCustomer("he",0);
 		//
 		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
 		return mv;
