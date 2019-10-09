@@ -697,11 +697,34 @@
 															</h4>
 														</div>
 														<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
-															<div class="panel-body" style="height: auto;" >
-																	<div class="table-responsive">
-													                    <table id="mytab" class="table table-hover"></table>
-													                </div>
+															<div class="panel-body" style="height: auto;">
+															<div class="table-responsive">
+																<table class="table" id="mytable">
+																	<thead>
+																		<tr class="">
+																			<th class="">产品名称</th>
+																			<th class="">金额</th>
+																			<th class="">不含税金额</th>
+																			<th class="">成本</th>
+																			<th class="">毛利</th>
+																			<th class="">毛利率</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<th:block th:if="${grossProfit != null}">
+																			<tr th:each="gp,grossProfitStart: ${grossProfit}">
+																				<td th:text="${gp.name}"></td>
+																				<td th:text="${gp.amount}"></td>
+																				<td th:text="${gp.excludingTaxAmount}"></td>
+																				<td th:text="${gp.cost}"></td>
+																				<td th:text="${gp.grossProfit}"></td>
+																				<td th:text="${gp.grossProfitMargin}"></td>
+																			</tr>
+																		</th:block>
+																	</tbody>
+																</table>
 															</div>
+															
 														</div>
 													</div>
 												</div>
@@ -842,7 +865,7 @@ function guestlist(obj,datas){
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>	
 <!--  js -->  
-<script src="../pageJs/newOrder.js"></script>
+<!-- <script src="../pageJs/newOrder.js"></script> -->
    
 </body>
 </html>
