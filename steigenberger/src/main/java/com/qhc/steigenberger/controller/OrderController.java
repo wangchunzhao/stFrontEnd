@@ -86,6 +86,7 @@ public class OrderController {
 //		//
 //		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
 		
+		
 		SalesOrder salesOrder = new SalesOrder();
 		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
 		List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
