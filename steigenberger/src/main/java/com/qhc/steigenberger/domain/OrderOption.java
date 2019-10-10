@@ -29,7 +29,7 @@ public class OrderOption {
 	private Map<String,Map<String,String>> offices;//Map<saleType key(code),Map<office code,office name>>
 	private Map<String,Map<String,String>> groups;//Map<office code,Map<group code,group name>>
 	//
-	private Map<String,Map<String,Double>> taxRate;//Map<saleType key(code),Map<taxRate name,rate>>
+	private Map<String,Double> taxRate;//Map<saleType key(code),Map<taxRate name,rate>>
 	//
 	private Map<String,Currency> exchangeRate;
 	//
@@ -52,7 +52,7 @@ public class OrderOption {
 		this.saleTypes =new HashMap<String, String>();
 		this.offices =new HashMap<String, Map<String, String>>();;
 		this.groups=new HashMap<String, Map<String, String>>();
-		this.taxRate=new HashMap<String, Map<String, Double>>();
+		this.taxRate=new HashMap<String, Double>();
 		this.exchangeRate= new HashMap<String,Currency>();
 		this.paymentType =new HashMap<String, String>();
 	}
@@ -121,15 +121,14 @@ public class OrderOption {
 		this.groups = groups;
 	}
 
-	public Map<String, Map<String, Double>> getTaxRate() {
+	
+	public Map<String, Double> getTaxRate() {
 		return taxRate;
 	}
 
-	public void setTaxRate(Map<String, Map<String, Double>> taxRate) {
+	public void setTaxRate(Map<String, Double> taxRate) {
 		this.taxRate = taxRate;
 	}
-
-	
 
 	public Map<String, Currency> getExchangeRate() {
 		return exchangeRate;
