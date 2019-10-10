@@ -35,6 +35,8 @@ public class OrderOption {
 	//
 	private Map<String,String> paymentType;//回款类型
 	private Map<String,String> biddingPlan;//回款类型,大客户
+	
+	private Map<String,String> customerClazz;
 	/**
 	 * 
 	 */
@@ -152,6 +154,14 @@ public class OrderOption {
 
 	public void setBiddingPlan(Map<String, String> biddingPlan) {
 		this.biddingPlan = biddingPlan;
+	}
+
+	public Map<String, String> getCustomerClazz() {
+		return customerClazz;
+	}
+
+	public void setCustomerClazz(Map<String, String> customerClazz) {
+		this.customerClazz = customerClazz;
 	}
 
 }

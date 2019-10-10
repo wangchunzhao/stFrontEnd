@@ -19,6 +19,7 @@ public class Customer {
 	private String address;
 	private String groupCode;
 	private String clazzCode;
+	private String clazzName;
 	private String levelCode;
 	private String affiliationCode;
 	private String affiliationName;
@@ -80,6 +81,12 @@ public class Customer {
 	}
 	public void setAffiliationName(String affiliationName) {
 		this.affiliationName = affiliationName;
+	}
+	public String getClazzName() {
+		return clazzName;
+	}
+	public void setClazzName(String clazzName) {
+		this.clazzName = clazzName;
 	}
 	
 }
