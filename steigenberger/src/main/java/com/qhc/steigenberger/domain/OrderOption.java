@@ -34,7 +34,7 @@ public class OrderOption {
 	private Set<Currency> exchangeRate;
 	//
 	private Map<String,String> paymentType;//回款类型
-	
+	private Map<String,String> biddingPlan;//回款类型,大客户
 	/**
 	 * 
 	 */
@@ -143,6 +143,14 @@ public class OrderOption {
 
 	public void setPaymentType(Map<String, String> paymentType) {
 		this.paymentType = paymentType;
+	}
+
+	public Map<String, String> getBiddingPlan() {
+		return biddingPlan;
+	}
+
+	public void setBiddingPlan(Map<String, String> biddingPlan) {
+		this.biddingPlan = biddingPlan;
 	}
 
 }
