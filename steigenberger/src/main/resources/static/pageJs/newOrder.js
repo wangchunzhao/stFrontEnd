@@ -18,6 +18,10 @@ function getCity(obj,cityMaps){
 		$("#citySelect").html('');
 		$("#citySelect").append("<option value=''>--选择市--</option>");
 		$("#citySelect").val('');
+		
+		$("#selectDistrict").html('');
+		$("#selectDistrict").append("<option value=''>--选择区--</option>");
+		$("#selectDistrict").val('');
 	}else{
 		$("#citySelect").html('');
 		$("#citySelect").append("<option value=''>--选择市--</option>");
@@ -47,6 +51,67 @@ function getDistrict(obj,districts){
 		});
 	} 		
 }
+
+function getOffices(obj,offices){
+	var saleType = $(obj).val();
+	if ($(obj).val() == '') {
+		$("#officeSelect").html('');
+		$("#officeSelect").append("<option value=''>--选择大区--</option>");
+		$("#officeSelect").val('');
+		
+		$("#selectGroup").html('');
+		$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		$("#selectGroup").val('');
+	}else{
+		$("#officeSelect").html('');
+		$("#officeSelect").append("<option value=''>--选择大区--</option>");
+		$("#officeSelect").val('');
+		var officesMap = offices[saleType];
+		$.each(officesMap, function (key,value) {
+				$("#officeSelect").append("<option value='" + key + "'>" + value + "</option>");
+			
+		});
+	} 		
+}
+
+function getGroups(obj,groups){
+	var officeCode = $(obj).val();
+	if ($(obj).val() == '') {
+		$("#selectGroup").html('');
+		$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		$("#selectGroup").val('');
+	}else{
+		$("#selectGroup").html('');
+		$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		$("#selectGroup").val('');
+		var groupsMap = groups[officeCode];
+		$.each(groupsMap, function (key,value) {
+				$("#selectGroup").append("<option value='" + key + "'>" + value + "</option>");			
+		});
+	} 		
+}
+
+function getExchangeRate(obj,currencies){
+	var currencyCode = $(obj).val();
+	if(currencyCode==''){
+		$('#exchangeRate').val('');
+	}
+	$.each(currencies, function (index,item) {
+		if(item.code==currencyCode){
+			$('#exchangeRate').val(item.rate);
+			getAmount('#orignalContractAmount');
+		}
+		
+	});
+}
+
+function getAmount(obj){
+    var exchangeRate = $("#exchangeRate").val()
+	var originalAmount = $(obj).val();
+    var amount = exchangeRate*originalAmount
+    $("#contractAmount").val(amount);
+}
+
 function queryUnitParams(params) {
     params.pageNo = this.pageNumber;
     params.custName = $("#contractUnitName").val();

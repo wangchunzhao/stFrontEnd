@@ -120,8 +120,9 @@
 							    </div>
 							    <span class="col-md-1 control-label">销售类型</span>
 								<div class="col-md-2">
-									<select class="form-control" th:field="*{saleTypes}">
-										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>	
+									<select class="form-control" th:onchange="getOffices(this,[[${order_option.offices}]])">
+										<option value="">--选择大区--</option>
+										<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">税率</span>
@@ -135,17 +136,18 @@
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">原币合同金额</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" >
+									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" >
 							    </div>
 							    <span class="col-md-1 control-label">币种</span>
 								<div class="col-md-2">
-									<select class="form-control"  id="currency"><!--  th:field="*{currency}"-->
-										<option th:each="currency : ${currencies}" th:value="${currency.key}" th:text="${currency.value}"></option>
+									<select class="form-control"  id="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])"><!--  th:field="*{currency}"-->
+									    <option value="">--选择币种--</option>
+										<option th:each="currency : ${order_option.exchangeRate}" th:value="${currency.code}" th:text="${currency.name}"></option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">合同金额</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp"><!-- th:field="*{contractValue}" -->
+									<input type="text" class="form-control" id="contractAmount"aria-describedby="emailHelp"><!-- th:field="*{contractValue}" -->
 							    </div>
 							    <span class="col-md-1 control-label">购销明细金额合计</span>
 								<div class="col-md-2">
@@ -155,7 +157,7 @@
 							<div class="row" style="padding-top: 10px;">
 								<span class="col-md-1 control-label">汇率</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" th:field="*{exchangeRate}" disabled>
+									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" disabled>
 							    </div>
 							    <span class="col-md-1 control-label">国际贸易条件</span>
 								<div class="col-xs-12 col-md-1" style="padding-right: 1px;">
@@ -192,14 +194,14 @@
 							<div class="row">
 							 	<span class="col-md-1 control-label">大区</span>
 								<div class="col-md-2">
-									<select class="form-control">
-										<option th:each="type : ${offices}" th:value="${type.key}" th:text="${type.value}"></option>	
+									<select class="form-control" id="officeSelect" th:onchange="getGroups(this,[[${order_option.groups}]])">
+										<option value="">--选择大区--</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">中心</span>
 								<div class="col-md-2">
-									<select class="form-control">
-										<option th:each="type : ${groups}" th:value="${type.key}" th:text="${type.value}"></option>	
+									<select class="form-control" id="selectGroup">
+										<option value="">--选择中心--</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">保修年限</span>
