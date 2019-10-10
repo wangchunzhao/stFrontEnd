@@ -19,7 +19,9 @@ import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOffice;
+import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OperationService;
@@ -59,7 +61,9 @@ public class MenuController {
 	private final static String FORM_MARGIN = "margin";
 	private final static String FORM_WTW_MARGIN = "wtw";
 
-	
+	private final static String FORM_GROSS_PROFIT = "grossProfit";
+	private final static String FORM_SUBMIT_TYPE_3 = "3";
+	private final static String FORM_SUBMIT_TYPE_4 = "4";
 	
 	
 	
@@ -203,6 +207,12 @@ public class MenuController {
 //		//
 		//
 //		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
+		
+		
+		SalesOrder salesOrder = new SalesOrder();
+		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
+		List<SalesGroup> list = staticOrderService.getGrossProfitList(salesOrder);
+		mv.addObject(FORM_GROSS_PROFIT, list);
 		return mv;
 	}
 	
