@@ -45,7 +45,7 @@ public class UserService{
 		String userMail = user.getUserMail()==null?"":user.getUserMail();
 		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
 
-		String url = URL_USER_PAGEABLELIST+"/"+pageNum+"/"+pageSize+"?isActive="+
+		String url = URL_USER+"/"+pageNum+"/"+pageSize+"?isActive="+
 		isActive+"&userIdentity="+userIdentity+"&userMail="+userMail;
 		
 		return pageFryeService.getInfo(url, RestPage.class);
