@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.SalesGroup;
+import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -50,6 +52,11 @@ public class OrderController {
 	private final static String FORM_SAVE = "save";
 	private final static String FORM_MARGIN = "margin";
 	private final static String FORM_WTW_MARGIN = "wtw";
+	
+	
+	private final static String FORM_GROSS_PROFIT = "grossProfit";
+	private final static String FORM_SUBMIT_TYPE_3 = "3";
+	private final static String FORM_SUBMIT_TYPE_4 = "4";
 
 	@Autowired
 	UserService userService;
@@ -62,9 +69,9 @@ public class OrderController {
 
 	String newOrder = "下订单";
 
-//	@RequestMapping("standardDiscount")
-//	public ModelAndView goDealerOrder() {
-//		ModelAndView mv = new ModelAndView(PAGE_DEALER);
+	@RequestMapping("standardDiscount")
+	public ModelAndView goDealerOrder() {
+		ModelAndView mv = new ModelAndView(PAGE_DEALER);
 //		Map<String, String> customerClassMap = orderService.getCustomerClazz();
 //		Map<String, String> salesTypeMap = orderService.getSalesType();
 //		Map<String, String> currencyMap = orderService.getCurrency();
@@ -78,8 +85,14 @@ public class OrderController {
 //		String s = this.searchCustomer("he",0);
 //		//
 //		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
-//		return mv;
-//	}
+		
+		SalesOrder salesOrder = new SalesOrder();
+		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
+		List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
+		mv.addObject(FORM_GROSS_PROFIT, list);
+		
+		return mv;
+	}
 
 	@PostMapping("dealer")
 	@ResponseBody
