@@ -552,33 +552,35 @@
 										</div>
 										<div class="modal-body">
 											<div id="accordion-magical-coder-auto-id-1564367406503" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">
-													<div class="panel panel-default">
-														<div class="panel-heading" role="tab">
-															<h4 class="panel-title">
-																<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseOne-magical-coder-auto-id-1564367403401" aria-expanded="true" class="">基本信息 basic information</a>
-															</h4>
-														</div>
-														<div id="collapseOne-magical-coder-auto-id-1564367403401" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
-															<div class="panel-body" style="height: auto;">
-
-															<div class="row">
-													<div class="col-md-3 col-xs-3">需求流水号</div>
-													<div class="col-md-3 col-xs-3">合同号</div><div class="col-md-3 col-xs-3">合同名称</div><div class="col-md-3 col-xs-3">合同金额</div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div>
-												</div><div class="row" style="margin-top: 4px;">
-													<div class="col-xs-6 col-md-3">性质分类</div>
-													<div class="col-xs-6 col-md-3">版本号</div><div class="col-xs-6 col-md-3">操作人</div><div class="col-xs-6 col-md-3">操作时间</div><div class="col-xs-6 col-md-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-xs-6 col-md-3"><select class="form-control">
-													<option value="1">1</option>
-													<option value="2">2</option>
-												</select></div><div class="col-xs-6 col-md-3"><select class="form-control">
-													<option value="1">1</option>
-													<option value="2">2</option>
-												</select></div><div class="col-xs-6 col-md-3"><select class="form-control">
-													<option value="1">1</option>
-													<option value="2">2</option>
-												</select></div>
-												</div></div>
-														</div>
-													</div>
+													<div class="panel-body" style="height: auto;">
+																<div class="row">
+																	<div class="col-md-3 col-xs-3">需求流水号</div>
+																	<div class="col-md-3 col-xs-3">合同号</div>
+																	<div class="col-md-3 col-xs-3">合同名称</div>
+																	<div class="col-md-3 col-xs-3">合同金额</div>
+																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="seqNum"></div>
+																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractNo"></div>
+																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractName"></div>
+																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractAmount"></div>
+																</div>
+																<div class="row" style="margin-top: 4px;">
+																		<div class="col-xs-6 col-md-3">性质分类</div>
+																		<div class="col-xs-6 col-md-3">版本号</div>
+																		<div class="col-xs-6 col-md-3">操作人</div>
+																		<div class="col-xs-6 col-md-3">操作时间</div>
+																		<div class="col-xs-6 col-md-3">
+																			<input type="text" class="form-control" aria-describedby="customerClass"></div>
+																		<div class="col-xs-6 col-md-3">
+																				<input type="text" class="form-control" aria-describedby="version">
+																		</div>
+																		<div class="col-xs-6 col-md-3">
+																			<input type="text" class="form-control" aria-describedby="salesCode">
+																		</div>
+																		<div class="col-xs-6 col-md-3">
+																			<input type="text" class="form-control" aria-describedby="createTime">
+																		</div>
+																</div>
+															</div>
 													<div class="panel panel-default">
 														<div class="panel-heading" role="tab">
 															<h4 class="panel-title">
@@ -712,7 +714,7 @@
 	
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
-<script src="../pageJs/newOrder.js"></script>
+<!-- <script src="../pageJs/newOrder.js"></script> -->
 <script>
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
@@ -770,6 +772,26 @@ function guestlist(obj,datas){
             //刷新select
             $(obj).selectpicker('refresh');
         }
+    });
+    
+    $(function () {
+        //1.初始化Table
+    	var oTable = new TableInit();
+    	$('#showGrossProfit').on('onclick',function(){
+    		var opt = {
+    				url : "/steigenberger/newOrder/queryGrossProfit",//请求路径
+    		        silent: true,
+    		        query:{
+    		            sequanceNum:1
+    		        }
+    		    };
+
+    		$("#mytable").bootstrapTable('refresh', opt);
+    		$("#mymodal").modal('show');
+    		
+//    		oTable.Init();
+    	});
+
     });
 }
 </script>
