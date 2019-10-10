@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
-import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.RoleService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
@@ -94,7 +94,7 @@ public class UserController {
 	
 	 @RequestMapping("/toUpdate")
 	public String toUpdate(Model model, String userIdentity) {
-		List<SapSalesOffice> officeList = sapSalesOfficeService.getList();
+		List<SalesOffice> officeList = sapSalesOfficeService.getList();
 		Map<String, Object> map = userService.findInfos(userIdentity);
 		model.addAttribute("map", map);
 		model.addAttribute("officeList", officeList);

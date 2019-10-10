@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.ApplicationOfRolechangeService;
 import com.qhc.steigenberger.service.RoleService;
@@ -46,7 +46,7 @@ public class PermissionApplyController extends BaseController{
 	@PostMapping("/sapSalesOfficelist")
 	@ResponseBody
 	public JsonResult sapSalesOfficelist() {
-		List<SapSalesOffice> role = sapSalesOfficeService.getList();
+		List<SalesOffice> role = sapSalesOfficeService.getList();
 		return JsonResult.build(200,"success", role);
 	}
 	

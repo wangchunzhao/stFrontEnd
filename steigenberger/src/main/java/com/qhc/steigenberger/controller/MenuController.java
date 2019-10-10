@@ -19,7 +19,7 @@ import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.Role;
-import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OperationService;

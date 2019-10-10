@@ -19,12 +19,17 @@ public abstract class AbsOrder {
 	public final static String ORDER_TYPE_CODE_DEALER = "Z001";
 	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
 	public final static String ORDER_TYPE_CODE_BULK = "Z003";
+	
+	public final static String ORDER_CUSTOMER_DEALER_CODE="01";
+	public final static String ORDER_CUSTOMER_KEY_ACCOUNT_CODE="02";
 	//@NotEmpty(message="order type 不能为空")
 	private String orderType;
 	/**
 	 * 客户基本信息 Basic information
 	 */
-	
+	private String customerClazzCode;//客户性质分类代码
+	private String customerClazzName;//客户性质分类名称
+	private String terminalType;//终端客户性质
 	private String contracterCode;//签约单位 Contract unit
 	private String customerName;//店名 customer name
 	private int isConvenientStore;//是否便利店 convenience store

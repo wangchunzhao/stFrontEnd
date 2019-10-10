@@ -24,7 +24,7 @@ public class User implements Serializable{
     
     public List<ApplicationOfRolechange> apps;
 	
-    public SapSalesOffice region;//区域
+    public SalesOffice region;//区域
    	
    	public List<Role> roles;
    	
@@ -33,11 +33,11 @@ public class User implements Serializable{
 
 
    	
-	public SapSalesOffice getRegion() {
+	public SalesOffice getRegion() {
 		return region;
 	}
 
-	public void setRegion(SapSalesOffice region) {
+	public void setRegion(SalesOffice region) {
 		this.region = region;
 	}
 

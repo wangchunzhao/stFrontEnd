@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mangofactory.swagger.models.dto.Model;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.ReportFormsInfo;
-import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.service.KOrderInfoService;
 import com.qhc.steigenberger.service.ReportFormsInfoService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
@@ -70,7 +70,7 @@ public class ReportFormsInfoController{
 		ModelAndView mv = new ModelAndView();
 		//投标客户    TODO
 		
-		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
+		List<SalesOffice> areaList = sapSalesOfficeService.getList();
 		mv.addObject("areaList", areaList);
 		mv.setViewName("report/biddingDetail");
 		return mv;

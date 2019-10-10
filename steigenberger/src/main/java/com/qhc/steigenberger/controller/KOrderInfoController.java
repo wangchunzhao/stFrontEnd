@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qhc.steigenberger.domain.KOrderInfo;
-import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.service.KOrderInfoService;

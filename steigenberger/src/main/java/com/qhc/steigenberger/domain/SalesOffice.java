@@ -10,7 +10,7 @@ import com.qhc.steigenberger.util.Page;
  * @author lizuoshan
  *
  */
-public class SapSalesOffice implements Serializable {
+public class SalesOffice implements Serializable {
 	
     /**
 	 * 
@@ -21,6 +21,7 @@ public class SapSalesOffice implements Serializable {
 	
     private String name;
 	
+    private String saleTypeCode;
 
 	public String getCode() {
 		return code;
@@ -36,6 +37,14 @@ public class SapSalesOffice implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSaleTypeCode() {
+		return saleTypeCode;
+	}
+
+	public void setSaleTypeCode(String saleTypeCode) {
+		this.saleTypeCode = saleTypeCode;
 	}
 	
 	

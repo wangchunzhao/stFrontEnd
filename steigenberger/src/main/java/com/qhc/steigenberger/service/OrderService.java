@@ -15,7 +15,7 @@ import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Customer;
-import com.qhc.steigenberger.domain.SapSalesOffice;
+import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
