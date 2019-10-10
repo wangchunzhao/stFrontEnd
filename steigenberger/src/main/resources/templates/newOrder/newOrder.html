@@ -7,36 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-
-
-<!-- Custom CSS -->
-<link href="../css/style.css" rel='stylesheet' type='text/css' />
-
-<!-- font-awesome icons CSS -->
-<link href="../css/font-awesome.css" rel="stylesheet"> 
-<!-- //font-awesome icons CSS-->
-
-<!-- side nav css file -->
-<link href='../css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
-<!-- //side nav css file -->
-<link href="../bootstrap-table-master/dist/bootstrap-table.css" rel="stylesheet" media="screen">
- <!-- js-->
-<script src="../js/jquery-1.11.1.min.js"></script>
-<script src="../js/modernizr.custom.js"></script>
-
-<!-- chart -->
-<script src="../js/Chart.js"></script>
-<!-- //chart -->
-
 <!-- Metis Menu -->
-<script src="../js/metisMenu.min.js"></script>
-<script src="../js/custom.js"></script>
-<link href="../css/custom.css" rel="stylesheet">
-<!--//Metis Menu -->
-
-<!--pie-chart --><!-- index page sales reviews visitors pie chart -->
-<script src="../js/pie-chart.js" type="text/javascript"></script>
-<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
+<script src="../pageJs/commonCss.js"></script>
 </head> 
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
@@ -70,7 +42,7 @@
 							    <div class="input-group">
 				                    <input type="text" class="form-control" disabled>
 				                    <span class="input-group-btn">
-				                        <button id="showCustomer" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">
+				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
 				                        	<span class="glyphicon glyphicon-search"></span>
 				                        </button>
 				                    </span>
@@ -111,14 +83,14 @@
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">便利店</span>
-								<div class="col-md-1">
+								<div class="col-md-2">
 							      <select class="form-control">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">新客户</span>
-								<div class="col-md-1">
+								<div class="col-md-2">
 							      <select class="form-control">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
@@ -138,51 +110,55 @@
 						<div class="panel-body" style="height: auto;">
 
 							<div class="row">
-								<div class="col-xs-12 col-md-3">
-									流水号 code
-								</div>
-								<div class="col-xs-12 col-md-3">
-									合同号 contract no
-								</div>
-								<div class="col-xs-12 col-md-3">
-									销售类型 Sales type
-								</div>
-								<div class="col-xs-12 col-md-3">
-									税率 Rate
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}" disabled>
-								</div>
-								<div class="col-xs-12 col-md-3">
+								<span class="col-md-1 control-label">流水号</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}" disabled>
+							    </div>
+							    <span class="col-md-1 control-label">合同号</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contractNumber}" disabled>
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">销售类型</span>
+								<div class="col-md-2">
 									<select class="form-control" th:field="*{saleType}">
-										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>
-										
+										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">税率</span>
+								<div class="col-md-2">
 									<select class="form-control" th:field="*{taxRate}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
-								</div>
+							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
-								<div class="col-xs-12 col-md-3">
-									国际贸易条件 international trade
-								</div>
-								<div class="col-xs-12 col-md-3">
-									原币合同金额 Contract amount
-								</div>
-								<div class="col-xs-12 col-md-3">
-									合同金额 Contract amount
-								</div>
-								<div class="col-xs-12 col-md-3">
-									币种 currency
-								</div>
-								<div class="col-xs-12 col-md-2" style="padding-right: 1px;">
+								<span class="col-md-1 control-label">原币合同金额</span>
+								<div class="col-md-2">
+									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" th:field="*{contractValue}">
+							    </div>
+							    <span class="col-md-1 control-label">币种</span>
+								<div class="col-md-2">
+									<select class="form-control" th:field="*{currency}" id="currency">
+										<option th:each="currency : ${currencies}" th:value="${currency.key}" th:text="${currency.value}"></option>
+									</select>
+							    </div>
+							    <span class="col-md-1 control-label">合同金额</span>
+								<div class="col-md-2">
+									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" th:field="*{contractValue}">
+							    </div>
+							    <span class="col-md-1 control-label">购销明细金额合计</span>
+								<div class="col-md-2">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+							    </div>	
+							</div>
+							<div class="row" style="padding-top: 10px;">
+								<span class="col-md-1 control-label">汇率</span>
+								<div class="col-md-2">
+									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" th:field="*{currencyExchange}" disabled>
+							    </div>
+							    <span class="col-md-1 control-label">国际贸易条件</span>
+								<div class="col-xs-12 col-md-1" style="padding-right: 1px;">
 									<select class="form-control" th:field="*{incoterm}">
 										<option th:each="incoterm : ${incoterms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
 									</select>
@@ -190,43 +166,14 @@
 								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{incotermContect}">
 								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" th:field="*{contractValue}" disabled>
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" id="contractAmount" aria-describedby="emailHelp" th:field="*{contractRMBValue}">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<select class="form-control" th:field="*{currency}" id="currency">
-										<option th:each="currency : ${currencies}" th:value="${currency.key}" th:text="${currency.value}"></option>
-									</select>
-								</div>
-							</div>
-							<div class="row" style="padding-top: 10px;">
-								<div class="col-xs-12 col-md-3">
-									汇率 exchange rate
-								</div>
-								<div class="col-xs-12 col-md-3">
-									合同管理员 Contract administrator
-								</div>
-								<div class="col-xs-12 col-md-3">
-									录入日期 Date of entry
-								</div>
-								<div class="col-xs-12 col-md-3">
-									购销明细金额合计 Aggregate amount
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" th:field="*{currencyExchange}" disabled>
-								</div>
-								<div class="col-xs-12 col-md-3">
+								<span class="col-md-1 control-label">合同管理员</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">录入日期</span>
+							    <div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
-								</div>
+							    </div>
 							</div>
 						</div>
 					</div>
@@ -243,135 +190,110 @@
 						<div class="panel-body" style="height: auto;">
 
 							<div class="row">
-								<div class="col-xs-12 col-md-3">
-									大区 area
-								</div>
-								<div class="col-xs-12 col-md-3">
-									中心 center
-								</div>
-								<div class="col-xs-12 col-md-3">
-									保修年限 warranty period
-								</div>
-								<div class="col-xs-12 col-md-3">
-									安装方式 installation
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{officeCode}">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{groupCode}">
-								</div>
-								<div class="col-xs-12 col-md-3">
+							 	<span class="col-md-1 control-label">大区</span>
+								<div class="col-md-2">
+									<select class="form-control" th:field="*{saleType}">
+										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>	
+									</select>
+							    </div>
+							    <span class="col-md-1 control-label">中心</span>
+								<div class="col-md-2">
+									<select class="form-control" th:field="*{saleType}">
+										<option th:each="type : ${sales_type}" th:value="${type.key}" th:text="${type.value}"></option>	
+									</select>
+							    </div>
+							    <span class="col-md-1 control-label">保修年限</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{warrenty}">
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">安装方式</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{installCode}">
-								</div>
+							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
-								<div class="col-xs-12 col-md-6">
-									地区 Region
-								</div>
-								<div class="col-xs-12 col-md-3">
-									到货地址 Address
-								</div>
-								<div class="col-xs-12 col-md-3">
-									收货方式 Receiving way
-								</div>
-								<div class="col-xs-12 col-md-2" style="padding-left: 12px; padding-right: 1px;">
-									<select class="form-control" th:field="*{provinceCode}">
-										<option value="1">1</option>
-										<option value="2">2</option>
-									</select>
-								</div>
-								<div class="col-xs-12 col-md-2" style="padding-left: 1px; padding-right: 1px;">
-									<select class="form-control" th:field="*{cityCode}">
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
-									</select>
-								</div>
-								<div class="col-xs-12 col-md-2" style="padding-left: 1px;">
-									<select class="form-control" style="padding-left: 0px;"  th:field="*{distinctCode}">
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
-									</select>
-								</div>
-								<div class="col-xs-12 col-md-3">
+							
+								<span class="col-md-1 control-label">地区</span>
+								<div class="col-md-5">
+									<div class="row">
+										<div class="col-md-4" style="padding-left: 12px; padding-right: 1px;">
+											<select class="form-control" th:field="*{provinceCode}">
+												<option value="1">1</option>
+												<option value="2">2</option>
+											</select>
+										</div>
+									    <div class="col-md-4" style="padding-left: 1px; padding-right: 1px;">
+											<select class="form-control" th:field="*{cityCode}">
+												<option value="1" class="">1</option>
+												<option value="2" class="">2</option>
+											</select>
+										</div>
+										<div class="col-md-4" style="padding-left: 1px;">
+											<select class="form-control" style="padding-left: 0px;"  th:field="*{distinctCode}">
+												<option value="1" class="">1</option>
+												<option value="2" class="">2</option>
+											</select>
+										</div>
+									</div>
+							    </div>
+							    <span class="col-md-1 control-label">到货地址</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{address}">
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">收货方式</span>
+								<div class="col-md-2">
 									<select class="form-control" th:field="*{confirmTypeCode}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
-								</div>
+							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
-								<div class="col-xs-12 col-md-3">
-									运输类型 Type of transportation
-								</div>
-								<div class="col-xs-12 col-md-3">
-									授权人1及身份证号 Id number 1
-								</div>
-								<div class="col-xs-12 col-md-3">
-									授权人1电话 Tel 1
-								</div>
-								<div class="col-xs-12 col-md-3">
-									授权人2及身份证号 Id number 2
-								</div>
-								<div class="col-xs-12 col-md-3">
+								<span class="col-md-1 control-label">运输类型</span>
+								<div class="col-md-2">
 									<select class="form-control" th:field="*{transferTypeCode}">
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor1Id}">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor1Tel}">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor2Id}">
-								</div>
-							</div>
-							<div class="row" style="margin-top: 15px;">
-								<div class="col-xs-12 col-md-3">
-									授权人2电话 Tel 2
-								</div>
-								<div class="col-xs-12 col-md-3">
-									授权人3及身份证号 Id number 3
-								</div>
-								<div class="col-xs-12 col-md-3">
-									授权人3电话 Tel 3
-								</div>
-
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor2Tel}">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor3Id}">
-								</div>
-								<div class="col-xs-12 col-md-3">
-									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
-								</div>
-								
-							</div>
-							<div class="row" style="margin-top: 15px;">
-								<div class="col-xs-12 col-md-3">
-									标准折扣 standard discount
-								</div>
-								<div class="col-xs-12 col-md-9">
-									外销运费 Export freight
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">标准折扣</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{approvedDicount}">
-								</div>
-								<div class="col-xs-12 col-md-3">
+							    </div>
+							    <span class="col-md-1 control-label">外销运费</span>
+								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{freight}">
-								</div>
-								<div class="col-xs-12 col-md-3"></div>
-								<div class="col-xs-12 col-md-3"></div>
+							    </div>				
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<span class="col-md-1 control-label">授权人1及身份证号</span>
+								<div class="col-md-5">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor1Id}">
+							    </div>
+							    <span class="col-md-1 control-label">授权人1电话</span>
+								<div class="col-md-5">
+									<input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{contactor1Tel}">
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<span class="col-md-1 control-label">授权人2及身份证号</span>
+								<div class="col-md-5">
+									<input type="text" class="form-control" aria-describedby="emailHelp">
+							    </div>
+							    <span class="col-md-1 control-label">授权人2电话</span>
+								<div class="col-md-5">
+									<input type="text" class="form-control" aria-describedby="emailHelp" >
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 15px;">
+								<span class="col-md-1 control-label">授权人3及身份证号</span>
+								<div class="col-md-5">
+									<input type="text" class="form-control" aria-describedby="emailHelp" >
+							    </div>
+							    <span class="col-md-1 control-label">授权人3电话</span>
+								<div class="col-md-5">
+									<input type="text" class="form-control" aria-describedby="emailHelp" >
+							    </div>
 							</div>
 						</div>
 					</div>
@@ -621,7 +543,7 @@
 							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfit" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;">
 								查看毛利表 Gross profit table
 							</button>
-							<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+							<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064086809" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -638,74 +560,64 @@
 														</div>
 														<div id="collapseOne-magical-coder-auto-id-1564367403401" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 															<div class="panel-body" style="height: auto;">
-																<div class="row">
-																	<div class="col-md-3 col-xs-3">需求流水号</div>
-																	<div class="col-md-3 col-xs-3">合同号</div>
-																	<div class="col-md-3 col-xs-3">合同名称</div>
-																	<div class="col-md-3 col-xs-3">合同金额</div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="seqNum"></div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractNo"></div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractName"></div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractAmount"></div>
-																</div>
-																<div class="row" style="margin-top: 4px;">
-																		<div class="col-xs-6 col-md-3">性质分类</div>
-																		<div class="col-xs-6 col-md-3">版本号</div>
-																		<div class="col-xs-6 col-md-3">操作人</div>
-																		<div class="col-xs-6 col-md-3">操作时间</div>
-																		<div class="col-xs-6 col-md-3">
-																			<input type="text" class="form-control" aria-describedby="customerClass"></div>
-																		<div class="col-xs-6 col-md-3">
-																				<input type="text" class="form-control" aria-describedby="version">
-																		</div>
-																		<div class="col-xs-6 col-md-3">
-																			<input type="text" class="form-control" aria-describedby="salesCode">
-																		</div>
-																		<div class="col-xs-6 col-md-3">
-																			<input type="text" class="form-control" aria-describedby="createTime">
-																		</div>
-																</div>
-															</div>
+
+															<div class="row">
+													<div class="col-md-3 col-xs-3">需求流水号</div>
+													<div class="col-md-3 col-xs-3">合同号</div><div class="col-md-3 col-xs-3">合同名称</div><div class="col-md-3 col-xs-3">合同金额</div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div>
+												</div><div class="row" style="margin-top: 4px;">
+													<div class="col-xs-6 col-md-3">性质分类</div>
+													<div class="col-xs-6 col-md-3">版本号</div><div class="col-xs-6 col-md-3">操作人</div><div class="col-xs-6 col-md-3">操作时间</div><div class="col-xs-6 col-md-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-xs-6 col-md-3"><select class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select></div><div class="col-xs-6 col-md-3"><select class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select></div><div class="col-xs-6 col-md-3"><select class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select></div>
+												</div></div>
 														</div>
-																</div>
-																<div class="panel panel-default">
-																	<div class="panel-heading" role="tab">
-																		<h4 class="panel-title">
-																			<a class="" role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseTwo-magical-coder-auto-id-1564367403394" aria-expanded="true">
-																				明细信息 detail information
-																			</a>
-																		</h4>
-																	</div>
-																	<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
-																		<div class="panel-body" style="height: auto;">
-																		<div class="table-responsive">
-																			<table class="table" id="mytable">
-																				<thead>
-																					<tr class="">
-																						<th class="">产品名称</th>
-																						<th class="">金额</th>
-																						<th class="">不含税金额</th>
-																						<th class="">成本</th>
-																						<th class="">毛利</th>
-																						<th class="">毛利率</th>
-																					</tr>
-																				</thead>
-																				<tbody>
-																					<th:block th:if="${grossProfit != null}">
-																						<tr th:each="gp,grossProfitStart: ${grossProfit}">
-																							<td th:text="${gp.name}"></td>
-																							<td th:text="${gp.amount}"></td>
-																							<td th:text="${gp.excludingTaxAmount}"></td>
-																							<td th:text="${gp.cost}"></td>
-																							<td th:text="${gp.grossProfit}"></td>
-																							<td th:text="${gp.grossProfitMargin}"></td>
-																						</tr>
-																					</th:block>
-																				</tbody>
-																			</table>
-																		</div>
-																		
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading" role="tab">
+															<h4 class="panel-title">
+																<a class="" role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseTwo-magical-coder-auto-id-1564367403394" aria-expanded="true">
+																	明细信息 detail information
+																</a>
+															</h4>
+														</div>
+														<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+															<div class="panel-body" style="height: auto;">
+															<div class="table-responsive">
+																<table class="table" id="mytable">
+																	<thead>
+																		<tr class="">
+																			<th class="">产品名称</th>
+																			<th class="">金额</th>
+																			<th class="">不含税金额</th>
+																			<th class="">成本</th>
+																			<th class="">毛利</th>
+																			<th class="">毛利率</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<th:block th:if="${grossProfit != null}">
+																			<tr th:each="gp,grossProfitStart: ${grossProfit}">
+																				<td th:text="${gp.name}"></td>
+																				<td th:text="${gp.amount}"></td>
+																				<td th:text="${gp.excludingTaxAmount}"></td>
+																				<td th:text="${gp.cost}"></td>
+																				<td th:text="${gp.grossProfit}"></td>
+																				<td th:text="${gp.grossProfitMargin}"></td>
+																			</tr>
+																		</th:block>
+																	</tbody>
+																</table>
 															</div>
+															
+														</div>
+														</div>
 													</div>
 												</div>
 										</div>
@@ -735,7 +647,6 @@
 									</div>
 								</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
@@ -768,7 +679,7 @@
 				
 		</div>
 		</form>
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -781,13 +692,13 @@
 							<div class="row">
 								<span class="col-md-2">签约单位</span>
 								<div class="col-md-6">
-							      <input type="text" class="form-control" id="">
+							      <input type="text" class="form-control" id="contractUnitName">
 							    </div>
-							    <button type="button" class="btn btn-default">
+							    <button type="button" class="btn btn-default" onclick="searchUnit()">
 							    	<span class="glyphicon glyphicon-search">查询</span>
 							    </button>
 							</div>
-							<table id="customerTab" class="table table-hover"></table>
+							<table id="contractUnitTable" data-pagination="true"   class="table table-hover"></table>
 						</div>
 					</div>
 				</div>
@@ -800,9 +711,8 @@
 	</div>
 	
    <div id="footer" class="container" th:replace="foot::foot"></div>
-    
-	
-<script src="../js/classie.js"></script>
+<script src="../pageJs/commonJs.js"></script>
+<script src="../pageJs/newOrder.js"></script>
 <script>
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
@@ -822,10 +732,6 @@
 		}
 	}
 </script>	
-<!--scrolling js-->
-<script src="../js/jquery.nicescroll.js"></script>
-<script src="../js/scripts.js"></script>
-<!--//scrolling js-->
 <script>
 $("#gid").on('shown.bs.select',function(e){
     //获取下拉select里的输入框,提示一下搜索下拉
@@ -865,39 +771,11 @@ function guestlist(obj,datas){
             $(obj).selectpicker('refresh');
         }
     });
-    
-    $(function () {
-        //1.初始化Table
-    	var oTable = new TableInit();
-    	$('#showGrossProfit').on('onclick',function(){
-    		var opt = {
-    				url : "/steigenberger/newOrder/queryGrossProfit",//请求路径
-    		        silent: true,
-    		        query:{
-    		            sequanceNum:1
-    		        }
-    		    };
-
-    		$("#mytable").bootstrapTable('refresh', opt);
-    		$("#mymodal").modal('show');
-    		
-//    		oTable.Init();
-    	});
-
-    });
 }
 </script>
-<!-- side nav js -->
-<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
 <script>
      $('.sidebar-menu').SidebarNav()
    </script>	
-<script src="../js/SimpleChart.js"></script>
-<script src="../js/bootstrap.js"> </script>	
-<script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
-<script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
-<!--  js -->  
-<!-- <script src="../pageJs/newOrder.js"></script> -->
    
 </body>
 </html>
