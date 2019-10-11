@@ -17,6 +17,7 @@ import java.util.Set;
  *
  */
 public class OrderOption {
+	public final static String ORDER_BULK = "bulk";
 	//
 	private String sequenceNumber;
 	private Map<String,String> provinces;//Map<province code,province name>
@@ -36,29 +37,38 @@ public class OrderOption {
 	private Map<String,String> paymentType;//回款类型
 	private Map<String,String> biddingPlan;//回款类型,大客户
 	
-	private String customerClazzCode;
-	private String orderTypeCode;//大客户，经销商，备货
 	
+	private Map<String,String> orderTypes;//大客户，经销商，备货Map<customer class code, orderType>
+	/*
+	 * need to be setted by invoker
+	 */
+	private String customerClazzCode;
+	/*
+	 * need to be setted by invoker
+	 */
+	private String orderTypeCode;
 	/**
 	 * 
 	 */
 	public OrderOption() {
-		Date  date =new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String date1 = sdf.format(date);
-		Random r = new Random();
-		int num = r.nextInt(89)+10;
-		this.sequenceNumber = "QHC"+date1+String.valueOf(num);
-		this.provinces = new HashMap<String, String>();
-		this.citys = new HashMap<String, Map<String, String>>();;
-		this.districts = new HashSet<BArea>();
-		this.termialClass = new HashMap<String, String>();;
-		this.saleTypes =new HashMap<String, String>();
-		this.offices =new HashMap<String, Map<String, String>>();;
-		this.groups=new HashMap<String, Map<String, String>>();
-		this.taxRate=new HashMap<String, Double>();
-		this.exchangeRate= new HashMap<String,Currency>();
-		this.paymentType =new HashMap<String, String>();
+//		Date  date =new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//		String date1 = sdf.format(date);
+//		Random r = new Random();
+//		int num = r.nextInt(89)+10;
+//		this.sequenceNumber = "QHC"+date1+String.valueOf(num);
+//		this.provinces = new HashMap<String, String>();
+//		this.citys = new HashMap<String, Map<String, String>>();;
+//		this.districts = new HashSet<BArea>();
+//		this.termialClass = new HashMap<String, String>();;
+//		this.saleTypes =new HashMap<String, String>();
+//		this.offices =new HashMap<String, Map<String, String>>();;
+//		this.groups=new HashMap<String, Map<String, String>>();
+//		this.taxRate=new HashMap<String, Double>();
+//		this.exchangeRate= new HashMap<String,Currency>();
+//		this.paymentType =new HashMap<String, String>();
+//		this.biddingPlan = new HashMap<String, String>();
+//		this.orderType = new HashMap<String, String>();
 	}
 
 	public String getSequenceNumber() {
@@ -158,6 +168,14 @@ public class OrderOption {
 		this.biddingPlan = biddingPlan;
 	}
 
+	public Map<String, String> getOrderTypes() {
+		return orderTypes;
+	}
+
+	public void setOrderTypes(Map<String, String> orderTypes) {
+		this.orderTypes = orderTypes;
+	}
+
 	public String getCustomerClazzCode() {
 		return customerClazzCode;
 	}
@@ -173,7 +191,6 @@ public class OrderOption {
 	public void setOrderTypeCode(String orderTypeCode) {
 		this.orderTypeCode = orderTypeCode;
 	}
-	
-	
 
+	
 }

@@ -87,10 +87,15 @@ public class MenuController {
 	@Autowired
 	private CacheUtil cacheUtil;
 	
+	@Autowired
+	UserOperationInfoService userOperationInfoService;
+	
 	@PostConstruct
 	public void init() {
 		staticOrderService = this.orderService;
 	}
+	
+	
 	
 	@RequestMapping("/specialApplication")
 	public String index() {
@@ -187,8 +192,8 @@ public class MenuController {
   	}
 	
 
-	@Autowired
-	UserOperationInfoService userOperationInfoService;
+	
+	
 	@RequestMapping("standardDiscount")
 	public static ModelAndView goDealerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER);
@@ -198,8 +203,9 @@ public class MenuController {
 //		Map<String, String> incotermMap = null;//orderService.getIncoterms();
 
 		OrderOption oo = staticOrderService.getOrderOption();
-		oo.setOrderTypeCode("Z001");
 		oo.setCustomerClazzCode("02");
+		String orderTypeCode =oo.getOrderTypes().get("02");
+		oo.setOrderTypeCode(orderTypeCode);	
 		mv.addObject(ORDER_OPTION,oo);
 //		//
 //		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
