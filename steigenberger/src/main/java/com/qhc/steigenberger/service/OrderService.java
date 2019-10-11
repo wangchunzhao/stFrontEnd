@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
@@ -39,6 +40,7 @@ import reactor.core.publisher.Mono;
 public class OrderService {
 	
 	private final static String URL_CUSTOMER = "customer";
+	private final static String URL_MATERIAL = "material";
 	private final static String URL_ORDER_OPTION = "order/option";
 //	private final static String URL_SALES_TYPE = "order/salesType";
 //	private final static String URL_CURRENCY = "currency";
@@ -73,6 +75,10 @@ public class OrderService {
 	 */
 	public PageHelper<Customer> findCustomer(String clazzCode,String name,int pageNo) {
 		return  (PageHelper<Customer>) fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+clazzCode+URL_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
+	}
+	
+	public PageHelper<Material> findMaterialsByName(String name,int pageNo) {
+		return (PageHelper<Material>) fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
 	}
 //	/**
 //	 * 

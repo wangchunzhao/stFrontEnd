@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
@@ -69,9 +70,9 @@ public class OrderController {
 
 	String newOrder = "下订单";
 
-	@RequestMapping("standardDiscount")
-	public ModelAndView goDealerOrder() {
-		ModelAndView mv = new ModelAndView(PAGE_DEALER);
+//	@RequestMapping("standardDiscount")
+//	public ModelAndView goDealerOrder() {
+//		ModelAndView mv = new ModelAndView(PAGE_DEALER);
 //		Map<String, String> customerClassMap = orderService.getCustomerClazz();
 //		Map<String, String> salesTypeMap = orderService.getSalesType();
 //		Map<String, String> currencyMap = orderService.getCurrency();
@@ -85,15 +86,15 @@ public class OrderController {
 //		String s = this.searchCustomer("he",0);
 //		//
 //		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
-		
-		
-		SalesOrder salesOrder = new SalesOrder();
-		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
-		List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
-		mv.addObject(FORM_GROSS_PROFIT, list);
-		
-		return mv;
-	}
+//		
+//		
+//		SalesOrder salesOrder = new SalesOrder();
+//		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
+//		List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
+//		mv.addObject(FORM_GROSS_PROFIT, list);
+//		
+//		return mv;
+//	}
 
 	@PostMapping("dealer")
 	@ResponseBody
@@ -137,6 +138,12 @@ public class OrderController {
 	public PageHelper<Customer> searchCustomer(String clazzCode,String customerName,int pageNo) {
 		PageHelper<Customer> cus = orderService.findCustomer(clazzCode,customerName,pageNo);
 		return cus;
+	}
+	@RequestMapping("material")
+	@ResponseBody
+	public PageHelper<Material> searchMateril(String customerName,int pageNo) {
+		PageHelper<Material> cms = orderService.findMaterialsByName(customerName,pageNo);
+		return cms;
 	}
 
 	@PostMapping("/createOrder")
