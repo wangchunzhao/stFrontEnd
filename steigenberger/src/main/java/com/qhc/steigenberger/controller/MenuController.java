@@ -198,6 +198,8 @@ public class MenuController {
 //		Map<String, String> incotermMap = null;//orderService.getIncoterms();
 
 		OrderOption oo = staticOrderService.getOrderOption();
+		oo.setOrderTypeCode("Z001");
+		oo.setCustomerClazzCode("02");
 		mv.addObject(ORDER_OPTION,oo);
 //		//
 //		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);

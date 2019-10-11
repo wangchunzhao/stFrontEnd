@@ -134,8 +134,8 @@ public class OrderController {
 
 	@RequestMapping("customers")
 	@ResponseBody
-	public PageHelper<Customer> searchCustomer(String customerName,int pageNo) {
-		PageHelper<Customer> cus = orderService.findCustomer(customerName,pageNo);
+	public PageHelper<Customer> searchCustomer(String clazzCode,String customerName,int pageNo) {
+		PageHelper<Customer> cus = orderService.findCustomer(clazzCode,customerName,pageNo);
 		return cus;
 	}
 

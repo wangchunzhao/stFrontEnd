@@ -71,8 +71,8 @@ public class OrderService {
 	 * @param name customer name 
 	 * @return  customer list
 	 */
-	public PageHelper<Customer> findCustomer(String name,int pageNo) {
-		return  (PageHelper<Customer>) fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
+	public PageHelper<Customer> findCustomer(String clazzCode,String name,int pageNo) {
+		return  (PageHelper<Customer>) fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+clazzCode+URL_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
 	}
 //	/**
 //	 * 

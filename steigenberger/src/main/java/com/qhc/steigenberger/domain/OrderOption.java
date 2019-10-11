@@ -36,7 +36,9 @@ public class OrderOption {
 	private Map<String,String> paymentType;//回款类型
 	private Map<String,String> biddingPlan;//回款类型,大客户
 	
-	private Map<String,String> customerClazz;
+	private String customerClazzCode;
+	private String orderTypeCode;//大客户，经销商，备货
+	
 	/**
 	 * 
 	 */
@@ -156,12 +158,22 @@ public class OrderOption {
 		this.biddingPlan = biddingPlan;
 	}
 
-	public Map<String, String> getCustomerClazz() {
-		return customerClazz;
+	public String getCustomerClazzCode() {
+		return customerClazzCode;
 	}
 
-	public void setCustomerClazz(Map<String, String> customerClazz) {
-		this.customerClazz = customerClazz;
+	public void setCustomerClazzCode(String customerClazzCode) {
+		this.customerClazzCode = customerClazzCode;
 	}
+
+	public String getOrderTypeCode() {
+		return orderTypeCode;
+	}
+
+	public void setOrderTypeCode(String orderTypeCode) {
+		this.orderTypeCode = orderTypeCode;
+	}
+	
+	
 
 }
