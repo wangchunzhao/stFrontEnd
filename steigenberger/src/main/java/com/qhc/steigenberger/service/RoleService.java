@@ -80,7 +80,7 @@ public class RoleService{
 		Role role = selectRoleInfo(roleId);
 		List<Operations> operations = role.getOperations();
 		List<Operations> operationsAll = operationService.getList();
-		if(!operations.isEmpty()) {
+		if(operations!=null&&operations.size()>0) {
 			for(Operations operation:operationsAll) {
 				for(Operations op: operations) {
 					if(op.getId().equals(operation.getId())) {
@@ -99,7 +99,7 @@ public class RoleService{
 	
 	public Role updateRoleOperation(Role role) {
 		
-		return fryeService.postInfo(role, URL_ROLE, Role.class);
+		return fryeService.putInfo(role, URL_ROLE, Role.class);
 	}
 }
 

@@ -65,7 +65,7 @@
 	    	//var rids = rid.join(",");
 	    	var userId = $("#id").val();    
 	    	var userName = $("#edituserName").val();    
-	    	var tel = $("#tel").val();    
+	    	var tel = $("#mytel").val();   
 	    	var userMail = $("#edituserMail").val();    
 	    	var userIdentity = $("#edituserIdentity").val();
 	    	var regionCode = $("#region").val();  
@@ -128,7 +128,7 @@
 	                    
 	                    <div class="form-group">
 	                        <label>申请人电话</label>
-	                         <input type="text" class="form-control" id=tel name="tel" th:value="${map?.user.tel}" required/>
+	                         <input type="text" class="form-control" id="mytel" name="tel" th:value="${map?.user.tel}" required/>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>申请人邮箱</label>

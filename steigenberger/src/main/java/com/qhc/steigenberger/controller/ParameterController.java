@@ -33,10 +33,8 @@ public class ParameterController {
 
 	@RequestMapping("/index")
 	public String index(Model model,HttpServletRequest request) {
-		List<Parameter> parameters = (List<Parameter>) cacheUtil.getInstance().getValue(parameterService.CATCHE_SETTINGS_NAME);
-		if(null==parameters||parameters.size()==0) {
-			parameters = parameterService.getList();
-		}
+		
+		List<Parameter> parameters = parameterService.getList();
 		model.addAttribute("parameters", parameters);
 		request.getSession().setAttribute("parameterSettings",parameters);
 		return "systemManage/parameterSetting";
@@ -50,49 +48,26 @@ public class ParameterController {
 		String msg = "";
 		int status = 0;
 		Parameter result = new Parameter();
-		List<Parameter> parameters = (List<Parameter>) cacheUtil.getInstance().getValue(parameterService.CATCHE_SETTINGS_NAME);
-		boolean flag = true;
-		if(parameters!=null) {
-			for(Parameter p :parameters) {
-				if(parameter.getId().equals(p.getId())
-						&&parameter.getCode().equals(p.getCode())
-						&&parameter.getsValue().equals(p.getsValue())
-						&&parameter.getEnableDate().equals(p.getEnableDate())
-						) {
-					flag = false;
-					break;
-				}
-				
-			}
+		Parameter pp = new Parameter();
+		pp.setId(0);
+		pp.setCode(parameter.getCode());
+		pp.setEnableDate(parameter.getEnableDate());
+		pp.setsValue(parameter.getsValue());
+		pp.setComment(parameter.getComment());
+		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		pp.setOptTime(sdf.format(new Date()));
+		User u = (User) request.getSession().getAttribute(userService.ACCOUNT);
+//		parameter.setOperater(u.getUserIdentity());
+		pp.setOperater("adsf");
+		result = parameterService.updateInfo(pp);
+		if (result != null&&result.getId()!=0) {
+			status = 200;
+			msg = "更新操作成功!";
+		} else {
+			status = 500;
+			msg = "操作失败";
 		}
-		if(flag) {
-			Parameter pp = new Parameter();
-			pp.setId(0);
-			pp.setCode(parameter.getCode());
-			pp.setEnableDate(parameter.getEnableDate());
-			pp.setsValue(parameter.getsValue());
-			pp.setComment(parameter.getComment());
-			SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			pp.setOptTime(sdf.format(new Date()));
-			User u = (User) request.getSession().getAttribute(userService.ACCOUNT);
-//			parameter.setOperater(u.getUserIdentity());
-			pp.setOperater("adsf");
-			result = parameterService.updateInfo(pp);
-			if (result != null&&result.getId()!=0) {
-				status = 200;
-				msg = "更新操作成功!";
-				//更新缓存
-				cacheUtil.getInstance().removeCache(parameterService.CATCHE_SETTINGS_NAME);
-				cacheUtil.getInstance().addCache(parameterService.CATCHE_SETTINGS_NAME, parameterService.getList(), new CacheConfModel());
-			} else {
-				status = 500;
-				msg = "操作失败";
-			}
-		}else {
-			status =403;
-			msg = "无效,参数未变更！";
-			result = parameter;
-		}
+	
 		return JsonResult.build(status, "参数设置" + msg, "");
 
 	}

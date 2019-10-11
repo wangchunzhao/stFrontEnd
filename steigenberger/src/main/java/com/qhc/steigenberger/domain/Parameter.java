@@ -3,7 +3,10 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Component
@@ -14,15 +17,21 @@ public class Parameter implements Serializable{
 	public Integer id;
 	public String code;
 	public String sValue;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date enableDate;
 	public String comment;
 	public String operater;
 	public String optTime;
 	
 	public String preValue;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date preEnableDate;
-	public String afterValue;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date afterEnableDate;
+	public String afterValue;
 	
 	
 	public Date getPreEnableDate() {
