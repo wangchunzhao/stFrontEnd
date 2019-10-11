@@ -158,10 +158,7 @@ public class MenuController {
 	
 	@RequestMapping("/settingIndex")
 	public String index(Model model,HttpServletRequest request) {
-		List<Parameter> parameters = (List<Parameter>) cacheUtil.getInstance().getValue(parameterService.CATCHE_SETTINGS_NAME);
-		if(null==parameters||parameters.size()==0) {
-			parameters = parameterService.getList();
-		}
+		List<Parameter> parameters = parameterService.getList();
 		model.addAttribute("parameters", parameters);
 		request.getSession().setAttribute("parameterSettings",parameters);
 		return settingIndex;
