@@ -137,6 +137,26 @@ public class FryeService<T> {
 				.bodyToMono(T);
 		return resp.block();
 	}
+	
+	/**
+	 * put请求返回一个对象
+	 * 
+	 * @param t
+	 * @param path
+	 * @param T
+	 * @return
+	 */
+	public T putInfo(T t, String path, Class T) {
+		String url = config.getFryeURL() + path;
+		@SuppressWarnings("unchecked")
+		Mono<T> resp = WebClient.create().put().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
+				.body(Mono.just(t), T).retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(T);
+		return resp.block();
+	}
 
 	/**
 	 * get请求返回一个对象
