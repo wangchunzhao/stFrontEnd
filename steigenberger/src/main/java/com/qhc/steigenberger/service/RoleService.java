@@ -99,7 +99,7 @@ public class RoleService{
 	
 	public Role updateRoleOperation(Role role) {
 		
-		return fryeService.postInfo(role, URL_ROLE, Role.class);
+		return fryeService.putInfo(role, URL_ROLE, Role.class);
 	}
 }
 
