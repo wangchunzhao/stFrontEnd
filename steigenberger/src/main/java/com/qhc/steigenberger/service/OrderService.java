@@ -74,11 +74,11 @@ public class OrderService {
 	 * @return  customer list
 	 */
 	public PageHelper<Customer> findCustomer(String clazzCode,String name,int pageNo) {
-		return  (PageHelper<Customer>) fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+clazzCode+URL_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
+		return  (PageHelper<Customer>) fryeService.getInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+clazzCode+URL_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
 	}
 	
 	public PageHelper<Material> findMaterialsByName(String name,int pageNo) {
-		return (PageHelper<Material>) fryeService.getListInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
+		return (PageHelper<Material>) fryeService.getInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
 	}
 //	/**
 //	 * 
