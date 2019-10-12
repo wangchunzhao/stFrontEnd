@@ -169,7 +169,11 @@ public class OrderOption {
 	}
 
 	public Map<String, String> getOrderTypes() {
+		if(orderTypes==null) {
+			return new HashMap();
+		}
 		return orderTypes;
+		
 	}
 
 	public void setOrderTypes(Map<String, String> orderTypes) {

@@ -139,7 +139,7 @@ public class OrderController {
 		PageHelper<Customer> cus = orderService.findCustomer(clazzCode,customerName,pageNo);
 		return cus;
 	}
-	@RequestMapping("material")
+	@RequestMapping("materials")
 	@ResponseBody
 	public PageHelper<Material> searchMateril(String customerName,int pageNo) {
 		PageHelper<Material> cms = orderService.findMaterialsByName(customerName,pageNo);
