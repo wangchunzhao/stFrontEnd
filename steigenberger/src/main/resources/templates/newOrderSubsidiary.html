@@ -1,0 +1,208 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div  class="container" th:fragment="subsidiary">
+    	<div class="modal fade" id="subsidiaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:1200px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+					<h4 class="modal-title" id="myModalLabel">新增购销明细</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="modalType">
+					<input type="hidden" id="index">
+					<div class="panel-group">
+						<div class="panel-body">
+							<div class="row">
+								<span class="col-md-1 control-label">规格</span>
+							    <div class="col-md-2">
+							    <div class="input-group">
+				                    <input type="text" class="form-control" disabled id="customer">
+				                    <span class="input-group-btn">
+				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
+				                        	<span class="glyphicon glyphicon-search"></span>
+				                        </button>
+				                    </span>
+				                </div>
+				                </div>
+							    <span class="col-md-1">专用号</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="paymentTime">
+							    </div>
+							    <span class="col-md-1">物料属性</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="paymentTime">
+							    </div>
+							    <span class="col-md-1">类型</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">数量</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">计量单位</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">产品实卖价</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">产品实卖金额</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">产品转移价</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">可选项实卖价</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">可选项实卖金额</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">可选项转移价</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">B2C预估价</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">B2C预估金额</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">B2C预估成本</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">实卖价合计</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">实卖金额合计</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">转移价合计</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">市场零售价</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">市场零售金额</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">折扣率</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">行项目类别</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">需求计划</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">生产周期</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">工厂最早交货时间</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">生产开始时间</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">要求发货时间</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">地址</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							    <span class="col-md-1">入库时间</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-1">采购周期</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row">
+								<span class="col-md-1">B2C备注</span>
+								<div class="col-md-5">
+							      <textarea class="form-control" rows="2"></textarea>
+							    </div>
+							    <span class="col-md-1">特殊备注</span>
+								<div class="col-md-5">
+							       <textarea class="form-control" rows="2"></textarea>
+							    </div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" onclick="confirmPayment()">确定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+	<div class="modal fade" id="subsidiaryUnitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+						<h4 class="modal-title" id="myModalLabel">请选择规格</h4>
+					</div>
+					<div class="modal-body">
+						<div class="panel-group">
+							<div class="panel-body">
+								<div class="row">
+									<span class="col-md-2">签约单位</span>
+									<div class="col-md-6">
+								      <input type="text" class="form-control" id="contractUnitName">
+								    </div>
+								    <button type="button" class="btn btn-default" onclick="searchUnit()">
+								    	<span class="glyphicon glyphicon-search">查询</span>
+								    </button>
+								</div>
+								<table id="contractUnitTable" data-pagination="true"   class="table table-hover"></table>
+							</div>
+						</div>
+					</div>
+			    </div>
+			</div>
+		</div>
+</div>
+</body>
+</html>

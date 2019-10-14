@@ -16,7 +16,7 @@
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<form method="post" role="form" action="#" th:action="@{dealer}" th:object="${order_option}">
-		
+		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -40,7 +40,7 @@
 								<span class="col-md-1 control-label">签约单位</span>
 							    <div class="col-md-2">
 							    <div class="input-group">
-				                    <input type="text" class="form-control" disabled>
+				                    <input type="text" class="form-control" disabled id="customer">
 				                    <span class="input-group-btn">
 				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
 				                        	<span class="glyphicon glyphicon-search"></span>
@@ -50,7 +50,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">性质分类</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="" disabled>
+							      <input type="text" class="form-control" id="customerClazz" disabled>
 							    </div>
 							    <span class="col-md-1 control-label">店名</span>
 								<div class="col-md-2">
@@ -120,8 +120,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">销售类型</span>
 								<div class="col-md-2">
-									<select class="form-control" th:onchange="getOffices(this,[[${order_option.offices}]])">
-										<option value="">--选择大区--</option>
+									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]])">
 										<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
 							    </div>
@@ -142,7 +141,6 @@
 								<div class="col-md-2">
 									<select class="form-control"  id="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])"><!--  th:field="*{currency}"-->
 									    <option value="">--选择币种--</option>
-										<option th:each="currency : ${order_option.exchangeRate}" th:value="${currency.code}" th:text="${currency.name}"></option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">合同金额</span>
@@ -213,13 +211,12 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{installCode}" -->
 							    </div>
 							</div>
-							<div class="row" style="margin-top: 15px;">
-							
-								<span class="col-md-1 control-label">地区</span>
+							<div class="row" style="margin-top: 15px;">	
+									<span class="col-md-1 control-label">地区</span>
 								<div class="col-md-5">
 									<div class="row">
 										<div class="col-md-4" style="padding-left: 12px; padding-right: 1px;">
-											<select class="form-control" th:onchange="getCity(this,[[${order_option.citys}]])">
+											<select class="form-control" th:onchange="getCity(this,[[${order_option.citys}]])" id="selectProvince">
 												<option value="">--选择省--</option>
 												<option th:each="province : ${order_option.provinces}" th:value="${province.key}" th:text="${province.value}"></option>
 											</select>
@@ -260,9 +257,11 @@
 								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{approvedDicount}" -->
 							    </div>
-							    <span class="col-md-1 control-label">外销运费</span>
-								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{freight}" -->
+							    <div id="freightDiv" style="display:none;">
+								    <span class="col-md-1 control-label">外销运费</span>
+									<div class="col-md-2">
+										<input type="text" class="form-control" aria-describedby="emailHelp" id="freight"><!-- th:field="*{freight}" -->
+								    </div>
 							    </div>				
 							</div>
 							<div class="row" style="margin-top: 15px;">
@@ -312,54 +311,12 @@
 									结算方式 Method of payment
 								</div>
 								<div class="col-xs-12 col-md-12">
-									<textarea class="form-control" rows="3"></textarea>
+								<span class="text-info" id="paymentArea"></span>
 								</div>
-							</div>
-							
+							</div>	
 							<div class="container" id="box" style="width:100%;">
-										 <table class="table table-bordered table-hover">
-											 <tr>
-												 <th class="text-center" style="width: 5%;">行号</th>
-												 <th class="text-center" style="width: 10%;">回款类型</th>
-												 <th class="text-center" style="width: 10%;">回款起始时间</th>
-																 <th class="text-center" style="width: 10%;">预算回款金额</th>
-												 <th class="text-center" style="width: 15%;">预算回款金额（原币）</th>
-												 <th class="text-center" style="width: 10%;">所占比例</th>
-												 <th class="text-center" style="width: 10%;">备注</th>
-																 <th class="text-center" style="width: 10%;"><input type="button"  value="+" class="btn btn-primary" v-on:click="add()"/></th>
-											 </tr>
-											 <tr class="text-center" v-for="item in myData">
-																<td>1</td>
-																<td>
-																		<select id="fab" name="fab" style="width:90%">
-																		<option value="1">全款</option>
-																		<option value="2">部分还款</option>
-							
-																		</select>
-																</td>
-																<td>
-																	<input type="text" id="weight" name="weight" style="width:90%"/>
-																	
-																</td>
-																<td>
-																	<input type="text" id="unit" name="unit" style="width:90%"/>
-																</td>
-																<td>
-																	<input type="text" id="price" name="peice" style="width:90%"/>
-																</td>
-																<td>
-																	<input type="text" id="price" name="peice" style="width:90%"/>
-																</td>
-																<td>
-																	<input type="text" id="price" name="peice" style="width:90%"/>
-																</td>
-																<td>
-																	 <button class="btn btn-del btn-sm" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=$index">X</button>
-																</td>
-											 </tr>
-										 </table>
-										 
-									 </div>  
+							  <table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;" id="paymentTable" data-pagination="false" ></table>
+ 							</div>  
 						</div>
 					</div>
 				</div>
@@ -447,7 +404,10 @@
 							<div class="magicalcoder-tmp-wrap" >
 								<!-- Nav tabs -->
 								<ul class="nav nav-tabs" role="tablist">
-									<li role="presentation" class="active"><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">柜体</a></li><li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">机组</a></li><li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
+									<li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">所有</a></li>
+									<li role="presentation" class="active"><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">柜体</a></li>
+									<li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">机组</a></li>
+									<li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
 									<li role="presentation" class=""><a href="#_magicalcoderTag2-magical-coder-auto-id-1565062571302" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">冷凝器</a></li>
 									<li role="presentation" class=""><a href="#_magicalcoderTag3-magical-coder-auto-id-1565062575037" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">散件</a></li>
 									<li role="presentation" class=""><a href="#_magicalcoderTag4-magical-coder-auto-id-1565062576052" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">其他</a></li>
@@ -563,31 +523,25 @@
 
 															<div class="row">
 													<div class="col-md-3 col-xs-3">需求流水号</div>
-													<div class="col-md-3 col-xs-3">合同号</div>
-													<div class="col-md-3 col-xs-3">合同名称</div>
-													<div class="col-md-3 col-xs-3">合同金额</div>
-													<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="seqNum"></div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractNo"></div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractName"></div>
-																	<div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="contractAmount"></div>
+													<div class="col-md-3 col-xs-3">合同号</div><div class="col-md-3 col-xs-3">合同名称</div><div class="col-md-3 col-xs-3">合同金额</div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div><div class="col-md-3 col-xs-3"><input type="text" class="form-control" aria-describedby="emailHelp"></div>
 												</div><div class="row" style="margin-top: 4px;">
 													<div class="col-xs-6 col-md-3">性质分类</div>
-													<div class="col-xs-6 col-md-3">版本号</div>
-													<div class="col-xs-6 col-md-3">操作人</div>
-													<div class="col-xs-6 col-md-3">操作时间</div>
-													<div class="col-xs-6 col-md-3">
-													<input type="text" class="form-control" aria-describedby="emailHelp"></div>
-													<div class="col-xs-6 col-md-3">
-															<input type="text" class="form-control" aria-describedby="version">
-													</div>
-													<div class="col-xs-6 col-md-3">
-														<input type="text" class="form-control" aria-describedby="operator">
-													</div>
-													<div class="col-xs-6 col-md-3">
-														<input type="text" class="form-control" aria-describedby="createTime">
-													</div>
-												</div>
-												</div>
+													                                                    <div class="col-xs-6 col-md-3">版本号</div>
+                                                    <div class="col-xs-6 col-md-3">操作人</div>
+                                                    <div class="col-xs-6 col-md-3">操作时间</div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                    <input type="text" class="form-control" aria-describedby="emailHelp"></div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                            <input type="text" class="form-control" aria-describedby="version">
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control" aria-describedby="operator">
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control" aria-describedby="createTime">
+                                                    </div>
+                                                </div>
+                                                </div>
 														</div>
 													</div>
 													<div class="panel panel-default">
@@ -695,7 +649,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
-					<h4 class="modal-title" id="myModalLabel">请选择一个签约单位</h4>
+					<h4 class="modal-title" id="myModalLabel">请选择签约单位</h4>
 				</div>
 				<div class="modal-body">
 					<div class="panel-group">
@@ -713,14 +667,65 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认</button>
+		    </div>
+		</div>
+	</div>
+	<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:800px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+					<h4 class="modal-title" id="myModalLabel">新增回款类型</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="modalType">
+					<input type="hidden" id="index">
+					<div class="panel-group">
+						<div class="panel-body">
+							<div class="row">
+								<span class="col-md-2">回款类型</span>
+								<div class="col-md-4">
+							      <select class="form-control" id="paymentType">
+									<option value="1">全款</option>
+									<option value="2">部分还款</option>
+								  </select>
+							    </div>
+							    <span class="col-md-2">回款起始时间</span>
+								<div class="col-md-4">
+							      <input type="text" class="form-control" id="paymentTime">
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+								<span class="col-md-2">预算回款金额</span>
+								<div class="col-md-4">
+							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							    </div>
+							    <span class="col-md-2">预算回款金额(原币)</span>
+								<div class="col-md-4">
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							    </div>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+								<span class="col-md-2">所占比列</span>
+								<div class="col-md-4">
+							      <input type="text" class="form-control" id="proportion" oninput="proportionChange()">
+							    </div>
+							    <span class="col-md-2">备注</span>
+								<div class="col-md-4">
+							      <input type="text" class="form-control" id="remark">
+							    </div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" onclick="confirmPayment()">确定</button>
+							</div>
+						</div>
+					</div>
 				</div>
 		    </div>
 		</div>
 	</div>
-	
+	<div th:replace="newOrderSubsidiary::subsidiary"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
 <script th:inline="javascript" src="../pageJs/newOrder.js"></script>

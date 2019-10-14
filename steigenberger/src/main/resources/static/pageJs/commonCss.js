@@ -4,3 +4,5 @@ document.write('<link href="../css/SidebarNav.min.css" media="all" rel="styleshe
 document.write('<link href="../bootstrap-table-master/dist/bootstrap-table.css" rel="stylesheet" media="screen">');
 document.write('<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">');
 document.write('<link href="../css/custom.css" rel="stylesheet">');
+document.write('<link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet">');
+
