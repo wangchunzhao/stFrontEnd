@@ -20,7 +20,7 @@
 							    <div class="input-group">
 				                    <input type="text" class="form-control" disabled id="customer">
 				                    <span class="input-group-btn">
-				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
+				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="searchSpecification()">
 				                        	<span class="glyphicon glyphicon-search"></span>
 				                        </button>
 				                    </span>
@@ -177,7 +177,7 @@
 		    </div>
 		</div>
 	</div>
-	<div class="modal fade" id="subsidiaryUnitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="specificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -188,15 +188,15 @@
 						<div class="panel-group">
 							<div class="panel-body">
 								<div class="row">
-									<span class="col-md-2">签约单位</span>
+									<span class="col-md-2">规格型号</span>
 									<div class="col-md-6">
-								      <input type="text" class="form-control" id="contractUnitName">
+								      <input type="text" class="form-control" id="specificationName">
 								    </div>
-								    <button type="button" class="btn btn-default" onclick="searchUnit()">
+								    <button type="button" class="btn btn-default" onclick="searchSpecification()">
 								    	<span class="glyphicon glyphicon-search">查询</span>
 								    </button>
 								</div>
-								<table id="contractUnitTable" data-pagination="true"   class="table table-hover"></table>
+								<table id="specificationTable" data-pagination="true"   class="table table-hover"></table>
 							</div>
 						</div>
 					</div>

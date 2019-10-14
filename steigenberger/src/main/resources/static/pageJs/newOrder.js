@@ -280,6 +280,13 @@ function getPaymentAreaContent(){
 	}
 	
 }
+function addSubsidiary(){
+	$('#subsidiaryModal').modal('show');
+}
+function searchSpecification(){
+	$('#specificationModal').modal('show');
+}
+
 var paymentColumns = [
 {
 	 field: 'index',
