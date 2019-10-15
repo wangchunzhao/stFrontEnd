@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +79,14 @@ public class OrderService {
 	}
 	
 	public PageHelper<Material> findMaterialsByName(String name,int pageNo) {
-		return (PageHelper<Material>) fryeService.getInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
+		Map p = new HashMap();
+		p.put("name", name);
+		p.put("pageNo", pageNo);
+		
+		return (PageHelper<Material>) fryeService.postForm(URL_MATERIAL,p,PageHelper.class);
+	}
+	public Material getMaterial(String code) {
+		return (Material)fryeService.getInfo(URL_MATERIAL+URL_PARAMETER_SEPERATOR+code,Material.class);
 	}
 //	/**
 //	 * 

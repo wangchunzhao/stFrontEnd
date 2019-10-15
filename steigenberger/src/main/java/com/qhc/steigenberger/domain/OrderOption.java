@@ -47,29 +47,7 @@ public class OrderOption {
 	 * need to be setted by invoker
 	 */
 	private String orderTypeCode;
-	/**
-	 * 
-	 */
-	public OrderOption() {
-//		Date  date =new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//		String date1 = sdf.format(date);
-//		Random r = new Random();
-//		int num = r.nextInt(89)+10;
-//		this.sequenceNumber = "QHC"+date1+String.valueOf(num);
-//		this.provinces = new HashMap<String, String>();
-//		this.citys = new HashMap<String, Map<String, String>>();;
-//		this.districts = new HashSet<BArea>();
-//		this.termialClass = new HashMap<String, String>();;
-//		this.saleTypes =new HashMap<String, String>();
-//		this.offices =new HashMap<String, Map<String, String>>();;
-//		this.groups=new HashMap<String, Map<String, String>>();
-//		this.taxRate=new HashMap<String, Double>();
-//		this.exchangeRate= new HashMap<String,Currency>();
-//		this.paymentType =new HashMap<String, String>();
-//		this.biddingPlan = new HashMap<String, String>();
-//		this.orderType = new HashMap<String, String>();
-	}
+
 
 	public String getSequenceNumber() {
 		return sequenceNumber;

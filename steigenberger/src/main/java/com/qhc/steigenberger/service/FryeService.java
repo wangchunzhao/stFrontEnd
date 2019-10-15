@@ -53,7 +53,11 @@ public class FryeService<T> {
 			return next.exchange(clientRequest);
 		};
 	}
-
+	/**
+	 * 
+	 * @param path
+	 * @param params
+	 */
 	public void putJason(String path, T params) {
 
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
@@ -65,7 +69,11 @@ public class FryeService<T> {
 				.bodyToMono(String.class);
 		response.block();
 	}
-
+	/**
+	 * 
+	 * @param path
+	 * @param params
+	 */
 	public void postJason(String path, T params) {
 		
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
@@ -77,7 +85,12 @@ public class FryeService<T> {
 				.bodyToMono(String.class);
 		response.block();
 	}
-
+	/**
+	 * 
+	 * @param path
+	 * @param params
+	 * @return
+	 */
 	public Date getLastUpdatedDate(String path, String params) {
 		String url = config.getFryeURL() + path;
 		WebClient webClient = getBuilder().baseUrl(url).build();
@@ -131,6 +144,25 @@ public class FryeService<T> {
 		@SuppressWarnings("unchecked")
 		Mono<T> resp = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
 				.body(Mono.just(t), T).retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(T);
+		return resp.block();
+	}
+	/**
+	 * 
+	 * @param path
+	 * @param pars
+	 * @param T 
+	 * @param T
+	 * @return
+	 */
+	public T postForm(String path, Map<String,String> pars, Class T) {
+		String url = config.getFryeURL() + path;
+		@SuppressWarnings("unchecked")
+		Mono<T> resp = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
+				.bodyValue(pars).retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
 						clientResponse -> Mono.error(new ExternalServerInternalException()))

@@ -70,31 +70,6 @@ public class OrderController {
 
 	String newOrder = "下订单";
 
-//	@RequestMapping("standardDiscount")
-//	public ModelAndView goDealerOrder() {
-//		ModelAndView mv = new ModelAndView(PAGE_DEALER);
-//		Map<String, String> customerClassMap = orderService.getCustomerClazz();
-//		Map<String, String> salesTypeMap = orderService.getSalesType();
-//		Map<String, String> currencyMap = orderService.getCurrency();
-//		Map<String, String> incotermMap = orderService.getIncoterms();
-//		//
-//		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
-//		mv.addObject(SALES_TYPE_MAP, salesTypeMap);
-//		mv.addObject(CURRENCY_MAP, currencyMap);
-//		mv.addObject(INCOTERMS_MAP, incotermMap);
-//		//
-//		String s = this.searchCustomer("he",0);
-//		//
-//		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
-//		
-//		
-//		SalesOrder salesOrder = new SalesOrder();
-//		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
-//		List<SalesGroup> list = orderService.getGrossProfitList(salesOrder);
-//		mv.addObject(FORM_GROSS_PROFIT, list);
-//		
-//		return mv;
-//	}
 
 	@PostMapping("dealer")
 	@ResponseBody
@@ -141,8 +116,8 @@ public class OrderController {
 	}
 	@RequestMapping("materials")
 	@ResponseBody
-	public PageHelper<Material> searchMateril(String customerName,int pageNo) {
-		PageHelper<Material> cms = orderService.findMaterialsByName(customerName,pageNo);
+	public PageHelper<Material> searchMateril(String materialName,int pageNo) {
+		PageHelper<Material> cms = orderService.findMaterialsByName(materialName,pageNo);
 		return cms;
 	}
 
