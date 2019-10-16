@@ -2,16 +2,30 @@ $(function () {
 	var customerUnitTable = '/steigenberger/order/customers'
 	var contractUnitTable = new TableInit('contractUnitTable',customerUnitTable,queryUnitParams,contractUnitTableColumn);
 	contractUnitTable.init();
-	$("#contractUnitTable").on('check.bs.table',function(){
+	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
 		$('#unitModal').modal('hide');
 		$("#contractUnitName").val('');
-		var selectCustomer=$("#contractUnitTable").bootstrapTable('getSelections');
-		$("#customer").val(selectCustomer[0].name)
-		$("#customerClazz").val(selectCustomer[0].clazzName)
+		$("#customer").val(row.name)
+		$("#customerClazz").val(row.clazzName)
 	})
 	
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
+	
+	var addressTable = new TableInit('addressTable','','',addressColumns)
+	addressTable.init();
+	
+	var materialTypeTableUrl = "/steigenberger/order/materials"
+	var materialTypeTable = new TableInit('materialTypeTable',materialTypeTableUrl,queryMaterialTypeParams,materialTypeColumn)
+	materialTypeTable.init();
+	$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
+		$('#specificationModal').modal('hide');
+		$("#materialsName").val('');
+		$("#materialTypeName").val(row.description)
+	})
+	
+	initMarialsTables();
+	$('#second').tab('show');
 });
 //Customer basic infomation js start 
 function openSearchUnit(){
@@ -60,23 +74,15 @@ function getDistrict(obj,districts){
 		});
 	} 		
 }
-function addAddress(){
-	var count = $('#addressTable').bootstrapTable('getData').length;
-	$("#ceshi").bootstrapTable('insertRow', {
-	    index: count,
-	    row: {
-	    	pca: '',
-	    	shippingAddress: '',
-	    	deliveryWay: '',
-	    	deleteButton:''
-	    }
-	});
-}
 
-function salesTypeChange(obj,offices){
+function salesTypeChange(obj,offices,taxRate){
 	var saleType = $(obj).val();
+	$("#taxtRate").val(taxRate[saleType]);
 	if(saleType=="20"){
 		$("#freightDiv").show();
+		$('#selectProvince').val('');
+		$('#citySelect').val('');
+		$('#selectDistrict').val('');
 		$('#citySelect').attr("disabled",true);
 		$('#selectDistrict').attr("disabled",true);	
 		$('#selectProvince').attr("disabled",true);		
@@ -151,12 +157,20 @@ function queryUnitParams(params) {
     params.customerName = $("#contractUnitName").val();
     params.clazzCode = $("#customerClazzCode").val();
     return params;
-}	
-var contractUnitTableColumn = [ {
-	title:'选择',
-    checkbox: true
+}
 
-},{
+function queryMaterialTypeParams(params) {
+    params.pageNo = this.pageNumber;
+    params.customerName = $("#materialsName").val();
+    return params;
+}
+
+var materialTypeColumn = [ {
+	title : '规格型号',
+	field : 'description'
+}]
+
+var contractUnitTableColumn = [ {
 	title : '签约单位',
 	field : 'name'
 }, {
@@ -165,6 +179,42 @@ var contractUnitTableColumn = [ {
 },{
 	title : '性质分类',
 	field : 'clazzName'
+}]
+
+var addressColumns = [{
+	title:'行号',
+    field: 'index',
+    width:'5%'
+},{
+	title : '省市区',
+	field : 'pca',
+	width:'35%'
+}, 
+{
+	field:'provinceValue',
+	visible:false
+},
+{
+	field:'cityValue',
+	visible:false
+},
+{
+	field:'areaValue',
+	visible:false
+},{
+	title : '到货地址',
+	field : 'shippingAddress',
+	width:'45%'
+},{
+    title: '<input type="button"  value="+" class="btn btn-primary" onclick="addAddress()"/>',
+    align: 'center',
+    width:'15%',
+    formatter: function(value, row, index) {
+    	var actions = [];
+		actions.push('<a class="btn" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		actions.push('<a class="btn" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+		return actions.join('');
+    }
 }]
 
 function add(){
@@ -180,7 +230,7 @@ function add(){
 
 function confirmPayment(){
 	var modalType = $("#modalType").val();
-	var paymentType = $("#paymentType").find("option:selected").text();;
+	var paymentType = $("#paymentType").find("option:selected").text();
 	var paymentTypeValue = $("#paymentType").val();
 	var paymentTime = $("#paymentTime").val();
 	var proportion = $("#proportion").val();
@@ -282,9 +332,146 @@ function getPaymentAreaContent(){
 }
 function addSubsidiary(){
 	$('#subsidiaryModal').modal('show');
+	$('#materialsModalType').val('new');
+}
+
+function editMaterials(index){
+	$('#subsidiaryModal').modal('show');
+	$('#materialsModalType').val('edit');
+	$('#materialsIndex').val(index);
+}
+
+function removeMaterials(index){
+	var delIndex = [parseInt(index)+1];
+	$('#materialsTable').bootstrapTable('remove', {
+        field: "index",
+        values: delIndex
+    });
+	var count = $('#materialsTable').bootstrapTable('getData').length;
+	for(var i=0;i<count;i++){
+		var rows = {
+				index: i,
+				field : "index",
+				value : i+1
+			}
+		$('#materialsTable').bootstrapTable("updateCell",rows);
+	}
+}
+
+function confirmMaterials(){
+	var modalType = $("#materialsModalType").val();
+	var rowIndex = $("#materialsIndex").val();
+	var materialTypeName = $("#materialTypeName").val();
+	var count = $('#materialsTable').bootstrapTable('getData').length;
+	if(modalType=='new'){
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: count,
+		    row: {
+		    	index:count+1,
+		    	materialTypeName:materialTypeName
+		    }
+		});
+	}else{
+		$("#materialsTable").bootstrapTable('updateRow', {
+		    index: rowIndex,
+		    row: {
+		    	index:parseInt(rowIndex)+1,
+		    	materialTypeName:materialTypeName
+		    }
+		});
+	}
+	
+	$('#subsidiaryModal').modal('hide');
 }
 function searchSpecification(){
 	$('#specificationModal').modal('show');
+}
+
+function addAddress(){
+	$("#addressModal").modal('show');
+	$("#addressModalType").val('new');
+}
+
+function confirmAddress(){
+	var province = $("#selectProvince").find("option:selected").text();
+	var provinceValue = $("#selectProvince").val();
+	var city = $("#citySelect").find("option:selected").text();
+	var cityValue = $("#citySelect").val();
+	var area = $("#selectDistrict").find("option:selected").text();
+	var areaValue = $("#selectDistrict").val();
+	var pca = province;
+	if(cityValue!=''){
+		pca+="/"+city
+	}
+	if(areaValue!=''){
+		pca+="/"+area
+	}
+	var shippingAddress = $("#shippingAddress").val();
+	var addressModalType = $("#addressModalType").val();
+	var count = $('#addressTable').bootstrapTable('getData').length;
+	var rowIndex = $("#addressIndex").val()
+	if(addressModalType=='new'){
+		$("#addressTable").bootstrapTable('insertRow', {
+		    index: count,
+		    row: {
+		    	index:count+1,
+		    	pca: pca,
+		    	provinceValue:provinceValue,
+		    	cityValue:cityValue,
+		    	areaValue:areaValue,
+		    	shippingAddress:shippingAddress
+		    }
+		});
+	}else{
+		$("#addressTable").bootstrapTable('updateRow', {
+		    index: rowIndex,
+		    row: {
+		    	index:parseInt(rowIndex)+1,
+		    	pca: pca,
+		    	provinceValue:provinceValue,
+		    	cityValue:cityValue,
+		    	areaValue:areaValue,
+		    	shippingAddress:shippingAddress
+		    }
+		});
+	}
+	$("#addressModal").modal('hide');
+}
+
+function initMarialsTables(){
+	var materialsTable = new TableInit('materialsTable','','',materialsColumn);
+	materialsTable.init();
+	var materialsTableall1 = new TableInit('materialsTableall1','','',materialsColumn);
+	materialsTableall1.init();
+	var materialsTableall2 = new TableInit('materialsTableall2','','',materialsColumn);
+	materialsTableall2.init();
+}
+function editAddress(index){
+	var row = $('#addressTable').bootstrapTable('getData')[index];
+	$("#addressIndex").val(index);
+	$("#addressModalType").val("edit");
+	$("#addressModal").modal('show');
+	$("#selectProvince").val(row.provinceValue);
+	$("#citySelect").val(row.cityValue);
+	$("#selectDistrict").val(row.areaValue);
+	$("#shippingAddress").val(row.shippingAddress);
+}
+
+function removeAddress(index){
+	var delIndex = [parseInt(index)+1];
+	$('#addressTable').bootstrapTable('remove', {
+        field: "index",
+        values: delIndex
+    });
+	var count = $('#addressTable').bootstrapTable('getData').length;
+	for(var i=0;i<count;i++){
+		var rows = {
+				index: i,
+				field : "index",
+				value : i+1
+			}
+		$('#addressTable').bootstrapTable("updateCell",rows);
+	}
 }
 
 var paymentColumns = [

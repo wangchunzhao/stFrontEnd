@@ -120,16 +120,13 @@
 							    </div>
 							    <span class="col-md-1 control-label">销售类型</span>
 								<div class="col-md-2">
-									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]])">
+									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]])">
 										<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">税率</span>
 								<div class="col-md-2">
-									<select class="form-control" th:field="*{taxRate}">
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
-									</select>
+									<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxtRate" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
@@ -211,41 +208,22 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{installCode}" -->
 							    </div>
 							</div>
-							<div class="row" style="margin-top: 15px;">	
-									<span class="col-md-1 control-label">地区</span>
-								<div class="col-md-5">
-									<div class="row">
-										<div class="col-md-4" style="padding-left: 12px; padding-right: 1px;">
-											<select class="form-control" th:onchange="getCity(this,[[${order_option.citys}]])" id="selectProvince">
-												<option value="">--选择省--</option>
-												<option th:each="province : ${order_option.provinces}" th:value="${province.key}" th:text="${province.value}"></option>
-											</select>
-										</div>
-									    <div class="col-md-4" style="padding-left: 1px; padding-right: 1px;">
-											<select class="form-control" id="citySelect" th:onchange="getDistrict(this,[[${order_option.districts}]])">
-												<option value="">--选择市--</option>
-											</select>
-										</div>
-										<div class="col-md-4" style="padding-left: 1px;">
-											<select class="form-control" style="padding-left: 0px;" id="selectDistrict">
-												<option value="">--选择区--</option>
-											</select>
-										</div>
-									</div>
-							    </div>
-							    <span class="col-md-1 control-label">到货地址</span>
-								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
-							    </div>
-							    <span class="col-md-1 control-label">收货方式</span>
+							<div class="row">
+							  <div class="col-md-1">
+							  	<span class="control-label"><strong>地址信息</strong></span>
+							  </div>
+							  <div class="col-md-11">
+							  	<table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;" id="addressTable" data-pagination="false" ></table>
+							  </div>
+ 							</div>  
+							<div class="row" style="margin-top: 15px;">
+								<span class="col-md-1 control-label">收货方式</span>
 								<div class="col-md-2">
 									<select class="form-control"><!--  th:field="*{confirmTypeCode}" -->
 										<option value="1" class="">1</option>
 										<option value="2" class="">2</option>
 									</select>
 							    </div>
-							</div>
-							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">运输类型</span>
 								<div class="col-md-2">
 									<select class="form-control" ><!-- th:field="*{transferTypeCode}" -->
@@ -402,77 +380,51 @@
 							</div>
 
 							<div class="magicalcoder-tmp-wrap" >
-								<!-- Nav tabs -->
-								<ul class="nav nav-tabs" role="tablist">
-									<li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">所有</a></li>
-									<li role="presentation" class="active"><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">柜体</a></li>
-									<li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">机组</a></li>
-									<li role="presentation" class=""><a href="#_magicalcoderTag1-magical-coder-auto-id-1565062574969" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
-									<li role="presentation" class=""><a href="#_magicalcoderTag2-magical-coder-auto-id-1565062571302" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">冷凝器</a></li>
-									<li role="presentation" class=""><a href="#_magicalcoderTag3-magical-coder-auto-id-1565062575037" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">散件</a></li>
-									<li role="presentation" class=""><a href="#_magicalcoderTag4-magical-coder-auto-id-1565062576052" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">其他</a></li>
+								<ul class="nav nav-tabs" role="tablist" id="tablist">
+									<li role="presentation" class=""><a href="#all" id="first" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">所有</a></li>
+									<li role="presentation" class=""><a href="#all1" id="second" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">柜体</a></li>
+									<li role="presentation" class=""><a href="#all2" id="third" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">机组</a></li>
+									<li role="presentation" class=""><a href="#all3" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
+									<li role="presentation" class=""><a href="#all4" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">冷凝器</a></li>
+									<li role="presentation" class=""><a href="#all5" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">散件</a></li>
+									<li role="presentation" class=""><a href="#all6" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">其他</a></li>
 								</ul>
 								<!-- Tab panes -->
 								<div class="tab-content">
-									<div role="tabpanel" class="tab-pane active" id="_magicalcoderTag1-magical-coder-auto-id-1565062574969" style="height: auto;">
-												<div class="table-responsive">
-													<table class="table">
-														<thead>
-														<tr class="">
-															<th class="text-center" style="width: 10%;"><input type="button"  value="+" class="btn btn-primary" onclick="addSubsidiary()"/></th>
-															<th class=""><div style="width:60px;">行号</div></th><th class=""><div style="width:60px;">调研表</div></th><th class=""><div style="width:160px;">规格型号</div></th><th class=""><div style="width:60px;">专用号</div></th><th class=""><div style="width:60px;">物料属性</div></th>
-															<th class=""><div style="width:60px;">类型</div></th>
-															<th class=""><div style="width:60px;">数量</div></th><th class=""><div style="width:60px;">计量单位</div></th><th class=""><div style="width:100px;">产品实卖价</div></th><th class=""><div style="width:150px;">产品实卖金额</div></th><th class=""><div style="width:100px;">产品转移价</div></th><th class=""><div style="width:130px;">可选项实卖价</div></th><th class=""><div style="width:120px;">可选项实卖金额</div></th><th class=""><div style="width:120px;">可选项转移价</div></th><th class=""><div style="width:100px;">B2C预估价</div></th><th class=""><div style="width:100px;">B2C预估金额</div></th><th class=""><div style="width:100px;">B2C预估成本</div></th><th class=""><div style="width:100px;">实卖价合计</div></th><th class=""><div style="width:100px;">实卖金额合计</div></th><th class=""><div style="width:100px;">转移价合计</div></th><th class=""><div style="width:100px;">市场零售价</div></th><th class=""><div style="width:120px;">市场零售金额</div></th><th class=""><div style="width:60px;">折扣率</div></th><th class=""><div style="width:100px;">行项目类别</div></th><th class=""><div style="width:60px;">需求计划</div></th><th class=""><div style="width:60px;">生产周期</div></th><th class=""><div style="width:160px;">工厂最早交货时间</div></th><th class=""><div style="width:120px;">生产开始时间</div></th>
-															<th class=""><div style="width:120px;">要求发货时间</div></th><th class=""><div style="width:80px;">地址</div></th>
-															<th class=""><div style="width:60px;">入库时间</div></th><th class=""><div style="width:60px;">采购周期</div></th><th class=""><div style="width:60px;">B2C备注</div></th><th class=""><div style="width:60px;">特殊备注</div></th>
-														</tr>
-														</thead>
-														<tbody>
-														<!-- <tr class="">
-																<td>
-																	 <button class="btn btn-del btn-sm" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=$index">X</button>
-																</td>
-															<td class="">1</td>
-															<td class=""></td>
-															<td class="">
-																<div class="input-group" mc-ace="~">
-																	<input type="text" class="form-control" placeholder="请输入关键词">
-																	<div class="input-group-btn">
-																		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">搜索 <span class="caret"></span></button>
-																	</div>
-																</div>
-															</td><td class=""></td><td class=""></td><td class=""></td><td class=""><input type="text" class="form-control" aria-describedby="emailHelp" mc-ace="~"></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""><input type="text" class="form-control" aria-describedby="emailHelp" mc-ace="~"></td>
-															<td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""><input type="text" class="form-control" aria-describedby="emailHelp" mc-ace="~"></td>
-															<td class=""><select class="form-control" mc-ace="~">
-																<option value="1" class="">1</option>
-																<option value="2" class="">2</option>
-															</select></td>
-															<td class="">
-																<select class="form-control" mc-ace="~">
-																	<option value="1" class="">1</option>
-																	<option value="2" class="">2</option>
-																</select>
-															</td><td class=""></td><td class=""> <input type="text" class="form-control"> </td><td class=""></td>
-															<td class=""><input type="text" id="weight" name="weight" style="width:100%"/></td>
-															<td class="">
-																<select class="form-control">
-																		<option value="1">市南区</option>
-																		<option value="2">李沧区</option>
-																</select></td>
-															<td class=""></td><td class=""></td><td class=""><textarea class="form-control" rows="1"></textarea></td><td class=""><textarea class="form-control" rows="1"></textarea></td>
-														</tr> -->
-														</tbody>
-													</table>
-												</div>
+									<div role="tabpanel" class="tab-pane" id="all" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTable" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
 									</div>
-									<div role="tabpanel" class="tab-pane" id="_magicalcoderTag2-magical-coder-auto-id-1565062571302">
-
+									<div role="tabpanel" class="tab-pane" id="all1" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTableall1" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
 									</div>
-									<div role="tabpanel" class="tab-pane" id="_magicalcoderTag3-magical-coder-auto-id-1565062575037">
-
+									<div role="tabpanel" class="tab-pane" id="all2" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTableall2" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
 									</div>
-									<div role="tabpanel" class="tab-pane" id="_magicalcoderTag4-magical-coder-auto-id-1565062576052" style="height: 194px;">
-
+									<div role="tabpanel" class="tab-pane" id="all3" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTableall3" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="all4" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTableall4" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="all5" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTableall5" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="all6" style="height: auto;">
+										<div class="table-responsive">
+											<table class="table" id="materialsTableall6" style="table-layout:fixed;word-break:break-all;"></table>
+										</div>
 									</div>
 								</div>
 
@@ -726,9 +678,11 @@
 		</div>
 	</div>
 	<div th:replace="newOrderSubsidiary::subsidiary"></div>
+	<div th:replace="addressModal::addressModal"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
 <script th:inline="javascript" src="../pageJs/newOrder.js"></script>
+<script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script>
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),

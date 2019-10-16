@@ -10,15 +10,15 @@
 					<h4 class="modal-title" id="myModalLabel">新增购销明细</h4>
 				</div>
 				<div class="modal-body">
-					<input type="hidden" id="modalType">
-					<input type="hidden" id="index">
+					<input type="hidden" id="materialsModalType">
+					<input type="hidden" id="materialsIndex">
 					<div class="panel-group">
 						<div class="panel-body">
 							<div class="row">
 								<span class="col-md-1 control-label">规格</span>
 							    <div class="col-md-2">
 							    <div class="input-group">
-				                    <input type="text" class="form-control" disabled id="customer">
+				                    <input type="text" class="form-control" disabled id="materialTypeName">
 				                    <span class="input-group-btn">
 				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="searchSpecification()">
 				                        	<span class="glyphicon glyphicon-search"></span>
@@ -42,7 +42,7 @@
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">数量</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="originalBudgetReturnAmount">
 							    </div>
 							    <span class="col-md-1">计量单位</span>
 								<div class="col-md-2">
@@ -144,7 +144,7 @@
 							    </div>
 							    <span class="col-md-1">地址</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="budgetReturnAmount">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
@@ -156,20 +156,20 @@
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
 							    </div>
-							</div>
-							<div class="row">
-								<span class="col-md-1">B2C备注</span>
-								<div class="col-md-5">
-							      <textarea class="form-control" rows="2"></textarea>
-							    </div>
 							    <span class="col-md-1">特殊备注</span>
 								<div class="col-md-5">
 							       <textarea class="form-control" rows="2"></textarea>
 							    </div>
 							</div>
+							<div class="row">
+								<span class="col-md-1">B2C备注</span>
+								<div class="col-md-11">
+							      <textarea class="form-control" rows="2"></textarea>
+							    </div>
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-primary" onclick="confirmPayment()">确定</button>
+								<button type="button" class="btn btn-primary" onclick="confirmMaterials()">确定</button>
 							</div>
 						</div>
 					</div>
@@ -190,11 +190,12 @@
 								<div class="row">
 									<span class="col-md-2">规格型号</span>
 									<div class="col-md-6">
-								      <input type="text" class="form-control" id="specificationName">
+								      <input type="text" class="form-control" id="materialsName">
 								    </div>
 								    <button type="button" class="btn btn-default" onclick="searchSpecification()">
 								    	<span class="glyphicon glyphicon-search">查询</span>
 								    </button>
+								    <table id="materialTypeTable" data-pagination="true"   class="table table-hover"></table>
 								</div>
 								<table id="specificationTable" data-pagination="true"   class="table table-hover"></table>
 							</div>
