@@ -4,8 +4,9 @@ var materialsColumn = [{
 	    width:200,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-			actions.push('<a class="btn" onclick="editMaterials(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-			actions.push('<a class="btn" onclick="removeMaterials(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+			actions.push('<a class="btn" style="font-size:11px" onclick="editMaterials(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+			actions.push('<a class="btn" style="font-size:11px" onclick="copyMaterials(\'' + row.identification + '\')"><i class="fa fa-copy"></i>复制</a>');
+			actions.push('<a class="btn" style="font-size:11px" onclick="removeMaterials(\'' + row.identification + '\')"><i class="fa fa-remove"></i>删除</a>');
 			return actions.join('');
 	    }
 	},{
@@ -18,7 +19,7 @@ var materialsColumn = [{
 		width:60,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-			actions.push('<a class="btn" onclick="editPayment(\'' + index + '\')"><i class="fa fa-edit"></i></a> ');
+			actions.push('<a class="btn" onclick="openConfig()"><i class="fa fa-edit"></i></a> ');
 			return actions.join('');
 	    }
 	},{
@@ -29,6 +30,10 @@ var materialsColumn = [{
 		title:'专用号',
 	    field: 'index',
 	    width:150
+	},{
+		title:'标识',
+	    field: 'identification',
+	    visible:false
 	},{
 		title:'物料属性',
 	    field: 'index',

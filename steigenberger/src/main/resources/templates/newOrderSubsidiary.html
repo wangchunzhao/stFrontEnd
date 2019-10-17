@@ -144,7 +144,14 @@
 							    </div>
 							    <span class="col-md-1">地址</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount">
+								    <div class="input-group">
+					                    <input type="text" class="form-control" disabled id="materialAddress">
+					                    <span class="input-group-btn">
+					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()">
+					                        	<span class="glyphicon glyphicon-search"></span>
+					                        </button>
+					                    </span>
+					                </div>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
@@ -198,6 +205,26 @@
 								    <table id="materialTypeTable" data-pagination="true"   class="table table-hover"></table>
 								</div>
 								<table id="specificationTable" data-pagination="true"   class="table table-hover"></table>
+							</div>
+						</div>
+					</div>
+			    </div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="materialAddressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+						<h4 class="modal-title">请选择地址</h4>
+					</div>
+					<div class="modal-body">
+						<div class="panel-group">
+							<div class="panel-body">
+								<div class="row">
+								    <table id="materialAddressTable" data-pagination="false"   class="table table-hover"></table>
+								</div>
 							</div>
 						</div>
 					</div>

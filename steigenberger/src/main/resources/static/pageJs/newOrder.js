@@ -1,14 +1,4 @@
 $(function () {
-	var customerUnitTable = '/steigenberger/order/customers'
-	var contractUnitTable = new TableInit('contractUnitTable',customerUnitTable,queryUnitParams,contractUnitTableColumn);
-	contractUnitTable.init();
-	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
-		$('#unitModal').modal('hide');
-		$("#contractUnitName").val('');
-		$("#customer").val(row.name)
-		$("#customerClazz").val(row.clazzName)
-	})
-	
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
 	
@@ -25,11 +15,20 @@ $(function () {
 	})
 	
 	initMarialsTables();
-	$('#second').tab('show');
+	$('#first').tab('show');
 });
 //Customer basic infomation js start 
 function openSearchUnit(){
 	$('#unitModal').modal('show');	
+	var customerUnitTable = '/steigenberger/order/customers'
+	var contractUnitTable = new TableInit('contractUnitTable',customerUnitTable,queryUnitParams,contractUnitTableColumn);
+	contractUnitTable.init();
+	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
+		$('#unitModal').modal('hide');
+		$("#contractUnitName").val('');
+		$("#customer").val(row.name)
+		$("#customerClazz").val(row.clazzName)
+	})
 }
 function searchUnit(){
 	$('#contractUnitTable').bootstrapTable('refresh');
@@ -217,6 +216,32 @@ var addressColumns = [{
     }
 }]
 
+var materialsAddressColumns = [{
+	title:'行号',
+    field: 'index',
+    width:'5%'
+},{
+	title : '省市区',
+	field : 'pca',
+	width:'35%'
+}, 
+{
+	field:'provinceValue',
+	visible:false
+},
+{
+	field:'cityValue',
+	visible:false
+},
+{
+	field:'areaValue',
+	visible:false
+},{
+	title : '到货地址',
+	field : 'shippingAddress',
+	width:'45%'
+}]
+
 function add(){
 	$('#paymentModal').modal('show');
 	$("#modalType").val("new");
@@ -341,11 +366,10 @@ function editMaterials(index){
 	$('#materialsIndex').val(index);
 }
 
-function removeMaterials(index){
-	var delIndex = [parseInt(index)+1];
+function removeMaterials(identification){
 	$('#materialsTable').bootstrapTable('remove', {
-        field: "index",
-        values: delIndex
+        field: "identification",
+        values: identification
     });
 	var count = $('#materialsTable').bootstrapTable('getData').length;
 	for(var i=0;i<count;i++){
@@ -356,21 +380,91 @@ function removeMaterials(index){
 			}
 		$('#materialsTable').bootstrapTable("updateCell",rows);
 	}
+	removeRelatedRow(identification);
+	
+}
+//删除其他tab相同的行
+function removeRelatedRow(identification){
+	var identificationSplit = identification.split('|');
+	var type = identificationSplit[1];
+	if(type=='柜体'){
+		$('#materialsTableall1').bootstrapTable('remove', {
+	        field: "identification",
+	        values: identification
+	    });
+		var count = $('#materialsTableall1').bootstrapTable('getData').length;
+		for(var i=0;i<count;i++){
+			var rows = {
+					index: i,
+					field : "index",
+					value : i+1
+				}
+			$('#materialsTableall1').bootstrapTable("updateCell",rows);
+		}
+	}else{
+		$('#materialsTableall2').bootstrapTable('remove', {
+	        field: "identification",
+	        values: identification
+	    });
+		var count = $('#materialsTableall2').bootstrapTable('getData').length;
+		for(var i=0;i<count;i++){
+			var rows = {
+					index: i,
+					field : "index",
+					value : i+1
+				}
+			$('#materialsTableall2').bootstrapTable("updateCell",rows);
+		}
+	}
 }
 
 function confirmMaterials(){
 	var modalType = $("#materialsModalType").val();
 	var rowIndex = $("#materialsIndex").val();
 	var materialTypeName = $("#materialTypeName").val();
-	var count = $('#materialsTable').bootstrapTable('getData').length;
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+	var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
 	if(modalType=='new'){
-		$("#materialsTable").bootstrapTable('insertRow', {
-		    index: count,
-		    row: {
-		    	index:count+1,
-		    	materialTypeName:materialTypeName
-		    }
-		});
+		if(materialTypeName=='柜体'){
+			var identification = countMaterialsTableall1+'|'+materialTypeName
+			$("#materialsTableall1").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall1,
+			    row: {
+			    	index:countMaterialsTable+1,
+			    	materialTypeName:materialTypeName,
+			    	identification:identification
+			    }
+			});
+			$("#second").tab('show');
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: {
+			    	index:countMaterialsTable+1,
+			    	materialTypeName:materialTypeName,
+			    	identification:identification
+			    }
+			});
+		}else if(materialTypeName=='机组'){
+			var identification = countMaterialsTableall2+'|'+materialTypeName
+			$("#materialsTableall2").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall2,
+			    row: {
+			    	index:countMaterialsTableall2+1,
+			    	materialTypeName:materialTypeName,
+			    	identification:identification
+			    }
+			});
+			$("#third").tab('show');
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: {
+			    	index:countMaterialsTable+1,
+			    	materialTypeName:materialTypeName,
+			    	identification:identification
+			    }
+			});
+		}
 	}else{
 		$("#materialsTable").bootstrapTable('updateRow', {
 		    index: rowIndex,
@@ -387,9 +481,49 @@ function searchSpecification(){
 	$('#specificationModal').modal('show');
 }
 
+function addMaterialAddress(){
+	$('#materialAddressTable').bootstrapTable('removeAll');
+	$('#materialAddressModal').modal('show');
+	var materialAddressTable = new TableInit('materialAddressTable','','',materialsAddressColumns);
+	materialAddressTable.init();
+	var addressTableData = $('#addressTable').bootstrapTable('getData')
+	for(var i=0;i<addressTableData.length;i++){
+		var addressTableRow = addressTableData[i];
+		$("#materialAddressTable").bootstrapTable('insertRow', {
+		    index: i,
+		    row: addressTableRow
+		});
+	}
+	$("#materialAddressTable").on('click-row.bs.table',function($element,row,field){
+		$('#materialAddressModal').modal('hide');
+		if(row.pca==''){
+			$("#materialAddress").val(row.shippingAddress);
+		}else{
+			$("#materialAddress").val(row.pca+"/"+row.shippingAddress);
+		}
+		
+	})
+}
+
 function addAddress(){
 	$("#addressModal").modal('show');
 	$("#addressModalType").val('new');
+}
+
+function openConfig(){
+	$("#materialconfigModal").modal('show');
+}
+//还原标准配置
+function resetStandardConfiguration(){
+	
+}
+//关闭调研表
+function closeMaterialConfig(){
+	$("#materialconfigModal").modal('hide');
+}
+//保存调研表
+function saveMaterialConfig(){
+	
 }
 
 function confirmAddress(){
@@ -399,12 +533,15 @@ function confirmAddress(){
 	var cityValue = $("#citySelect").val();
 	var area = $("#selectDistrict").find("option:selected").text();
 	var areaValue = $("#selectDistrict").val();
-	var pca = province;
-	if(cityValue!=''){
-		pca+="/"+city
-	}
-	if(areaValue!=''){
-		pca+="/"+area
+	var pca = ''
+	if(provinceValue!=''){
+		pca = province;
+		if(cityValue!=''){
+			pca+="/"+city
+		}
+		if(areaValue!=''){
+			pca+="/"+area
+		}
 	}
 	var shippingAddress = $("#shippingAddress").val();
 	var addressModalType = $("#addressModalType").val();
@@ -445,6 +582,14 @@ function initMarialsTables(){
 	materialsTableall1.init();
 	var materialsTableall2 = new TableInit('materialsTableall2','','',materialsColumn);
 	materialsTableall2.init();
+	var materialsTableall3 = new TableInit('materialsTableall3','','',materialsColumn);
+	materialsTableall3.init();
+	var materialsTableall4 = new TableInit('materialsTableall4','','',materialsColumn);
+	materialsTableall4.init();
+	var materialsTableall5 = new TableInit('materialsTableall5','','',materialsColumn);
+	materialsTableall5.init();
+	var materialsTableall6 = new TableInit('materialsTableall6','','',materialsColumn);
+	materialsTableall6.init();
 }
 function editAddress(index){
 	var row = $('#addressTable').bootstrapTable('getData')[index];
@@ -473,6 +618,7 @@ function removeAddress(index){
 		$('#addressTable').bootstrapTable("updateCell",rows);
 	}
 }
+
 
 var paymentColumns = [
 {
