@@ -155,13 +155,13 @@ public class FryeService<T> {
 	 * @param path
 	 * @param pars
 	 * @param T 
-	 * @param T
 	 * @return
 	 */
 	public T postForm(String path, Map<String,String> pars, Class T) {
 		String url = config.getFryeURL() + path;
+		
 		@SuppressWarnings("unchecked")
-		Mono<T> resp = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
+		Mono<T> resp = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(pars).retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,

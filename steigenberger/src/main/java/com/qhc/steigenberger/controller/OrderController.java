@@ -1,16 +1,13 @@
 package com.qhc.steigenberger.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,11 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.Customer;
-import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
-import com.qhc.steigenberger.domain.SalesGroup;
-import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -38,19 +32,19 @@ import com.qhc.steigenberger.util.PageHelper;
 @RequestMapping("order")
 public class OrderController {
 
-	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
-	private final static String SALES_TYPE_MAP = "sales_type";
-	private final static String CURRENCY_MAP = "currencies";
-	private final static String INCOTERMS_MAP = "incoterms";
+//	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
+//	private final static String SALES_TYPE_MAP = "sales_type";
+//	private final static String CURRENCY_MAP = "currencies";
+//	private final static String INCOTERMS_MAP = "incoterms";
 
 	//
-	private final static String PAGE_DEALER = "newOrder/newOrder";
-	//
-	private final static String FORM_ORDER_DEALER = "dealerOrder";
+//	private final static String PAGE_DEALER = "newOrder/newOrder";
+//	//
+//	private final static String FORM_ORDER_DEALER = "dealerOrder";
 
 	//
 	private final static String FORM_SUBMIT = "submit";
-	private final static String FORM_SAVE = "save";
+//	private final static String FORM_SAVE = "save";
 	private final static String FORM_MARGIN = "margin";
 	private final static String FORM_WTW_MARGIN = "wtw";
 	
@@ -119,6 +113,13 @@ public class OrderController {
 	public PageHelper<Material> searchMateril(String materialName,int pageNo) {
 		PageHelper<Material> cms = orderService.findMaterialsByName(materialName,pageNo);
 		return cms;
+	}
+	
+	@RequestMapping("material")
+	@ResponseBody
+	public Material getMaterilById(String code) {
+		Material m = orderService.getMaterial(code);
+		return m;
 	}
 
 	@PostMapping("/createOrder")
