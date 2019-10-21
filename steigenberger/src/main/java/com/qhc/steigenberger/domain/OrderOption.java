@@ -52,10 +52,10 @@ public class OrderOption {
 	private Map<String,String> dealerIndustryCodes;
 	
 	// 物料评估类
-	private Map<String,String> materialGroups;
+	private Map<String,String> materialGroups;//Map<material group code,material group name>
 	
 	// 物料在订单上的分类
-	private Map<String,String> materialGroupOrders;
+	private Map<String,String> materialGroupOrders;//Map<st group code,st group name>
 	
 	// 运输方式
 	private Map<String,String> shippingTypes;
