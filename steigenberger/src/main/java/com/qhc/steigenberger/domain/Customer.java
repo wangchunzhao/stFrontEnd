@@ -24,6 +24,9 @@ public class Customer implements Serializable {
 	private String address;
 	private String clazzCode;
 	private String clazzName;
+
+	private String industryCodeCode;
+	private String industryCodeName;
 	
 	public String getCode() {
 		return code;
@@ -60,6 +63,18 @@ public class Customer implements Serializable {
 	}
 	public void setClazzName(String clazzName) {
 		this.clazzName = clazzName;
+	}
+	public String getIndustryCodeCode() {
+		return industryCodeCode;
+	}
+	public void setIndustryCodeCode(String industryCodeCode) {
+		this.industryCodeCode = industryCodeCode;
+	}
+	public String getIndustryCodeName() {
+		return industryCodeName;
+	}
+	public void setIndustryCodeName(String industryCodeName) {
+		this.industryCodeName = industryCodeName;
 	}
 
 
