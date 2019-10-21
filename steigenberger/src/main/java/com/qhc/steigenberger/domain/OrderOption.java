@@ -52,10 +52,13 @@ public class OrderOption {
 	private Map<String,String> dealerIndustryCodes;
 	
 	// 物料评估类
-	private Map<String,String> materialGroups;
+	private Map<String,String> materialGroups; // Map<material group code, material group code name>
 	
 	// 物料在订单上的分类
-	private Map<String,String> materialGroupOrders;
+	private Map<String,String> materialGroupOrders; // Map<material group order code, material group order code name>
+	
+	// 物料评估类 与 物料在订单上的分类映射
+	private Map<String,String> materialGroupMapGroupOrder; // Map<material group code, material group order code>
 	
 	// 运输方式
 	private Map<String,String> shippingTypes;
@@ -208,6 +211,14 @@ public class OrderOption {
 
 	public void setMaterialGroupOrders(Map<String, String> materialGroupOrders) {
 		this.materialGroupOrders = materialGroupOrders;
+	}
+
+	public Map<String, String> getMaterialGroupMapGroupOrder() {
+		return materialGroupMapGroupOrder;
+	}
+
+	public void setMaterialGroupMapGroupOrder(Map<String, String> materialGroupMapGroupOrder) {
+		this.materialGroupMapGroupOrder = materialGroupMapGroupOrder;
 	}
 
 	public Map<String, String> getShippingTypes() {
