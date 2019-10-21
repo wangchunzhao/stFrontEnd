@@ -47,6 +47,18 @@ public class OrderOption {
 	 * need to be setted by invoker
 	 */
 	private String orderTypeCode;
+	
+	// 终端客户性质选择 For dealer
+	private Map<String,String> dealerIndustryCodes;
+	
+	// 物料评估类
+	private Map<String,String> materialGroups;
+	
+	// 物料在订单上的分类
+	private Map<String,String> materialGroupOrders;
+	
+	// 运输方式
+	private Map<String,String> shippingTypes;
 
 
 	public String getSequenceNumber() {
@@ -172,6 +184,38 @@ public class OrderOption {
 
 	public void setOrderTypeCode(String orderTypeCode) {
 		this.orderTypeCode = orderTypeCode;
+	}
+
+	public Map<String, String> getDealerIndustryCodes() {
+		return dealerIndustryCodes;
+	}
+
+	public void setDealerIndustryCodes(Map<String, String> dealerIndustryCodes) {
+		this.dealerIndustryCodes = dealerIndustryCodes;
+	}
+
+	public Map<String, String> getMaterialGroups() {
+		return materialGroups;
+	}
+
+	public void setMaterialGroups(Map<String, String> materialGroups) {
+		this.materialGroups = materialGroups;
+	}
+
+	public Map<String, String> getMaterialGroupOrders() {
+		return materialGroupOrders;
+	}
+
+	public void setMaterialGroupOrders(Map<String, String> materialGroupOrders) {
+		this.materialGroupOrders = materialGroupOrders;
+	}
+
+	public Map<String, String> getShippingTypes() {
+		return shippingTypes;
+	}
+
+	public void setShippingTypes(Map<String, String> shippingTypes) {
+		this.shippingTypes = shippingTypes;
 	}
 
 	
