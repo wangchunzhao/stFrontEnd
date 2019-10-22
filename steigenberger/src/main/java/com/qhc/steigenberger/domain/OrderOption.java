@@ -62,6 +62,9 @@ public class OrderOption {
 	
 	// 运输方式
 	private Map<String,String> shippingTypes;
+	
+	// 收货方式
+	private Map<String,String> receiveTerms;
 
 
 	public String getSequenceNumber() {
@@ -227,6 +230,14 @@ public class OrderOption {
 
 	public void setShippingTypes(Map<String, String> shippingTypes) {
 		this.shippingTypes = shippingTypes;
+	}
+
+	public Map<String, String> getReceiveTerms() {
+		return receiveTerms;
+	}
+
+	public void setReceiveTerms(Map<String, String> receiveTerms) {
+		this.receiveTerms = receiveTerms;
 	}
 
 	

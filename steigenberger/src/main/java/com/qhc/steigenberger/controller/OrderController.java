@@ -7,18 +7,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
+import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -27,6 +32,8 @@ import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
 import com.qhc.steigenberger.util.PageHelper;
+
+import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("order")
@@ -146,5 +153,19 @@ public class OrderController {
 		}
 		return JsonResult.build(401, "fail", null);
 	}
+
+    
+    /**
+     * 查询订单版本历史
+     * @param orderId
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value="根据orderId查询订单版本历史", notes="根据orderId查询订单版本历史")
+    @GetMapping(value = "order/{orderId}/version")
+	@ResponseBody
+    public List<OrderVersion> orderVersions(@PathVariable String orderId) throws Exception {	
+    	return orderService.findOrderVersions(orderId);
+    }
 
 }
