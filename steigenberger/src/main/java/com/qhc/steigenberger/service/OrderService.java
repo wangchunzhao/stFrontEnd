@@ -18,6 +18,7 @@ import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.OrderOption;
+import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.config.ApplicationConfig;
@@ -148,6 +149,11 @@ public class OrderService {
 				.bodyToFlux(SalesGroup.class);
 		return sgFlux.collectList().block();
 		
+	}
+	
+	public List<OrderVersion> findOrderVersions(String orderId) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+orderId+URL_PARAMETER_SEPERATOR+"version";
+		return (List<OrderVersion>)fryeService.getInfo(url,List.class);
 	}
 
 }
