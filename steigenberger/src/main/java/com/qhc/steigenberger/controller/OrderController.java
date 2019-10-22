@@ -129,7 +129,7 @@ public class OrderController {
 		return m;
 	}
 
-	@PostMapping("/createOrder")
+	@PostMapping("createOrder")
 	@ResponseBody
 	public JsonResult permissionApply1(HttpServletRequest request) {
 
@@ -162,7 +162,7 @@ public class OrderController {
      * @throws Exception
      */
     @ApiOperation(value="根据orderId查询订单版本历史", notes="根据orderId查询订单版本历史")
-    @GetMapping(value = "order/{orderId}/version")
+    @GetMapping(value = "{orderId}/version")
 	@ResponseBody
     public List<OrderVersion> orderVersions(@PathVariable String orderId) throws Exception {	
     	return orderService.findOrderVersions(orderId);
