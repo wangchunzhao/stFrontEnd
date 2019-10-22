@@ -31,12 +31,13 @@ public class Material implements Serializable{
 	private double B2CPriceEstimated;//B2C评估价
 	private double B2CCostOfEstimated;//B2C评估成本
 	private double retailPrice;//市场零售价
-	private int discount;//折扣
+	private double discount;//折扣
 	private int period;//生产、采购周期
 	private Date deliveryDate;//最早交货时间
 	private Date shippDate; //要求发货时间
 	private Date produceDate;//生产开始时间
 	private Date onStoreDate;//入库时间
+	private double standardPrice;//标准价格
 	public String getCode() {
 		return code;
 	}
@@ -109,10 +110,11 @@ public class Material implements Serializable{
 	public void setRetailPrice(double retailPrice) {
 		this.retailPrice = retailPrice;
 	}
-	public int getDiscount() {
+
+	public double getDiscount() {
 		return discount;
 	}
-	public void setDiscount(int discount) {
+	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 	public int getPeriod() {
@@ -145,8 +147,11 @@ public class Material implements Serializable{
 	public void setOnStoreDate(Date onStoreDate) {
 		this.onStoreDate = onStoreDate;
 	}
-	
-	
-	
+	public double getStandardPrice() {
+		return standardPrice;
+	}
+	public void setStandardPrice(double standardPrice) {
+		this.standardPrice = standardPrice;
+	}
 	
 }
