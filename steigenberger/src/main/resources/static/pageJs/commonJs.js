@@ -1,4 +1,4 @@
-document.write('<script src="../js/jquery-1.11.1.min.js"></script>');
+document.write('<script src="../js/jquery-1.12.4.min.js"></script>');
 document.write('<script src="../js/modernizr.custom.js"></script>');
 document.write('<script src="../js/Chart.js"></script>');
 document.write('<script src="../js/metisMenu.min.js"></script>');

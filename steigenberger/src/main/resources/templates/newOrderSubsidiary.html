@@ -11,6 +11,7 @@
 				</div>
 				<div class="modal-body">
 					<input type="hidden" id="materialsModalType">
+					<input type="hidden" id="materialsType">
 					<input type="hidden" id="materialsIndex">
 					<div class="panel-group">
 						<div class="panel-body">
@@ -28,93 +29,93 @@
 				                </div>
 							    <span class="col-md-1">专用号</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="paymentTime">
+							      <input type="text" class="form-control" id="materialCode">
 							    </div>
 							    <span class="col-md-1">物料属性</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="paymentTime">
+							      <input type="text" class="form-control" id="isPurchased">
 							    </div>
 							    <span class="col-md-1">类型</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="groupName" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">数量</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount">
+							      <input type="number" class="form-control" id="amount" oninput="amountChange()">
 							    </div>
 							    <span class="col-md-1">计量单位</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="unitName" disabled>
 							    </div>
 							    <span class="col-md-1">产品实卖价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="acturalPrice" disabled>
 							    </div>
 							    <span class="col-md-1">产品实卖金额</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="acturalPriceAmount" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">产品转移价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="transcationPrice" disabled>
 							    </div>
 							    <span class="col-md-1">可选项实卖价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="acturalPricaOfOptional" disabled>
 							    </div>
 							    <span class="col-md-1">可选项实卖金额</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="acturalPricaOfOptionalAmount" disabled>
 							    </div>
 							    <span class="col-md-1">可选项转移价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="transcationPriceOfOptional" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">B2C预估价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="B2CPriceEstimated" disabled>
 							    </div>
 							    <span class="col-md-1">B2C预估金额</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="B2CPriceEstimatedAmount" disabled>
 							    </div>
 							    <span class="col-md-1">B2C预估成本</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="B2CCostOfEstimated" disabled>
 							    </div>
 							    <span class="col-md-1">实卖价合计</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="acturalPriceTotal" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">实卖金额合计</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="acturalPriceAmountTotal" disabled>
 							    </div>
 							    <span class="col-md-1">转移价合计</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="transcationPriceTotal" disabled>
 							    </div>
 							    <span class="col-md-1">市场零售价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="retailPrice" disabled>
 							    </div>
 							    <span class="col-md-1">市场零售金额</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="retailPriceAmount" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">折扣率</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="discount" disabled>
 							    </div>
 							    <span class="col-md-1">行项目类别</span>
 								<div class="col-md-2">
@@ -126,21 +127,21 @@
 							    </div>
 							    <span class="col-md-1">生产周期</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="producePeriod" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">工厂最早交货时间</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="deliveryDate" disabled>
 							    </div>
 							    <span class="col-md-1">生产开始时间</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="produceDate" disabled>
 							    </div>
 							    <span class="col-md-1">要求发货时间</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="shippDate">
 							    </div>
 							    <span class="col-md-1">地址</span>
 								<div class="col-md-2">
@@ -157,21 +158,21 @@
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">入库时间</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="onStoreDate" disabled>
 							    </div>
 							    <span class="col-md-1">采购周期</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <input type="text" class="form-control" id="purchasePeriod" disabled>
 							    </div>
 							    <span class="col-md-1">特殊备注</span>
 								<div class="col-md-5">
-							       <textarea class="form-control" rows="2"></textarea>
+							       <textarea class="form-control" rows="2" id="specialRemark"></textarea>
 							    </div>
 							</div>
 							<div class="row">
 								<span class="col-md-1">B2C备注</span>
 								<div class="col-md-11">
-							      <textarea class="form-control" rows="2"></textarea>
+							      <textarea class="form-control" rows="2" id="b2cRemark"></textarea>
 							    </div>
 							</div>
 							<div class="modal-footer">
@@ -199,7 +200,7 @@
 									<div class="col-md-6">
 								      <input type="text" class="form-control" id="materialsName">
 								    </div>
-								    <button type="button" class="btn btn-default" onclick="searchSpecification()">
+								    <button type="button" class="btn btn-default" onclick="searchMaterilType()">
 								    	<span class="glyphicon glyphicon-search">查询</span>
 								    </button>
 								    <table id="materialTypeTable" data-pagination="true"   class="table table-hover"></table>

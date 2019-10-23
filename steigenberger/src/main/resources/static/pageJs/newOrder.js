@@ -5,18 +5,11 @@ $(function () {
 	var addressTable = new TableInit('addressTable','','',addressColumns)
 	addressTable.init();
 	
-	var materialTypeTableUrl = "/steigenberger/order/materials"
-	var materialTypeTable = new TableInit('materialTypeTable',materialTypeTableUrl,queryMaterialTypeParams,materialTypeColumn)
-	materialTypeTable.init();
-	$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
-		$('#specificationModal').modal('hide');
-		$("#materialsName").val('');
-		$("#materialTypeName").val(row.description)
-	})
-	
 	initMarialsTables();
 	$('#first').tab('show');
 });
+
+
 //Customer basic infomation js start 
 function openSearchUnit(){
 	$('#unitModal').modal('show');	
@@ -160,87 +153,10 @@ function queryUnitParams(params) {
 
 function queryMaterialTypeParams(params) {
     params.pageNo = this.pageNumber;
-    params.customerName = $("#materialsName").val();
+    params.materialName = $("#materialsName").val();
     return params;
 }
 
-var materialTypeColumn = [ {
-	title : '规格型号',
-	field : 'description'
-}]
-
-var contractUnitTableColumn = [ {
-	title : '签约单位',
-	field : 'name'
-}, {
-	title : '地址',
-	field : 'address'
-},{
-	title : '性质分类',
-	field : 'clazzName'
-}]
-
-var addressColumns = [{
-	title:'行号',
-    field: 'index',
-    width:'5%'
-},{
-	title : '省市区',
-	field : 'pca',
-	width:'35%'
-}, 
-{
-	field:'provinceValue',
-	visible:false
-},
-{
-	field:'cityValue',
-	visible:false
-},
-{
-	field:'areaValue',
-	visible:false
-},{
-	title : '到货地址',
-	field : 'shippingAddress',
-	width:'45%'
-},{
-    title: '<input type="button"  value="+" class="btn btn-primary" onclick="addAddress()"/>',
-    align: 'center',
-    width:'15%',
-    formatter: function(value, row, index) {
-    	var actions = [];
-		actions.push('<a class="btn" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-		actions.push('<a class="btn" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
-		return actions.join('');
-    }
-}]
-
-var materialsAddressColumns = [{
-	title:'行号',
-    field: 'index',
-    width:'5%'
-},{
-	title : '省市区',
-	field : 'pca',
-	width:'35%'
-}, 
-{
-	field:'provinceValue',
-	visible:false
-},
-{
-	field:'cityValue',
-	visible:false
-},
-{
-	field:'areaValue',
-	visible:false
-},{
-	title : '到货地址',
-	field : 'shippingAddress',
-	width:'45%'
-}]
 
 function add(){
 	$('#paymentModal').modal('show');
@@ -355,17 +271,115 @@ function getPaymentAreaContent(){
 	}
 	
 }
+
+//打开物料规格查询框
 function addSubsidiary(){
-	$('#subsidiaryModal').modal('show');
+		$('#subsidiaryModal').modal('show');
+		$('#amount').val(1);
+		var materialTypeTableUrl = "/steigenberger/order/materials"
+		var materialTypeTable = new TableInit('materialTypeTable',materialTypeTableUrl,queryMaterialTypeParams,materialTypeColumn)
+		materialTypeTable.init();
+		$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
+			$('#specificationModal').modal('hide');
+			getMaterialInfo(row.code);
+			$("#materialTypeName").val(row.description);
+			$("#materialCode").val(row.code);
+			if(row.isPurchased=='0'){
+				$('#isPurchased').val('生产');
+			}else{
+				$('#isPurchased').val('采购');
+			}
+		})
 	$('#materialsModalType').val('new');
 }
 
+//点击查询出来的物料记录
+function getMaterialInfo(code){	
+	$.ajax({
+	    url: "/steigenberger/order/material",
+	    data: {code: code},
+	    type: "POST",
+	    dataType: "json",
+	    success: function(data) {
+	       fillMaterailValue(data); 
+	    }
+	});
+}
+//将查出来的物料信息填充到各个field中
+function fillMaterailValue(data){
+	$("#groupName").val(data.groupName);
+	var materialsType = materialGroupMapGroupOrder[data.groupCode];
+	var amount = $("#amount").val();
+	$("#materialsType").val(materialsType);
+	$("#unitName").val(data.unitName);
+	$("#unitName").val(data.unitName);
+	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
+	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
+	$("#acturalPricaOfOptionalAmount").val(toDecimal2(amount*(data.acturalPricaOfOptional)));
+	$("#transcationPriceOfOptional").val(toDecimal2(data.transcationPriceOfOptional));
+	$("#B2CPriceEstimated").val(toDecimal2(data.b2CPriceEstimated));
+	$("#B2CPriceEstimatedAmount").val(toDecimal2((data.b2CPriceEstimated)*amount));
+	$("#B2CCostOfEstimated").val(toDecimal2(data.b2CCostOfEstimated));
+	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
+	$("#retailPrice").val(toDecimal2(data.retailPrice));
+	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
+	$("#discount").val('40%');
+	var discountValue = $("#discount").val();
+	var discount = discountValue.split("%")[0];
+	var acturalPrice = (data.retailPrice*discount)/100
+	$("#acturalPrice").val(toDecimal2(acturalPrice));
+	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
+	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
+	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
+	if($('#isPurchased').val()=='生产'){
+		$("#producePeriod").val(data.period);
+	}else{
+		$("#purchasePeriod").val(data.period);
+	}
+	$("#deliveryDate").val(data.deliveryDate);
+	$("#produceDate").val(data.produceDate);
+	$("#onStoreDate").val(data.onStoreDate);
+	
+	
+}
+
+//数量变化
+function amountChange(){
+	var amount = $("#amount").val();
+	if(amount==''){
+		return;
+	}
+	$("#acturalPriceAmount").val(toDecimal2(amount*(parseFloat($("#acturalPrice").val()))));
+	$("#acturalPricaOfOptionalAmount").val(toDecimal2(amount*(parseFloat($("#acturalPricaOfOptional").val()))));
+	$("#B2CPriceEstimatedAmount").val(toDecimal2(amount*(parseFloat($("#B2CPriceEstimated").val()))));
+	$("#retailPriceAmount").val(toDecimal2(parseFloat($("#retailPrice").val())*amount));
+	$("#acturalPriceAmountTotal").val(toDecimal2(parseFloat($("#acturalPriceTotal").val())*amount));
+}
+
+function toDecimal2(x) {   
+     var f = parseFloat(x);   
+     if (isNaN(f)) {   
+      return false;   
+     }   
+     var f = Math.round(x*100)/100;   
+     var s = f.toString();   
+     var rs = s.indexOf('.');   
+    if (rs < 0) {   
+     rs = s.length;   
+     s += '.';   
+    }   
+   while (s.length <= rs + 2) {   
+     s += '0';   
+   } 
+   return s;
+ }  
+//编辑购销明细
 function editMaterials(index){
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
 	$('#materialsIndex').val(index);
 }
-
+//删除购销明细
 function removeMaterials(identification){
 	$('#materialsTable').bootstrapTable('remove', {
         field: "identification",
@@ -418,51 +432,91 @@ function removeRelatedRow(identification){
 	}
 }
 
+//确认购销明细modal
 function confirmMaterials(){
 	var modalType = $("#materialsModalType").val();
+	var materialType = $("#materialsType").val();
 	var rowIndex = $("#materialsIndex").val();
 	var materialTypeName = $("#materialTypeName").val();
 	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
 	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
 	var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
+	var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
+	var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
+	var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
+	var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 	if(modalType=='new'){
-		if(materialTypeName=='柜体'){
-			var identification = countMaterialsTableall1+'|'+materialTypeName
+		if(materialType=='T101'){
+			var rowData = confirmRowData(countMaterialsTableall1);
 			$("#materialsTableall1").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall1,
-			    row: {
-			    	index:countMaterialsTable+1,
-			    	materialTypeName:materialTypeName,
-			    	identification:identification
-			    }
+			    row: rowData
 			});
 			$("#second").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable);
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
-			    row: {
-			    	index:countMaterialsTable+1,
-			    	materialTypeName:materialTypeName,
-			    	identification:identification
-			    }
+			    row: rowDataAll
 			});
-		}else if(materialTypeName=='机组'){
-			var identification = countMaterialsTableall2+'|'+materialTypeName
+		}else if(materialType=='T102'){
+			var rowData = confirmRowData(countMaterialsTableall2);
 			$("#materialsTableall2").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall2,
-			    row: {
-			    	index:countMaterialsTableall2+1,
-			    	materialTypeName:materialTypeName,
-			    	identification:identification
-			    }
+			    row: rowData
 			});
 			$("#third").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable);
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
-			    row: {
-			    	index:countMaterialsTable+1,
-			    	materialTypeName:materialTypeName,
-			    	identification:identification
-			    }
+			    row: rowDataAll
+			});
+		}else if(materialType=='T103'){
+			var rowData = confirmRowData(countMaterialsTableall3);
+			$("#materialsTableall3").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall3,
+			    row: rowData
+			});
+			$("#four").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T104'){
+			var rowData = confirmRowData(countMaterialsTableall4);
+			$("#materialsTableall4").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall4,
+			    row: rowData
+			});
+			$("#five").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T105'){
+			var rowData = confirmRowData(countMaterialsTableall5);
+			$("#materialsTableall5").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall5,
+			    row: rowData
+			});
+			$("#six").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T106'){
+			var rowData = confirmRowData(countMaterialsTableall6);
+			$("#materialsTableall6").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall6,
+			    row: rowData
+			});
+			$("#seven").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
 			});
 		}
 	}else{
@@ -477,10 +531,61 @@ function confirmMaterials(){
 	
 	$('#subsidiaryModal').modal('hide');
 }
+
+
+//购销明细行数据
+
+function confirmRowData(index){
+	var row = {
+			index:index+1,
+			materialTypeName:$("#materialTypeName").val(),
+			code:$("#materialCode").val(),
+			identification:index+"|"+$("#materialsType").val(),
+			isPurchased:$("#isPurchased").val(),
+			groupName:$("#groupName").val(),
+			amount:$("#amount").val(),
+			unitName:$("#unitName").val(),
+			acturalPrice:$("#acturalPrice").val(),
+			acturalPriceAmount:$("#acturalPriceAmount").val(),
+			transcationPrice:$("#transcationPrice").val(),
+			acturalPricaOfOptional:$("#acturalPricaOfOptional").val(),
+			acturalPricaOfOptionalAmount:$("#acturalPricaOfOptionalAmount").val(),
+			transcationPriceOfOptional:$("#transcationPriceOfOptional").val(),
+			B2CPriceEstimated:$("#B2CPriceEstimated").val(),
+			B2CPriceEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
+			B2CCostOfEstimated:$("#B2CCostOfEstimated").val(),
+			acturalPriceTotal:$("#acturalPriceTotal").val(),
+			acturalPriceAmountTotal:$("#acturalPriceAmountTotal").val(),
+			transcationPriceTotal:$("#transcationPriceTotal").val(),
+			retailPrice:$("#retailPrice").val(),
+			retailPriceAmount:$("#retailPriceAmount").val(),
+			discount:$("#discount").val(),
+			producePeriod:$("#producePeriod").val(),
+			deliveryDate:$("#deliveryDate").val(),
+			produceDate:$("#produceDate").val(),
+			shippDate:$("#shippDate").val(),
+			materialAddress:$("#materialAddress").val(),
+			onStoreDate:$("#onStoreDate").val(),
+			purchasePeriod:$("#purchasePeriod").val(),
+			b2cRemark:$("#b2cRemark").val(),
+			specialRemark:$("#specialRemark").val()
+	}
+	
+	return row;
+}
+
+//打开规格查询框
 function searchSpecification(){
 	$('#specificationModal').modal('show');
 }
 
+//查询规格
+function searchMaterilType(){
+	$('#materialTypeTable').bootstrapTable('refresh');
+}
+
+
+//添加物料地址
 function addMaterialAddress(){
 	$('#materialAddressTable').bootstrapTable('removeAll');
 	$('#materialAddressModal').modal('show');
@@ -510,8 +615,15 @@ function addAddress(){
 	$("#addressModalType").val('new');
 }
 
-function openConfig(){
+function openConfig(identification){
 	$("#materialconfigModal").modal('show');
+	$("#identification").val(identification);
+	var formData = localStorage[identification];
+	var jsonObject = JSON.parse(formData);
+	$.each(jsonObject, function (name, val){
+		var obj = $("#materialConfigForm").find("*[name=" + name + "]");
+		obj.val(val);
+	});
 }
 //还原标准配置
 function resetStandardConfiguration(){
@@ -523,8 +635,106 @@ function closeMaterialConfig(){
 }
 //保存调研表
 function saveMaterialConfig(){
-	
+	var identification = $("#identification").val();
+	var formData = $("#materialConfigForm").serializeObject();
+	localStorage.setItem(identification, JSON.stringify(formData));
+	$("#materialconfigModal").modal('hide');
 }
+//复制调研表
+function copyMaterials(identification){
+	var identificationSplit = identification.split('|');
+	var materialsType = identificationSplit[1];
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	if(materialsType=='T101'){
+		var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+		var rowData = confirmRowData(countMaterialsTableall1);
+		$("#materialsTableall1").bootstrapTable('insertRow', {
+		    index: countMaterialsTableall1,
+		    row: rowData
+		});
+		var rowDataAll = confirmRowData(countMaterialsTable);
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: countMaterialsTable,
+		    row:rowDataAll
+		});
+	}else if(type=='T102'){
+		var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
+		var rowData = confirmRowData(countMaterialsTableall2);
+		$("#materialsTableall2").bootstrapTable('insertRow', {
+		    index: countMaterialsTableall2,
+		    row: rowData
+		});
+		var rowDataAll = confirmRowData(countMaterialsTable);
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: countMaterialsTable,
+		    row:rowDataAll
+		});
+	}else if(type=='T103'){
+		var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
+		var rowData = confirmRowData(countMaterialsTableall3);
+		$("#materialsTableall3").bootstrapTable('insertRow', {
+		    index: countMaterialsTableall1,
+		    row: rowData
+		});
+		var rowDataAll = confirmRowData(countMaterialsTable);
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: countMaterialsTable,
+		    row:rowDataAll
+		});
+	}else if(type=='T104'){
+		var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
+		var rowData = confirmRowData(countMaterialsTableall4);
+		$("#materialsTableall4").bootstrapTable('insertRow', {
+		    index: countMaterialsTableall1,
+		    row: rowData
+		});
+		var rowDataAll = confirmRowData(countMaterialsTable);
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: countMaterialsTable,
+		    row:rowDataAll
+		});
+	}else if(type=='T105'){
+		var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
+		var rowData = confirmRowData(countMaterialsTableall5);
+		$("#materialsTableall1").bootstrapTable('insertRow', {
+		    index: countMaterialsTableall5,
+		    row: rowData
+		});
+		var rowDataAll = confirmRowData(countMaterialsTable);
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: countMaterialsTable,
+		    row:rowDataAll
+		});
+	}else if(type=='T106'){
+		var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
+		var rowData = confirmRowData(countMaterialsTableall6);
+		$("#materialsTableall1").bootstrapTable('insertRow', {
+		    index: countMaterialsTableall6,
+		    row: rowData
+		});
+		var rowDataAll = confirmRowData(countMaterialsTable);
+		$("#materialsTable").bootstrapTable('insertRow', {
+		    index: countMaterialsTable,
+		    row:rowDataAll
+		});
+	}
+}
+
+$.fn.serializeObject = function() {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [ o[this.name] ];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
 
 function confirmAddress(){
 	var province = $("#selectProvince").find("option:selected").text();
@@ -619,6 +829,87 @@ function removeAddress(index){
 	}
 }
 
+var materialTypeColumn = [ {
+	title : '专用号',
+	field : 'code'
+},{
+	title : '规格型号',
+	field : 'description'
+}]
+
+var contractUnitTableColumn = [ {
+	title : '签约单位',
+	field : 'name'
+}, {
+	title : '地址',
+	field : 'address'
+},{
+	title : '性质分类',
+	field : 'clazzName'
+}]
+
+var addressColumns = [{
+	title:'行号',
+    field: 'index',
+    width:'5%'
+},{
+	title : '省市区',
+	field : 'pca',
+	width:'35%'
+}, 
+{
+	field:'provinceValue',
+	visible:false
+},
+{
+	field:'cityValue',
+	visible:false
+},
+{
+	field:'areaValue',
+	visible:false
+},{
+	title : '到货地址',
+	field : 'shippingAddress',
+	width:'45%'
+},{
+    title: '<input type="button"  value="+" class="btn btn-primary" onclick="addAddress()"/>',
+    align: 'center',
+    width:'15%',
+    formatter: function(value, row, index) {
+    	var actions = [];
+		actions.push('<a class="btn" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		actions.push('<a class="btn" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+		return actions.join('');
+    }
+}]
+
+var materialsAddressColumns = [{
+	title:'行号',
+    field: 'index',
+    width:'5%'
+},{
+	title : '省市区',
+	field : 'pca',
+	width:'35%'
+}, 
+{
+	field:'provinceValue',
+	visible:false
+},
+{
+	field:'cityValue',
+	visible:false
+},
+{
+	field:'areaValue',
+	visible:false
+},{
+	title : '到货地址',
+	field : 'shippingAddress',
+	width:'45%'
+}]
+
 
 var paymentColumns = [
 {
@@ -701,19 +992,3 @@ var TableInit = function (id,url,params,tableColumns) {
 	};
 	return oTableInit;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

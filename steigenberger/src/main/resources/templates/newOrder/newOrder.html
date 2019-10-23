@@ -15,8 +15,9 @@
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
 		<!-- //header-ends -->
 		<!-- main content start-->
-		<form method="post" role="form" action="#" th:action="@{dealer}" th:object="${order_option}">
+		<form method="post" role="form" action="/steigenberger/order/dealer" th:object="${order_option}">
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
+		<input type="hidden"  name="action" value="submit">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -81,8 +82,8 @@
 							    </div>
 								 <span class="col-md-1 control-label">终端客户性质</span>
 								<div class="col-md-2">
-							      <select class="form-control"><!-- th:field="*{customerNatureCode}" -->
-										<option th:each="clazz : ${customer_classes}" th:value="${clazz.key}" th:text="${clazz.value}" th:selected="${dealerOrder.customerNatureCode eq clazz.key}" ></option>
+							      <select class="form-control">
+										<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 									</select>
 							    </div>
 							</div>
@@ -223,15 +224,13 @@
 								<span class="col-md-1 control-label">收货方式</span>
 								<div class="col-md-2">
 									<select class="form-control"><!--  th:field="*{confirmTypeCode}" -->
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
+										<option th:each="receiveTerm : ${order_option.receiveTerms}" th:value="${receiveTerm.key}" th:text="${receiveTerm.value}"></option>
 									</select>
 							    </div>
-								<span class="col-md-1 control-label">运输类型</span>
+								<span class="col-md-1 control-label">运输方式</span>
 								<div class="col-md-2">
-									<select class="form-control" ><!-- th:field="*{transferTypeCode}" -->
-										<option value="1" class="">1</option>
-										<option value="2" class="">2</option>
+									<select class="form-control" >
+										<option th:each="shippingType : ${order_option.shippingTypes}" th:value="${shippingType.key}" th:text="${shippingType.value}"></option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
@@ -397,10 +396,10 @@
 									<li role="presentation" class=""><a href="#all" id="first" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">所有</a></li>
 									<li role="presentation" class=""><a href="#all1" id="second" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true" class="">柜体</a></li>
 									<li role="presentation" class=""><a href="#all2" id="third" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">机组</a></li>
-									<li role="presentation" class=""><a href="#all3" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
-									<li role="presentation" class=""><a href="#all4" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">冷凝器</a></li>
-									<li role="presentation" class=""><a href="#all5" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">散件</a></li>
-									<li role="presentation" class=""><a href="#all6" aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">其他</a></li>
+									<li role="presentation" class=""><a href="#all3" id="four"  aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false" class="">冷风机</a></li>
+									<li role="presentation" class=""><a href="#all4" id="five"  aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">冷凝器</a></li>
+									<li role="presentation" class=""><a href="#all5" id="six"  aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">散件</a></li>
+									<li role="presentation" class=""><a href="#all6" id="seven"  aria-controls="profile" role="tab" data-toggle="tab" class="" aria-expanded="false">其他</a></li>
 								</ul>
 								<!-- Tab panes -->
 								<div class="tab-content">
@@ -690,7 +689,10 @@
 <script src="../pageJs/commonJs.js"></script>
 <script th:inline="javascript" src="../pageJs/newOrder.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
-<script>
+<script th:inline="javascript" type="text/javascript">
+	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
+	console.log(materialGroupMapGroupOrder)
+	console.log(materialGroupMapGroupOrder['FA01'])
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
