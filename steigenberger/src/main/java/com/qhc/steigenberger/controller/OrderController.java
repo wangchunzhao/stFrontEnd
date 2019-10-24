@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
+import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
+import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -166,6 +169,20 @@ public class OrderController {
 	@ResponseBody
     public List<OrderVersion> orderVersions(@PathVariable String orderId) throws Exception {	
     	return orderService.findOrderVersions(orderId);
+    }
+
+    
+    /**
+     * 查询订单版本历史
+     * @param orderId
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value="查询订单", notes="查询订单")
+    @PostMapping(value = "query")
+	@ResponseBody
+    public List<SalesOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {	
+    	return orderService.findOrders(query);
     }
 
 }

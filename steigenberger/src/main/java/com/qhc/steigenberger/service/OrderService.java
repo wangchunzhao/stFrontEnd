@@ -18,6 +18,7 @@ import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.OrderOption;
+import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
@@ -154,6 +155,11 @@ public class OrderService {
 	public List<OrderVersion> findOrderVersions(String orderId) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+orderId+URL_PARAMETER_SEPERATOR+"version";
 		return (List<OrderVersion>)fryeService.getInfo(url,List.class);
+	}
+	
+	public List<SalesOrder> findOrders(OrderQuery query) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"query";
+		return (List<SalesOrder>)fryeService.postInfo(query, url, List.class);
 	}
 
 }
