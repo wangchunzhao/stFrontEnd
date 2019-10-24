@@ -3,19 +3,33 @@
  */
 package com.qhc.steigenberger.domain.form;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import com.qhc.steigenberger.domain.OrderAddress;
 
 /**
  * @author wang@dxc.com
  *
  */
 public abstract class AbsOrder {
+	public String getCustomerClazzCode() {
+		return customerClazzCode;
+	}
+	public void setCustomerClazzCode(String customerClazzCode) {
+		this.customerClazzCode = customerClazzCode;
+	}
+	public String getCustomerClazzName() {
+		return customerClazzName;
+	}
+	public void setCustomerClazzName(String customerClazzName) {
+		this.customerClazzName = customerClazzName;
+	}
+	public String getTerminalType() {
+		return terminalType;
+	}
+	public void setTerminalType(String terminalType) {
+		this.terminalType = terminalType;
+	}
 	public final static String ORDER_TYPE_CODE_DEALER = "Z001";
 	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
 	public final static String ORDER_TYPE_CODE_BULK = "Z003";
@@ -86,8 +100,22 @@ public abstract class AbsOrder {
 	/**
 	 * 购销明细 Purchase and sale subsidiar
 	 */
-	//private List<ProductItem> items;//购销明细
+	private List<ProductItem> items;//购销明细
 	private String comments;//备注
+	//合同明细地址
+	private List<OrderAddress> orderAddress;
+	public List<ProductItem> getItems() {
+		return items;
+	}
+	public void setItems(List<ProductItem> items) {
+		this.items = items;
+	}
+	public List<OrderAddress> getOrderAddress() {
+		return orderAddress;
+	}
+	public void setOrderAddress(List<OrderAddress> orderAddress) {
+		this.orderAddress = orderAddress;
+	}
 	/**
 	 * 附件信息 Attachment information
 	 */

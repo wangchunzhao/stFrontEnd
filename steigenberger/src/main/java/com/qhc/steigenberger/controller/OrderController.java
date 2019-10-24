@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
@@ -183,6 +184,19 @@ public class OrderController {
 	@ResponseBody
     public List<SalesOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {	
     	return orderService.findOrders(query);
+    }
+    
+    /**
+     * 查询物料配置
+     * @param clazzCode
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "material/configurations")
+    @ResponseBody
+    public List<Characteristic> findCharacteristic(String clazzCode,String materialCode) {
+        return orderService.getCharactersByClazzCode(clazzCode,materialCode);
+        
     }
 
 }

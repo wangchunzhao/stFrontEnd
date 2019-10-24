@@ -23,6 +23,7 @@ import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.config.ApplicationConfig;
+import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -54,6 +55,7 @@ public class OrderService {
 	private final static String URL_PARAMETER_SEPERATOR = "/";
 	
 	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
+	private final static String URL_MATERIAL_CONFIG = "material/configurations";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -161,5 +163,9 @@ public class OrderService {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"query";
 		return (List<SalesOrder>)fryeService.postInfo(query, url, List.class);
 	}
-
+	
+	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {
+        String url = URL_MATERIAL_CONFIG+URL_PARAMETER_SEPERATOR+clazzCode+','+materialCode;
+        return (List<Characteristic>)fryeService.getInfo(url,List.class);
+    }
 }

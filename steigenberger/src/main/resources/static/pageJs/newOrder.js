@@ -1,4 +1,5 @@
 $(function () {
+	localStorage.clear()
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
 	
@@ -313,6 +314,7 @@ function fillMaterailValue(data){
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitName").val(data.unitName);
+	$("#materialClazzCode").val(data.clazzCode);
 	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
 	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
 	$("#acturalPricaOfOptionalAmount").val(toDecimal2(amount*(data.acturalPricaOfOptional)));
@@ -541,6 +543,7 @@ function confirmRowData(index){
 			materialTypeName:$("#materialTypeName").val(),
 			code:$("#materialCode").val(),
 			identification:index+"|"+$("#materialsType").val(),
+			clazzCode:$("#materialClazzCode").val(),
 			isPurchased:$("#isPurchased").val(),
 			groupName:$("#groupName").val(),
 			amount:$("#amount").val(),
@@ -616,14 +619,32 @@ function addAddress(){
 }
 
 function openConfig(identification){
+	debugger
 	$("#materialconfigModal").modal('show');
-	$("#identification").val(identification);
-	var formData = localStorage[identification];
-	var jsonObject = JSON.parse(formData);
-	$.each(jsonObject, function (name, val){
-		var obj = $("#materialConfigForm").find("*[name=" + name + "]");
-		obj.val(val);
-	});
+	var value = identification.split(',')
+	$("#materialConfigClazzCode").val(value[2]);
+	$("#materialConfigCode").val(value[1]);
+	$("#identification").val(value[0]);
+	var url = "/steigenberger/order/material/configurations"
+	var configTable = new TableInit('configTable',url,queryConfigParams,configTableColumns);
+	configTable.init();
+	$("#configTable").bootstrapTable('refresh');
+	var configData = localStorage[value[0]];
+	if(configData){
+		var jsonObject = JSON.parse(configData);
+	    $.each(jsonObject, function (name, val){
+	        var obj = $("#materialConfigForm").find("*[name=" + name + "]");
+	        obj.val(val);
+	    });
+	}
+	//$("#configTable").bootstrapTable('load', [{'isOptional':'可选项','name':'柜内颜色','configs':[{'code':'1','name':'标准白色'},{'code':'2','name':'标准黑色色'}]}]);
+		
+}
+
+function queryConfigParams(params) {
+    params.clazzCode = $("#materialConfigClazzCode").val();
+    params.materialCode = $("#materialConfigCode").val();
+    return params;
 }
 //还原标准配置
 function resetStandardConfiguration(){
@@ -636,6 +657,12 @@ function closeMaterialConfig(){
 //保存调研表
 function saveMaterialConfig(){
 	var identification = $("#identification").val();
+	/*var configData = new Object();
+	var remark = $("#configRemark").val();
+	var configTableData = $("#configTable").bootstrapTable('getData');
+	configData.configTableData = configTableData;
+	configData.remark = remark*/
+	debugger
 	var formData = $("#materialConfigForm").serializeObject();
 	localStorage.setItem(identification, JSON.stringify(formData));
 	$("#materialconfigModal").modal('hide');
@@ -910,6 +937,43 @@ var materialsAddressColumns = [{
 	width:'45%'
 }]
 
+var configTableColumns = [
+{
+	title :'选项',
+	field :'optional',
+	width:'15%',
+	formatter: function(value, row, index) {
+    	if(value){
+    		return '必选项'
+    	}else{
+    		return '可选项'
+    	}
+    }
+}, 
+{
+	title:'配置',
+	field:'name',
+	width:'35%',
+	formatter: function(value, row, index) {
+    	var text = '<input type="text" class="form-control" value=\'' + value + '\' readonly>'
+		return text;
+    }
+},
+{
+	title:'配置值',
+	field:'configs',
+	width:'50%',
+	formatter: function(value, row, index) {
+    	var start = '<select class="form-control" name=\'' +'name'+ row.code + '\'>';
+    	var end = '</select>';
+    	$.each(value,function(index,item){
+    		start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+    	})
+		return start+end;
+    }
+}
+]
+
 
 var paymentColumns = [
 {
@@ -975,6 +1039,7 @@ var TableInit = function (id,url,params,tableColumns) {
 			url : url,//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
+			uniqueId:'index',
 			cache: false,            
 		    sortable: true,                     //是否启用排序
 		    clickToSelect: true,               //是否启用点击选中行

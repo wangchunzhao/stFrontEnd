@@ -22,7 +22,7 @@ public class Material implements Serializable{
 	private String code;//物料号,专用号
 	private String description;//物料名称，规格型号
 	private boolean isConfigurable;//是否为可配置物料
-	private boolean isPurchased;//类型
+	private boolean isPurchased;//类型  1:采购  0:生产
 	private String unitName;//计量单位名称
 	private double acturalPrice;//产品实卖价
 	private double transcationPrice;//转移价
@@ -38,6 +38,27 @@ public class Material implements Serializable{
 	private Date produceDate;//生产开始时间
 	private Date onStoreDate;//入库时间
 	private double standardPrice;//标准价格
+	private String groupCode;//物料分组
+	private String groupName;//类型名称
+	private String clazzCode;
+	public String getClazzCode() {
+		return clazzCode;
+	}
+	public void setClazzCode(String clazzCode) {
+		this.clazzCode = clazzCode;
+	}
+	public String getGroupCode() {
+		return groupCode;
+	}
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
 	public String getCode() {
 		return code;
 	}
