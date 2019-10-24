@@ -3,7 +3,7 @@ package com.qhc.steigenberger.domain;
 public class OrderAddress {
 	
 	
-	//省市区
+	//省市区 00/00/00
 	private String pca;
 	//地址
 	private String address;
