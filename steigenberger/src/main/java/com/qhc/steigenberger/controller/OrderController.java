@@ -78,7 +78,7 @@ public class OrderController {
 
 	@PostMapping("dealer")
 	@ResponseBody
-	public ModelAndView submitDlealerOrder(@Valid @ModelAttribute DealerOrder form, ModelAndView model,
+	public ModelAndView submitDlealerOrder(@Valid @ModelAttribute DealerOrder orderData, ModelAndView model,
 			@RequestParam(value = "action", required = true) String action, HttpServletRequest request,
 			BindingResult bindingResult) {
 
@@ -91,24 +91,24 @@ public class OrderController {
 		// String domainId = (String)object;
 		String domainId = "wangch";
 
-		form.setCurrentUser(domainId);
+		orderData.setCurrentUser(domainId);
 		//
 		switch (action) {
 		case FORM_WTW_MARGIN:
-			form.setSubmitType(4);
+			orderData.setSubmitType(4);
 			break;
 		case FORM_MARGIN:
-			form.setSubmitType(3);
+			orderData.setSubmitType(3);
 			break;
 		case FORM_SUBMIT:
-			form.setSubmitType(2);
+			orderData.setSubmitType(2);
 			break;
 		default:
-			form.setSubmitType(1);
+			orderData.setSubmitType(1);
 		}
 
-		form.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
-		orderService.saveOrder(form);
+		orderData.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
+		orderService.saveOrder(orderData);
 
 		return MenuController.goDealerOrder();
 	}

@@ -22,11 +22,21 @@ public class DealerOrder extends AbsOrder{
 	
 	private double bodyDiscount;//柜体折扣 standard discount
 	
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
 	private double mainDiscount;//机组折扣 standard discount
 	
 	private int isLongterm;//是否为长期折扣
 	
 	private double approvedDicount;//批准的折扣、标准折扣
+	
+	private String paymentType;//结算方式
 	
 	//
 

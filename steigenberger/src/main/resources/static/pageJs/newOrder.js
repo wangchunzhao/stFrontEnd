@@ -636,6 +636,8 @@ function openConfig(identification){
 	        var obj = $("#materialConfigForm").find("*[name=" + name + "]");
 	        obj.val(val);
 	    });
+	}else{
+		$("#configRemark").val('');
 	}
 	//$("#configTable").bootstrapTable('load', [{'isOptional':'可选项','name':'柜内颜色','configs':[{'code':'1','name':'标准白色'},{'code':'2','name':'标准黑色色'}]}]);
 		
@@ -854,6 +856,21 @@ function removeAddress(index){
 			}
 		$('#addressTable').bootstrapTable("updateCell",rows);
 	}
+}
+
+function saveOrder(){
+	 var orderData = $("#orderForm").serializeObject();
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 orderData.items = items;
+	 $.ajax({
+		    url: "/steigenberger/order/dealer",
+		    data: {action: 'save',orderData: JSON.stringify(orderData)},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		       fillMaterailValue(data); 
+		    }
+	});
 }
 
 var materialTypeColumn = [ {

@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.domain.form;
 
+import java.util.Date;
 import java.util.List;
 
 import com.qhc.steigenberger.domain.OrderAddress;
@@ -12,24 +13,7 @@ import com.qhc.steigenberger.domain.OrderAddress;
  *
  */
 public abstract class AbsOrder {
-	public String getCustomerClazzCode() {
-		return customerClazzCode;
-	}
-	public void setCustomerClazzCode(String customerClazzCode) {
-		this.customerClazzCode = customerClazzCode;
-	}
-	public String getCustomerClazzName() {
-		return customerClazzName;
-	}
-	public void setCustomerClazzName(String customerClazzName) {
-		this.customerClazzName = customerClazzName;
-	}
-	public String getTerminalType() {
-		return terminalType;
-	}
-	public void setTerminalType(String terminalType) {
-		this.terminalType = terminalType;
-	}
+	
 	public final static String ORDER_TYPE_CODE_DEALER = "Z001";
 	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
 	public final static String ORDER_TYPE_CODE_BULK = "Z003";
@@ -65,7 +49,10 @@ public abstract class AbsOrder {
 	private double contractRMBValue;//合同金额 Contract amount
 	private String currency;//币种 currency
 	private double currencyExchange;//汇率 exchange rate
-	//public abstract double getItemsAmount();//购销明细金额合计 Aggregate amount
+	private double itemsAmount;//购销明细金额合计 Aggregate amount
+	private String contractManager;//合同管理员
+	private Date inputDate;//录入日期
+	
 	/*
 	 * 合同详细信息 Contract details
 	 */
@@ -73,19 +60,16 @@ public abstract class AbsOrder {
 	private String groupCode;//中心 center
 	private int warrenty;//保修年限
 	private String installCode;//安装方式 installation
-	private String provinceCode; //地区 Region,到货地址 Address
-	private String cityCode; //地区 Region,到货地址 Address
-	private String distinctCode; //地区 Region,到货地址 Address
-	private String address; //地区 Region,到货地址 Address
 	private String contactor1Id;//授权人1及身份证号
-	private String contactor1Tel;//授权人1及身份证号
+	private String contactor1Tel;//授权人1电话
 	private String contactor2Id;//授权人2及身份证号
-	private String contactor2Tel;//授权人2及身份证号
+	private String contactor2Tel;//授权人2电话
 	private String contactor3Id;//授权人3及身份证号
-	private String contactor3Tel;//授权人3及身份证号
+	private String contactor3Tel;//授权人3电话
 	private String confirmTypeCode;//收货方式 Receiving way
 	private String transferTypeCode;//运输类型 Type of transportation
 	private double freight;//运费
+	
 	/**
 	 * 结算方式 Method of payment
 	 */
@@ -101,6 +85,24 @@ public abstract class AbsOrder {
 	 * 购销明细 Purchase and sale subsidiar
 	 */
 	private List<ProductItem> items;//购销明细
+	public double getItemsAmount() {
+		return itemsAmount;
+	}
+	public void setItemsAmount(double itemsAmount) {
+		this.itemsAmount = itemsAmount;
+	}
+	public String getContractManager() {
+		return contractManager;
+	}
+	public void setContractManager(String contractManager) {
+		this.contractManager = contractManager;
+	}
+	public Date getInputDate() {
+		return inputDate;
+	}
+	public void setInputDate(Date inputDate) {
+		this.inputDate = inputDate;
+	}
 	private String comments;//备注
 	//合同明细地址
 	private List<OrderAddress> orderAddress;
@@ -342,31 +344,7 @@ public abstract class AbsOrder {
 	public void setInstallCode(String installCode) {
 		this.installCode = installCode;
 	}
-	public String getProvinceCode() {
-		return provinceCode;
-	}
-	public void setProvinceCode(String provinceCode) {
-		this.provinceCode = provinceCode;
-	}
-	public String getCityCode() {
-		return cityCode;
-	}
-	public void setCityCode(String cityCode) {
-		this.cityCode = cityCode;
-	}
-	public String getDistinctCode() {
-		return distinctCode;
-	}
-	public void setDistinctCode(String distinctCode) {
-		this.distinctCode = distinctCode;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
+	
 	public double getFreight() {
 		return freight;
 	}
@@ -385,5 +363,22 @@ public abstract class AbsOrder {
 	public void setSalesCode(String salesCode) {
 		this.salesCode = salesCode;
 	}
-	
+	public String getCustomerClazzCode() {
+		return customerClazzCode;
+	}
+	public void setCustomerClazzCode(String customerClazzCode) {
+		this.customerClazzCode = customerClazzCode;
+	}
+	public String getCustomerClazzName() {
+		return customerClazzName;
+	}
+	public void setCustomerClazzName(String customerClazzName) {
+		this.customerClazzName = customerClazzName;
+	}
+	public String getTerminalType() {
+		return terminalType;
+	}
+	public void setTerminalType(String terminalType) {
+		this.terminalType = terminalType;
+	}
 }

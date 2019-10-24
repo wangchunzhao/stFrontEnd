@@ -15,7 +15,7 @@
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
 		<!-- //header-ends -->
 		<!-- main content start-->
-		<form method="post" role="form" action="/steigenberger/order/dealer" th:object="${order_option}">
+		<form method="post" role="form" id="orderForm" th:object="${order_option}">
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
 		<input type="hidden"  name="action" value="submit">
 		<div id="page-wrapper">
@@ -46,7 +46,8 @@
 								<span class="col-md-1 control-label">签约单位</span>
 							    <div class="col-md-2">
 							    <div class="input-group">
-				                    <input type="text" class="form-control" disabled id="customer">
+				                    <input type="text" class="form-control" readonly id="customer">
+				                    <input type="hidden" name="contracterCode">
 				                    <span class="input-group-btn">
 				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
 				                        	<span class="glyphicon glyphicon-search"></span>
@@ -56,33 +57,33 @@
 							    </div>
 							    <span class="col-md-1 control-label">性质分类</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="customerClazz" disabled>
+							      <input type="text" class="form-control" id="customerClazz" readonly>
 							    </div>
 							    <span class="col-md-1 control-label">店名</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="">
+							      <input type="text" class="form-control" id="" name="customerName">
 							    </div>
 								<span class="col-md-1 control-label">项目报备编号</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="">
+							      <input type="text" class="form-control" id="" name="recordCode">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">客户经理</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="" disabled>
+							      <input type="text" class="form-control" id="" readonly name="salesCode">
 							    </div>
 							    <span class="col-md-1 control-label">客户经理电话</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="">
+							      <input type="text" class="form-control" id="" name="salesTelnumber">
 							    </div>
 						    	<span class="col-md-1  control-label">是否改造店</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="" disabled>
+							      <input type="text" class="form-control" id="" readonly>
 							    </div>
 								 <span class="col-md-1 control-label">终端客户性质</span>
 								<div class="col-md-2">
-							      <select class="form-control">
+							      <select class="form-control" name="customerNatureCode">
 										<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 									</select>
 							    </div>
@@ -90,14 +91,14 @@
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">便利店</span>
 								<div class="col-md-2">
-							      <select class="form-control">
+							      <select class="form-control" name="isConvenientStore">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">新客户</span>
 								<div class="col-md-2">
-							      <select class="form-control">
+							      <select class="form-control" name="isNew">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
@@ -118,64 +119,64 @@
 							<div class="row">
 								<span class="col-md-1 control-label">流水号</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}" disabled>
+							      <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{sequenceNumber}" readonly>
 							    </div>
 							    <span class="col-md-1 control-label">合同号</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp"  disabled> <!-- th:field="*{contractNumber}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp"  naem="contractNumber" readonly> <!-- th:field="*{contractNumber}" -->
 							    </div>
 							    <span class="col-md-1 control-label">销售类型</span>
 								<div class="col-md-2">
-									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]])">
+									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]])" name="saleType">
 										<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">税率</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxtRate" disabled>
+									<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxtRate" readonly name="taxRate">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">原币合同金额</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" >
+									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" name="contractValue" >
 							    </div>
 							    <span class="col-md-1 control-label">币种</span>
 								<div class="col-md-2">
-									<select class="form-control"  id="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])"><!--  th:field="*{currency}"-->
+									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])"><!--  th:field="*{currency}"-->
 									    <option value="">--选择币种--</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">合同金额</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="contractAmount"aria-describedby="emailHelp"><!-- th:field="*{contractValue}" -->
+									<input type="text" class="form-control" id="contractAmount"aria-describedby="emailHelp" name="contractRMBValue"><!-- th:field="*{contractValue}" -->
 							    </div>
 							    <span class="col-md-1 control-label">购销明细金额合计</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="itemsAmount">
 							    </div>	
 							</div>
 							<div class="row" style="padding-top: 10px;">
 								<span class="col-md-1 control-label">汇率</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" disabled>
+									<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" readonly name="currencyExchange">
 							    </div>
 							    <span class="col-md-1 control-label">国际贸易条件</span>
 								<div class="col-xs-12 col-md-1" style="padding-right: 1px;">
-									<select class="form-control" ><!-- th:field="*{incoterm}" -->
+									<select class="form-control" name="incoterm"><!-- th:field="*{incoterm}" -->
 										<option th:each="incoterm : ${incoterms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
-									<input type="text" class="form-control" aria-describedby="emailHelp" ><!--  th:field="*{incotermContect}"-->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="incotermContect"><!--  th:field="*{incotermContect}"-->
 								</div>
 								<span class="col-md-1 control-label">合同管理员</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contractManager">
 							    </div>
 							    <span class="col-md-1 control-label">录入日期</span>
 							    <div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="inputDate">
 							    </div>
 							</div>
 						</div>
@@ -193,23 +194,23 @@
 							<div class="row">
 							 	<span class="col-md-1 control-label">大区</span>
 								<div class="col-md-2">
-									<select class="form-control" id="officeSelect" th:onchange="getGroups(this,[[${order_option.groups}]])">
+									<select class="form-control" id="officeSelect" th:onchange="getGroups(this,[[${order_option.groups}]])" name="officeCode">
 										<option value="">--选择大区--</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">中心</span>
 								<div class="col-md-2">
-									<select class="form-control" id="selectGroup">
+									<select class="form-control" id="selectGroup" name="groupCode">
 										<option value="">--选择中心--</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">保修年限</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp"><!-- th:field="*{warrenty}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="warrenty"><!-- th:field="*{warrenty}" -->
 							    </div>
 							    <span class="col-md-1 control-label">安装方式</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{installCode}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="installCode"><!-- th:field="*{installCode}" -->
 							    </div>
 							</div>
 							<div class="row">
@@ -223,55 +224,55 @@
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">收货方式</span>
 								<div class="col-md-2">
-									<select class="form-control"><!--  th:field="*{confirmTypeCode}" -->
+									<select class="form-control" name="confirmTypeCode"><!--  th:field="*{confirmTypeCode}" -->
 										<option th:each="receiveTerm : ${order_option.receiveTerms}" th:value="${receiveTerm.key}" th:text="${receiveTerm.value}"></option>
 									</select>
 							    </div>
 								<span class="col-md-1 control-label">运输方式</span>
 								<div class="col-md-2">
-									<select class="form-control" >
+									<select class="form-control" name="transferTypeCode">
 										<option th:each="shippingType : ${order_option.shippingTypes}" th:value="${shippingType.key}" th:text="${shippingType.value}"></option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{approvedDicount}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount"><!-- th:field="*{approvedDicount}" -->
 							    </div>
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
 									<div class="col-md-2">
-										<input type="text" class="form-control" aria-describedby="emailHelp" id="freight"><!-- th:field="*{freight}" -->
+										<input type="text" class="form-control" aria-describedby="emailHelp" id="freight" name="freight"><!-- th:field="*{freight}" -->
 								    </div>
 							    </div>				
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">授权人1及身份证号</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" aria-describedby="emailHelp" ><!-- th:field="*{contactor1Id}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contactor1Id"><!-- th:field="*{contactor1Id}" -->
 							    </div>
 							    <span class="col-md-1 control-label">授权人1电话</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" aria-describedby="emailHelp"><!-- th:field="*{contactor1Tel}"  -->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contactor1Tel"><!-- th:field="*{contactor1Tel}"  -->
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">授权人2及身份证号</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" aria-describedby="emailHelp">
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contactor2Id">
 							    </div>
 							    <span class="col-md-1 control-label">授权人2电话</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contactor2Tel">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">授权人3及身份证号</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contactor3Id" >
 							    </div>
 							    <span class="col-md-1 control-label">授权人3电话</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="contactor3Tel">
 							    </div>
 							</div>
 						</div>
@@ -288,7 +289,7 @@
 								 <div class="row">
 								 	<span class="col-md-2 control-label">结算方式</span>
 									<div class="col-md-10">
-										<select class="form-control"><!--  th:field="*{confirmTypeCode}" -->
+										<select class="form-control" name="paymentType"><!--  th:field="*{confirmTypeCode}" -->
 											<option value="1" class="">1</option>
 											<option value="2" class="">2</option>
 											<option value="3" class="">3</option>
@@ -332,19 +333,19 @@
 									立柜柜体是否在地下室
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<select class="form-control">
+									<select class="form-control" name="isTerm1">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<select class="form-control">
+									<select class="form-control" name="isTerm2">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<select class="form-control">
+									<select class="form-control" name="isTerm3">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
@@ -446,7 +447,7 @@
 									备注 Remark
 								</div>
 								<div class="col-xs-12 col-md-12">
-									<textarea class="form-control" rows="3"></textarea>
+									<textarea class="form-control" rows="3" name="comments"></textarea>
 								</div>
 							</div>
 						</div>
@@ -597,7 +598,7 @@
 				</div>
 
 			</div>
-			<button type="submit" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" name="save" value="save">保存 save</button><button type="submit" class="btn btn-primary pull-right" style="margin-left: 30px;" name="action" value="submit">提交 submit</button><button type="button" class="btn pull-right btn-warning">返回 back</button>
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" name="save" value="save" onclick="saveOrder()">保存 save</button><button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" name="action" value="submit">提交 submit</button><button type="button" class="btn pull-right btn-warning">返回 back</button>
 				
 		</div>
 		</form>

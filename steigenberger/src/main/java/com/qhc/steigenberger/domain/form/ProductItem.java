@@ -35,7 +35,7 @@ public class ProductItem {
 	private double standardPrice;//标准价格
 	private String groupCode;//物料分组
 	private String groupName;//类型名称
-	private List<ConfigItem> configs;
+	private List<ConfigItem> configs;//配置表数据
 	public String getCode() {
 		return code;
 	}

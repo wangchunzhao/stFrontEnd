@@ -2,9 +2,9 @@ package com.qhc.steigenberger.domain;
 
 public class ConfigItem {
 	
-	private String option;
-	private String configCode;
-	private String configValueCode;
+	private String option;//可选、必选
+	private String configCode;//配置项
+	private String configValueCode;//配置值
 	public String getOption() {
 		return option;
 	}
