@@ -862,14 +862,15 @@ function saveOrder(){
 	 var orderData = $("#orderForm").serializeObject();
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
+	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	 $.ajax({
-		    url: "/steigenberger/order/dealer",
-		    data: {action: 'save',orderData: JSON.stringify(orderData)},
+		    url: "/steigenberger/order/dealer?action="+'save',
+		    contentType: "application/json;charset=UTF-8",
+		    data: JSON.stringify(orderData),
 		    type: "POST",
 		    dataType: "json",
-		    success: function(data) {
-		       fillMaterailValue(data); 
-		    }
+		    success: function(data) { 
+		    }	 
 	});
 }
 

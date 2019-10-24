@@ -78,7 +78,7 @@ public class OrderController {
 
 	@PostMapping("dealer")
 	@ResponseBody
-	public ModelAndView submitDlealerOrder(@Valid @ModelAttribute DealerOrder orderData, ModelAndView model,
+	public ModelAndView submitDlealerOrder(@RequestBody DealerOrder orderData, ModelAndView model,
 			@RequestParam(value = "action", required = true) String action, HttpServletRequest request,
 			BindingResult bindingResult) {
 
@@ -87,12 +87,8 @@ public class OrderController {
 			return MenuController.goDealerOrder();
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
-		// if(object!=null && object instanceof String) {
-		// String domainId = (String)object;
 		String domainId = "wangch";
-
 		orderData.setCurrentUser(domainId);
-		//
 		switch (action) {
 		case FORM_WTW_MARGIN:
 			orderData.setSubmitType(4);
