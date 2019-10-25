@@ -31,6 +31,7 @@ import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
+import com.qhc.steigenberger.domain.form.BaseOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
@@ -178,8 +179,21 @@ public class OrderController {
     @ApiOperation(value="查询订单", notes="查询订单")
     @PostMapping(value = "query")
 	@ResponseBody
-    public List<SalesOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {	
+    public List<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {	
     	return orderService.findOrders(query);
+    }
+    
+    /**
+     * 查询订单
+     * @param orderId
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value="查询Dealer订单详情", notes="查询Dealer订单详情")
+    @PostMapping(value = "order/dealerOrder")
+    @ResponseStatus(HttpStatus.OK)
+    public DealerOrder getDealerOrder(@RequestParam String sequenceNumber, @RequestParam String versionId) throws Exception {	
+    	return orderService.findDealerOrder(sequenceNumber, versionId);
     }
     
     /**
