@@ -4,9 +4,9 @@
 package com.qhc.steigenberger.domain.form;
 
 /**
- * @author wang@dxc.com
+ * @author wwang67
  *
  */
-public class BulkOrder extends AbsOrderBulk {
-
+public abstract class AbsCharacteristic {
+	
 }
