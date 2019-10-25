@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.domain.form;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -98,7 +99,9 @@ public abstract class AbsOrder {
 	private String currentVersion;//当前版本,创建时steigenberger创建
 	private String userOfficeCode;//用户所在销售办公室
 
-	
+	public AbsOrder() {
+		this.items = new ArrayList<AbsItem>();
+	}
 	public String getCurrentVersion() {
 		return currentVersion;
 	}
