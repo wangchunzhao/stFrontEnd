@@ -86,6 +86,7 @@ public class OrderController {
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		String domainId = "wangch";
+
 		orderData.setCurrentUser(domainId);
 		orderData.setUserOfficeCode("1234");
 

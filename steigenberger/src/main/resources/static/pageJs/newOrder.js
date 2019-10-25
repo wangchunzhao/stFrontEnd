@@ -605,9 +605,9 @@ function addMaterialAddress(){
 	$("#materialAddressTable").on('click-row.bs.table',function($element,row,field){
 		$('#materialAddressModal').modal('hide');
 		if(row.pca==''){
-			$("#materialAddress").val(row.shippingAddress);
+			$("#materialAddress").val(row.address);
 		}else{
-			$("#materialAddress").val(row.pca+"/"+row.shippingAddress);
+			$("#materialAddress").val(row.pca+"/"+row.address);
 		}
 		
 	})
@@ -619,12 +619,12 @@ function addAddress(){
 }
 
 function openConfig(identification){
-	debugger
 	$("#materialconfigModal").modal('show');
 	var value = identification.split(',')
 	$("#materialConfigClazzCode").val(value[2]);
 	$("#materialConfigCode").val(value[1]);
 	$("#identification").val(value[0]);
+	$("#viewPrice").val(value[3]);
 	var url = "/steigenberger/order/material/configurations"
 	var configTable = new TableInit('configTable',url,queryConfigParams,configTableColumns);
 	configTable.init();
@@ -795,7 +795,7 @@ function confirmAddress(){
 		    	provinceValue:provinceValue,
 		    	cityValue:cityValue,
 		    	areaValue:areaValue,
-		    	shippingAddress:shippingAddress
+		    	address:shippingAddress
 		    }
 		});
 	}else{
@@ -871,6 +871,28 @@ function saveOrder(){
 		    dataType: "json",
 		    success: function(data) { 
 		    }	 
+	});
+}
+
+function viewConfig(){
+	var bomCode = $("#materialConfigCode").val();
+	var formData = $("#materialConfigForm").serializeObject();
+	formData.bomCode = bomCode;
+	$.ajax({
+	    url: "/steigenberger/order/material/configuration",
+	    contentType: "application/json;charset=UTF-8",
+	    data: JSON.stringify(formData),
+	    type: "POST",
+	    dataType: "json",
+	    success: function(data) { 
+	    	$("#moreConfig").attr("style","display:block;");
+	    	$("#viewCode").val($("#materialConfigCode").val());
+	    	$("#viewPrice").val($("#viewPrice").val());
+	    	$("#configPrice").val(data.priceGap);
+	    },
+	    error: function(){
+	    	$("#viewError").attr("style","display:block;");
+	    }
 	});
 }
 
@@ -951,7 +973,7 @@ var materialsAddressColumns = [{
 	visible:false
 },{
 	title : '到货地址',
-	field : 'shippingAddress',
+	field : 'address',
 	width:'45%'
 }]
 
@@ -973,16 +995,22 @@ var configTableColumns = [
 	field:'name',
 	width:'35%',
 	formatter: function(value, row, index) {
-    	var text = '<input type="text" class="form-control" value=\'' + value + '\' readonly>'
-		return text;
+    	var text = '<input type="text" class="form-control" value=\'' + value + '\'readonly>'
+    	var textCode = '<input type="hidden"value=\'' + row.code + '\' name="configCode" >'
+		return text+textCode;
     }
+},
+{
+	title:'',
+	visible:false,
+	field:'code'
 },
 {
 	title:'配置值',
 	field:'configs',
 	width:'50%',
 	formatter: function(value, row, index) {
-    	var start = '<select class="form-control" name=\'' +'name'+ row.code + '\'>';
+    	var start = '<select class="form-control" name="configValueCode">';
     	var end = '</select>';
     	$.each(value,function(index,item){
     		start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
