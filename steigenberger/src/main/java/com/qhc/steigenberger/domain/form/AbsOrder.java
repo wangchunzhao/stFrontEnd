@@ -93,7 +93,7 @@ public abstract class AbsOrder {
 	 * 购销明细 Purchase and sale subsidiar
 	 */
 	//private List<ProductItem> items;//购销明细
-	private AbsForm form;
+	private List<AbsItem> items;
 	private String comments;//备注
 	private List<OrderAddress> orderAddress;//合同明细地址
 	
@@ -171,13 +171,12 @@ public abstract class AbsOrder {
 	public void setInputDate(Date inputDate) {
 		this.inputDate = inputDate;
 	}
-	
-	
-	public AbsForm getForm() {
-		return form;
+		
+	public List<AbsItem> getItems() {
+		return items;
 	}
-	public void setForm(AbsForm form) {
-		this.form = form;
+	public void setItems(List<AbsItem> items) {
+		this.items = items;
 	}
 	public List<OrderAddress> getOrderAddress() {
 		return orderAddress;
