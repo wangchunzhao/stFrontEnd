@@ -89,6 +89,7 @@ public class OrderController {
 
 		orderData.setCurrentUser(domainId);
 		orderData.setUserOfficeCode("1234");
+		orderData.setCurrentVersion("123");
 
 		switch (action) {
 

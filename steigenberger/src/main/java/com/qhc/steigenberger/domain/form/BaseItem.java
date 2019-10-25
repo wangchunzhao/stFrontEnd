@@ -8,5 +8,5 @@ package com.qhc.steigenberger.domain.form;
  *
  */
 public class BaseItem  extends AbsItem{
-
+	
 }

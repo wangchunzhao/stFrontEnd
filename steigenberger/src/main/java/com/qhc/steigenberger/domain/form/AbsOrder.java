@@ -100,7 +100,7 @@ public abstract class AbsOrder {
 	private String userOfficeCode;//用户所在销售办公室
 
 	public AbsOrder() {
-		this.items = new ArrayList();
+		
 	}
 	public String getCurrentVersion() {
 		return currentVersion;
