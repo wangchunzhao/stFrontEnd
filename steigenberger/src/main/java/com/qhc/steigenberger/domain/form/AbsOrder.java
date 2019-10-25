@@ -43,11 +43,13 @@ public abstract class AbsOrder {
 	private String contractNumber;//合同号 contract no
 	private String saleType;//销售类型 Sales type
 	private double taxRate;//税率 Rate
-	private String incoterm;//国际贸易条件 international trade
-	private String incotermContect;//国际贸易条件 international trade
+	private String incoterm;//国际贸易条件code
+	private String incotermName;//国际贸易条件名称
+	private String incotermContect;//国际贸易条件内容
 	private double contractValue;//原币合同金额 Contract amount
 	private double contractRMBValue;//合同金额 Contract amount
 	private String currency;//币种 currency
+	private String currencyName;//币种名称
 	private double currencyExchange;//汇率 exchange rate
 	private double itemsAmount;//购销明细金额合计 Aggregate amount
 	private String contractManager;//合同管理员
@@ -57,9 +59,12 @@ public abstract class AbsOrder {
 	 * 合同详细信息 Contract details
 	 */
 	private String officeCode;//大区 area
+	private String officeName;//大区 name
 	private String groupCode;//中心 center
+	private String groupName;//中心name
 	private int warrenty;//保修年限
 	private String installCode;//安装方式 installation
+	private String installName;//安装方式名称
 	private String contactor1Id;//授权人1及身份证号
 	private String contactor1Tel;//授权人1电话
 	private String contactor2Id;//授权人2及身份证号
@@ -67,9 +72,10 @@ public abstract class AbsOrder {
 	private String contactor3Id;//授权人3及身份证号
 	private String contactor3Tel;//授权人3电话
 	private String confirmTypeCode;//收货方式 Receiving way
-	private String transferTypeCode;//运输类型 Type of transportation
-	private double freight;//运费
-	
+	private String confirmTypeName;//收货方式名称
+	private String transferTypeCode;//运输类型code
+	private String transferTypeName;//运输类型名称
+	private double freight;//运费	
 	/**
 	 * 结算方式 Method of payment
 	 */
@@ -81,10 +87,71 @@ public abstract class AbsOrder {
 	private int isTerm1;//柜体控制阀件是否甲供
 	private int isTerm2;//分体柜是否远程监控
 	private int isTerm3;//立柜柜体是否在地下室
+	private Date earliestDeliveryDate;//要求发货时间,最早交付时间
+	private Date earliestProductDate;//工厂最早交货时间,最早生产时间
 	/**
 	 * 购销明细 Purchase and sale subsidiar
 	 */
-	private List<ProductItem> items;//购销明细
+	private List<ProductItem> items;//购销明细	
+	private String comments;//备注
+	private List<OrderAddress> orderAddress;//合同明细地址
+	
+	
+	
+	public String getIncotermName() {
+		return incotermName;
+	}
+	public void setIncotermName(String incotermName) {
+		this.incotermName = incotermName;
+	}
+	public String getCurrencyName() {
+		return currencyName;
+	}
+	public void setCurrencyName(String currencyName) {
+		this.currencyName = currencyName;
+	}
+	public String getOfficeName() {
+		return officeName;
+	}
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	public String getInstallName() {
+		return installName;
+	}
+	public void setInstallName(String installName) {
+		this.installName = installName;
+	}
+	public String getConfirmTypeName() {
+		return confirmTypeName;
+	}
+	public void setConfirmTypeName(String confirmTypeName) {
+		this.confirmTypeName = confirmTypeName;
+	}
+	public String getTransferTypeName() {
+		return transferTypeName;
+	}
+	public void setTransferTypeName(String transferTypeName) {
+		this.transferTypeName = transferTypeName;
+	}
+	public Date getEarliestDeliveryDate() {
+		return earliestDeliveryDate;
+	}
+	public void setEarliestDeliveryDate(Date earliestDeliveryDate) {
+		this.earliestDeliveryDate = earliestDeliveryDate;
+	}
+	public Date getEarliestProductDate() {
+		return earliestProductDate;
+	}
+	public void setEarliestProductDate(Date earliestProductDate) {
+		this.earliestProductDate = earliestProductDate;
+	}
 	public double getItemsAmount() {
 		return itemsAmount;
 	}
@@ -103,9 +170,7 @@ public abstract class AbsOrder {
 	public void setInputDate(Date inputDate) {
 		this.inputDate = inputDate;
 	}
-	private String comments;//备注
-	//合同明细地址
-	private List<OrderAddress> orderAddress;
+	
 	public List<ProductItem> getItems() {
 		return items;
 	}

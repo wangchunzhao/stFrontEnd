@@ -13,10 +13,13 @@ import com.qhc.steigenberger.domain.ConfigItem;
  *
  */
 public class ProductItem {
-	private String code;//物料号,专用号
-	private String description;//物料名称，规格型号
+	
+	private Integer rowNumber;//行号
+	private String materialCode;//物料号,专用号
+	private String materialName;//物料名称,规格型号
 	private boolean isConfigurable;//是否为可配置物料
 	private boolean isPurchased;//类型  1:采购  0:生产
+	private double quantity;//数量
 	private String unitName;//计量单位名称
 	private String unitCode;//计量单位code
 	private double acturalPrice;//产品实卖价
@@ -26,27 +29,90 @@ public class ProductItem {
 	private double B2CPriceEstimated;//B2C评估价
 	private double B2CCostOfEstimated;//B2C评估成本
 	private double retailPrice;//市场零售价
+	private double standardPrice;//标准价格
 	private double discount;//折扣
 	private int period;//生产、采购周期
 	private Date deliveryDate;//最早交货时间
 	private Date shippDate; //要求发货时间  自己填
 	private Date produceDate;//生产开始时间
-	private Date onStoreDate;//入库时间
-	private double standardPrice;//标准价格
-	private String groupCode;//物料分组
-	private String groupName;//类型名称
-	private List<ConfigItem> configs;//配置表数据
-	public String getCode() {
-		return code;
+	private Date onStoreDate;//入库时间	
+	private String groupCode;//物料类型代码
+	private String groupName;//物料类型名称
+	private String itemCategory;//行项目类别
+	private String itemRequirementPlan;//需求计划
+	private String b2cComments;//B2C备注
+	private String specialComments;//特殊备注
+	private String configComments;//配置表备注(配置表页面)
+	private String mosaicImage;//拼接图备注(配置表页面)
+	private String attachedImage;//拼接图附件(配置表页面)
+	private List<ConfigItem> configs;//配置表数据(配置表页面)
+	
+	
+	public Integer getRowNumber() {
+		return rowNumber;
 	}
-	public void setCode(String code) {
-		this.code = code;
+	public void setRowNumber(Integer rowNumber) {
+		this.rowNumber = rowNumber;
 	}
-	public String getDescription() {
-		return description;
+	public String getMaterialCode() {
+		return materialCode;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMaterialCode(String materialCode) {
+		this.materialCode = materialCode;
+	}
+	public String getMaterialName() {
+		return materialName;
+	}
+	public void setMaterialName(String materialName) {
+		this.materialName = materialName;
+	}
+	public double getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+	public String getItemCategory() {
+		return itemCategory;
+	}
+	public void setItemCategory(String itemCategory) {
+		this.itemCategory = itemCategory;
+	}
+	public String getItemRequirementPlan() {
+		return itemRequirementPlan;
+	}
+	public void setItemRequirementPlan(String itemRequirementPlan) {
+		this.itemRequirementPlan = itemRequirementPlan;
+	}
+	public String getB2cComments() {
+		return b2cComments;
+	}
+	public void setB2cComments(String b2cComments) {
+		this.b2cComments = b2cComments;
+	}
+	public String getSpecialComments() {
+		return specialComments;
+	}
+	public void setSpecialComments(String specialComments) {
+		this.specialComments = specialComments;
+	}
+	public String getConfigComments() {
+		return configComments;
+	}
+	public void setConfigComments(String configComments) {
+		this.configComments = configComments;
+	}
+	public String getMosaicImage() {
+		return mosaicImage;
+	}
+	public void setMosaicImage(String mosaicImage) {
+		this.mosaicImage = mosaicImage;
+	}
+	public String getAttachedImage() {
+		return attachedImage;
+	}
+	public void setAttachedImage(String attachedImage) {
+		this.attachedImage = attachedImage;
 	}
 	public boolean isConfigurable() {
 		return isConfigurable;
