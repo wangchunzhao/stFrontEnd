@@ -89,6 +89,7 @@ public class OrderController {
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		String domainId = "wangch";
+		String officeCode = "1234";
 		orderData.setCurrentUser(domainId);
 		switch (action) {
 		case FORM_WTW_MARGIN:
