@@ -1,4 +1,4 @@
-package com.qhc.steigenberger.domain;
+package com.qhc.steigenberger.domain.form;
 
 public class OrderAddress {
 	

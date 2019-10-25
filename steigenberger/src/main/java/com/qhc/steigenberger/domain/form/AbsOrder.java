@@ -6,8 +6,6 @@ package com.qhc.steigenberger.domain.form;
 import java.util.Date;
 import java.util.List;
 
-import com.qhc.steigenberger.domain.OrderAddress;
-
 /**
  * @author wang@dxc.com
  *
