@@ -44,7 +44,7 @@ public abstract class AbsItem {
 	private String configComments;//配置表备注(配置表页面)
 	private String mosaicImage;//拼接图备注(配置表页面)
 	private String attachedImage;//拼接图附件(配置表页面)
-	private List<ConfigItem> configs;//配置表数据(配置表页面)
+	private List<AbsCharacteristic> configs;//配置表数据(配置表页面)
 	public Integer getRowNumber() {
 		return rowNumber;
 	}
@@ -231,12 +231,11 @@ public abstract class AbsItem {
 	public void setAttachedImage(String attachedImage) {
 		this.attachedImage = attachedImage;
 	}
-	public List<ConfigItem> getConfigs() {
+	public List<AbsCharacteristic> getConfigs() {
 		return configs;
 	}
-	public void setConfigs(List<ConfigItem> configs) {
+	public void setConfigs(List<AbsCharacteristic> configs) {
 		this.configs = configs;
 	}
-	
 	
 }
