@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
+import com.qhc.steigenberger.domain.form.BaseOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.FryeService;
 import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
@@ -159,13 +161,18 @@ public class OrderService {
 		return (List<OrderVersion>)fryeService.getInfo(url,List.class);
 	}
 	
-	public List<SalesOrder> findOrders(OrderQuery query) {
+	public List<BaseOrder> findOrders(OrderQuery query) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"query";
-		return (List<SalesOrder>)fryeService.postInfo(query, url, List.class);
+		return (List<BaseOrder>)fryeService.postInfo(query, url, ArrayList.class);
 	}
 	
 	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {
         String url = URL_MATERIAL_CONFIG+URL_PARAMETER_SEPERATOR+clazzCode+','+materialCode;
         return (List<Characteristic>)fryeService.getInfo(url,List.class);
     }
+	
+	public DealerOrder findDealerOrder(String sequenceNumber, String versionId) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"dealerOrder?sequenceNumber=" + sequenceNumber + "&versionId=" + versionId;
+		return (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+	}
 }
