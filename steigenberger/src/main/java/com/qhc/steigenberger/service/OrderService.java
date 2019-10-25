@@ -24,6 +24,7 @@ import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.config.ApplicationConfig;
+import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SpecialDelivery;
@@ -58,6 +59,7 @@ public class OrderService {
 	
 	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
 	private final static String URL_MATERIAL_CONFIG = "material/configurations";
+	private final static String URL_MATERIAL_BOM = "material/configuration";
 	
 	@Autowired
 	private FryeService fryeService;
@@ -174,5 +176,9 @@ public class OrderService {
 	public DealerOrder findDealerOrder(String sequenceNumber, String versionId) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"dealerOrder?sequenceNumber=" + sequenceNumber + "&versionId=" + versionId;
 		return (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+	}
+	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+URL_MATERIAL_BOM;
+		return (BomExplosion)fryeService.postInfo(pars,url, BomExplosion.class);
 	}
 }
