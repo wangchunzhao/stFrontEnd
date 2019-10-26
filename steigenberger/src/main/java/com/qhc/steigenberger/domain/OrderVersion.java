@@ -2,6 +2,8 @@ package com.qhc.steigenberger.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 public class OrderVersion {
 	String id;
 	String version;
@@ -9,7 +11,8 @@ public class OrderVersion {
 	Date createTime;
 	String kOrdersId;
 	
-	String parentVersionId;
+	private Date submitDate = null;
+	private Date bpmSubmitTime = null;
 	Date optTime;
 	String kOrderInfoId;
 	
@@ -25,12 +28,6 @@ public class OrderVersion {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	public String getParentVersionId() {
-		return parentVersionId;
-	}
-	public void setParentVersionId(String parentVersionId) {
-		this.parentVersionId = parentVersionId;
-	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -42,6 +39,18 @@ public class OrderVersion {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public Date getSubmitDate() {
+		return submitDate;
+	}
+	public void setSubmitDate(Date submitDate) {
+		this.submitDate = submitDate;
+	}
+	public Date getBpmSubmitTime() {
+		return bpmSubmitTime;
+	}
+	public void setBpmSubmitTime(Date bpmSubmitTime) {
+		this.bpmSubmitTime = bpmSubmitTime;
 	}
 	public Date getOptTime() {
 		return optTime;
