@@ -626,18 +626,28 @@ function openConfig(identification){
 	$("#identification").val(value[0]);
 	$("#viewPrice").val(value[3]);
 	var url = "/steigenberger/order/material/configurations"
-	var configTable = new TableInit('configTable',url,queryConfigParams,configTableColumns);
+	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
-	$("#configTable").bootstrapTable('refresh');
 	var configData = localStorage[value[0]];
+	debugger
 	if(configData){
+		$("#configTable").bootstrapTable("removeAll");
 		var jsonObject = JSON.parse(configData);
-	    $.each(jsonObject, function (name, val){
-	        var obj = $("#materialConfigForm").find("*[name=" + name + "]");
-	        obj.val(val);
-	    });
+		for(var i=0;i<jsonObject.configTableData.length;i++){
+			$("#configTable").bootstrapTable('insertRow',{
+				index:i,
+				row:jsonObject.configTableData[i]
+			});
+		}
+		$("#configRemark").val(jsonObject.remark);
+		
 	}else{
-		$("#configRemark").val('');
+		$("#configTable").bootstrapTable('refresh',{
+			url:url,
+			query:{'clazzCode':$("#materialConfigClazzCode").val(),
+				   'materialCode':$("#materialConfigCode").val()
+			}
+		});
 	}
 	//$("#configTable").bootstrapTable('load', [{'isOptional':'可选项','name':'柜内颜色','configs':[{'code':'1','name':'标准白色'},{'code':'2','name':'标准黑色色'}]}]);
 		
@@ -659,14 +669,12 @@ function closeMaterialConfig(){
 //保存调研表
 function saveMaterialConfig(){
 	var identification = $("#identification").val();
-	/*var configData = new Object();
+	var configData = new Object();
 	var remark = $("#configRemark").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
 	configData.configTableData = configTableData;
-	configData.remark = remark*/
-	debugger
-	var formData = $("#materialConfigForm").serializeObject();
-	localStorage.setItem(identification, JSON.stringify(formData));
+	configData.remark = remark
+	localStorage.setItem(identification, JSON.stringify(configData));
 	$("#materialconfigModal").modal('hide');
 }
 //复制调研表
@@ -862,6 +870,10 @@ function saveOrder(){
 	 var orderData = $("#orderForm").serializeObject();
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
+	 for(var i=0;i<items.length;i++){
+		 items[0]['configs']= localStorage[items[0].identification].configTableData
+		 items[0]['configComments'] = localStorage[items[0].identification].remark
+	 }
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	 $.ajax({
 		    url: "/steigenberger/order/dealer?action="+'save',
@@ -896,6 +908,17 @@ function viewConfig(){
 	});
 }
 
+//设置配置值
+
+function setConfigValueCode(obj,index){
+	var configValueCode = $(obj).val();
+	$("#configTable").bootstrapTable('updateCell', {
+	    index: index,
+	    field:'configValueCode',
+	    value:configValueCode
+	});
+	debugger
+}
 var materialTypeColumn = [ {
 	title : '专用号',
 	field : 'code'
@@ -993,27 +1016,30 @@ var configTableColumns = [
 {
 	title:'配置',
 	field:'name',
-	width:'35%',
-	formatter: function(value, row, index) {
-    	var text = '<input type="text" class="form-control" value=\'' + value + '\'readonly>'
-    	var textCode = '<input type="hidden"value=\'' + row.code + '\' name="configCode" >'
-		return text+textCode;
-    }
+	width:'35%'
 },
 {
 	title:'',
 	visible:false,
 	field:'code'
+},{
+	title:'test',
+	visible:false,
+	field:'configValueCode'
 },
 {
 	title:'配置值',
 	field:'configs',
 	width:'50%',
-	formatter: function(value, row, index) {
-    	var start = '<select class="form-control" name="configValueCode">';
+	formatter: function(value, row, index) {		
+    	var start = '<select class="form-control" name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
     	var end = '</select>';
     	$.each(value,function(index,item){
-    		start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+    		if(item.code==row.configValueCode){
+    			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+    		}else{
+    			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+    		}	
     	})
 		return start+end;
     }
