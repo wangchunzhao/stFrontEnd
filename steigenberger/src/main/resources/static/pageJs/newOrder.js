@@ -325,7 +325,7 @@ function fillMaterailValue(data){
 	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
-	$("#discount").val('40%');
+	$("#discount").val('0.4');
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
 	var acturalPrice = (data.retailPrice*discount)/100
@@ -867,13 +867,17 @@ function removeAddress(index){
 }
 
 function saveOrder(){
+	 debugger
 	 var orderData = $("#orderForm").serializeObject();
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
-		 items[0]['configs']= localStorage[items[0].identification].configTableData
-		 items[0]['configComments'] = localStorage[items[0].identification].remark
+		 var configData = localStorage[items[0].identification];
+		 var jsonObject = JSON.parse(configData);
+		 items[0]['configs']= jsonObject.configTableData
+		 items[0]['configComments'] = jsonObject.remark
 	 }
+
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	 $.ajax({
 		    url: "/steigenberger/order/dealer?action="+'save',
