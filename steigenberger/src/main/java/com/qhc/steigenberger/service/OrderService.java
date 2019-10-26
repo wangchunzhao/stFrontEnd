@@ -166,9 +166,9 @@ public class OrderService {
 		return (List<OrderVersion>)fryeService.getInfo(url,List.class);
 	}
 	
-	public List<BaseOrder> findOrders(OrderQuery query) {
+	public PageHelper<BaseOrder> findOrders(OrderQuery query) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"query";
-		return (List<BaseOrder>)fryeService.postInfo(query, url, ArrayList.class);
+		return (PageHelper<BaseOrder>)fryeService.postInfo(query, url, PageHelper.class);
 	}
 	
 	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {

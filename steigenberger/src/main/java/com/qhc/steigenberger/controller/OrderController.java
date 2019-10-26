@@ -183,7 +183,7 @@ public class OrderController {
 	@ApiOperation(value = "查询订单", notes = "查询订单")
 	@PostMapping(value = "query")
 	@ResponseBody
-	public List<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {
+	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {
 		// 只查询最新的版本
 		query.setLast(true);
 		return orderService.findOrders(query);
