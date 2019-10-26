@@ -92,7 +92,7 @@ public abstract class AbsOrder {
 	 * 购销明细 Purchase and sale subsidiar
 	 */
 	//private List<ProductItem> items;//购销明细
-	private List<AbsItem> items;
+	private List<BaseItem> items;
 	private String comments;//备注
 	private List<OrderAddress> orderAddress;//合同明细地址
 	
@@ -182,14 +182,20 @@ public abstract class AbsOrder {
 		this.inputDate = inputDate;
 	}
 		
-	public List<AbsItem> getItems() {
+	/*public List<AbsItem> getItems() {
 		return items;
 	}
 	public void setItems(List<AbsItem> items) {
 		this.items = items;
-	}
+	}*/
 	public List<OrderAddress> getOrderAddress() {
 		return orderAddress;
+	}
+	public List<BaseItem> getItems() {
+		return items;
+	}
+	public void setItems(List<BaseItem> items) {
+		this.items = items;
 	}
 	public void setOrderAddress(List<OrderAddress> orderAddress) {
 		this.orderAddress = orderAddress;

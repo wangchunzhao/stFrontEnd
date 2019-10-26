@@ -7,6 +7,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,9 @@ import com.qhc.steigenberger.service.UserService;
 
 @Controller
 public class LoginController extends BaseController{
+	
+	@Value("${qhc.ldap}")
+	String ldap;
 	
 	@Autowired
 	UserService userService;
@@ -44,6 +48,9 @@ public class LoginController extends BaseController{
         	}else if(isActive ==0) {
         		modelAndView.addObject("msg","用户已被禁用!");
         		modelAndView.setViewName("login");
+        	}else if("false".equals(ldap)){
+        		modelAndView.setViewName("main");
+        		System.out.println("身份验证成功!");
         	}else {
         		String host = "utccgl.com";//AD域IP，必须填写正确
             	String domain = "utccgl\\";//域名后缀，
