@@ -184,6 +184,8 @@ public class OrderController {
 	@PostMapping(value = "query")
 	@ResponseBody
 	public List<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {
+		// 只查询最新的版本
+		query.setLast(true);
 		return orderService.findOrders(query);
 	}
 
