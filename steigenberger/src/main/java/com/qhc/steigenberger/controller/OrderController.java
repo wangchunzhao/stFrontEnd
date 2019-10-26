@@ -1,8 +1,6 @@
 package com.qhc.steigenberger.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
@@ -34,7 +31,6 @@ import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.BaseOrder;
-import com.qhc.steigenberger.domain.form.BomQueryModel;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
@@ -62,8 +58,7 @@ public class OrderController {
 //	private final static String FORM_SAVE = "save";
 	private final static String FORM_MARGIN = "margin";
 	private final static String FORM_WTW_MARGIN = "wtw";
-	
-	
+
 	private final static String FORM_GROSS_PROFIT = "grossProfit";
 	private final static String FORM_SUBMIT_TYPE_3 = "3";
 	private final static String FORM_SUBMIT_TYPE_4 = "4";
@@ -79,7 +74,6 @@ public class OrderController {
 
 	String newOrder = "下订单";
 
-
 	@PostMapping("dealer")
 	@ResponseBody
 	public ModelAndView submitDlealerOrder(@RequestBody DealerOrder orderData, ModelAndView model,
@@ -92,23 +86,28 @@ public class OrderController {
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		String domainId = "wangch";
-		String officeCode = "1234";
+
 		orderData.setCurrentUser(domainId);
+		orderData.setUserOfficeCode("1234");
+		orderData.setCurrentVersion("123");
+
 		switch (action) {
-		case FORM_WTW_MARGIN:
-			orderData.setSubmitType(4);
-			break;
-		case FORM_MARGIN:
-			orderData.setSubmitType(3);
-			break;
-		case FORM_SUBMIT:
-			orderData.setSubmitType(2);
-			break;
-		default:
-			orderData.setSubmitType(1);
+
+			case FORM_WTW_MARGIN:
+				orderData.setSubmitType(4);
+				break;
+			case FORM_MARGIN:
+				orderData.setSubmitType(3);
+				break;
+			case FORM_SUBMIT:
+				orderData.setSubmitType(2);
+				break;
+			default:
+				orderData.setSubmitType(1);
 		}
 
 		orderData.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
+		
 		orderService.saveOrder(orderData);
 
 		return MenuController.goDealerOrder();
@@ -116,17 +115,18 @@ public class OrderController {
 
 	@RequestMapping("customers")
 	@ResponseBody
-	public PageHelper<Customer> searchCustomer(String clazzCode,String customerName,int pageNo) {
-		PageHelper<Customer> cus = orderService.findCustomer(clazzCode,customerName,pageNo);
+	public PageHelper<Customer> searchCustomer(String clazzCode, String customerName, int pageNo) {
+		PageHelper<Customer> cus = orderService.findCustomer(clazzCode, customerName, pageNo);
 		return cus;
 	}
+
 	@RequestMapping("materials")
 	@ResponseBody
-	public PageHelper<Material> searchMateril(String materialName,int pageNo) {
-		PageHelper<Material> cms = orderService.findMaterialsByName(materialName,pageNo);
+	public PageHelper<Material> searchMateril(String materialName, int pageNo) {
+		PageHelper<Material> cms = orderService.findMaterialsByName(materialName, pageNo);
 		return cms;
 	}
-	
+
 	@RequestMapping("material")
 	@ResponseBody
 	public Material getMaterilById(String code) {
@@ -159,72 +159,61 @@ public class OrderController {
 		return JsonResult.build(401, "fail", null);
 	}
 
-    
-    /**
-     * 查询订单版本历史
-     * @param orderId
-     * @return
-     * @throws Exception
-     */
-    @ApiOperation(value="根据orderId查询订单版本历史", notes="根据orderId查询订单版本历史")
-    @GetMapping(value = "{orderId}/version")
+	/**
+	 * 查询订单版本历史
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "根据orderId查询订单版本历史", notes = "根据orderId查询订单版本历史")
+	@GetMapping(value = "{orderId}/version")
 	@ResponseBody
-    public List<OrderVersion> orderVersions(@PathVariable String orderId) throws Exception {	
-    	return orderService.findOrderVersions(orderId);
-    }
+	public List<OrderVersion> orderVersions(@PathVariable String orderId) throws Exception {
+		return orderService.findOrderVersions(orderId);
+	}
 
-    
-    /**
-     * 查询订单版本历史
-     * @param orderId
-     * @return
-     * @throws Exception
-     */
-    @ApiOperation(value="查询订单", notes="查询订单")
-    @PostMapping(value = "query")
+	/**
+	 * 查询订单版本历史
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "查询订单", notes = "查询订单")
+	@PostMapping(value = "query")
 	@ResponseBody
-    public List<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {	
-    	return orderService.findOrders(query);
-    }
-    
-    /**
-     * 查询订单
-     * @param orderId
-     * @return
-     * @throws Exception
-     */
-    @ApiOperation(value="查询Dealer订单详情", notes="查询Dealer订单详情")
-    @PostMapping(value = "order/dealerOrder")
-    @ResponseStatus(HttpStatus.OK)
-    public DealerOrder getDealerOrder(@RequestParam String sequenceNumber, @RequestParam String versionId) throws Exception {	
-    	return orderService.findDealerOrder(sequenceNumber, versionId);
-    }
-    
-    /**
-     * 查询物料配置
-     * @param clazzCode
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "material/configurations")
-    @ResponseBody
-    public List<Characteristic> findCharacteristic(String clazzCode,String materialCode) {
-        return orderService.getCharactersByClazzCode(clazzCode,materialCode);
-        
-    }
-    
-    @ApiOperation(value = "根据BOM配置获取新的Characteristic和value")
-	@PostMapping(value = "material/configuration")
+	public List<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {
+		return orderService.findOrders(query);
+	}
+
+	/**
+	 * 查询订单
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "查询Dealer订单详情", notes = "查询Dealer订单详情")
+	@PostMapping(value = "order/dealerOrder")
 	@ResponseStatus(HttpStatus.OK)
-	public BomExplosion findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
-			Map<String, String> pars = new HashMap<>();
-			List<String> configCodes = model.getConfigCode();
-			List<String> configValueCodes = model.getConfigValueCode();
-			for(int i=0;i<configCodes.size();i++){
-				pars.put(configCodes.get(i), configValueCodes.get(i));
-			}
-			pars.put("bom_code", model.getBomCode());
-			return orderService.findBOMWithPrice(pars);	
+	public DealerOrder getDealerOrder(@RequestParam String sequenceNumber, @RequestParam String versionId)
+			throws Exception {
+		return orderService.findDealerOrder(sequenceNumber, versionId);
+	}
+
+	/**
+	 * 查询物料配置
+	 * 
+	 * @param clazzCode
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "material/configurations")
+	@ResponseBody
+	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
+		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
+
 	}
 
 }

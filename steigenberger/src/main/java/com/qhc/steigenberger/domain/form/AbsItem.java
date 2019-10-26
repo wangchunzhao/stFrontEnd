@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.domain.form;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,10 @@ public abstract class AbsItem {
 	private String mosaicImage;//拼接图备注(配置表页面)
 	private String attachedImage;//拼接图附件(配置表页面)
 	private List<AbsCharacteristic> configs;//配置表数据(配置表页面)
+	
+	public AbsItem() {
+		configs = new ArrayList<AbsCharacteristic>();
+	}
 	public Integer getRowNumber() {
 		return rowNumber;
 	}

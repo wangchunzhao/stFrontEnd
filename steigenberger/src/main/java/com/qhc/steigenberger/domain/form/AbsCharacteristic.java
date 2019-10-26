@@ -11,6 +11,10 @@ public abstract class AbsCharacteristic {
 	private String option;//可选、必选
 	private String configCode;//配置项
 	private String configValueCode;//配置值
+	
+	public AbsCharacteristic() {
+		
+	}
 	public String getOption() {
 		return option;
 	}

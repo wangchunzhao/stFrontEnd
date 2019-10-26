@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.domain.form;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +96,18 @@ public abstract class AbsOrder {
 	private String comments;//备注
 	private List<OrderAddress> orderAddress;//合同明细地址
 	
-	
+	private String currentVersion;//当前版本,创建时steigenberger创建
+	private String userOfficeCode;//用户所在销售办公室
+
+	public AbsOrder() {
+		
+	}
+	public String getCurrentVersion() {
+		return currentVersion;
+	}
+	public void setCurrentVersion(String currentVersion) {
+		this.currentVersion = currentVersion;
+	}
 	
 	public String getIncotermName() {
 		return incotermName;
@@ -445,4 +457,11 @@ public abstract class AbsOrder {
 	public void setTerminalType(String terminalType) {
 		this.terminalType = terminalType;
 	}
+	public String getUserOfficeCode() {
+		return userOfficeCode;
+	}
+	public void setUserOfficeCode(String userOfficeCode) {
+		this.userOfficeCode = userOfficeCode;
+	}
+	
 }
