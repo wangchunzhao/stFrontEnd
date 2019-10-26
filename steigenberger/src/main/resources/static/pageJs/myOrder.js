@@ -17,9 +17,9 @@ var TableInit = function () {
 	
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
-			method : 'get',
+			method : 'post',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/kOrderInfo/kOrderInfoList",//请求路径
+			url : "/steigenberger/order/query",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -35,68 +35,42 @@ var TableInit = function () {
 			showRefresh : false,//刷新按钮
 			queryParams : function (params) {
 			    var temp = {
-			        limit : params.limit, // 每页显示数量
-			        offset : params.offset, // SQL语句起始索引
-			        page: (params.offset / params.limit) + 1,   //当前页码
+			    	pageSize: params.limit, // 每页显示数量
+//			        offset : params.offset, // SQL语句起始索引
+			    	pageNo: (params.offset / params.limit)   //当前页码
 		
-			        id:$('#id').val(),
-			        contractNo:$('#contractNo').val(),
-			        contractUnit:$('#contractUnit').val(),
-			        area:$('#area').val(),
-			        orderType:$('#orderType').val(),
-			        b2c:$('#b2c').val(),
-			        specialDiscount:$('#specialDiscount').val(),
-			        createTime1:$('#reservation').val(),
-			        status:$('#status').val()
+//			        id:$('#id').val()
 			       // Tel:$('#search_tel').val()
 			    };
 			    return temp;
 			},
 			columns : [ {
 				title : '流水号',
-				field : 'id',
+				field : 'sequenceNumber',
 				sortable : true
 			}, {
 				title : '合同号',
-				field : 'contractNo',
+				field : 'contractNumber',
 				sortable : true
 			},{
 				title : '签约单位',
-				field : 'contractUnit',
+				field : 'contracterCode',
 				sortable : true
 			},{
 				title : '区域',
-				field : 'area',
+				field : 'officeName',
 				sortable : true
 			},{
 				title : '订单类型',
-				field : 'orderType',
-				sortable : true
-			},{
-				title : '是否有B2C',
-				field : 'b2c',
-				formatter : formatTrue,
-				sortable : true
-			},{
-				title : '是否特批折扣',
-				field : 'specialDiscount',
-				formatter : formatTrue,
+				field : 'saleType',
 				sortable : true
 			},{
 				title : '创建日期',
-				field : 'createTime',
+				field : 'inputDate',
 				sortable : true
 			},{
-				title : '状态',
-				field : 'status',
-				sortable : true
-			},{
-				title : 'SAP状态',
-				field : 'sapStatus',
-				sortable : true
-			},  {
 				title : '操作',
-				field : 'id',
+				field : 'sequenceNumber',
 				formatter : operation,//对资源进行操作
 			} ]
 		})
@@ -130,7 +104,7 @@ $('#search_btn').click(function() {
 
 //重置按钮事件
 $('#resetBtn').click(function() {
-	$("#id").val("");
+/*	$("#id").val("");
 	$("#contractNo").val("");
 	$("#reservation").val("");
 	$("#contractUnit").val("");
@@ -138,7 +112,7 @@ $('#resetBtn').click(function() {
 	$("#orderType").val(-1);
 	$("#b2c").val(-1);
 	$("#specialDiscount").val(-1);
-	$("#status").val(-1);
+	$("#status").val(-1);*/
 })
 
 
