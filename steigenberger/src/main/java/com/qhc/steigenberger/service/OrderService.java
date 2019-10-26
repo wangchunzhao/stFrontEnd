@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.service;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,9 @@ import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.BaseOrder;
+import com.qhc.steigenberger.domain.form.BulkOrder;
 import com.qhc.steigenberger.domain.form.DealerOrder;
+import com.qhc.steigenberger.domain.form.KeyAccountOrder;
 import com.qhc.steigenberger.service.FryeService;
 import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
 import com.qhc.steigenberger.service.exception.URLNotFoundException;
@@ -174,9 +177,30 @@ public class OrderService {
     }
 	
 	public DealerOrder findDealerOrder(String sequenceNumber, String versionId) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"dealerOrder?sequenceNumber=" + sequenceNumber + "&versionId=" + versionId;
-		return (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+		return (DealerOrder)findOrder(sequenceNumber, versionId, "dealer");
 	}
+	
+	public AbsOrder findOrder(String sequenceNumber, String versionId, String orderType) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"dealerOrder?sequenceNumber=" + sequenceNumber + "&versionId=" + versionId;
+		AbsOrder order = null;
+		switch(orderType) {
+			case "dealer":
+				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+				break;
+			case "keyaccount":
+				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
+				break;
+			case "bulk":
+				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
+				break;
+			
+			default :
+				throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
+		}
+		
+		return order;
+	}
+
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+URL_MATERIAL_BOM;
 		return (BomExplosion)fryeService.postInfo(pars,url, BomExplosion.class);
