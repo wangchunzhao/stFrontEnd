@@ -214,7 +214,6 @@ public abstract class AbsOrder {
 	private Date optTime;//新建时为录入日期/其它为修改时间
 	//
 	
-	
 	public String getCurrentUser() {
 		return currentUser;
 	}

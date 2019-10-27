@@ -44,8 +44,31 @@ public abstract class AbsItem {
 	private String mosaicImage;//拼接图备注(配置表页面)
 	private String attachedImage;//拼接图附件(配置表页面)
 	private List<ProductCharacteristic> configs;//配置表数据(配置表页面)
+	private int isVirtual;//工程虚拟物料
+	private double volumeCube;//工程虚拟物料
+	private double feight;//运费
 	
-	
+	public double getFeight() {
+		return feight;
+	}
+	public void setFeight(double feight) {
+		this.feight = feight;
+	}
+	public double getVolumeCube() {
+		return volumeCube;
+	}
+	public void setVolumeCube(double volumeCube) {
+		this.volumeCube = volumeCube;
+	}
+	public int getIsVirtual() {
+		return isVirtual;
+	}
+	public void setIsVirtual(int isVirtual) {
+		this.isVirtual = isVirtual;
+	}
+	public Integer getRowNumber() {
+		return rowNumber;
+	}
 	public void setRowNumber(Integer rowNumber) {
 		this.rowNumber = rowNumber;
 	}
