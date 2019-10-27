@@ -47,7 +47,51 @@ public abstract class AbsItem {
 	private int isVirtual;//工程虚拟物料
 	private double volumeCube;//工程虚拟物料
 	private double feight;//运费
+	private String requestBrand;
+	private String requestPackage;
+	private String requestNameplate;
+	private String requestCircult;
+	private String comments;
+	private String colorComments;
 	
+	
+	
+	public String getRequestBrand() {
+		return requestBrand;
+	}
+	public void setRequestBrand(String requestBrand) {
+		this.requestBrand = requestBrand;
+	}
+	public String getRequestPackage() {
+		return requestPackage;
+	}
+	public void setRequestPackage(String requestPackage) {
+		this.requestPackage = requestPackage;
+	}
+	public String getRequestNameplate() {
+		return requestNameplate;
+	}
+	public void setRequestNameplate(String requestNameplate) {
+		this.requestNameplate = requestNameplate;
+	}
+	public String getRequestCircult() {
+		return requestCircult;
+	}
+	public void setRequestCircult(String requestCircult) {
+		this.requestCircult = requestCircult;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public String getColorComments() {
+		return colorComments;
+	}
+	public void setColorComments(String colorComments) {
+		this.colorComments = colorComments;
+	}
 	public double getFeight() {
 		return feight;
 	}
