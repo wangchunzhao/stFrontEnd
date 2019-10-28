@@ -90,24 +90,24 @@
                        	 签约单位 Contract unit
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control" id="id">
+                        <input type="text" class="form-control" id="sequenceNumber">
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control" id="contractNo">
+                        <input type="text" class="form-control" id="contractNumber">
                     </div>
                     <div class="col-md-3 col-xs-3">
 					   <input type="text" readonly name="reservation" id="reservation" class="form-control"  /> 
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" class="form-control" id="contractUnit" >
+                        <input type="text" class="form-control" id="contracterCode" >
                     </div>
 
                 </div>
                 <div class="row" style="margin-top: 2px;">
-                    <div class="col-md-2 col-xs-2">
+                    <div class="col-md-3 col-xs-3">
                        	 区域  Area
                     </div>
-                    <div class="col-md-4 col-xs-4" >
+                    <div class="col-md-3 col-xs-3" >
                        	 订单类型 Order type
                     </div>
                    
@@ -120,34 +120,30 @@
                     <div class="col-xs-3 col-md-2">
                        	 状态 Status
                     </div>
-                    <div class="col-md-2 col-xs-2">
-                        <select class="form-control" id="area">
-                            <option value="-1">请选择</option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="officeCode">
+                            <option value="">请选择</option>
                         </select>
                     </div>
-                    <div class="col-md-4 col-xs-4">
+                    <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="orderType">
-                        	<option value="-1">请选择</option>
-                            <option value="1">经销商标准折扣下单</option>
-                            <option value="2">经销商非标准折扣下单</option>
-							<option value="3">直签客户投标报价</option>
-							<option value="4">直签客户下订单</option>
-							<option value="5">备货</option>
+                        	<option value="">请选择</option>
+                            <option value="ZH0D">经销商订单</option>
+                            <option value="ZH0M">备货订单</option>
+                            <option value="ZH0T">大客户订单</option>
                         </select>
                     </div>
                     
                     <div class="col-xs-3 col-md-2">
                         <select class="form-control" id="b2c">
-                            <option value="-1">请选择</option>
+                            <option value="">请选择</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
                     </div>
                     <div class="col-xs-3 col-md-2">
                         <select class="form-control" id="specialDiscount">
-                            <option value="-1">请选择</option>
+                            <option value="">请选择</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
