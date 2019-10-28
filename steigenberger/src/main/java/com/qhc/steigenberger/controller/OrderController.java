@@ -3,14 +3,12 @@ package com.qhc.steigenberger.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +24,6 @@ import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
-import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -86,10 +83,9 @@ public class OrderController {
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
 		String domainId = "wangch";
-
+		String saleOfficeCode = "1234";
 		orderData.setCurrentUser(domainId);
-		orderData.setUserOfficeCode("1234");
-		orderData.setCurrentVersion("123");
+		orderData.setUserOfficeCode(saleOfficeCode);
 
 		switch (action) {
 
