@@ -7,7 +7,7 @@ package com.qhc.steigenberger.domain;
  */
 public class OrderQuery {
 	private String orderId;
-	private String sequenceNumber;
+	private String sequenceNumber;//模糊查询
 	private String status;
 	private String versionId;
 	private String version;
@@ -17,12 +17,12 @@ public class OrderQuery {
 	private Integer pageNo = null;
 	private Integer pageSize = null;
 	//订单管理查询条件
-	private String contractNumber;//合同编号
-	private String contracterCode;//签约单位
-	private String officeCode;//区域
-	private String orderType;//订单类型
-	private String b2c;//是否有B2C
-	private String specialDiscount;//是否特批折扣
+	private String contractNumber;//合同编号   模糊查询
+	private String contracterCode;//签约单位   模糊查询
+	private String officeCode;//区域   精确查询
+	private String orderType;//订单类型    精确查询
+//	private String b2c;//是否有B2C
+//	private String specialDiscount;//是否特批折扣
 	
 	private boolean includeDetail = false;
 	
@@ -103,18 +103,6 @@ public class OrderQuery {
 	}
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
-	}
-	public String getB2c() {
-		return b2c;
-	}
-	public void setB2c(String b2c) {
-		this.b2c = b2c;
-	}
-	public String getSpecialDiscount() {
-		return specialDiscount;
-	}
-	public void setSpecialDiscount(String specialDiscount) {
-		this.specialDiscount = specialDiscount;
 	}
 	
 }
