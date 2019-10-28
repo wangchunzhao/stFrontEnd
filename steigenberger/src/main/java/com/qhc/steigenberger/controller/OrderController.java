@@ -183,7 +183,9 @@ public class OrderController {
 	@ApiOperation(value = "查询订单", notes = "查询订单")
 	@PostMapping(value = "query")
 	@ResponseBody
-	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query) throws Exception {
+	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
+		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		System.out.println(identityName+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
 		return orderService.findOrders(query);
