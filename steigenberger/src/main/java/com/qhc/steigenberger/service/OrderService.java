@@ -48,6 +48,9 @@ import reactor.core.publisher.Mono;
  */
 @Service
 public class OrderService {
+	private final static String ORDER_TYPE_DEALER = "ZH0D"; //'经销商订单'
+	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
+	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 	
 	private final static String URL_CUSTOMER = "customer";
 	private final static String URL_MATERIAL = "material";
@@ -176,21 +179,21 @@ public class OrderService {
         return (List<Characteristic>)fryeService.getInfo(url,List.class);
     }
 	
-	public DealerOrder findDealerOrder(String sequenceNumber, String versionId) {
-		return (DealerOrder)findOrder(sequenceNumber, versionId, "dealer");
+	public DealerOrder findDealerOrderDetail(String sequenceNumber, String version) {
+		return (DealerOrder)findOrderDetail(sequenceNumber, version, ORDER_TYPE_DEALER);
 	}
 	
-	public AbsOrder findOrder(String sequenceNumber, String versionId, String orderType) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"dealerOrder?sequenceNumber=" + sequenceNumber + "&versionId=" + versionId;
+	public AbsOrder findOrderDetail(String sequenceNumber, String version, String orderType) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"detail?sequenceNumber=" + sequenceNumber + "&version=" + version;
 		AbsOrder order = null;
 		switch(orderType) {
-			case "dealer":
+			case ORDER_TYPE_DEALER:
 				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
 				break;
-			case "keyaccount":
+			case ORDER_TYPE_KEYACCOUNT:
 				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
 				break;
-			case "bulk":
+			case ORDER_TYPE_BULK:
 				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
 				break;
 			
@@ -199,6 +202,11 @@ public class OrderService {
 		}
 		
 		return order;
+	}
+	
+	public String getOrderType(String sequenceNumber) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"type?sequenceNumber=" + sequenceNumber;
+		return (String)fryeService.getInfo(url, String.class);
 	}
 
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {

@@ -190,16 +190,22 @@ public class OrderController {
 	/**
 	 * 查询订单
 	 * 
-	 * @param orderId
+	 * @param sequenceNumber
+	 * @param version
+	 * @param orderType
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "查询Dealer订单详情", notes = "查询Dealer订单详情")
-	@PostMapping(value = "order/dealerOrder")
-	@ResponseStatus(HttpStatus.OK)
-	public DealerOrder getDealerOrder(@RequestParam String sequenceNumber, @RequestParam String versionId)
+	@ApiOperation(value = "查询订单详情", notes = "查询订单详情")
+	@GetMapping(value = "detail")
+	@ResponseBody
+	public AbsOrder getOrderDetail(@RequestParam String sequenceNumber, String version, String orderType)
 			throws Exception {
-		return orderService.findDealerOrder(sequenceNumber, versionId);
+		if (orderType == null || orderType.trim().length() == 0) {
+			// get Order type with sequenceNumber
+			orderType = orderService.getOrderType(sequenceNumber);
+		}
+		return orderService.findOrderDetail(sequenceNumber, version, orderType);
 	}
 
 	/**
