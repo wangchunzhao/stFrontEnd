@@ -101,6 +101,8 @@ public abstract class AbsOrder {
 	private List<BiddingPayment> payments;//付款条件或bidding plan 
 	
 	private String currentVersion;//当前版本,创建时steigenberger创建
+	private String currentVersionStatus;
+	private List<String> versions;
 	private String userOfficeCode;//用户所在销售办公室
 
 	public AbsOrder() {
@@ -108,6 +110,20 @@ public abstract class AbsOrder {
 	}
 	public AbsOrder(String json) {
 		
+	}
+	
+	
+	public String getCurrentVersionStatus() {
+		return currentVersionStatus;
+	}
+	public void setCurrentVersionStatus(String currentVersionStatus) {
+		this.currentVersionStatus = currentVersionStatus;
+	}
+	public List<String> getVersions() {
+		return versions;
+	}
+	public void setVersions(List<String> versions) {
+		this.versions = versions;
 	}
 	public String getCurrentVersion() {
 		return currentVersion;

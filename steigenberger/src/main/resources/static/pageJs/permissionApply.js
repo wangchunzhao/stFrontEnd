@@ -36,7 +36,7 @@ $(function(){
 					$('#area').append(BuildAreaOption(item.name,item.code));
 				}
 			}else{
-				alert('角色列表请求错误！')
+				alert('区域列表请求错误！')
 			}
 		},'json');
 	}
