@@ -3,6 +3,7 @@
  */
 package com.qhc.steigenberger.service;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.config.ApplicationConfig;
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
@@ -188,7 +191,15 @@ public class OrderService {
 		AbsOrder order = null;
 		switch(orderType) {
 			case ORDER_TYPE_DEALER:
-				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+				String json = (String)fryeService.getInfo(url, String.class);
+				ObjectMapper mapper = new ObjectMapper();
+				mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+				try {
+					order = mapper.readValue(json, DealerOrder.class);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+//				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
 				break;
 			case ORDER_TYPE_KEYACCOUNT:
 				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
