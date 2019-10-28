@@ -49,6 +49,7 @@ public class LoginController extends BaseController{
         		modelAndView.addObject("msg","用户已被禁用!");
         		modelAndView.setViewName("login");
         	}else if("false".equals(ldap)){
+        		setAccount(request,userName);
         		modelAndView.setViewName("main");
         		System.out.println("身份验证成功!");
         	}else {

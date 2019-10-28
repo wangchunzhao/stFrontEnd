@@ -106,6 +106,9 @@ public abstract class AbsOrder {
 	public AbsOrder() {
 		
 	}
+	public AbsOrder(String json) {
+		
+	}
 	public String getCurrentVersion() {
 		return currentVersion;
 	}

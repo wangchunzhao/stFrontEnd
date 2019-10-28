@@ -9,5 +9,10 @@ package com.qhc.steigenberger.domain.form;
  *
  */
 public class DealerOrder extends AbsOrderDealer{
-	
+	public DealerOrder () {
+		
+	}
+	public DealerOrder(String json) {
+		
+	}
 }

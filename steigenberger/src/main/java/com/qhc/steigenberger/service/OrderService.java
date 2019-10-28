@@ -139,7 +139,7 @@ public class OrderService {
 	 * @param form : order
 	 */
 	public void saveOrder(DealerOrder form) {
-		fryeService.postJason(URL_ORDER, DealerOrder.class);
+		fryeService.postJason(URL_ORDER, form);
 	}
 	
 	public DOrder getInfoById(String orderId) {
