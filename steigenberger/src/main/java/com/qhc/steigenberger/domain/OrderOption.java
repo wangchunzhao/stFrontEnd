@@ -65,6 +65,9 @@ public class OrderOption {
 	
 	// 收货方式
 	private Map<String,String> receiveTerms;
+	
+	// 国际贸易条款
+	private Map<String, String> intercoms;
 
 
 	public String getSequenceNumber() {
@@ -240,5 +243,12 @@ public class OrderOption {
 		this.receiveTerms = receiveTerms;
 	}
 
+	public Map<String, String> getIntercoms() {
+		return intercoms;
+	}
+
+	public void setIntercoms(Map<String, String> intercoms) {
+		this.intercoms = intercoms;
+	}
 	
 }

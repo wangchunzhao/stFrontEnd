@@ -18,7 +18,7 @@ public class OrderQuery {
 	private Integer pageSize = null;
 	//订单管理查询条件
 	private String contractNumber;//合同编号   模糊查询
-	private String contracterCode;//签约单位   模糊查询
+	private String contracterName;//签约单位   模糊查询
 	private String officeCode;//区域   精确查询
 	private String orderType;//订单类型    精确查询
 //	private String b2c;//是否有B2C
@@ -86,11 +86,12 @@ public class OrderQuery {
 	public void setContractNumber(String contractNumber) {
 		this.contractNumber = contractNumber;
 	}
-	public String getContracterCode() {
-		return contracterCode;
+	
+	public String getContracterName() {
+		return contracterName;
 	}
-	public void setContracterCode(String contracterCode) {
-		this.contracterCode = contracterCode;
+	public void setContracterName(String contracterName) {
+		this.contracterName = contracterName;
 	}
 	public String getOfficeCode() {
 		return officeCode;
