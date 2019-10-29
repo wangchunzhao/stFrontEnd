@@ -43,7 +43,7 @@ public abstract class AbsItem {
 	private String configComments;//配置表备注(配置表页面)
 	private String mosaicImage;//拼接图备注(配置表页面)
 	private String attachedImage;//拼接图附件(配置表页面)
-	private List<ProductCharacteristic> configs;//配置表数据(配置表页面)
+	private List<BaseChracteristic> configs;//配置表数据(配置表页面)
 	private int isVirtual;//工程虚拟物料
 	private double volumeCube;//工程虚拟物料
 	private double feight;//运费
@@ -296,10 +296,10 @@ public abstract class AbsItem {
 	public void setAttachedImage(String attachedImage) {
 		this.attachedImage = attachedImage;
 	}
-	public List<ProductCharacteristic> getConfigs() {
+	public List<BaseChracteristic> getConfigs() {
 		return configs;
 	}
-	public void setConfigs(List<ProductCharacteristic> configs) {
+	public void setConfigs(List<BaseChracteristic> configs) {
 		this.configs = configs;
 	}
 	
