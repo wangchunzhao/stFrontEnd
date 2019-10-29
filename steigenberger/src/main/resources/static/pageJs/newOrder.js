@@ -90,7 +90,6 @@ function salesTypeChange(obj,offices,taxRate){
 	var saleType = $(obj).val();
 	$("#taxtRate").val(taxRate[saleType]);
 	if(saleType=="20"){
-		debugger
 		$("#freightDiv").show();
 		$('#selectProvince').val('');
 		$('#citySelect').val('');
@@ -123,6 +122,7 @@ function salesTypeChange(obj,offices,taxRate){
 		$('#citySelect').attr("disabled",false);
 		$('#selectDistrict').attr("disabled",false);
 		$('#selectProvince').attr("disabled",false);
+		$('#incoterm').val('');
 		$('#incoterm').attr("readonly",true);
 		$('#incotermContect').attr("readonly",true);
 		$('#installCode').attr("readonly",false);
@@ -145,22 +145,26 @@ function salesTypeChange(obj,offices,taxRate){
 		$("#selectGroup").val('');
 	}else{
 		$("#officeSelect").html('');
+		$("#selectGroup").html('');
 		if($(obj).val() == '10'){
+			$("#officeSelect").attr("readonly",false);
+			$("#selectGroup").attr("readonly",false);
 			$("#officeSelect").append("<option value=''>--选择大区--</option>");
+			$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		}else{
+			$("#officeSelect").attr("readonly",true);
+			$("#selectGroup").attr("readonly",true);
 		}	
 		$("#officeSelect").val('');
 		var officesMap = offices[saleType];
 		$.each(officesMap, function (key,value) {
-				$("#officeSelect").append("<option value='" + key + "'>" + value + "</option>");			
+				$("#officeSelect").append("<option value='" + key + "' readonly>" + value + "</option>");			
 		});
-		if($(obj).val() != '10'){
-			$("#officeSelect").attr("readonly",true);
-			$("#selectGroup").attr("readonly",true);
-		}
 	} 		
 }
 
 function getGroups(obj,groups){
+	debugger
 	var officeCode = $(obj).val();
 	if ($(obj).val() == '') {
 		$("#selectGroup").html('');
@@ -993,9 +997,13 @@ function saveOrder(){
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[0].identification];
-		 var jsonObject = JSON.parse(configData);
-		 items[0]['configs']= jsonObject.configTableData
-		 items[0]['configComments'] = jsonObject.remark
+		 if(configData){
+			 var jsonObject = JSON.parse(configData);
+			 items[0]['configs']= jsonObject.configTableData;
+			 items[0]['configComments'] = jsonObject.remark
+		 } else{
+			 items[0]['configs'] = null;
+		 }	 	 
 	 }
 
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
@@ -1238,6 +1246,7 @@ var TableInit = function (id,url,params,tableColumns) {
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			uniqueId:'index',
+			height:'750px',
 			cache: false,            
 		    sortable: true,                     //是否启用排序
 		    clickToSelect: true,               //是否启用点击选中行

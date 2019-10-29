@@ -17,6 +17,7 @@
 		<!-- main content start-->
 		<form method="post" role="form" id="orderForm" th:object="${order_option}">
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
+		<input type="hidden"  id="customerClazzName" name="customerClazzName">
 		<input type="hidden"  name="action" value="submit">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
@@ -46,7 +47,7 @@
 								<span class="col-md-1 control-label">签约单位</span>
 							    <div class="col-md-2">
 							    <div class="input-group">
-				                    <input type="text" class="form-control" readonly id="customer">
+				                    <input type="text" class="form-control" readonly id="customer" name="contracterName">
 				                    <input type="hidden" name="contracterCode">
 				                    <span class="input-group-btn">
 				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
@@ -146,6 +147,7 @@
 								<div class="col-md-2">
 									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])"><!--  th:field="*{currency}"-->
 									    <option value="">--选择币种--</option>
+									    <option th:each="exchange : ${order_option.exchangeRate}" th:value="${exchange.key}" th:text="${exchange.value.name}"></option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">合同金额</span>
@@ -165,7 +167,8 @@
 							    <span class="col-md-1 control-label">国际贸易条件</span>
 								<div class="col-xs-12 col-md-1" style="padding-right: 1px;">
 									<select class="form-control" id="incoterm" name="incoterm" readonly><!-- th:field="*{incoterm}" -->
-										<option th:each="incoterm : ${incoterms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
+									     <option></option>
+										<option th:each="incoterm : ${order_option.intercoms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
