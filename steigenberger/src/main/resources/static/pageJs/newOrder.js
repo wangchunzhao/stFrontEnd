@@ -8,8 +8,25 @@ $(function () {
 	
 	initMarialsTables();
 	$('#first').tab('show');
-	
+	$('#end').datepicker();
+	var nowDateString = moment(new Date()).format('YYYY-MM-DD');
+	$("#inputDate").val(nowDateString);
+	defaultCollapse();
 });
+
+//设置面板折叠显示
+
+function defaultCollapse(){
+	$('#customerBasicInfo').collapse('show');
+	$('#contractBasicInfomation').collapse('hide');
+	$('#contractDetailInfo').collapse('hide');
+	$('#researchTableContent').collapse('hide');
+	$('#paymentMethod').collapse('hide');
+	$('#purchaseDetail').collapse('hide');
+	$('#infoCheck').collapse('hide');
+	$('#attachmentInfo').collapse('hide');
+	
+}
 
 
 //Customer basic infomation js start 
@@ -73,18 +90,50 @@ function salesTypeChange(obj,offices,taxRate){
 	var saleType = $(obj).val();
 	$("#taxtRate").val(taxRate[saleType]);
 	if(saleType=="20"){
+		debugger
 		$("#freightDiv").show();
 		$('#selectProvince').val('');
 		$('#citySelect').val('');
 		$('#selectDistrict').val('');
 		$('#citySelect').attr("disabled",true);
 		$('#selectDistrict').attr("disabled",true);	
-		$('#selectProvince').attr("disabled",true);		
+		$('#selectProvince').attr("disabled",true);
+		$('#orignalContractAmount').attr("readonly",false);
+		$('#incoterm').attr("readonly",false);
+		$('#incotermContect').attr("readonly",false);
+		$('#warrenty').val('');
+		$('#warrenty').attr("readonly",true);
+		$('#installCode').val('');
+		$('#installCode').attr("readonly",true);
+		$('#transferType').attr("readonly",true);
+		$('#contactor1Id').attr("readonly",true);
+		$('#contactor2Id').attr("readonly",true);
+		$('#contactor3Id').attr("readonly",true);
+		$('#contactor1Tel').attr("readonly",true);
+		$('#contactor2Tel').attr("readonly",true);
+		$('#contactor3Tel').attr("readonly",true);
+		$('#contactor1Id').val('');
+		$('#contactor2Id').val('');
+		$('#contactor3Id').val('');
+		$('#contactor1Tel').val('');
+		$('#contactor2Tel').val('');
+		$('#contactor3Tel').val('');
 	}else{
 		$('#freightDiv').hide();
 		$('#citySelect').attr("disabled",false);
 		$('#selectDistrict').attr("disabled",false);
-		$('#selectProvince').attr("disabled",false);	
+		$('#selectProvince').attr("disabled",false);
+		$('#incoterm').attr("readonly",true);
+		$('#incotermContect').attr("readonly",true);
+		$('#installCode').attr("readonly",false);
+		$('#transferType').attr("readonly",false);
+		$('#contactor1Id').attr("readonly",false);
+		$('#contactor2Id').attr("readonly",false);
+		$('#contactor3Id').attr("readonly",false);
+		$('#contactor1Tel').attr("readonly",false);
+		$('#contactor2Tel').attr("readonly",false);
+		$('#contactor3Tel').attr("readonly",false);
+		$('#warrenty').attr("readonly",false);
 	}
 	if ($(obj).val() == '') {
 		$("#officeSelect").html('');
@@ -96,13 +145,18 @@ function salesTypeChange(obj,offices,taxRate){
 		$("#selectGroup").val('');
 	}else{
 		$("#officeSelect").html('');
-		$("#officeSelect").append("<option value=''>--选择大区--</option>");
+		if($(obj).val() == '10'){
+			$("#officeSelect").append("<option value=''>--选择大区--</option>");
+		}	
 		$("#officeSelect").val('');
 		var officesMap = offices[saleType];
 		$.each(officesMap, function (key,value) {
-				$("#officeSelect").append("<option value='" + key + "'>" + value + "</option>");
-			
+				$("#officeSelect").append("<option value='" + key + "'>" + value + "</option>");			
 		});
+		if($(obj).val() != '10'){
+			$("#officeSelect").attr("readonly",true);
+			$("#selectGroup").attr("readonly",true);
+		}
 	} 		
 }
 
@@ -311,7 +365,6 @@ function getMaterialInfo(code){
 function fillMaterailValue(data){
 	$("#groupName").val(data.groupName);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
-	debugger
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
@@ -385,7 +438,6 @@ function editMaterials(index){
 }
 //删除购销明细
 function removeMaterials(identification){
-	debugger
 	$('#materialsTable').bootstrapTable('remove', {
         field: "identification",
         values: identification

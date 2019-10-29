@@ -9,7 +9,7 @@ $(function () {
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();
-
+    InitSapSalesOffice();
 });
 
 var TableInit = function () {
@@ -37,10 +37,17 @@ var TableInit = function () {
 			    var temp = {
 			    	pageSize: params.limit, // 每页显示数量
 //			        offset : params.offset, // SQL语句起始索引
-			    	pageNo: (params.offset / params.limit)   //当前页码
-		
+			    	pageNo: (params.offset / params.limit),  //当前页码
+			    	
+			    	sequenceNumber:$('#sequenceNumber').val(),
+			    	contractNumber:$('#contractNumber').val(),
+			    	contracterCode:$('#contracterCode').val(),
+			    	officeCode:$('#officeCode').val(),
+			    	orderType:$('#orderType').val(),
+			    	b2c:$('#b2c').val(),
+			    	specialDiscount:$('#specialDiscount').val(),
+			    	status:$('#status').val()
 //			        id:$('#id').val()
-			       // Tel:$('#search_tel').val()
 			    };
 			    return temp;
 			},
@@ -57,16 +64,20 @@ var TableInit = function () {
 				field : 'contracterCode',
 				sortable : true
 			},{
+				title : '订单类型',
+				field : 'orderType',
+				sortable : true
+			},{
+				title : '折扣',
+				field : 'approvedDiscount',
+				sortable : true
+			},{
 				title : '区域',
 				field : 'officeName',
 				sortable : true
 			},{
-				title : '订单类型',
-				field : 'saleType',
-				sortable : true
-			},{
 				title : '创建日期',
-				field : 'inputDate',
+				field : 'createTime',
 				sortable : true
 			},{
 				title : '操作',
@@ -98,7 +109,7 @@ function operation(value, row, index) {
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
-		url : '/steigenberger/kOrderInfo/kOrderInfoList'
+		url : '/steigenberger/order/query'
 	});
 })
 
@@ -116,7 +127,22 @@ $('#resetBtn').click(function() {
 })
 
 
-
+function InitSapSalesOffice(){
+		$.post('/steigenberger/permission/sapSalesOfficelist',null,function(ret){
+			if(ret.status==200){
+				for(var i in ret.data){
+					var item = ret.data[i];
+					$('#officeCode').append(BuildAreaOption(item.name,item.code));
+				}
+			}else{
+				alert('角色列表请求错误！')
+			}
+		},'json');
+	}
+	
+	function BuildAreaOption(name,code){
+		return "<option value='"+code+"'>"+name+"</option>";
+	}
 
 
 
