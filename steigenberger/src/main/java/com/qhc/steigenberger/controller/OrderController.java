@@ -191,6 +191,8 @@ public class OrderController {
 	@ResponseBody
 	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
 		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		User user = userService.selectUserIdentity(identityName);//identityName
+		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		System.out.println(identityName+"======================");
 		// 只查询最新的版本
 		query.setLast(true);

@@ -72,6 +72,10 @@ var TableInit = function () {
 				field : 'approvedDiscount',
 				sortable : true
 			},{
+				title : '是否特批折扣',
+				field : 'approvedDiscount',
+				formatter : formatTrue
+			},{
 				title : '区域',
 				field : 'officeName',
 				sortable : true
@@ -96,7 +100,7 @@ var TableInit = function () {
 //		formatter : formatSex,//对返回的数据进行处理再显示
 //	},
 function formatTrue(value, row, index) {
-	return value == 1 ? "是" : "否";
+	return value == 48 ? "是" : "否";
 	//或者 return row.sex == 1 ? "男" : "女";
 }
  
