@@ -21,6 +21,7 @@ public class OrderQuery {
 	private String contracterName;//签约单位   模糊查询
 	private String officeCode;//区域   精确查询
 	private String orderType;//订单类型    精确查询
+	private String salesCode;//客户经理code   精确查询 
 //	private String b2c;//是否有B2C
 //	private String specialDiscount;//是否特批折扣
 	
@@ -104,6 +105,12 @@ public class OrderQuery {
 	}
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
+	}
+	public String getSalesCode() {
+		return salesCode;
+	}
+	public void setSalesCode(String salesCode) {
+		this.salesCode = salesCode;
 	}
 	
 }
