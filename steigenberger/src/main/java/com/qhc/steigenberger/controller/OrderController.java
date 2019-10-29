@@ -60,6 +60,11 @@ public class OrderController {
 	private final static String FORM_GROSS_PROFIT = "grossProfit";
 	private final static String FORM_SUBMIT_TYPE_3 = "3";
 	private final static String FORM_SUBMIT_TYPE_4 = "4";
+	
+	//权限
+	private final static String allOrder = "11";//查看所有订单
+	private final static String areaOrder = "12";//查看本区域订单
+	private final static String selfOrder = "13";//查看自己的订单
 
 	@Autowired
 	UserService userService;
@@ -194,6 +199,18 @@ public class OrderController {
 		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
+		for(int i = 0; i < userOperationInfoList.size(); i++) {
+			String operationId = userOperationInfoList.get(i).getOperationId();
+			if(operationId.equals(allOrder)) {
+				break;
+			}else if(operationId.equals(areaOrder)) {
+				query.setOfficeCode(userOperationInfoList.get(i).getAttachedCode());
+				break;
+			}else {
+				query.setSalesCode(identityName);
+			}
+			
+		}
 		System.out.println(identityName+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
