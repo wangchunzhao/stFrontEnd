@@ -83,6 +83,7 @@ public class OrderController {
 			return MenuController.goDealerOrder();
 		}
 		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+		//test data
 		String domainId = "wangch";
 		String saleOfficeCode = "1234";
 		orderData.setCurrentUser(domainId);
