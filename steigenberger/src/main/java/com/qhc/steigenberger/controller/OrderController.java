@@ -1,5 +1,6 @@
 package com.qhc.steigenberger.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,7 +104,16 @@ public class OrderController {
 		}
 
 		orderData.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
-		
+		//test data
+//		orderData.setSalesCode(domainId);
+//		orderData.setSalesName("sales name");
+//		orderData.setCustomerClazzName("customerClazzName");
+//		orderData.setCustomerClazzCode("01");
+//		orderData.setContracterCode("经销商");
+//		orderData.setContracterName("contracterName");
+//		orderData.setCreateTime(new Date());
+//		orderData.setCurrentVersion("v123.13");
+		//
 		orderService.saveOrder(orderData);
 
 		return MenuController.goDealerOrder();
