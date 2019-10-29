@@ -27,6 +27,7 @@ public abstract class AbsOrder {
 	private String customerClazzName;//客户性质分类名称
 	private String terminalType;//终端客户性质
 	private String contracterCode;//签约单位 Contract unit
+	private String contracterName;//签约单位名字
 	private String customerName;//店名 customer name
 	private int isConvenientStore;//是否便利店 convenience store
 	private String salesCode;//客户经理 Customer manager
@@ -113,6 +114,12 @@ public abstract class AbsOrder {
 	}
 	
 	
+	public String getContracterName() {
+		return contracterName;
+	}
+	public void setContracterName(String contracterName) {
+		this.contracterName = contracterName;
+	}
 	public String getCurrentVersionStatus() {
 		return currentVersionStatus;
 	}
