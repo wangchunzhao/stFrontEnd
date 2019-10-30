@@ -5,6 +5,13 @@ $(function () {
 	
 	var addressTable = new TableInit('addressTable','','',addressColumns)
 	addressTable.init();
+	//初始化客户查询Table
+	var contractUnitTable = new TableInit('contractUnitTable','',queryUnitParams,contractUnitTableColumn);
+	contractUnitTable.init();
+	
+	//初始化物料查询table
+	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
+	materialTypeTable.init();
 	
 	initMarialsTables();
 	$('#first').tab('show');
@@ -32,15 +39,23 @@ function defaultCollapse(){
 //Customer basic infomation js start 
 function openSearchUnit(){
 	$('#unitModal').modal('show');	
-	var customerUnitTable = '/steigenberger/order/customers'
-	var contractUnitTable = new TableInit('contractUnitTable',customerUnitTable,queryUnitParams,contractUnitTableColumn);
-	contractUnitTable.init();
+	var opt = {
+				url: '/steigenberger/order/customers'
+			   };
+	$("#contractUnitTable").bootstrapTable('refresh', opt);
 	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
 		$('#unitModal').modal('hide');
 		$("#contractUnitName").val('');
 		$("#customer").val(row.name)
 		$("#customerClazz").val(row.clazzName)
 	})
+}
+
+function queryUnitParams(params) {
+    params.pageNo = this.pageNumber;
+    params.customerName = $("#contractUnitName").val();
+    params.clazzCode = $("#customerClazzCode").val();
+    return params;
 }
 function searchUnit(){
 	$('#contractUnitTable').bootstrapTable('refresh');
@@ -97,6 +112,7 @@ function salesTypeChange(obj,offices,taxRate){
 		$('#citySelect').attr("disabled",true);
 		$('#selectDistrict').attr("disabled",true);	
 		$('#selectProvince').attr("disabled",true);
+		$('#currency').attr('disabled',false);
 		$('#orignalContractAmount').attr("readonly",false);
 		$('#incoterm').attr("readonly",false);
 		$('#incotermContect').attr("readonly",false);
@@ -122,9 +138,12 @@ function salesTypeChange(obj,offices,taxRate){
 		$('#citySelect').attr("disabled",false);
 		$('#selectDistrict').attr("disabled",false);
 		$('#selectProvince').attr("disabled",false);
-		$('#incoterm').val('');
+		
+		$('#currency').attr('disabled',true);
+		$('#orignalContractAmount').attr("readonly",true);
 		$('#incoterm').attr("readonly",true);
 		$('#incotermContect').attr("readonly",true);
+		
 		$('#installCode').attr("readonly",false);
 		$('#transferType').attr("readonly",false);
 		$('#contactor1Id').attr("readonly",false);
@@ -164,7 +183,6 @@ function salesTypeChange(obj,offices,taxRate){
 }
 
 function getGroups(obj,groups){
-	debugger
 	var officeCode = $(obj).val();
 	if ($(obj).val() == '') {
 		$("#selectGroup").html('');
@@ -202,13 +220,6 @@ function getAmount(obj){
 	var originalAmount = $(obj).val();
     var amount = exchangeRate*originalAmount
     $("#contractAmount").val(amount);
-}
-
-function queryUnitParams(params) {
-    params.pageNo = this.pageNumber;
-    params.customerName = $("#contractUnitName").val();
-    params.clazzCode = $("#customerClazzCode").val();
-    return params;
 }
 
 function queryMaterialTypeParams(params) {
@@ -336,9 +347,10 @@ function getPaymentAreaContent(){
 function addSubsidiary(){
 		$('#subsidiaryModal').modal('show');
 		$('#amount').val(1);
-		var materialTypeTableUrl = "/steigenberger/order/materials"
-		var materialTypeTable = new TableInit('materialTypeTable',materialTypeTableUrl,queryMaterialTypeParams,materialTypeColumn)
-		materialTypeTable.init();
+		var opt = {
+			url: "/steigenberger/order/materials"
+		};
+		$("#materialTypeTable").bootstrapTable('refresh', opt);
 		$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
 			$('#specificationModal').modal('hide');
 			getMaterialInfo(row.code);
@@ -361,7 +373,12 @@ function getMaterialInfo(code){
 	    type: "POST",
 	    dataType: "json",
 	    success: function(data) {
-	       fillMaterailValue(data); 
+	    	if(data==null){
+	    	   alert("未查询到物料详细信息无法添加该物料！")
+	    	   $("#confirmMaterial").attr("disabled",true);
+	    	}else{
+	    	   fillMaterailValue(data); 
+	    	}      
 	    }
 	});
 }
@@ -435,10 +452,12 @@ function toDecimal2(x) {
    return s;
  }  
 //编辑购销明细
-function editMaterials(index){
+function editMaterials(identification){
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
 	$('#materialsIndex').val(index);
+	var identificationSplit = identification.split('|');
+	var type = identificationSplit[1];
 }
 //删除购销明细
 function removeMaterials(identification){
@@ -801,6 +820,7 @@ function saveMaterialConfig(){
 //复制调研表
 function copyMaterials(identification){
 	var identificationSplit = identification.split('|');
+	var configsData = localStorage[identification];
 	var materialsType = identificationSplit[1];
 	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
 	if(materialsType=='T101'){
@@ -815,6 +835,9 @@ function copyMaterials(identification){
 		    index: countMaterialsTable,
 		    row:rowDataAll
 		});
+		if(configsData){
+			localStorage.setItem(rowData.identification,configsData);
+		}
 	}else if(type=='T102'){
 		var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
 		var rowData = confirmRowData(countMaterialsTableall2,'');
@@ -827,6 +850,9 @@ function copyMaterials(identification){
 		    index: countMaterialsTable,
 		    row:rowDataAll
 		});
+		if(configsData){
+			localStorage.setItem(rowData.identification,configsData);
+		}
 	}else if(type=='T103'){
 		var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
 		var rowData = confirmRowData(countMaterialsTableall3,'');
@@ -839,6 +865,9 @@ function copyMaterials(identification){
 		    index: countMaterialsTable,
 		    row:rowDataAll
 		});
+		if(configsData){
+			localStorage.setItem(rowData.identification,configsData);
+		}
 	}else if(type=='T104'){
 		var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
 		var rowData = confirmRowData(countMaterialsTableall4,'');
@@ -851,6 +880,9 @@ function copyMaterials(identification){
 		    index: countMaterialsTable,
 		    row:rowDataAll
 		});
+		if(configsData){
+			localStorage.setItem(rowData.identification,configsData);
+		}
 	}else if(type=='T105'){
 		var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
 		var rowData = confirmRowData(countMaterialsTableall5,'');
@@ -863,6 +895,9 @@ function copyMaterials(identification){
 		    index: countMaterialsTable,
 		    row:rowDataAll
 		});
+		if(configsData){
+			localStorage.setItem(rowData.identification,configsData);
+		}
 	}else if(type=='T106'){
 		var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 		var rowData = confirmRowData(countMaterialsTableall6,'');
@@ -875,6 +910,9 @@ function copyMaterials(identification){
 		    index: countMaterialsTable,
 		    row:rowDataAll
 		});
+		if(configsData){
+			localStorage.setItem(rowData.identification,configsData);
+		}
 	}
 }
 
@@ -1003,7 +1041,8 @@ function saveOrder(){
 			 items[0]['configComments'] = jsonObject.remark
 		 } else{
 			 items[0]['configs'] = null;
-		 }	 	 
+		 }	 
+		 
 	 }
 
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
@@ -1246,17 +1285,15 @@ var TableInit = function (id,url,params,tableColumns) {
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			uniqueId:'index',
-			height:'750px',
 			cache: false,            
 		    sortable: true,                     //是否启用排序
 		    clickToSelect: true,               //是否启用点击选中行
-		    smartDisplay:false,
+		    smartDisplay:true,
 		    singleSelect: true,
 		    sortOrder: "asc",                   //排序方式
 			pageNumber : 1, //初始化加载第一页
 			sidePagination : 'server',//server:服务器端分页|client：前端分页
-			pageSize : 50,//单页记录数
-			pageList : [ 10, 20, 30 ],//可选择单页记录数
+			pageSize : 10,//单页记录数,
 			showRefresh : false,//刷新按钮
 			queryParams : params,
 			columns : tableColumns

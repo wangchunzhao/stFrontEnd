@@ -34,7 +34,7 @@
 							    </div>
 							    <span class="col-md-1">物料属性</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="isPurchased">
+							      <input type="text" class="form-control" id="isPurchased" disabled>
 							    </div>
 							    <span class="col-md-1">类型</span>
 								<div class="col-md-2">
@@ -178,7 +178,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-primary" onclick="confirmMaterials()">确定</button>
+								<button type="button" class="btn btn-primary" onclick="confirmMaterials()" id="confirmMaterial">确定</button>
 							</div>
 						</div>
 					</div>
@@ -187,13 +187,13 @@
 		</div>
 	</div>
 	<div class="modal fade" id="specificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
+			<div class="modal-dialog" style="width:800px;">
+				<div class="modal-content" style="height">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
 						<h4 class="modal-title" id="myModalLabel">请选择规格</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body" >
 						<div class="panel-group">
 							<div class="panel-body">
 								<div class="row">
@@ -204,9 +204,8 @@
 								    <button type="button" class="btn btn-default" onclick="searchMaterilType()">
 								    	<span class="glyphicon glyphicon-search">查询</span>
 								    </button>
-								    <table id="materialTypeTable" data-pagination="true"   class="table table-hover"></table>
 								</div>
-								<table id="specificationTable" data-pagination="true"   class="table table-hover"></table>
+								<table id="materialTypeTable" data-pagination="true"   class="table table-hover"></table>
 							</div>
 						</div>
 					</div>

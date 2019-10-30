@@ -145,7 +145,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">币种</span>
 								<div class="col-md-2">
-									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])"><!--  th:field="*{currency}"-->
+									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled><!--  th:field="*{currency}"-->
 									    <option value="">--选择币种--</option>
 									    <option th:each="exchange : ${order_option.exchangeRate}" th:value="${exchange.key}" th:text="${exchange.value.name}"></option>
 									</select>
@@ -614,7 +614,7 @@
 		</div>
 		</form>
 	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog" style="width:800px">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
@@ -632,7 +632,7 @@
 							    	<span class="glyphicon glyphicon-search">查询</span>
 							    </button>
 							</div>
-							<table id="contractUnitTable" data-pagination="true"   class="table table-hover"></table>
+							<table id="contractUnitTable" data-pagination="true"  data-height="900px" class="table table-hover"></table>
 						</div>
 					</div>
 				</div>

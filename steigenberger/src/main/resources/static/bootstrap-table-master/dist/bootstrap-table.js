@@ -2791,7 +2791,7 @@
 	  totalNotFiltered: 0,
 	  pageNumber: 1,
 	  pageSize: 10,
-	  pageList: [10, 25, 50, 100],
+	  pageList: [],
 	  paginationHAlign: 'right',
 	  // right, left
 	  paginationVAlign: 'bottom',
@@ -2962,11 +2962,7 @@
 	    return "".concat(pageNumber, " rows per page");
 	  },
 	  formatShowingRows: function formatShowingRows(pageFrom, pageTo, totalRows, totalNotFiltered) {
-	    if (totalNotFiltered !== undefined && totalNotFiltered > 0 && totalNotFiltered > totalRows) {
-	      return "Showing ".concat(pageFrom, " to ").concat(pageTo, " of ").concat(totalRows, " rows (filtered from ").concat(totalNotFiltered, " total rows)");
-	    }
-
-	    return "Showing ".concat(pageFrom, " to ").concat(pageTo, " of ").concat(totalRows, " rows");
+	    return "Showing ".concat(totalRows, " rows");
 	  },
 	  formatSRPaginationPreText: function formatSRPaginationPreText() {
 	    return 'previous page';
@@ -4655,7 +4651,7 @@
 	        this.options.totalNotFiltered = undefined;
 	      }
 
-	      var paginationInfo = o.onlyInfoPagination ? o.formatDetailPagination(o.totalRows) : o.formatShowingRows(this.pageFrom, this.pageTo, o.totalRows, o.totalNotFiltered);
+	      var paginationInfo = o.onlyInfoPagination ? o.formatDetailPagination(o.totalRows) : o.formatShowingRows(this.pageFrom, this.pageTo, o.totalRows, o.totalNotFiltered,this.options.pageSize);
 	      html.push("<div class=\"".concat(this.constants.classes.pull, "-").concat(o.paginationDetailHAlign, " pagination-detail\">\n      <span class=\"pagination-info\">\n      ").concat(paginationInfo, "\n      </span>"));
 
 	      if (!o.onlyInfoPagination) {
