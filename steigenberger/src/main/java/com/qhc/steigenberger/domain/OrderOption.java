@@ -68,6 +68,12 @@ public class OrderOption {
 	
 	// 国际贸易条款
 	private Map<String, String> intercoms;
+	
+	// 安装方式
+	private Map<String, Map<String, String>> installationTerms;
+	
+	// 标准折扣
+	private String standardDiscount;
 
 
 	public String getSequenceNumber() {
@@ -249,6 +255,22 @@ public class OrderOption {
 
 	public void setIntercoms(Map<String, String> intercoms) {
 		this.intercoms = intercoms;
+	}
+
+	public Map<String, Map<String, String>> getInstallationTerms() {
+		return installationTerms;
+	}
+
+	public void setInstallationTerms(Map<String, Map<String, String>> installationTerms) {
+		this.installationTerms = installationTerms;
+	}
+
+	public String getStandardDiscount() {
+		return standardDiscount;
+	}
+
+	public void setStandardDiscount(String standardDiscount) {
+		this.standardDiscount = standardDiscount;
 	}
 	
 }
