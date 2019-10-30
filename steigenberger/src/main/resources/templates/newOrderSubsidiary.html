@@ -39,6 +39,7 @@
 							    <span class="col-md-1">类型</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="groupName" disabled>
+							      <input type="hidden" id="groupCode">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
@@ -121,6 +122,7 @@
 							    <span class="col-md-1">行项目类别</span>
 								<div class="col-md-2">
 							      <select class="form-control" name="itemCategory" id="itemCategory" onchange="changeRequirement(this)">
+							      		<option value="">请选择</option>
 										<option value="ZHD1">可配置</option>
 										<option value="ZHD2">标准(不可配置)</option>
 										<option value="ZHD3">可配置(免费）</option>
@@ -132,6 +134,7 @@
 							    <span class="col-md-1">需求计划</span>
 								<div class="col-md-2">
 							      <select class="form-control" name="itemRequirementPlan" id="itemRequirementPlan">
+							      <option value="">请选择</option>
 									</select>
 							    </div>
 							    <span class="col-md-1">生产周期</span>
@@ -150,7 +153,10 @@
 							    </div>
 							    <span class="col-md-1">要求发货时间</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="shippDate">
+								<div class="input-group">
+										<input id="shippDate" class="form-control" type="text" data-date-format="yyyy-mm-dd">
+	               						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+               					</div>
 							    </div>
 							    <span class="col-md-1">地址</span>
 								<div class="col-md-2">

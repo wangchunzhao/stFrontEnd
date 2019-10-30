@@ -15,7 +15,7 @@ $(function () {
 	
 	initMarialsTables();
 	$('#first').tab('show');
-	$('#end').datepicker();
+	$('#shippDate').datepicker();
 	var nowDateString = moment(new Date()).format('YYYY-MM-DD');
 	$("#inputDate").val(nowDateString);
 	defaultCollapse();
@@ -400,6 +400,7 @@ function getMaterialInfo(code){
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
 	$("#groupName").val(data.groupName);
+	$("#groupCode").val(data.groupCode);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
@@ -693,13 +694,14 @@ function confirmRowData(index,identification){
 		idenf=index+"|"+$("#materialsType").val()
 	}
 	var row = {
-			index:index+1,
+			rowNumber:(index+1)*10,
 			materialName:$("#materialTypeName").val(),
 			materialCode:$("#materialCode").val(),
 			identification:idenf,
 			clazzCode:$("#materialClazzCode").val(),
 			isPurchased:$("#isPurchased").val(),
 			groupName:$("#groupName").val(),
+			groupCode:$("#groupCode").val(),
 			amount:$("#amount").val(),
 			unitName:$("#unitName").val(),
 			acturalPrice:$("#acturalPrice").val(),
@@ -1045,28 +1047,35 @@ function removeAddress(index){
 }
 //获取需求计划
 
-function changeRequirement(obj){
+function changeRequirement(obj){	
 	$("#itemRequirementPlan").html('');
 	var requireMent1='<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>'+
 	'<option value="Z004">物料需求计划</option>';
 	var requireMent2 = '<option value="Z004">物料需求计划</option>';
 	var itemCategory = $(obj).val();
-	if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
-		$("#itemRequirementPlan").append(requireMent2);
+	if(itemCategory!=''){
+		if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
+			$("#itemRequirementPlan").append(requireMent2);
+		}else{
+			$("#itemRequirementPlan").append(requireMent1);
+		}
 	}else{
-		$("#itemRequirementPlan").append(requireMent1);
+		$("#itemRequirementPlan").append('<option value="="></option>');
 	}
-	
 }
 
 //保存订单
 function saveOrder(){
+	 var versions=[];
+	 var version = getVersion();
+	 versions.push(version);
 	 var orderData = $("#orderForm").serializeObject();
+	 orderData['versions'] = versions;
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[0].identification];
-		 items[0].isVirtual = 1;
+		 items[0].isVirtual = 0;
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 items[0]['configs']= jsonObject.configTableData;
@@ -1083,10 +1092,23 @@ function saveOrder(){
 		    type: "POST",
 		    dataType: "json",
 		    success: function(data) { 
-		    }	 
+		    	alert("保存成功");
+		    },
+		    error: function(){
+		    	alert("保存失败");
+		    }
 	});
 }
-
+//获取版本
+function  getVersion(){
+	var dateString = moment().format('YYYYMMDD');
+	var num = '';
+    for(var i=0;i<3;i++)
+    {
+        num+=Math.floor(Math.random()*10);
+    }
+    return 'V'+dateString+num;
+}
 
 //调研表查看物料
 function viewConfig(){

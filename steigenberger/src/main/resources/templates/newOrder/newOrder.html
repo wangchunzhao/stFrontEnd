@@ -241,7 +241,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" readonly><!-- th:field="*{approvedDicount}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" readonly th:field="*{standardDiscount}">
 							    </div>
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
@@ -278,15 +278,6 @@
 							    <span class="col-md-1 control-label">授权人3电话</span>
 								<div class="col-md-5">
 									<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" name="contactor3Tel">
-							    </div>
-							</div>
-							<div class="row" style="margin-top:15px;">
-								<span class="col-md-1 control-label">是否为散件</span>
-								<div class="col-md-2">
-									<select class="form-control" >
-									    <option value="">是</option>
-									     <option value="">否</option>
-									</select>
 							    </div>
 							</div>
 						</div>
@@ -384,10 +375,7 @@
 									<input type="text" class="form-control" aria-describedby="emailHelp" readonly>
 								</div>
 								<div class="col-xs-3 col-md-3">
-									<div class="input-group">
-										<input id="end" class="form-control" type="text" data-date-format="yyyy-mm-dd">
-	               						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-               						</div>
+										<input id="requiredDeliveryTime" class="form-control" type="text" readonly>
 								</div>
 								<div class="col-xs-3 col-md-3"></div>
 								<div class="col-xs-3 col-md-3">

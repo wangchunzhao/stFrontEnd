@@ -39,6 +39,10 @@ var materialsColumn = [{
 	    field: 'clazzCode',
 	    visible:false
 	},{
+		title:'',
+	    field: 'groupCode',
+	    visible:false
+	},{
 		title:'物料属性',
 	    field: 'isPurchased',
 	    width:80
