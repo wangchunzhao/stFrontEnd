@@ -111,15 +111,15 @@ public class OrderController {
 
 		orderData.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
 		//test data
-//		orderData.setSalesCode(domainId);
-//		orderData.setSalesName("sales name");
-//		orderData.setCustomerClazzName("customerClazzName");
-//		orderData.setCustomerClazzCode("01");
-//		orderData.setContracterCode("经销商");
-//		orderData.setContracterName("contracterName");
-//		orderData.setCreateTime(new Date());
-//		orderData.setCurrentVersion("v123.13");
-		//
+		orderData.setSalesCode(domainId);
+		orderData.setSalesName("sales name");
+		orderData.setCustomerClazzName("customerClazzName");
+		orderData.setCustomerClazzCode("01");
+		orderData.setContracterCode("经销商");
+		orderData.setContracterName("contracterName");
+		orderData.setCreateTime(new Date());
+		orderData.setCurrentVersion("v123.13");
+		
 		orderService.saveOrder(orderData);
 
 		return MenuController.goDealerOrder();
@@ -192,7 +192,7 @@ public class OrderController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "查询订单", notes = "查询订单")
+	@ApiOperation(value = "订单管理列表", notes = "订单管理列表")
 	@PostMapping(value = "query")
 	@ResponseBody
 	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
@@ -214,7 +214,8 @@ public class OrderController {
 		System.out.println(identityName+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
-		return orderService.findOrders(query);
+		PageHelper<BaseOrder> order = orderService.findOrders(query);
+		return order;
 	}
 
 	/**

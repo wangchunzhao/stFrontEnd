@@ -44,8 +44,8 @@ var TableInit = function () {
 			    	contracterCode:$('#contracterCode').val(),
 			    	officeCode:$('#officeCode').val(),
 			    	orderType:$('#orderType').val(),
-			    	b2c:$('#b2c').val(),
-			    	specialDiscount:$('#specialDiscount').val(),
+//			    	b2c:$('#b2c').val(),
+//			    	specialDiscount:$('#specialDiscount').val(),
 			    	status:$('#status').val()
 //			        id:$('#id').val()
 			    };
@@ -84,8 +84,12 @@ var TableInit = function () {
 				field : 'createTime',
 				sortable : true
 			},{
+				title : '订单状态',
+				field : 'currentVersionStatus',
+				formatter : formatStatus
+			},{
 				title : '操作',
-				field : 'sequenceNumber',
+				field : 'currentVersionStatus',
 				formatter : operation,//对资源进行操作
 			} ]
 		})
@@ -93,23 +97,37 @@ var TableInit = function () {
 		return oTableInit;
 };
  
-//value代表该列的值，row代表当前对象
-//{
-//		title : '性别',
-//		field : 'sex',
-//		formatter : formatSex,//对返回的数据进行处理再显示
-//	},
 function formatTrue(value, row, index) {
 	return value == 48 ? "是" : "否";
 	//或者 return row.sex == 1 ? "男" : "女";
 }
+function formatStatus(value, row, index) {
+	if(value=="5"){
+		return "订单审批通过";
+	}
+}
+
  
 //删除、编辑操作
 function operation(value, row, index) {
-	var htm = "<button>删除</button><button>修改</button>"
+//	alert(value);
+	if(value=="5"){
+		var htm = "<a class='mod'>下推订单</a>"
+	}else{
+		var htm = "<button>删除</button><button>修改</button>"
+	}
 	return htm;
 }
- 
+//表格  - 操作 - 事件
+window.actionEvents = {
+    'click .mod': function(e, value, row, index) {      
+          //修改操作
+        },
+    'click .delete' : function(e, value, row, index) {
+          //删除操作 
+        }
+} 
+
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
