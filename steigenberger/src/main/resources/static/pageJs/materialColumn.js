@@ -11,7 +11,7 @@ var materialsColumn = [{
 	    }
 	},{
 		title:'行号',
-	    field: 'index',
+	    field: 'rowNumber',
 	    width:50
 	},{
 		title:'调研表',
@@ -24,11 +24,11 @@ var materialsColumn = [{
 	    }
 	},{
 		title:'规格型号',
-	    field: 'materialTypeName',
+	    field: 'materialName',
 	    width:200
 	},{
 		title:'专用号',
-	    field: 'code',
+	    field: 'materialCode',
 	    width:150
 	},{
 		title:'标识',
@@ -125,12 +125,12 @@ var materialsColumn = [{
 
 	},{
 		title:'行项目类别',
-	    field: 'index',
+	    field: 'itemCategory',
 	    width:150
 
 	},{
 		title:'需求计划',
-	    field: 'index',
+	    field: 'itemRequirementPlan',
 	    width:150
 	},{
 		title:'生产周期',

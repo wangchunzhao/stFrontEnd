@@ -19,8 +19,23 @@ $(function () {
 	var nowDateString = moment(new Date()).format('YYYY-MM-DD');
 	$("#inputDate").val(nowDateString);
 	defaultCollapse();
+	getUserDetail();
 });
 
+
+//获取session中用户信息
+function getUserDetail(){
+	$.ajax({
+	    url: "/steigenberger/order/user",
+	    data: {},
+	    type: "get",
+	    success: function(data) {
+	    	$("#salesName").val(data.userName);
+	    	$("#salesTelnumber").val(data.tel);
+	    	$("#salesCode").val(data.userIdentity);
+	    }
+	});
+}
 //设置面板折叠显示
 
 function defaultCollapse(){
@@ -679,8 +694,8 @@ function confirmRowData(index,identification){
 	}
 	var row = {
 			index:index+1,
-			materialTypeName:$("#materialTypeName").val(),
-			code:$("#materialCode").val(),
+			materialName:$("#materialTypeName").val(),
+			materialCode:$("#materialCode").val(),
 			identification:idenf,
 			clazzCode:$("#materialClazzCode").val(),
 			isPurchased:$("#isPurchased").val(),
@@ -702,6 +717,8 @@ function confirmRowData(index,identification){
 			retailPrice:$("#retailPrice").val(),
 			retailPriceAmount:$("#retailPriceAmount").val(),
 			discount:$("#discount").val(),
+			itemCategory:$("#itemCategory").val(),
+			itemRequirementPlan:$("#itemRequirementPlan").val(),
 			producePeriod:$("#producePeriod").val(),
 			deliveryDate:$("#deliveryDate").val(),
 			produceDate:$("#produceDate").val(),
@@ -1026,7 +1043,21 @@ function removeAddress(index){
 		$('#addressTable').bootstrapTable("updateCell",rows);
 	}
 }
+//获取需求计划
 
+function changeRequirement(obj){
+	$("#itemRequirementPlan").html('');
+	var requireMent1='<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>'+
+	'<option value="Z004">物料需求计划</option>';
+	var requireMent2 = '<option value="Z004">物料需求计划</option>';
+	var itemCategory = $(obj).val();
+	if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
+		$("#itemRequirementPlan").append(requireMent2);
+	}else{
+		$("#itemRequirementPlan").append(requireMent1);
+	}
+	
+}
 
 //保存订单
 function saveOrder(){
@@ -1035,16 +1066,15 @@ function saveOrder(){
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[0].identification];
+		 items[0].isVirtual = 1;
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 items[0]['configs']= jsonObject.configTableData;
 			 items[0]['configComments'] = jsonObject.remark
 		 } else{
 			 items[0]['configs'] = null;
-		 }	 
-		 
+		 }	 	 
 	 }
-
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	 $.ajax({
 		    url: "/steigenberger/order/dealer?action="+'save',

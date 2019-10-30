@@ -251,5 +251,20 @@ public class OrderController {
 		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
 
 	}
+	
+	@RequestMapping(value = "user")
+	@ResponseBody
+	public User findUsetDetail(HttpServletRequest request) {
+		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		User user = userService.selectUserIdentity(identityName);//identityName
+		/*if(user!=null){
+			user.setUserName("test");
+			user.setTel("1111111");
+			user.setUserIdentity("3121");
+		}*/
+		return user;
+
+	}
+
 
 }

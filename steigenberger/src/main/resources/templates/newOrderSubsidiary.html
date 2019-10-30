@@ -120,11 +120,19 @@
 							    </div>
 							    <span class="col-md-1">行项目类别</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalBudgetReturnAmount" disabled>
+							      <select class="form-control" name="itemCategory" id="itemCategory" onchange="changeRequirement(this)">
+										<option value="ZHD1">可配置</option>
+										<option value="ZHD2">标准(不可配置)</option>
+										<option value="ZHD3">可配置(免费）</option>
+										<option value="ZHD4">不可配置（免费）</option>
+										<option value="ZHR1">退货（可配置）</option>
+										<option value="ZHR2">退货(不可配置)</option>
+									</select>
 							    </div>
 							    <span class="col-md-1">需求计划</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="budgetReturnAmount" disabled>
+							      <select class="form-control" name="itemRequirementPlan" id="itemRequirementPlan">
+									</select>
 							    </div>
 							    <span class="col-md-1">生产周期</span>
 								<div class="col-md-2">
