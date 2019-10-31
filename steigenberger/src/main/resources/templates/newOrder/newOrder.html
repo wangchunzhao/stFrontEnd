@@ -215,7 +215,8 @@
 							    </div>
 							    <span class="col-md-1 control-label">安装方式</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="installCode" aria-describedby="emailHelp" name="installCode" readonly><!-- th:field="*{installCode}" -->
+									<input type="text" class="form-control" id="installName" aria-describedby="emailHelp" name="installNae" readonly>
+									<input type="hidden" id="installCode" name="installCode">
 							    </div>
 							</div>
 							<div class="row">
@@ -241,7 +242,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" readonly th:field="*{standardDiscount}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{standardDiscount}">
 							    </div>
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
@@ -692,6 +693,7 @@
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
+	var installationTerms = [[${order_option.installationTerms}]]
 	console.log(materialGroupMapGroupOrder)
 	console.log(materialGroupMapGroupOrder['FA01'])
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
