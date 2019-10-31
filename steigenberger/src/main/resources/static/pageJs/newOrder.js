@@ -1160,7 +1160,6 @@ function saveOrder(){
 		    contentType: "application/json;charset=UTF-8",
 		    data: JSON.stringify(orderData),
 		    type: "POST",
-		    dataType: "json",
 		    success: function(data) { 
 		    	alert("保存成功");
 		    },
