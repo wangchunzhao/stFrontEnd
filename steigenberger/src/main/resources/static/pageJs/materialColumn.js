@@ -19,7 +19,9 @@ var materialsColumn = [{
 		width:60,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-			actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+row.code+','+row.clazzCode +','+row.transcationPrice+ '\')"><i class="fa fa-edit"></i></a> ');
+	    	if(row.configurable){
+	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+row.code+','+row.clazzCode +','+row.transcationPrice+ '\')"><i class="fa fa-edit"></i></a> ');
+	    	}			
 			return actions.join('');
 	    }
 	},{

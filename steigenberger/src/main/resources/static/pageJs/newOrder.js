@@ -13,6 +13,13 @@ $(function () {
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
 	materialTypeTable.init();
 	
+	var installationTerm = installationTerms[$("#customerClazzCode").val()];
+	$.each(installationTerm, function (key, value) {
+		$("#installCode").val(key);
+		$("#installName").val(value);
+		
+	});
+	
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -362,6 +369,7 @@ function getPaymentAreaContent(){
 function addSubsidiary(){
 		$('#subsidiaryModal').modal('show');
 		$('#amount').val(1);
+		$('#discount').val($("#approvedDicount").val());
 		var opt = {
 			url: "/steigenberger/order/materials"
 		};
