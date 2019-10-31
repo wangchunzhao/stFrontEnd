@@ -20,6 +20,7 @@ import com.qhc.steigenberger.domain.CustomerClazz;
 import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.Material;
+import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
@@ -228,5 +229,9 @@ public class OrderService {
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+URL_MATERIAL_BOM;
 		return (BomExplosion)fryeService.postInfo(pars,url, BomExplosion.class);
+	}
+	public List<MaterialGroups> calcGrossProfit(BaseOrder order) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"grossprofit";
+		return (List<MaterialGroups>)fryeService.postInfo(order, url, ArrayList.class);
 	}
 }

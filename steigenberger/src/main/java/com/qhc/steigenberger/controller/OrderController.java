@@ -23,6 +23,7 @@ import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
+import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.User;
@@ -57,7 +58,7 @@ public class OrderController {
 	private final static String FORM_MARGIN = "margin";
 	private final static String FORM_WTW_MARGIN = "wtw";
 
-	private final static String FORM_GROSS_PROFIT = "grossProfit";
+	private final static String FORM_GROSS_PROFIT = "grossprofit";
 	private final static String FORM_SUBMIT_TYPE_3 = "3";
 	private final static String FORM_SUBMIT_TYPE_4 = "4";
 	
@@ -280,6 +281,13 @@ public class OrderController {
 		}*/
 		return user;
 
+	}
+
+	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+	@PostMapping(value = "grossprofit")
+	@ResponseStatus(HttpStatus.OK)
+	public List<MaterialGroups> calcGrossProfit(@RequestBody BaseOrder order) throws Exception {
+		return orderService.calcGrossProfit(order);
 	}
 
 
