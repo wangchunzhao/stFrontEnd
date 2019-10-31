@@ -207,7 +207,7 @@ public class OrderController {
 				query.setOfficeCode(userOperationInfoList.get(i).getAttachedCode());
 				break;
 			}else {
-				query.setSalesCode(identityName);
+				query.setSalesCode(String.valueOf(user.id));
 			}
 			
 		}
@@ -237,6 +237,21 @@ public class OrderController {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
 		return orderService.findOrderDetail(sequenceNumber, version, orderType);
+	}
+
+	/**
+	 * 推送订单到SAP
+	 * 
+	 * @param sequenceNumber
+	 * @param version
+	 * @param orderType
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
+	@PostMapping(value = "sap")
+	public String toSap(@RequestParam String sequenceNumber, String version, String orderType) throws Exception {
+		return orderService.toSap(sequenceNumber, version);
 	}
 
 	/**
