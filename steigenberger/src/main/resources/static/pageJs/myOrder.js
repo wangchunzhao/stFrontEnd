@@ -84,6 +84,10 @@ var TableInit = function () {
 				field : 'createTime',
 				sortable : true
 			},{
+				title : '版本',
+				field : 'currentVersion',
+				visible: false 
+			},{
 				title : '订单状态',
 				field : 'currentVersionStatus',
 				formatter : formatStatus
@@ -110,23 +114,32 @@ function formatStatus(value, row, index) {
  
 //删除、编辑操作
 function operation(value, row, index) {
-//	alert(value);
+//	alert(row.sequenceNumber);
+//	var sequenceNumber = row.sequenceNumber;
 	if(value=="5"){
-		var htm = "<a class='mod'>下推订单</a>"
+		var sequenceNumber = row.sequenceNumber;
+		var orderType = row.orderType;
+		var currentVersion = row.currentVersion;
+		var htm = "<button type='button' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>"
 	}else{
 		var htm = "<button>删除</button><button>修改</button>"
 	}
 	return htm;
 }
-//表格  - 操作 - 事件
-window.actionEvents = {
-    'click .mod': function(e, value, row, index) {      
-          //修改操作
-        },
-    'click .delete' : function(e, value, row, index) {
-          //删除操作 
-        }
-} 
+
+function tosap(seqNumb,ordType,version) {
+	$.post('/steigenberger/order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){
+	
+		if(textStatus=="success"){
+			alert('下推订单成功！')
+			$('#mytab').bootstrapTable('refresh', {
+				url : '/steigenberger/order/query'
+			});
+		}else{
+			alert('下推订单失败！')
+		}
+	},'text');
+}
 
 //查询按钮事件
 $('#search_btn').click(function() {

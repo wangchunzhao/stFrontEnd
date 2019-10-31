@@ -202,8 +202,11 @@ public class OrderController {
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
 			String operationId = userOperationInfoList.get(i).getOperationId();
 			if(operationId.equals(allOrder)) {
+				query.setSalesCode("");
+				query.setOfficeCode("");
 				break;
 			}else if(operationId.equals(areaOrder)) {
+				query.setSalesCode("");
 				query.setOfficeCode(userOperationInfoList.get(i).getAttachedCode());
 				break;
 			}else {
@@ -250,8 +253,9 @@ public class OrderController {
 	 */
 	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
 	@PostMapping(value = "sap")
-	public String toSap(@RequestParam String sequenceNumber, String version, String orderType) throws Exception {
-		return orderService.toSap(sequenceNumber, version);
+	@ResponseBody
+	public String toSap(@RequestParam String sequenceNumber, String currentVersion, String orderType) throws Exception {
+		return orderService.toSap(sequenceNumber, currentVersion);
 	}
 
 	/**
