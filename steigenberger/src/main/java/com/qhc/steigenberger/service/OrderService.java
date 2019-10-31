@@ -219,6 +219,11 @@ public class OrderService {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"type?sequenceNumber=" + sequenceNumber;
 		return (String)fryeService.getInfo(url, String.class);
 	}
+	
+	public String toSap(String sequenceNumber, String version) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"sap?sequenceNumber=" + sequenceNumber + "&version=" + version;
+		return (String)fryeService.postInfo(null, url, String.class);
+	}
 
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+URL_MATERIAL_BOM;

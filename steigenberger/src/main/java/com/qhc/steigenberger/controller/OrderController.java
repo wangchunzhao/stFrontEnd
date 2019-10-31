@@ -240,6 +240,21 @@ public class OrderController {
 	}
 
 	/**
+	 * 推送订单到SAP
+	 * 
+	 * @param sequenceNumber
+	 * @param version
+	 * @param orderType
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
+	@PostMapping(value = "sap")
+	public String toSap(@RequestParam String sequenceNumber, String version, String orderType) throws Exception {
+		return orderService.toSap(sequenceNumber, version);
+	}
+
+	/**
 	 * 查询物料配置
 	 * 
 	 * @param clazzCode
