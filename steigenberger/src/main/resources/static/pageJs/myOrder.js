@@ -90,7 +90,7 @@ var TableInit = function () {
 			},{
 				title : '按钮权限',
 				field : 'buttonControl',
-				sortable : true 
+				visible: false  
 			},{
 				title : '订单状态',
 				field : 'currentVersionStatus',
@@ -120,7 +120,7 @@ function formatStatus(value, row, index) {
 		return "工程人员提交成功";
 	}else if(value=="04"){
 		return "支持经理提交成功";
-	}else if(value=="05"){
+	}else if(value=="5"){
 		return "订单审批通过";
 	}else if(value=="06"){
 		return "订单更改审批通过";
@@ -140,12 +140,13 @@ function formatStatus(value, row, index) {
  
 //删除、编辑操作
 function operation(value, row, index) {
-//	alert(row.sequenceNumber);
-//	var sequenceNumber = row.sequenceNumber;
-	if(value=="5"){
-		var sequenceNumber = row.sequenceNumber;
-		var orderType = row.orderType;
-		var currentVersion = row.currentVersion;
+	var sequenceNumber = row.sequenceNumber;
+	var orderType = row.orderType;
+	var currentVersion = row.currentVersion;
+	var currentVersionStatus = row.currentVersionStatus;
+	var buttonControl = row.buttonControl;
+
+	if(currentVersionStatus=="5" && buttonControl ==null){
 		var htm = "<button type='button' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>"
 	}else{
 		var htm = "<button>删除</button>"

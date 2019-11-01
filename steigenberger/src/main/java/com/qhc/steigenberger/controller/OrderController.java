@@ -2,6 +2,7 @@ package com.qhc.steigenberger.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -219,6 +220,12 @@ public class OrderController {
 		// 只查询最新的版本
 		query.setLast(true);
 		PageHelper<BaseOrder> order = orderService.findOrders(query);
+		if(!"".equals(query.getOfficeCode())) {
+			List<BaseOrder> list = order.getRows();
+			for(int i = 0; i < list.size(); i++) {
+				((Map)list.get(i)).put("buttonControl", "0");
+			}
+		}
 		return order;
 	}
 
