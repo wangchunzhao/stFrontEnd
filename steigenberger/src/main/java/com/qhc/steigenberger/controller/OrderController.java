@@ -64,9 +64,9 @@ public class OrderController {
 	private final static String FORM_SUBMIT_TYPE_4 = "4";
 	
 	//权限
-	private final static String allOrder = "11";//查看所有订单
-	private final static String areaOrder = "12";//查看本区域订单
-	private final static String selfOrder = "13";//查看自己的订单
+	private final static String allOrder = "1011";//查看所有订单
+	private final static String areaOrder = "1012";//查看本区域订单
+	private final static String selfOrder = "1013";//查看自己的订单
 
 	@Autowired
 	UserService userService;
