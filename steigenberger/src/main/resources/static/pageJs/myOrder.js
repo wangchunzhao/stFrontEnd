@@ -110,25 +110,25 @@ function formatTrue(value, row, index) {
 	//或者 return row.sex == 1 ? "男" : "女";
 }
 function formatStatus(value, row, index) {
-	if(value=="00"){
+	if(value=="0"){
 		return "订单新建保存";
-	}else if(value=="01"){
+	}else if(value=="1"){
 		return "客户经理提交成功";
-	}else if(value=="02"){
+	}else if(value=="2"){
 		return "B2C审核提交成功";
-	}else if(value=="03"){
+	}else if(value=="3"){
 		return "工程人员提交成功";
-	}else if(value=="04"){
+	}else if(value=="4"){
 		return "支持经理提交成功";
 	}else if(value=="5"){
 		return "订单审批通过";
-	}else if(value=="06"){
+	}else if(value=="6"){
 		return "订单更改审批通过";
-	}else if(value=="07"){
+	}else if(value=="7"){
 		return "订单更改保存";
-	}else if(value=="08"){
+	}else if(value=="8"){
 		return "订单更改提交成功";
-	}else if(value=="09"){
+	}else if(value=="9"){
 		return "已下推SAP";
 	}else if(value=="10"){
 		return "BPM驳回";
