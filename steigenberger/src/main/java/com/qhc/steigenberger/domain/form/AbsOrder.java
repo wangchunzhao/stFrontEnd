@@ -105,6 +105,9 @@ public abstract class AbsOrder {
 	private String currentVersionStatus;
 	private List<String> versions;
 	private String userOfficeCode;//用户所在销售办公室
+	
+	//按钮控制权限
+	private String buttonControl;
 
 	public AbsOrder() {
 		
@@ -534,6 +537,12 @@ public abstract class AbsOrder {
 	}
 	public void setPayments(List<BiddingPayment> payments) {
 		this.payments = payments;
+	}
+	public String getButtonControl() {
+		return buttonControl;
+	}
+	public void setButtonControl(String buttonControl) {
+		this.buttonControl = buttonControl;
 	}
 	
 }
