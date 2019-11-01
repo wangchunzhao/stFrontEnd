@@ -409,6 +409,7 @@ function getMaterialInfo(code){
 function fillMaterailValue(data){
 	$("#groupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
+	$("#isConfigurable").val(data.configurable);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
@@ -425,7 +426,6 @@ function fillMaterailValue(data){
 	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
-	$("#discount").val('0.4');
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
 	var acturalPrice = (data.retailPrice*discount)/100
@@ -499,7 +499,7 @@ function removeMaterials(identification){
 		$('#materialsTable').bootstrapTable("updateCell",rows);
 	}
 	removeRelatedRow(identification);
-	
+	getAllCountFiled();
 }
 //删除其他tab相同的行
 function removeRelatedRow(identification){
@@ -691,9 +691,70 @@ function confirmMaterials(){
 	}
 	
 	$('#subsidiaryModal').modal('hide');
+	//计算最早发货时间，最早出货时间，购销明细合计
+	getAllCountFiled();
 }
 
+function getAllCountFiled(){
+	var tableData = $('#materialsTable').bootstrapTable('getData');
+	//工厂最早交货时间
+	var deliveryTime=[];
+	//要求发货时间
+	var  requiredDeliveryTime=[];
+	//购销明细金额
+	var itemsAmount = [];
+	$.each(tableData,function(index,item){
+		if(item.deliveryDate){
+			deliveryTime.push(moment(item.deliveryDate));
+		}
+		if(item.shippDate){
+			requiredDeliveryTime.push(moment(item.shippDate));
+		}
+		if(item.acturalPriceAmountTotal){
+			itemsAmount.push(item.acturalPriceAmountTotal);
+		}
+	})
+	var totalAmount = toDecimal2(calculationAmount(itemsAmount));
+	$("#itemsAmount").val(totalAmount);	
+	var earlyRequiredDeliveryTime = compareDate(requiredDeliveryTime);
+	if(earlyRequiredDeliveryTime){
+		$("#requiredDeliveryTime").val(moment(earlyRequiredDeliveryTime).format('YYYY-MM-DD'));
+	}else{
+		$("#requiredDeliveryTime").val('');
+	}	
+	var earlyDeliveryTime = compareDate(deliveryTime);
+	if(earlyDeliveryTime){
+		$("#deliveryTime").val(moment(earlyDeliveryTime).format('YYYY-MM-DD'));
+	}else{
+		$("#deliveryTime").val('');
+	}
+	
+}
 
+//计算购销明细金额
+function calculationAmount(amount){
+	var totalAmount=0.00;
+	if(amount.length!=0){	
+		$.each(amount,function(index,item){
+			totalAmount+=parseFloat(item);
+		})	
+	}
+	return totalAmount;
+}
+//时间比较
+
+function compareDate(date){
+	if(date.length==0){
+		return '';
+	}
+	var earlyDate = date[0];
+	$.each(date,function(index,item){
+		if(moment(item).isBefore(earlyDate)){
+			earlyDate = item;
+		}
+	})
+	return earlyDate;
+}
 //购销明细行数据
 
 function confirmRowData(index,identification){
@@ -707,6 +768,7 @@ function confirmRowData(index,identification){
 			materialCode:$("#materialCode").val(),
 			identification:idenf,
 			clazzCode:$("#materialClazzCode").val(),
+			isConfigurable:$("#isConfigurable").val(),
 			isPurchased:$("#isPurchased").val(),
 			groupName:$("#groupName").val(),
 			groupCode:$("#groupCode").val(),
@@ -1098,7 +1160,6 @@ function saveOrder(){
 		    contentType: "application/json;charset=UTF-8",
 		    data: JSON.stringify(orderData),
 		    type: "POST",
-		    dataType: "json",
 		    success: function(data) { 
 		    	alert("保存成功");
 		    },
