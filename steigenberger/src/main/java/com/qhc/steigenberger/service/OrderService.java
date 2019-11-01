@@ -223,7 +223,7 @@ public class OrderService {
 	
 	public String toSap(String sequenceNumber, String version) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"sap?sequenceNumber=" + sequenceNumber + "&version=" + version;
-		return (String)fryeService.postInfo(null, url, String.class);
+		return (String)fryeService.postInfo("", url, String.class);
 	}
 
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
@@ -233,5 +233,9 @@ public class OrderService {
 	public List<MaterialGroups> calcGrossProfit(BaseOrder order) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"grossprofit";
 		return (List<MaterialGroups>)fryeService.postInfo(order, url, ArrayList.class);
+	}
+	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+sequenceNumber+"/" + version + "/grossprofit";
+		return (List<MaterialGroups>)fryeService.postInfo("", url, List.class);
 	}
 }

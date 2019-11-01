@@ -289,9 +289,16 @@ public class OrderController {
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
 	public List<MaterialGroups> calcGrossProfit(@RequestBody BaseOrder order) throws Exception {
 		return orderService.calcGrossProfit(order);
+	}
+
+	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+	@PostMapping(value = "{sequenceNumber}/{version}/grossprofit")
+	@ResponseBody
+	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) throws Exception {
+		return orderService.calcGrossProfit(sequenceNumber, version);
 	}
 
 
