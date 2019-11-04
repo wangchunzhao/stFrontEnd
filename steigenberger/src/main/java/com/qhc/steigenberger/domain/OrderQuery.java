@@ -1,5 +1,7 @@
 package com.qhc.steigenberger.domain;
 
+import java.util.List;
+
 /**
  * 订单查询类
  * @author zsu4
@@ -22,7 +24,8 @@ public class OrderQuery {
 	private String officeCode;//区域   精确查询
 	private String orderType;//订单类型    精确查询
 	private String salesCode;//客户经理code   精确查询 
-//	private String b2c;//是否有B2C
+	private Boolean b2c;//是否有B2C B2C备注里面有值则是true
+	private List statusList;  //订单状态集合
 //	private String specialDiscount;//是否特批折扣
 	
 	private boolean includeDetail = false;
@@ -111,6 +114,18 @@ public class OrderQuery {
 	}
 	public void setSalesCode(String salesCode) {
 		this.salesCode = salesCode;
+	}
+	public Boolean getB2c() {
+		return b2c;
+	}
+	public void setB2c(Boolean b2c) {
+		this.b2c = b2c;
+	}
+	public List getStatusList() {
+		return statusList;
+	}
+	public void setStatusList(List statusList) {
+		this.statusList = statusList;
 	}
 	
 }
