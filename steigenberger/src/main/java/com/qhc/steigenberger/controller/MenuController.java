@@ -216,8 +216,8 @@ public class MenuController {
 		
 		SalesOrder salesOrder = new SalesOrder();
 		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
-		List<SalesGroup> list = staticOrderService.getGrossProfitList(salesOrder);
-		mv.addObject(FORM_GROSS_PROFIT, list);
+//		List<SalesGroup> list = staticOrderService.getGrossProfitList(salesOrder);
+//		mv.addObject(FORM_GROSS_PROFIT, list);
 		return mv;
 	}
 	

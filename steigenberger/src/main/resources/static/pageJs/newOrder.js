@@ -384,6 +384,7 @@ function addSubsidiary(){
 			}else{
 				$('#isPurchased').val('采购');
 			}
+			$('#unitName').val(row.unitName);
 		})
 	$('#materialsModalType').val('new');
 }
