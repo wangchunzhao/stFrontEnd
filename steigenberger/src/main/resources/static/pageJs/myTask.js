@@ -2,7 +2,7 @@ $(function () {
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();
-   
+    InitSapSalesOffice();
 });
 
 var TableInit = function () {
@@ -12,7 +12,7 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'post',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/order/query",//请求路径
+			url : "/steigenberger/order/queryTodo",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -32,8 +32,10 @@ var TableInit = function () {
 			    	pageNo: (params.offset / params.limit),  //当前页码
 			    	
 			    	sequenceNumber:$('#sequenceNumber').val(),
-			    	
-			    	status:$('#status').val()
+			    	contracterCode:$('#contracterCode').val(),
+			    	salesCode:$('#salesCode').val(),
+			    	orderType:$('#orderType').val(),
+			    	officeCode:$('#officeCode').val()
 			    };
 			    return temp;
 			},
@@ -42,10 +44,6 @@ var TableInit = function () {
 				field : 'sequenceNumber',
 				sortable : true
 			}, {
-				title : '合同号',
-				field : 'contractNumber',
-				sortable : true
-			},{
 				title : '签约单位',
 				field : 'contracterCode',
 				sortable : true
@@ -58,10 +56,6 @@ var TableInit = function () {
 				field : 'approvedDiscount',
 				sortable : true
 			},{
-				title : '是否特批折扣',
-				field : 'approvedDiscount',
-				formatter : formatTrue
-			},{
 				title : '区域',
 				field : 'officeName',
 				sortable : true
@@ -73,10 +67,6 @@ var TableInit = function () {
 				title : '版本',
 				field : 'currentVersion',
 				visible: false 
-			},{
-				title : '按钮权限',
-				field : 'buttonControl',
-				visible: false  
 			},{
 				title : '订单状态',
 				field : 'currentVersionStatus',
@@ -119,13 +109,46 @@ function formatStatus(value, row, index) {
 		return "BPM驳回";
 	}else if(value=="11"){
 		return "Selling Tool驳回";
+	}else if(value=="12"){
+		return "待支持经理审批";
 	}
 }
 
+//查询按钮事件
+$('#search_btn').click(function() {
+	$('#mytab').bootstrapTable('refresh', {
+		url : '/steigenberger/order/queryTodo'
+	});
+})
+
+//重置按钮事件
+$('#resetBtn').click(function() {
+	$("#sequenceNumber").val("");
+	$("#contracterCode").val("");
+	$("#salesCode").val("");
+	$("#officeCode").val("");
+	$("#orderType").val("");
+})
  
 //删除、编辑操作
 function operation(value, row, index) {
-	
 	var htm = "<button>审批</button>"
 	return htm;
+}
+
+function InitSapSalesOffice(){
+	$.post('/steigenberger/permission/sapSalesOfficelist',null,function(ret){
+		if(ret.status==200){
+			for(var i in ret.data){
+				var item = ret.data[i];
+				$('#officeCode').append(BuildAreaOption(item.name,item.code));
+			}
+		}else{
+			alert('区域列表请求错误！')
+		}
+	},'json');
+}
+
+function BuildAreaOption(name,code){
+	return "<option value='"+code+"'>"+name+"</option>";
 }
