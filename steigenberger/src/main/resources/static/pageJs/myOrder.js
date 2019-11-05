@@ -134,6 +134,8 @@ function formatStatus(value, row, index) {
 		return "BPM驳回";
 	}else if(value=="11"){
 		return "Selling Tool驳回";
+	}else if(value=="12"){
+		return "待支持经理审批";
 	}
 }
 
@@ -193,15 +195,14 @@ $('#search_btn').click(function() {
 
 //重置按钮事件
 $('#resetBtn').click(function() {
-/*	$("#id").val("");
-	$("#contractNo").val("");
-	$("#reservation").val("");
-	$("#contractUnit").val("");
-	$("#area").val(-1);
-	$("#orderType").val(-1);
-	$("#b2c").val(-1);
-	$("#specialDiscount").val(-1);
-	$("#status").val(-1);*/
+	$("#sequenceNumber").val("");
+	$("#contractNumber").val("");
+	$("#contracterCode").val("");
+	$("#officeCode").val("");
+	$("#orderType").val("");
+	
+	$("#status").val("");
+
 })
 
 
@@ -218,9 +219,9 @@ function InitSapSalesOffice(){
 		},'json');
 	}
 	
-	function BuildAreaOption(name,code){
-		return "<option value='"+code+"'>"+name+"</option>";
-	}
+function BuildAreaOption(name,code){
+	return "<option value='"+code+"'>"+name+"</option>";
+}
 
 
 

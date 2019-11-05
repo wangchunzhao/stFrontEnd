@@ -277,6 +277,7 @@ public class OrderController {
 				list.add(orderStatus12);
 				list.add(orderStatus10);
 				query.setStatusList(list);
+				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(ENGINEER_Order)) {
 				//工程人员
@@ -285,15 +286,27 @@ public class OrderController {
 				list.add(orderStatus2);
 				query.setStatusList(list);
 				query.setOrderType(orderType1);
+				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(B2C_Order)) {
 				//B2C
+				List list = new ArrayList();
+				list.add(orderStatus1);
+				list.add(orderStatus3);
+				query.setStatusList(list);
+				query.setB2c(true);
+				query.setSalesCode("");
+				break;
 			}else {
 				//客户经理
+				List list = new ArrayList();
+				list.add(orderStatus0);
+				list.add(orderStatus11);
+				query.setStatusList(list);
+				query.setSalesCode(String.valueOf(user.id));
 			}
 			
 		}
-		
 		// 只查询最新的版本
 		query.setLast(true);
 		PageHelper<BaseOrder> order = orderService.findOrders(query);
