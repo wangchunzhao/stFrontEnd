@@ -40,6 +40,11 @@ var materialsColumn = [{
 		title:'',
 	    field: 'clazzCode',
 	    visible:false
+	},
+	{
+		title:'',
+	    field: 'standardPrice',
+	    visible:false
 	},{
 		title:'',
 	    field: 'groupCode',
@@ -185,6 +190,11 @@ var materialsColumn = [{
 	},{
 		title:'特殊备注',
 	    field: 'specialRemark',
+	    width:150
+
+	},{
+		title:'颜色备注',
+	    field: 'colorComments',
 	    width:150
 
 	}

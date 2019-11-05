@@ -13,6 +13,13 @@ $(function () {
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
 	materialTypeTable.init();
 	
+	//初始化毛利率table
+	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
+	grossProfitTable.init();
+	
+	var version = getVersion();
+	$("#version").val(version);
+	
 	var installationTerm = installationTerms[$("#customerClazzCode").val()];
 	$.each(installationTerm, function (key, value) {
 		$("#installCode").val(key);
@@ -135,7 +142,6 @@ function salesTypeChange(obj,offices,taxRate){
 		$('#selectDistrict').attr("disabled",true);	
 		$('#selectProvince').attr("disabled",true);
 		$('#currency').attr('disabled',false);
-		$('#orignalContractAmount').attr("readonly",false);
 		$('#incoterm').attr("readonly",false);
 		$('#incotermContect').attr("readonly",false);
 		$('#warrenty').val('');
@@ -162,7 +168,6 @@ function salesTypeChange(obj,offices,taxRate){
 		$('#selectProvince').attr("disabled",false);
 		
 		$('#currency').attr('disabled',true);
-		$('#orignalContractAmount').attr("readonly",true);
 		$('#incoterm').attr("readonly",true);
 		$('#incotermContect').attr("readonly",true);
 		
@@ -187,7 +192,7 @@ function salesTypeChange(obj,offices,taxRate){
 	}else{
 		$("#officeSelect").html('');
 		$("#selectGroup").html('');
-		if($(obj).val() == '10'){
+		if($(obj).val() == '10'||$(obj).val() == '30'){
 			$("#officeSelect").attr("readonly",false);
 			$("#selectGroup").attr("readonly",false);
 			$("#officeSelect").append("<option value=''>--选择大区--</option>");
@@ -429,7 +434,7 @@ function fillMaterailValue(data){
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
-	var acturalPrice = (data.retailPrice*discount)/100
+	var acturalPrice = (data.retailPrice*discount)
 	$("#acturalPrice").val(toDecimal2(acturalPrice));
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
@@ -442,6 +447,7 @@ function fillMaterailValue(data){
 	$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
 	$("#onStoreDate").val(data.onStoreDate);
+	$("#standardPrice").val(toDecimal2(data.standardPrice));
 	
 	
 }
@@ -775,6 +781,7 @@ function confirmRowData(index,identification){
 			groupCode:$("#groupCode").val(),
 			amount:$("#amount").val(),
 			unitName:$("#unitName").val(),
+			standardPrice:$("#standardPrice").val(),
 			acturalPrice:$("#acturalPrice").val(),
 			acturalPriceAmount:$("#acturalPriceAmount").val(),
 			transcationPrice:$("#transcationPrice").val(),
@@ -800,7 +807,8 @@ function confirmRowData(index,identification){
 			onStoreDate:$("#onStoreDate").val(),
 			purchasePeriod:$("#purchasePeriod").val(),
 			b2cRemark:$("#b2cRemark").val(),
-			specialRemark:$("#specialRemark").val()
+			specialRemark:$("#specialRemark").val(),
+			colorComments:$("#colorComments").val()
 	}
 	
 	return row;
@@ -1138,7 +1146,7 @@ function changeRequirement(obj){
 //保存订单
 function saveOrder(){
 	 var versions=[];
-	 var version = getVersion();
+	 var version = $("#version").val();
 	 versions.push(version);
 	 var orderData = $("#orderForm").serializeObject();
 	 orderData['versions'] = versions;
@@ -1212,6 +1220,47 @@ function setConfigValueCode(obj,index){
 	    value:configValueCode
 	});
 }
+//查看毛利率信息
+function viewGrossProfit(){
+	$("#grossProfit").modal("show");
+	var version = $("#version").val();
+	var sequenceNumber = $("#sequenceNumber").val();
+	$("#grossSeqNum").val(sequenceNumber);
+	$("#grossVersion").val(version);
+	$("#grossContractRMBValue").val($("#contractAmount").val());
+	$("#grossPerson").val($("#salesName").val());
+	$("#grossDate").val($("#inputDate").val());
+	$("#grossClazz").val($("#customerClazz").val());
+	var opt = {
+			url: '/steigenberger/order/grossprofit',
+			query:{'sequenceNumber':sequenceNumber,'version':version}
+		   };
+	$("#grossProfitTable").bootstrapTable('refresh', opt);	
+}
+
+
+var grossProfitColumns=[
+	{
+		 field: 'name',
+		 title: '产品名称'
+	},{
+		 field: 'amount',
+		 title: '金额'
+	},{
+		 field: 'excludingTaxAmount',
+		 title: '不含税金额'
+	},{
+		 field: 'cost',
+		 title: '成本'
+	},{
+		 field: 'grossProfit',
+		 title: '毛利'
+	},
+	{
+		 field: 'grossProfitMargin',
+		 title: '毛利率'
+	}
+]
 
 //规格型号查询column
 var materialTypeColumn = [ {
@@ -1317,7 +1366,8 @@ var configTableColumns = [
 	title:'',
 	visible:false,
 	field:'code'
-},{
+},
+{
 	title:'test',
 	visible:false,
 	field:'configValueCode'

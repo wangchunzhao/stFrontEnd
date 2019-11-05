@@ -25,6 +25,7 @@ import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
+import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.User;
@@ -295,18 +296,27 @@ public class OrderController {
 	}
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@PostMapping(value = "grossprofit")
-	@ResponseBody
-	public List<MaterialGroups> calcGrossProfit(@RequestBody BaseOrder order) throws Exception {
-		return orderService.calcGrossProfit(order);
-	}
-
-	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@PostMapping(value = "{sequenceNumber}/{version}/grossprofit")
+	@RequestMapping(value = "grossprofit")
 	@ResponseBody
 	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) throws Exception {
 		return orderService.calcGrossProfit(sequenceNumber, version);
 	}
-
+	
+	@RequestMapping("viewOrder")
+	@ResponseBody
+	public ModelAndView viewOrder(@RequestBody OrderQuery query,ModelAndView view) {
+		ModelAndView mv = new ModelAndView("newOrder/newOrder");
+		OrderOption oo = orderService.getOrderOption();
+		oo.setCustomerClazzCode("02");
+		String orderTypeCode =oo.getOrderTypes().get("02");
+		oo.setOrderTypeCode(orderTypeCode);	
+		mv.addObject("order_option",oo);
+		/*if (orderType == null || orderType.trim().length() == 0) {
+			// get Order type with sequenceNumber
+			orderType = orderService.getOrderType(sequenceNumber);
+		}
+		orderService.findOrderDetail(sequenceNumber, version, orderType);*/
+		return mv;
+	}
 
 }
