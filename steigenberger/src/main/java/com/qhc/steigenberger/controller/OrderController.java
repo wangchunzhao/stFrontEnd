@@ -242,7 +242,7 @@ public class OrderController {
 	@ApiOperation(value = "查询订单详情", notes = "查询订单详情")
 	@GetMapping(value = "detail")
 	@ResponseBody
-	public AbsOrder getOrderDetail(@RequestParam String sequenceNumber, String version, String orderType)
+	public AbsOrder getOrderDetail(@RequestParam String sequenceNumber, @RequestParam String version, @RequestParam(required = false) String orderType)
 			throws Exception {
 		if (orderType == null || orderType.trim().length() == 0) {
 			// get Order type with sequenceNumber
@@ -263,7 +263,7 @@ public class OrderController {
 	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
 	@PostMapping(value = "sap")
 	@ResponseBody
-	public String toSap(@RequestParam String sequenceNumber, String currentVersion, String orderType) throws Exception {
+	public String toSap(@RequestParam String sequenceNumber, @RequestParam String currentVersion, String orderType) throws Exception {
 		return orderService.toSap(sequenceNumber, currentVersion);
 	}
 
@@ -296,10 +296,17 @@ public class OrderController {
 	}
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@RequestMapping(value = "grossprofit")
+	@RequestMapping(value = "{sequenceNumber}/{version}/grossprofit")
 	@ResponseBody
-	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) throws Exception {
+	public List<MaterialGroups> calcGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
 		return orderService.calcGrossProfit(sequenceNumber, version);
+	}
+
+	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+	@PostMapping(value = "grossprofit")
+	@ResponseStatus(HttpStatus.OK)
+	public List<MaterialGroups> calcGrossProfit(@RequestBody BaseOrder order) throws Exception {
+		return orderService.calcGrossProfit(order);
 	}
 	
 	@RequestMapping("viewOrder")
