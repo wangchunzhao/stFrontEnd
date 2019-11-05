@@ -130,8 +130,13 @@ function getDistrict(obj,districts){
 	} 		
 }
 
-function salesTypeChange(obj,offices,taxRate){
+function salesTypeChange(obj,offices,taxRate,exchangeRate){
+	$("#orignalContractAmount").val("");
+	$("#exchangeRate").val("");
+	$("#contractAmount").val("");
 	var saleType = $(obj).val();
+	getCurrency(saleType,exchangeRate);
+	getIncoterm(saleType);
 	$("#taxtRate").val(taxRate[saleType]);
 	if(saleType=="20"){
 		$("#freightDiv").show();
@@ -209,6 +214,33 @@ function salesTypeChange(obj,offices,taxRate){
 	} 		
 }
 
+function getIncoterm(salesType){
+	$("#incoterm").html('');
+	if(salesType=='20'){
+		$.each(intercoms, function (key,value) {
+			$("#incoterm").append("<option value=" + key +">" + value + "</option>");			
+		});
+	}
+}
+function getCurrency(saleType,exchangeRates){
+	$("#currency").html("");
+	if(saleType==''){
+		$("#currency").html("");
+	}else if(saleType=='20'){
+		$("#currency").append("<option value=''>--选择币种--</option>");
+		var currency = exchangeRates[saleType];
+		$.each(currency, function (index,item) {
+			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");			
+		});
+	}else{
+		var currency = exchangeRates[saleType];
+		$.each(currency, function (index,item) {
+			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			$("#exchangeRate").val(item.rate);
+		});
+	}
+	
+}
 function getGroups(obj,groups){
 	var officeCode = $(obj).val();
 	if ($(obj).val() == '') {
@@ -233,7 +265,9 @@ function getExchangeRate(obj,currencies){
 		$("#contractAmount").val('');
 		return
 	}
-	$.each(currencies, function (index,item) {
+	var salesType = $("#salesType").val();
+	var currency = currencies[salesType];
+	$.each(currency, function (index,item) {
 		if(item.code==currencyCode){
 			$('#exchangeRate').val(item.rate);
 			getAmount('#orignalContractAmount');
@@ -1051,6 +1085,7 @@ function confirmAddress(){
 	var addressModalType = $("#addressModalType").val();
 	var count = $('#addressTable').bootstrapTable('getData').length;
 	var rowIndex = $("#addressIndex").val()
+	debugger
 	if(addressModalType=='new'){
 		$("#addressTable").bootstrapTable('insertRow', {
 		    index: count,
@@ -1072,7 +1107,7 @@ function confirmAddress(){
 		    	provinceValue:provinceValue,
 		    	cityValue:cityValue,
 		    	areaValue:areaValue,
-		    	shippingAddress:shippingAddress
+		    	address:shippingAddress
 		    }
 		});
 	}
@@ -1232,9 +1267,8 @@ function viewGrossProfit(){
 	$("#grossDate").val($("#inputDate").val());
 	$("#grossClazz").val($("#customerClazz").val());
 	var opt = {
-			url: '/steigenberger/order/grossprofit',
-			query:{'sequenceNumber':sequenceNumber,'version':version}
-		   };
+			url: '/steigenberger/order/'+sequenceNumber+'/'+version+'/grossprofit'
+	};
 	$("#grossProfitTable").bootstrapTable('refresh', opt);	
 }
 
@@ -1304,7 +1338,7 @@ var addressColumns = [{
 	visible:false
 },{
 	title : '到货地址',
-	field : 'shippingAddress',
+	field : 'address',
 	width:'45%'
 },{
     title: '<input type="button"  value="+" class="btn btn-primary" onclick="addAddress()"/>',

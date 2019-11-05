@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class OrderOption {
 	//
 	private Map<String,Double> taxRate;//Map<saleType key(code),Map<taxRate name,rate>>
 	//
-	private Map<String,Currency> exchangeRate;
+	private Map<String,List<Currency>> exchangeRate;
 	//
 	private Map<String,String> paymentType;//回款类型
 	private Map<String,String> biddingPlan;//回款类型,大客户
@@ -149,11 +150,11 @@ public class OrderOption {
 		this.taxRate = taxRate;
 	}
 
-	public Map<String, Currency> getExchangeRate() {
+	public Map<String, List<Currency>> getExchangeRate() {
 		return exchangeRate;
 	}
 
-	public void setExchangeRate(Map<String, Currency> exchangeRate) {
+	public void setExchangeRate(Map<String, List<Currency>> exchangeRate) {
 		this.exchangeRate = exchangeRate;
 	}
 

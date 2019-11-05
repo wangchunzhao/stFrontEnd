@@ -20,7 +20,7 @@ var materialsColumn = [{
 	    formatter: function(value, row, index) {
 	    	var actions = [];
 	    	if(row.isConfigurable){
-	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+row.code+','+row.clazzCode +','+row.transcationPrice+ '\')"><i class="fa fa-edit"></i></a> ');
+	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+row.materialCode+','+row.clazzCode +','+row.transcationPrice+ '\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
 	    }

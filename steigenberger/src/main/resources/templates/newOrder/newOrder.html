@@ -133,7 +133,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">销售类型</span>
 								<div class="col-md-2">
-									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]])" name="saleType">
+									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" name="saleType" id="salesType">
 										<option value="">--请选择--</option>
 										<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
@@ -152,7 +152,7 @@
 								<div class="col-md-2">
 									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled><!--  th:field="*{currency}"-->
 									    <option value="">--选择币种--</option>
-									    <option th:each="exchange : ${order_option.exchangeRate}" th:value="${exchange.key}" th:text="${exchange.value.name}"></option>
+									    <!-- <option th:each="exchange : ${order_option.exchangeRate}" th:value="${exchange.key}" th:text="${exchange.value.name}"></option> -->
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">合同金额</span>
@@ -691,6 +691,7 @@
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
 	var installationTerms = [[${order_option.installationTerms}]]
+	var intercoms = [[${order_option.intercoms}]]
 	console.log(materialGroupMapGroupOrder)
 	console.log(materialGroupMapGroupOrder['FA01'])
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
