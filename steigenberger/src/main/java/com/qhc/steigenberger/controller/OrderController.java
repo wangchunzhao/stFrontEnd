@@ -1,5 +1,6 @@
 package com.qhc.steigenberger.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,29 @@ public class OrderController {
 	//权限
 	private final static String allOrder = "1011";//查看所有订单
 	private final static String areaOrder = "1012";//查看本区域订单
-	private final static String selfOrder = "1013";//查看自己的订单
+	private final static String B2C_Order = "1014";//B2C审核订单
+	private final static String ENGINEER_Order = "1015";//工程人员审批订单
+	private final static String SUPPORT_Order = "1016";//支持经理审批订单
+	
+	//订单状态
+	private final static String orderStatus0="0";//订单新建保存
+	private final static String orderStatus1="1";//客户经理提交成功
+	private final static String orderStatus2="2";//B2C审核提交成功
+	private final static String orderStatus3="3";//工程人员提交成功
+	private final static String orderStatus4="4";//支持经理提交成功
+	private final static String orderStatus5="5";//订单审批通过
+	private final static String orderStatus6="6";//订单更改审批通过
+	private final static String orderStatus7="7";//订单更改保存
+	private final static String orderStatus8="8";//订单更改提交成功
+	private final static String orderStatus9="9";//已下推SAP
+	private final static String orderStatus10="10";//BPM驳回
+	private final static String orderStatus11="11";//Selling Tool驳回
+	private final static String orderStatus12="12";//待支持经理审批
+	
+	//订单类型
+	private final static String orderType1="ZH0D";//经销商订单
+	private final static String orderType2="ZH0M";//备货订单
+
 
 	@Autowired
 	UserService userService;
@@ -189,7 +212,7 @@ public class OrderController {
 	}
 
 	/**
-	 * 查询订单版本历史
+	 * 查询订单管理列表
 	 * 
 	 * @param orderId
 	 * @return
@@ -229,6 +252,55 @@ public class OrderController {
 		}
 		return order;
 	}
+	
+	/**
+	 * 查询代办订单列表
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "代办列表", notes = "代办订单列表")
+	@PostMapping(value = "queryTodo")
+	@ResponseBody
+	public PageHelper<BaseOrder> searchTodoOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
+		//取得session中的登陆用户域账号，查询权限
+		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		User user = userService.selectUserIdentity(identityName);//identityName
+		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
+		for(int i = 0; i < userOperationInfoList.size(); i++) {
+			//查询权限id
+			String operationId = userOperationInfoList.get(i).getOperationId();
+			if(operationId.equals(SUPPORT_Order)) {
+				//支持经理
+				List list = new ArrayList();
+				list.add(orderStatus12);
+				list.add(orderStatus10);
+				query.setStatusList(list);
+				break;
+			}else if(operationId.equals(ENGINEER_Order)) {
+				//工程人员
+				List list = new ArrayList();
+				list.add(orderStatus1);
+				list.add(orderStatus2);
+				query.setStatusList(list);
+				query.setOrderType(orderType1);
+				break;
+			}else if(operationId.equals(B2C_Order)) {
+				//B2C
+			}else {
+				//客户经理
+			}
+			
+		}
+		
+		// 只查询最新的版本
+		query.setLast(true);
+		PageHelper<BaseOrder> order = orderService.findOrders(query);
+		
+		return order;
+	}
+
 
 	/**
 	 * 查询订单

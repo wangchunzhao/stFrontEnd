@@ -12,7 +12,7 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'post',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/order/query",//请求路径
+			url : "/steigenberger/order/queryTodo",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
