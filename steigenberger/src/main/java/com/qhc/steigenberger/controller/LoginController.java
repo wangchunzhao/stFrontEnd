@@ -94,6 +94,7 @@ public class LoginController extends BaseController{
             	
         	}
 		} catch (Exception e) {
+			modelAndView.addObject("userName",userName);
 			modelAndView.addObject("msg","无该用户信息，请联系管理员添加!");
 			modelAndView.setViewName("login");
 			e.printStackTrace();
