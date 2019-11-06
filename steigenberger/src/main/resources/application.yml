@@ -29,6 +29,11 @@ spring:
                 auth: true
                 starttls:
                     auth: true   
+
+# logging config
+logging:
+    config: classpath:logback-spring.xml
+    path: ./logs
    
 qhc:     
     frye: 
