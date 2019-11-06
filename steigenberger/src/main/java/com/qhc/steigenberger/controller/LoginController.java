@@ -46,6 +46,7 @@ public class LoginController extends BaseController{
         		modelAndView.addObject("msg","用户名或密码不能为空!");
         		modelAndView.setViewName("login");
         	}else if(isActive ==0) {
+        		modelAndView.addObject("userName",userName);
         		modelAndView.addObject("msg","用户已被禁用!");
         		modelAndView.setViewName("login");
         	}else if("false".equals(ldap)){
@@ -70,14 +71,17 @@ public class LoginController extends BaseController{
             		modelAndView.setViewName("main");
             		System.out.println("身份验证成功!");
             		} catch (AuthenticationException e) {
+            			modelAndView.addObject("userName",userName);
             			modelAndView.addObject("msg","身份验证失败!");
             			modelAndView.setViewName("login");
             			e.printStackTrace();
             		} catch (javax.naming.CommunicationException e) {
+            			modelAndView.addObject("userName",userName);
             			modelAndView.addObject("msg","AD域连接失败!");
             			modelAndView.setViewName("login");
             			e.printStackTrace();
             			} catch (Exception e) {
+            				modelAndView.addObject("userName",userName);
             				modelAndView.addObject("msg","身份验证未知异常!");
             				modelAndView.setViewName("login");
             				e.printStackTrace();
@@ -94,6 +98,7 @@ public class LoginController extends BaseController{
             	
         	}
 		} catch (Exception e) {
+			modelAndView.addObject("userName",userName);
 			modelAndView.addObject("msg","无该用户信息，请联系管理员添加!");
 			modelAndView.setViewName("login");
 			e.printStackTrace();
