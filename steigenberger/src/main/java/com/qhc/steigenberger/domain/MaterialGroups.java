@@ -14,9 +14,15 @@ public class MaterialGroups {
 	
 	private BigDecimal excludingTaxAmount;//不含税金额
 	
+	private BigDecimal wtwCost;//wtw成本
+	
 	private BigDecimal cost;//成本
 	
+	private BigDecimal wtwGrossProfit;//wtw毛利
+	
 	private BigDecimal grossProfit;//毛利
+	
+	private Double wtwGrossProfitMargin;//wtw毛利率	
 	
 	private Double grossProfitMargin;//毛利率	
 
@@ -82,5 +88,29 @@ public class MaterialGroups {
 
 	public void setGrossProfitMargin(Double grossProfitMargin) {
 		this.grossProfitMargin = grossProfitMargin;
+	}
+
+	public BigDecimal getWtwCost() {
+		return wtwCost;
+	}
+
+	public void setWtwCost(BigDecimal wtwCost) {
+		this.wtwCost = wtwCost;
+	}
+
+	public BigDecimal getWtwGrossProfit() {
+		return wtwGrossProfit;
+	}
+
+	public void setWtwGrossProfit(BigDecimal wtwGrossProfit) {
+		this.wtwGrossProfit = wtwGrossProfit;
+	}
+
+	public Double getWtwGrossProfitMargin() {
+		return wtwGrossProfitMargin;
+	}
+
+	public void setWtwGrossProfitMargin(Double wtwGrossProfitMargin) {
+		this.wtwGrossProfitMargin = wtwGrossProfitMargin;
 	}
 }

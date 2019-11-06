@@ -234,6 +234,10 @@ public class OrderService {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"grossprofit";
 		return (List<MaterialGroups>)fryeService.postForm(url, order, ArrayList.class);
 	}
+	public List<MaterialGroups> calcWtwGrossProfit(String sequenceNumber, String version) {
+		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+sequenceNumber+"/" + version + "/wtwgrossprofit";
+		return (List<MaterialGroups>)fryeService.postForm(url, "", ArrayList.class);
+	}
 	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+sequenceNumber+"/" + version + "/grossprofit";
 		return (List<MaterialGroups>)fryeService.postForm(url, "", ArrayList.class);
