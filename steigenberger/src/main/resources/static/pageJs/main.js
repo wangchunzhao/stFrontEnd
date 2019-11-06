@@ -32,26 +32,26 @@
 		            	//判断权限
 		            	userIdentity = result.data.userIdentity;
 		            	var operationList = result.data.operations;
-		            	var operationNames = "";
+		            	var operationNames = ",";
 		            	for(var i=0;i<operationList.length;i++){
 		            		operationNames+=operationList[i].id+",";
 		            	}
-		               if(operationNames.indexOf("1001,")==-1){
+		               if(operationNames.indexOf(",1001,")==-1){
 		            	   $('#todo').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1002,")==-1){ 
+			       		if(operationNames.indexOf(",1002,")==-1){ 
 			       			$('#newOrder').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1003,")==-1){
+			       		if(operationNames.indexOf(",1003,")==-1){
 			       			$('#orderManage').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1004,")==-1){
+			       		if(operationNames.indexOf(",1004,")==-1){
 			       			$('#contract').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1005,")==-1){
+			       		if(operationNames.indexOf(",1005,")==-1){
 			       			$('#newSpecial').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1006,")==-1){
+			       		if(operationNames.indexOf(",1006,")==-1){
 			       			$('#report1').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		if(operationNames.indexOf("1007,")==-1){
@@ -62,16 +62,16 @@
 			       			$('#report').attr('href',ctxPath+"main/noAuthorization");
 			       		}*/
 			       		
-			       		if(operationNames.indexOf("1008,")==-1){
+			       		if(operationNames.indexOf(",1008,")==-1){
 			       			$('#user').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1013,")==-1){
+			       		if(operationNames.indexOf(",1013,")==-1){
 			       			$('#permission').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1010,")==-1){
+			       		if(operationNames.indexOf(",1010,")==-1){
 			       			$('#parameterSetting').attr('href',ctxPath+"main/noAuthorization");
 			       		}
-			       		if(operationNames.indexOf("1009,")==-1){
+			       		if(operationNames.indexOf(",1009,")==-1){
 			       			$('#role').attr('href',ctxPath+"main/noAuthorization");
 			       		}
 			       		

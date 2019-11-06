@@ -26,6 +26,7 @@ public class OrderQuery {
 	private String salesCode;//客户经理code   精确查询 
 	private Boolean b2c;//是否有B2C B2C备注里面有值则是true
 	private List statusList;  //订单状态集合
+	private String salesName;//客户经理姓名   模糊查询
 //	private String specialDiscount;//是否特批折扣
 	
 	private boolean includeDetail = false;
@@ -126,6 +127,12 @@ public class OrderQuery {
 	}
 	public void setStatusList(List statusList) {
 		this.statusList = statusList;
+	}
+	public String getSalesName() {
+		return salesName;
+	}
+	public void setSalesName(String salesName) {
+		this.salesName = salesName;
 	}
 	
 }

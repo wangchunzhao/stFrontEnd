@@ -33,7 +33,7 @@ var TableInit = function () {
 			    	
 			    	sequenceNumber:$('#sequenceNumber').val(),
 			    	contracterCode:$('#contracterCode').val(),
-			    	salesCode:$('#salesCode').val(),
+			    	salesName:$('#salesName').val(),
 			    	orderType:$('#orderType').val(),
 			    	officeCode:$('#officeCode').val()
 			    };
@@ -58,6 +58,10 @@ var TableInit = function () {
 			},{
 				title : '区域',
 				field : 'officeName',
+				sortable : true
+			},{
+				title : '客户经理',
+				field : 'salesName',
 				sortable : true
 			},{
 				title : '创建日期',
