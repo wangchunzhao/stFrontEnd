@@ -44,7 +44,7 @@ var TableInit = function () {
 			    	contracterName:$('#contracterName').val(),//签约单位
 			    	officeCode:$('#officeCode').val(),
 			    	orderType:$('#orderType').val(),
-			    	b2c:true,
+			   
 			    	createTime:$('#reservation').val(),
 //			    	specialDiscount:$('#specialDiscount').val(),
 			    	status:$('#status').val()
