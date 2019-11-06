@@ -39,12 +39,13 @@ var TableInit = function () {
 //			        offset : params.offset, // SQL语句起始索引
 			    	pageNo: (params.offset / params.limit),  //当前页码
 			    	
-			    	sequenceNumber:$('#sequenceNumber').val(),
-			    	contractNumber:$('#contractNumber').val(),
-			    	contracterCode:$('#contracterCode').val(),
+			    	sequenceNumber:$('#sequenceNumber').val(),//需求流水号
+			    	contractNumber:$('#contractNumber').val(),//合同号
+			    	contracterName:$('#contracterName').val(),//签约单位
 			    	officeCode:$('#officeCode').val(),
 			    	orderType:$('#orderType').val(),
-//			    	b2c:$('#b2c').val(),
+			    	b2c:true,
+			    	createTime:$('#reservation').val(),
 //			    	specialDiscount:$('#specialDiscount').val(),
 			    	status:$('#status').val()
 //			        id:$('#id').val()

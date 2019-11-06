@@ -28,6 +28,7 @@ public class OrderQuery {
 	private List statusList;  //订单状态集合
 	private String salesName;//客户经理姓名   模糊查询
 //	private String specialDiscount;//是否特批折扣
+	private String createTime;
 	
 	private boolean includeDetail = false;
 	
@@ -133,6 +134,12 @@ public class OrderQuery {
 	}
 	public void setSalesName(String salesName) {
 		this.salesName = salesName;
+	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 	
 }
