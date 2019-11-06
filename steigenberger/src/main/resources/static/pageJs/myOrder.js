@@ -149,27 +149,34 @@ function operation(value, row, index) {
 	var buttonControl = row.buttonControl;
 	var htm="";
 	if(currentVersionStatus=="5" && buttonControl ==null){
-		htm = "<button type='button' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>";
+		htm = "<button type='button' class='btn btn-warning' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>";
 	}else{
-		var deletehtm = "<button>删除</button>";
-		var viewHtm = "<button type='button' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
+		var deletehtm = "<button class='btn btn-danger'>删除</button>";
+		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
 		htm =deletehtm+viewHtm;
 	}
 	return htm;
 }
 
 function viewOrder(seqNumb,ordType,version){
-	 /*location.href="/steigenberger/order/viewOrder"
-	$.ajax({
-	    url: "/steigenberger/order/viewOrder",
-	    contentType: "application/json;charset=UTF-8",
-	    data: JSON.stringify({sequenceNumber:seqNumb,orderType:ordType,currentVersion:version}),
-	    type: "POST",
-	    success: function(data) { 
-	    },
-	    error: function(){
-	    }
-});*/
+	var myForm = document.createElement("form");       
+    myForm.method = "post";  
+    myForm.action = "/steigenberger/order/viewOrder";        
+	var seq = document.createElement("input");       
+	seq.setAttribute("name", "sequenceNumber");  
+	seq.setAttribute("value", seqNumb);  
+	myForm.appendChild(seq);
+	var type = document.createElement("input");       
+	type.setAttribute("name", "orderType");  
+	type.setAttribute("value", ordType);  
+	myForm.appendChild(type);  
+	var ver = document.createElement("input");       
+	ver.setAttribute("name", "version");  
+	ver.setAttribute("value", version);  
+	myForm.appendChild(ver);    
+	document.body.appendChild(myForm);     
+	myForm.submit();   
+	document.body.removeChild(myForm); 	
 }
 
 function tosap(seqNumb,ordType,version) {

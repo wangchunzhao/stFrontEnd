@@ -139,13 +139,7 @@ public class OrderController {
 		//test data
 		orderData.setSalesCode(domainId);
 		orderData.setSalesName("sales name");
-		orderData.setCustomerClazzName("customerClazzName");
-		orderData.setCustomerClazzCode("01");
-		orderData.setContracterCode("经销商");
-		orderData.setContracterName("contracterName");
-		orderData.setCreateTime(new Date());
-		orderData.setCurrentVersion("v123.13");
-		
+		orderData.setCreateTime(new Date());		
 		orderService.saveOrder(orderData);
 
 		return MenuController.goDealerOrder();
@@ -394,20 +388,18 @@ public class OrderController {
 		return orderService.calcGrossProfit(order);
 	}
 	
-	@RequestMapping("viewOrder")
+	@RequestMapping(value="viewOrder")
 	@ResponseBody
-	public ModelAndView viewOrder(@RequestBody OrderQuery query,ModelAndView view) {
-		ModelAndView mv = new ModelAndView("newOrder/newOrder");
+	public ModelAndView viewOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
+		ModelAndView mv = new ModelAndView("dealerOrder/dealerOrderView");
 		OrderOption oo = orderService.getOrderOption();
-		oo.setCustomerClazzCode("02");
-		String orderTypeCode =oo.getOrderTypes().get("02");
-		oo.setOrderTypeCode(orderTypeCode);	
 		mv.addObject("order_option",oo);
-		/*if (orderType == null || orderType.trim().length() == 0) {
-			// get Order type with sequenceNumber
+		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		orderService.findOrderDetail(sequenceNumber, version, orderType);*/
+		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+		oo.setOrderTypeCode(orderType);	
+		mv.addObject("orderDetail",order);
 		return mv;
 	}
 

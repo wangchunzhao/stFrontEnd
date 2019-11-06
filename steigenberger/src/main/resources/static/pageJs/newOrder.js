@@ -1180,11 +1180,9 @@ function changeRequirement(obj){
 
 //保存订单
 function saveOrder(){
-	 var versions=[];
 	 var version = $("#version").val();
-	 versions.push(version);
 	 var orderData = $("#orderForm").serializeObject();
-	 orderData['versions'] = versions;
+	 orderData['currentVersion'] = version;
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){

@@ -38,13 +38,13 @@ public class MenuController {
 	
 	private final static String ORDER_OPTION = "order_option";
 	//
-	private final static String PAGE_DEALER = "newOrder/newOrder";
+	private final static String PAGE_DEALER = "dealerOrder/newOrder";
 	//
 	private final static String FORM_ORDER_DEALER = "dealerOrder";
 	
 	private final static String specialApplication="special/specialList";
 	private final static String todo="todo/mytask";
-	private final static String newOrder="newOrder/orderForm";
+	private final static String newOrder="dealerOrder/orderForm";
 	private final static String orderManageList="orderManage/myOrder";
 	private final static String contract="contract/myContract";
 	private final static String purchaseAndSale="report/purchaseAndSale";
