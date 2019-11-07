@@ -45,7 +45,7 @@ public class LoginController extends BaseController{
     		User user  = userService.selectUserIdentity(userName);
     		if(user == null) {
     			modelAndView.addObject("userName",userName);
-        		modelAndView.addObject("msg","没有该用户!");
+        		modelAndView.addObject("msg","无该用户信息!");
         		modelAndView.setViewName("login");
         		return modelAndView;
     		}
@@ -108,9 +108,9 @@ public class LoginController extends BaseController{
         	}
 		} catch (Exception e) {
 			modelAndView.addObject("userName",userName);
-			modelAndView.addObject("msg","无该用户信息，请联系管理员添加!");
+			modelAndView.addObject("msg","后台访问异常");
 			modelAndView.setViewName("login");
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
        return modelAndView;
