@@ -26,12 +26,28 @@ public class LoginFilter implements Filter{
 	Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
     //排除不拦截的url
-    private static final String[] excludePathPatterns = { "/steigenberger/loginIn", "/steigenberger/", "/steigenberger", "/steigenberger/menu/nologin"};
-    private List<String> excludeLocations = null;
+    private static final String[] excludePathPatterns = { "/steigenberger/loginIn", 
+    		"/steigenberger/", 
+    		"/steigenberger", 
+    		"/steigenberger/menu/nologin"};
+    private List<String> excludeLocations = Arrays.asList(excludePathPatterns);
+    private List<String> excludePrefixs = Arrays.asList(new String[] {"/steigenberger/assets",
+    		"/steigenberger/bootstrap-date",
+    		"/steigenberger/bootstrap-fileinput-master",
+    		"/steigenberger/bootstrap-table-master",
+    		"/steigenberger/css",
+    		"/steigenberger/drag",
+    		"/steigenberger/fonts",
+    		"/steigenberger/images",
+    		"/steigenberger/index.html",
+    		"/steigenberger/js",
+    		"/steigenberger/lib",
+    		"/steigenberger/page",
+    		"/steigenberger/pageJs",
+    		"/steigenberger/view"});
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-    	excludeLocations = Arrays.asList(excludePathPatterns);
     }
 
     @Override
@@ -44,7 +60,14 @@ public class LoginFilter implements Filter{
         // 获取请求url地址，不拦截excludePathPatterns中的url
         String url = req.getRequestURI();
         logger.info("request uri : " + url);
-        if (excludeLocations.contains(url) || url.toLowerCase().endsWith(".html")  || url.toLowerCase().endsWith(".js") || url.toLowerCase().endsWith(".css")) {
+        boolean isStaticAssets = false;
+        for (String prefix : excludePrefixs) {
+        	if(url.startsWith(prefix)) {
+        		isStaticAssets = true;
+        		break;
+        	}
+		}
+        if (excludeLocations.contains(url) || isStaticAssets) {
             //放行，相当于第一种方法中LoginInterceptor返回值为true
             chain.doFilter(request, response);
             return;
