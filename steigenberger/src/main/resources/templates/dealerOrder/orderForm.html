@@ -56,7 +56,7 @@
         		<div class="r3_counter_box" >
                     <i class="pull-left fa fa-dollar icon-rounded"></i>
                     <div class="stats">
-                      <span><a onclick="" href="/steigenberger/menu/standardDiscount">经销商标准折扣下单</a></span><br>
+                      <span><a onclick="return doSomething()" href="/steigenberger/menu/standardDiscount">经销商标准折扣下单</a></span><br>
 					  <span style="font-size:12px">Dealer standard discount order</span>
                     </div>
                 </div>
@@ -145,7 +145,7 @@ function doSomething(){
 	
 	 var ret = false;
 	 $.ajax({
-		 url:'/steigenberger/newOrder/createOrder',
+		 url:'/steigenberger/order/createOrder',
 		 data:{ menu:'下单'},
 		 dataType:'json',
 		 method:'POST',
@@ -153,12 +153,12 @@ function doSomething(){
 		 success:function(resp){
 			 console.log(resp);
 			 ret = true;
-				/* if(resp.status==200){
-					 ret = true;
-				}else{
-					 alert("对不起，您没有下单权限");
-					 ret = false;
-				} */
+/*			if(resp.status==200){
+				 ret = true;
+			}else{
+				 alert("对不起，您没有下单权限");
+				 ret = false;
+			}*/
 		 },
 		 error:function(resp,status){
 			 console.log(resp);

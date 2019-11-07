@@ -74,6 +74,7 @@ public class OrderController {
 	private final static String B2C_Order = "1014";//B2C审核订单
 	private final static String ENGINEER_Order = "1015";//工程人员审批订单
 	private final static String SUPPORT_Order = "1016";//支持经理审批订单
+	private final static String CREATE_Order = "1017";//下订单
 	
 	//订单状态
 	private final static String orderStatus0="0";//订单新建保存
@@ -103,8 +104,6 @@ public class OrderController {
 
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
-
-	String newOrder = "下订单";
 
 	@PostMapping("dealer")
 	@ResponseBody
@@ -169,8 +168,8 @@ public class OrderController {
 			User user = userService.selectUserIdentity("wangch");
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
-				String operationName = userOperationInfoList.get(i).getOperationName();
-				if (operationName.equals(newOrder)) {
+				String operationId = userOperationInfoList.get(i).getOperationId();
+				if (operationId.equals(CREATE_Order)) {
 					return JsonResult.build(200, "success", null);
 				}
 			}
@@ -422,5 +421,6 @@ public class OrderController {
 		mv.addObject("orderDetail",order);
 		return mv;
 	}
+
 
 }
