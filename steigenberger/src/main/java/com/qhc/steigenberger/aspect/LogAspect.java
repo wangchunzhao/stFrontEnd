@@ -50,13 +50,13 @@ public class LogAspect {
     }
 
     private String argsToString(Object object) {
-    	ObjectMapper mapper = new ObjectMapper();
-    	mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        try {
-            return mapper.writeValueAsString(object);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
+//    	ObjectMapper mapper = new ObjectMapper();
+//    	mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+//        try {
+//            return mapper.writeValueAsString(object);
+//        } catch (Exception e) {
+//            logger.error("统一日志 ===== 转换json失败", e);
+//        }
         return String.valueOf(object);
     }
 
