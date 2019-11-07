@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * 日志统一打印切面
@@ -50,6 +51,7 @@ public class LogAspect {
 
     private String argsToString(Object object) {
     	ObjectMapper mapper = new ObjectMapper();
+    	mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         try {
             return mapper.writeValueAsString(object);
         } catch (Exception e) {
