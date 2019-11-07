@@ -221,5 +221,10 @@ public class MenuController {
 		return mv;
 	}
 	
+	@RequestMapping("/nologin")
+  	public String nologin() {
+  		return "noLogin";
+  	}
+	
 
 }
