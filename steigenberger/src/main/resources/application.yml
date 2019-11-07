@@ -1,5 +1,5 @@
 server:
-  port: 8800
+  port: 8880
   servlet:
     context-path: /steigenberger
 
@@ -39,7 +39,7 @@ qhc:
     frye: 
         protocal: http
         server: localhost
-        port: 8801
+        port: 8880
         application: frye
     ldap: false
 
