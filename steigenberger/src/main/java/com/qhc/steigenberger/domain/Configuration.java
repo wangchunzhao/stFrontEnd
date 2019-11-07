@@ -10,6 +10,13 @@ package com.qhc.steigenberger.domain;
 public class Configuration {
 	private String code;
 	private String name;
+	private boolean isDefault;
+	public boolean isDefault() {
+		return isDefault;
+	}
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
+	}
 	public String getCode() {
 		return code;
 	}

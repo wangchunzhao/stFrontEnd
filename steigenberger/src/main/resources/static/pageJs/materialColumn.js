@@ -5,8 +5,7 @@ var materialsColumn = [{
 	    formatter: function(value, row, index) {
 	    	var actions = [];
 			actions.push('<a class="btn" style="font-size:11px" onclick="editMaterials(\'' +row.identification+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
-			actions.push('<a class="btn" style="font-size:11px" onclick="copyMaterials(\'' + row.identification + '\')"><i class="fa fa-copy"></i>复制</a>');
-			actions.push('<a class="btn" style="font-size:11px" onclick="removeMaterials(\'' + row.identification + '\')"><i class="fa fa-remove"></i>删除</a>');
+			actions.push('<a class="btn" style="font-size:11px" onclick="copyMaterials(\'' + row.identification + '\')"><i class="fa fa-copy"></i>复制</a>');	
 			return actions.join('');
 	    }
 	},{
