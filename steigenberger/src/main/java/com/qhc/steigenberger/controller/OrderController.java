@@ -2,8 +2,10 @@ package com.qhc.steigenberger.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.Characteristic;
+import com.qhc.steigenberger.domain.Configuration;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
@@ -113,13 +116,12 @@ public class OrderController {
 			model.addObject("error", bindingResult.getFieldError().getDefaultMessage());
 			return MenuController.goDealerOrder();
 		}
-		Object object = request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
-		//test data
-		String domainId = "wangch";
-		String saleOfficeCode = "1234";
-		orderData.setCurrentUser(domainId);
-		orderData.setUserOfficeCode(saleOfficeCode);
-
+		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		User user = userService.selectUserIdentity(identityName);
+		orderData.setCurrentUser(user.getUserIdentity());
+		if(user.getRegion()!=null){
+			orderData.setUserOfficeCode(user.getRegion().getCode());
+		}
 		switch (action) {
 
 			case FORM_WTW_MARGIN:
@@ -134,14 +136,6 @@ public class OrderController {
 			default:
 				orderData.setSubmitType(1);
 		}
-
-		orderData.setOrderType(AbsOrder.ORDER_TYPE_CODE_DEALER);
-		//test data
-		orderData.setSalesCode(domainId);
-		orderData.setSalesName("sales name");
-		orderData.setCreateTime(new Date());		
-		orderService.saveOrder(orderData);
-
 		return MenuController.goDealerOrder();
 	}
 
@@ -356,6 +350,25 @@ public class OrderController {
 	@RequestMapping(value = "material/configurations")
 	@ResponseBody
 	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
+		/*List<Characteristic> ch = new ArrayList<>();
+		Characteristic c = new Characteristic();
+		c.setName("test");
+		c.setCode("2");
+		c.setOptional(true);
+		Set<Configuration> s = new HashSet<>();
+		Configuration con = new Configuration();
+		con.setCode("222");
+		con.setName("default");
+		con.setDefault(true);
+		Configuration con1 = new Configuration();
+		con1.setCode("2222");
+		con1.setName("test");
+		con1.setDefault(false);
+		s.add(con);
+		s.add(con1);
+		c.setConfigs(s);
+		ch.add(c);
+		return ch;*/
 		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
 
 	}

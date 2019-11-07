@@ -544,7 +544,6 @@ function removeMaterials(identification){
 }
 //删除其他tab相同的行
 function removeRelatedRow(identification){
-	debugger
 	var identificationSplit = identification.split('|');
 	var type = identificationSplit[1];
 	if(type=='T101'){
@@ -901,6 +900,7 @@ function openConfig(identification){
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
 	var configData = localStorage[value[0]];
+	debugger
 	if(configData){
 		$("#configTable").bootstrapTable("removeAll");
 		var jsonObject = JSON.parse(configData);
@@ -930,7 +930,12 @@ function queryConfigParams(params) {
 
 //还原标准配置
 function resetStandardConfiguration(){
-	
+	$("#configTable").bootstrapTable('refresh',{
+		url:'/steigenberger/order/material/configurations',
+		query:{'clazzCode':$("#materialConfigClazzCode").val(),
+			   'materialCode':$("#materialConfigCode").val()
+		}
+	});
 }
 
 //关闭调研表
@@ -954,45 +959,44 @@ function copyMaterials(identification){
 	var identificationSplit = identification.split('|');
 	var configsData = localStorage[identification];
 	var materialsType = identificationSplit[1];
+	var index = identificationSplit[0];
 	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
 	if(materialsType=='T101'){
 		var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
-		var rowData = confirmRowData(countMaterialsTableall1,'');
-		$("#materialsTableall1").bootstrapTable('insertRow', {
-		    index: countMaterialsTableall1,
-		    row: rowData
-		});
-		var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
-		$("#materialsTable").bootstrapTable('insertRow', {
-		    index: countMaterialsTable,
-		    row:rowDataAll
-		});
+		var materialsTableall1Data = $('#materialsTableall1').bootstrapTable('getData')[index];
+		var rowData = getRowData(materialsTableall1Data,materialsType,countMaterialsTableall1);
+		$("#materialsTableall1").bootstrapTable('append',  rowData);
+		var rowDataAll = getRowData(materialsTableall1Data,materialsType,countMaterialsTable);
+		$("#materialsTable").bootstrapTable('append', rowDataAll);
 		if(configsData){
 			localStorage.setItem(rowData.identification,configsData);
 		}
-	}else if(type=='T102'){
+	}else if(materialsType=='T102'){
 		var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
-		var rowData = confirmRowData(countMaterialsTableall2,'');
+		var materialsTableall2Data = $('#materialsTableall2').bootstrapTable('getData')[index];
+		var rowData = getRowData(materialsTableall2Data,materialsType,countMaterialsTableall2);
+		$("#materialsTableall1").bootstrapTable('append',  rowData);
 		$("#materialsTableall2").bootstrapTable('insertRow', {
 		    index: countMaterialsTableall2,
-		    row: rowData
+		    row: materialsTableall2Data
 		});
-		var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+		var rowDataAll = getRowData(materialsTableall2Data,materialsType,countMaterialsTable);
 		$("#materialsTable").bootstrapTable('insertRow', {
 		    index: countMaterialsTable,
-		    row:rowDataAll
+		    row:materialsTableall2Data
 		});
 		if(configsData){
-			localStorage.setItem(rowData.identification,configsData);
+			localStorage.setItem(materialsTableall2Data.identification,configsData);
 		}
-	}else if(type=='T103'){
+	}else if(materialsType=='T103'){
 		var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
-		var rowData = confirmRowData(countMaterialsTableall3,'');
+		var materialsTableall3Data = $('#materialsTableall3').bootstrapTable('getData')[index];
+		var rowData = getRowData(materialsTableall3Data,materialsType,countMaterialsTableall3);
 		$("#materialsTableall3").bootstrapTable('insertRow', {
-		    index: countMaterialsTableall1,
+		    index: countMaterialsTableall3,
 		    row: rowData
 		});
-		var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+		var rowDataAll = getRowData(materialsTableall3Data,materialsType,countMaterialsTable);
 		$("#materialsTable").bootstrapTable('insertRow', {
 		    index: countMaterialsTable,
 		    row:rowDataAll
@@ -1000,14 +1004,15 @@ function copyMaterials(identification){
 		if(configsData){
 			localStorage.setItem(rowData.identification,configsData);
 		}
-	}else if(type=='T104'){
+	}else if(materialsType=='T104'){
 		var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
-		var rowData = confirmRowData(countMaterialsTableall4,'');
+		var materialsTableall4Data = $('#materialsTableall4').bootstrapTable('getData')[index];
+		var rowData = getRowData(materialsTableall4Data,materialsType,countMaterialsTableall4);
 		$("#materialsTableall4").bootstrapTable('insertRow', {
-		    index: countMaterialsTableall1,
+		    index: countMaterialsTableall4,
 		    row: rowData
 		});
-		var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+		var rowDataAll = getRowData(materialsTableall4Data,materialsType,countMaterialsTable);
 		$("#materialsTable").bootstrapTable('insertRow', {
 		    index: countMaterialsTable,
 		    row:rowDataAll
@@ -1015,14 +1020,15 @@ function copyMaterials(identification){
 		if(configsData){
 			localStorage.setItem(rowData.identification,configsData);
 		}
-	}else if(type=='T105'){
+	}else if(materialsType=='T105'){
 		var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
-		var rowData = confirmRowData(countMaterialsTableall5,'');
-		$("#materialsTableall1").bootstrapTable('insertRow', {
+		var materialsTableall5Data = $('#materialsTableall5').bootstrapTable('getData')[index];
+		var rowData = getRowData(materialsTableall5Data,materialsType,countMaterialsTableall5);
+		$("#materialsTableall5").bootstrapTable('insertRow', {
 		    index: countMaterialsTableall5,
 		    row: rowData
 		});
-		var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+		var rowDataAll = getRowData(materialsTableall5Data,materialsType,countMaterialsTable);
 		$("#materialsTable").bootstrapTable('insertRow', {
 		    index: countMaterialsTable,
 		    row:rowDataAll
@@ -1030,14 +1036,15 @@ function copyMaterials(identification){
 		if(configsData){
 			localStorage.setItem(rowData.identification,configsData);
 		}
-	}else if(type=='T106'){
+	}else if(materialsType=='T106'){
 		var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
-		var rowData = confirmRowData(countMaterialsTableall6,'');
-		$("#materialsTableall1").bootstrapTable('insertRow', {
+		var materialsTableall6Data = $('#materialsTableall6').bootstrapTable('getData')[index];
+		var rowData = getRowData(materialsTableall6Data,materialsType,countMaterialsTableall6);
+		$("#materialsTableall6").bootstrapTable('insertRow', {
 		    index: countMaterialsTableall6,
 		    row: rowData
 		});
-		var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+		var rowDataAll = getRowData(materialsTableall6Data,materialsType,countMaterialsTable);
 		$("#materialsTable").bootstrapTable('insertRow', {
 		    index: countMaterialsTable,
 		    row:rowDataAll
@@ -1046,6 +1053,55 @@ function copyMaterials(identification){
 			localStorage.setItem(rowData.identification,configsData);
 		}
 	}
+}
+
+//复制调研表时获取行数据
+function getRowData(materialsTableData,type,newIndex){
+	var identification = newIndex+'|'+type;
+	var rowNumber = (newIndex+1)*10;
+	var row = {
+			rowNumber:rowNumber,
+			materialName:materialsTableData.materialName,
+			materialCode:materialsTableData.materialCode,
+			identification:identification,
+			clazzCode:materialsTableData.clazzCode,
+			isConfigurable:materialsTableData.isConfigurable,
+			isPurchased:materialsTableData.isPurchased,
+			groupName:materialsTableData.groupName,
+			groupCode:materialsTableData.groupCode,
+			amount:materialsTableData.amount,
+			unitName:materialsTableData.unitName,
+			standardPrice:materialsTableData.standardPrice,
+			acturalPrice:materialsTableData.acturalPrice,
+			acturalPriceAmount:materialsTableData.acturalPriceAmount,
+			transcationPrice:materialsTableData.transcationPrice,
+			acturalPricaOfOptional:materialsTableData.acturalPricaOfOptional,
+			acturalPricaOfOptionalAmount:materialsTableData.acturalPricaOfOptionalAmount,
+			transcationPriceOfOptional:materialsTableData.transcationPriceOfOptional,
+			B2CPriceEstimated:materialsTableData.B2CPriceEstimated,
+			B2CPriceEstimatedAmount:materialsTableData.B2CPriceEstimatedAmount,
+			B2CCostOfEstimated:materialsTableData.B2CCostOfEstimated,
+			acturalPriceTotal:materialsTableData.acturalPriceTotal,
+			acturalPriceAmountTotal:materialsTableData.acturalPriceAmountTotal,
+			transcationPriceTotal:materialsTableData.transcationPriceTotal,
+			retailPrice:materialsTableData.retailPrice,
+			retailPriceAmount:materialsTableData.retailPriceAmount,
+			discount:materialsTableData.discount,
+			itemCategory:materialsTableData.itemCategory,
+			itemRequirementPlan:materialsTableData.itemRequirementPlan,
+			producePeriod:materialsTableData.producePeriod,
+			deliveryDate:materialsTableData.deliveryDate,
+			produceDate:materialsTableData.produceDate,
+			shippDate:materialsTableData.shippDate,
+			materialAddress:materialsTableData.materialAddress,
+			onStoreDate:materialsTableData.onStoreDate,
+			purchasePeriod:materialsTableData.purchasePeriod,
+			b2cRemark:materialsTableData.b2cRemark,
+			specialRemark:materialsTableData.specialRemark,
+			colorComments:materialsTableData.colorComments
+	}
+	
+	return row;
 }
 
 $.fn.serializeObject = function() {
@@ -1085,7 +1141,6 @@ function confirmAddress(){
 	var addressModalType = $("#addressModalType").val();
 	var count = $('#addressTable').bootstrapTable('getData').length;
 	var rowIndex = $("#addressIndex").val()
-	debugger
 	if(addressModalType=='new'){
 		$("#addressTable").bootstrapTable('insertRow', {
 		    index: count,
@@ -1180,20 +1235,22 @@ function changeRequirement(obj){
 
 //保存订单
 function saveOrder(){
+	debugger
 	 var version = $("#version").val();
 	 var orderData = $("#orderForm").serializeObject();
 	 orderData['currentVersion'] = version;
+	 orderData['orderType'] = 'ZH0D';
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
-		 var configData = localStorage[items[0].identification];
-		 items[0].isVirtual = 0;
+		 var configData = localStorage[items[i].identification];
+		 items[i].isVirtual = 0;
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
-			 items[0]['configs']= jsonObject.configTableData;
-			 items[0]['configComments'] = jsonObject.remark
+			 items[i]['configs']= jsonObject.configTableData;
+			 items[i]['configComments'] = jsonObject.remark
 		 } else{
-			 items[0]['configs'] = null;
+			 items[i]['configs'] = null;
 		 }	 	 
 	 }
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
@@ -1411,13 +1468,24 @@ var configTableColumns = [
 	formatter: function(value, row, index) {		
     	var start = '<select class="form-control" name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
     	var end = '</select>';
-    	$.each(value,function(index,item){
-    		if(item.code==row.configValueCode){
-    			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
-    		}else{
-    			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
-    		}	
-    	})
+    	if(row.configValueCode){
+    		$.each(value,function(index,item){
+        		if(item.code==row.configValueCode){
+        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        		}else{
+        			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+        		}	
+        	})
+    	}else{
+    		$.each(value,function(index,item){
+        		if(item.default){
+        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        		}else{
+        			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+        		}	
+        	})
+    	}
+    	
 		return start+end;
     }
 }
