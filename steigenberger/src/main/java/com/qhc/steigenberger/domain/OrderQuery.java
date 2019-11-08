@@ -28,7 +28,8 @@ public class OrderQuery {
 	private String specialDiscount;//是否特批折扣，审批折扣字段是48的就是否，反之就是是，前台传值1-true，0-false
 	private List statusList;  //订单状态集合
 	private String salesName;//客户经理姓名   模糊查询
-	private String createTime;//2019-04-07 ~ 2019-11-07
+	private String createTime;//2019-11-08 - 2019-11-08
+	private String submitTime;//2019-11-08 - 2019-11-08
 	
 	private boolean includeDetail = false;
 	
@@ -146,6 +147,12 @@ public class OrderQuery {
 	}
 	public void setSpecialDiscount(String specialDiscount) {
 		this.specialDiscount = specialDiscount;
+	}
+	public String getSubmitTime() {
+		return submitTime;
+	}
+	public void setSubmitTime(String submitTime) {
+		this.submitTime = submitTime;
 	}
 	
 }

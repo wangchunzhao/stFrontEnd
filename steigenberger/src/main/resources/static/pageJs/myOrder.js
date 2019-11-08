@@ -2,7 +2,12 @@ $(document).ready(function() {
         $('#reservation').daterangepicker(null, function(start, end, label) {
           console.log(start.toISOString(), end.toISOString(), label);
         });
+        $('#reservation1').daterangepicker(null, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+          });
 });
+
+
 
 $(function () {
 
@@ -46,6 +51,7 @@ var TableInit = function () {
 			    	orderType:$('#orderType').val(),
 			    	b2c:$('#b2c').val(),
 			    	createTime:$('#reservation').val(),
+			    	submitTime:$('#reservation1').val(),
 			    	specialDiscount:$('#specialDiscount').val(),
 			    	status:$('#status').val()
 //			        id:$('#id').val()
