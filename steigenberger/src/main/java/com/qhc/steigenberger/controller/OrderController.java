@@ -164,8 +164,8 @@ public class OrderController {
 	public JsonResult permissionApply1(HttpServletRequest request) {
 
 		try {
-//			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
-			User user = userService.selectUserIdentity("wangch");
+			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			User user = userService.selectUserIdentity(identityName);
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
 				String operationId = userOperationInfoList.get(i).getOperationId();
