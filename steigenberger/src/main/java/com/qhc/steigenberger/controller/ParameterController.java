@@ -73,13 +73,13 @@ public class ParameterController {
 	}
 
 	@RequestMapping("/toUpdate")
-	 public String authorization(Model model,@RequestParam(value="id") Integer id,HttpServletRequest request) {
+	 public String authorization(Model model,@RequestParam(value="code") String code,HttpServletRequest request) {
 			List<Parameter> parameters = (List<Parameter>) request.getSession().getAttribute("parameterSettings");
 			
 			Parameter parameter = new Parameter();
 			if(parameters!=null&&parameters.size()>0) {
 				for(Parameter p :parameters) {
-					if(id==p.getId()) {
+					if(code.equals(p.getCode())) {
 						parameter = p;
 						break;
 					}

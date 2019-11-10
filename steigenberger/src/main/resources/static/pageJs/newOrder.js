@@ -1,4 +1,10 @@
 $(function () {
+	$('#specificationModal').on('hidden.bs.modal', function () {
+		$("body").addClass("modal-open");
+	});
+	$('#subsidiaryModal').on('hidden.bs.modal', function () {
+		$("body").removeClass("modal-open");
+	});
 	localStorage.clear()
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
