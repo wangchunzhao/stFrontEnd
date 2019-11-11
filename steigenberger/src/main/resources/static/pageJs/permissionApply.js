@@ -3,13 +3,13 @@ $(function(){
 	InitRoles();
 	InitSapSalesOffice();
 	
-	$('#roleName').on('change',function(){
-		if("1,2".indexOf($(this).val())>-1){
-			$('#area').parents('.form-group').show();
-		}else{
-			$('#area').parents('.form-group').hide();
-		}
-	});
+//	$('#roleName').on('change',function(){
+//		if("1,2".indexOf($(this).val())>-1){
+//			$('#area').parents('.form-group').show();
+//		}else{
+//			$('#area').parents('.form-group').hide();
+//		}
+//	});
 	
 	function InitRoles(){
 		$.post('/steigenberger/permission/roleList',null,function(ret){
