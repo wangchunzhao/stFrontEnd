@@ -53,46 +53,46 @@
 		<div id="page-wrapper">
 			<div class="col_3" style="margin-left: 2%;">
         	<div class="col-md-3 widget widget1">
-        		<div class="r3_counter_box" >
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(1)">
                     <i class="pull-left fa fa-dollar icon-rounded"></i>
                     <div class="stats">
-                      <span><a onclick="return doSomething()" href="/steigenberger/menu/standardDiscount">经销商标准折扣下单</a></span><br>
+                      <span><a>经销商标准折扣下单</a></span><br>
 					  <span style="font-size:12px">Dealer standard discount order</span>
                     </div>
                 </div>
         	</div>
         	<div class="col-md-3 widget widget1">
-        		<div class="r3_counter_box">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(2)">
                     <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
                     <div class="stats">
-                      <span><a onclick="return doSomething()" href="/steigenberger/menu/standardDiscount">经销商非标准折扣下单</a></a></span><br>
+                      <span><a>经销商非标准折扣下单</a></a></span><br>
 					  <span style="font-size:12px">Distributor non - standard discount order</span>
                     </div>
                 </div>
         	</div>
         	<div class="col-md-3 widget widget1">
-        		<div class="r3_counter_box">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(3)">
                     <i class="pull-left fa fa-money user2 icon-rounded"></i>
                     <div class="stats">
-                      <span><a onclick="return doSomething()" href="/steigenberger/menu/standardDiscount">直签客户投标报价</a></span><br>
+                      <span><a>直签客户投标报价</a></span><br>
 					  <span style="font-size:12px"> Direct sign customer tender offer</span>
                     </div>
                 </div>
         	</div>
         	<div class="col-md-3 widget widget1">
-        		<div class="r3_counter_box">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(4)">
                     <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
                     <div class="stats">
-                      <span><a onclick="return doSomething()" href="/steigenberger/menu/standardDiscount">直签客户投标下单</a></span><br>
+                      <span><a>直签客户投标下单</a></span><br>
 					  <span style="font-size:12px">Direct sign customer create order</span>
                     </div>
                 </div>
         	 </div>
         	<div class="col-md-3 widget" >
-        		<div class="r3_counter_box" >
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(5)">
                     <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
                     <div class="stats" >
-                      <span><a onclick="return doSomething()" href="/steigenberger/menu/standardDiscount">备货</a></span><br>
+                      <span><a>备货</a></span><br>
 					  <span style="font-size:12px;">Stock up</span>
                     </div>
                 </div>
@@ -167,6 +167,12 @@ function doSomething(){
 	
 	return ret;
 	
+}
+
+function toDifferentOrder(type){
+	if(doSomething()){
+		window.location.href="/steigenberger/menu/standardDiscount";
+	}
 }
 </script>
 </body>
