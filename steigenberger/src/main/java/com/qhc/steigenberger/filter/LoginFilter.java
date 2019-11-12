@@ -20,8 +20,8 @@ import org.springframework.stereotype.Component;
 
 import com.qhc.steigenberger.service.UserService;
 
-@Component
-@WebFilter(urlPatterns="/**",filterName="loginFilter")
+//@Component
+//@WebFilter(urlPatterns="/**",filterName="loginFilter")
 public class LoginFilter implements Filter{
 	Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
@@ -77,7 +77,7 @@ public class LoginFilter implements Filter{
         //业务代码
         HttpSession session = req.getSession();
         if (session == null || session.getAttribute(UserService.SESSION_USERIDENTITY) == null) {
-        	logger.info("Session is null or Session is timeout.");
+        	logger.info("No Authorization info.");
         	res.sendRedirect("/steigenberger/menu/nologin");
         	return;
         }
