@@ -1,8 +1,20 @@
 $(document).ready(function() {
-        $('#reservation').daterangepicker(null, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
+        $('#reservation').daterangepicker(
+        		{
+        		autoUpdateInput:true,
+        		startDate: moment().subtract('days', 6),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+        		endDate: moment()
+        		}, 
+        		function(start, end, label) {
+        			 $('#reservation').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+        			console.log(start.toISOString(), end.toISOString(), label);
         });
-        $('#reservation1').daterangepicker(null, function(start, end, label) {
+        $('#reservation1').daterangepicker(
+        		{
+        			autoUpdateInput:true,
+            		startDate: moment().subtract('days', 6),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+            		endDate: moment()
+                }, function(start, end, label) {
             console.log(start.toISOString(), end.toISOString(), label);
           });
 });
