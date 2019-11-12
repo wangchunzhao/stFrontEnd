@@ -56,49 +56,18 @@ public class FreightController {
 	
 	 @RequestMapping(value = "/upload")
 	 @ResponseBody
-	 private JsonResult importExcel(@RequestParam(value = "excelFile", required = false) MultipartFile file,HttpServletRequest request) {
+	 public JsonResult importExcel(@RequestParam(value = "excelFile", required = false) MultipartFile file,HttpServletRequest request) {
 	     try {
 	         MultipartRequest multipartRequest=(MultipartRequest) request;
 	         MultipartFile excelFile=multipartRequest.getFile("excelFile");
 	         if(excelFile!=null){
-	        	 BProvince bProvince = new BProvince();
-	        	 BCity bCity = new BCity();
-	        	 BArea bArea = new BArea();
+
 	        	 //2007版本以下的excel用这个
 //	             List<List<String>> datas = ExcelUtil.readXls(excelFile.getInputStream());
 	        	 List<List<String>> datas = ExcelUtil.readXlsx(excelFile.getInputStream());
+	        	 System.out.println(bAreaService+"1111111111111111111");
 	        	 bAreaService.add(datas);
 /*	        	 
-	        	 for (int i = 0; i < datas.size(); i++) {
-	        		 List<String> data = datas.get(i);
-	        		 for(int j = 0; j < data.size(); j++) {
-	        			 bProvince.setName(data.get(0));
-	        			 bProvince.setCode(data.get(1));
-	        			 bProvinceService.add(bProvince);
-	        			 
-	        			 bCity.setbProvinceCode(data.get(1));
-	        			 bCity.setName(data.get(2));
-	        			 bCity.setCode(data.get(3));
-	        			 bCityService.add(bCity);
-	        			 
-	        			 bArea.setbCityCode(data.get(3));
-	        			 bArea.setName(data.get(4));
-	        			 bArea.setCode(data.get(5));
-	        			 bArea.setPrice(Double.valueOf(data.get(6)));
-	        			 bArea.setPrice1(Double.valueOf(data.get(7)));
-	        			 bArea.setPrice2(Double.valueOf(data.get(8)));
-	        			 bArea.setPrice3(Double.valueOf(data.get(9)));
-	        			 bArea.setPrice4(Double.valueOf(data.get(10)));
-	        			 bArea.setPrice5(Double.valueOf(data.get(11)));
-	        			 bArea.setPrice6(Double.valueOf(data.get(12)));
-	        			 bArea.setPrice7(Double.valueOf(data.get(13)));
-	        			 bArea.setPrice8(Double.valueOf(data.get(14)));
-	        			 bArea.setPrice9(Double.valueOf(data.get(15)));
-	        			 bArea.setPrice10(Double.valueOf(data.get(16)));
-	        			 bArea.setPrice11(Double.valueOf(data.get(17)));
-	        			 bAreaService.add(bArea);
-	        		 }
-				}
 	             // .............
 	        	 //将文件上传到某个路径
 	        	 /*String fileName = excelFile.getOriginalFilename();

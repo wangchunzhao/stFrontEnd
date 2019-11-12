@@ -24,7 +24,7 @@ var TableInit = function () {
 			pageNumber : 1, //初始化加载第一页
 			pagination : true,//是否分页
 			sidePagination : 'server',//server:服务器端分页|client：前端分页
-			pageSize : 1,//单页记录数
+			pageSize : 10,//单页记录数
 			pageList : [ 10, 20, 30 ],//可选择单页记录数
 			showRefresh : false,//刷新按钮
 			queryParams : function (params) {
@@ -104,13 +104,11 @@ var TableInit = function () {
 			};
 		return oTableInit;
 };
- 
-
- 
+  
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
-		url : '/steigenberger/freight/bCityFreightList'
+		url : '/steigenberger/freight/List'
 	});
 })
 
@@ -118,13 +116,6 @@ $('#search_btn').click(function() {
 $('#resetBtn').click(function() {
 	
 })
-
-
-
-
-
-
-
 
 //上传
 initUpload("excelFile",  "/steigenberger/freight/upload");
@@ -161,6 +152,10 @@ initUpload("excelFile",  "/steigenberger/freight/upload");
         if(data.response.status == 200)
         {
             alert(data.files[index].name + "上传成功!");
+            //上传成功后刷新
+            $('#mytab').bootstrapTable('refresh', {
+        		url : '/steigenberger/freight/List'
+        	});
         //关闭
             $(".close").click();
         }
