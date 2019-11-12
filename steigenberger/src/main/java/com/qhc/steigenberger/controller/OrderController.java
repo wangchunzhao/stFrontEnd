@@ -135,6 +135,7 @@ public class OrderController {
 			default:
 				orderData.setSubmitType(1);
 		}
+		
 		orderService.saveOrder(orderData);
 		return MenuController.goDealerOrder();
 	}
