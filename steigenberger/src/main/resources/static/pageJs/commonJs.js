@@ -16,6 +16,7 @@ document.write('<script src="../bootstrap-table-master/dist/locale/bootstrap-tab
 document.write('<script src="../js/bootstrap-table-editable.js"> </script>');
 document.write('<script src="../js/bootstrap-datepicker.js"> </script>');
 document.write('<script src="../js/bootstrap-datepicker.zh-CN.js"> </script>');
+document.write('<script src="../js/bootstrapValidator.min.js"> </script>');
 
 
 

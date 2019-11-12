@@ -5,4 +5,5 @@ document.write('<link href="../bootstrap-table-master/dist/bootstrap-table.css" 
 document.write('<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">');
 document.write('<link href="../css/custom.css" rel="stylesheet">');
 document.write('<link href="../css/bootstrap-datepicker.css" rel="stylesheet">');
+document.write('<link href="../css/bootstrapValidator.min.css" rel="stylesheet">');
 

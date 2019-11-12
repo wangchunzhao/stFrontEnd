@@ -639,8 +639,44 @@ function removeRelatedRow(identification){
 	}
 }
 
+/*function initSubsidiartFormValidator(){
+	 $('subsidiaryForm').bootstrapValidator({
+	　　　　　　　　message: 'This value is not valid',
+	            　	   feedbackIcons: {
+			                　　　　　　　　valid: 'glyphicon glyphicon-ok',
+			                　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+			                　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+	            　　　　　　　　               },
+		            fields: {
+		            	amount: {
+		            		validators: {
+		            			notEmpty: {
+		            	            message: '数量不能为空'
+		            	        },
+		            	        regexp: {
+		            	            regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/,
+		            	            message: '必须含有大写字母，小写字母和数字'
+		            	        }
+		            	    }
+		                },
+	                email: {
+	                    validators: {
+	                        notEmpty: {
+	                            message: '邮箱地址不能为空'
+	                        }
+	                    }
+	                }
+	            }
+	        });
+}*/
 //确认购销明细modal
 function confirmMaterials(){
+	/*debugger
+	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
+    bootstrapValidator.validate();
+    if(!bootstrapValidator.isValid()){
+    	return
+    }*/
 	var modalType = $("#materialsModalType").val();
 	var materialType = $("#materialsType").val();
 	var rowIndex = $("#materialsIndex").val();
@@ -1240,8 +1276,7 @@ function changeRequirement(obj){
 }
 
 //保存订单
-function saveOrder(){
-	debugger
+function saveOrder(type){
 	 var version = $("#version").val();
 	 var orderData = $("#orderForm").serializeObject();
 	 orderData['currentVersion'] = version;
@@ -1260,18 +1295,34 @@ function saveOrder(){
 		 }	 	 
 	 }
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
-	 $.ajax({
-		    url: "/steigenberger/order/dealer?action="+'save',
-		    contentType: "application/json;charset=UTF-8",
-		    data: JSON.stringify(orderData),
-		    type: "POST",
-		    success: function(data) { 
-		    	alert("保存成功");
-		    },
-		    error: function(){
-		    	alert("保存失败");
-		    }
-	});
+	 if(type){
+		 $.ajax({
+			    url: "/steigenberger/order/dealer?action="+type,
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	alert("提交成功");
+			    },
+			    error: function(){
+			    	alert("提交失败");
+			    }
+		});  
+	 }else{
+		 $.ajax({
+			    url: "/steigenberger/order/dealer?action="+'save',
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	alert("保存成功");
+			    },
+			    error: function(){
+			    	alert("保存失败");
+			    }
+		}); 
+	 }
+	 
 }
 //获取版本
 function  getVersion(){
