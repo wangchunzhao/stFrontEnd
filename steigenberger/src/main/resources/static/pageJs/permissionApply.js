@@ -54,7 +54,18 @@ function add(){
 //	var roleName = document.getElementById('roleName').value;
 //	var area = document.getElementById('area').value;
 //	var status = document.getElementById('status').value;
-	$.ajax({
+	var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+	var obj = document.getElementById("useremil"); //要验证的对象
+	var roleName = document.getElementById('roleName').value;
+
+	if(!reg.test(obj.value)){
+		alert("邮箱格式不正确!");
+		return false;
+	}else if(roleName==""){
+		alert("请选择角色!");
+		return false;
+	}else{
+		$.ajax({
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
             url: "/steigenberger/permission/adduser" ,//url
@@ -63,6 +74,9 @@ function add(){
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.status == 200) {
                     alert("保存成功");
+                }else{
+                	var a = result.msg;
+                	alert(a);
                 }
                 ;
             },
@@ -70,4 +84,6 @@ function add(){
                 alert("保存失败！");
             }
         });
+	}
+	
 }

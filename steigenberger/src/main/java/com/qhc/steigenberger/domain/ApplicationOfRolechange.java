@@ -3,6 +3,8 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ApplicationOfRolechange implements Serializable{
 	
     /**
@@ -15,7 +17,7 @@ public class ApplicationOfRolechange implements Serializable{
 	private String creator;
 	
     private Date createTime;
-
+	
     private Date approvalTime;
 
 	private String approverRequired;

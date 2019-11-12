@@ -5,7 +5,10 @@ import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -116,6 +119,28 @@ public class LoginController extends BaseController{
        return modelAndView;
     }
     
-   
+    //登陆验证
+    @RequestMapping(value = "loginOut")
+    public String loginOut(HttpServletRequest request) {
+    	ModelAndView modelAndView = new ModelAndView();
+    	System.out.println("222222222222222222222");
+    	// 干掉cookie和session
+        HttpSession session = request.getSession();
+        session.removeAttribute("userIdentity");
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie c : cookies) {
+                if ("autoLogin".equals(c.getName())) {
+                    //设置cookie存活时间为0
+                    c.setMaxAge(0);
+                    //将cookie响应到前台
+ //                   response.addCookie(c);
+                    break;
+                }
+            }
+        }
+    	return "login";
+    }
 	
 }

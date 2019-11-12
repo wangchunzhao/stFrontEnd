@@ -70,42 +70,46 @@ public class PermissionApplyController extends BaseController{
 		String userid = request.getParameter("userid");
 		String roleId = request.getParameter("roleName");
 		String area = request.getParameter("area");
-		String isactive = request.getParameter("status");
+		String isactive = "1";//全是启用
 		String tel = request.getParameter("tel");
 		//获取域用户
 //		User usersession = getAccount(request);
-		
-		User user = new User();
-		user.setUserMail(useremil);
-		user.setIsActive(1);
-		user.setUserName(userName);
-		user.setUserIdentity(userid);
-		user.setTel(tel);
-		 
-		
-		ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
-		applicationOfRolechange.setCreator("admin");
-		applicationOfRolechange.setCreateTime(new Date(System.currentTimeMillis()));
-		applicationOfRolechange.setApprovalTime(new Date(System.currentTimeMillis()));
-		applicationOfRolechange.setApproverFact("admin");
-		applicationOfRolechange.setApproverRequired("admin");
-		applicationOfRolechange.setAttachedCode(area);
-		applicationOfRolechange.setIsactive(1);
-		applicationOfRolechange.setbRolesId(Integer.valueOf(roleId));
-		
-//		System.out.println(usersession.getUserIdentity());
 		String msg = "";
 		int status = 0;
-		Boolean result = addStatus(user,applicationOfRolechange);
-//		String result = userService.updateUserInfo(user);
-		if (result) {
-			status = 200;
-			msg = "操作成功！";
-		} else {
+		User userch = userService.selectUserIdentity(userid);
+		if(userch != null) {
 			status = 500;
-			msg = "操作失败";
+			msg = "该用户已存在";
+		}else {
+			User user = new User();
+			user.setUserMail(useremil);
+			user.setIsActive(1);
+			user.setUserName(userName);
+			user.setUserIdentity(userid);
+			user.setTel(tel);
+			 
+			ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
+			applicationOfRolechange.setCreator("admin");
+			applicationOfRolechange.setCreateTime(new Date(System.currentTimeMillis()));
+			applicationOfRolechange.setApprovalTime(new Date(System.currentTimeMillis()));
+			applicationOfRolechange.setApproverFact("admin");
+			applicationOfRolechange.setApproverRequired("admin");
+			applicationOfRolechange.setAttachedCode(area);
+			applicationOfRolechange.setIsactive(1);
+			applicationOfRolechange.setbRolesId(Integer.valueOf(roleId));
+			
+//			System.out.println(usersession.getUserIdentity());
+			Boolean result = addStatus(user,applicationOfRolechange);
+//			String result = userService.updateUserInfo(user);
+			if (result) {
+				status = 200;
+				msg = "操作成功！";
+			} else {
+				status = 500;
+				msg = "操作失败";
+			}
 		}
-		return JsonResult.build(status, "角色" + msg, "");
+		return JsonResult.build(status, msg, "");
 	}
 	
 	public Boolean addStatus(User user,ApplicationOfRolechange applicationOfRolechange) {
