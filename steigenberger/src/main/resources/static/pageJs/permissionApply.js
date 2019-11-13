@@ -57,12 +57,14 @@ function add(){
 	var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
 	var obj = document.getElementById("useremil"); //要验证的对象
 	var roleName = document.getElementById('roleName').value;
-
+	var userid = document.getElementById('userid').value;
+	var tel = document.getElementById('tel').value;
+//	alert(tel);
 	if(!reg.test(obj.value)){
 		alert("邮箱格式不正确!");
 		return false;
-	}else if(roleName==""){
-		alert("请选择角色!");
+	}else if(roleName=="" ||tel==undefined|| userid==undefined){
+		alert("表单信息填写不完整!");
 		return false;
 	}else{
 		$.ajax({
