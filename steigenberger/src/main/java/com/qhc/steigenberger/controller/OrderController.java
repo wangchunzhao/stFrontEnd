@@ -348,7 +348,7 @@ public class OrderController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "material/configurations")
+	@RequestMapping(value = "material/configuration")
 	@ResponseBody
 	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
 		/*List<Characteristic> ch = new ArrayList<>();

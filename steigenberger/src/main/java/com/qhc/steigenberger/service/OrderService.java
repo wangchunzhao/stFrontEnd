@@ -68,7 +68,7 @@ public class OrderService {
 	private final static String URL_PARAMETER_SEPERATOR = "/";
 	
 	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
-	private final static String URL_MATERIAL_CONFIG = "material/configurations";
+	private final static String URL_MATERIAL_CONFIG = "material/configuration";
 	private final static String URL_MATERIAL_BOM = "material/configuration";
 	
 	@Autowired
