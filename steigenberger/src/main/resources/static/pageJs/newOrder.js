@@ -32,7 +32,7 @@ $(function () {
 		$("#installName").val(value);
 		
 	});
-	
+	initSubsidiartFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -639,14 +639,9 @@ function removeRelatedRow(identification){
 	}
 }
 
-/*function initSubsidiartFormValidator(){
-	 $('subsidiaryForm').bootstrapValidator({
+function initSubsidiartFormValidator(){
+	 $('#subsidiaryForm').bootstrapValidator({
 	　　　　　　　　message: 'This value is not valid',
-	            　	   feedbackIcons: {
-			                　　　　　　　　valid: 'glyphicon glyphicon-ok',
-			                　　　　　　　　invalid: 'glyphicon glyphicon-remove',
-			                　　　　　　　　validating: 'glyphicon glyphicon-refresh'
-	            　　　　　　　　               },
 		            fields: {
 		            	amount: {
 		            		validators: {
@@ -654,8 +649,8 @@ function removeRelatedRow(identification){
 		            	            message: '数量不能为空'
 		            	        },
 		            	        regexp: {
-		            	            regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/,
-		            	            message: '必须含有大写字母，小写字母和数字'
+		            	            regexp: /^[1-9]\d*$/,
+		            	            message: '只能输入正整数'
 		            	        }
 		            	    }
 		                },
@@ -668,15 +663,15 @@ function removeRelatedRow(identification){
 	                }
 	            }
 	        });
-}*/
+}
 //确认购销明细modal
 function confirmMaterials(){
-	/*debugger
+	debugger
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
     	return
-    }*/
+    }
 	var modalType = $("#materialsModalType").val();
 	var materialType = $("#materialsType").val();
 	var rowIndex = $("#materialsIndex").val();
@@ -1302,10 +1297,10 @@ function saveOrder(type){
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(data) { 
-			    	alert("提交成功");
+			    	layer.alert('提交成功', {icon: 6});
 			    },
 			    error: function(){
-			    	alert("提交失败");
+			    	layer.alert('提交失败', {icon: 5});
 			    }
 		});  
 	 }else{
@@ -1315,10 +1310,10 @@ function saveOrder(type){
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(data) { 
-			    	alert("保存成功");
+			    	layer.alert('保存成功', {icon: 6});
 			    },
 			    error: function(){
-			    	alert("保存失败");
+			    	layer.alert('保存失败', {icon: 5});
 			    }
 		}); 
 	 }
