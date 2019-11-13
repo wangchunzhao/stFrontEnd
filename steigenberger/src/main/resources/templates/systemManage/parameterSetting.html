@@ -95,7 +95,7 @@
 										<td>
 										<!-- <i class="glyphicon glyphicon-pencil"></i> -->
 											<button type="button" class="btn btn-primary btn-lg btn_update"  
-											th:title="${setting?.code}" style="font-size: 13px; padding: 3px 10px;">
+											th:title="${setting?.id}" style="font-size: 13px; padding: 3px 10px;">
 		                                    		编辑 edit
 		                                	</button>
 										</td>
@@ -117,7 +117,7 @@
 		   	  $(".btn_update").on("click",function(){
 		   		  var pId= $(this).attr("title");
 		   			//pId=parseInt(pId); 
-		   	      	window.location.href = ctxPath+"parameterSetting/toUpdate?code="+pId; 
+		   	      	window.location.href = ctxPath+"parameterSetting/toUpdate?id="+pId; 
 		   	     	return false;
 		         });
 		});

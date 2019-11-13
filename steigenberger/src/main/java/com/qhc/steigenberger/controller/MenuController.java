@@ -165,7 +165,7 @@ public class MenuController {
 	public String index(Model model,HttpServletRequest request) {
 		List<Parameter> parameters = parameterService.getList();
 		model.addAttribute("parameters", parameters);
-		request.getSession().setAttribute("parameterSettings",parameters);
+//		request.getSession().setAttribute("parameterSettings",parameters);
 		return settingIndex;
 	}
 	

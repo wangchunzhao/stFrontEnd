@@ -34,7 +34,19 @@ public class ParameterService{
 		return list;
 	}
 
-	
+	/**
+	 * 查询全部设置
+	 * @return
+	 */
+	public Parameter get(Integer id) {
+		Parameter p = null;
+		try {
+			p =fryeService.getInfo("parameterSettings/" + id, Parameter.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
 	
 	/**
 	 *  修改配置信息
@@ -43,11 +55,7 @@ public class ParameterService{
 	 */
 	public Parameter updateInfo(Parameter Parameter) {
 		Parameter p = null;
-		try {
-			p =fryeService.postInfo(Parameter, URL_SETTINGS, Parameter.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		p =fryeService.postInfo(Parameter, URL_SETTINGS, Parameter.class);
 		return p;
 	}
 }

@@ -36,7 +36,7 @@ public class ParameterController {
 		
 		List<Parameter> parameters = parameterService.getList();
 		model.addAttribute("parameters", parameters);
-		request.getSession().setAttribute("parameterSettings",parameters);
+//		request.getSession().setAttribute("parameterSettings",parameters);
 		return "systemManage/parameterSetting";
 	}
 
@@ -48,24 +48,18 @@ public class ParameterController {
 		String msg = "";
 		int status = 0;
 		Parameter result = new Parameter();
-		Parameter pp = new Parameter();
-		pp.setId(0);
-		pp.setCode(parameter.getCode());
-		pp.setEnableDate(parameter.getEnableDate());
-		pp.setsValue(parameter.getsValue());
-		pp.setComment(parameter.getComment());
 		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		pp.setOptTime(sdf.format(new Date()));
-		User u = (User) request.getSession().getAttribute(userService.ACCOUNT);
-//		parameter.setOperater(u.getUserIdentity());
-		pp.setOperater("adsf");
-		result = parameterService.updateInfo(pp);
-		if (result != null&&result.getId()!=0) {
+		parameter.setOptTime(sdf.format(new Date()));
+//		User u = (User) request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+		String identity = (String)request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+		parameter.setOperater(identity);
+		try {
+			result = parameterService.updateInfo(parameter);
 			status = 200;
 			msg = "更新操作成功!";
-		} else {
+		} catch (Exception e) {
 			status = 500;
-			msg = "操作失败";
+			msg = "操作失败：" + e.getMessage();
 		}
 	
 		return JsonResult.build(status, "参数设置" + msg, "");
@@ -73,19 +67,8 @@ public class ParameterController {
 	}
 
 	@RequestMapping("/toUpdate")
-	 public String authorization(Model model,@RequestParam(value="code") String code,HttpServletRequest request) {
-			List<Parameter> parameters = (List<Parameter>) request.getSession().getAttribute("parameterSettings");
-			
-			Parameter parameter = new Parameter();
-			if(parameters!=null&&parameters.size()>0) {
-				for(Parameter p :parameters) {
-					if(code.equals(p.getCode())) {
-						parameter = p;
-						break;
-					}
-					
-				}
-			}
+	 public String authorization(Model model,@RequestParam(value="id") Integer id) {
+			Parameter parameter = this.parameterService.get(id);
 			
 		    model.addAttribute("parameter", parameter);
 		    return "systemManage/editParameter"; 
