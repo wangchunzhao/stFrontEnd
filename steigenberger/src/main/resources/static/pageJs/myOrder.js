@@ -86,7 +86,7 @@ var TableInit = function () {
 			},{
 				title : '订单类型',
 				field : 'orderType',
-				sortable : true
+				formatter : formatOrderType
 			},{
 				title : '折扣',
 				field : 'approvedDiscount',
@@ -128,6 +128,15 @@ var TableInit = function () {
 function formatTrue(value, row, index) {
 	return value == 48 ? "是" : "否";
 	//或者 return row.sex == 1 ? "男" : "女";
+}
+function formatOrderType(value, row, index){
+	if(value=="ZH0D"){
+		return "经销商订单";
+	}else if(value=="ZH0M"){
+		return "备货订单";
+	}else if(value=="ZH0T"){
+		return "大客户订单";
+	}
 }
 function formatStatus(value, row, index) {
 	if(value=="0"){

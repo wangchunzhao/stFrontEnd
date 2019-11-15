@@ -228,7 +228,7 @@ public class OrderController {
 				query.setOfficeCode(userOperationInfoList.get(i).getAttachedCode());
 				break;
 			}else {
-				query.setSalesCode(String.valueOf(user.id));
+				query.setSalesCode(user.getUserIdentity());
 			}
 			
 		}
@@ -295,7 +295,7 @@ public class OrderController {
 				list.add(orderStatus0);
 				list.add(orderStatus11);
 				query.setStatusList(list);
-				query.setSalesCode(String.valueOf(user.id));
+				query.setSalesCode(user.getUserIdentity());
 			}
 			
 		}
