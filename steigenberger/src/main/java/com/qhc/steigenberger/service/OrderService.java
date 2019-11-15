@@ -68,7 +68,7 @@ public class OrderService {
 	private final static String URL_PARAMETER_SEPERATOR = "/";
 	
 	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
-	private final static String URL_MATERIAL_CONFIG = "material/configuration";
+	private final static String URL_MATERIAL_CONFIG = "material/configurations";
 	private final static String URL_MATERIAL_BOM = "material/configuration";
 	
 	@Autowired
@@ -197,7 +197,7 @@ public class OrderService {
 				mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
 				try {
 					order = mapper.readValue(json, DealerOrder.class);
-				} catch (JsonProcessingException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 //				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);

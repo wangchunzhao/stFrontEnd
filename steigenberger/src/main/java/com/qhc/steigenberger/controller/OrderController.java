@@ -2,6 +2,7 @@ package com.qhc.steigenberger.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Configuration;
 import com.qhc.steigenberger.domain.Customer;
@@ -36,6 +38,7 @@ import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.AbsOrder;
 import com.qhc.steigenberger.domain.form.BaseOrder;
+import com.qhc.steigenberger.domain.form.BomQueryModel;
 import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
@@ -176,14 +179,14 @@ public class OrderController {
 				}
 			}
 //			if(user.getRoles()!=null&user.getRoles().size()>0) {
-//				jsonResult.build(200,"success", 1);
+//				JsonResult.build(200,"success", 1);
 //			}else {
-//				jsonResult.build(500,"fail", 1);
+//				JsonResult.build(500,"fail", 1);
 //			}
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
-		return JsonResult.build(401, "fail", null);
+		return JsonResult.build(401,"success", 1);
 	}
 
 	/**
@@ -348,7 +351,7 @@ public class OrderController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "material/configuration")
+	@RequestMapping(value = "material/configurations")
 	@ResponseBody
 	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
 		/*List<Characteristic> ch = new ArrayList<>();
@@ -405,6 +408,7 @@ public class OrderController {
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
 	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
 	public List<MaterialGroups> calcGrossProfit(@RequestBody BaseOrder order) throws Exception {
 		return orderService.calcGrossProfit(order);
 	}
@@ -423,6 +427,21 @@ public class OrderController {
 		mv.addObject("orderDetail",order);
 		return mv;
 	}
+	
+    @ApiOperation(value = "根据BOM配置获取新的Characteristic和value")
+    @PostMapping(value = "material/configuration")
+    @ResponseStatus(HttpStatus.OK)
+    public BomExplosion findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
+            Map<String, String> pars = new HashMap<>();
+            List<String> configCodes = model.getConfigCode();
+            List<String> configValueCodes = model.getConfigValueCode();
+            for(int i=0;i<configCodes.size();i++){
+                pars.put(configCodes.get(i), configValueCodes.get(i));
+            }
+            pars.put("bom_code", model.getBomCode());
+            return orderService.findBOMWithPrice(pars);    
+    }
+
 
 
 }
