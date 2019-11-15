@@ -171,7 +171,8 @@ function operation(value, row, index) {
 	if(currentVersionStatus=="5" && buttonControl ==null){
 		htm = "<button type='button' class='btn btn-warning' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>";
 	}else{
-		var deletehtm = "<button class='btn btn-danger'>删除</button>";
+		//var deletehtm = "<button class='btn btn-danger'>删除</button>";
+		var deletehtm = "";
 		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
 		htm =deletehtm+viewHtm;
 	}

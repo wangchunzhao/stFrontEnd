@@ -2677,3 +2677,228 @@ Stack trace:
 2019-11-15 15:03:52 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@14bb9401
 2019-11-15 15:03:52 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:67毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@62a297f3
 2019-11-15 15:03:52 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:187毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@4780e12
+2019-11-15 15:18:41 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@5bc0a096
+2019-11-15 15:18:41 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:18:42 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@21a81b8f
+2019-11-15 15:18:42 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@3f312c1f
+2019-11-15 15:18:42 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:105毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@3dd1f334
+2019-11-15 15:18:42 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:234毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@11339f22
+2019-11-15 15:23:40 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@25602a77
+2019-11-15 15:23:40 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:23:41 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@223b02fc
+2019-11-15 15:23:41 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:106毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@33aa8bbc
+2019-11-15 15:27:28 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@1431e159
+2019-11-15 15:27:28 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:27:29 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@7b8bd5a8
+2019-11-15 15:27:29 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:42毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@74519dd4
+2019-11-15 15:27:44 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@1e7f214f
+2019-11-15 15:27:44 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:27:45 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@311065a0
+2019-11-15 15:27:45 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:34毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@535aae07
+2019-11-15 15:27:47 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@190c3e7e
+2019-11-15 15:27:47 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:27:47 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@366d5fda
+2019-11-15 15:27:47 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:1毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:27:48 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() start =====,参数:[Ljava.lang.Object;@758591c0
+2019-11-15 15:27:48 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() end =====,响应时间:0毫秒,响应内容:todo/mytask
+2019-11-15 15:27:49 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@191a46b
+2019-11-15 15:27:49 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:48毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@ffdfae7
+2019-11-15 15:27:49 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@7367fa84
+2019-11-15 15:27:49 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:27:50 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@34671796
+2019-11-15 15:27:50 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:33毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@23c232ae
+2019-11-15 15:28:05 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@1146133b
+2019-11-15 15:28:05 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:2毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:28:06 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@65299cb0
+2019-11-15 15:28:07 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:27毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@6294ecb
+2019-11-15 15:28:15 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@3bee9e1
+2019-11-15 15:28:15 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:28:17 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@4d2742b7
+2019-11-15 15:28:17 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:27毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@3e8698f0
+2019-11-15 15:28:30 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@13004769
+2019-11-15 15:28:30 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:28:31 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@222f0d50
+2019-11-15 15:28:31 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:44毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@36b25aeb
+2019-11-15 15:28:43 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@1be19131
+2019-11-15 15:28:43 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:1毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:28:44 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@2049bfc6
+2019-11-15 15:28:44 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:31毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@43d7c353
+2019-11-15 15:28:49 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() start =====,参数:[Ljava.lang.Object;@d77bf26
+2019-11-15 15:28:49 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() end =====,响应时间:0毫秒,响应内容:todo/mytask
+2019-11-15 15:28:50 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@bc788c
+2019-11-15 15:28:50 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:43毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@29f459f3
+2019-11-15 15:28:51 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@7e4f2528
+2019-11-15 15:28:51 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:28:51 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@4239cd79
+2019-11-15 15:28:51 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:28:53 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() start =====,参数:[Ljava.lang.Object;@2690bacc
+2019-11-15 15:28:53 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() end =====,响应时间:0毫秒,响应内容:todo/mytask
+2019-11-15 15:28:54 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@37f5eaff
+2019-11-15 15:28:54 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:38毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@71f1872e
+2019-11-15 15:28:55 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@6a9e0432
+2019-11-15 15:28:55 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:28:56 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@18a41c46
+2019-11-15 15:28:56 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:26毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@104c5152
+2019-11-15 15:28:58 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.contract() start =====,参数:[Ljava.lang.Object;@369cdcf4
+2019-11-15 15:28:58 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.contract() end =====,响应时间:0毫秒,响应内容:contract/myContract
+2019-11-15 15:28:58 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.contract() start =====,参数:[Ljava.lang.Object;@565dbc33
+2019-11-15 15:28:58 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.contract() end =====,响应时间:0毫秒,响应内容:contract/myContract
+2019-11-15 15:28:59 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.roleList() start =====,参数:[Ljava.lang.Object;@56807a94
+2019-11-15 15:28:59 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@2dd70380
+2019-11-15 15:28:59 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.roleList() end =====,响应时间:88毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@3bbc5a9a
+2019-11-15 15:28:59 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:58毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@2063e3ec
+2019-11-15 15:29:00 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@11a14949
+2019-11-15 15:29:00 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:29:01 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@3cd8b807
+2019-11-15 15:29:01 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:47毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@30f65f8a
+2019-11-15 15:29:16 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.LoginController.loginIn() start =====,参数:[Ljava.lang.Object;@c9e5988
+2019-11-15 15:29:16 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.LoginController.loginIn() end =====,响应时间:46毫秒,响应内容:ModelAndView [view="main"; model=null]
+2019-11-15 15:29:17 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@1d18c06e
+2019-11-15 15:29:17 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:45毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@719f5969
+2019-11-15 15:29:18 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@57219676
+2019-11-15 15:29:18 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:29:19 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@3ceda46
+2019-11-15 15:29:19 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:29:21 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@cc11f18
+2019-11-15 15:29:21 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:29:22 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@5e344850
+2019-11-15 15:29:22 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:21毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@6d8e9f47
+2019-11-15 15:29:26 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@7b1751ba
+2019-11-15 15:29:26 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:29:27 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@65629e03
+2019-11-15 15:29:27 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:29:27 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@179a71d5
+2019-11-15 15:29:27 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:29:28 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@6d3ddd20
+2019-11-15 15:29:28 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:50毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@309ae54
+2019-11-15 15:34:24 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@9b2406
+2019-11-15 15:34:24 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:34:25 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@5be8882
+2019-11-15 15:34:25 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@6c1d32c2
+2019-11-15 15:34:25 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:35毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@4f726176
+2019-11-15 15:34:25 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:144毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@13d6079e
+2019-11-15 15:34:38 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() start =====,参数:[Ljava.lang.Object;@5df39e28
+2019-11-15 15:34:38 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() end =====,响应时间:0毫秒,响应内容:todo/mytask
+2019-11-15 15:34:38 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@71ba1109
+2019-11-15 15:34:38 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:45毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@3227a2b7
+2019-11-15 15:34:39 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@3c43d744
+2019-11-15 15:34:39 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:34:39 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@66a0e013
+2019-11-15 15:34:39 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:35:53 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() start =====,参数:[Ljava.lang.Object;@55faeba1
+2019-11-15 15:35:53 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.todo() end =====,响应时间:0毫秒,响应内容:todo/mytask
+2019-11-15 15:35:53 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@1a15b936
+2019-11-15 15:35:53 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:57毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@219cc501
+2019-11-15 15:35:55 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@aab4d77
+2019-11-15 15:35:55 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:35:56 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@4b0fda07
+2019-11-15 15:35:56 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@28caeb1f
+2019-11-15 15:35:56 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:23毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@d76f1ce
+2019-11-15 15:35:56 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:107毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@2ad20454
+2019-11-15 15:37:39 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@741ebc36
+2019-11-15 15:37:39 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:37:40 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@4edcb835
+2019-11-15 15:37:40 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@7e8c8558
+2019-11-15 15:37:40 [http-nio-8880-exec-4] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:49毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@7b854c11
+2019-11-15 15:37:40 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:163毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@2d4f16f3
+2019-11-15 15:37:42 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@fab04ee
+2019-11-15 15:37:42 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:37:42 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@16f7140d
+2019-11-15 15:37:42 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@14641b4e
+2019-11-15 15:37:43 [http-nio-8880-exec-7] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:63毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@654d316e
+2019-11-15 15:37:43 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:169毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@1836ff04
+2019-11-15 15:38:12 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@75e97e21
+2019-11-15 15:38:12 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:38:15 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@297f8e64
+2019-11-15 15:38:15 [http-nio-8880-exec-5] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@147f3370
+2019-11-15 15:38:15 [http-nio-8880-exec-5] ERROR c.q.steigenberger.aspect.LogAspect - 统一日志 ===== 
+java.lang.NullPointerException: null
+	at com.qhc.steigenberger.controller.OrderController.searchOrder(OrderController.java:214)
+	at com.qhc.steigenberger.controller.OrderController$$FastClassBySpringCGLIB$$2cc72f05.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:769)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:747)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)
+	at com.qhc.steigenberger.aspect.LogAspect.aroundApi(LogAspect.java:38)
+	at sun.reflect.GeneratedMethodAccessor54.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:747)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:93)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:747)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689)
+	at com.qhc.steigenberger.controller.OrderController$$EnhancerBySpringCGLIB$$86d72561.searchOrder(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:888)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:526)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:861)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1579)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+2019-11-15 15:38:15 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:171毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@1e60f618
+2019-11-15 15:38:32 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.LoginController.loginIn() start =====,参数:[Ljava.lang.Object;@7e12f708
+2019-11-15 15:38:33 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.LoginController.loginIn() end =====,响应时间:50毫秒,响应内容:ModelAndView [view="main"; model=null]
+2019-11-15 15:38:33 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() start =====,参数:[Ljava.lang.Object;@3e3adc54
+2019-11-15 15:38:33 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.UserController.getOperations() end =====,响应时间:36毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@58af8953
+2019-11-15 15:38:35 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@6e05997c
+2019-11-15 15:38:35 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:1毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:38:35 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() start =====,参数:[Ljava.lang.Object;@1c7a30a8
+2019-11-15 15:38:35 [http-nio-8880-exec-2] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.newOrder() end =====,响应时间:0毫秒,响应内容:dealerOrder/orderForm
+2019-11-15 15:38:35 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@5d652a42
+2019-11-15 15:38:35 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:38:36 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@5c35f476
+2019-11-15 15:38:36 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@747dc6e6
+2019-11-15 15:38:36 [http-nio-8880-exec-6] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:27毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@26c25cb7
+2019-11-15 15:38:36 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:118毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@4703bf45
+2019-11-15 15:38:50 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@287dbdc9
+2019-11-15 15:38:50 [http-nio-8880-exec-8] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:38:50 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@7d559ba9
+2019-11-15 15:38:51 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@2eb63b9f
+2019-11-15 15:38:51 [http-nio-8880-exec-1] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:72毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@72b75a33
+2019-11-15 15:38:51 [http-nio-8880-exec-9] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() end =====,响应时间:169毫秒,响应内容:com.qhc.steigenberger.util.PageHelper@35090f26
+2019-11-15 15:39:05 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() start =====,参数:[Ljava.lang.Object;@6def1c9c
+2019-11-15 15:39:05 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.MenuController.orderManage() end =====,响应时间:0毫秒,响应内容:orderManage/myOrder
+2019-11-15 15:39:06 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() start =====,参数:[Ljava.lang.Object;@7aaac199
+2019-11-15 15:39:06 [http-nio-8880-exec-10] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.OrderController.searchOrder() start =====,参数:[Ljava.lang.Object;@79f3527e
+2019-11-15 15:39:06 [http-nio-8880-exec-3] INFO  c.q.steigenberger.aspect.LogAspect - 统一日志 ===== com.qhc.steigenberger.controller.PermissionApplyController.sapSalesOfficelist() end =====,响应时间:49毫秒,响应内容:com.qhc.steigenberger.domain.JsonResult@4496b3a0
