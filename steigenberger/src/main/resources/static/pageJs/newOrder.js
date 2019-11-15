@@ -1298,6 +1298,8 @@ function saveOrder(type){
 			    type: "POST",
 			    success: function(data) { 
 			    	layer.alert('提交成功', {icon: 6});
+			    	//跳转到订单管理页面
+			    	window.location.href = '/steigenberger/menu/orderManageList';
 			    },
 			    error: function(){
 			    	layer.alert('提交失败', {icon: 5});
