@@ -171,7 +171,18 @@ function doSomething(){
 
 function toDifferentOrder(type){
 	if(doSomething()){
-		window.location.href="/steigenberger/menu/standardDiscount";
+		if(type=='1'){
+			window.location.href="/steigenberger/menu/standardDiscount";	
+		}else if(type=='2'){
+			window.location.href="/steigenberger/menu/nonStandardDiscount";
+		}else if(type=='3'){
+			//window.location.href="/steigenberger/menu/directCustomerOrder";
+		}else if(type=='4'){
+			window.location.href="/steigenberger/menu/directCustomerOrder";
+		}else{
+			window.location.href="/steigenberger/menu/stockUpOrder";
+		}
+		
 	}
 }
 </script>

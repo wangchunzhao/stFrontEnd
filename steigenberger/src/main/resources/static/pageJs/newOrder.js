@@ -1364,19 +1364,47 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
-	$("#grossProfit").modal("show");
+	if(!$("#salesType").val()){
+		layer.alert('请选择销售类型', {icon: 5});
+		return
+	}
 	var version = $("#version").val();
-	var sequenceNumber = $("#sequenceNumber").val();
+	 var orderData = $("#orderForm").serializeObject();
+	 orderData['currentVersion'] = version;
+	 orderData['orderType'] = 'ZH0D';
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 orderData.items = items;
+	 for(var i=0;i<items.length;i++){
+		 var configData = localStorage[items[i].identification];
+		 items[i].isVirtual = 0;
+		 if(configData){
+			 var jsonObject = JSON.parse(configData);
+			 items[i]['configs']= jsonObject.configTableData;
+			 items[i]['configComments'] = jsonObject.remark
+		 } else{
+			 items[i]['configs'] = null;
+		 }	 	 
+	 }
+	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+	$("#grossProfit").modal("show");
 	$("#grossSeqNum").val(sequenceNumber);
 	$("#grossVersion").val(version);
 	$("#grossContractRMBValue").val($("#contractAmount").val());
 	$("#grossPerson").val($("#salesName").val());
 	$("#grossDate").val($("#inputDate").val());
 	$("#grossClazz").val($("#customerClazz").val());
-	var opt = {
-			url: '/steigenberger/order/'+sequenceNumber+'/'+version+'/grossprofit'
-	};
-	$("#grossProfitTable").bootstrapTable('refresh', opt);	
+	$.ajax({
+	    url: "/steigenberger/order/grossprofit",
+	    contentType: "application/json;charset=UTF-8",
+	    data: JSON.stringify(orderData),
+	    type: "POST",
+	    success: function(data) { 
+	    	$("#grossProfitTable").bootstrapTable('load', data);
+	    },
+	    error: function(){
+	    	layer.alert('毛利率查看失败', {icon: 5});
+	    }
+	});  
 }
 
 

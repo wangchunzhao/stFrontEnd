@@ -39,6 +39,9 @@ public class MenuController {
 	private final static String ORDER_OPTION = "order_option";
 	//
 	private final static String PAGE_DEALER = "dealerOrder/newOrder";
+	private final static String PAGE_DEALER_NON_STANDARD = "dealerOrder/newNonStandardOrder";
+	
+	private final static String PAGE_DEALER_DIRECT_CUSTOMER = "directCustomerOrder/directCustomerOrder";
 	//
 	private final static String FORM_ORDER_DEALER = "dealerOrder";
 	
@@ -220,6 +223,29 @@ public class MenuController {
 //		mv.addObject(FORM_GROSS_PROFIT, list);
 		return mv;
 	}
+	
+	@RequestMapping("nonStandardDiscount")
+	public static ModelAndView goNonStandardDealerOrder() {
+		ModelAndView mv = new ModelAndView(PAGE_DEALER_NON_STANDARD);
+		OrderOption oo = staticOrderService.getOrderOption();
+		oo.setCustomerClazzCode("02");
+		String orderTypeCode =oo.getOrderTypes().get("02");
+		oo.setOrderTypeCode(orderTypeCode);	
+		mv.addObject(ORDER_OPTION,oo);		
+		return mv;
+	}
+	
+	@RequestMapping("directCustomerOrder")
+	public static ModelAndView goDirectCustomerOrder() {
+		ModelAndView mv = new ModelAndView(PAGE_DEALER_DIRECT_CUSTOMER);
+		OrderOption oo = staticOrderService.getOrderOption();
+		oo.setCustomerClazzCode("02");
+		String orderTypeCode =oo.getOrderTypes().get("02");
+		oo.setOrderTypeCode(orderTypeCode);	
+		mv.addObject(ORDER_OPTION,oo);		
+		return mv;
+	}
+	
 	
 	@RequestMapping("/nologin")
   	public String nologin() {
