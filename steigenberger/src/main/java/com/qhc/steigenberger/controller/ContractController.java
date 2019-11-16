@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qhc.steigenberger.domain.Contract;
 import com.qhc.steigenberger.domain.JsonResult;
+import com.qhc.steigenberger.domain.Result;
+import com.qhc.steigenberger.service.ContractService;
 import com.qhc.steigenberger.service.OperationService;
 
 
@@ -21,50 +24,46 @@ import com.qhc.steigenberger.service.OperationService;
 @RequestMapping("contract")
 public class ContractController {
 	
-//	@Autowired
-//	
+	@Autowired
+	ContractService contractService;
 
 	
 	@GetMapping(path="/")
 	@ResponseBody
-	public JsonResult findAll(@RequestBody Map<String, Object> params){
-		JsonResult r = null;
-//		Map<String,Object> m = new HashMap<String,Object>();
-//		m.put("list", operationService.getList());
+	public Result findAll(@RequestParam Map<String, Object> params){
+		Result r = null;
+		r = contractService.find(params);
 		return r;
 	}
 	
 	@RequestMapping("/{id}")
 	@ResponseBody
-	public JsonResult get(@PathVariable Integer contractId){
-		JsonResult r = null;
-//		Map<String,Object> m = new HashMap<String,Object>();
-//		m.put("list", operationService.getList());
+	public Result get(@PathVariable Integer contractId){
+		Result r = null;
+		r = contractService.find(contractId);
 		return r;
 	}
 	
 	@PostMapping("/")
 	@ResponseBody
-	public JsonResult save(@RequestBody Contract contract){
-		JsonResult r = null;
-//		Map<String,Object> m = new HashMap<String,Object>();
-//		m.put("list", operationService.getList());
+	public Result save(@RequestBody Contract contract){
+		Result r = null;
+		r = contractService.save(contract);
 		return r;
 	}
 	
 	@PutMapping("/{id}/send")
 	@ResponseBody
-	public JsonResult send(@PathVariable Integer contractId){
-		JsonResult r = null;
-//		Map<String,Object> m = new HashMap<String,Object>();
-//		m.put("list", operationService.getList());
+	public Result send(@PathVariable Integer contractId){
+		Result r = null;
+//		contractService.
 		return r;
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public JsonResult preview(@PathVariable Integer contractId){
-		JsonResult r = null;
+	public Result preview(@PathVariable Integer contractId){
+		Result r = null;
 //		Map<String,Object> m = new HashMap<String,Object>();
 //		m.put("list", operationService.getList());
 		return r;

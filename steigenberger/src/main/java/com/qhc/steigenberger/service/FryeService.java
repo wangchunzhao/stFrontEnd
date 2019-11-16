@@ -4,6 +4,7 @@
 package com.qhc.steigenberger.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.config.ApplicationConfig;
 import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
 import com.qhc.steigenberger.service.exception.URLNotFoundException;
@@ -221,6 +224,44 @@ public class FryeService<T> {
 		String url = config.getFryeURL() + path;
 		WebClient webClient = WebClient.create();
 		Mono<T> mono = webClient.get().uri(url).retrieve().bodyToMono(T);
+		T t = mono.block();
+		return t;
+	}
+
+	/**
+	 * get请求返回一个对象
+	 * 
+	 * @param t
+	 * @param path
+	 * @param T
+	 * @return
+	 */
+	public T getInfo(String path, Object params, Class T) {
+		String url = config.getFryeURL() + path;
+		
+		Map<String, ?> map = new HashMap<String, Object>();
+		if (params != null) {
+			if (params instanceof Map) {
+				map = (Map)params;
+			} else {
+				ObjectMapper mapper = new ObjectMapper();
+				map = mapper.convertValue(params, Map.class);
+			}
+			StringBuilder sb = new StringBuilder(64);
+			for (Map.Entry<String, ?> e : map.entrySet()) {
+				sb.append("&").append(e.getKey()).append("={").append(e.getKey()).append("}");
+			}
+			if (sb.length() > 0) {
+				if (path.indexOf("?") >= 0) {
+					url += sb.toString();
+				} else {
+					url += "?" + sb.substring(1);
+				}
+			}
+		}
+		
+		WebClient webClient = WebClient.create();
+		Mono<T> mono = webClient.get().uri(url, map).retrieve().bodyToMono(T);
 		T t = mono.block();
 		return t;
 	}
