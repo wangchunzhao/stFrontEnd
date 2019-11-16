@@ -15,7 +15,7 @@
 <script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
 
 <!--webfonts-->
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
 <!--//webfonts--> 
 
 <!-- chart -->
@@ -57,7 +57,7 @@
 	    <div class="panel panel-default">
 	        <div class="panel-heading" role="tab">
 	            <h4 class="panel-title">
-	                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">编辑参数 edit settings</a>
+	                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">缂栬緫鍙傛暟 edit settings</a>
 	            </h4>
 	        </div>
 	        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
@@ -69,7 +69,7 @@
 							 <input type="hidden" class="form-control old_enableDate"  th:value="${#dates.format(parameter?.enableDate, 'yyyy-MM-dd')}" />
 							 <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
 				                    <div class="col-md-12 col-xs-12">
-				                       	 参数  comment
+				                       	 鍙傛暟  comment
 				                    </div>
 				                    <div class="col-md-12 col-xs-12">
 				                        <input type="text" class="form-control comment" name="comment" th:value="${parameter?.comment}" disabled="disabled"/>
@@ -77,7 +77,7 @@
 			                   </div>
 			                   <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
 				                    <div class="col-md-12 col-xs-12">
-				                        	预设值
+				                        	棰勮鍊�
 				                    </div>
 				                    <div class="col-md-12 col-xs-12">
 				                        <input type="text" class="form-control sValue" name="sValue" th:value="${parameter?.sValue}" />
@@ -85,7 +85,7 @@
 			                    </div>
 			                    <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
 				                    <div class="col-md-12 col-xs-12">
-				                        	生效日期 
+				                        	鐢熸晥鏃ユ湡 
 				                    </div>
 				                    
 				                     <div class="col-md-12 col-xs-12">
@@ -99,8 +99,8 @@
 			                    </div>
 			                    <div class="row" style="padding: 3px 10px;margin-top:95px;margin-right:15px">
 									<div class="form-group text-righ">
-										<button type="submit" class="submit btn btn-primary" style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px" >保存</button>
-										<button type="button" class="btn btn-primary" id="btn_back" style="font-size: 15px; padding: 3px 10px; float:right;margin-right:3px">返回</button>
+										<button type="submit" class="submit btn btn-primary" style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px" >淇濆瓨</button>
+										<button type="button" class="btn btn-primary" id="btn_back" style="font-size: 15px; padding: 3px 10px; float:right;margin-right:3px">杩斿洖</button>
 									</div>
 			                </div>
 					</form>
@@ -123,11 +123,11 @@ var ctxPath  = [[@{/}]];
 	        format: 'YYYY-MM-DD',
 	        locale: moment.locale('zh-cn')
 	    });
-	    //动态设置最小值
+	    //鍔ㄦ�佽缃渶灏忓��
 	    picker1.on('dp.change', function (e) {
 	        picker2.data('DateTimePicker').minDate(e.date);
 	    });
-	    //动态设置最大值
+	    //鍔ㄦ�佽缃渶澶у��
 	    picker2.on('dp.change', function (e) {
 	        picker1.data('DateTimePicker').maxDate(e.date);
 	    }); */
@@ -145,7 +145,7 @@ var ctxPath  = [[@{/}]];
 			  var old_enableDate=$(".settingform .old_enableDate").val();
 			  
 			  /*if(enableDate<=old_enableDate){
-				  toastr.warning("预设值生效时间必须大于当前值生效时间!");
+				  toastr.warning("棰勮鍊肩敓鏁堟椂闂村繀椤诲ぇ浜庡綋鍓嶅�肩敓鏁堟椂闂�!");
 				  return false;
 			  }*/
 			  paramId=parseInt(paramId);
