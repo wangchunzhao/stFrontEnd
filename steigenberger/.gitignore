@@ -4,3 +4,4 @@ bin
 /logs/
 .project
 .classpath
+/build
