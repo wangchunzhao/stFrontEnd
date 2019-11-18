@@ -149,7 +149,7 @@ initUpload("excelFile",  "/steigenberger/freight/upload");
     }
     $("#excelFile").on("fileuploaded", function (event, data, previewId, index) {
         console.log(data);
-        if(data.response.status == 200)
+        if(data.response.msg == "success")
         {
             alert(data.files[index].name + "上传成功!");
             //上传成功后刷新
@@ -160,7 +160,7 @@ initUpload("excelFile",  "/steigenberger/freight/upload");
             $(".close").click();
         }
         else{
-            alert(data.files[index].name + "上传失败!" + data.response.message);
+            alert(data.files[index].name + "上传失败!");
         //重置
         $("#excelFile").fileinput("clear");
         $("#excelFile").fileinput("reset");
