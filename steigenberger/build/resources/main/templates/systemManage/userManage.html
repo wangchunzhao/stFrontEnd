@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}"/>
+
+<!-- Custom CSS -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' th:href="@{/css/style.css}"/>
+
+<!-- font-awesome icons CSS -->
+<link href="./css/font-awesome.css" rel="stylesheet" th:href="@{/css/font-awesome.css}"> 
+<!-- //font-awesome icons CSS-->
+
+	<!-- js-->
+<script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
+
+<!--webfonts-->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="./css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+<!--pie-chart --><!-- index page sales reviews visitors pie chart -->
+<script src="./js/pie-chart.js" type="text/javascript" th:src="@{/js/pie-chart.js}"></script>
+<link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
+
+<!-- side nav css file -->
+<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css' th:href="@{/css/SidebarNav.min.css}"/>
+<!-- //side nav css file -->
+<script src="./js/SidebarNav.min.js" th:src="@{/js/SidebarNav.min.js}"></script>
+
+<link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
+<script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+	
+ <script type="text/javascript">
+ var ctxPath  = [[@{/}]];
+     $(function(){
+    	  $("#btn_select").on("click",function(){
+    	      var userIdentity=$(".searchVal1").val();
+    	      var userMail=$(".searchVal2").val();
+    	      var isActive=$(".searchVal3").val();
+    	      window.location.href = ctxPath+"user/index?userMail="+userMail+"&userIdentity="+userIdentity+"&isActive="+isActive; 
+    	      return false;
+          });
+    	  
+    	  $("#btn_reset").on("click",function(){
+    	      $(".searchVal1").val('');
+    	      $(".searchVal2").val('');
+    	      $(".searchVal3").val(2);
+    	      return false;
+          });
+    	  
+    	  $(".update_user").on("click",function(){
+      		  var userIdentity= $(this).attr("title");
+      	      window.location.href = ctxPath+"user/toUpdate?userIdentity="+userIdentity; 
+      	      return false;
+            });
+    	  
+    	  
+    		var ctxPath  = [[@{/}]];
+    		var userIdentity;
+    		$.ajax({
+	            type: "GET",
+	            dataType: "json",
+	            url: ctxPath+"user/getOperations" ,
+	            async:false,
+	            success: function (result) {
+	            	console.log(result.data);
+	            	var user = result.data;
+	            	//profile赋值
+	            	//$("#userId").text("id:"+user.id);
+	            	//$("#userName").text("userName:"+user.userName);
+	            	//$("#userIdentity").text("userIdentity:"+user.userIdentity);
+	            	
+	            	$("#userId").text(user.id);
+	            	$("#userName").text(user.userName);
+	            	$("#userIdentity").text(user.userIdentity);
+	            	var roleList = user.roles;
+	            	var roleNames = "";
+	            	for(var i=0;i<roleList.length;i++){
+	            		if(i==roleList.length-1){
+	            			roleNames+=roleList[i].name;
+	            		}else{
+	            			roleNames+=roleList[i].name+",";
+	            		}
+	            	}
+	            	//$("#userRoles").text("userRoles:"+roleNames);
+	            	$("#userRoles").text(roleNames);
+	            	
+	            	//判断权限
+	            	userIdentity = result.data.userIdentity;
+	            	var operationList = result.data.operations;
+	            	var operationNames = "";
+	            	for(var i=0;i<operationList.length;i++){
+	            		operationNames+=operationList[i].name+",";
+	            	}
+	              	 //alert(operationNames);
+	               if(operationNames.indexOf("todo")==-1){
+	            	   $('#todo').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("newOrder")==-1){ 
+		       			$('#newOrder').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("orderManage")==-1){
+		       			$('#orderManage').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("contract")==-1){
+		       			$('#contract').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("newSpecial")==-1){
+		       			$('#newSpecial').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("report1")==-1){
+		       			$('#report1').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("report2")==-1){
+		       			$('#report2').attr('href','javascript:void(0);');
+		       		}
+		       		
+		       		if(operationNames.indexOf("report1")==-1&&operationNames.indexOf("report2")==-1){
+		       			$('#report').attr('href','javascript:void(0);');
+		       		}
+		       		
+		       		if(operationNames.indexOf("user")==-1){
+		       			$('#user').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("permission")==-1){
+		       			$('#permission').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("parameterSetting")==-1){
+		       			$('#parameterSetting').attr('href','javascript:void(0);');
+		       		}
+		       		if(operationNames.indexOf("role")==-1){
+		       			$('#role').attr('href','javascript:void(0);');
+		       		}
+		       		
+		       		if(operationNames.indexOf("user")==-1&&
+		       				operationNames.indexOf("permission")==-1&&
+		       				operationNames.indexOf("parameterSetting")==-1&&
+		       				operationNames.indexOf("role")==-1
+		       				){
+		       			
+		       			//$('#sys').style="display:none";
+		       			$('#sys').attr('style',"display:none");
+		       		}
+	                
+	            },
+	            error : function() {
+	                //alert("没有查到数据！");
+	            }
+	        }); 
+    			
+    		
+    	  
+    	  
+        });
+     
+      function showmsg(data){
+    	  if(data.status>200){
+		    	toastr.warning(data.msg);  
+		       }
+		    else{
+		    	toastr.success(data.msg);
+		      }
+		 setTimeout(function(){
+			window.location.reload();	      				 
+		    },1000);
+      }
+      
+      toastr.options = {  
+  	        closeButton: false,  
+  	        debug: false,  
+  	        progressBar: false,  
+  	        positionClass: "toast-bottom-center",  
+  	        onclick: null,  
+  	        showDuration: "300",  
+  	        hideDuration: "1000",  
+  	        timeOut: "2000",  
+  	        extendedTimeOut: "1000",  
+  	        showEasing: "swing",  
+  	        hideEasing: "linear",  
+  	        showMethod: "fadeIn",  
+  	        hideMethod: "fadeOut"  
+  	    }; 
+ 
+ </script>
+<script src="../pageJs/main.js" type="text/javascript" ></script>	
+</head> 
+<body class="cbp-spmenu-push">
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+
+	
+<!-- main content start-->
+<div id="page-wrapper">
+<ul class="breadcrumb" style="margin-left: 3%;">
+	<li><a href="#">>系统管理>用户管理</a></li>
+</ul>
+<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist"  style="margin-top: 20px; margin-left: 35px; margin-right: 20px;">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">用户查询 User query</a>
+            </h4>
+        </div>
+        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel-body" style="height: auto;">
+				<form action="">
+					 <div class="row">
+	                    <div class="col-md-4 col-xs-43">
+	                       	 域账号 user Identity
+	                    </div>
+	                    <div class="col-md-4 col-xs-4">
+	                        	用户邮箱 user main
+	                    </div>
+	                    <div class="col-md-4 col-xs-4">
+	                        	状态 status
+	                    </div>
+	                    <div class="col-md-4 col-xs-4">
+	                        <input type="text" class="form-control searchVal1" id="searchVal1" th:value="${user1?.userIdentity}">
+	                    </div>
+	                    <div class="col-md-4 col-xs-4">
+	                        <input type="text" class="form-control searchVal2" id="searchVal2" th:value="${user1?.userMail}">
+	                    </div>
+	                    <div class="col-md-4 col-xs-4">
+	                        <select class="form-control  searchVal3" name="" th:value="${user1?.isActive}">
+	                        		<option value="2">全选</option>
+									<option value="1" th:selected="${user1?.isActive }==1">启用</option>
+									<option value="0" th:selected="${user1?.isActive }==0">停用</option>
+								</select>
+	                    </div>
+	                </div>
+				</form>
+                <button type="button" class="btn btn-primary" id="btn_select" style="margin-top: 10px; margin-right: 20px;">select</button><button type="button" id="btn_reset" class="btn btn-primary" style="margin-top: 10px; margin-right: 20px;">reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a class="" role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1564457283858" aria-expanded="true">用户列表 List of users</a>
+            </h4>
+        </div>
+        <div id="collapseTwo-magical-coder-auto-id-1564457283858" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+            <div class="panel-body" style="height: auto;">
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+							<tr>
+								<th>编号</th>
+								<th>用户名</th>
+								<th>邮箱</th>
+								<th>域账号</th>
+								<th>区域</th>
+								<th>角色</th>
+								<th>账号状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+                        <tbody>
+							<th:block th:if="${datas.content != null}">
+								<tr th:each="user,userStart: ${datas.content}">
+									<td th:text="${userStart.count}">560001</td>
+									<td th:text="${user.userName}">Bangalore</td>
+									<td th:text="${user.userMail}">Bangalore</td>
+									<td th:text="${user.userIdentity}">560001</td>
+									<td th:text="${user.region?.name}">Bangalore</td>
+								 	<td>
+									 <div th:each="role:${user.roles}">
+				                          <div th:text="${role.name }"></div>
+				                      </div>
+									</td>
+									<td th:text="${user.isActive>0?'启用' :'禁用'}" th:style="${user.isActive>0?'color:green' :'color:red'}">560001</td>
+									<td>
+									<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">
+											<i class="glyphicon glyphicon-refresh"></i>编辑</a>  -->
+											<!-- <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal"  th:title="${user.id}"
+											data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
+		                                    		编辑 edit
+		                                </button> -->
+		                                <button type="button" class="btn btn-primary btn-lg update_user"   th:title="${user.userIdentity}"
+												data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
+                                    		 edit
+                                		</button>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+                    </table>
+                </div>
+				<div th:include="page :: pager" th:remove="tag"></div> 
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="../js/classie.js"></script>
+<script>
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+
+	function disableOther( button ) {
+		if( button !== 'showLeftPush' ) {
+			classie.toggle( showLeftPush, 'disabled' );
+		}
+	}
+</script>	
+<!--scrolling js-->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!-- side nav js -->
+<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+<script>
+     $('.sidebar-menu').SidebarNav()
+   </script>	
+<script src="../js/SimpleChart.js"></script>
+<script src="../js/bootstrap.js"> </script>	
+</body>
+</html>

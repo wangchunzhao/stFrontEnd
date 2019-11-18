@@ -25,6 +25,7 @@ $(function () {
 
     //1.初始化Table
     var oTable = new TableInit();
+    InitTime();
     oTable.Init();
     InitSapSalesOffice();
     InitTime();
@@ -265,7 +266,6 @@ function InitTime(){
 	var startDate = new Date();
 	startDate.setTime(endDate.getTime() - 1000*3600*24*7);
 	$("#reservation").val(dateFtt("yyyy-MM-dd", startDate)+" - "+dateFtt("yyyy-MM-dd", endDate));
-	$("#reservation1").val(dateFtt("yyyy-MM-dd", startDate)+" - "+dateFtt("yyyy-MM-dd", endDate));
 	
 }
 //时间格式化处理

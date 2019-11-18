@@ -65,7 +65,6 @@ public class FreightController {
 	        	 //2007版本以下的excel用这个
 //	             List<List<String>> datas = ExcelUtil.readXls(excelFile.getInputStream());
 	        	 List<List<String>> datas = ExcelUtil.readXlsx(excelFile.getInputStream());
-	        	 System.out.println(bAreaService+"1111111111111111111");
 	        	 bAreaService.add(datas);
 /*	        	 
 	             // .............

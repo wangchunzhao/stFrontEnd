@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}"/>
+
+<!-- Custom CSS -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' th:href="@{/css/style.css}"/>
+
+<!-- font-awesome icons CSS -->
+<link href="./css/font-awesome.css" rel="stylesheet" th:href="@{/css/font-awesome.css}"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- js-->
+<script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
+
+<!--webfonts-->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="./css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+
+<!-- side nav css file -->
+<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css' th:href="@{/css/SidebarNav.min.css}"/>
+<!-- //side nav css file -->
+<script src="./js/SidebarNav.min.js" th:src="@{/js/SidebarNav.min.js}"></script>
+
+
+<!-- Metis Menu -->
+<script src="../js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="../js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="../css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+<script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
+<link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
+<script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+ 
+</head> 
+<body class="cbp-spmenu-push">
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+	
+<!-- main content start-->
+<div id="page-wrapper">
+	<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+	    <div class="panel panel-default">
+	        <div class="panel-heading" role="tab">
+	            <h4 class="panel-title">
+	                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">角色授权 roleAuthorization</a>
+	            </h4>
+	        </div>
+	        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+	            <div class="panel-body" style="height: auto;">
+					<form action=""  role="form"  class="form">
+				         	<input type="hidden" th:value="${map?.role.id}" id="roleId"/>
+				         		<div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
+					                    <div class="col-xs-12">名称</div>
+					            </div>
+					            <div class="row" style="padding: 3px 10px;margin-right:15px">
+					                    <div class="col-xs-12">
+					                        <input type="text" class="form-control" id="name" th:value="${map?.role.name}" />
+					                    </div>
+					            </div>
+						         <div class="row" style="width:200px;padding: 3px 10px;margin-top:15px;margin-right:15px">
+						         	<div class="col-xs-6"> 选择权限</div>
+						         </div>
+						         <div class="row" style="padding: 3px 10px;margin-left:10px;margin-right:20px;width:96%; height:200px; border:solid 1px #CCC;overflow: auto;">
+									  <table class="table" >
+									  	<tr th:each="operation,operationStart:${map?.operationsAll}"  >
+									  		<td style="width:40%;">
+										  		<div class="checkbox checkbox-inline checkbox-success">
+										  			<input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected==true}"   th:title="${operation.id}" checked>
+												     <input type="checkbox"  class="send  styled"   th:id="${operation.id}"   th:value="${operation.id}"  th:if="${operation.selected!=true}"   th:title="${operation.id}">
+						                     		 <label   th:text="${operation.name}" ></label>
+										  		</div>
+									  		</td>
+									  		<td th:text="${operation.description}"></td>
+									  	</tr>
+									  </table>				               
+								</div>
+								         
+					            <div class="form-group text-righ" style="padding: 3px 10px;margin-top:65px;margin-right:15px">						    
+								      <button type="submit"   class="submit btn btn-primary pull-right " style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px">保存</button>
+								      <button type="button" class="btn btn-primary pull-right" id="btn_back" style="font-size: 15px; padding: 3px 10px;float:right;margin-right:3px">返回</button>
+								 </div>
+				         </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>		
+
+<script src="../js/classie.js"></script>
+<script>
+	var ctxPath  = [[@{/}]];
+	$(".form").on("submit",function(e){
+    	e.preventDefault();
+    	var oid = new Array();
+    	var val=$(".checkbox-inline :checked");
+    	var ops=[];
+    	val.each(function(i){
+    		oid[i] = $(this).val();
+    		var obj = {
+    				id: oid[i]
+        		};
+    			ops.push(obj);
+		  });   		
+    	//var oids = oid.join(",");
+    	var roleId = $("#roleId").val();    
+    	var name = $("#name").val();    
+    	var isActive = $("#isActive").val();  
+    	
+    	roleId=parseInt(roleId);
+    	var data={id:roleId,operations:ops,name:name,isActive:isActive};
+    	console.log(data);
+    	console.log(typeof oids);
+    	 
+    	$.ajax({  type:"post",
+	      		   url: ctxPath+'role/updateAuthorization',
+	      		   contentType:'application/json;charset=utf-8',
+	      		   data:JSON.stringify(data),
+	      		   success: function(data){	     	      			
+	       		     if(data.status>200){
+ 	       		    	toastr.warning(data.msg);  
+ 	       		    setTimeout(function(){
+ 	       		    	window.location.reload();
+ 	       		     },2000);
+ 	       		       }
+ 	       		    else{
+ 	       		    	toastr.success(data.msg);
+ 	       		       setTimeout(function(){
+ 	       		    	window.location.href = ctxPath+"role/index";
+ 	       		        },2000);
+ 	       		      } 				 
+	      		}});
+    	
+       	});
+	
+	 $(".form #btn_back").on("click",function(e){
+		 window.location.href = ctxPath+"role/index";
+	    });
+	      
+	 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+	 		showLeftPush = document.getElementById( 'showLeftPush' ),
+	 		body = document.body;
+	 		
+	 	showLeftPush.onclick = function() {
+	 		classie.toggle( this, 'active' );
+	 		classie.toggle( body, 'cbp-spmenu-push-toright' );
+	 		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+	 		disableOther( 'showLeftPush' );
+	 	};
+	 	
+
+	 	function disableOther( button ) {
+	 		if( button !== 'showLeftPush' ) {
+	 			classie.toggle( showLeftPush, 'disabled' );
+	 		}
+	 	}
+	 </script>
+	 <script src="../pageJs/main.js" type="text/javascript" ></script>	
+	 <!--scrolling js-->
+	 <script src="../js/jquery.nicescroll.js"></script>
+	 <script src="../js/scripts.js"></script>
+	 <!-- side nav js -->
+	 <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+	 <script>
+	      $('.sidebar-menu').SidebarNav()
+	    </script>	
+	 <script src="../js/SimpleChart.js"></script>
+	 <script src="../js/bootstrap.js"> </script>	
+</body>
+</html>

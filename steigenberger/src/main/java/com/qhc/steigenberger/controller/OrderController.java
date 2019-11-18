@@ -78,6 +78,7 @@ public class OrderController {
 	private final static String ENGINEER_Order = "1015";//工程人员审批订单
 	private final static String SUPPORT_Order = "1016";//支持经理审批订单
 	private final static String CREATE_Order = "1017";//下订单
+	private final static String CREATE_BEIHUO_Order = "1018";//下备货订单
 	
 	//订单状态
 	private final static String orderStatus0="0";//订单新建保存
@@ -163,7 +164,7 @@ public class OrderController {
 		Material m = orderService.getMaterial(code);
 		return m;
 	}
-
+	//判断有没有新建经销商和直签订单的权限
 	@PostMapping("createOrder")
 	@ResponseBody
 	public JsonResult permissionApply1(HttpServletRequest request) {
@@ -183,6 +184,25 @@ public class OrderController {
 //			}else {
 //				JsonResult.build(500,"fail", 1);
 //			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return JsonResult.build(401,"success", 1);
+	}
+	//判断有没有下备货订单的权限
+	@PostMapping("createBeiOrder")
+	@ResponseBody
+	public JsonResult permissionApply(HttpServletRequest request) {
+		try {
+			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			User user = userService.selectUserIdentity(identityName);
+			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
+			for (int i = 0; i < userOperationInfoList.size(); i++) {
+				String operationId = userOperationInfoList.get(i).getOperationId();
+				if (operationId.equals(CREATE_BEIHUO_Order)) {
+					return JsonResult.build(200, "success", null);
+				}
+			}
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
