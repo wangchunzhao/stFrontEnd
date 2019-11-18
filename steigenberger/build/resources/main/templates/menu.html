@@ -1,0 +1,94 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:fragment="menu">
+		<!--left-fixed -navigation-->
+		<aside class="sidebar-left">
+      <nav class="navbar navbar-inverse">
+          <div class="navbar-header">
+            
+            <h1 style="color:#FFFFFF;">Haier <span ><img th:src="@{/images/logo.png}"> </span></h1>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="sidebar-menu">
+               <li class="treeview" >
+                <a href="/steigenberger/menu/todo" id="todo">
+                <i class="fa fa-dashboard"></i> 
+				<span>待办任务</span>
+				<span style="font-size:12px">To-do tasks</span>
+				
+                </a>
+				
+              </li>
+              <li class="treeview" >
+                <a href="/steigenberger/menu/newOrder" id="newOrder">
+                <i class="fa fa-dashboard"></i> 
+				<span>新建订单</span>
+				<span style="font-size:12px">Create Order</span>
+				
+                </a>
+				
+              </li>
+			 
+			   <li class="treeview" >
+                <a href="/steigenberger/menu/orderManageList" id="订单管理">
+                <i class="fa fa-dashboard"></i> 
+				<span>订单管理</span>
+				<span style="font-size:12px">Order</span>
+				
+                </a>
+				
+              </li>
+			  <li class="treeview">
+                <a href="/steigenberger/menu/contract" id="contract" >
+                <i class="fa fa-laptop"></i>
+                <span>合同管理 </span>
+				<span style="font-size:12px">Contract</span>
+                
+                </a>
+                
+              </li>
+              <li class="treeview" >
+                <a href="/steigenberger/menu/specialApplication" id="special">
+                <i class="fa fa-pie-chart"></i>
+                <span>特批发货</span>
+				<span style="font-size:12px">Special Delivery</span>
+                
+                </a>
+					
+              </li>
+              <li class="treeview" >
+                <a href="#" id="report">
+                <i class="fa fa-laptop"></i>
+                <span>报表管理 </span>
+				<span style="font-size:12px">Report</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li ><a href="/steigenberger/menu/purchaseAndSale" id="report1"><i class="fa fa-angle-right"></i> <span>购销明细报表</span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
+                  <li ><a href="/steigenberger/menu/biddingDetail" id="report2"><i class="fa fa-angle-right"></i> <span>投标跟踪表</span><span style="font-size:12px">Bid tracking report</span> </a></li>
+                </ul>
+              </li>
+			  
+              <li class="treeview" id="sys" style="display: ''" >
+	              		<a href="#">
+			                <i class="fa fa-edit"></i> 
+							<span>系统管理</span> <span style="font-size:12px">System</span><i class="fa fa-angle-left pull-right"></i>
+		                </a>
+		                <ul class="treeview-menu">
+		                  <li ><a href="/steigenberger/menu/userIndex" id="user" ><i class="fa fa-angle-right"></i>人员管理<span style="font-size:12px">Personnel manage</span> </a></li>
+		                  <li ><a href="/steigenberger/menu/permissionApply" id="permission"><i class="fa fa-angle-right"></i>用户新增 <span style="font-size:12px">Add User</span></a></li>
+						  <li ><a href="/steigenberger/menu/settingIndex" id="parameterSetting" ><i class="fa fa-angle-right"></i>参数设置 <span style="font-size:12px">Parameter Settings</span></a></li>
+						  <li ><a href="/steigenberger/menu/roleIndex" id="role" ><i class="fa fa-angle-right"></i>角色管理 <span style="font-size:12px">Role manage</span></a></li>
+						  <li ><a href="/steigenberger/menu/freight" id="role" ><i class="fa fa-angle-right"></i>三级运费导入 <span style="font-size:12px"></span></a></li>
+		                </ul>
+              </li>
+              </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+      </nav>
+    </aside>
+	</div>
+		
+</body>
+</html>

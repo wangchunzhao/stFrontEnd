@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}"/>
+
+<!-- Custom CSS -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' th:href="@{/css/style.css}"/>
+
+<!-- font-awesome icons CSS -->
+<link href="./css/font-awesome.css" rel="stylesheet" th:href="@{/css/font-awesome.css}"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- js-->
+<script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
+
+<!--webfonts-->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="./css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+
+<!-- side nav css file -->
+<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css' th:href="@{/css/SidebarNav.min.css}"/>
+<!-- //side nav css file -->
+<script src="./js/SidebarNav.min.js" th:src="@{/js/SidebarNav.min.js}"></script>
+
+<script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
+<link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
+<script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+<!-- -date -->
+<script type="text/javascript" src="../bootstrap-date/build/js/moment-with-locales.min.js" th:src="@{/bootstrap-date/build/js/moment-with-locales.min.js}"></script>
+<!-- <link rel="stylesheet" href="../bootstrap-date/build/css/bootstrap.min.css"/> -->
+<link rel="stylesheet" href="../bootstrap-date/build/css/bootstrap-datetimepicker.min.css" th:href="@{/bootstrap-date/build/css/bootstrap-datetimepicker.min.css}"/>
+<script type="text/javascript" src="../bootstrap-date/build/js/bootstrap-datetimepicker.min.js" th:src="@{/bootstrap-date/build/js/bootstrap-datetimepicker.min.js}"></script>
+<!-- <script type="text/javascript" src="../bootstrap-date/build/js/bootstrap.min.js" ></script> -->
+
+</head> 
+<body class="cbp-spmenu-push">
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+	
+<!-- main content start-->
+<div id="page-wrapper">
+	<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+	    <div class="panel panel-default">
+	        <div class="panel-heading" role="tab">
+	            <h4 class="panel-title">
+	                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564457285983" aria-expanded="true" class="" mc-ace="~">缂栬緫鍙傛暟 edit settings</a>
+	            </h4>
+	        </div>
+	        <div id="collapseOne-magical-coder-auto-id-1564457285983" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+	            <div class="panel-body" style="height: auto;">
+					<form  class="form settingform" role="form">
+							 <input type="hidden" class="form-control"  id="paramId" th:value="${parameter?.id}" name="id"/>
+							 <input type="hidden" class="form-control code"  th:value="${parameter?.code}" />
+							 <input type="hidden" class="form-control old_sValue"  th:value="${parameter?.sValue}" />
+							 <input type="hidden" class="form-control old_enableDate"  th:value="${#dates.format(parameter?.enableDate, 'yyyy-MM-dd')}" />
+							 <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
+				                    <div class="col-md-12 col-xs-12">
+				                       	 鍙傛暟  comment
+				                    </div>
+				                    <div class="col-md-12 col-xs-12">
+				                        <input type="text" class="form-control comment" name="comment" th:value="${parameter?.comment}" disabled="disabled"/>
+				                    </div>
+			                   </div>
+			                   <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
+				                    <div class="col-md-12 col-xs-12">
+				                        	棰勮鍊�
+				                    </div>
+				                    <div class="col-md-12 col-xs-12">
+				                        <input type="text" class="form-control sValue" name="sValue" th:value="${parameter?.sValue}" />
+				                    </div>
+			                    </div>
+			                    <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
+				                    <div class="col-md-12 col-xs-12">
+				                        	鐢熸晥鏃ユ湡 
+				                    </div>
+				                    
+				                     <div class="col-md-12 col-xs-12">
+				                     <div class='input-group date' id='datetimepicker1'><!--  th:value="${#dates.format(parameter?.enableDate, 'yyyy-MM-dd')}"-->
+							               <input type='text' class="form-control  enableDate" name="enableDate" th:value="${#dates.format(parameter?.enableDate, 'yyyy-MM-dd')}"/>
+							               <span class="input-group-addon">
+							                   <span class="glyphicon glyphicon-calendar"></span>
+							               </span>
+							           </div> 
+				                    </div>
+			                    </div>
+			                    <div class="row" style="padding: 3px 10px;margin-top:95px;margin-right:15px">
+									<div class="form-group text-righ">
+										<button type="submit" class="submit btn btn-primary" style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px" >淇濆瓨</button>
+										<button type="button" class="btn btn-primary" id="btn_back" style="font-size: 15px; padding: 3px 10px; float:right;margin-right:3px">杩斿洖</button>
+									</div>
+			                </div>
+					</form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>	
+	
+<script src="../js/classie.js"></script>	
+<script type="text/javascript">
+var ctxPath  = [[@{/}]];
+	$(function () {
+	    var picker1 = $('#datetimepicker1').datetimepicker({
+	        format: 'YYYY-MM-DD',
+	        locale: moment.locale('zh-cn')
+	        //minDate: new Date()
+	    });
+	   /*  var picker2 = $('#datetimepicker2').datetimepicker({
+	        format: 'YYYY-MM-DD',
+	        locale: moment.locale('zh-cn')
+	    });
+	    //鍔ㄦ�佽缃渶灏忓��
+	    picker1.on('dp.change', function (e) {
+	        picker2.data('DateTimePicker').minDate(e.date);
+	    });
+	    //鍔ㄦ�佽缃渶澶у��
+	    picker2.on('dp.change', function (e) {
+	        picker1.data('DateTimePicker').maxDate(e.date);
+	    }); */
+	    
+	    
+		$(".settingform").on("submit",function(e){
+			  e.preventDefault();
+			  var paramId=$(".settingform #paramId").val();  		  
+			  var code=$(".settingform .code").val();  		  
+			  var comment=$(".settingform .comment").val(); 
+			  var sValue=$(".settingform .sValue").val(); 
+			  var enableDate=$(".settingform .enableDate").val()+" 00:00:00";
+			  
+			  var old_sValue=$(".settingform .old_sValue").val(); 
+			  var old_enableDate=$(".settingform .old_enableDate").val();
+			  
+			  /*if(enableDate<=old_enableDate){
+				  toastr.warning("棰勮鍊肩敓鏁堟椂闂村繀椤诲ぇ浜庡綋鍓嶅�肩敓鏁堟椂闂�!");
+				  return false;
+			  }*/
+			  paramId=parseInt(paramId);
+			  var data={
+					  id:paramId,
+					  code:code,
+					  comment:comment,
+					  sValue:sValue,
+					  enableDate:enableDate
+					  }
+			$.ajax({  
+				type:"post",
+		      		   url: ctxPath+'parameterSetting/update',
+		      		   contentType:'application/json;charset=utf-8',
+		      		   async:false,
+		      		   data:JSON.stringify(data),
+		      		 	success: function(data){
+		       		     if(data.status>200){
+	 	       		    	toastr.warning(data.msg);  
+		 	       		    /*setTimeout(function(){
+		 	       		    	window.location.reload();
+		 	       		     },2000);*/
+	 	       		       }
+	 	       		    else{
+	 	       		    	toastr.success(data.msg);
+	 	       		       	setTimeout(function(){
+	 	       		    		window.location.href = ctxPath+"parameterSetting/index";
+	 	       		        },1000);
+	 	       		      } 				 
+		      		}});
+			});
+	    
+		$(".settingform #btn_back").on("click",function(e){
+			  window.location.href = ctxPath+"parameterSetting/index";	
+		 });
+	});
+	
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+
+	function disableOther( button ) {
+		if( button !== 'showLeftPush' ) {
+			classie.toggle( showLeftPush, 'disabled' );
+		}
+	}
+</script>
+<script src="../pageJs/main.js" type="text/javascript" ></script>	
+<!--scrolling js-->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!-- side nav js -->
+<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+<script>
+     $('.sidebar-menu').SidebarNav()
+   </script>	
+<script src="../js/SimpleChart.js"></script>
+<script src="../js/bootstrap.js"> </script>
+
+</body>
+</html>

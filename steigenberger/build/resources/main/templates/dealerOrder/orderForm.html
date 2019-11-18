@@ -1,0 +1,190 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- Bootstrap Core CSS -->
+<link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+
+<!-- Custom CSS -->
+<link href="../css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS -->
+<link href="../css/font-awesome.css" rel="stylesheet"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- side nav css file -->
+<link href='../css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+<!-- //side nav css file -->
+ 
+ <!-- js-->
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/modernizr.custom.js"></script>
+
+<!--webfonts-->
+<link href="##3##" rel="stylesheet">
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="../js/Chart.js"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="../js/metisMenu.min.js"></script>
+<script src="../js/custom.js"></script>
+<link href="../css/custom.css" rel="stylesheet">
+<!--//Metis Menu -->
+
+<!--pie-chart --><!-- 12345678 -->
+<script src="../js/pie-chart.js" type="text/javascript"></script>
+<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
+ 
+</head> 
+<body class="cbp-spmenu-push">
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+	
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="col_3" style="margin-left: 2%;">
+        	<div class="col-md-3 widget widget1">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(1)">
+                    <i class="pull-left fa fa-dollar icon-rounded"></i>
+                    <div class="stats">
+                      <span><a>经销商标准折扣下单</a></span><br>
+					  <span style="font-size:12px">Dealer standard discount order</span>
+                    </div>
+                </div>
+        	</div>
+        	<div class="col-md-3 widget widget1">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(2)">
+                    <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
+                    <div class="stats">
+                      <span><a>经销商非标准折扣下单</a></a></span><br>
+					  <span style="font-size:12px">Distributor non - standard discount order</span>
+                    </div>
+                </div>
+        	</div>
+        	<div class="col-md-3 widget widget1">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(3)">
+                    <i class="pull-left fa fa-money user2 icon-rounded"></i>
+                    <div class="stats">
+                      <span><a>直签客户投标报价</a></span><br>
+					  <span style="font-size:12px"> Direct sign customer tender offer</span>
+                    </div>
+                </div>
+        	</div>
+        	<div class="col-md-3 widget widget1">
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(4)">
+                    <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
+                    <div class="stats">
+                      <span><a>直签客户投标下单</a></span><br>
+					  <span style="font-size:12px">Direct sign customer create order</span>
+                    </div>
+                </div>
+        	 </div>
+        	<div class="col-md-3 widget" >
+        		<div class="r3_counter_box" style="height:140px;cursor:pointer;" onclick="toDifferentOrder(5)">
+                    <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
+                    <div class="stats" >
+                      <span><a>备货</a></span><br>
+					  <span style="font-size:12px;">Stock up</span>
+                    </div>
+                </div>
+        	 </div>
+        	
+		</div>
+	
+		</div>
+
+	<!-- new added graphs chart js-->
+<div id="footer" class="container" th:replace="foot::foot"></div>
+<script src="../js/classie.js"></script>
+<script>
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+
+	function disableOther( button ) {
+		if( button !== 'showLeftPush' ) {
+			classie.toggle( showLeftPush, 'disabled' );
+		}
+	}
+</script>	
+<!--scrolling js-->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!--//scrolling js-->
+
+<!-- side nav js -->
+<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+<script>
+     $('.sidebar-menu').SidebarNav()
+   </script>	
+<script src="../js/SimpleChart.js"></script>
+<script src="../js/bootstrap.js"> </script>	
+   
+<!--  js -->  
+<script >
+
+
+function doSomething(){
+	
+	 var ret = false;
+	 $.ajax({
+		 url:'/steigenberger/order/createOrder',
+		 data:{ menu:'下单'},
+		 dataType:'json',
+		 method:'POST',
+		 async:false,
+		 success:function(resp){
+			 console.log(resp);
+//			 ret = true;
+			if(resp.status==200){
+				 ret = true;
+			}else{
+				 alert("对不起，您没有下单权限");
+				 ret = false;
+			}
+		 },
+		 error:function(resp,status){
+			 console.log(resp);
+		 }
+	 });
+	
+	return ret;
+	
+}
+
+function toDifferentOrder(type){
+
+	if(doSomething()){
+		if(type=='1'){
+			window.location.href="/steigenberger/menu/standardDiscount";	
+		}else if(type=='2'){
+			window.location.href="/steigenberger/menu/nonStandardDiscount";
+		}else if(type=='3'){
+			//window.location.href="/steigenberger/menu/directCustomerOrder";
+		}else if(type=='4'){
+			window.location.href="/steigenberger/menu/directCustomerOrder";
+		}else{
+			window.location.href="/steigenberger/menu/stockUpOrder";
+		}
+	}
+}
+</script>
+</body>
+</html>

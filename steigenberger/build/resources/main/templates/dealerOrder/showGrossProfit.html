@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Bootstrap Core CSS -->
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}"/>
+
+<!-- Custom CSS -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' th:href="@{/css/style.css}"/>
+
+<!-- font-awesome icons CSS -->
+<link href="./css/font-awesome.css" rel="stylesheet" th:href="@{/css/font-awesome.css}"> 
+<!-- //font-awesome icons CSS-->
+
+<!-- js-->
+<script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
+
+<!--webfonts-->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
+<!--//webfonts--> 
+
+<!-- chart -->
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<!-- //chart -->
+
+<!-- Metis Menu -->
+<script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="./css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+
+<!-- side nav css file -->
+<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css' th:href="@{/css/SidebarNav.min.css}"/>
+<!-- //side nav css file -->
+<script src="./js/SidebarNav.min.js" th:src="@{/js/SidebarNav.min.js}"></script>
+
+
+<!-- Metis Menu -->
+<script src="../js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
+<script src="../js/custom.js" th:src="@{/js/custom.js}"></script>
+<link href="../css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
+<!--//Metis Menu -->
+
+<script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+<link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
+<link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
+<script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+
+<script type="text/javascript">
+	
+ </script>
+<script src="../pageJs/main.js" type="text/javascript" ></script>	
+</head> 
+<body class="cbp-spmenu-push">
+<div class="sticky-header header-section " th:replace="head::head">	</div>
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+	
+<!-- main content start-->
+<div id="page-wrapper">
+	<div id="collapseOne-magical-coder-auto-id-1563938421442" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+			<div class="panel-body" style="height: auto;" mc-ace="~">
+
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064086809" style="margin-right: 25px;">
+					鏌ョ湅姣涘埄琛� Gross profit table
+				</button><div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064086809" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">脳</span></button>
+								<h4 class="modal-title" id="myModalLabel">姣涘埄琛ㄤ俊鎭� Gross profit table</h4>
+							</div>
+							<div class="modal-body">
+								<div id="accordion-magical-coder-auto-id-1564367406503" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">
+									<div class="panel panel-default">
+										<div class="panel-heading" role="tab">
+											<h4 class="panel-title">
+												<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseOne-magical-coder-auto-id-1564367403401" aria-expanded="true" class="">鍩烘湰淇℃伅 basic information</a>
+											</h4>
+										</div>
+										<div id="collapseOne-magical-coder-auto-id-1564367403401" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+											<div class="panel-body" style="height: auto;">
+												<div class="row">
+													<div class="col-md-3 col-xs-3">闇�姹傛祦姘村彿</div>
+													<div class="col-md-3 col-xs-3">鍚堝悓鍙�</div>
+													<div class="col-md-3 col-xs-3">鍚堝悓鍚嶇О</div>
+													<div class="col-md-3 col-xs-3">鍚堝悓閲戦</div>
+													<div class="col-md-3 col-xs-3">
+														<input type="text" class="form-control" aria-describedby="orderId">
+													</div>
+													<div class="col-md-3 col-xs-3">
+														<input type="text" class="form-control" aria-describedby="contractId">
+													</div>
+													<div class="col-md-3 col-xs-3">
+														<input type="text" class="form-control" aria-describedby="contractName">
+													</div>
+													<div class="col-md-3 col-xs-3">
+														<input type="text" class="form-control" aria-describedby="contractAmount">
+													</div>
+												</div>
+												<div class="row" style="margin-top: 4px;">
+													<div class="col-xs-6 col-md-3">鎬ц川鍒嗙被</div>
+													<div class="col-xs-6 col-md-3">鐗堟湰鍙�</div>
+													<div class="col-xs-6 col-md-3">鎿嶄綔浜�</div>
+													<div class="col-xs-6 col-md-3">鎿嶄綔鏃堕棿</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control" aria-describedby="classificationOfProperties">
+													</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control" aria-describedby="version">
+													</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control" aria-describedby="operator">
+													</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control" aria-describedby="createTime>
+													</div>
+												</div>
+										</div>
+									</div>
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab">
+												<h4 class="panel-title">
+													<a class="" role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseTwo-magical-coder-auto-id-1564367403394" aria-expanded="true">
+														鏄庣粏淇℃伅 detail information
+													</a>
+												</h4>
+											</div>
+											<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+												<div class="panel-body" style="height: auto;" >
+
+													<div class="table-responsive">
+														<table class="table">
+															<thead>
+															<tr class="">
+																<th class="">浜у搧鍚嶇О</th>
+																<th class="">閲戦</th>
+																<th class="">涓嶅惈绋庨噾棰�</th>
+																<th class="">鎴愭湰</th>
+																<th class="">姣涘埄</th>
+																<th class="">姣涘埄鐜�</th>
+															</tr>
+															</thead>
+															<tbody>
+															<tr>
+																<td class="">鏁存満鏌�</td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鍒嗕綋鏌�</td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鏈虹粍</td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+																<td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鍐峰嚌鍣�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鏁ｄ欢</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鍐峰簱</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">B2C</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鍏朵粬椤圭洰鏀惰垂</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鍙�夐」</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">瀹夎璐�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鏉愭枡璐�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鐢垫皵璐�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">缁翠繚璐�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">杩愯垂</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">棰勬彁澶囦欢璐�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">涓嶅彲棰勪及椤�</td> <td class=""></td> <td class=""></td><td class=""></td><td class=""></td><td class=""></td>
+															</tr>
+															<tr>
+																<td class="">鍚堣</td> <td class="">0.00</td> <td class="">0.00</td><td class="">0.00</td><td class="">0.00</td><td class="">0.00</td>
+															</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">鍏抽棴 close</button>
+								<button type="button" class="btn btn-primary">瀵煎嚭 export</button>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				</div>
+			</div>
+		</div>
+</div>
+<script src="../js/classie.js"></script>
+<script>
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+		showLeftPush = document.getElementById( 'showLeftPush' ),
+		body = document.body;
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+
+	function disableOther( button ) {
+		if( button !== 'showLeftPush' ) {
+			classie.toggle( showLeftPush, 'disabled' );
+		}
+	}
+</script>	
+<!--scrolling js-->
+<script src="../js/jquery.nicescroll.js"></script>
+<script src="../js/scripts.js"></script>
+<!-- side nav js -->
+<script src='../js/SidebarNav.min.js' type='text/javascript'></script>
+<script>
+     $('.sidebar-menu').SidebarNav()
+   </script>	
+<script src="../js/SimpleChart.js"></script>
+<script src="../js/bootstrap.js"> </script>
+</body>
+</html>
