@@ -23,7 +23,7 @@ public class ContractService {
 	private FryeService fryeService;
 	
 	public Result find(Map<String, Object> params) {
-		return (Result)fryeService.getInfo("/contract/", params, Result.class);
+		return (Result)fryeService.getInfo("/contract", params, Result.class);
 	}
 	
 	public Result find(Integer contractId) {

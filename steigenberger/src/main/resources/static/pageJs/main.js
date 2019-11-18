@@ -100,8 +100,24 @@ var userIdentity;
 function signOut(){  
     alert("你点击了按钮哦"); 
     $.post('/steigenberger/loginOut',null,function(ret){
-		
+		window.location.href=ctxPath;
 	},null);
-} 		 
-			
+} 		 	
+
+/**序列化表单，多个value用数组存放**/
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var arr = this.serializeArray();  
+    $.each(arr,function(){  
+        if (o[this.name]) {  //返回json中有该属性
+            if (!o[this.name].push) { //将已存在的属性值改成数组
+                o[this.name] = [ o[this.name] ];
+            }  
+            o[this.name].push(this.value || ''); //将值存放到数组中
+        } else {  //返回json中没有有该属性
+            o[this.name] = this.value || '';  //直接将属性和值放入返回json中
+        }  
+    });  
+    return o;  
+}	
 		

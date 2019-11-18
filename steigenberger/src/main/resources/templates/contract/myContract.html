@@ -47,327 +47,712 @@
 <script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
 <script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 
+<!-- Art Template -->
+<script type="text/javascript" src="../js/template-web.js"></script>
+
+<script type="text/javascript" src="../pageJs/main.js"></script>
+
+<script type="text/javascript">
+var ctxPath  = [[@{/}]];
+</script>
+
 </head> 
 <body class="cbp-spmenu-push" style="width:100%;">
 	<div class="sticky-header header-section " th:replace="head::head">	</div>
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
 	
-		<!-- //header-ends -->
-		<!-- main content start-->
-		
-		<div id="page-wrapper" >
-			<ul class="breadcrumb" style="margin-left: 3%;">
-				<li><a href="#">>合同管理</a></li>
-			</ul>
-<div id="accordion-magical-coder-auto-id-1564368887861" class="panel-group" role="tablist" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab">
-            <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564368890555" class="collapsed" aria-expanded="false">查询列表 Query conditions</a>
-            </h4>
-        </div>
-        <div id="collapseOne-magical-coder-auto-id-1564368890555" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
-            <div class="panel-body" style="height: auto;">
+<!-- //header-ends -->
+<!-- main content start-->
 
-                <div class="row">
-                    <div class="col-md-3 col-xs-3">
-                        需求流水号 Code
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        合同号 contract code
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        需求创建日期 Creation time
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        合同制作日期 Contract date
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" id="sequenceNumber" name="sequenceNumber" class="form-control" aria-describedby="emailHelp">
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" id="contractNumber" name="contractNumber" class="form-control" aria-describedby="emailHelp">
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" id="createTime" name="createTime" class="form-control" aria-describedby="emailHelp">
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" id="productionTime" name="productionTime" class="form-control" aria-describedby="emailHelp">
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 3px;">
-                    <div class="col-md-3 col-xs-3">
-                        签约单位 Contract unit
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        签约人 Customer manager
-                    </div>
-                    <div class="col-xs-6 col-md-6">
-                        合同状态 contract status
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" id="contractorName" name="contractorName" class="form-control" aria-describedby="emailHelp">
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <input type="text" id="contractManager" name="contractManager" class="form-control" readonly>
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        <select class="form-control" id="status" name="status">
-                            <option value="">-- 请选择 --</option>
-                            <option value="1">已制作</option>
-                            <option value="2">已发送</option>
-                            <option value="3">已签署</option>
-                            <option value="4">已盖章</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                       
-                    </div>
-                </div>
-				<div class="row" style="margin-top: 3px;">
-					<div class="col-xs-6"></div>
-					<div class="col-xs-6">
-						 <button type="button" class="btn btn-primary pull-right">同步状态 sync</button><button type="button" class="btn btn-warning pull-right">重置 reset</button><button type="button" id="search" class="btn btn-success pull-right">查询 select</button>
+<div id="page-wrapper" >
+	<ul class="breadcrumb" style="margin-left: 3%;">
+		<li><a href="#">>合同管理</a></li>
+	</ul>
+	<div id="accordion-magical-coder-auto-id-1564368887861" class="panel-group" role="tablist" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
+	    <div class="panel panel-default">
+	        <div class="panel-heading" role="tab">
+	            <h4 class="panel-title">
+	                <a role="button" data-toggle="collapse" href="#collapseOne-magical-coder-auto-id-1564368890555" class="collapsed" aria-expanded="false">查询列表 Query conditions</a>
+	            </h4>
+	        </div>
+	        <div id="collapseOne-magical-coder-auto-id-1564368890555" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
+	            <div class="panel-body" style="height: auto;">
+	
+	                <div class="row">
+	                    <div class="col-md-3 col-xs-3">
+	                        需求流水号 Code
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        合同号 contract code
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        需求创建日期 Creation time
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        合同制作日期 Contract date
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" id="s_sequenceNumber" name="s_sequenceNumber" class="form-control" aria-describedby="emailHelp">
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" id="s_contractNumber" name="s_contractNumber" class="form-control" aria-describedby="emailHelp">
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" id="s_createTime" name="s_createTime" class="form-control" aria-describedby="emailHelp">
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" id="s_productionTime" name="s_productionTime" class="form-control" aria-describedby="emailHelp">
+	                    </div>
+	                </div>
+	                <div class="row" style="margin-top: 3px;">
+	                    <div class="col-md-3 col-xs-3">
+	                        签约单位 Contract unit
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        签约人 Customer manager
+	                    </div>
+	                    <div class="col-xs-6 col-md-6">
+	                        合同状态 contract status
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" id="s_contractorName" name="s_contractorName" class="form-control" aria-describedby="emailHelp">
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <input type="text" id="s_contractManager" name="s_contractManager" class="form-control" readonly>
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                        <select class="form-control" id="s_status" name="s_status">
+	                            <option value="">-- 请选择 --</option>
+	                            <option value="1">已制作</option>
+	                            <option value="2">已发送</option>
+	                            <option value="3">已签署</option>
+	                            <option value="4">已盖章</option>
+	                        </select>
+	                    </div>
+	                    <div class="col-md-3 col-xs-3">
+	                       
+	                    </div>
+	                </div>
+					<div class="row" style="margin-top: 3px;">
+						<div class="col-xs-6"></div>
+						<div class="col-xs-6">
+							 <button type="button" class="btn btn-primary pull-right">同步状态 sync</button>
+							 <button type="button" class="btn btn-warning pull-right">重置 reset</button>
+							 <button type="button" id="search" class="btn btn-success pull-right">查询 select</button>
+						</div>
 					</div>
-				</div>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab">
-            <h4 class="panel-title">
-                <a class="" role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1564368891577" aria-expanded="true">信息列表 Information list</a>
-            </h4>
-        </div>
-        <div id="collapseTwo-magical-coder-auto-id-1564368891577" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
-            <div class="panel-body" style="height: auto;">
+	            </div>
+	        </div>
+	    </div>
+	    <div class="panel panel-default">
+	        <div class="panel-heading" role="tab">
+	            <h4 class="panel-title">
+	                <a class="" role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1564368891577" aria-expanded="true">信息列表 Information list</a>
+	            </h4>
+	        </div>
+	        <div id="collapseTwo-magical-coder-auto-id-1564368891577" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+	            <div class="panel-body" style="height: auto;">
+	
+	                <div class="table-responsive">
+	                	<table class="table" id="contractTable"></table>
+						<table class="table" style="display: none">
+							<thead>
+								<tr class="">
+									<th class=""><div style="width: 100px;">序号 number</div></th>
+									<th class=""><div style="width: 100px;">流水号 Code</div></th>
+									<th class=""><div style="width: 160px;">合同号contract
+											code</div></th>
+									<th class=""><div style="width: 180px;">签约单位
+											Contract unit</div></th>
+									<th class=""><div style="width: 180px;">性质分类
+											Classification</div></th>
+									<th class=""><div style="width: 180px;">创建时间
+											Creation time</div></th>
+									<th class=""><div style="width: 180px;">合同制作时间
+											Contract date</div></th>
+									<th class=""><div style="width: 180px;">版本号 version
+											number</div></th>
+									<th class=""><div style="width: 180px;">合同状态
+											Contract status</div></th>
+									<th class=""><div style="width: 180px;">签约人
+											Customer manager</div></th>
+									<th class=""><div style="width: 250px;">合同发送时间
+											Contract delivery time</div></th>
+									<th class=""><div style="width: 180px;">操作
+											operation</div></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="">
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""><a href="/" class="" mc-ace="~"
+										style="margin-right: 10px;">预览preview</a><a href="/" class="">导出export</a></td>
+								</tr>
+								<tr class="">
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""><a href="制作合同BPM.html" class=""
+										style="margin-right: 10px;">制作making</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 
-                <div class="table-responsive">
-                	<table class="table" id="contractTable"></table>
-					<table class="table" style="display: none">
-						<thead>
-							<tr class="">
-								<th class=""><div style="width: 100px;">序号 number</div></th>
-								<th class=""><div style="width: 100px;">流水号 Code</div></th>
-								<th class=""><div style="width: 160px;">合同号contract
-										code</div></th>
-								<th class=""><div style="width: 180px;">签约单位
-										Contract unit</div></th>
-								<th class=""><div style="width: 180px;">性质分类
-										Classification</div></th>
-								<th class=""><div style="width: 180px;">创建时间
-										Creation time</div></th>
-								<th class=""><div style="width: 180px;">合同制作时间
-										Contract date</div></th>
-								<th class=""><div style="width: 180px;">版本号 version
-										number</div></th>
-								<th class=""><div style="width: 180px;">合同状态
-										Contract status</div></th>
-								<th class=""><div style="width: 180px;">签约人
-										Customer manager</div></th>
-								<th class=""><div style="width: 250px;">合同发送时间
-										Contract delivery time</div></th>
-								<th class=""><div style="width: 180px;">操作
-										operation</div></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="">
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""><a href="/" class="" mc-ace="~"
-									style="margin-right: 10px;">预览preview</a><a href="/" class="">导出export</a></td>
-							</tr>
-							<tr class="">
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""></td>
-								<td class=""><a href="制作合同BPM.html" class=""
-									style="margin-right: 10px;">制作making</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-            </div>
-        </div>
-    </div>
 </div>
 
+<!-- 合同编辑对话框 -->
+<div class="modal fade" id="contractDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width: 1440px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="myModalLabel">合同信息 contract information</h4>
+			</div>
+			<div id="contractDialogBody" class="modal-body">
+				<!-- 合同编辑内容 -->
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭 close</button>
+				<button type="button" class="btn btn-primary" onclick="save();">保存 save</button>
+			</div>
 		</div>
+	</div>
+</div>
+
 	<!-- new added graphs chart js-->
 <div id="footer" class="container" th:replace="foot::foot"></div>
+
+<!-- 合同编辑对话框模板 -->
+<script id="contract-edit-tpl" type="text/html">
+<form id="contractForm">
+<input type="hidden" name="id" value="{{id}}">
+<input type="hidden" name="orderVersionId" value="{{orderVersionId}}">
+<input type="hidden" name="receiveTermsName" value="{{receiveTermsName}}" >
+<input type="hidden" name="mail" value="{{mail}}" >
+<input type="hidden" name="partyaName" value="{{partyaName}}" >
+<input type="hidden" name="productionTime" value="{{productionTime}}" >
+<input type="hidden" name="status" value="{{status}}" >
+<div id="contract-edit-dialog-content" class="panel-group"
+	role="tablist" aria-multiselectable="true"
+	style="margin-bottom: 20px; margin-left: 50px; margin-right: 25px;">
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse"
+					href="#collapseOne-magical-coder-auto-id-1565148333801"
+					aria-expanded="false" class="collapsed">基本信息</a>
+			</h4>
+		</div>
+		<div id="collapseOne-magical-coder-auto-id-1565148333801"
+			class="panel-collapse collapse in" role="tabpanel"
+			aria-expanded="false">
+			<div class="panel-body" style="height: auto;">
+				<div class="row">
+					<div class="col-md-3 col-xs-3">合同号（核算号）</div>
+					<div class="col-md-3 col-xs-3">流水号</div>
+					<div class="col-md-3 col-xs-3">签约单位</div>
+					<div class="col-md-3 col-xs-3">合同金额</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractNumber"
+							value="{{contractNumber}}" class="form-control" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="sequenceNumber"
+							value="{{sequenceNumber}}" class="form-control" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractorName"
+							value="{{contractorName}}" class="form-control" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="amountOnContract"
+							value="{{amountOnContract}}" class="form-control" readonly>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab">
+			<h4 class="panel-title">
+				<a class="" role="button" data-toggle="collapse"
+					href="#collapseTwo-magical-coder-auto-id-1565148324973"
+					aria-expanded="true">合同信息</a>
+			</h4>
+		</div>
+		<div id="collapseTwo-magical-coder-auto-id-1565148324973"
+			class="panel-collapse collapse in" role="tabpanel"
+			aria-expanded="true">
+			<div class="panel-body" style="height: auto;">
+				<div class="row">
+					<div class="col-md-6 col-xs-6">收到需方预付款后几日内发货</div>
+					<div class="col-md-6 col-xs-6">* 接货方式</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="deliveryDaysAfterPrepay" value="{{deliveryDaysAfterPrepay}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3"></div>
+					<div class="col-md-3 col-xs-3">
+						<label class="checkbox-inline"> 
+							<input type="radio" name="receiveTermsCode" value="1" onclick="receiveTermsName('盖章接货');" {{if receiveTermsCode == '1'}}checked{{/if}}>盖章接货
+						</label>
+						<label class="checkbox-inline"> 
+							<input type="radio" name="receiveTermsCode" value="2" onlick="receiveTermsName('签字接货');" {{if receiveTermsCode == '2'}}checked{{/if}}>签字接货
+						</label> 
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">接货人1电话</div>
+					<div class="col-md-3 col-xs-3">接货人1及身份证号</div>
+					<div class="col-md-3 col-xs-3">接货人2电话</div>
+					<div class="col-md-3 col-xs-3">接货人2及身份证号</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractor1Tel" value="{{contractor1Tel}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractor1Id" value="{{contractor1Id}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractor2Tel" value="{{contractor2Tel}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractor2Id" value="{{contractor2Id}}"
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">接货人3电话</div>
+					<div class="col-md-3 col-xs-3">接货人3及身份证号</div>
+					<div class="col-md-3 col-xs-3">* 终端客户名称</div>
+					<div class="col-md-3 col-xs-3">* 实际安装地点</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractor3Tel"
+							value="{{contractor3Tel}}" class="form-control"
+							aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractor3Id" value="{{contractor3Id}}"
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="clientName" value="{{clientName}}"
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="installLocation"
+							value="{{installLocation}}" class="form-control"
+							aria-describedby="emailHelp">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">质量标准</div>
+					<div class="col-md-6 col-xs-6">* 验收标准（方法）</div>
+					<div class="col-md-3 col-xs-3">* 签约单位邮箱</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="qualityStand" value="{{qualityStand}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-6 col-xs-6">
+						<label class="checkbox-inline"> 
+							<input type="radio" name="acceptanceCriteriaCode" value="1001" {{if acceptanceCriteriaCode == '1001'}}checked{{/if}}>需方负责安装调试
+						</label>
+						<label class="checkbox-inline">
+							<input type="radio" name="acceptanceCriteriaCode" value="1002" {{if acceptanceCriteriaCode == '1002'}}checked{{/if}}>供方负责安装调试
+						</label>
+					</div>
+					<div class="col-md-3 col-xs-3"> 
+						<input type="text" name="partyaMail" value="{{partyaMail}}" class="form-control" aria-describedby="emailHelp">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-xs-6 col-md-12">结算方式</div>
+					<div class="col-xs-6">
+						<textarea name="settlement" class="form-control" rows="3">{{settlement}}</textarea>
+					</div>
+					<div class="col-xs-6"></div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">发票邮寄地址</div>
+					<div class="col-md-3 col-xs-3">邮编</div>
+					<div class="col-md-3 col-xs-3">发票接收人</div>
+					<div class="col-md-3 col-xs-3">联系电话</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoiceAddress" value="{{invoiceAddress}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoicePostCode" value="{{invoicePostCode}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoiceReceiver" value="{{invoiceReceiver}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoiceTel" value="{{invoiceTel}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">委托代理人</div>
+					<div class="col-md-3 col-xs-3">公司电话</div>
+					<div class="col-md-3 col-xs-3">开户银行</div>
+					<div class="col-md-3 col-xs-3">银行账号</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="broker" value="{{broker}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="companyTel" value="{{companyTel}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="bankName" value="{{bankName}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="accountNumber" value="{{accountNumber}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-9 col-xs-9">单位地址</div>
+					<div class="col-md-3 col-xs-3">* 公司邮政编码</div>
+					<div class="col-md-9 col-xs-9">
+						<input type="text" name="paryaAddress" value="{{paryaAddress}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="partyaCode" value="{{partyaCode}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</script>
+
 <script src="../js/classie.js"></script>
 <script>
-	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-		showLeftPush = document.getElementById( 'showLeftPush' ),
-		body = document.body;
-		
-	showLeftPush.onclick = function() {
-		classie.toggle( this, 'active' );
-		classie.toggle( body, 'cbp-spmenu-push-toright' );
-		classie.toggle( menuLeft, 'cbp-spmenu-open' );
-		disableOther( 'showLeftPush' );
-	};
-	
 
-	function disableOther( button ) {
-		if( button !== 'showLeftPush' ) {
-			classie.toggle( showLeftPush, 'disabled' );
+/**序列化表单，多个value用数组存放**/
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var arr = this.serializeArray();  
+    $.each(arr,function(){  
+        if (o[this.name]) {  //返回json中有该属性
+            if (!o[this.name].push) { //将已存在的属性值改成数组
+                o[this.name] = [ o[this.name] ];
+            }  
+            o[this.name].push(this.value || ''); //将值存放到数组中
+        } else {  //返回json中没有有该属性
+            o[this.name] = this.value || '';  //直接将属性和值放入返回json中
+        }  
+    });  
+    return o;  
+}	
+
+$('#search').on('click',function(e){
+	refresh();
+});
+
+function refresh() {
+	$('#contractTable').bootstrapTable('refresh');
+}
+
+function receiveTermsName(name) {
+	$('[name=receiveTermsName]', $('#contractForm')).val(name);
+}
+
+var contractCols = [ {
+	field : 'id',
+	visible : false
+}, {
+	field : 'versionId',
+	visible : false
+}, {
+	field : 'amountOnContract',
+	visible : false
+}, {
+	title : '序号 Number',
+	width : '5%',
+	formatter: function(value, row, index) {
+        var pageSize = $('#contractTable').bootstrapTable('getOptions').pageSize;     //通过table的#id 得到每页多少条
+        var pageNumber = $('#contractTable').bootstrapTable('getOptions').pageNumber; //通过table的#id 得到当前第几页
+        return pageSize * (pageNumber - 1) + index + 1;    // 返回每条的序号： 每页条数 *（当前页 - 1 ）+ 序号
+    }
+}, {
+	field : 'sequenceNumber',
+	title : '流水号 Code',
+	width : '5%'
+}, {
+	field : 'contractNumber',
+	title : '合同号Contract Code',
+	width : '5%'
+}, {
+	field : 'contractorCode',
+	visible : false
+}, {
+	field : 'contractorName',
+	title : '签约单位 Contract Unit',
+	width : '5%'
+}, {
+	field : 'contractorClassCode',
+	visible : false
+}, {
+	field : 'contractorClassName',
+	title : '性质分类 Classification',
+	width : '5%'
+}, {
+	field : 'createTime',
+	title : '创建时间 Creation Time',
+	width : '5%'
+}, {
+	field : 'productionTime',
+	title : '合同制作时间 Contract Date',
+	width : '5%'
+}, {
+	field : 'versionId',
+	visible : false
+}, {
+	field : 'version',
+	title : '版本号 Version Number',
+	width : '5%'
+}, {
+	field : 'status',
+	title : '合同状态 Contract Status',
+	width : '5%'
+}, {
+	field : 'status',
+	title : '合同状态 Contract Status',
+	width : '5%',
+	formatter: function(value, row, index) {
+    	if(value == null){
+    		return '待制定'
+    	}else if(value == '1'){
+    		return '已制定'
+    	}else if(value == '2'){
+    		return '已发送'
+    	}else if(value == '3'){
+    		return '已签署'
+    	}else if(value == '4'){
+    		return '已盖章'
+    	}else{
+    		return '待制定'
+    	}
+    }
+}, {
+	field : 'opteratorDomainId',
+	title : '签约人 Customer Manager',
+	width : '5%'
+}, {
+	field : 'sendTime',
+	title : '合同发送时间 Contract Delivery Time',
+	width : '5%'
+},{
+    title: '操作',
+    align: 'center',
+    width:'15%',
+    formatter: function(value, row, index) {
+    	var actions = [];
+		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
+		actions.push('<a class="btn" onclick="preview(\'' + index + '\')"><i class="fa fa-remove"></i>预览preview</a>');
+		actions.push('<a class="btn" onclick="export(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
+		actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
+		return actions.join('');
+    }
+} ];
+
+// 初始化合同列表
+$('#contractTable').bootstrapTable({
+	method : 'get',
+	url : ctxPath + "contract/",//请求路径
+	striped : true, //是否显示行间隔色
+	//toolbar : '#toolbar',
+	uniqueId : 'id',
+	cache : false,
+	sortable : true, //是否启用排序
+	clickToSelect : true, //是否启用点击选中行
+	smartDisplay : true,
+	singleSelect : true,
+	sortOrder : "asc", //排序方式
+	pageNumber : 1, //初始化加载第一页
+	sidePagination : 'server',//server:服务器端分页|client：前端分页
+	pageSize : 10,//单页记录数,
+	showRefresh : false,//刷新按钮
+	undefinedText : '',
+	queryParams : function(){
+		return {
+			/* id:'', */
+			sequenceNumber: $('#s_sequenceNumber').val(),
+			contractNumber: $('#s_contractNumber').val(),
+			contractManager: $('#s_contractManager').val(),
+			contractorName: $('#s_contractorName').val(),
+			createTime: $('#s_createTime').val(),
+			productionTime: $('#s_productionTime').val(),
+			status: $('#s_status').val()
+		};
+	},
+	responseHandler : function(res){
+		if (res.status != 'ok') {
+			alert(res.msg);
+			return {};
 		}
-	}
-	
-	$('#search').on('click',function(e){
-		refresh();
-	});
-	
-	function refresh() {
-		$('#contractTable').bootstrapTable('refresh');
-	}
+		return {
+			total: res.data.total,
+			rows: res.data.rows
+		}
+	},
+	formatNoMatches:function(){
+        return "<h2>没有匹配的数据</h2>";
+    }, 
+	columns : contractCols
+});
 
-	var contractCols = [ {
-		field : 'id',
-		title : '序号 Number',
-		width : '5%'
-	}, {
-		field : 'sequenceNumber',
-		title : '流水号 Code',
-		width : '5%'
-	}, {
-		field : 'contractNumber',
-		title : '合同号Contract Code',
-		width : '5%'
-	}, {
-		field : 'contractorCode',
-		visible : false
-	}, {
-		field : 'contractorName',
-		title : '签约单位 Contract Unit',
-		width : '5%'
-	}, {
-		field : 'contractorClassCode',
-		visible : false
-	}, {
-		field : 'contractorClassName',
-		title : '性质分类 Classification',
-		width : '5%'
-	}, {
-		field : 'createTime',
-		title : '创建时间 Creation Time',
-		width : '5%'
-	}, {
-		field : 'productionTime',
-		title : '合同制作时间 Contract Date',
-		width : '5%'
-	}, {
-		field : 'versionId',
-		visible : false
-	}, {
-		field : 'version',
-		title : '版本号 Version Number',
-		width : '5%'
-	}, {
-		field : 'status',
-		title : '合同状态 Contract Status',
-		width : '5%'
-	}, {
-		field : 'status',
-		title : '合同状态 Contract Status',
-		width : '5%',
-		formatter: function(value, row, index) {
-	    	if(value == null){
-	    		return '待制定'
-	    	}else if(value == '1'){
-	    		return '已制定'
-	    	}else if(value == '2'){
-	    		return '已发送'
-	    	}else if(value == '3'){
-	    		return '已签署'
-	    	}else if(value == '4'){
-	    		return '已盖章'
+// 新增或编辑合同
+function edit(index) {
+	var row = $('#contractTable').bootstrapTable('getData')[index];	
+	var contractId = row.id;
+	var contract = {};
+	
+	if (contractId) {
+		$.ajax({
+		    url: ctxPath + "contract/" + contractId,
+		    // data: '',
+		    type: "GET",
+		    // dataType: "json",
+		    success: function(data) {
+		    	if(data == null || data.status != 'ok'){
+		    	   alert("查询合同信息失败！" + data.msg);
+		    	}else{
+		    		console.log(data.data)
+		    		contract = data.data;
+		    		setEditInfo(row, contract);
+		    		showEditModal(contract);
+		    	}      
+		    }
+		});		
+	} else {
+		setEditInfo(row, contract);
+		showEditModal(contract);
+	}
+}
+
+//将行记录中属于订单的信息设置到合同中
+function setEditInfo(row, contract) {
+	// var row = $('#contractTable').bootstrapTable('getData')[index];	
+	
+	/* $('[name=contractNumber]').val(row.contractNumber);
+	$('[name=sequenceNumber]').val(row.sequenceNumber);
+	$('[name=contractorName]').val(row.contractorName); */
+	// $('[name=amount]').val(row.contractNumber);
+	// $('[name=contractNumber]').val(row.contractNumber);
+	console.log(row.contractNumber);
+	console.log(contract.contractNumber);
+	contract.contractNumber = row.contractNumber;
+	contract.sequenceNumber = row.sequenceNumber;
+	contract.contractorName = row.contractorName;
+	contract.amountOnContract = row.amountOnContract;
+	contract.orderVersionId = row.versionId;
+}
+
+// 保存合同信息
+function save() {
+	var json = $('#contractForm').serializeObject();
+	json.partyaName='abc';
+	json.mail=json.partyaMail;
+	/*console.log(json.mail);
+	console.log(json.acceptanceCriteriaCode);
+	console.log(json.receiveTermsCode);
+	console.log(json.installLocation);
+	console.log(json.clientName);
+	console.log(json.partyaCode);
+	console.log(json.partyaName);*/
+	console.log(json.partyaMail);
+	console.log(json.partyaMail == undefined);
+	console.log(json.mail == undefined);
+	console.log(json);
+	if ($.trim(json.partyaMail) == ''){
+		alert('签约单位邮箱不能为空！');
+		return;
+	}
+	if ($.trim(json.acceptanceCriteriaCode) == ''){
+		alert('验收标准（方法）不能为空！');
+		return;
+	}
+	if ($.trim(json.receiveTermsCode) == ''){
+		alert('接货方式不能为空！');
+		return;
+	}
+	if ($.trim(json.installLocation) == ''){
+		alert('实际安装地点不能为空！');
+		return;
+	}
+	if ($.trim(json.clientName) == ''){
+		alert('终端客户名称不能为空！');
+		return;
+	}
+	if ($.trim(json.partyaCode) == ''){
+		alert('公司邮政编码不能为空！');
+		return;
+	}
+	$.ajax({
+	    url: ctxPath + "contract/",
+	    data: JSON.stringify(json),
+	    type: "POST",
+	    contentType: "application/json;charset=UTF-8",
+	    success: function(data) {
+	    	if(data == null || data.status != 'ok') {
+	    		alert("保存合同信息失败！" + data.msg);
 	    	}else{
-	    		return '待制定'
-	    	}
-	    }
-	}, {
-		field : 'opteratorDomainId',
-		title : '签约人 Customer Manager',
-		width : '5%'
-	}, {
-		field : 'sendTime',
-		title : '合同发送时间 Contract Delivery Time',
-		width : '5%'
-	},{
-	    title: '操作',
-	    align: 'center',
-	    width:'15%',
-	    formatter: function(value, row, index) {
-	    	var actions = [];
-			actions.push('<a class="btn" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-			actions.push('<a class="btn" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
-			return actions.join('');
-	    }
-	} ];
-
-	$('#contractTable').bootstrapTable({
-		method : 'get',
-		url : "/steigenberger/contract/",//请求路径
-		striped : true, //是否显示行间隔色
-		//toolbar : '#toolbar',
-		uniqueId : 'id',
-		cache : false,
-		sortable : true, //是否启用排序
-		clickToSelect : true, //是否启用点击选中行
-		smartDisplay : true,
-		singleSelect : true,
-		sortOrder : "asc", //排序方式
-		pageNumber : 1, //初始化加载第一页
-		sidePagination : 'server',//server:服务器端分页|client：前端分页
-		pageSize : 10,//单页记录数,
-		showRefresh : false,//刷新按钮
-		queryParams : function(){
-			return {
-				/* id:'', */
-				sequenceNumber: $('#sequenceNumber').val(),
-				contractNumber: $('#contractNumber').val(),
-				contractManager: $('#contractManager').val(),
-				contractorName: $('#contractorName').val(),
-				createTime: $('#createTime').val(),
-				productionTime: $('#productionTime').val(),
-				status: $('#status').val()
-			};
-		},
-		responseHandler : function(res){
-			if (res.status != 'ok') {
-				alert(res.msg);
-				return {};
-			}
-			return {
-				total: res.data.total,
-				rows: res.data.rows
-			}
-		},
-		formatNoMatches:function(){
-	        return "<h2>没有匹配的数据</h2>";
-	    }, 
-		columns : contractCols
+	    		alert("保存合同信息成功！");
+	    		$("#contractDialog").modal('hide');
+	    		refresh();
+	    	}      
+	    },
+        error: function (res) {
+            alert("提交失败: "+jQuery.parseJSON(res.responseText).message);
+        },
+	    dataType: "json"
 	});
+}
+
+// 显示合同编辑对话框
+function showEditModal(contract) {	
+	var html = template('contract-edit-tpl', contract);
+	$("#contractDialogBody").html(html);
+	$("#contractDialog").modal('show');
+}
 </script>	
 <!--scrolling js-->
 <script src="../js/jquery.nicescroll.js"></script>
