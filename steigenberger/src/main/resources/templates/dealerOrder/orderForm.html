@@ -142,7 +142,6 @@
 
 
 function doSomething(){
-	
 	 var ret = false;
 	 $.ajax({
 		 url:'/steigenberger/order/createOrder',
@@ -164,27 +163,53 @@ function doSomething(){
 			 console.log(resp);
 		 }
 	 });
-	
 	return ret;
-	
 }
-
+function doBeihuoSomething(){
+	 var ret = false;
+	 $.ajax({
+		 url:'/steigenberger/order/createBeiOrder',
+		 data:{ menu:'下单'},
+		 dataType:'json',
+		 method:'POST',
+		 async:false,
+		 success:function(resp){
+			 console.log(resp);
+			if(resp.status==200){
+				 ret = true;
+			}else{
+				 alert("对不起，您没有下单权限");
+				 ret = false;
+			}
+		 },
+		 error:function(resp,status){
+			 console.log(resp);
+		 }
+	 });
+	return ret;
+}
 function toDifferentOrder(type){
-
-	if(doSomething()){
-		if(type=='1'){
-			window.location.href="/steigenberger/menu/standardDiscount";	
-		}else if(type=='2'){
-			window.location.href="/steigenberger/menu/nonStandardDiscount";
-		}else if(type=='3'){
-			//window.location.href="/steigenberger/menu/directCustomerOrder";
-		}else if(type=='4'){
-			window.location.href="/steigenberger/menu/directCustomerOrder";
-		}else{
+	if(type == '5'){
+		if(doBeihuoSomething()){
 			window.location.href="/steigenberger/menu/stockUpOrder";
 		}
+	}else{
+		if(doSomething()){
+			if(type=='1'){
+				window.location.href="/steigenberger/menu/standardDiscount";	
+			}else if(type=='2'){
+				window.location.href="/steigenberger/menu/nonStandardDiscount";
+			}else if(type=='3'){
+				//window.location.href="/steigenberger/menu/directCustomerOrder";
+			}else if(type=='4'){
+				window.location.href="/steigenberger/menu/directCustomerOrder";
+			}
+		}
 	}
+	
 }
+
+
 </script>
 </body>
 </html>
