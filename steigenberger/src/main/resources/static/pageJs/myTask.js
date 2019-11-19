@@ -98,7 +98,7 @@ function formatOrderType(value, row, index){
 	}
 }
 function formatStatus(value, row, index) {
-	if(value=="0"){
+	if(value=="0000"){
 		return "订单新建保存";
 	}else if(value=="1"){
 		return "客户经理提交成功";

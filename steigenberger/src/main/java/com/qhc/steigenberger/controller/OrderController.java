@@ -81,7 +81,7 @@ public class OrderController {
 	private final static String CREATE_BEIHUO_Order = "1018";//下备货订单
 	
 	//订单状态
-	private final static String orderStatus0="0";//订单新建保存
+	private final static String orderStatus0="0000";//订单新建保存
 	private final static String orderStatus1="1";//客户经理提交成功
 	private final static String orderStatus2="2";//B2C审核提交成功
 	private final static String orderStatus3="3";//工程人员提交成功
