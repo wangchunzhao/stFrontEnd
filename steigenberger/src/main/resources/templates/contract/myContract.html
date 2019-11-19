@@ -256,6 +256,7 @@ var ctxPath  = [[@{/}]];
 <input type="hidden" name="orderVersionId" value="{{orderVersionId}}">
 <input type="hidden" name="receiveTermsName" value="{{receiveTermsName}}" >
 <input type="hidden" name="mail" value="{{mail}}" >
+<input type="hidden" name="partyaCode" value="{{partyaCode}}" >
 <input type="hidden" name="partyaName" value="{{partyaName}}" >
 <input type="hidden" name="productionTime" value="{{productionTime}}" >
 <input type="hidden" name="status" value="{{status}}" >
@@ -449,13 +450,13 @@ var ctxPath  = [[@{/}]];
 				</div>
 				<div class="row" style="margin-top: 2px;">
 					<div class="col-md-9 col-xs-9">单位地址</div>
-					<div class="col-md-3 col-xs-3">* 公司邮政编码</div>
+					<div class="col-md-3 col-xs-3">公司邮政编码</div>
 					<div class="col-md-9 col-xs-9">
 						<input type="text" name="partyaAddress" value="{{partyaAddress}}" 
 							class="form-control" aria-describedby="emailHelp">
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="partyaCode" value="{{partyaCode}}" 
+						<input type="text" name="" value="{{}}" 
 							class="form-control" aria-describedby="emailHelp">
 					</div>
 				</div>
@@ -506,6 +507,12 @@ var contractCols = [ {
 	visible : false
 }, {
 	field : 'amountOnContract',
+	visible : false
+}, {
+	field : 'contractorCode',
+	visible : false
+}, {
+	field : 'contractorName',
 	visible : false
 }, {
 	title : '序号 Number',
@@ -659,9 +666,9 @@ function edit(index) {
 		    	if(data == null || data.status != 'ok'){
 		    	   alert("查询合同信息失败！" + data.msg);
 		    	}else{
-		    		console.log(data.data)
+		    		// console.log(data.data)
 		    		contract = data.data;
-		    		setEditInfo(row, contract);
+		    		// setEditInfo(row, contract);
 		    		showEditModal(contract);
 		    	}      
 		    }
@@ -681,13 +688,13 @@ function setEditInfo(row, contract) {
 	$('[name=contractorName]').val(row.contractorName); */
 	// $('[name=amount]').val(row.contractNumber);
 	// $('[name=contractNumber]').val(row.contractNumber);
-	console.log(row.contractNumber);
-	console.log(contract.contractNumber);
 	contract.contractNumber = row.contractNumber;
 	contract.sequenceNumber = row.sequenceNumber;
 	contract.contractorName = row.contractorName;
 	contract.amountOnContract = row.amountOnContract;
 	contract.orderVersionId = row.versionId;
+	contract.partyaCode = row.contractorCode;
+	contract.partyaName = row.contractorName;
 }
 
 // 保存合同信息
@@ -722,8 +729,12 @@ function save() {
 		alert('终端客户名称不能为空！');
 		return;
 	}
-	if ($.trim(json.partyaCode) == ''){
-		alert('公司邮政编码不能为空！');
+	if ($.trim(json.deliveryDaysAfterPrepay) == ''){
+		alert('收到需方预付款后几日内发货不能为空！');
+		return;
+	}
+	if (!/^[1-9]\d*$/.test($.trim(json.deliveryDaysAfterPrepay))){
+		alert('收到需方预付款后几日内发货必须是有效的数字！');
 		return;
 	}
 	$.ajax({
@@ -751,7 +762,7 @@ function save() {
 function showEditModal(contract) {	
 	var html = template('contract-edit-tpl', contract);
 	$("#contractDialogBody").html(html);
-	initValidator();
+	// initValidator();
 	$("#contractDialog").modal('show');
 }
 
@@ -796,13 +807,13 @@ function initValidator() {
 					}
 				}
 			},
-			partyaCode: {
+			/*partyaCode: {
 				validators: {
 					notEmpty: {
 						message: '公司邮政编码不能为空'
 					}
 				}
-			},
+			},*/
 			partyaMail: {
 				validators: {
 					notEmpty: {
