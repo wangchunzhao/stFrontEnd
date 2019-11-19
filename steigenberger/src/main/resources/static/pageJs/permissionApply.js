@@ -58,7 +58,7 @@ function add(){
 	var obj = document.getElementById("useremil"); //要验证的对象
 	var roleName = document.getElementById('roleName').value;
 	var userid = document.getElementById('userid').value;
-	var tel = document.getElementById('tel').value;
+	var tel = document.getElementById('telnum').value;
 //	alert(tel);
 	if(!reg.test(obj.value)){
 		alert("邮箱格式不正确!");

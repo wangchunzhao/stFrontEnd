@@ -71,7 +71,7 @@ public class PermissionApplyController extends BaseController{
 		String roleId = request.getParameter("roleName");
 		String area = request.getParameter("area");
 		String isactive = "1";//全是启用
-		String tel = request.getParameter("tel");
+		String tel = request.getParameter("telnum");
 		//获取域用户
 //		User usersession = getAccount(request);
 		String msg = "";
@@ -106,7 +106,7 @@ public class PermissionApplyController extends BaseController{
 				msg = "操作成功！";
 			} else {
 				status = 500;
-				msg = "操作失败";
+				msg = "保存失败";
 			}
 		}
 		return JsonResult.build(status, msg, "");
