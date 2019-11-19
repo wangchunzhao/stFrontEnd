@@ -52,9 +52,10 @@ import reactor.core.publisher.Mono;
  */
 @Service
 public class OrderService {
-	private final static String ORDER_TYPE_DEALER = "ZH0D"; //'经销商订单'
-	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
-	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
+    private final static String ORDER_TYPE_DEALER = "ZH0D"; //'经销商订单'
+    private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
+    private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
+
 	
 	private final static String URL_CUSTOMER = "customer";
 	private final static String URL_MATERIAL = "material";
@@ -227,8 +228,7 @@ public class OrderService {
 	}
 
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+URL_MATERIAL_BOM;
-		return (BomExplosion)fryeService.postInfo(pars,url, BomExplosion.class);
+		return (BomExplosion)fryeService.postInfo(pars,URL_MATERIAL_BOM, HashMap.class);
 	}
 	public List<MaterialGroups> calcGrossProfit(BaseOrder order) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"grossprofit";

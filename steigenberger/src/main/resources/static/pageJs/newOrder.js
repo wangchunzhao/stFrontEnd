@@ -65,7 +65,7 @@ function defaultCollapse(){
 	$('#researchTableContent').collapse('hide');
 	$('#paymentMethod').collapse('hide');
 	$('#purchaseDetail').collapse('hide');
-	$('#infoCheck').collapse('hide');
+	$('#infoCheck').collapse('show');
 	$('#attachmentInfo').collapse('hide');
 	
 }
@@ -137,6 +137,7 @@ function getDistrict(obj,districts){
 }
 
 function salesTypeChange(obj,offices,taxRate,exchangeRate){
+	debugger
 	$("#orignalContractAmount").val("");
 	$("#exchangeRate").val("");
 	$("#contractAmount").val("");
@@ -649,24 +650,30 @@ function initSubsidiartFormValidator(){
 		            	            message: '数量不能为空'
 		            	        },
 		            	        regexp: {
-		            	            regexp: /^[1-9]\d*$/,
-		            	            message: '只能输入正整数'
+		            	            regexp: /^[1-9]\d{0,4}$/,
+		            	            message: '只能输入小于十万的正整数'
 		            	        }
 		            	    }
 		                },
-	                email: {
+		               itemRequirementPlan: {
 	                    validators: {
 	                        notEmpty: {
-	                            message: '邮箱地址不能为空'
+	                            message: '请选择需求计划'
 	                        }
 	                    }
-	                }
+		               },
+		               itemCategory: {
+		                    validators: {
+		                        notEmpty: {
+		                            message: '请选择行项目类别'
+		                        }
+		                    }
+			           }
 	            }
 	        });
 }
 //确认购销明细modal
 function confirmMaterials(){
-	debugger
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
@@ -1336,7 +1343,13 @@ function  getVersion(){
 function viewConfig(){
 	var bomCode = $("#materialConfigCode").val();
 	var formData = $("#materialConfigForm").serializeObject();
+	var configTableData = $("#configTable").bootstrapTable('getData');
+	var configCode = [];
+	for(var i=0;i<configTableData.length;i++){
+		configCode.push(configTableData[i].code);
+	}
 	formData.bomCode = bomCode;
+	formData.configCode = configCode;
 	$.ajax({
 	    url: "/steigenberger/order/material/configuration",
 	    contentType: "application/json;charset=UTF-8",
@@ -1370,6 +1383,11 @@ function viewGrossProfit(){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
 	}
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 if(items.length==0){
+		 layer.alert('请添加行项目', {icon: 5});
+		 return
+	 }
 	var version = $("#version").val();
 	 var orderData = $("#orderForm").serializeObject();
 	 orderData['currentVersion'] = version;
@@ -1521,7 +1539,7 @@ var configTableColumns = [
 	field :'optional',
 	width:'15%',
 	formatter: function(value, row, index) {
-    	if(value){
+    	if(!value){
     		return '必选项'
     	}else{
     		return '可选项'
