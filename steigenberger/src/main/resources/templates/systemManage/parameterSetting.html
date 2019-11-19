@@ -113,14 +113,14 @@
 <script src="../js/classie.js"></script>
 <script>
 	var ctxPath  = [[@{/}]];
-		$(function(){
-		   	  $(".btn_update").on("click",function(){
-		   		  var pId= $(this).attr("title");
-		   			//pId=parseInt(pId); 
-		   	      	window.location.href = ctxPath+"parameterSetting/toUpdate?id="+pId; 
-		   	     	return false;
-		         });
-		});
+	$(function(){
+	   	  $(".btn_update").on("click",function(){
+	   		  var pId= $(this).attr("title");
+	   			//pId=parseInt(pId); 
+	   	      	window.location.href = ctxPath+"parameterSetting/toUpdate?id="+pId; 
+	   	     	return false;
+	         });
+	});
 		
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),

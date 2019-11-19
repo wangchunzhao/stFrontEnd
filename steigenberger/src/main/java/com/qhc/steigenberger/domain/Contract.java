@@ -90,7 +90,7 @@ public class Contract
 	private String acceptanceCriteriaCode = null;
 
 	/* Mail */
-	private String mail = null;
+//	private String mail = null;
 
 	/* Contractor1Id */
 	private String contractor1Id = null;
@@ -341,13 +341,13 @@ public class Contract
 		this.acceptanceCriteriaCode = acceptanceCriteriaCode;
 	}
 
-	public String getMail() {
-		return this.mail;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+//	public String getMail() {
+//		return this.mail;
+//	}
+//
+//	public void setMail(String mail) {
+//		this.mail = mail;
+//	}
 	 
 	public String getContractor1Id() {
 		return this.contractor1Id;
@@ -552,7 +552,7 @@ public class Contract
 	        + "receiveTermsCode = " + this.receiveTermsCode + tab
 	        + "receiveTermsName = " + this.receiveTermsName + tab
 	        + "kAcceptanceCriteriaCode = " + this.acceptanceCriteriaCode + tab
-	        + "mail = " + this.mail + tab
+//	        + "mail = " + this.mail + tab
 	        + "contractor1Id = " + this.contractor1Id + tab
 	        + "contractor1Tel = " + this.contractor1Tel + tab
 	        + "contractor2Id = " + this.contractor2Id + tab
