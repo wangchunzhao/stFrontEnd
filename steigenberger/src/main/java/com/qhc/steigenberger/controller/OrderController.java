@@ -82,7 +82,7 @@ public class OrderController {
 	
 	//订单状态
 	private final static String orderStatus0="0000";//订单新建保存
-	private final static String orderStatus1="1";//客户经理提交成功
+	private final static String orderStatus1="0100";//客户经理提交待支持经理审核
 	private final static String orderStatus2="2";//B2C审核提交成功
 	private final static String orderStatus3="3";//工程人员提交成功
 	private final static String orderStatus4="4";//支持经理提交成功
@@ -288,6 +288,7 @@ public class OrderController {
 				List list = new ArrayList();
 				list.add(orderStatus12);
 				list.add(orderStatus10);
+				list.add(orderStatus1);
 				query.setStatusList(list);
 				query.setSalesCode("");
 				break;
