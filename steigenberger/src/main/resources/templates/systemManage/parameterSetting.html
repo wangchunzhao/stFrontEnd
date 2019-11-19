@@ -76,8 +76,8 @@
 									<th class="" style="width:10%;">生效时间 enableDate</th>
 									<th class="" style="width:10%;">预设值 value</th>
 									<th class="" style="width:10%;">生效时间 enableDate</th>
-									<th class="" style="width:10%;">失效值 value</th>
-									<th class="" style="width:10%;">生效时间 enableDate</th>
+									<!-- <th class="" style="width:10%;">失效值 value</th>
+									<th class="" style="width:10%;">生效时间 enableDate</th> -->
 									<th class="" style="width:10%;">操作 operation</th>
 								</tr>
 							</thead>
@@ -90,8 +90,8 @@
 										<td th:text="${#dates.format(setting?.enableDate,'yyyy-MM-dd')}"></td>
 										<td th:text="${setting?.afterValue}" th:value="${setting?.afterValue}">48</td>
 										<td th:text="${#dates.format(setting?.afterEnableDate,'yyyy-MM-dd')}"></td>
-										<td th:text="${setting?.preValue}" th:value="${setting?.preValue}">48</td>
-										<td th:text="${#dates.format(setting?.preEnableDate,'yyyy-MM-dd')}"></td>
+										<!-- <td th:text="${setting?.preValue}" th:value="${setting?.preValue}">48</td>
+										<td th:text="${#dates.format(setting?.preEnableDate,'yyyy-MM-dd')}"></td> -->
 										<td>
 										<!-- <i class="glyphicon glyphicon-pencil"></i> -->
 											<button type="button" class="btn btn-primary btn-lg btn_update"  

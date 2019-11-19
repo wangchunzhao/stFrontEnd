@@ -152,7 +152,7 @@ var ctxPath  = [[@{/}]];
 			  d = d.substring(d.length-2);
 			  var strtoday = y+'-'+m+'-'+d+' 00:00:00'
 			  
-			  if(enableDate<=strtoday){
+			  if(enableDate<strtoday){
 				  toastr.warning("预设值生效时间不能早于当天!");
 				  return false;
 			  }
