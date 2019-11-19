@@ -47,6 +47,10 @@
 <script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
 <script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 
+<!-- bootstrapValidator -->
+<link href="../css/bootstrapValidator.min.css" rel='stylesheet' type='text/css' />
+<script src="../js/bootstrapValidator.min.js"> </script>
+
 <!-- Art Template -->
 <script type="text/javascript" src="../js/template-web.js"></script>
 
@@ -691,17 +695,13 @@ function save() {
 	var json = $('#contractForm').serializeObject();
 	json.partyaName='abc';
 	json.mail=json.partyaMail;
-	/*console.log(json.mail);
-	console.log(json.acceptanceCriteriaCode);
-	console.log(json.receiveTermsCode);
-	console.log(json.installLocation);
-	console.log(json.clientName);
-	console.log(json.partyaCode);
-	console.log(json.partyaName);*/
-	console.log(json.partyaMail);
-	console.log(json.partyaMail == undefined);
-	console.log(json.mail == undefined);
-	console.log(json);
+	
+	/*var bootstrapValidator = $("#contractForm").data('bootstrapValidator');
+    bootstrapValidator.validate();
+    if(!bootstrapValidator.isValid()){
+    	return;
+    }*/
+	
 	if ($.trim(json.partyaMail) == ''){
 		alert('签约单位邮箱不能为空！');
 		return;
@@ -751,7 +751,78 @@ function save() {
 function showEditModal(contract) {	
 	var html = template('contract-edit-tpl', contract);
 	$("#contractDialogBody").html(html);
+	initValidator();
 	$("#contractDialog").modal('show');
+}
+
+function initValidator() {
+	$('#contractForm').bootstrapValidator({
+		message: 'This value is not valid',
+		feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+			receiveTermsCode: {
+				validators: {
+					notEmpty: {
+						message: '接货方式不能为空'
+					},
+					regexp: {
+						regexp: /^[1-9]\d*$/,
+						message: '只能输入正整数'
+					}
+				}
+			},
+			clientName: {
+				validators: {
+					notEmpty: {
+						message: '终端客户名称不能为空'
+					}
+				}
+			},
+			installLocation: {
+				validators: {
+					notEmpty: {
+						message: '实际安装地点不能为空'
+					}
+				}
+			},
+			acceptanceCriteriaCode: {
+				validators: {
+					notEmpty: {
+						message: '验收标准（方法）不能为空'
+					}
+				}
+			},
+			partyaCode: {
+				validators: {
+					notEmpty: {
+						message: '公司邮政编码不能为空'
+					}
+				}
+			},
+			partyaMail: {
+				validators: {
+					notEmpty: {
+						message: '签约单位邮箱不能为空'
+					}
+				}
+			},
+			deliveryDaysAfterPrepay: {
+				validators: {
+					notEmpty: {
+						message: '预付款后几日内发货不能为空'
+					},
+					regexp: {
+						regexp: /^[1-9]\d*$/,
+						message: '只能输入正整数'
+					}
+				}
+			}
+		}
+	});
 }
 </script>	
 <!--scrolling js-->
