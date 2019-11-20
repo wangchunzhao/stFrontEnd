@@ -26,12 +26,14 @@ $(function () {
 	var version = getVersion();
 	$("#version").val(version);
 	
-	var installationTerm = installationTerms[$("#customerClazzCode").val()];
-	$.each(installationTerm, function (key, value) {
-		$("#installCode").val(key);
-		$("#installName").val(value);
-		
-	});
+	if(installationTerms){
+		var installationTerm = installationTerms[$("#customerClazzCode").val()];
+		$.each(installationTerm, function (key, value) {
+			$("#installCode").val(key);
+			$("#installName").val(value);
+			
+		});
+	}
 	initSubsidiartFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');

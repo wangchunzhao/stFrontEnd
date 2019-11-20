@@ -23,6 +23,7 @@
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
 		<input type="hidden"  id="customerClazzName" name="customerClazzName">
 		<input type="hidden"  name="action" value="submit">
+		<input type="hidden"  id="orderModelType" value="new">
 		<input type="hidden"  name="salesCode" id="salesCode">
 		<input type="hidden"  id="version">
 		<div id="page-wrapper">
@@ -715,14 +716,14 @@
 	<div th:replace="addressModal::addressModal"></div>
 	<div th:replace="materialconfig::materialconfig"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
-<script src="../pageJs/commonJs.js"></script>
-<script th:inline="javascript" src="../pageJs/newOrder.js"></script>
+   <script src="../pageJs/commonJs.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
+<script th:inline="javascript" src="../pageJs/newOrder.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
-	var installationTerms = [[${order_option.installationTerms}]]
+	var installationTerms =  [[${order_option.installationTerms}]]
 	var intercoms = [[${order_option.intercoms}]]
-	var items = [[${orderDetail.items}]]
+	console.log("231321321");
 	console.log(materialGroupMapGroupOrder)
 	console.log(materialGroupMapGroupOrder['FA01'])
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
