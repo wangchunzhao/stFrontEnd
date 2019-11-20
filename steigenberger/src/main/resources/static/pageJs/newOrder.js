@@ -40,7 +40,80 @@ $(function () {
 	$("#inputDate").val(nowDateString);
 	defaultCollapse();
 	getUserDetail();
+	fillItems();
 });
+
+//初始化购销明细
+function fillItems(){
+	if(items){
+		for(var i=0;i<items.length;i++){
+			var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+			var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+			var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
+			var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
+			var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
+			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
+			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
+			var materialType = materialGroupMapGroupOrder[items[i].groupCode];
+			if(materialType=='T101'){
+				$("#materialsTableall1").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall1,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T102'){
+				$("#materialsTableall2").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall2,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T103'){
+				$("#materialsTableall3").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall3,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T104'){
+				$("#materialsTableall4").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall4,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T105'){
+				$("#materialsTableall5").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall5,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: item[i]
+				});
+			}else if(materialType=='T106'){
+				$("#materialsTableall6").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall6,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}
+		}
+	}
+	
+}
 
 
 //获取session中用户信息
@@ -1415,6 +1488,10 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
+	if($("#orderModelType").val()=='edit'){
+		editViewGrossProfit();
+		return;
+	}
 	if(!$("#salesType").val()){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
@@ -1463,6 +1540,23 @@ function viewGrossProfit(){
 	});  
 }
 
+//修改订单时查看毛利率
+function editViewGrossProfit(){
+	debugger
+	$("#grossProfit").modal("show");
+	var version = $("#version").val();
+	var sequenceNumber = $("#sequenceNumber").val();
+	$("#grossSeqNum").val(sequenceNumber);
+	$("#grossVersion").val(version);
+	$("#grossContractRMBValue").val($("#contractAmount").val());
+	$("#grossPerson").val($("#salesName").val());
+	$("#grossDate").val($("#inputDate").val());
+	$("#grossClazz").val($("#customerClazz").val());
+	var opt = {
+			url: '/steigenberger/order/'+sequenceNumber+'/'+version+'/grossprofit'
+	};
+	$("#grossProfitTable").bootstrapTable('refresh', opt);	
+}
 
 var grossProfitColumns=[
 	{

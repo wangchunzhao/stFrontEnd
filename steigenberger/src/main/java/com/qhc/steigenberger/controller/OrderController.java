@@ -434,6 +434,7 @@ public class OrderController {
 		return orderService.calcGrossProfit(order);
 	}
 	
+	@ApiOperation(value = "查看订单", notes = "查看订单")
 	@RequestMapping(value="viewOrder")
 	@ResponseBody
 	public ModelAndView viewOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
@@ -445,6 +446,64 @@ public class OrderController {
 		}
 		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
 		oo.setOrderTypeCode(orderType);	
+		mv.addObject("orderDetail",order);
+		return mv;
+	}
+	
+	@ApiOperation(value = "修改订单", notes = "修改订单")
+	@RequestMapping(value="editOrder")
+	@ResponseBody
+	public ModelAndView editOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
+		ModelAndView mv = new ModelAndView("dealerOrder/editDealerOrder");
+		OrderOption oo = orderService.getOrderOption();
+		mv.addObject("order_option",oo);
+		if (orderType == null || orderType.trim().length() == 0) {
+			orderType = orderService.getOrderType(sequenceNumber);
+		}
+		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+		oo.setOrderTypeCode(orderType);	
+		mv.addObject("orderDetail",order);
+		return mv;
+	}
+	
+	@ApiOperation(value = "审批订单", notes = "审批订单")
+	@RequestMapping(value="approveOrder")
+	@ResponseBody
+	public ModelAndView approveOrder(HttpServletRequest request,String sequenceNumber, String orderType,String version,ModelAndView view) {
+		//取得session中的登陆用户域账号，查询权限
+		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		User user = userService.selectUserIdentity(identityName);//identityName
+		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
+		OrderOption oo = orderService.getOrderOption();
+		if (orderType == null || orderType.trim().length() == 0) {
+			orderType = orderService.getOrderType(sequenceNumber);
+		}
+		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+		oo.setOrderTypeCode(orderType);	
+		ModelAndView mv = null;
+		for(int i = 0; i < userOperationInfoList.size(); i++) {
+			//查询权限id
+			String operationId = userOperationInfoList.get(i).getOperationId();
+			if(operationId.equals(SUPPORT_Order)) {
+				//支持经理
+				mv = new ModelAndView("dealerOrder/supportManagerOrder");
+				break;
+			}else if(operationId.equals(ENGINEER_Order)) {
+				//工程人员
+				mv = new ModelAndView("dealerOrder/engineerManagerOrder");
+				break;
+			}else if(operationId.equals(B2C_Order)) {
+				//B2C
+				mv = new ModelAndView("dealerOrder/b2cManagerOrder");
+				break;
+			}else {
+				//客户经理
+				mv = new ModelAndView("dealerOrder/customerManagerOrder");
+				break;
+			}
+			
+		}
+		mv.addObject("order_option",oo);
 		mv.addObject("orderDetail",order);
 		return mv;
 	}

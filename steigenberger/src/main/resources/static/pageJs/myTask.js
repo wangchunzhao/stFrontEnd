@@ -145,8 +145,32 @@ $('#resetBtn').click(function() {
  
 //删除、编辑操作
 function operation(value, row, index) {
-	var htm = "<button>审批</button>"
-	return htm;
+	var sequenceNumber = row.sequenceNumber;
+	var orderType = row.orderType;
+	var currentVersion = row.currentVersion;
+	var viewHtm = "<a type='button' class='btn btn-primary' id='approveOrder' onclick='approveOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>审批</button>";
+	return viewHtm;
+}
+
+function approveOrder(seqNumb,ordType,version){
+	var myForm = document.createElement("form");       
+	    myForm.method = "post";  
+	    myForm.action = "/steigenberger/order/approveOrder";        
+		var seq = document.createElement("input");       
+		seq.setAttribute("name", "sequenceNumber");  
+		seq.setAttribute("value", seqNumb);  
+		myForm.appendChild(seq);
+		var type = document.createElement("input");       
+		type.setAttribute("name", "orderType");  
+		type.setAttribute("value", ordType);  
+		myForm.appendChild(type);  
+		var ver = document.createElement("input");       
+		ver.setAttribute("name", "version");  
+		ver.setAttribute("value", version);  
+		myForm.appendChild(ver);    
+		document.body.appendChild(myForm);     
+		myForm.submit();   
+		document.body.removeChild(myForm); 	
 }
 
 function InitSapSalesOffice(){

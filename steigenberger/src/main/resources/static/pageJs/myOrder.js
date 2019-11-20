@@ -183,8 +183,9 @@ function operation(value, row, index) {
 	}else{
 		//var deletehtm = "<button class='btn btn-danger'>删除</button>";
 		var deletehtm = "";
+		var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>编辑</button>";
 		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
-		htm =deletehtm+viewHtm;
+		htm =htm+deletehtm+editHtml+'&nbsp'+viewHtm;
 	}
 	return htm;
 }
@@ -193,6 +194,27 @@ function viewOrder(seqNumb,ordType,version){
 	var myForm = document.createElement("form");       
     myForm.method = "post";  
     myForm.action = "/steigenberger/order/viewOrder";        
+	var seq = document.createElement("input");       
+	seq.setAttribute("name", "sequenceNumber");  
+	seq.setAttribute("value", seqNumb);  
+	myForm.appendChild(seq);
+	var type = document.createElement("input");       
+	type.setAttribute("name", "orderType");  
+	type.setAttribute("value", ordType);  
+	myForm.appendChild(type);  
+	var ver = document.createElement("input");       
+	ver.setAttribute("name", "version");  
+	ver.setAttribute("value", version);  
+	myForm.appendChild(ver);    
+	document.body.appendChild(myForm);     
+	myForm.submit();   
+	document.body.removeChild(myForm); 	
+}
+
+function editOrder(seqNumb,ordType,version){
+	var myForm = document.createElement("form");       
+    myForm.method = "post";  
+    myForm.action = "/steigenberger/order/editOrder";        
 	var seq = document.createElement("input");       
 	seq.setAttribute("name", "sequenceNumber");  
 	seq.setAttribute("value", seqNumb);  
