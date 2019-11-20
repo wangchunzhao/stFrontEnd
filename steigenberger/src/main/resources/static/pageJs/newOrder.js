@@ -414,6 +414,7 @@ function getPaymentAreaContent(){
 //打开物料规格查询框
 function addSubsidiary(){
 		$('#subsidiaryModal').modal('show');
+		$("#subsidiaryForm")[0].reset();
 		$('#amount').val(1);
 		$('#discount').val($("#approvedDicount").val());
 		var opt = {
@@ -454,6 +455,24 @@ function getMaterialInfo(code){
 }
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
+	if(data.materialName){
+		$("#materialTypeName").val(data.materialName);
+	}
+	if(data.materialCode){
+		$("#materialCode").val(data.materialCode);
+	}
+	if(data.b2cRemark){
+		$("#b2cRemark").val(data.b2cRemark);
+	}
+	if(data.colorComments){
+		$("#colorComments").val(data.colorComments);
+	}
+	if(data.specialRemark){
+		$("#specialRemark").val(data.specialRemark);
+	}
+	if(data.itemCategory){
+		$("#itemCategory").val(data.itemCategory)
+	}
 	$("#groupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
@@ -525,11 +544,28 @@ function toDecimal2(x) {
  }  
 //编辑购销明细
 function editMaterials(identification){
+	debugger
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
-	$('#materialsIndex').val(index);
 	var identificationSplit = identification.split('|');
-	var type = identificationSplit[1];
+	var materialsType = identificationSplit[1];
+	var index = identificationSplit[0];
+	var tableData;
+	if(materialsType=='T101'){
+		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
+	}else if(materialsType=='T102'){
+		tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
+	}else if(materialsType=='T103'){
+		tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
+	}else if(materialsType=='T104'){
+		tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
+	}else if(materialsType=='T105'){
+		tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
+	}else if(materialsType=='T106'){
+		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
+	}
+	
+	fillMaterailValue(tableData);
 }
 //删除购销明细
 function removeMaterials(identification){
