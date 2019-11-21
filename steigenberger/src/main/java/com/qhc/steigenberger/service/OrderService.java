@@ -24,13 +24,16 @@ import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
+import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.config.ApplicationConfig;
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
+import com.qhc.steigenberger.domain.Contract;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -52,7 +55,9 @@ import reactor.core.publisher.Mono;
  */
 @Service
 public class OrderService {
-    private final static String ORDER_TYPE_DEALER = "ZH0D"; //'经销商订单'
+	private ObjectMapper mapper = new ObjectMapper().setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+
+	private final static String ORDER_TYPE_DEALER = "ZH0D"; //'经销商订单'
     private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
     private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 
@@ -175,8 +180,20 @@ public class OrderService {
 	}
 	
 	public PageHelper<BaseOrder> findOrders(OrderQuery query) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"query";
-		return (PageHelper<BaseOrder>)fryeService.postInfo(query, url, PageHelper.class);
+		String url = "order/query";
+		PageHelper page = (PageHelper)fryeService.postInfo(query, url, PageHelper.class);
+		try {
+			System.out.println(mapper.writeValueAsString(page));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, BaseOrder.class);
+//		page = mapper.convertValue(page, javaType);
+		
+		javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, BaseOrder.class);
+		page.setRows(mapper.convertValue(page.getRows(), javaType));
+		
+		return page;
 	}
 	
 	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {
@@ -184,35 +201,36 @@ public class OrderService {
         return (List<Characteristic>)fryeService.getInfo(url,List.class);
     }
 	
-	public DealerOrder findDealerOrderDetail(String sequenceNumber, String version) {
-		return (DealerOrder)findOrderDetail(sequenceNumber, version, ORDER_TYPE_DEALER);
-	}
+//	public DealerOrder findDealerOrderDetail(String sequenceNumber, String version) {
+//		return (DealerOrder)findOrderDetail(sequenceNumber, version, ORDER_TYPE_DEALER);
+//	}
 	
 	public AbsOrder findOrderDetail(String sequenceNumber, String version, String orderType) {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"detail?sequenceNumber=" + sequenceNumber + "&version=" + version;
 		AbsOrder order = null;
-		switch(orderType) {
-			case ORDER_TYPE_DEALER:
-				String json = (String)fryeService.getInfo(url, String.class);
-				ObjectMapper mapper = new ObjectMapper();
-				mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
-				try {
-					order = mapper.readValue(json, DealerOrder.class);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-//				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
-				break;
-			case ORDER_TYPE_KEYACCOUNT:
-				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
-				break;
-			case ORDER_TYPE_BULK:
-				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
-				break;
-			
-			default :
-				throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
-		}
+		order = (AbsOrder)fryeService.getInfo(url, BaseOrder.class);
+//		switch(orderType) {
+//			case ORDER_TYPE_DEALER:
+//				String json = (String)fryeService.getInfo(url, String.class);
+//				ObjectMapper mapper = new ObjectMapper();
+//				mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+//				try {
+//					order = mapper.readValue(json, DealerOrder.class);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+////				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+//				break;
+//			case ORDER_TYPE_KEYACCOUNT:
+//				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
+//				break;
+//			case ORDER_TYPE_BULK:
+//				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
+//				break;
+//			
+//			default :
+//				throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
+//		}
 		
 		return order;
 	}

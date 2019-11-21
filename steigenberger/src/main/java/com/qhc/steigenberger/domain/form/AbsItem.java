@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author wang@dxc.com
  *
@@ -30,9 +32,13 @@ public abstract class AbsItem {
 	private double standardPrice;//标准价格
 	private double discount;//折扣
 	private int period;//生产、采购周期
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Date deliveryDate;//最早交货时间
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Date shippDate; //要求发货时间  自己填
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Date produceDate;//生产开始时间
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Date onStoreDate;//入库时间	
 	private String groupCode;//物料类型代码
 	private String groupName;//物料类型名称
