@@ -17,10 +17,10 @@ public abstract class AbsOrderDealer extends AbsOrder {
 	 */
 	private double discount;//合并折扣
 	
-	private double bodyDiscount;//柜体折扣 standard discount
-
-
-	private double mainDiscount;//机组折扣 standard discount
+//	private double bodyDiscount;//柜体折扣 standard discount
+//
+//
+//	private double mainDiscount;//机组折扣 standard discount
 	
 	private int isLongterm;//是否为长期折扣
 	
@@ -52,21 +52,6 @@ public abstract class AbsOrderDealer extends AbsOrder {
 		this.discount = discount;
 	}
 
-	public double getBodyDiscount() {
-		return bodyDiscount;
-	}
-
-	public void setBodyDiscount(double bodyDiscount) {
-		this.bodyDiscount = bodyDiscount;
-	}
-
-	public double getMainDiscount() {
-		return mainDiscount;
-	}
-
-	public void setMainDiscount(double mainDiscount) {
-		this.mainDiscount = mainDiscount;
-	}
 
 	public int getIsLongterm() {
 		return isLongterm;
