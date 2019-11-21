@@ -21,6 +21,7 @@
 		<input type="hidden"  name="action" value="submit">
 		<input type="hidden"  name="salesCode" id="salesCode">
 		<input type="hidden"  id="version" th:field="*{currentVersion}">
+		<input type="hidden"  id="orderModelType" value="edit">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -593,7 +594,10 @@
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn pull-right btn-warning" id="back" onclick="window.location.href = '/steigenberger/menu/orderManageList';">返回 back</button>		
+			<button type="button" class="btn pull-right btn-warning"  style="margin-left: 10px;" id="back" onclick="window.location.href = '/steigenberger/menu/orderManageList';">返回</button>
+			<button type="button" class="btn btn-danger pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="" id="reject">驳回</button>		
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" id="approve">提交</button>
+			<button type="button" class="btn pull-right btn-success"  id="approve">保存</button>		
 		</div>
 		</form>
 	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -682,7 +686,7 @@
 	<div th:replace="materialconfig::materialconfig"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
-<script th:inline="javascript" src="../pageJs/dealerOrderView.js"></script>
+<script th:inline="javascript" src="../pageJs/newOrder.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]

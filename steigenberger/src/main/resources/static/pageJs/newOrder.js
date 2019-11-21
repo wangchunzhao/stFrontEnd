@@ -26,12 +26,14 @@ $(function () {
 	var version = getVersion();
 	$("#version").val(version);
 	
-	var installationTerm = installationTerms[$("#customerClazzCode").val()];
-	$.each(installationTerm, function (key, value) {
-		$("#installCode").val(key);
-		$("#installName").val(value);
-		
-	});
+	if(installationTerms){
+		var installationTerm = installationTerms[$("#customerClazzCode").val()];
+		$.each(installationTerm, function (key, value) {
+			$("#installCode").val(key);
+			$("#installName").val(value);
+			
+		});
+	}
 	initSubsidiartFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
@@ -40,7 +42,80 @@ $(function () {
 	$("#inputDate").val(nowDateString);
 	defaultCollapse();
 	getUserDetail();
+	fillItems();
 });
+
+//初始化购销明细
+function fillItems(){
+	if(items){
+		for(var i=0;i<items.length;i++){
+			var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+			var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+			var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
+			var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
+			var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
+			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
+			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
+			var materialType = materialGroupMapGroupOrder[items[i].groupCode];
+			if(materialType=='T101'){
+				$("#materialsTableall1").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall1,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T102'){
+				$("#materialsTableall2").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall2,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T103'){
+				$("#materialsTableall3").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall3,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T104'){
+				$("#materialsTableall4").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall4,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}else if(materialType=='T105'){
+				$("#materialsTableall5").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall5,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: item[i]
+				});
+			}else if(materialType=='T106'){
+				$("#materialsTableall6").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall6,
+				    row: items[i]
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: items[i]
+				});
+			}
+		}
+	}
+	
+}
 
 
 //获取session中用户信息
@@ -414,6 +489,7 @@ function getPaymentAreaContent(){
 //打开物料规格查询框
 function addSubsidiary(){
 		$('#subsidiaryModal').modal('show');
+		$("#subsidiaryForm")[0].reset();
 		$('#amount').val(1);
 		$('#discount').val($("#approvedDicount").val());
 		var opt = {
@@ -454,6 +530,24 @@ function getMaterialInfo(code){
 }
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
+	if(data.materialName){
+		$("#materialTypeName").val(data.materialName);
+	}
+	if(data.materialCode){
+		$("#materialCode").val(data.materialCode);
+	}
+	if(data.b2cRemark){
+		$("#b2cRemark").val(data.b2cRemark);
+	}
+	if(data.colorComments){
+		$("#colorComments").val(data.colorComments);
+	}
+	if(data.specialRemark){
+		$("#specialRemark").val(data.specialRemark);
+	}
+	if(data.itemCategory){
+		$("#itemCategory").val(data.itemCategory)
+	}
 	$("#groupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
@@ -525,11 +619,28 @@ function toDecimal2(x) {
  }  
 //编辑购销明细
 function editMaterials(identification){
+	debugger
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
-	$('#materialsIndex').val(index);
 	var identificationSplit = identification.split('|');
-	var type = identificationSplit[1];
+	var materialsType = identificationSplit[1];
+	var index = identificationSplit[0];
+	var tableData;
+	if(materialsType=='T101'){
+		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
+	}else if(materialsType=='T102'){
+		tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
+	}else if(materialsType=='T103'){
+		tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
+	}else if(materialsType=='T104'){
+		tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
+	}else if(materialsType=='T105'){
+		tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
+	}else if(materialsType=='T106'){
+		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
+	}
+	
+	fillMaterailValue(tableData);
 }
 //删除购销明细
 function removeMaterials(identification){
@@ -1379,6 +1490,10 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
+	if($("#orderModelType").val()=='edit'){
+		editViewGrossProfit();
+		return;
+	}
 	if(!$("#salesType").val()){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
@@ -1427,6 +1542,23 @@ function viewGrossProfit(){
 	});  
 }
 
+//修改订单时查看毛利率
+function editViewGrossProfit(){
+	debugger
+	$("#grossProfit").modal("show");
+	var version = $("#version").val();
+	var sequenceNumber = $("#sequenceNumber").val();
+	$("#grossSeqNum").val(sequenceNumber);
+	$("#grossVersion").val(version);
+	$("#grossContractRMBValue").val($("#contractAmount").val());
+	$("#grossPerson").val($("#salesName").val());
+	$("#grossDate").val($("#inputDate").val());
+	$("#grossClazz").val($("#customerClazz").val());
+	var opt = {
+			url: '/steigenberger/order/'+sequenceNumber+'/'+version+'/grossprofit'
+	};
+	$("#grossProfitTable").bootstrapTable('refresh', opt);	
+}
 
 var grossProfitColumns=[
 	{
