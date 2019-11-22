@@ -9,6 +9,7 @@ $(function () {
 	
 	var installationTerm = installationTerms[$("#customerClazzCode").val()];
 	$.each(installationTerm, function (key, value) {
+		debugger
 		$("#installCode").val(key);
 		$("#installName").val(value);
 		

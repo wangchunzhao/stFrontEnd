@@ -58,7 +58,8 @@
 							    <div class="col-md-2">
 							    <div class="input-group">
 				                    <input type="text" class="form-control" readonly id="customer" name="contracterName">
-				                    <input type="hidden" name="contracterCode">
+				                    <input type="hidden" name="contracterCode" id="contactorCode">
+				                    <input type="hidden" name="contractorclassname" id="contractorclassname">
 				                    <span class="input-group-btn">
 				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
 				                        	<span class="glyphicon glyphicon-search"></span>
@@ -68,7 +69,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">性质分类</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="customerClazz" readonly>
+							      <input type="text" class="form-control" id="customerClazz" readonly name="contractorclassname">
 							    </div>
 							    <span class="col-md-1 control-label">店名</span>
 								<div class="col-md-2">
@@ -184,6 +185,7 @@
 										<option th:each="incoterm : ${order_option.intercoms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
 									</select>
 								</div>
+								<input type="hidden" name="incotermName" id="incotermName">
 								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
 									<input type="text" class="form-control" aria-describedby="emailHelp" readonly id="incotermContect" name="incotermContect"><!--  th:field="*{incotermContect}"-->
 								</div>
@@ -193,7 +195,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">录入日期</span>
 							    <div class="col-md-2">
-									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="createTime" readonly>
+									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="optTime" readonly>
 							    </div>
 							</div>
 						</div>
@@ -215,19 +217,21 @@
 										<option value="">--选择大区--</option>
 									</select>
 							    </div>
+							    <input type="hidden" name="officeName" id="officeName">
 							    <span class="col-md-1 control-label">中心</span>
 								<div class="col-md-2">
 									<select class="form-control" id="selectGroup" name="groupCode">
 										<option value="">--选择中心--</option>
 									</select>
 							    </div>
+							    <input type="hidden" name="groupName" id="groupName">
 							    <span class="col-md-1 control-label">保修年限(年)</span>
 								<div class="col-md-2">
 									<input type="text" class="form-control" id="warrenty" value="1" aria-describedby="emailHelp" name="warrenty" readonly><!-- th:field="*{warrenty}" -->
 							    </div>
 							    <span class="col-md-1 control-label">安装方式</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="installName" aria-describedby="emailHelp" name="installNae" readonly>
+									<input type="text" class="form-control" id="installName" aria-describedby="emailHelp" name="installName" readonly>
 									<input type="hidden" id="installCode" name="installCode">
 							    </div>
 							</div>
@@ -251,6 +255,7 @@
 									<select class="form-control" name="transferTypeCode" id="transferType">
 										<option th:each="shippingType : ${order_option.shippingTypes}" th:value="${shippingType.key}" th:text="${shippingType.value}"></option>
 									</select>
+									<input type="hidden" id="transferTypeName" name="transferTypeName">
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
@@ -723,9 +728,10 @@
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
 	var installationTerms =  [[${order_option.installationTerms}]]
 	var intercoms = [[${order_option.intercoms}]]
-	console.log("231321321");
-	console.log(materialGroupMapGroupOrder)
-	console.log(materialGroupMapGroupOrder['FA01'])
+	var officesMap = [[${order_option.offices}]]
+	var groupsMap = [[${order_option.groups}]]
+	var shippingTypesMap = [[${order_option.shippingTypes}]]
+
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;

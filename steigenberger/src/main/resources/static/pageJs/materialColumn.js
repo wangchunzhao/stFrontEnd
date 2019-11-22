@@ -62,7 +62,7 @@ var materialsColumn = [{
 	    width:80
 	},{
 		title:'数量',
-	    field: 'amount',
+	    field: 'quantity',
 	    width:60
 	},{
 		title:'计量单位',
@@ -183,12 +183,12 @@ var materialsColumn = [{
 
 	},{
 		title:'B2C备注',
-	    field: 'b2cRemark',
+	    field: 'b2cComments',
 	    width:150
 
 	},{
 		title:'特殊备注',
-	    field: 'specialRemark',
+	    field: 'specialComments',
 	    width:150
 
 	},{
