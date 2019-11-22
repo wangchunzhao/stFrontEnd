@@ -155,9 +155,8 @@ function doSomething(){
 			if(resp.status==200){
 				 ret = true;
 			}else{
-				 // alert("对不起，您没有下单权限");
-				 // ret = false;
-                ret = true;
+				 alert("对不起，您没有下单权限");
+				 ret = false;
 			}
 		 },
 		 error:function(resp,status){
