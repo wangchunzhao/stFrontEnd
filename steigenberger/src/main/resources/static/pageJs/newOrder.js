@@ -35,6 +35,7 @@ $(function () {
 		});
 	}
 	initSubsidiartFormValidator();
+	initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -602,9 +603,12 @@ function amountChange(){
 
 function toDecimal2(x) {   
      var f = parseFloat(x);   
-     if (isNaN(f)) {   
-      return false;   
-     }   
+     if (isNaN(f)) {
+     	//jxu52 修改B2C无值的时候显示空或0 BUG开始
+      // return false;
+		 return 0;
+		 //jxu52 修改B2C无值的时候显示空或0 BUG结束
+     }
      var f = Math.round(x*100)/100;   
      var s = f.toString();   
      var rs = s.indexOf('.');   
@@ -783,6 +787,26 @@ function initSubsidiartFormValidator(){
 	            }
 	        });
 }
+
+function initOrderFormValidator(){
+	$('#orderForm').bootstrapValidator({
+		message: 'This value is not valid',
+		fields: {
+			contractValue: {
+				validators: {
+					// notEmpty: {
+					// 	message: '数量不能为空'
+					// },
+					regexp: {
+						regexp: /^\d+(\.\d{0,2})?$/,
+						message: '请输入合法的金额，金额限制两位小数'
+					}
+				}
+			}
+		}
+	});
+}
+
 //确认购销明细modal
 function confirmMaterials(){
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
