@@ -43,118 +43,11 @@ public class XwpfUtil {
 		map.put(Boolean.valueOf(false), "□");
 	}
 
-	public void replaceInPara(XWPFDocument doc, Map<String, Object> params) throws Exception {
+	public void replacePara(XWPFDocument doc, Map<String, Object> params) throws Exception {
 		Iterator<XWPFParagraph> iterator = doc.getParagraphsIterator();
-
 		while (iterator.hasNext()) {
 			XWPFParagraph para = iterator.next();
-//			replaceInPara(para, params);
 			replaceParagraph(para, params);
-		}
-	}
-
-	private void replaceInPara(XWPFParagraph para, Map<String, Object> params) throws Exception {
-		if (matcher(para.getParagraphText()).find()) {
-			List<XWPFRun> runs = para.getRuns();
-			Map<Integer, String> tempMap = new HashMap<>();
-			int start = -1;
-
-			String str = "";
-			for (int i = 0; i < runs.size(); i++) {
-				XWPFRun run = runs.get(i);
-				String runText = run.toString();
-
-				boolean begin = (runText.indexOf("$") > -1);
-				boolean end = (runText.indexOf("}") > -1);
-
-				if (begin && end) {
-					tempMap.put(Integer.valueOf(i), runText);
-					fillBlock(para, params, tempMap, i);
-				} else if (begin && !end) {
-					tempMap.put(Integer.valueOf(i), runText);
-				} else if (!begin && end) {
-					tempMap.put(Integer.valueOf(i), runText);
-					fillBlock(para, params, tempMap, i);
-
-				} else if (tempMap.size() > 0) {
-					tempMap.put(Integer.valueOf(i), runText);
-				}
-
-			}
-
-		} else if (matcherRow(para.getParagraphText())) {
-			List list = para.getRuns();
-		}
-	}
-
-	private boolean matcherRow(String str) {
-		Pattern pattern = Pattern.compile("\\$\\[(.+?)\\]", 2);
-		Matcher matcher = pattern.matcher(str);
-		return matcher.find();
-	}
-
-	private void fillBlock(XWPFParagraph para, Map<String, Object> params, Map<Integer, String> tempMap, int index)
-			throws InvalidFormatException, IOException, Exception {
-		if (tempMap != null && tempMap.size() > 0) {
-			String wholeText = "";
-			List<Integer> tempIndexList = new ArrayList<>();
-			for (Map.Entry<Integer, String> entry : tempMap.entrySet()) {
-				tempIndexList.add(entry.getKey());
-
-				wholeText = wholeText + (String) entry.getValue();
-			}
-
-			if (wholeText.equals("")) {
-				return;
-			}
-			Matcher matcher = matcher(wholeText);
-			if (matcher.find()) {
-				String path = null;
-				String keyText = matcher.group().substring(2, matcher.group().length() - 1);
-
-				Object value = params.get(keyText);
-				String newRunText = "";
-				if (value instanceof Object) {
-					newRunText = matcher.replaceFirst(String.valueOf(value));
-				}
-
-				XWPFRun tempRun = null;
-
-				for (Integer pos : tempIndexList) {
-					tempRun = para.getRuns().get(pos.intValue());
-					tempRun.setText("", 0);
-				}
-
-				if (newRunText.indexOf("\n") > -1) {
-					String[] textArr = newRunText.split("\n");
-					if (textArr.length > 0) {
-
-						String fontFamily = tempRun.getFontFamily();
-						int fontSize = tempRun.getFontSize();
-
-						for (int i = 0; i < textArr.length; i++) {
-
-							if (i == 0) {
-
-								tempRun.setText(textArr[0], 0);
-
-							} else if (textArr[i] != null) {
-								XWPFRun newRun = para.createRun();
-
-								newRun.addBreak();
-
-								newRun.setText(textArr[i], 0);
-							}
-
-						}
-					}
-				} else {
-
-					tempRun.setText(newRunText, 0);
-				}
-			}
-
-			tempMap.clear();
 		}
 	}
 
@@ -165,7 +58,6 @@ public class XwpfUtil {
 			for (XWPFTableCell cell : cells) {
 				List<XWPFParagraph> paras = cell.getParagraphs();
 				for (XWPFParagraph para : paras) {
-//					replaceInPara(para, params);
 					replaceParagraph(para, params);
 				}
 			}
@@ -255,35 +147,8 @@ public class XwpfUtil {
 
 					List<XWPFParagraph> paragraphs = cell.getParagraphs();
 					for (XWPFParagraph paragraph : paragraphs) {
-						// replaceInPara(paragraph, (Map) map);
 						replaceParagraph(paragraph, (Map) map);
 					}
-
-//					cellText = cell.getText();
-//					logger.info("cell text: " + cellText);
-//					if (cellText != null && !"".equals(cellText)) {
-//						int ls = cellText.indexOf("${");
-//						int le = 0;
-//						if (ls >= 0) {
-//							le = cellText.indexOf("}", ls);
-//							if (le > 0) {
-//								String cellKey = cellText.substring(ls + 2, le);
-//								String value = map.get(cellKey);
-//								logger.info("key: " + cellKey);
-//								logger.info("value: " + value);
-//								value = value == null ? "" : value;
-//								cellText = cellText.replace("${" + cellKey + "}", value);
-//								logger.info("cell text: " + cellText);
-//								cell.getParagraphs().get(0);
-//								cell.setText(cellText);
-//							}
-//						}
-//						cellTextKey = cellText.replace("$", "").replace("{", "").replace("}", "");
-//						if (map.containsKey(cellTextKey)) {
-					setCellText(tmpCell, cell, map.get(cellTextKey));
-//							cell.setText(map.get(cellTextKey));
-//						}
-//					}
 				}
 				table.addRow(row, 2);
 				table.removeRow(table.getRows().size() - 1);
@@ -306,7 +171,6 @@ public class XwpfUtil {
 			XWPFTableRow row = table.getRow(1);
 
 			XWPFTableCell cell = row.getCell(0);
-//			replaceInPara(cell.getParagraphs().get(0), totalMap);
 			List<XWPFParagraph> paragraphs = cell.getParagraphs();
 			for (XWPFParagraph paragraph : paragraphs) {
 				replaceParagraph(paragraph, (Map) map);
@@ -317,7 +181,26 @@ public class XwpfUtil {
 		}
 	}
 
-	public void updateValueToTable(XWPFDocument doc, Map<String, Object> params, int tableIndex) throws Exception {
+	/**
+	 * 替换指定行的参数
+	 * 
+	 * @param rows
+	 * @param params
+	 * @throws Exception
+	 */
+	private void replaceInRow(List<XWPFTableRow> rows, Map<String, Object> params) throws Exception {
+		for (XWPFTableRow row : rows) {
+			List<XWPFTableCell> cells = row.getTableCells();
+			for (XWPFTableCell cell : cells) {
+				List<XWPFParagraph> paras = cell.getParagraphs();
+				for (XWPFParagraph para : paras) {
+					replaceParagraph(para, params);
+				}
+			}
+		}
+	}
+
+	public void replaceTable2(XWPFDocument doc, Map<String, Object> params, int tableIndex) throws Exception {
 		List<XWPFTable> tableList = doc.getTables();
 		if (tableList.size() <= tableIndex) {
 			throw new Exception("tableIndex对应的表格不存在");
@@ -330,231 +213,28 @@ public class XwpfUtil {
 		replaceInTable(table, params);
 	}
 
-	public void replaceInRow(List<XWPFTableRow> rows, Map<String, Object> params) throws Exception {
-		for (XWPFTableRow row : rows) {
-			List<XWPFTableCell> cells = row.getTableCells();
-			for (XWPFTableCell cell : cells) {
-				List<XWPFParagraph> paras = cell.getParagraphs();
-				for (XWPFParagraph para : paras) {
-//					replaceInPara(para, params);
-					replaceParagraph(para, params);
-				}
-			}
-		}
-	}
-
-	private void setCellText(XWPFTableCell tmpCell, XWPFTableCell cell, String text) throws Exception {
-		CTTc cttc2 = tmpCell.getCTTc();
-		CTTcPr ctPr2 = cttc2.getTcPr();
-
-		CTTc cttc = cell.getCTTc();
-		CTTcPr ctPr = cttc.addNewTcPr();
-
-		if (ctPr2.getTcW() != null) {
-			ctPr.addNewTcW().setW(ctPr2.getTcW().getW());
-		}
-		if (ctPr2.getVAlign() != null) {
-			ctPr.addNewVAlign().setVal(ctPr2.getVAlign().getVal());
-		}
-		if (cttc2.getPList().size() > 0) {
-			CTP ctp = cttc2.getPList().get(0);
-			if (ctp.getPPr() != null && ctp.getPPr().getJc() != null) {
-				((CTP) cttc.getPList().get(0)).addNewPPr().addNewJc().setVal(ctp.getPPr().getJc().getVal());
-			}
-		}
-
-		if (ctPr2.getTcBorders() != null) {
-			ctPr.setTcBorders(ctPr2.getTcBorders());
-		}
-
-		XWPFParagraph tmpP = tmpCell.getParagraphs().get(0);
-		XWPFParagraph cellP = cell.getParagraphs().get(0);
-		XWPFRun tmpR = null;
-		if (tmpP.getRuns() != null && tmpP.getRuns().size() > 0) {
-			tmpR = tmpP.getRuns().get(0);
-		}
-
-		List<XWPFRun> runList = new ArrayList<>();
-		if (text == null) {
-			XWPFRun cellR = cellP.createRun();
-			runList.add(cellR);
-			cellR.setText("");
-
-		} else if (text.indexOf("\b") > -1) {
-			String[] bArr = text.split("\b");
-			for (int b = 0; b < bArr.length; b++) {
-				XWPFRun cellR = cellP.createRun();
-				runList.add(cellR);
-				if (b == 0) {
-					cellR.setBold(true);
-				}
-				if (bArr[b].indexOf("\n") > -1) {
-					String[] arr = bArr[b].split("\n");
-					for (int i = 0; i < arr.length; i++) {
-						if (i > 0) {
-							cellR.addBreak();
-						}
-						cellR.setText(arr[i]);
-					}
-				} else {
-					cellR.setText(bArr[b]);
-				}
-			}
-		} else {
-			XWPFRun cellR = cellP.createRun();
-			runList.add(cellR);
-			if (text.indexOf("\n") > -1) {
-				String[] arr = text.split("\n");
-				for (int i = 0; i < arr.length; i++) {
-					if (i > 0) {
-						cellR.addBreak();
-					}
-					cellR.setText(arr[i]);
-				}
-			} else {
-				cellR.setText(text);
-			}
-		}
-
-		if (tmpR != null) {
-
-			for (XWPFRun cellR : runList) {
-				if (!cellR.isBold()) {
-					cellR.setBold(tmpR.isBold());
-				}
-				cellR.setItalic(tmpR.isItalic());
-				cellR.setStrike(tmpR.isStrike());
-				cellR.setUnderline(tmpR.getUnderline());
-				cellR.setColor(tmpR.getColor());
-				cellR.setTextPosition(tmpR.getTextPosition());
-				if (tmpR.getFontSize() != -1) {
-					cellR.setFontSize(tmpR.getFontSize());
-				}
-				if (tmpR.getFontFamily() != null) {
-					cellR.setFontFamily(tmpR.getFontFamily());
-				}
-				if (tmpR.getCTR() != null && tmpR.getCTR().isSetRPr()) {
-					CTRPr tmpRPr = tmpR.getCTR().getRPr();
-					if (tmpRPr.isSetRFonts()) {
-						CTFonts tmpFonts = tmpRPr.getRFonts();
-
-						CTRPr cellRPr = cellR.getCTR().isSetRPr() ? cellR.getCTR().getRPr()
-								: cellR.getCTR().addNewRPr();
-						CTFonts cellFonts = cellRPr.isSetRFonts() ? cellRPr.getRFonts() : cellRPr.addNewRFonts();
-						cellFonts.setAscii(tmpFonts.getAscii());
-						cellFonts.setAsciiTheme(tmpFonts.getAsciiTheme());
-						cellFonts.setCs(tmpFonts.getCs());
-						cellFonts.setCstheme(tmpFonts.getCstheme());
-						cellFonts.setEastAsia(tmpFonts.getEastAsia());
-						cellFonts.setEastAsiaTheme(tmpFonts.getEastAsiaTheme());
-						cellFonts.setHAnsi(tmpFonts.getHAnsi());
-						cellFonts.setHAnsiTheme(tmpFonts.getHAnsiTheme());
-					}
-				}
-			}
-		}
-
-		cellP.setAlignment(tmpP.getAlignment());
-		cellP.setVerticalAlignment(tmpP.getVerticalAlignment());
-		cellP.setBorderBetween(tmpP.getBorderBetween());
-		cellP.setBorderBottom(tmpP.getBorderBottom());
-		cellP.setBorderLeft(tmpP.getBorderLeft());
-		cellP.setBorderRight(tmpP.getBorderRight());
-		cellP.setBorderTop(tmpP.getBorderTop());
-		cellP.setPageBreak(tmpP.isPageBreak());
-		if (tmpP.getCTP() != null && tmpP.getCTP().getPPr() != null) {
-			CTPPr tmpPPr = tmpP.getCTP().getPPr();
-			CTPPr cellPPr = (cellP.getCTP().getPPr() != null) ? cellP.getCTP().getPPr() : cellP.getCTP().addNewPPr();
-
-			CTSpacing tmpSpacing = tmpPPr.getSpacing();
-			if (tmpSpacing != null) {
-
-				CTSpacing cellSpacing = (cellPPr.getSpacing() != null) ? cellPPr.getSpacing() : cellPPr.addNewSpacing();
-				if (tmpSpacing.getAfter() != null) {
-					cellSpacing.setAfter(tmpSpacing.getAfter());
-				}
-				if (tmpSpacing.getAfterAutospacing() != null) {
-					cellSpacing.setAfterAutospacing(tmpSpacing.getAfterAutospacing());
-				}
-				if (tmpSpacing.getAfterLines() != null) {
-					cellSpacing.setAfterLines(tmpSpacing.getAfterLines());
-				}
-				if (tmpSpacing.getBefore() != null) {
-					cellSpacing.setBefore(tmpSpacing.getBefore());
-				}
-				if (tmpSpacing.getBeforeAutospacing() != null) {
-					cellSpacing.setBeforeAutospacing(tmpSpacing.getBeforeAutospacing());
-				}
-				if (tmpSpacing.getBeforeLines() != null) {
-					cellSpacing.setBeforeLines(tmpSpacing.getBeforeLines());
-				}
-				if (tmpSpacing.getLine() != null) {
-					cellSpacing.setLine(tmpSpacing.getLine());
-				}
-				if (tmpSpacing.getLineRule() != null) {
-					cellSpacing.setLineRule(tmpSpacing.getLineRule());
-				}
-			}
-
-			CTInd tmpInd = tmpPPr.getInd();
-			if (tmpInd != null) {
-				CTInd cellInd = (cellPPr.getInd() != null) ? cellPPr.getInd() : cellPPr.addNewInd();
-				if (tmpInd.getFirstLine() != null) {
-					cellInd.setFirstLine(tmpInd.getFirstLine());
-				}
-				if (tmpInd.getFirstLineChars() != null) {
-					cellInd.setFirstLineChars(tmpInd.getFirstLineChars());
-				}
-				if (tmpInd.getHanging() != null) {
-					cellInd.setHanging(tmpInd.getHanging());
-				}
-				if (tmpInd.getHangingChars() != null) {
-					cellInd.setHangingChars(tmpInd.getHangingChars());
-				}
-				if (tmpInd.getLeft() != null) {
-					cellInd.setLeft(tmpInd.getLeft());
-				}
-				if (tmpInd.getLeftChars() != null) {
-					cellInd.setLeftChars(tmpInd.getLeftChars());
-				}
-				if (tmpInd.getRight() != null) {
-					cellInd.setRight(tmpInd.getRight());
-				}
-				if (tmpInd.getRightChars() != null) {
-					cellInd.setRightChars(tmpInd.getRightChars());
-				}
-			}
-		}
-	}
-
-	public void transferToPDF(InputStream doc, OutputStream out) {
-		XWPFDocument document = null;
-		try {
-			document = new XWPFDocument(doc);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
-		PdfOptions options = PdfOptions.create();
-		try {
-			PdfConverter.getInstance().convert(document, out, options);
-		} catch (XWPFConverterException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	/**
+	 * 
+	 * 通用替换段落中参数的方法
+	 * 
+	 * @param xWPFParagraph
+	 * @param parametersMap
+	 */
 	public void replaceParagraph(XWPFParagraph xWPFParagraph, Map<String, Object> parametersMap) {
+		String startTag = "${";
+		String endTag = "}";
+		// parameter start tag size
+		int pslen = startTag.length();
+		// parameter end tag size
+		int pelen = endTag.length();
+		String regEx = "\\$\\{.+?\\}";
+		regEx = startTag.replace("$", "\\$").replace("{", "\\{") + ".+?" + endTag.replace("}", "\\}");
+		
 		List<XWPFRun> runs = xWPFParagraph.getRuns();
 		String xWPFParagraphText = xWPFParagraph.getText();
-		String regEx = "\\$\\{.+?\\}";
+		
 		Pattern pattern = Pattern.compile(regEx);
 		Matcher matcher = pattern.matcher(xWPFParagraphText);// 正则匹配字符串${****}
-		// parameter start tag size
-		int pslen = 2;
-		// parameter end tag size
-		int pelen = 1;
 
 		if (matcher.find()) {
 			// 查找到有标签才执行替换
@@ -704,16 +384,35 @@ public class XwpfUtil {
 			replaceParagraph(xWPFParagraph, parametersMap);
 
 		} // if 有标签
+	}
 
-//		runs = xWPFParagraph.getRuns();
-//		logger.info(String.valueOf(runs));
-//		for (XWPFRun run : runs) {
-//			logger.info(String.valueOf(run.getCTR()));
-//			if (run.getCTR() != null && run.getCTR().getRPr() != null
-//					&& run.getCTR().getRPr().getRFonts() != null
-//					&& run.getCTR().getRPr().getRFonts().getAsciiTheme() == null) {
-//				run.getCTR().getRPr().getRFonts().setAsciiTheme(STTheme.MAJOR_EAST_ASIA);
-//			}
-//		}
+	/**
+	 * 
+	 * 使用xdocreport包来实现word to pdf
+	 * <br>但存在问题，对于表格新增行，总是会报ST_Theme为空的错误。每个单元格替换的值会有两个（两个XWPFRun），一个显示一个隐藏，第二个XWPFRun造成该错误。
+	 * 
+	 * @param doc
+	 * @param out
+	 */
+	public boolean transferToPDF(InputStream doc, OutputStream out) {
+		XWPFDocument document = null;
+		try {
+			document = new XWPFDocument(doc);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return false;
+		}
+
+		PdfOptions options = PdfOptions.create();
+		try {
+			PdfConverter.getInstance().convert(document, out, options);
+			return true;
+		} catch (XWPFConverterException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

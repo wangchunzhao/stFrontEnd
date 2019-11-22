@@ -209,10 +209,11 @@ public class OrderService {
 		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"detail?sequenceNumber=" + sequenceNumber + "&version=" + version;
 		AbsOrder order = null;
 		order = (AbsOrder)fryeService.getInfo(url, BaseOrder.class);
-//		switch(orderType) {
-//			case ORDER_TYPE_DEALER:
+		ObjectMapper mapper = new ObjectMapper();
+		switch(orderType) {
+			case ORDER_TYPE_DEALER:
 //				String json = (String)fryeService.getInfo(url, String.class);
-//				ObjectMapper mapper = new ObjectMapper();
+				order = mapper.convertValue(order, DealerOrder.class);
 //				mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
 //				try {
 //					order = mapper.readValue(json, DealerOrder.class);
@@ -220,17 +221,19 @@ public class OrderService {
 //					e.printStackTrace();
 //				}
 ////				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
-//				break;
-//			case ORDER_TYPE_KEYACCOUNT:
+				break;
+			case ORDER_TYPE_KEYACCOUNT:
 //				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
-//				break;
-//			case ORDER_TYPE_BULK:
+				order = mapper.convertValue(order, KeyAccountOrder.class);
+				break;
+			case ORDER_TYPE_BULK:
 //				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
-//				break;
-//			
-//			default :
-//				throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
-//		}
+				order = mapper.convertValue(order, BulkOrder.class);
+				break;
+			
+			default :
+				throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
+		}
 		
 		return order;
 	}

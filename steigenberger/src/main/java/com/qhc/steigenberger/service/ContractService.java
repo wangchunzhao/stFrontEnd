@@ -4,13 +4,13 @@
 package com.qhc.steigenberger.service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,56 +39,64 @@ import com.qhc.steigenberger.util.XwpfUtil;
  */
 @Service
 public class ContractService {
-	private ObjectMapper mapper = new ObjectMapper().setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
-	
+	private ObjectMapper mapper = new ObjectMapper()
+			.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+
 	@Value("${contract.dir}")
 	private String contractDir;
-	
+
 	@Autowired
 	private FryeService fryeService;
-	
+
 	@Autowired
 	private OrderService orderService;
-	
+
 	public Result find(Map<String, Object> params) {
-		Result result = (Result)fryeService.getInfo("/contract", params, Result.class);
+		Result result = (Result) fryeService.getInfo("/contract", params, Result.class);
 		if (result.getStatus().equals("ok")) {
-			JavaType javaType = mapper.getTypeFactory().constructParametricType(Result.class, mapper.getTypeFactory().constructParametricType(ArrayList.class, Contract.class));
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(Result.class,
+					mapper.getTypeFactory().constructParametricType(ArrayList.class, Contract.class));
 			// result.setData(mapper.convertValue(result.getData(), );
 			result = mapper.convertValue(result, javaType);
 		}
-		
+
 		return result;
 	}
-	
+
 	public Result<Contract> find(Integer contractId) {
-		Result result = (Result)fryeService.getInfo("/contract/" + contractId, Result.class);
+		Result result = (Result) fryeService.getInfo("/contract/" + contractId, Result.class);
 		if (result.getStatus().equals("ok")) {
 			Contract contract = new ObjectMapper().convertValue(result.getData(), Contract.class);
 			result.setData(contract);
 		}
 		return result;
 	}
-	
+
+	/**
+	 * 新增或修改合同信息
+	 * 
+	 * @param contract
+	 * @return
+	 */
 	public Result save(Contract contract) {
-		return (Result)fryeService.postForm("/contract", contract, Result.class);
+		Result result = null;
+		result = (Result) fryeService.postForm("/contract", contract, Result.class);
+		if (result.getStatus().equals("ok")) {
+			deletePdf((Contract)result.getData());
+		}
+		
+		return result;
 	}
 
 	public File exportToPDF(Integer contractId) throws Exception {
-		Contract contract = (Contract)this.find(contractId).getData();
-		// 需求流水号-签约单位-版本号
-		String fileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "-" + contract.getVersion()
-				+ ".docx";
-		// 需求流水号-签约单位-合同号(核算号)
-		String pdfFileName = "";
-		if (contract.getVersion() != null && !contract.getVersion().isEmpty()) {
-			pdfFileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "(" + contract.getContractNumber()
-					+ "-" + contract.getVersion() + ").pdf";
-		} else {
-			pdfFileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "(" + contract.getContractNumber()
-			+ ").pdf";
-		}
+		Contract contract = (Contract) this.find(contractId).getData();
+		File wordFile = getWordFile(contract);
+		File pdfFile = getPdfFile(contract);
 		
+		if (pdfFile.exists() && pdfFile.length() > 0) {
+			return pdfFile;
+		}
+
 		AbsOrder order = null;
 		OrderQuery query = new OrderQuery();
 		query.setSequenceNumber(contract.getSequenceNumber());
@@ -256,30 +264,80 @@ public class ContractService {
 		InputStream is = getClass().getClassLoader().getResourceAsStream("contract_template.docx");
 		XWPFDocument doc = new XWPFDocument(is);
 
-		xwpfUtil.replaceInPara(doc, params);
+		xwpfUtil.replacePara(doc, params);
 		xwpfUtil.exportTable1(doc, detailList, paramSum, 0, Boolean.valueOf(false));
-		xwpfUtil.updateValueToTable(doc, paraTable2, 1);
-
-		File path = new File(contractDir);
-		File wordFile = new File(path, fileName);
-		File pdfFile = new File(path, pdfFileName);
-		if (!path.exists()) {
-			path.mkdirs();
-		}
+		xwpfUtil.replaceTable2(doc, paraTable2, 1);
+		
 		FileOutputStream vos = new FileOutputStream(wordFile);
 		doc.write(vos);
 
 		xwpfUtil.close(vos);
 		xwpfUtil.close(is);
 
-//		xwpfUtil.transferToPDF(new FileInputStream(wordFile), new FileOutputStream(pdfFile));
-		
-		Word2PdfUtil.word2pdf(wordFile, pdfFile);
+		boolean seccess = true;
+
+//		seccess = xwpfUtil.transferToPDF(new FileInputStream(wordFile), new FileOutputStream(pdfFile));
+
+		// 使用jacob包转换word为pdf
+		seccess = Word2PdfUtil.word2pdf(wordFile, pdfFile);
+
+		if (!seccess) {
+			pdfFile.delete();
+		}
 
 //		wordFile.delete();
 
 		return pdfFile;
 	}
-
+	
+	/**
+	 * 
+	 * 合同修改后删除已生成的pdf文件
+	 * 
+	 * @param contract
+	 */
+	public void deletePdf(Contract contract) {
+		File pdfFile = getPdfFile(contract);
+		if (pdfFile.exists()) {
+			pdfFile.delete();
+		}
+	}
+	
+	private File getPdfFile(Contract contract) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(contract.getProductionTime());
+		File path = new File(contractDir, String.valueOf(c.get(Calendar.YEAR)));
+		if (!path.exists()) {
+			path.mkdirs();
+		}
+		
+		// 需求流水号-签约单位-合同号(核算号)
+		String pdfFileName = "";
+		if (contract.getVersion() != null && !contract.getVersion().isEmpty()) {
+			pdfFileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "("
+					+ contract.getContractNumber() + "-" + contract.getVersion() + ").pdf";
+		} else {
+			pdfFileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "("
+					+ contract.getContractNumber() + ").pdf";
+		}
+		File pdfFile = new File(path, pdfFileName);
+		return pdfFile;
+	}
+	
+	private File getWordFile(Contract contract) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(contract.getProductionTime());
+		File path = new File(contractDir, String.valueOf(c.get(Calendar.YEAR)));
+		if (!path.exists()) {
+			path.mkdirs();
+		}
+		
+		// 需求流水号-签约单位-版本号
+		String fileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "-"
+				+ contract.getVersion() + ".docx";
+		// 需求流水号-签约单位-合同号(核算号)
+		File wordFile = new File(path, fileName);
+		return wordFile;
+	}
 
 }

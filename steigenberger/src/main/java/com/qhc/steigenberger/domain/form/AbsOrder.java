@@ -55,7 +55,7 @@ public abstract class AbsOrder {
 	private double currencyExchange;//汇率 exchange rate
 	private double itemsAmount;//购销明细金额合计 Aggregate amount
 	private String contractManager;//合同管理员
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date createTime;//新建时间
 	private double bodyDiscount;
 	private double mainDiscount;
@@ -93,9 +93,9 @@ public abstract class AbsOrder {
 	private int isTerm1;//柜体控制阀件是否甲供
 	private int isTerm2;//分体柜是否远程监控
 	private int isTerm3;//立柜柜体是否在地下室
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date earliestDeliveryDate;//要求发货时间,最早交付时间
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date earliestProductDate;//工厂最早交货时间,最早生产时间
 	/**
 	 * 购销明细 Purchase and sale subsidiar
@@ -245,7 +245,7 @@ public abstract class AbsOrder {
 	//
 	private int submitType;
 	private String currentUser;//当前session用户
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date optTime;//新建时为录入日期/其它为修改时间
 	//
 	

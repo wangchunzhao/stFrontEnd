@@ -22,7 +22,7 @@ import com.jacob.com.Dispatch;
  * 
  * word转pdf的工具
  * 
- * @author 
+ * @author Walker
  * @time 
  */
 public class Word2PdfUtil {
@@ -59,8 +59,9 @@ public class Word2PdfUtil {
     public static boolean word2pdf(String source, String target) {
         logger.info("Word转PDF开始启动...");
         long start = System.currentTimeMillis();
-//        System.loadLibrary("./lib/jacob-1.19-x64.dll");
+//        System.loadLibrary("jacob-1.19-x64.dll");
         ActiveXComponent app = null;
+        boolean success = true;
         try {
             app = new ActiveXComponent("Word.Application");
             app.setProperty("Visible", false);
@@ -76,15 +77,17 @@ public class Word2PdfUtil {
             Dispatch.call(doc, "Close", false);
             long end = System.currentTimeMillis();
             logger.info("转换完成，用时：" + (end - start) + "ms");
-            return true;
+            success = true;
         } catch (Exception e) {
             logger.info("Word转PDF出错：" + e.getMessage());
-            return false;
+            success = false;
         } finally {
             if (app != null) {
                 app.invoke("Quit", wdDoNotSaveChanges);
             }
         }
+        
+        return success;
     }
 
 }
