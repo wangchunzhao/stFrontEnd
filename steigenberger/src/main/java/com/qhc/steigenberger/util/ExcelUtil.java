@@ -31,7 +31,8 @@ public class ExcelUtil {
     public static List<List<String>> readXlsx(InputStream input) throws IOException {
         List<List<String>> result = new ArrayList<List<String>>();
         XSSFWorkbook workbook = new XSSFWorkbook(input);
-        for (XSSFSheet xssfSheet : workbook) {
+        Iterable<XSSFSheet> sheets = (Iterable)workbook;
+        for (XSSFSheet xssfSheet : sheets) {
             if (xssfSheet == null) {
                 continue;
             }

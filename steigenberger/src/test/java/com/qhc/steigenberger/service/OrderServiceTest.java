@@ -25,7 +25,7 @@ class OrderServiceTest {
 
 	@Test
 	void testFindOrderDetail() {
-		AbsOrder order = orderService.findOrderDetail("123", "1-1", "");
+		AbsOrder order = orderService.findOrderDetail("123", "1-2", "");
 		System.out.println(order.getCreateTime());
 	}
 

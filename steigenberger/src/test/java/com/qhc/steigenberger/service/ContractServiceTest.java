@@ -18,6 +18,7 @@ class ContractServiceTest {
 	void testExportToPDF() {
 		File f = null;
 		try {
+			System.out.println(System.getProperty("java.library.path"));
 			f = contractService.exportToPDF(1);
 		} catch (Exception e) {
 			e.printStackTrace();

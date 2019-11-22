@@ -30,6 +30,7 @@ import com.qhc.steigenberger.domain.form.BaseItem;
 import com.qhc.steigenberger.domain.form.BaseOrder;
 import com.qhc.steigenberger.util.NumberToCNUtil;
 import com.qhc.steigenberger.util.PageHelper;
+import com.qhc.steigenberger.util.Word2PdfUtil;
 import com.qhc.steigenberger.util.XwpfUtil;
 
 /**
@@ -231,9 +232,9 @@ public class ContractService {
 		params.put("installPlace", contract.getInstallLocation());
 
 		// 质量标准-其他
-		params.put("qualityStandardOther", XwpfUtil.map.get(contract.getQualityStand()));
+		params.put("qualityStandardOther", XwpfUtil.map.get(contract.getQualityStand().equals("")));
 		// 质量标准-自安自保
-		params.put("qualityStandardSelfHode", XwpfUtil.map.get(contract.getQualityStand()));
+		params.put("qualityStandardSelfHode", XwpfUtil.map.get(!contract.getQualityStand().equals("")));
 		// 验收标准（方法）-需方负责安装调试
 		params.put("acceptanceStandardBuyer", XwpfUtil.map.get(contract.getAcceptanceCriteriaCode().equals("1001")));
 		// 验收标准（方法）-供方负责安装调试
@@ -256,7 +257,7 @@ public class ContractService {
 		XWPFDocument doc = new XWPFDocument(is);
 
 		xwpfUtil.replaceInPara(doc, params);
-		xwpfUtil.export(doc, detailList, paramSum, 0);
+		xwpfUtil.exportTable1(doc, detailList, paramSum, 0, Boolean.valueOf(false));
 		xwpfUtil.updateValueToTable(doc, paraTable2, 1);
 
 		File path = new File(contractDir);
@@ -271,7 +272,9 @@ public class ContractService {
 		xwpfUtil.close(vos);
 		xwpfUtil.close(is);
 
-		xwpfUtil.transferToPDF(new FileInputStream(wordFile), new FileOutputStream(pdfFile));
+//		xwpfUtil.transferToPDF(new FileInputStream(wordFile), new FileOutputStream(pdfFile));
+		
+		Word2PdfUtil.word2pdf(wordFile, pdfFile);
 
 //		wordFile.delete();
 
