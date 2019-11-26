@@ -134,10 +134,11 @@ public abstract class AbsItem {
 	public void setMaterialName(String materialName) {
 		this.materialName = materialName;
 	}
+	
 	public boolean isConfigurable() {
 		return isConfigurable;
 	}
-	public void setConfigurable(boolean isConfigurable) {
+	public void setIsConfigurable(boolean isConfigurable) {
 		this.isConfigurable = isConfigurable;
 	}
 	public boolean isPurchased() {
