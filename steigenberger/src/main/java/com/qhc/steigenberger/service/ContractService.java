@@ -12,17 +12,27 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.domain.Contract;
+import com.qhc.steigenberger.domain.ContractSignSys;
+import com.qhc.steigenberger.domain.Mail;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.form.AbsOrder;
@@ -39,6 +49,8 @@ import com.qhc.steigenberger.util.XwpfUtil;
  */
 @Service
 public class ContractService {
+	private Logger logger = LoggerFactory.getLogger(ContractService.class);
+
 	private ObjectMapper mapper = new ObjectMapper()
 			.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
 
@@ -50,6 +62,12 @@ public class ContractService {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private MailService mailService;
+
+	@Autowired
+	private BestsignService bestsignService;
 
 	public Result find(Map<String, Object> params) {
 		Result result = (Result) fryeService.getInfo("/contract", params, Result.class);
@@ -82,17 +100,47 @@ public class ContractService {
 		Result result = null;
 		result = (Result) fryeService.postForm("/contract", contract, Result.class);
 		if (result.getStatus().equals("ok")) {
-			deletePdf((Contract)result.getData());
+			deletePdf((Contract) result.getData());
 		}
-		
+
 		return result;
 	}
 
+	public byte[] doDownloadFromSignSystem(String signContractId) {
+//		Contract contract = (Contract) this.find(contractId).getData();
+//		if (contract == null)
+//			return null;
+//
+//		String signContractId = contract.getSignContractId();
+		byte[] zipBytes = bestsignService.downloadContract(signContractId);
+
+		return zipBytes;
+	}
+
+	/**
+	 * 
+	 * 导出合同PDF格式文档
+	 * 
+	 * @param contractId 合同ID
+	 * @return PDF文件
+	 * @throws Exception
+	 */
 	public File exportToPDF(Integer contractId) throws Exception {
 		Contract contract = (Contract) this.find(contractId).getData();
+		return exportToPDF(contract);
+	}
+
+	/**
+	 * 导出合同PDF格式文档
+	 * 
+	 * @param contract 合同对象
+	 * @return PDF文件
+	 * @throws Exception
+	 */
+	public File exportToPDF(Contract contract) throws Exception {
 		File wordFile = getWordFile(contract);
 		File pdfFile = getPdfFile(contract);
-		
+
 		if (pdfFile.exists() && pdfFile.length() > 0) {
 			return pdfFile;
 		}
@@ -267,7 +315,7 @@ public class ContractService {
 		xwpfUtil.replacePara(doc, params);
 		xwpfUtil.exportTable1(doc, detailList, paramSum, 0, Boolean.valueOf(false));
 		xwpfUtil.replaceTable2(doc, paraTable2, 1);
-		
+
 		FileOutputStream vos = new FileOutputStream(wordFile);
 		doc.write(vos);
 
@@ -289,7 +337,7 @@ public class ContractService {
 
 		return pdfFile;
 	}
-	
+
 	/**
 	 * 
 	 * 合同修改后删除已生成的pdf文件
@@ -302,7 +350,7 @@ public class ContractService {
 			pdfFile.delete();
 		}
 	}
-	
+
 	private File getPdfFile(Contract contract) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(contract.getProductionTime());
@@ -310,7 +358,7 @@ public class ContractService {
 		if (!path.exists()) {
 			path.mkdirs();
 		}
-		
+
 		// 需求流水号-签约单位-合同号(核算号)
 		String pdfFileName = "";
 		if (contract.getVersion() != null && !contract.getVersion().isEmpty()) {
@@ -323,7 +371,7 @@ public class ContractService {
 		File pdfFile = new File(path, pdfFileName);
 		return pdfFile;
 	}
-	
+
 	private File getWordFile(Contract contract) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(contract.getProductionTime());
@@ -331,7 +379,7 @@ public class ContractService {
 		if (!path.exists()) {
 			path.mkdirs();
 		}
-		
+
 		// 需求流水号-签约单位-版本号
 		String fileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "-"
 				+ contract.getVersion() + ".docx";
@@ -340,4 +388,142 @@ public class ContractService {
 		return wordFile;
 	}
 
+	public Contract sendMailToCustomer(Integer contractId) {
+		Contract contract = (Contract) this.find(contractId).getData();
+		try {
+			File docFile = exportToPDF(contract);
+
+			Map<String, Object> valMap = new HashMap<>();
+			// 签约单位
+			valMap.put("customerName", contract.getContractorClassName());
+			// 合同号(核算号)
+			valMap.put("contractCode", contract.getContractNumber());
+			// 版本号，XX_fXX_yyyy.MM.dd
+			valMap.put("versionNo", contract.getVersion());
+			// 创建日期
+			valMap.put("createDate", contract.getProductionTime());
+
+			String filename = contract.getSequenceNumber() + "-" + contract.getContractorCode() + "-"
+					+ contract.getVersion() + ".pdf";
+
+			Mail mail = new Mail();
+			mail.setId(UUID.randomUUID().toString());
+			mail.setFrom(null);
+			mail.setTo(contract.getPartyaMail());
+//			LinkedHashMap<String, String> attachments = createAttachments(docFile, fileName);
+			LinkedHashMap<String, File> attachments = new LinkedHashMap<String, File>();
+			attachments.put(filename, docFile);
+			mail.setAttachments(attachments);
+			String body = mailService.render("contract-notice", "HTML5", valMap);
+			mail.setBody(body);
+			mail.setSubject("【" + valMap.get("contractCode") + "】" + valMap.get("versionNo") + "版合同已制作请上传签署");
+
+			logger.info("contract mail body: " + body);
+			mailService.send(mail);
+
+			String fileHashCode = bestsignService.generateShA1Code(docFile);
+// 	update contract file_hash_code		
+			contract.setFileHashCode(fileHashCode);
+// TODO			
+//			this.contractRepository.save(contract);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return contract;
+	}
+
+	/**
+	 * 定时任务，定时更新电子签约合同状态
+	 * 
+	 */
+	@Scheduled(cron = "0 30 1 * * ?")
+	public void refreshContractState() {
+		logger.info(System.currentTimeMillis() + ":定时任务--update contracts' state--开始执行");
+		try {
+			doRefreshContractState();
+		} catch (JsonMappingException e) {
+			logger.error("合同状态更新定时任务", e);
+		} catch (JsonProcessingException e) {
+			logger.error("合同状态更新定时任务", e);
+		}
+		logger.info(System.currentTimeMillis() + ":定时任务--update contracts' state--完成");
+	}
+
+	/**
+	 * 查询电子签约合同状态并更新本地合同状态及电子签约合同id
+	 * 
+	 * @return
+	 * @throws JsonProcessingException
+	 * @throws JsonMappingException
+	 */
+	public boolean doRefreshContractState() throws JsonMappingException, JsonProcessingException {
+		String states = "03,04,05,06";
+		List<Contract> contractList = null; // TODO this.contractRepository.findContractByStateList(states);
+		List<ContractSignSys> signList = bestsignService.syncContractSignSysData();
+		if (signList == null || signList.size() <= 0) {
+			logger.info(System.currentTimeMillis() + ":--update contracts' state--Failed");
+			return false;
+		}
+
+		for (Contract contract : contractList) {
+			String fileHashCode = contract.getFileHashCode();
+			if (fileHashCode == null || fileHashCode.isEmpty())
+				continue;
+
+			Optional<ContractSignSys> signed = signList.stream().filter(s -> fileHashCode.equals(s.getFileHashCode()))
+					.findFirst();
+			String signContractId = signed.isPresent() ? signed.get().getSignContractId() : null;
+			String state = "03";
+			if (signContractId != null) {
+				state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
+			}
+			if (!contract.getStatus().equals(Integer.parseInt(state))) {
+				contract.setSignContractId(signContractId);
+				contract.setStatus(Integer.parseInt(state));
+
+				// 更新合同状态及电子签约合同ID
+// TODO				this.contractRepository.save(contract);
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * 签署合同
+	 * 
+	 * @param contractId 合同ID
+	 * @return
+	 * @throws JsonProcessingException
+	 * @throws JsonMappingException
+	 */
+	public boolean doSignContract(int contractId) throws JsonMappingException, JsonProcessingException {
+		Contract contract = (Contract) this.find(Integer.valueOf(contractId)).getData();
+
+		if (contract == null)
+			return false;
+
+		// 电子签约中合同Id
+		String signContractId = null; // TODO contract.getSignContractId();
+		boolean result = bestsignService.doSignContract(signContractId);
+		String state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
+		System.out.println("state:" + state);
+		if (result || state.equals("06")) {
+//			contract.setState("06");
+			contract.setStatus(6);
+
+			// 使用上上签电子合同状态更新数据库更新合同状态
+//			this.contractRepository.save(contract);
+//			Result result = (Result) fryeService.putJason("/contract/" + contractId, Result.class);
+//			if (result.getStatus().equals("ok")) {
+//				Contract contract = new ObjectMapper().convertValue(result.getData(), Contract.class);
+//				result.setData(contract);
+//			}
+//			
+//			return result.getStatus().equals("ok");
+		}
+
+		return false;
+	}
 }

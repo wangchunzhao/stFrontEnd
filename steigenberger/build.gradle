@@ -60,6 +60,8 @@ dependencies {
 	implementation "org.apache.poi:poi:3.13"
 	
 	implementation "com.jacob:jacob:1.19"
+	
+	implementation "com.squareup.okhttp3:okhttp:3.9.0"
 
 	//
 	//compileOnly 'org.projectlombok:lombok'

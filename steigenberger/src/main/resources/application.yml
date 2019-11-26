@@ -30,6 +30,22 @@ spring:
                 starttls:
                     auth: true   
 
+#for email setting
+mail:
+#the directory for temp files
+    files:
+        path: "d:/qhc/mail/files"
+########### test profile ###########
+    debug: true
+    host: 159.82.101.253
+    username: 
+    password: 
+    smtp:
+        from: ricoh-4000@carrier.utc.com
+        auth: false
+        timeout: 120000
+        port: 25
+
 # logging config
 logging:
     config: classpath:logback-spring.xml
@@ -45,3 +61,24 @@ qhc:
 contract:
     dir: ./contract
     
+    # Bestsign config
+    bestsign:
+        # for Test
+        url: https://api.bestsign.info
+        accountname: yongzheng.wang@haiercarrier.com
+        entername: 青岛海尔开利冷冻设备有限公司
+        clientid: 2052754221899448935
+        secrete: 8bbfba318e84431ba815e028cdeb7f64
+        sealname: 青岛海尔开利冷冻设备
+        privatekey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC1dJfnXe216cOBi9yY61iZXDouDgDMitwOM4gCUWPJ9KlXUsbOG0LnEt9jUxsBRMcvkfnFaVn2ZLC7KxieaIdnIIGw1rN2a0WFJIwBuFrH1yaUUfgMGNOUJjhiph0JLOhQroLntUh//WycHZy8Phw6tQ7S/5f5FKVQi6HCMtcHok70HwU72Axr+e56F4pVGAcaMp7YXjdOmpFPXx6j6GF8FYh2unXUYrBGRH/5rHqAo0Ag8A2zkL47aKCvkucfeZiu4tuehR3unrI4tdAm/CpntsJ2BYvmhRgqntBHK3CW6Gme88jjepbSEkhDjROzlK0QMJeqU+s5HUM1BtLFJtPtAgMBAAECggEACM6w9NT1Tcgb6jTMr0t1EHSOil+5oDP5PGM57crfihTrB0cISUa/d5HN7/c/r08UT/XI5tEXQcNfZKZR2pZ+Q/4q7VdufIf2ZuEAPrEhDuQdhkN4Q7YMxvsX74najPB2Ejx2NCLzcurtE6LIUca9/gd9wbYQPVHIOGGep1tqXn9oF4/QeuFsFZK9GTS5TLGCekREW5gH57Eo2DHSiDlKTgCqjir6+yF2mRPWGGiaLKtDIBsOM2qpxI3C8yjgD5DKy3SrZ/vBe9kBeJ6VZzJqNGYmC7A/FQhdTMD9mshZUPQD3g9z6kmLkxBs0Q3nSGN/j/QBkcuGCal5gO0na3BcbQKBgQD+/GGVBCsCNax/K7LL+MZsLDOrKW1jsWdO8X49Ep/CnF1Exuz38dvQiW+hFo2K3gRB5ZkENWWy+HL+Z0rnwSI2jbRttMxN9q9Sdb8dRG1TazZtLIsOvz1oMF9VZ5PXn68To3oKNVIm1TGh7TdhqMS0VXPvpBiRLsWHX28Xf/6tTwKBgQC2LViECiIjUlKxONb7P68bT1Bs+YMs9329ESEf2ohloW6pql4ZMro9nJr+QPt6mUAgUyWZWWaVLuC/54+a5Y5SGDYBYFVN3iSLVIsttjq1R/YJVD0u6BGo92hqEmCfimQqHaci5WjAGD1zRpVoI9vOSAKhR7u6MkyIstqUrG10AwKBgEK10Onlr0LivACBdEO9EFyYq+Pp8L6WWUrkD3z29Gk784Lc8H5l/nZuno/skJd2QnLjGMdrGPJb4eoBKC2976+KH1xcYt863N+cAqYrktayRAkIEFGJYw1xKl/zu1A8bNece39UN+wE9vlAUK7yMpRjjvNxYSQKso8aPrxNNlotAoGAU7FpZN+y5z8+tiRCv5J2Q7mgXTATz2iz31QrP5MJ7obHbDLUoAbqALwdiIkZ/yzAhRktwNGNiyPKJN+g3axwQc7VoLQ8/FT9vPTOK+X3+qhgo9CLey0qT9G5qmFe+mx9r8uHqURzZyy7rmXS5dDzfkUe0DFAUT4iYvqn6H1+mzkCgYBUGred7m5xXs96xaHHVM5Y2mqpLszHndSMqDMMKUKIWSFBuOsGIqHfua/f+ZWHX4IbvveG5sEtYdBy4xReZRrW/yYcHL+/dIkP4DwE9unlwFnpKQ8F7Ynv7sWx+nilI0RuveSqt3M6HwgpQwaE9WCbhMvr6Gai9yASJuDQYwSttQ==
+        
+        contractDir: D:\\qhc\\contracts\\
+        
+        # for production
+        #sign.url=https://api.bestsign.cn
+        #sign.accountname=peng.liu@carrier.utc.com
+        #sign.entername=\u9752\u5C9B\u6D77\u5C14\u5F00\u5229\u51B7\u51BB\u8BBE\u5907\u6709\u9650\u516C\u53F8
+        #sign.clientid=1555896956019659217
+        #sign.secrete=CRUhcOhYjL2zpCOMvLzuIKrnS4WKP1W6
+        #sign.sealname=\u6D77\u5C14\u5F00\u5229\u516C\u7AE0
+        #sign.privatekey=MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCVWoXXGgYKtIlpT4l4exar2zsaVxF1QgKqHpz/HmJ9LBRGj7S7q/SDtPDgB+3OYE2WwgdjgJnMcMiT1GmLeEagaseIryZseREJcRE+rdiLh1bkN6r1G4SWF2xRvg5FDKSIt5GOnJrEuICImv5QRJeqHg+Cx7vFngp41vorGRB5w9qYZmPL09pcCSNgfqPBte+22CTLNS1C3hA1nzQSxnxN6Bh5caqMTcNy7LLTlbJtXUQ4Z1elo7gkfL44vIBtmvZj4lNiVZLmBLnHIQwDAauE1lkmVW9GA0mLjROmEzJ/qN/zgqjDe2jMkdGwrS2JuFBRdIldlSB8ySjVjomHgMVjAgMBAAECggEAQ2dUKeyjt2cc8LsllosugybwuIV86od8/lvMjNKgrk8bY3DtpxkGw/4AC4tohpAt1BEDFqPuRTbNPvJJI9mHPlSScpxhYekNiE5P8xKwPOA6lcqNzAq8PqSZjRaSCBWZl94IwezpaEjAMWaJyZ37OJpSc7pCgwA9R6X1x0eLiPfo5gZYn7N61HsOCQkfv30Cvk6rZ/zhBkgzd3kCAGuEj0ZQTvt6j8s0MN6RCCSXpRCZXo0mwq2oVc6Um+kr5pcQHg9kL1NjbDjGG6qWP/mOIBhn9Vc+j0F766uouaWagmcfBgSRfMGUE/qfIOSlvbBGKLN1n6d5jchoPE6XF1QfiQKBgQDod4O/WAhLbf62ZG875p09QfoM49erOEWkuVWIvuX7ywHvsSQYrHY7+TuVX7uTpd9TUMeHGfrC1sBDYV0BxXg+9TS1rf1YVn2VfOiYzWdiHA8F8HaO19kZ6k4boLZUOQaAqdGzJ+j+qwKY0ke9s7eRRmtLf9pTEULyrvqBPuPTPwKBgQCkeRcSL0ut4b4QRHg7mHpn1fXAQPaWOW17lCNLvh3/pKxlnlW+k7hM/YhZXhh+ITzHlS1lg8EHWJl3G0j1MbaNh9W/tsEo97g3AffUabxWDJXrcX7oIRjSZJEYo/GVY5KHeTrnhckpR7t1debfW4d8XME55G/Pek7XytL6vRqY3QKBgQCh2sSyLtrnmdgkqd0Audp00kEFRIXewrlKrXeuVCvQmlHoz08wlrNjom4n3JW/gVfyrGWf3SjJC7ilsV6OYy0LuLJQZKnmHaImuOdBrJH0r1COdBQ39HVGI+rqNYV9Mo8iehp1QK5q0ipmuNIWdNC0p3EBCi26dGRGkCn+XwlFBQKBgQCAUmmJqpTlKUdc8c7M0H5QHUMLqKO7OTsOO9n98mr9VcGb1xkXA7G7f+Otthht8Ai3vtAYb99el+XEY+lcRFklu2Etnqy+BegYItT1STnD+TXO6FIXUhtHq2b5To/h+joMsK0gjeUQ7AJ59m8WvRbMFKI9RNlniwmQm5JYRspFkQKBgQCRGys8S3rcVmoB/C0CC00CW9I5xMJFGK5gRo0HspJ92H4Ch90w0Uya4YnPBw7liIOvW2MjWhIKLN9cL1nTQ7V2ZFnwMgYdWCDEq77WqVVT6+YNy3NvnWV/GPpll3Gkthe/VG75vmkli1oSaXLrLHOm45uYCXZhA+K16Y4aJwgP/w==

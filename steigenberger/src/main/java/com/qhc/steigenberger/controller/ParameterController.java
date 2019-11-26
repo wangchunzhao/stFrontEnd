@@ -59,7 +59,7 @@ public class ParameterController {
 			msg = "更新操作成功!";
 		} catch (Exception e) {
 			status = 500;
-			msg = "操作失败：" + e.getMessage();
+			msg = "操作失败!";
 		}
 	
 		return JsonResult.build(status, "参数设置" + msg, "");

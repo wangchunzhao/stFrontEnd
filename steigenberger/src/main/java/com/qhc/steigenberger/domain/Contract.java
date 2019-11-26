@@ -5,7 +5,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 
@@ -145,6 +150,12 @@ public class Contract
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createTime = null;
+	
+	@ApiModelProperty("文档Hash值")
+	private String fileHashCode;
+	
+	@ApiModelProperty("电子签约中合同Id")
+	private String signContractId;
 
 
 	public Contract(){
@@ -500,6 +511,22 @@ public class Contract
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getFileHashCode() {
+		return fileHashCode;
+	}
+
+	public void setFileHashCode(String fileHashCode) {
+		this.fileHashCode = fileHashCode;
+	}
+
+	public String getSignContractId() {
+		return signContractId;
+	}
+
+	public void setSignContractId(String signContractId) {
+		this.signContractId = signContractId;
 	}
 
 	@Override
