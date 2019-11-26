@@ -43,7 +43,7 @@ public class ContractController {
 
 	@Autowired
 	ContractService contractService;
-	
+
 	@Value("${contract.bestsign.contractDir}")
 	private String contractDir;
 
@@ -96,25 +96,43 @@ public class ContractController {
 
 	@GetMapping("/{id}/preview")
 	@ResponseBody
-	public Result preview(@PathVariable("id") Integer contractId) {
-		Result r = null;
-//		Map<String,Object> m = new HashMap<String,Object>();
-//		m.put("list", operationService.getList());
-		return r;
+	public void preview(@PathVariable("id") Integer contractId, HttpServletRequest request,
+			HttpServletResponse response) {
+		File pdfFile = null;
+		InputStream pis = null;
+		try {
+			pdfFile = this.contractService.exportToPDF(contractId);
+//			String pdfFileName = new String(pdfFile.getName().getBytes("gb2312"), "ISO8859-1");
+//			response.setContentType("application/x-download;charset=GB2312");
+//			response.setHeader("Content-disposition", "attachment;filename=\"" + pdfFileName + "\"");
+
+			pis = new FileInputStream(pdfFile);
+			byte[] b = new byte[1024];
+			int len = -1;
+			while ((len = pis.read(b, 0, 1024)) != -1) {
+				response.getOutputStream().write(b, 0, len);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pis != null) {
+					pis.close();
+				}
+			} catch (IOException e) {
+			}
+		}
 	}
 
-	@RequestMapping({ "/export" })
-	public void exportContract(HttpServletRequest request, HttpServletResponse response) {
-		Contract contract = null;
-
-		String idStr = request.getParameter("id");
-		Integer contractId = Integer.parseInt(idStr);
-
+	@RequestMapping({ "/{id}/export" })
+	public void exportContract(@PathVariable("id") Integer contractId, HttpServletRequest request,
+			HttpServletResponse response) {
 		File pdfFile = null;
 		InputStream pis = null;
 		try {
 			pdfFile = this.contractService.exportToPDF(contractId);
 			String pdfFileName = new String(pdfFile.getName().getBytes("gb2312"), "ISO8859-1");
+			
 			response.setContentType("application/x-download;charset=GB2312");
 			response.setHeader("Content-disposition", "attachment;filename=\"" + pdfFileName + "\"");
 
@@ -178,10 +196,10 @@ public class ContractController {
 	public void downloadContract(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String idStr = request.getParameter("id");
 		Contract contract = this.contractService.find(Integer.valueOf(idStr)).getData();
-		
+
 		String signContractId = null; // TODO contract.getSignContractId();
 		byte[] zipBytes = this.contractService.doDownloadFromSignSystem(signContractId);
-		
+
 		String time = String.valueOf(System.currentTimeMillis());
 		String path = this.contractDir + contract.getSequenceNumber() + "_" + contract.getContractorName() + "_" + time
 				+ ".zip";
@@ -209,7 +227,8 @@ public class ContractController {
 		if (contract.getContractorName() != null) {
 			customerName = new String(contract.getContractorName().getBytes("gb2312"), "ISO8859-1");
 		}
-		String pdfFileName = contract.getSequenceNumber() + "-" + customerName + "(" + contract.getContractNumber() + ").pdf";
+		String pdfFileName = contract.getSequenceNumber() + "-" + customerName + "(" + contract.getContractNumber()
+				+ ").pdf";
 		if (contract.getVersion() != null && !contract.getVersion().isEmpty())
 			pdfFileName = contract.getSequenceNumber() + "-" + customerName + "(" + contract.getContractNumber() + "-"
 					+ contract.getVersion() + ").pdf";

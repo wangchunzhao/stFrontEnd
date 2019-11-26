@@ -597,8 +597,8 @@ var contractCols = [ {
     formatter: function(value, row, index) {
     	var actions = [];
 		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
-		actions.push('<a class="btn" onclick="preview(\'' + index + '\')"><i class="fa fa-remove"></i>预览preview</a>');
-		actions.push('<a class="btn" onclick="export(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
+		actions.push('<a class="btn" href="../contract/' + row.id + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
+		actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
 		actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
 		return actions.join('');
     }
@@ -677,6 +677,14 @@ function edit(index) {
 		setEditInfo(row, contract);
 		showEditModal(contract);
 	}
+}
+
+//显示合同编辑对话框
+function showEditModal(contract) {	
+	var html = template('contract-edit-tpl', contract);
+	$("#contractDialogBody").html(html);
+	// initValidator();
+	$("#contractDialog").modal('show');
 }
 
 //将行记录中属于订单的信息设置到合同中
@@ -758,12 +766,18 @@ function save() {
 	});
 }
 
-// 显示合同编辑对话框
-function showEditModal(contract) {	
-	var html = template('contract-edit-tpl', contract);
-	$("#contractDialogBody").html(html);
-	// initValidator();
-	$("#contractDialog").modal('show');
+function exportContract(index) {
+	var row = $('#contractTable').bootstrapTable('getData')[index];	
+	var contractId = row.id;
+	var contract = {};
+	
+	var url = ctxPath + "contract/" + contractId + "/export";
+	
+    var a = document.createElement("a");// 创建a标签
+    a.target = "_blank"; // 每次点击一次都打开新的窗口；
+    // a.download = "a.pdf";// 设置下载文件的文件名
+    a.href = url;// content为后台返回的下载地址
+    a.click();// 设置点击事件 
 }
 
 function initValidator() {

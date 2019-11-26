@@ -72,10 +72,8 @@ public class ContractService {
 	public Result find(Map<String, Object> params) {
 		Result result = (Result) fryeService.getInfo("/contract", params, Result.class);
 		if (result.getStatus().equals("ok")) {
-			JavaType javaType = mapper.getTypeFactory().constructParametricType(Result.class,
-					mapper.getTypeFactory().constructParametricType(ArrayList.class, Contract.class));
-			// result.setData(mapper.convertValue(result.getData(), );
-			result = mapper.convertValue(result, javaType);
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Contract.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
 		}
 
 		return result;
@@ -100,6 +98,7 @@ public class ContractService {
 		Result result = null;
 		result = (Result) fryeService.postForm("/contract", contract, Result.class);
 		if (result.getStatus().equals("ok")) {
+			result = mapper.convertValue(result, mapper.getTypeFactory().constructParametricType(Result.class, Contract.class));
 			deletePdf((Contract) result.getData());
 		}
 
@@ -288,9 +287,9 @@ public class ContractService {
 		params.put("installPlace", contract.getInstallLocation());
 
 		// 质量标准-其他
-		params.put("qualityStandardOther", XwpfUtil.map.get(contract.getQualityStand().equals("")));
+		params.put("qualityStandardOther", XwpfUtil.map.get(contract.getQualityStand() == null || contract.getQualityStand().equals("")));
 		// 质量标准-自安自保
-		params.put("qualityStandardSelfHode", XwpfUtil.map.get(!contract.getQualityStand().equals("")));
+		params.put("qualityStandardSelfHode", XwpfUtil.map.get(!(contract.getQualityStand() == null || contract.getQualityStand().equals(""))));
 		// 验收标准（方法）-需方负责安装调试
 		params.put("acceptanceStandardBuyer", XwpfUtil.map.get(contract.getAcceptanceCriteriaCode().equals("1001")));
 		// 验收标准（方法）-供方负责安装调试
