@@ -58,6 +58,8 @@ public class MenuController {
 	private final static String roleIndex="systemManage/roleManage";
 	private final static String freight="systemManage/freight";
 
+	private final static String stockUpOrder = "dealerOrder/stockUpOrder";
+
 	//
 	private final static String FORM_SUBMIT = "submit";
 	private final static String FORM_SAVE = "save";
@@ -251,6 +253,15 @@ public class MenuController {
   	public String nologin() {
   		return "noLogin";
   	}
-	
 
+	@RequestMapping("/stockUpOrder")
+	public static ModelAndView goStockUpOrder() {
+		ModelAndView mv = new ModelAndView(stockUpOrder);
+		OrderOption oo = staticOrderService.getOrderOption();
+		oo.setCustomerClazzCode("02");
+		String orderTypeCode =oo.getOrderTypes().get("02");
+		oo.setOrderTypeCode(orderTypeCode);
+		mv.addObject(ORDER_OPTION,oo);
+		return mv;
+	}
 }
