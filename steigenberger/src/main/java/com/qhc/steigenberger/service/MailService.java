@@ -1,6 +1,8 @@
 package com.qhc.steigenberger.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -270,9 +272,7 @@ public class MailService {
 			}
 			send(to, session, msg);
 			sendFlag = true;
-		} catch (AddressException e) {
-			logger.error("send email failed", (Throwable) e);
-		} catch (MessagingException e) {
+		} catch (Throwable e) {
 			logger.error("send email failed", (Throwable) e);
 		}
 		return sendFlag;
@@ -337,6 +337,8 @@ public class MailService {
 	
 	/**
 	 * 利用thremyleaf渲染邮件内容模板
+	 * <p>
+	 * ${contractCode}
 	 * 
 	 * @param templateName
 	 * @param mode HTML5
@@ -344,19 +346,47 @@ public class MailService {
 	 * @return
 	 */
 	public static String render(String templateName, String mode, Map<String, Object> variables) {
-		TemplateEngine templateEngine = new TemplateEngine();
-		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-		templateResolver.setTemplateMode(mode);
-//		templateResolver.setPrefix("templates/");
-		templateResolver.setPrefix("");
-		templateResolver.setSuffix(".html");
-		templateResolver.setCacheable(false);
-		templateResolver.setCharacterEncoding("UTF-8");
-		templateEngine.setTemplateResolver((ITemplateResolver) templateResolver);
-		Context context = new Context();
-		context.setVariables(variables);
-		StringWriter stringWriter = new StringWriter();
-		templateEngine.process(templateName, (IContext) context, stringWriter);
-		return stringWriter.toString();
+//		TemplateEngine templateEngine = new TemplateEngine();
+//		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+//		templateResolver.setTemplateMode(mode);
+////		templateResolver.setPrefix("templates/");
+//		templateResolver.setPrefix("");
+//		templateResolver.setSuffix(".html");
+//		templateResolver.setCacheable(false);
+//		templateResolver.setCharacterEncoding("UTF-8");
+//		templateEngine.setTemplateResolver((ITemplateResolver) templateResolver);
+//		Context context = new Context();
+//		context.setVariables(variables);
+//		StringWriter stringWriter = new StringWriter();
+//		templateEngine.process(templateName, (IContext) context, stringWriter);
+//		return stringWriter.toString();
+		
+		try (InputStream in = "".getClass().getResourceAsStream(templateName)) {
+			byte[] data = new byte[5192];
+			int size = 0;
+			StringBuilder content = new StringBuilder(1024);
+			while ((size = in.read(data)) > 0) {
+				content.append(new String(data, "UTF-8"));
+			}
+			String h = content.toString();
+			for (Map.Entry<String, Object> e : variables.entrySet()) {
+				String k = "\\$\\{" + e.getKey() + "\\}";
+				String v = e.getValue() == null ? "" : e.getValue().toString();
+				h = h.replaceAll(k, v);
+//				while (h.indexOf(k) >= 0) {
+//					h = h.re
+//				}
+			}
+			
+			logger.debug(h);
+			
+			return h;
+		} catch (Exception e) {
+			logger.error("render", e);
+		} finally {
+			
+		}
+		
+		return "";
 	}
 }

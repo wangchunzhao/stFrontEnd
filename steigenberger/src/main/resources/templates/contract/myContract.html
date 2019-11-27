@@ -129,8 +129,10 @@ var ctxPath  = [[@{/}]];
 	                            <option value="">-- 请选择 --</option>
 	                            <option value="1">已制作</option>
 	                            <option value="2">已发送</option>
-	                            <option value="3">已签署</option>
-	                            <option value="4">已盖章</option>
+	                            <option value="3">客户已上传</option>
+	                            <option value="4">未签署</option>
+	                            <option value="5">客户方签署</option>
+	                            <option value="6">已签署</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
@@ -593,13 +595,20 @@ var contractCols = [ {
 },{
     title: '操作',
     align: 'center',
-    width:'15%',
+    width:'25%',
     formatter: function(value, row, index) {
     	var actions = [];
+    	var contractId = row.id;
+    	var status = row.status;
+    	var productionTime = row.productionTime;
+    	var exists = !(contractId == undefined || contractId == null || contractId == '');
 		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
-		actions.push('<a class="btn" href="' + ctxPath + 'contract/' + row.id + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
-		actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
-		actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
+    	if (exists) {
+			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
+			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/export" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
+			//actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
+			actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
+    	}
 		return actions.join('');
     }
 } ];
@@ -766,7 +775,7 @@ function save() {
 	});
 }
 
-function exportContract(index) {
+/* function exportContract(index) {
 	var row = $('#contractTable').bootstrapTable('getData')[index];	
 	var contractId = row.id;
 	var contract = {};
@@ -778,6 +787,36 @@ function exportContract(index) {
     // a.download = "a.pdf";// 设置下载文件的文件名
     a.href = url;// content为后台返回的下载地址
     a.click();// 设置点击事件 
+} */
+
+/**
+ * 发送合同文档给客户
+ */
+function send(index) {
+	var row = $('#contractTable').bootstrapTable('getData')[index];	
+	var contractId = row.id;
+	var contract = {};
+	
+	var url = ctxPath + "contract/" + contractId + "/send";
+	
+	$.ajax({
+	    url: url,
+	    data: JSON.stringify(contract),
+	    type: "PUT",
+	    contentType: "application/json;charset=UTF-8",
+	    success: function(data) {
+	    	if(data == null || data.status != 'ok') {
+	    		alert("发送合同失败！" + data.msg);
+	    	}else{
+	    		alert("发送合同成功！");
+	    		refresh();
+	    	}      
+	    },
+        error: function (res) {
+            alert("发送失败: "+jQuery.parseJSON(res.responseText).message);
+        },
+	    dataType: "json"
+	});
 }
 
 function initValidator() {
