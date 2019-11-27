@@ -96,6 +96,7 @@ public class ContractService {
 	 */
 	public Result save(Contract contract) {
 		Result result = null;
+		contract.setStatus(1);
 		result = (Result) fryeService.postForm("/contract", contract, Result.class);
 		if (result.getStatus().equals("ok")) {
 			result = mapper.convertValue(result,
@@ -417,7 +418,8 @@ public class ContractService {
 			LinkedHashMap<String, File> attachments = new LinkedHashMap<String, File>();
 			attachments.put(filename, docFile);
 			mail.setAttachments(attachments);
-			String body = mailService.render("contract-notice", "HTML5", valMap);
+//			String body = mailService.render("contract-notice", "HTML5", valMap);
+			String body = mailService.render("/contract-notice.html", "HTML5", valMap);
 			mail.setBody(body);
 			mail.setSubject("【" + valMap.get("contractCode") + "】" + valMap.get("versionNo") + "版合同已制作请上传签署");
 
@@ -428,6 +430,9 @@ public class ContractService {
 			// update contract file_hash_code
 //			contract.setFileHashCode(fileHashCode);
 			this.updateFileHashCode(contractId, fileHashCode);
+			
+			// TODO 一期没有这行，状态待定
+			this.updateStatus(contractId, 2);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

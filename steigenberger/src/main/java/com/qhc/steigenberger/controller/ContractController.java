@@ -17,6 +17,8 @@ import java.util.zip.ZipInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.domain.Contract;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.service.ContractService;
@@ -40,6 +41,8 @@ import com.qhc.steigenberger.service.UserService;
 @Controller
 @RequestMapping("contract")
 public class ContractController {
+	
+	private static Logger logger = LoggerFactory.getLogger(ContractController.class);
 
 	@Autowired
 	ContractService contractService;
@@ -89,7 +92,8 @@ public class ContractController {
 				result = Result.error("Contract is null");
 			}
 		} catch (Exception e) {
-			result = Result.error(e.getMessage());
+			logger.error("send contract", e);
+			result = Result.error("发送合同给客户失败！");
 		}
 		return result;
 	}
