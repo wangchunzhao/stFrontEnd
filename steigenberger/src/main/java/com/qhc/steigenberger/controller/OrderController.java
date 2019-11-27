@@ -309,7 +309,7 @@ public class OrderController {
 				list.add(orderStatus0111);
 				list.add(orderStatus0112);
 				query.setStatusList(list);
-				query.setB2c("1");
+//				query.setB2c("1");
 				query.setSalesCode("");
 				break;
 			}else {
