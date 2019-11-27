@@ -123,13 +123,13 @@ public class BestsignService {
 		String result = getBestSignClient().executeRequest("/api/contracts/search", "post", paramsMap);
 		logger.debug("Search result:" + result);
 		if (result == null || result.isEmpty()) {
-			return null;
+			return new ArrayList<ContractSignSys>();
 		}
 
 		Map resultMap = (Map) mapper.readValue(result, HashMap.class);
 		String data = resultMap.get("data").toString();
 		if (data == null || data.isEmpty()) {
-			return null;
+			return new ArrayList<ContractSignSys>();
 		}
 		Map dataMap = (Map) mapper.readValue(data, HashMap.class);
 		String results = dataMap.get("results").toString();
@@ -158,7 +158,7 @@ public class BestsignService {
 		}
 
 		// 过滤删除状态为1的合同签署信息
-		List<ContractSignSys> resultList = new ArrayList<>();
+		List<ContractSignSys> resultList = new ArrayList<ContractSignSys>();
 		for (ContractSignSys one : signList) {
 			if (one.getCurHave() == null || !one.getCurHave().booleanValue()) {
 				one.setIsDelete("1");

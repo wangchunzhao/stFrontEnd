@@ -98,7 +98,8 @@ public class ContractService {
 		Result result = null;
 		result = (Result) fryeService.postForm("/contract", contract, Result.class);
 		if (result.getStatus().equals("ok")) {
-			result = mapper.convertValue(result, mapper.getTypeFactory().constructParametricType(Result.class, Contract.class));
+			result = mapper.convertValue(result,
+					mapper.getTypeFactory().constructParametricType(Result.class, Contract.class));
 			deletePdf((Contract) result.getData());
 		}
 
@@ -287,9 +288,11 @@ public class ContractService {
 		params.put("installPlace", contract.getInstallLocation());
 
 		// 质量标准-其他
-		params.put("qualityStandardOther", XwpfUtil.map.get(contract.getQualityStand() == null || contract.getQualityStand().equals("")));
+		params.put("qualityStandardOther",
+				XwpfUtil.map.get(contract.getQualityStand() == null || contract.getQualityStand().equals("")));
 		// 质量标准-自安自保
-		params.put("qualityStandardSelfHode", XwpfUtil.map.get(!(contract.getQualityStand() == null || contract.getQualityStand().equals(""))));
+		params.put("qualityStandardSelfHode",
+				XwpfUtil.map.get(!(contract.getQualityStand() == null || contract.getQualityStand().equals(""))));
 		// 验收标准（方法）-需方负责安装调试
 		params.put("acceptanceStandardBuyer", XwpfUtil.map.get(contract.getAcceptanceCriteriaCode().equals("1001")));
 		// 验收标准（方法）-供方负责安装调试
@@ -409,7 +412,8 @@ public class ContractService {
 			mail.setId(UUID.randomUUID().toString());
 			mail.setFrom(null);
 			mail.setTo(contract.getPartyaMail());
-//			LinkedHashMap<String, String> attachments = createAttachments(docFile, fileName);
+			// LinkedHashMap<String, String> attachments = createAttachments(docFile,
+			// fileName);
 			LinkedHashMap<String, File> attachments = new LinkedHashMap<String, File>();
 			attachments.put(filename, docFile);
 			mail.setAttachments(attachments);
@@ -421,10 +425,9 @@ public class ContractService {
 			mailService.send(mail);
 
 			String fileHashCode = bestsignService.generateShA1Code(docFile);
-// 	update contract file_hash_code		
-			contract.setFileHashCode(fileHashCode);
-// TODO			
-//			this.contractRepository.save(contract);
+			// update contract file_hash_code
+//			contract.setFileHashCode(fileHashCode);
+			this.updateFileHashCode(contractId, fileHashCode);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -458,7 +461,9 @@ public class ContractService {
 	 */
 	public boolean doRefreshContractState() throws JsonMappingException, JsonProcessingException {
 		String states = "03,04,05,06";
-		List<Contract> contractList = null; // TODO this.contractRepository.findContractByStateList(states);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("statusList", "3,4,5,6");
+		List<Contract> contractList = (List<Contract>)((PageHelper)this.find(params).getData()).getRows();
 		List<ContractSignSys> signList = bestsignService.syncContractSignSysData();
 		if (signList == null || signList.size() <= 0) {
 			logger.info(System.currentTimeMillis() + ":--update contracts' state--Failed");
@@ -482,7 +487,7 @@ public class ContractService {
 				contract.setStatus(Integer.parseInt(state));
 
 				// 更新合同状态及电子签约合同ID
-// TODO				this.contractRepository.save(contract);
+				this.updateSignId(contract.getId(), signContractId);
 			}
 		}
 		return true;
@@ -504,7 +509,7 @@ public class ContractService {
 			return false;
 
 		// 电子签约中合同Id
-		String signContractId = null; // TODO contract.getSignContractId();
+		String signContractId = contract.getSignContractId();
 		boolean result = bestsignService.doSignContract(signContractId);
 		String state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
 		System.out.println("state:" + state);
@@ -513,16 +518,31 @@ public class ContractService {
 			contract.setStatus(6);
 
 			// 使用上上签电子合同状态更新数据库更新合同状态
-//			this.contractRepository.save(contract);
-//			Result result = (Result) fryeService.putJason("/contract/" + contractId, Result.class);
-//			if (result.getStatus().equals("ok")) {
-//				Contract contract = new ObjectMapper().convertValue(result.getData(), Contract.class);
-//				result.setData(contract);
-//			}
-//			
-//			return result.getStatus().equals("ok");
+			this.updateSignId(contractId, signContractId);
 		}
 
 		return false;
+	}
+	
+	public Result updateSignId(Integer contractId, String signContractId) {
+		logger.info("updateSignId({}, {})", contractId, signContractId);
+		Result result = null;
+		result = (Result) fryeService.postForm("/contract/" + contractId + "/signid/" + signContractId, "", Result.class);
+		if (!result.getStatus().equals("ok")) {
+			throw new RuntimeException(result.getMsg());
+		}
+
+		return result;
+	}
+	
+	public Result updateFileHashCode(Integer contractId, String fileHashCode) {
+		logger.info("updateFileHashCode({}, {})", contractId, fileHashCode);
+		Result result = null;
+		result = (Result) fryeService.postForm("/contract/" + contractId + "/hashcode/" + fileHashCode, "", Result.class);
+		if (!result.getStatus().equals("ok")) {
+			throw new RuntimeException(result.getMsg());
+		}
+
+		return result;
 	}
 }

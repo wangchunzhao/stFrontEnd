@@ -597,7 +597,7 @@ var contractCols = [ {
     formatter: function(value, row, index) {
     	var actions = [];
 		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
-		actions.push('<a class="btn" href="../contract/' + row.id + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
+		actions.push('<a class="btn" href="' + ctxPath + 'contract/' + row.id + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
 		actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
 		actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
 		return actions.join('');
@@ -858,8 +858,8 @@ function initValidator() {
 <!-- side nav js -->
 <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
 <script>
-     $('.sidebar-menu').SidebarNav()
-   </script>	
+  $('.sidebar-menu').SidebarNav()
+</script>
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>	
    

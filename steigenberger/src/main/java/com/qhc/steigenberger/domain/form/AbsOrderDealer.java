@@ -3,6 +3,8 @@
  */
 package com.qhc.steigenberger.domain.form;
 
+import java.util.List;
+
 /**
  * @author wang@dxc.com
  *
@@ -44,7 +46,21 @@ public abstract class AbsOrderDealer extends AbsOrder {
 		this.customerNatureCode = customerNatureCode;
 	}
 
+	// 合并折扣= SUM{每行市场零售金额*（折扣率/100）}/SUM(市场零售金额)
 	public double getDiscount() {
+		List<BaseItem> items = super.getItems();
+		discount = 1;
+		if (items != null && items.size() > 0) {
+			double amount = this.getItemsAmount();
+			double discountAmount = 0;
+			for (AbsItem item : items) {
+				double price = item.getRetailPrice();
+				double quantity = item.getQuantity();
+				double d = item.getDiscount();
+				discountAmount += price * quantity * d / 100;
+			}
+			discount = discountAmount / amount;
+		}
 		return discount;
 	}
 

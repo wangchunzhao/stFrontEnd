@@ -124,6 +124,14 @@ public class ContractController {
 		}
 	}
 
+	/**
+	 * 
+	 * 导出PDF格式合同文档
+	 * 
+	 * @param contractId
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping({ "/{id}/export" })
 	public void exportContract(@PathVariable("id") Integer contractId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -132,7 +140,7 @@ public class ContractController {
 		try {
 			pdfFile = this.contractService.exportToPDF(contractId);
 			String pdfFileName = new String(pdfFile.getName().getBytes("gb2312"), "ISO8859-1");
-			
+
 			response.setContentType("application/x-download;charset=GB2312");
 			response.setHeader("Content-disposition", "attachment;filename=\"" + pdfFileName + "\"");
 
@@ -154,16 +162,23 @@ public class ContractController {
 		}
 	}
 
+	/**
+	 * 
+	 * 手工刷新电子签约合同状态
+	 * 
+	 * @return
+	 * @throws JsonProcessingException
+	 */
 	@RequestMapping(value = { "/refreshState" }, method = { RequestMethod.GET })
-	public String refreshState() throws JsonProcessingException {
-		Map<String, Object> map = new HashMap<>();
+	public Result<?> refreshState() throws JsonProcessingException {
+		Result<?> r = null;
 		boolean flag = this.contractService.doRefreshContractState();
 		if (flag) {
-			map.put("message", "success");
+			r = Result.ok("");
 		} else {
-			map.put("message", "fail");
+			r = Result.error("");
 		}
-		return (new ObjectMapper()).writeValueAsString(map);
+		return r;
 	}
 
 	/**
@@ -173,16 +188,16 @@ public class ContractController {
 	 * @return
 	 * @throws JsonProcessingException
 	 */
-	@RequestMapping(value = { "/sign" }, method = { RequestMethod.GET })
-	public String signContract(@RequestParam("id") int id) throws JsonProcessingException {
-		Map<String, Object> map = new HashMap<>();
-		boolean flag = this.contractService.doSignContract(id);
+	@RequestMapping(value = { "{id}/sign" }, method = { RequestMethod.GET })
+	public Result<?> signContract(@PathVariable("id") Integer contractId) throws JsonProcessingException {
+		Result<?> r = null;
+		boolean flag = this.contractService.doSignContract(contractId);
 		if (flag) {
-			map.put("message", "success");
+			r = Result.ok("");
 		} else {
-			map.put("message", "fail");
+			r = Result.error("");
 		}
-		return (new ObjectMapper()).writeValueAsString(map);
+		return r;
 	}
 
 	/**
@@ -192,12 +207,12 @@ public class ContractController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping({ "/download" })
+	@RequestMapping({ "{id}/download" })
 	public void downloadContract(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String idStr = request.getParameter("id");
 		Contract contract = this.contractService.find(Integer.valueOf(idStr)).getData();
 
-		String signContractId = null; // TODO contract.getSignContractId();
+		String signContractId = contract.getSignContractId();
 		byte[] zipBytes = this.contractService.doDownloadFromSignSystem(signContractId);
 
 		String time = String.valueOf(System.currentTimeMillis());
