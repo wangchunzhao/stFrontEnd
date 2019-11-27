@@ -80,6 +80,10 @@ var userIdentity;
 	       			$('#role').attr('href',ctxPath+"main/noAuthorization");
 	       		}
 	       		
+	       		if(operationNames.indexOf(",1019,")==-1){
+	       			$('#freight').attr('href',ctxPath+"main/noAuthorization");
+	       		}
+	       		
 	       		/*if(operationNames.indexOf("user")==-1&&
 	       				operationNames.indexOf("permission")==-1&&
 	       				operationNames.indexOf("parameterSetting")==-1&&

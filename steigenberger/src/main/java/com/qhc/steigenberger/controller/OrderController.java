@@ -81,14 +81,14 @@ public class OrderController {
 	private final static String CREATE_BEIHUO_Order = "1018";//下备货订单
 	
 	//订单状态
-	private final static String orderStatus0="0000";//订单新建保存
-	private final static String orderStatus1="0100";//客户经理提交待支持经理审核
-	private final static String orderStatus2="2";//B2C审核提交成功
-	private final static String orderStatus3="3";//工程人员提交成功
-	private final static String orderStatus4="4";//支持经理提交成功
-	private final static String orderStatus5="5";//订单审批通过
-	private final static String orderStatus6="6";//订单更改审批通过
-	private final static String orderStatus7="7";//订单更改保存
+	private final static String orderStatus0000="0000";//订单新建保存
+	private final static String orderStatus0100="0100";//客户经理提交待支持经理审核
+	private final static String orderStatus0110="0110";//客户经理提交待B2C审核
+	private final static String orderStatus0111="0111";//客户经理提交待B2C和工程审核
+	private final static String orderStatus0112="0112";//工程人员提交待B2C审核
+	private final static String orderStatus0101="0101";//客户经理提交待工程审核
+	private final static String orderStatus0121="0121";//B2C提交待工程审核
+	private final static String orderStatus0122="0122";//待支持经理审核
 	private final static String orderStatus8="8";//订单更改提交成功
 	private final static String orderStatus9="9";//已下推SAP
 	private final static String orderStatus10="10";//BPM驳回
@@ -287,16 +287,17 @@ public class OrderController {
 				//支持经理
 				List list = new ArrayList();
 				list.add(orderStatus12);
-				list.add(orderStatus10);
-				list.add(orderStatus1);
+				list.add(orderStatus0122);
+				list.add(orderStatus0100);
 				query.setStatusList(list);
 				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(ENGINEER_Order)) {
 				//工程人员
 				List list = new ArrayList();
-				list.add(orderStatus1);
-				list.add(orderStatus2);
+				list.add(orderStatus0111);
+				list.add(orderStatus0101);
+				list.add(orderStatus0121);
 				query.setStatusList(list);
 				query.setOrderType(orderType1);
 				query.setSalesCode("");
@@ -304,16 +305,17 @@ public class OrderController {
 			}else if(operationId.equals(B2C_Order)) {
 				//B2C
 				List list = new ArrayList();
-				list.add(orderStatus1);
-				list.add(orderStatus3);
+				list.add(orderStatus0110);
+				list.add(orderStatus0111);
+				list.add(orderStatus0112);
 				query.setStatusList(list);
-				query.setB2c("1");
+//				query.setB2c("1");
 				query.setSalesCode("");
 				break;
 			}else {
 				//客户经理
 				List list = new ArrayList();
-				list.add(orderStatus0);
+				list.add(orderStatus0000);
 				list.add(orderStatus11);
 				query.setStatusList(list);
 				query.setSalesCode(user.getUserIdentity());
