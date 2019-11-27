@@ -17,8 +17,8 @@ public abstract class AbsItem {
 	private Integer rowNumber;//行号
 	private String materialCode;//物料号,专用号
 	private String materialName;//物料名称,规格型号
-	private boolean isConfigurable;//是否为可配置物料
-	private boolean isPurchased;//类型  1:采购  0:生产
+	private boolean configurable;//是否为可配置物料
+	private boolean purchased;//类型  1:采购  0:生产
 	private double quantity;//数量
 	private String unitName;//计量单位名称
 	private String unitCode;//计量单位code
@@ -136,16 +136,16 @@ public abstract class AbsItem {
 	}
 	
 	public boolean isConfigurable() {
-		return isConfigurable;
+		return configurable;
 	}
-	public void setIsConfigurable(boolean isConfigurable) {
-		this.isConfigurable = isConfigurable;
+	public void setIsConfigurable(boolean configurable) {
+		this.configurable = configurable;
 	}
 	public boolean isPurchased() {
-		return isPurchased;
+		return purchased;
 	}
-	public void setPurchased(boolean isPurchased) {
-		this.isPurchased = isPurchased;
+	public void setPurchased(boolean purchased) {
+		this.purchased = purchased;
 	}
 	public double getQuantity() {
 		return quantity;

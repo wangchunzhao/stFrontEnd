@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 @SpringBootTest
 class ContractServiceTest {
 	
@@ -24,6 +27,36 @@ class ContractServiceTest {
 			e.printStackTrace();
 		}
 		System.out.println(f);
+	}
+
+	@Test
+	void testDoDownloadFromSignSystem() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSendMailToCustomer() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testDoRefreshContractState() throws JsonMappingException, JsonProcessingException {
+		this.contractService.doRefreshContractState();
+	}
+
+	@Test
+	void testDoSignContract() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testUpdateSignId() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testUpdateFileHashCode() {
+		fail("Not yet implemented");
 	}
 
 }

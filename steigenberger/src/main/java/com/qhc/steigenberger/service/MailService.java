@@ -2,6 +2,7 @@ package com.qhc.steigenberger.service;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,6 +27,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -295,7 +297,11 @@ public class MailService {
 					String file = f.getAbsolutePath();
 					DataSource source = new FileDataSource(file);
 					messageBodyPart.setDataHandler(new DataHandler(source));
-					messageBodyPart.setFileName(name);
+					try {
+						messageBodyPart.setFileName(MimeUtility.encodeText(name));
+					} catch (UnsupportedEncodingException e) {
+						messageBodyPart.setFileName(name);
+					}
 					mimeMultipart.addBodyPart((BodyPart) messageBodyPart);
 					continue;
 				}
