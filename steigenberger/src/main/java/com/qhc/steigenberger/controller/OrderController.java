@@ -83,7 +83,7 @@ public class OrderController {
 	//订单状态
 	private final static String orderStatus0="0000";//订单新建保存
 	private final static String orderStatus1="0100";//客户经理提交待支持经理审核
-	private final static String orderStatus2="2";//B2C审核提交成功
+	private final static String orderStatus2="0110";//B2C审核提交成功
 	private final static String orderStatus3="3";//工程人员提交成功
 	private final static String orderStatus4="4";//支持经理提交成功
 	private final static String orderStatus5="5";//订单审批通过
