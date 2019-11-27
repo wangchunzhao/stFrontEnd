@@ -51,12 +51,17 @@ class ContractServiceTest {
 
 	@Test
 	void testUpdateSignId() {
-		fail("Not yet implemented");
+		this.contractService.updateSignId(1, "abcde", 2);
 	}
 
 	@Test
 	void testUpdateFileHashCode() {
-		fail("Not yet implemented");
+		this.contractService.updateFileHashCode(1, "34423jdlfk89sdf");
+	}
+
+	@Test
+	void testUpdateStatus() {
+		this.contractService.updateStatus(1, 3);
 	}
 
 }

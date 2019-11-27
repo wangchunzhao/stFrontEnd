@@ -487,7 +487,8 @@ public class ContractService {
 				contract.setStatus(Integer.parseInt(state));
 
 				// 更新合同状态及电子签约合同ID
-				this.updateSignId(contract.getId(), signContractId);
+				this.updateSignId(contract.getId(), signContractId, Integer.parseInt(state));
+//				this.updateStatus(contract.getId(), Integer.parseInt(state));
 			}
 		}
 		return true;
@@ -518,16 +519,27 @@ public class ContractService {
 			contract.setStatus(6);
 
 			// 使用上上签电子合同状态更新数据库更新合同状态
-			this.updateSignId(contractId, signContractId);
+			this.updateStatus(contractId, 6);
 		}
 
 		return false;
 	}
 	
-	public Result updateSignId(Integer contractId, String signContractId) {
+	public Result updateStatus(Integer contractId, Integer status) {
+		logger.info("updateStatus({}, {})", contractId, status);
+		Result result = null;
+		result = (Result) fryeService.putForm("/contract/" + contractId + "/status/" + status, "", Result.class);
+		if (!result.getStatus().equals("ok")) {
+			throw new RuntimeException(result.getMsg());
+		}
+
+		return result;
+	}
+	
+	public Result updateSignId(Integer contractId, String signContractId, Integer status) {
 		logger.info("updateSignId({}, {})", contractId, signContractId);
 		Result result = null;
-		result = (Result) fryeService.postForm("/contract/" + contractId + "/signid/" + signContractId, "", Result.class);
+		result = (Result) fryeService.putForm("/contract/" + contractId + "/signid/" + signContractId + "/" + status, "", Result.class);
 		if (!result.getStatus().equals("ok")) {
 			throw new RuntimeException(result.getMsg());
 		}
@@ -538,7 +550,7 @@ public class ContractService {
 	public Result updateFileHashCode(Integer contractId, String fileHashCode) {
 		logger.info("updateFileHashCode({}, {})", contractId, fileHashCode);
 		Result result = null;
-		result = (Result) fryeService.postForm("/contract/" + contractId + "/hashcode/" + fileHashCode, "", Result.class);
+		result = (Result) fryeService.putForm("/contract/" + contractId + "/hashcode/" + fileHashCode, "", Result.class);
 		if (!result.getStatus().equals("ok")) {
 			throw new RuntimeException(result.getMsg());
 		}

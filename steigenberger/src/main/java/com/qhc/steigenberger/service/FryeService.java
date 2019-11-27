@@ -50,9 +50,9 @@ public class FryeService<T> {
 
 	private ExchangeFilterFunction logRequest() {
 		return (clientRequest, next) -> {
-			System.out.println("Request: {} {}" + clientRequest.method() + clientRequest.url());
+			System.out.println(String.format("Request: %s %s", clientRequest.method(), clientRequest.url()));
 			clientRequest.headers()
-					.forEach((name, values) -> values.forEach(value -> System.out.println("{}={}" + name + value)));
+					.forEach((name, values) -> values.forEach(value -> System.out.println(String.format("%s=%s", name, value))));
 			return next.exchange(clientRequest);
 		};
 	}
@@ -210,6 +210,22 @@ public class FryeService<T> {
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
 				.bodyToMono(T);
 		return resp.block();
+	}
+	
+	/**
+	 * 
+	 * @param path
+	 * @param params
+	 */
+	public T putForm(String path, Object params, Class T) {
+		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
+		Mono<String> response = webClient.put().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(T);
+		return (T)response.block();
 	}
 
 	/**
