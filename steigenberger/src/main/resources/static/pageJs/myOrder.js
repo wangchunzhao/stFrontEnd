@@ -146,17 +146,17 @@ function formatStatus(value, row, index) {
 	}else if(value=="0100"){
 		return "客户经理提交待支持经理审核";
 	}else if(value=="0110"){
-		return "待B2C审核";
-	}else if(value=="3"){
-		return "工程人员提交成功";
-	}else if(value=="4"){
-		return "支持经理提交成功";
-	}else if(value=="5"){
-		return "订单审批通过";
-	}else if(value=="6"){
-		return "订单更改审批通过";
-	}else if(value=="7"){
-		return "订单更改保存";
+		return "客户经理提交待B2C审核";
+	}else if(value=="0111"){
+		return "客户经理提交待B2C和工程审核";
+	}else if(value=="0112"){
+		return "工程人员提交待B2C审核";
+	}else if(value=="0101"){
+		return "客户经理提交待工程审核";
+	}else if(value=="0121"){
+		return "B2C提交待工程审核";
+	}else if(value=="0122"){
+		return "待支持经理审核";
 	}else if(value=="8"){
 		return "订单更改提交成功";
 	}else if(value=="9"){
