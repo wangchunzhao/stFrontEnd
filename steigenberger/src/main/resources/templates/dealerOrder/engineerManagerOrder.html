@@ -296,7 +296,7 @@
 								 <div class="row">
 								 	<span class="col-md-2 control-label">结算方式</span>
 									<div class="col-md-10">
-										<select class="form-control" name="paymentType" th:field="*{paymentType}"><!--  th:field="*{confirmTypeCode}" -->
+										<select class="form-control" name="paymentType" th:field="*{paymentType}" id="paymentType"><!--  th:field="*{confirmTypeCode}" -->
 											<option th:each="payment : ${order_option.paymentType}" th:value="${payment.key}" th:text="${payment.value}"></option>
 										</select>
 							   		 </div>

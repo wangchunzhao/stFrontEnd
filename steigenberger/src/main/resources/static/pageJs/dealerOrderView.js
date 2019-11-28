@@ -94,11 +94,11 @@ function fillItems(){
 	
 }
 function disableAll(){ 
-  var form=document.forms[0]; 
-  for(var i=0;i<form.length;i++){ 
-    var element=form.elements[i]; 
-    element.disabled=true; 
-  } 
+  var form=document.forms[0];
+  for(var i=0;i<form.length;i++){
+    var element=form.elements[i];
+    element.disabled=true;
+  }
   $("#back").attr('disabled',false);
   $("#grossClose").attr('disabled',false);
   $("#showGrossProfit").attr('disabled',false);
@@ -116,16 +116,16 @@ function disableAll(){
 }
 //获取session中用户信息
 function getUserDetail(){
-	$.ajax({
-	    url: "/steigenberger/order/user",
-	    data: {},
-	    type: "get",
-	    success: function(data) {
-	    	$("#salesName").val(data.userName);
-	    	$("#salesTelnumber").val(data.tel);
-	    	$("#salesCode").val(data.userIdentity);
-	    }
-	});
+	// $.ajax({
+	//     url: "/steigenberger/order/user",
+	//     data: {},
+	//     type: "get",
+	//     success: function(data) {
+	//     	$("#salesName").val(data.userName);
+	//     	$("#salesTelnumber").val(data.tel);
+	//     	$("#salesCode").val(data.userIdentity);
+	//     }
+	// });
 }
 
 //打开调研表

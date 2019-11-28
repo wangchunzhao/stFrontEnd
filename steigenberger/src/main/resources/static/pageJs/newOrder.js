@@ -23,9 +23,6 @@ $(function () {
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 	grossProfitTable.init();
 	
-	var version = getVersion();
-	$("#version").val(version);
-	
 	if(installationTerms){
 		var installationTerm = installationTerms[$("#customerClazzCode").val()];
 		$.each(installationTerm, function (key, value) {
@@ -236,7 +233,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#warrenty').attr("readonly",true);
 		$('#installCode').val('');
 		$('#installCode').attr("readonly",true);
-		$('#transferType').attr("readonly",true);
+		$('#transferType').attr("disabled",true);
 		$('#contactor1Id').attr("readonly",true);
 		$('#contactor2Id').attr("readonly",true);
 		$('#contactor3Id').attr("readonly",true);
@@ -1408,10 +1405,20 @@ function changeRequirement(obj){
 
 //保存提交订单
 function saveOrder(type){
+	$("#transferType").removeAttr("disabled");
 	 var version = $("#version").val();
+	 var payment = new Object();
+	 payment['termCode'] = $("#paymentType").val();
+	 payment['termName'] = $("#paymentType").find("option:selected").text();;
+	 payment['percentage'] = "1";
+	 payment['payDate'] = $("#inputDate").val();
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
+	 $('#transferType').attr("disabled",true);
+	 var payments=new Array();
+	 payments.push(payment);
+	 orderData.payments = payments;
 	 orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';
 	 var items = $("#materialsTable").bootstrapTable('getData');
@@ -1488,17 +1495,6 @@ function getSelectName() {
 	
 }
 
-
-//获取版本
-function  getVersion(){
-	var dateString = moment().format('YYYYMMDD');
-	var num = '';
-    for(var i=0;i<3;i++)
-    {
-        num+=Math.floor(Math.random()*10);
-    }
-    return 'V'+dateString+num;
-}
 
 //调研表查看物料
 function viewConfig(){
