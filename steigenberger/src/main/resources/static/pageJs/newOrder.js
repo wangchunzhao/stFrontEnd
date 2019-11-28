@@ -38,6 +38,7 @@ $(function () {
 	$('#shippDate').datepicker();
 	var nowDateString = moment(new Date()).format('YYYY-MM-DD');
 	$("#inputDate").val(nowDateString);
+	$("#optTime").val(nowDateString);
 	defaultCollapse();
 	getUserDetail();
 	fillItems();
@@ -155,8 +156,9 @@ function openSearchUnit(){
 		$('#unitModal').modal('hide');
 		$("#contractUnitName").val('');
 		$("#contactorCode").val(row.code);
-		$("#customer").val(row.name)
-		$("#customerClazz").val(row.clazzName)
+		$("#customer").val(row.name);
+		$("#customerClazz").val(row.clazzName);
+		$("#customerClazzName").val(row.clazzName);
 	})
 }
 
@@ -229,8 +231,6 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#currency').attr('disabled',false);
 		$('#incoterm').attr("readonly",false);
 		$('#incotermContect').attr("readonly",false);
-		$('#warrenty').val('');
-		$('#warrenty').attr("readonly",true);
 		$('#installCode').val('');
 		$('#installCode').attr("readonly",true);
 		$('#transferType').attr("disabled",true);
@@ -264,7 +264,6 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#contactor1Tel').attr("readonly",false);
 		$('#contactor2Tel').attr("readonly",false);
 		$('#contactor3Tel').attr("readonly",false);
-		$('#warrenty').attr("readonly",false);
 	}
 	if ($(obj).val() == '') {
 		$("#officeSelect").html('');
@@ -517,11 +516,12 @@ function getMaterialInfo(code){
 	    type: "POST",
 	    dataType: "json",
 	    success: function(data) {
-	    	if(data==null){
-	    	   alert("未查询到物料详细信息无法添加该物料！")
-	    	   $("#confirmMaterial").attr("disabled",true);
+	    	if(data){
+	    		$("#confirmMaterial").attr("disabled",false);
+	    		fillMaterailValue(data); 	   
 	    	}else{
-	    	   fillMaterailValue(data); 
+	    		alert("未查询到物料详细信息无法添加该物料！")
+		    	$("#confirmMaterial").attr("disabled",true);
 	    	}      
 	    }
 	});
@@ -1409,7 +1409,7 @@ function saveOrder(type){
 	 var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
-	 payment['termName'] = $("#paymentType").find("option:selected").text();;
+	 payment['termName'] = $("#paymentType").find("option:selected").text();
 	 payment['percentage'] = "1";
 	 payment['payDate'] = $("#inputDate").val();
 	 //获取下拉框name
@@ -1493,6 +1493,7 @@ function getSelectName() {
 		$("#transferTypeName").val(shippingTypesMap[shippingTypeCode]);
 	}
 	
+	$("#confirmTypeName").val($("#confirmType").find("option:selected").text());
 }
 
 

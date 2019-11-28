@@ -25,7 +25,7 @@
 		<input type="hidden"  name="action" value="submit">
 		<input type="hidden"  id="orderModelType" value="new">
 		<input type="hidden"  name="salesCode" id="salesCode">
-		<input type="hidden"  id="version">
+		<input type="hidden" name="optTime" id="optTime">
 		<div id="page-wrapper">
 		<ul class="breadcrumb" style="margin-left: 3%;">
 			<li><a href="#">>新建订单>经销商标准折扣下订单</a></li>
@@ -246,10 +246,11 @@
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">收货方式</span>
 								<div class="col-md-2">
-									<select class="form-control" name="confirmTypeCode"><!--  th:field="*{confirmTypeCode}" -->
+									<select class="form-control" name="confirmTypeCode" id="confirmType"><!--  th:field="*{confirmTypeCode}" -->
 										<option th:each="receiveTerm : ${order_option.receiveTerms}" th:value="${receiveTerm.key}" th:text="${receiveTerm.value}"></option>
 									</select>
 							    </div>
+							    <input type="hidden" id="confirmTypeName" name="confirmTypeName">
 								<span class="col-md-1 control-label">运输方式</span>
 								<div class="col-md-2">
 									<select class="form-control" name="transferTypeCode" id="transferType">
@@ -261,6 +262,8 @@
 								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{standardDiscount}">
 							    </div>
+							    <input type="hidden" name="mainDiscount" th:value="*{standardDiscount}">
+							    <input type="hidden" name="bodyDiscount" th:value="*{standardDiscount}">
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
 									<div class="col-md-2">
@@ -312,7 +315,7 @@
 								 <div class="row">
 								 	<span class="col-md-2 control-label">结算方式</span>
 									<div class="col-md-10">
-										<select class="form-control" name="paymentType" id="paymentType"><!--  th:field="*{confirmTypeCode}" -->
+										<select class="form-control" id="paymentType"><!--  th:field="*{confirmTypeCode}" -->
 											<option th:each="payment : ${order_option.paymentType}" th:value="${payment.key}" th:text="${payment.value}"></option>
 										</select>
 							   		 </div>
@@ -425,8 +428,7 @@
 								</div>
 								<div class="col-xs-3 col-md-3"></div>
 								<div class="col-xs-3 col-md-3">
-									<select class="form-control" >
-										<option value="1">history2019001</option>
+									<select class="form-control" id="version">
 									</select>
 								</div>
 							</div>
@@ -732,7 +734,7 @@
 	var groupsMap = [[${order_option.groups}]]
 	var shippingTypesMap = [[${order_option.shippingTypes}]]
 	var version = getVersion();
-	$("#version").val(version);
+	$("#version").append("<option value='" + version + "'>" + version + "</option>");
 
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
