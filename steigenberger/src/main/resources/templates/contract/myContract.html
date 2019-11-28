@@ -53,8 +53,13 @@
 
 <!-- Art Template -->
 <script type="text/javascript" src="../js/template-web.js"></script>
+<!-- // Art Template -->
 
 <script type="text/javascript" src="../pageJs/main.js"></script>
+
+<!-- layer -->
+<script src="../js/layer.js"></script>
+<!-- //layer -->
 
 <script type="text/javascript">
 var ctxPath  = [[@{/}]];
@@ -645,7 +650,7 @@ $('#contractTable').bootstrapTable({
 	},
 	responseHandler : function(res){
 		if (res.status != 'ok') {
-			alert(res.msg);
+			layer.alert(res.msg);
 			return {};
 		}
 		return {
@@ -673,7 +678,7 @@ function edit(index) {
 		    // dataType: "json",
 		    success: function(data) {
 		    	if(data == null || data.status != 'ok'){
-		    	   alert("查询合同信息失败！" + data.msg);
+		    		layer.alert("查询合同信息失败！" + data.msg);
 		    	}else{
 		    		// console.log(data.data)
 		    		contract = data.data;
@@ -727,31 +732,31 @@ function save() {
     }*/
 	
 	if ($.trim(json.partyaMail) == ''){
-		alert('签约单位邮箱不能为空！');
+		layer.alert('签约单位邮箱不能为空！');
 		return;
 	}
 	if ($.trim(json.acceptanceCriteriaCode) == ''){
-		alert('验收标准（方法）不能为空！');
+		layer.alert('验收标准（方法）不能为空！');
 		return;
 	}
 	if ($.trim(json.receiveTermsCode) == ''){
-		alert('接货方式不能为空！');
+		layer.alert('接货方式不能为空！');
 		return;
 	}
 	if ($.trim(json.installLocation) == ''){
-		alert('实际安装地点不能为空！');
+		layer.alert('实际安装地点不能为空！');
 		return;
 	}
 	if ($.trim(json.clientName) == ''){
-		alert('终端客户名称不能为空！');
+		layer.alert('终端客户名称不能为空！');
 		return;
 	}
 	if ($.trim(json.deliveryDaysAfterPrepay) == ''){
-		alert('收到需方预付款后几日内发货不能为空！');
+		layer.alert('收到需方预付款后几日内发货不能为空！');
 		return;
 	}
 	if (!/^[1-9]\d*$/.test($.trim(json.deliveryDaysAfterPrepay))){
-		alert('收到需方预付款后几日内发货必须是有效的数字！');
+		layer.alert('收到需方预付款后几日内发货必须是有效的数字！');
 		return;
 	}
 	$.ajax({
@@ -761,15 +766,15 @@ function save() {
 	    contentType: "application/json;charset=UTF-8",
 	    success: function(data) {
 	    	if(data == null || data.status != 'ok') {
-	    		alert("保存合同信息失败！" + data.msg);
+	    		layer.alert("保存合同信息失败！" + data.msg);
 	    	}else{
-	    		alert("保存合同信息成功！");
+	    		layer.alert("保存合同信息成功！");
 	    		$("#contractDialog").modal('hide');
 	    		refresh();
 	    	}      
 	    },
         error: function (res) {
-            alert("提交失败: "+jQuery.parseJSON(res.responseText).message);
+        	layer.alert("提交失败: "+jQuery.parseJSON(res.responseText).message);
         },
 	    dataType: "json"
 	});
@@ -806,14 +811,14 @@ function send(index) {
 	    contentType: "application/json;charset=UTF-8",
 	    success: function(data) {
 	    	if(data == null || data.status != 'ok') {
-	    		alert("发送合同失败！" + data.msg);
+	    		layer.alert("发送合同失败！" + data.msg);
 	    	}else{
-	    		alert("发送合同成功！");
+	    		layer.alert("发送合同成功！");
 	    		refresh();
 	    	}      
 	    },
         error: function (res) {
-            alert("发送失败: "+jQuery.parseJSON(res.responseText).message);
+        	layer.alert("发送失败: "+jQuery.parseJSON(res.responseText).message);
         },
 	    dataType: "json"
 	});

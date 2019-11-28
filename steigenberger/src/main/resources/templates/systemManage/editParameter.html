@@ -46,6 +46,8 @@
 <script type="text/javascript" src="../bootstrap-date/build/js/bootstrap-datetimepicker.min.js" th:src="@{/bootstrap-date/build/js/bootstrap-datetimepicker.min.js}"></script>
 <!-- <script type="text/javascript" src="../bootstrap-date/build/js/bootstrap.min.js" ></script> -->
 
+<script type="text/javascript" src="../js/layer.js"></script>
+
 </head> 
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
@@ -153,7 +155,8 @@ var ctxPath  = [[@{/}]];
 			  var strtoday = y+'-'+m+'-'+d+' 00:00:00'
 			  
 			  if(enableDate<strtoday){
-				  toastr.warning("预设值生效时间不能早于当天!");
+				  // toastr.warning("预设值生效时间不能早于当天!");
+				  layer.alert("预设值生效时间不能早于当天!");
 				  return false;
 			  }
 			  paramId=parseInt(paramId);
@@ -172,16 +175,18 @@ var ctxPath  = [[@{/}]];
 		      		   data:JSON.stringify(data),
 		      		 	success: function(data){
 		       		     if(data.status>200){
-	 	       		    	toastr.warning(data.msg);  
+	 	       		    	// toastr.warning(data.msg);  
+	 	       		    	layer.alert(data.msg);
 		 	       		    /*setTimeout(function(){
 		 	       		    	window.location.reload();
 		 	       		     },2000);*/
 	 	       		       }
 	 	       		    else{
-	 	       		    	toastr.success(data.msg);
+	 	       		    	// toastr.success(data.msg);
+	 	       		    	layer.alert(data.msg);
 	 	       		       	setTimeout(function(){
 	 	       		    		window.location.href = ctxPath+"parameterSetting/index";
-	 	       		        },1000);
+	 	       		        },30000);
 	 	       		      } 				 
 		      		}});
 			});
