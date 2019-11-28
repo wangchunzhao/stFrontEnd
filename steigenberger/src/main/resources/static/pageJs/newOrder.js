@@ -1407,15 +1407,17 @@ function changeRequirement(obj){
 function saveOrder(type){
 	$("#transferType").removeAttr("disabled");
 	 var version = $("#version").val();
-	 var payments = new Object();
-	 payments['termCode'] = $("#paymentType").val();
-	 payments['termName'] = $("#paymentType").find("option:selected").text();;
-	 payments['percentage'] = "100%";
-	 payments['payDate'] = $("#createTime").val();
+	 var payment = new Object();
+	 payment['termCode'] = $("#paymentType").val();
+	 payment['termName'] = $("#paymentType").find("option:selected").text();;
+	 payment['percentage'] = "1";
+	 payment['payDate'] = $("#createTime").val();
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
+	 var payments=new Array();
+	 payments.push(payment);
 	 orderData.payments = payments;
 	 orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';
