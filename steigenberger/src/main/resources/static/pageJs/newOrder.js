@@ -1411,7 +1411,7 @@ function saveOrder(type){
 	 payment['termCode'] = $("#paymentType").val();
 	 payment['termName'] = $("#paymentType").find("option:selected").text();;
 	 payment['percentage'] = "1";
-	 payment['payDate'] = $("#createTime").val();
+	 payment['payDate'] = $("#inputDate").val();
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
@@ -1495,17 +1495,6 @@ function getSelectName() {
 	
 }
 
-
-//获取版本
-function  getVersion(){
-	var dateString = moment().format('YYYYMMDD');
-	var num = '';
-    for(var i=0;i<3;i++)
-    {
-        num+=Math.floor(Math.random()*10);
-    }
-    return 'V'+dateString+num;
-}
 
 //调研表查看物料
 function viewConfig(){
