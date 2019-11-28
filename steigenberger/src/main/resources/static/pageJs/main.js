@@ -41,6 +41,7 @@ var userIdentity;
             	for(var i=0;i<operationList.length;i++){
             		operationNames+=operationList[i].id+",";
             	}
+         
                if(operationNames.indexOf(",1001,")==-1){
             	   $('#todo').attr('href',ctxPath+"main/noAuthorization");
 	       		}
