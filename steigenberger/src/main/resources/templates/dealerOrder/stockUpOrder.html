@@ -139,11 +139,11 @@
 							</div>
 							<span class="col-md-1 control-label">合同号（核算号）</span>
 							<div class="col-md-2">
-								<input type="text" class="form-control" aria-describedby="emailHelp"  naem="contractNumber"> <!-- th:field="*{contractNumber}" -->
+								<input type="text" class="form-control" aria-describedby="emailHelp"  id="" name="contractNumber"> <!-- th:field="*{contractNumber}" -->
 							</div>
 							<span class="col-md-1 control-label">销售类型</span>
 							<div class="col-md-2">
-								<input type="text" class="form-control" aria-describedby="emailHelp"  naem="" readonly>
+								<input type="text" class="form-control" aria-describedby="emailHelp"  name="" readonly>
 <!--								<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" name="saleType" id="salesType">-->
 <!--									<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
 <!--									<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>-->

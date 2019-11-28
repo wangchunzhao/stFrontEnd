@@ -1413,7 +1413,7 @@ function saveOrder(type){
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 orderData['currentVersion'] = version;
-	 orderData['orderType'] = 'ZH0D';
+	 orderData['orderType'] = 'ZH0M';
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
