@@ -462,7 +462,8 @@ public class OrderController {
 		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+        AbsOrder order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+//		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
 		oo.setOrderTypeCode(orderType);	
 		mv.addObject("orderDetail",order);
 		return mv;
