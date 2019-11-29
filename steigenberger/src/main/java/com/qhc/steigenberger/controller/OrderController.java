@@ -467,6 +467,22 @@ public class OrderController {
 		mv.addObject("orderDetail",order);
 		return mv;
 	}
+
+    @ApiOperation(value = "修改库存订单", notes = "修改库存订单")
+    @RequestMapping(value="editStockUpOrder")
+    @ResponseBody
+    public ModelAndView editStockUpOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
+        ModelAndView mv = new ModelAndView("dealerOrder/editStockUpOrder");
+        OrderOption oo = orderService.getOrderOption();
+        mv.addObject("order_option",oo);
+        if (orderType == null || orderType.trim().length() == 0) {
+            orderType = orderService.getOrderType(sequenceNumber);
+        }
+        AbsOrder order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+        oo.setOrderTypeCode(orderType);
+        mv.addObject("orderDetail",order);
+        return mv;
+    }
 	
 	@ApiOperation(value = "审批订单", notes = "审批订单")
 	@RequestMapping(value="approveOrder")
