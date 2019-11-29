@@ -58,7 +58,7 @@ public abstract class AbsOrder {
 	private double itemsAmount;//购销明细金额合计 Aggregate amount
 	private String contractManager;//合同管理员
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date createTime;//新建时间
 	private double bodyDiscount;
 	private double mainDiscount;
