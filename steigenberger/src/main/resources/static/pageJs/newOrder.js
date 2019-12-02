@@ -125,7 +125,7 @@ function getUserDetail(){
 	    type: "get",
 	    success: function(data) {
 	    	$("#salesName").val(data.userName);
-	    	$("#salesTelnumber").val(data.tel);
+	    	// $("#salesTelnumber").val(data.tel);
 	    	$("#salesCode").val(data.userIdentity);
 	    }
 	});

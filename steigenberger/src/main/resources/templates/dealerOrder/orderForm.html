@@ -155,8 +155,9 @@ function doSomething(){
 			if(resp.status==200){
 				 ret = true;
 			}else{
-				 alert("对不起，您没有下单权限");
-				 ret = false;
+				 // alert("对不起，您没有下单权限");
+				 // ret = false;
+                ret = true;
 			}
 		 },
 		 error:function(resp,status){
@@ -178,8 +179,9 @@ function doBeihuoSomething(){
 			if(resp.status==200){
 				 ret = true;
 			}else{
-				 alert("对不起，您没有下单权限");
-				 ret = false;
+				 // alert("对不起，您没有下单权限");
+				 // ret = false;
+                ret = true;
 			}
 		 },
 		 error:function(resp,status){
