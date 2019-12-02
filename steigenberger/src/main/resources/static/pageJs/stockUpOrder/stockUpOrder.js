@@ -788,15 +788,15 @@ function initOrderFormValidator(){
     $('#orderForm').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
-            contractValue: {
+			salesTelnumber: {
                 validators: {
                     // notEmpty: {
                     //     message: '数量不能为空'
                     // },
-                    regexp: {
-                        regexp: /^\d+(\.\d{0,2})?$/,
-                        message: '请输入合法的金额，金额限制两位小数'
-                    }
+					phone: {
+						country: 'CN',
+						message: '请输入正确的电话号码'
+					}
                 }
             }
         }
@@ -1408,56 +1408,70 @@ function changeRequirement(obj){
 
 //保存提交订单
 function saveOrder(type){
-	 var version = $("#version").val();
-	 //获取下拉框name
-	 getSelectName();
-	 var orderData = $("#orderForm").serializeObject(); 
-	 orderData['currentVersion'] = version;
-	 orderData['orderType'] = 'ZH0M';
-	 var items = $("#materialsTable").bootstrapTable('getData');
-	 orderData.items = items;
-	 for(var i=0;i<items.length;i++){
-		 var configData = localStorage[items[i].identification];
-		 items[i].isVirtual = 0;
-		 if(configData){
-			 var jsonObject = JSON.parse(configData);
-			 items[i]['configs']= jsonObject.configTableData;
-			 items[i]['configComments'] = jsonObject.remark
-		 } else{
-			 items[i]['configs'] = null;
-		 }	 	 
-	 }
-	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
-	 if(type){
-		 $.ajax({
-			    url: "/steigenberger/order/dealer?action="+type,
-			    contentType: "application/json;charset=UTF-8",
-			    data: JSON.stringify(orderData),
-			    type: "POST",
-			    success: function(data) { 
-			    	layer.alert('提交成功', {icon: 6});
-			    	//跳转到订单管理页面
-			    	window.location.href = '/steigenberger/menu/orderManageList';
-			    },
-			    error: function(){
-			    	layer.alert('提交失败', {icon: 5});
-			    }
-		});  
-	 }else{
-		 $.ajax({
-			    url: "/steigenberger/order/dealer?action="+'save',
-			    contentType: "application/json;charset=UTF-8",
-			    data: JSON.stringify(orderData),
-			    type: "POST",
-			    success: function(data) { 
-			    	layer.alert('保存成功', {icon: 6});
-			    },
-			    error: function(){
-			    	layer.alert('保存失败', {icon: 5});
-			    }
-		}); 
-	 }
-	 
+	if (!$('#orderForm').data('bootstrapValidator').isValid()) {//判断校检是否通过
+		alert("表单验证不通过，请检查");
+		return;
+	}else {
+		$("#transferType").removeAttr("disabled");
+		var version = $("#version").val();
+		var payment = new Object();
+		payment['termCode'] = $("#paymentType").val();
+		payment['termName'] = $("#paymentType").find("option:selected").text();
+		payment['percentage'] = "1";
+		payment['payDate'] = $("#inputDate").val();
+		//获取下拉框name
+		getSelectName();
+		var orderData = $("#orderForm").serializeObject();
+		$('#transferType').attr("disabled",true);
+		var payments=new Array();
+		payments.push(payment);
+		orderData.payments = payments;
+		orderData['currentVersion'] = version;
+		orderData['orderType'] = 'ZH0M';
+		var items = $("#materialsTable").bootstrapTable('getData');
+		orderData.items = items;
+		for(var i=0;i<items.length;i++){
+			var configData = localStorage[items[i].identification];
+			items[i].isVirtual = 0;
+			if(configData){
+				var jsonObject = JSON.parse(configData);
+				items[i]['configs']= jsonObject.configTableData;
+				items[i]['configComments'] = jsonObject.remark
+			} else{
+				items[i]['configs'] = null;
+			}
+		}
+		orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+		if(type){
+			$.ajax({
+				url: "/steigenberger/order/dealer?action="+type,
+				contentType: "application/json;charset=UTF-8",
+				data: JSON.stringify(orderData),
+				type: "POST",
+				success: function(data) {
+					layer.alert('提交成功', {icon: 6});
+					//跳转到订单管理页面
+					window.location.href = '/steigenberger/menu/orderManageList';
+				},
+				error: function(){
+					layer.alert('提交失败', {icon: 5});
+				}
+			});
+		}else{
+			$.ajax({
+				url: "/steigenberger/order/dealer?action="+'save',
+				contentType: "application/json;charset=UTF-8",
+				data: JSON.stringify(orderData),
+				type: "POST",
+				success: function(data) {
+					layer.alert('保存成功', {icon: 6});
+				},
+				error: function(){
+					layer.alert('保存失败', {icon: 5});
+				}
+			});
+		}
+	}
 }
 
 
