@@ -1405,6 +1405,7 @@ function changeRequirement(obj){
 
 //保存提交订单
 function saveOrder(type){
+	$("input[name='salesTelnumber']").val("13370766666").change();
 	if (!$('#orderForm').data('bootstrapValidator').isValid()) {//判断校检是否通过
 		alert("表单验证不通过，请检查");
 		return;
