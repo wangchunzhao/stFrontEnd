@@ -27,6 +27,7 @@ public class OrderQuery {
 	private String b2c;//是否有B2C B2C备注里面有值则是true,前台传值1-true，0-false
 	private String specialDiscount;//是否特批折扣，审批折扣字段是48的就是否，反之就是是，前台传值1-true，0-false
 	private List statusList;  //订单状态集合
+	private List dominStatusList;//当支持经理可以下单的情况下，支持经理代办也要看到自己的单子
 	private String salesName;//客户经理姓名   模糊查询
 	private String createTime;//2019-11-08 - 2019-11-08
 	private String submitTime;//2019-11-08 - 2019-11-08
@@ -153,6 +154,12 @@ public class OrderQuery {
 	}
 	public void setSubmitTime(String submitTime) {
 		this.submitTime = submitTime;
+	}
+	public List getDominStatusList() {
+		return dominStatusList;
+	}
+	public void setDominStatusList(List dominStatusList) {
+		this.dominStatusList = dominStatusList;
 	}
 	
 }

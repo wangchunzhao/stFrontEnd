@@ -290,7 +290,10 @@ public class OrderController {
 				list.add(orderStatus0122);
 				list.add(orderStatus0100);
 				query.setStatusList(list);
-				query.setSalesCode("");
+				List list2 = new ArrayList();
+				list.add(orderStatus0000);
+				query.setDominStatusList(list2);
+				query.setSalesCode(user.getUserIdentity());
 				break;
 			}else if(operationId.equals(ENGINEER_Order)) {
 				//工程人员
@@ -299,7 +302,7 @@ public class OrderController {
 				list.add(orderStatus0101);
 				list.add(orderStatus0121);
 				query.setStatusList(list);
-				query.setOrderType(orderType1);
+//				query.setOrderType(orderType1);
 				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(B2C_Order)) {
