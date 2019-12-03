@@ -786,6 +786,7 @@ function initOrderFormValidator(){
         message: 'This value is not valid',
         fields: {
 			salesTelnumber: {
+				trigger:"change",
                 validators: {
                     // notEmpty: {
                     //     message: '数量不能为空'
@@ -1405,7 +1406,9 @@ function changeRequirement(obj){
 
 //保存提交订单
 function saveOrder(type){
-	// $("input[name='salesTelnumber']").val($("input[name='salesTelnumber']").val()).change();
+	var salesTelnumber = $("input[name='salesTelnumber']").val();
+	$("input[name='salesTelnumber']").val("1").change();
+	$("input[name='salesTelnumber']").val(salesTelnumber).change();
 	if (!$('#orderForm').data('bootstrapValidator').isValid()) {//判断校检是否通过
 		alert("表单验证不通过，请检查");
 		return;

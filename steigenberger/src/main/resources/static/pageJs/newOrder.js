@@ -375,7 +375,7 @@ function getAmount(obj){
     var exchangeRate = $("#exchangeRate").val()
 	var originalAmount = $(obj).val();
     var amount = exchangeRate*originalAmount
-    $("#contractAmount").val(amount);
+    $("#contractAmount").val(toDecimal2(amount)).change();
 }
 
 function queryMaterialTypeParams(params) {
@@ -811,7 +811,16 @@ function initOrderFormValidator(){
                         message: '请输入合法的金额，金额限制两位小数'
                     }
                 }
-            }
+            },
+			contractRMBValue: {
+				trigger:"change",
+				validators: {
+					identical: {
+						field: 'itemsAmount',
+						message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
+					}
+				}
+			}
         }
     });
 }
