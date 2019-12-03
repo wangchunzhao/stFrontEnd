@@ -20,6 +20,8 @@ $(function () {
 	getUserDetail();
 	disableAll();
 	fillItems();
+	//修改查看订单时,辉县地址数据
+	fillOrderAddress();
 });
 
 //初始化购销明细
@@ -93,6 +95,21 @@ function fillItems(){
 	}
 	
 }
+
+//修改查看订单时,辉县地址数据
+function fillOrderAddress(){
+	if(orderAddress){
+		for(var i=0;i<orderAddress.length;i++){
+			var row = orderAddress[i];
+			row.index = i+1;
+			$("#addressTable").bootstrapTable('insertRow', {
+			    index: i,
+			    row: orderAddress[i]
+			});
+		}
+	}
+}
+
 function disableAll(){ 
   var form=document.forms[0];
   for(var i=0;i<form.length;i++){

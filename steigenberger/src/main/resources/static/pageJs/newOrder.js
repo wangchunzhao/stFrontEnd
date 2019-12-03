@@ -41,10 +41,13 @@ $(function () {
 	$("#optTime").val(nowDateString);
 	defaultCollapse();
 	getUserDetail();
+	//修改订单查看订单，回显购销明细数据
 	fillItems();
+	//修改查看订单时,辉县地址数据
+	fillOrderAddress();
 });
 
-//初始化购销明细
+//修改订单查看订单，回显购销明细数据
 function fillItems(){
 	if(items){
 		for(var i=0;i<items.length;i++){
@@ -116,6 +119,19 @@ function fillItems(){
 	
 }
 
+//修改查看订单时,辉县地址数据
+function fillOrderAddress(){
+	if(orderAddress){
+		for(var i=0;i<orderAddress.length;i++){
+			var row = orderAddress[i];
+			row.index = i+1;
+			$("#addressTable").bootstrapTable('insertRow', {
+			    index: i,
+			    row: orderAddress[i]
+			});
+		}
+	}
+}
 
 //获取session中用户信息
 function getUserDetail(){
@@ -1054,11 +1070,6 @@ function addMaterialAddress(){
 	})
 }
 
-function addAddress(){
-	$("#addressModal").modal('show');
-	$("#addressModalType").val('new');
-}
-
 //打开调研表
 function openConfig(identification){
 	$("#materialconfigModal").modal('show');
@@ -1356,6 +1367,15 @@ function initMarialsTables(){
 	materialsTableall6.init();
 }
 
+function addAddress(){
+	$("#addressModal").modal('show');
+	$("#addressModalType").val('new');
+	$("#selectProvince").val('');
+	$("#citySelect").val('');
+	$("#selectDistrict").val('');
+	$("#shippingAddress").val('');
+}
+
 
 function editAddress(index){
 	var row = $('#addressTable').bootstrapTable('getData')[index];
@@ -1365,7 +1385,7 @@ function editAddress(index){
 	$("#selectProvince").val(row.provinceValue);
 	$("#citySelect").val(row.cityValue);
 	$("#selectDistrict").val(row.areaValue);
-	$("#shippingAddress").val(row.shippingAddress);
+	$("#shippingAddress").val(row.address);
 }
 
 function removeAddress(index){
