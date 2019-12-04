@@ -116,8 +116,8 @@ function formatStatus(value, row, index) {
 		return "待支持经理审核";
 	}else if(value=="0120"){
 		return "B2C提交待待支持经理审核";
-	}else if(value=="9"){
-		return "已下推SAP";
+	}else if(value=="0102"){
+		return "工程提交待支持经理审核";
 	}else if(value=="10"){
 		return "BPM驳回";
 	}else if(value=="11"){

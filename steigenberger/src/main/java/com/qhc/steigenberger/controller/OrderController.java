@@ -87,9 +87,11 @@ public class OrderController {
 	private final static String orderStatus0111="0111";//客户经理提交待B2C和工程审核
 	private final static String orderStatus0112="0112";//工程人员提交待B2C审核
 	private final static String orderStatus0101="0101";//客户经理提交待工程审核
+	private final static String orderStatus0102="0102";//工程提交待支持经理审核
+	private final static String orderStatus0120="0120";//B2C提交待待支持经理审核
 	private final static String orderStatus0121="0121";//B2C提交待工程审核
 	private final static String orderStatus0122="0122";//待支持经理审核
-	private final static String orderStatus0120="0120";//B2C提交待待支持经理审核
+	
 	private final static String orderStatus9="9";//已下推SAP
 	private final static String orderStatus10="10";//BPM驳回
 	private final static String orderStatus11="11";//Selling Tool驳回
@@ -289,7 +291,9 @@ public class OrderController {
 				list.add(orderStatus0120);
 				list.add(orderStatus0122);
 				list.add(orderStatus0100);
+				list.add(orderStatus0102);
 				query.setStatusList(list);
+				//本人保存的
 				List list2 = new ArrayList();
 				list2.add(orderStatus0000);
 				query.setDominStatusList(list2);
@@ -304,6 +308,11 @@ public class OrderController {
 				list.add(orderStatus0121);
 				query.setStatusList(list);
 //				query.setOrderType(orderType1);
+				//本人保存的
+				List list2 = new ArrayList();
+				list2.add(orderStatus0000);
+				query.setDominStatusList(list2);
+				query.setDominSalesCode(user.getUserIdentity());
 				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(B2C_Order)) {
@@ -314,6 +323,11 @@ public class OrderController {
 				list.add(orderStatus0112);
 				query.setStatusList(list);
 //				query.setB2c("1");
+				//本人保存的
+				List list2 = new ArrayList();
+				list2.add(orderStatus0000);
+				query.setDominStatusList(list2);
+				query.setDominSalesCode(user.getUserIdentity());
 				query.setSalesCode("");
 				break;
 			}else {
