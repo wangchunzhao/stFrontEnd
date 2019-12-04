@@ -616,28 +616,62 @@ function toDecimal2(x) {
    return s;
  }  
 //编辑购销明细
-function editMaterials(identification){
+function editMaterials(identification, index){
 	$('#subsidiaryModal').modal('show');
-	$('#materialsModalType').val('edit');
-	var identificationSplit = identification.split('|');
-	var materialsType = identificationSplit[1];
-	var index = identificationSplit[0];
-	var tableData;
-	if(materialsType=='T101'){
-		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
-	}else if(materialsType=='T102'){
-		tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
-	}else if(materialsType=='T103'){
-		tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
-	}else if(materialsType=='T104'){
-		tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
-	}else if(materialsType=='T105'){
-		tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
-	}else if(materialsType=='T106'){
-		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
-	}
-	
-	fillMaterailValue(tableData);
+	// $('#materialsModalType').val('edit');
+	// var identificationSplit = identification.split('|');
+	// var materialsType = identificationSplit[1];
+	// var index = identificationSplit[0];
+	// var tableData;
+	// if(materialsType=='T101'){
+	// 	tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
+	// }else if(materialsType=='T102'){
+	// 	tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
+	// }else if(materialsType=='T103'){
+	// 	tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
+	// }else if(materialsType=='T104'){
+	// 	tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
+	// }else if(materialsType=='T105'){
+	// 	tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
+	// }else if(materialsType=='T106'){
+	// 	tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
+	// }
+	//
+	// fillMaterailValue(tableData);
+	$('#materialTypeName').val(items[index].materialName);
+	$('#materialCode').val(items[index].materialCode);
+	$('#isPurchased').val(items[index].isPurchased);
+	$('#groupName').val(items[index].groupName);
+	$('#unitName').val(items[index].unitName);
+	$('#acturalPrice').val(items[index].acturalPrice);
+	// $('#acturalPriceAmount').val(items[index].acturalPriceAmount);
+	$('#transcationPrice').val(items[index].transcationPrice);
+	$('#acturalPricaOfOptional').val(items[index].acturalPricaOfOptional);
+	// $('#acturalPricaOfOptionalAmount').val(items[index].acturalPricaOfOptionalAmount);
+	$('#transcationPriceOfOptional').val(items[index].transcationPriceOfOptional);
+	$('#B2CPriceEstimated').val(items[index].B2CPriceEstimated);
+	// $('#B2CPriceEstimatedAmount').val(items[index].B2CPriceEstimatedAmount);
+	$('#B2CCostOfEstimated').val(items[index].B2CCostOfEstimated);
+	$('#acturalPriceTotal').val(items[index].acturalPriceTotal);
+	// $('#acturalPriceAmountTotal').val(items[index].acturalPriceAmountTotal);
+	$('#transcationPriceTotal').val(items[index].transcationPriceTotal);
+	$('#retailPrice').val(items[index].retailPrice);
+	// $('#retailPriceAmount').val(items[index].retailPriceAmount);
+	$('#discount').val(items[index].discount);
+	$('#itemCategory').val(items[index].itemCategory).change();
+	$('#itemRequirementPlan').val(items[index].itemRequirementPlan);//233
+	$('#producePeriod').val(items[index].producePeriod);
+	$('#deliveryDate').val(items[index].deliveryDate);
+	$('#produceDate').val(items[index].produceDate);
+	$('#shippDate').val(items[index].shippDate);
+	$('#materialAddress').val(items[index].materialAddress);
+	$('#onStoreDate').val(items[index].onStoreDate);
+	$('#purchasePeriod').val(items[index].purchasePeriod);
+	$('#specialRemark').val(items[index].specialComments);
+	$('#colorComments').val(items[index].colorComments);
+	$('#b2cRemark').val(items[index].b2cComments);
+	$('#amount').val(items[index].quantity);
+	amountChange();
 }
 //删除购销明细
 function removeMaterials(identification){
