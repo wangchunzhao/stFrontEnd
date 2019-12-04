@@ -89,7 +89,7 @@ public class OrderController {
 	private final static String orderStatus0101="0101";//客户经理提交待工程审核
 	private final static String orderStatus0121="0121";//B2C提交待工程审核
 	private final static String orderStatus0122="0122";//待支持经理审核
-	private final static String orderStatus8="8";//订单更改提交成功
+	private final static String orderStatus0120="0120";//B2C提交待待支持经理审核
 	private final static String orderStatus9="9";//已下推SAP
 	private final static String orderStatus10="10";//BPM驳回
 	private final static String orderStatus11="11";//Selling Tool驳回
@@ -286,7 +286,7 @@ public class OrderController {
 			if(operationId.equals(SUPPORT_Order)) {
 				//支持经理
 				List list = new ArrayList();
-				list.add(orderStatus12);
+				list.add(orderStatus0120);
 				list.add(orderStatus0122);
 				list.add(orderStatus0100);
 				query.setStatusList(list);
