@@ -185,13 +185,13 @@ function operation(value, row, index) {
 	}else{
 		//var deletehtm = "<button class='btn btn-danger'>删除</button>";
 		var deletehtm = "";
-		if (orderType == "ZH0M") {
+		/*if (orderType == "ZH0M") {
 			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editStockUpOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
 		} else {
 			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
-		}
+		}*/
 		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
-		htm =htm+deletehtm+editHtml+'&nbsp'+viewHtm;
+		htm =htm+deletehtm+'&nbsp'+viewHtm;
 	}
 	return htm;
 }

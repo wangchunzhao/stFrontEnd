@@ -260,7 +260,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{standardDiscount}">
+									<input type="text" class="form-control" id="approvedDicount" readonly name="standardDiscount" th:value="*{standardDiscount}">
 							    </div>
 							    <input type="hidden" name="mainDiscount" th:value="*{standardDiscount}">
 							    <input type="hidden" name="bodyDiscount" th:value="*{standardDiscount}">
