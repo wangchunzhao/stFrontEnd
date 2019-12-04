@@ -23,7 +23,7 @@
 		<input type="hidden"  id="version">
 		<div id="page-wrapper">
 		<ul class="breadcrumb" style="margin-left: 3%;">
-			<li><a href="#">>新建订单>经销商标准折扣下订单</a></li>
+			<li><a href="#">>新建订单>直签客户投标下单</a></li>
 		</ul>
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -711,7 +711,7 @@
 	<div th:replace="materialconfig::materialconfig"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
-<script th:inline="javascript" src="../pageJs/newOrder.js"></script>
+<script th:inline="javascript" src="../pageJs/directCustomerOrder/directCustomerOrder.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
