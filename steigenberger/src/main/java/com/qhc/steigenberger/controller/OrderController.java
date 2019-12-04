@@ -293,7 +293,7 @@ public class OrderController {
 				List list2 = new ArrayList();
 				list.add(orderStatus0000);
 				query.setDominStatusList(list2);
-				query.setSalesCode(user.getUserIdentity());
+				query.setDominSalesCode(user.getUserIdentity());
 				break;
 			}else if(operationId.equals(ENGINEER_Order)) {
 				//工程人员
