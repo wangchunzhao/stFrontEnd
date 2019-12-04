@@ -1738,7 +1738,7 @@ function viewGrossProfit(){
 	 }
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	$("#grossProfit").modal("show");
-	$("#grossSeqNum").val(sequenceNumber);
+	$("#grossSeqNum").val($("#sequenceNumber").val());
 	$("#grossVersion").val(version);
 	$("#grossContractRMBValue").val($("#contractAmount").val());
 	$("#grossPerson").val($("#salesName").val());
