@@ -759,8 +759,19 @@ function save() {
 		layer.alert('收到需方预付款后几日内发货必须是有效的数字！');
 		return;
 	}
+	
+	var url = ctxPath + "contract/";
+	layer.confirm('是否发送邮件？', {
+		  btn: ['是', '否'] //可以无限个按钮
+		  ,btn1: function(index, layero){
+			//按钮【按钮一】的回调
+		    url = url + "send";
+		  },btn2: function(index, layero){
+		    //按钮【按钮二】的回调
+		  }
+		});
 	$.ajax({
-	    url: ctxPath + "contract/",
+	    url: url,
 	    data: JSON.stringify(json),
 	    type: "POST",
 	    contentType: "application/json;charset=UTF-8",

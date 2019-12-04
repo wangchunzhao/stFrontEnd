@@ -80,6 +80,20 @@ public class ContractController {
 		return r;
 	}
 
+	@PostMapping("/send")
+	@ResponseBody
+	public Result saveAndSend(@RequestBody Contract contract, HttpServletRequest request) {
+		String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
+		Result r = null;
+		contract.setProductionTime(new Date());
+		// 设置状态为已制作
+		contract.setStatus(1);
+		// 设置操作人
+//		contract.seto
+		r = contractService.save(contract);
+		return r;
+	}
+
 	@PutMapping("/{id}/send")
 	@ResponseBody
 	public Result send(@PathVariable("id") Integer contractId) {

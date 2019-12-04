@@ -393,6 +393,11 @@ public class ContractService {
 
 	public Contract sendMailToCustomer(Integer contractId) {
 		Contract contract = (Contract) this.find(contractId).getData();
+		return sendMailToCustomer(contract);
+	}
+
+	public Contract sendMailToCustomer(Contract contract) {
+		Integer contractId = contract.getId();
 		try {
 			File docFile = exportToPDF(contract);
 
