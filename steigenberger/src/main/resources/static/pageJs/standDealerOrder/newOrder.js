@@ -40,11 +40,15 @@ $(function () {
 	$("#inputDate").val(nowDateString);
 	$("#optTime").val(nowDateString);
 	defaultCollapse();
-	getUserDetail();
-	//修改订单查看订单，回显购销明细数据
-	fillItems();
-	//修改查看订单时,辉县地址数据
-	fillOrderAddress();
+	if(orderModelType=="new"){
+		getUserDetail();
+	}
+	if(orderModelType!="new"){
+		//修改订单查看订单，回显购销明细数据
+		fillItems();
+		//修改查看订单时,辉县地址数据
+		fillOrderAddress();
+	}
 });
 
 //修改订单查看订单，回显购销明细数据
@@ -141,7 +145,7 @@ function getUserDetail(){
 	    type: "get",
 	    success: function(data) {
 	    	$("#salesName").val(data.userName);
-	    	// $("#salesTelnumber").val(data.tel);
+	    	$("#salesTelnumber").val(data.tel);
 	    	$("#salesCode").val(data.userIdentity);
 	    }
 	});
@@ -1434,6 +1438,15 @@ function changeRequirement(obj){
 
 //保存提交订单
 function saveOrder(type){
+	if(type){
+		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if(!bootstrapValidator.isValid()){ 
+			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
+			return
+		}
+		
+	}
 	$("#transferType").removeAttr("disabled");
 	 var version = $("#version").val();
 	 var payment = new Object();

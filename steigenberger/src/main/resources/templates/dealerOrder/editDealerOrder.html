@@ -596,8 +596,8 @@
 			</div>
 			<button type="button" class="btn pull-right btn-warning"  style="margin-left: 10px;" id="back" onclick="window.location.href = '/steigenberger/menu/orderManageList';">返回</button>
 			<button type="button" class="btn btn-danger pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="" id="reject">驳回</button>		
-			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" id="approve">提交</button>
-			<button type="button" class="btn pull-right btn-success"  id="approve">保存</button>		
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" id="approve" onclick="saveOrder('submit')">提交</button>
+			<button type="button" class="btn pull-right btn-success"  id="approve" onclick="saveOrder()">保存</button>		
 		</div>
 		</form>
 	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -686,7 +686,7 @@
 	<div th:replace="materialconfig::materialconfig"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
-<script th:inline="javascript" src="../pageJs/newOrder.js"></script>
+<script th:inline="javascript" src="../pageJs/standDealerOrder/newOrder.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
@@ -700,7 +700,7 @@
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
-		
+	var orderModelType = $("#orderModelType").val();	
 	showLeftPush.onclick = function() {
 		classie.toggle( this, 'active' );
 		classie.toggle( body, 'cbp-spmenu-push-toright' );
