@@ -20,8 +20,8 @@
 		<input type="hidden"  id="customerClazzName" name="customerClazzName" th:field="*{customerClazzName}">
 		<input type="hidden"  name="action" value="submit">
 		<input type="hidden"  name="salesCode" id="salesCode">
-		<input type="hidden"  id="orderModelType" value="editB2C">
-		<input type="hidden"  id="currentVersion" th:field="*{currentVersion}">
+		<input type="hidden"  id="version" th:field="*{currentVersion}">
+		<input type="hidden"  id="orderModelType" value="edit">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
@@ -205,14 +205,12 @@
 										<option value="">--选择大区--</option>
 									</select>
 							    </div>
-							    <input type="hidden" id="officeCode" th:value="*{officeCode}">
 							    <span class="col-md-1 control-label">中心</span>
 								<div class="col-md-2">
 									<select class="form-control" id="selectGroup" name="groupCode" th:field="*{groupCode}">
 										<option value="">--选择中心--</option>
 									</select>
 							    </div>
-							    <input type="hidden" id="groupCode" th:value="*{groupCode}">
 							    <span class="col-md-1 control-label">保修年限(年)</span>
 								<div class="col-md-2">
 									<input type="text" class="form-control" id="warrenty" value="1" aria-describedby="emailHelp" name="warrenty" readonly th:field="*{warrenty}">
@@ -246,7 +244,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="mainDiscount" readonly th:field="*{mainDiscount}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{approvedDicount}">
 							    </div>
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
@@ -384,7 +382,8 @@
 								</div>
 								<div class="col-xs-3 col-md-3"></div>
 								<div class="col-xs-3 col-md-3">
-									<select class="form-control" id="version">
+									<select class="form-control" >
+										<option value="1">history2019001</option>
 									</select>
 								</div>
 							</div>
@@ -595,10 +594,9 @@
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn pull-right btn-warning"  style="margin-left: 10px;" id="back" onclick="window.location.href = '/steigenberger/menu/orderManageList';">返回</button>
-			<button type="button" class="btn btn-danger pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="" id="reject">驳回</button>		
-			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" id="approve">提交</button>
-			<button type="button" class="btn pull-right btn-success"  id="approve">保存</button>				
+			<button type="button" class="btn pull-right btn-warning"  style="margin-left: 10px;" id="back" onclick="window.location.href = '/steigenberger/menu/orderManageList';">返回</button>	
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" id="approve" onclick="saveOrder('submit')">提交</button>
+			<button type="button" class="btn pull-right btn-success"  id="approve" onclick="saveOrder()">保存</button>		
 		</div>
 		</form>
 	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -687,13 +685,12 @@
 	<div th:replace="materialconfig::materialconfig"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
-<script th:inline="javascript" src="../pageJs/standDealerOrder/dealerOrderView.js"></script>
-<script th:inline="javascript" src="../pageJs/materialColumnEdit.js"></script>
+<script th:inline="javascript" src="../pageJs/standDealerOrder/anewOrder.js"></script>
+<script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
 	var installationTerms = [[${order_option.installationTerms}]]
 	var items = [[${orderDetail.items}]]
-	var orderAddress = [[${orderDetail.orderAddress}]]
 	var intercoms = [[${order_option.intercoms}]]
 	var officesMap = [[${order_option.offices}]]
 	var groupsMap = [[${order_option.groups}]]
@@ -701,8 +698,7 @@
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
-	var orderModelType = $("#orderModelType").val();	
-	var currentVersion = [[${orderDetail.currentVersion}]]
+		
 	showLeftPush.onclick = function() {
 		classie.toggle( this, 'active' );
 		classie.toggle( body, 'cbp-spmenu-push-toright' );

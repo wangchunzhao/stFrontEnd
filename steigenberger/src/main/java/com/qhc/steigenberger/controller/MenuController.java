@@ -39,7 +39,7 @@ public class MenuController {
 	private final static String ORDER_OPTION = "order_option";
 	//
 	private final static String PAGE_DEALER = "dealerOrder/newOrder";
-	private final static String PAGE_DEALER_NON_STANDARD = "dealerOrder/newNonStandardOrder";
+	private final static String PAGE_DEALER_NON_STANDARD = "nonStandardDealerOrder/newNonStandardOrder";
 	
 	private final static String PAGE_DEALER_DIRECT_CUSTOMER = "directCustomerOrder/directCustomerOrder";
 	//
