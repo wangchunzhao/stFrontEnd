@@ -144,6 +144,12 @@ function formatStatus(value, row, index) {
 
 	if(value=="0000"){
 		return "订单新建保存";
+	}else if(value=="0010"){
+		return "订单新建保存";
+	}else if(value=="0001"){
+		return "订单新建保存";
+	}else if(value=="0011"){
+		return "订单新建保存";
 	}else if(value=="0100"){
 		return "客户经理提交待支持经理审核";
 	}else if(value=="0110"){
