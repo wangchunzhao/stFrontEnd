@@ -158,10 +158,10 @@ function formatStatus(value, row, index) {
 		return "B2C提交待工程审核";
 	}else if(value=="0122"){
 		return "待支持经理审核";
-	}else if(value=="8"){
-		return "订单更改提交成功";
-	}else if(value=="9"){
-		return "已下推SAP";
+	}else if(value=="0120"){
+		return "B2C提交待待支持经理审核";
+	}else if(value=="0102"){
+		return "工程提交待支持经理审核";
 	}else if(value=="10"){
 		return "BPM驳回";
 	}else if(value=="11"){
@@ -185,13 +185,13 @@ function operation(value, row, index) {
 	}else{
 		//var deletehtm = "<button class='btn btn-danger'>删除</button>";
 		var deletehtm = "";
-		if (orderType == "ZH0M") {
+		/*if (orderType == "ZH0M") {
 			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editStockUpOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
 		} else {
 			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
-		}
+		}*/
 		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
-		htm =htm+deletehtm+editHtml+'&nbsp'+viewHtm;
+		htm =htm+deletehtm+'&nbsp'+viewHtm;
 	}
 	return htm;
 }

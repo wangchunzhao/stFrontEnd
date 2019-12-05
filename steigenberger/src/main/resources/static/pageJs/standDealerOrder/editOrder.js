@@ -31,6 +31,7 @@ $(function () {
 			
 		});
 	}
+	initDropDownList();
 	initSubsidiartFormValidator();
     initOrderFormValidator();
 	initMarialsTables();
@@ -40,11 +41,23 @@ $(function () {
 	$("#inputDate").val(nowDateString);
 	$("#optTime").val(nowDateString);
 	defaultCollapse();
-	getUserDetail();
+	//修改订单查看订单，回显购销明细数据
 	fillItems();
+	//修改查看订单时,辉县地址数据
+	fillOrderAddress();
 });
 
-//初始化购销明细
+function initDropDownList(){
+	$('#salesType').trigger("change");
+	$('#officeSelect').val($('#officeCode').val());
+	$('#officeSelect').trigger("change");
+	$('#selectGroup').val($('#groupCode').val());
+	$("#orignalContractAmount").val($("#contractValue").val());
+	$("#contractAmount").val($("#contractRMBValue").val());
+	
+}
+
+//修改订单查看订单，回显购销明细数据
 function fillItems(){
 	if(items){
 		for(var i=0;i<items.length;i++){
@@ -116,6 +129,19 @@ function fillItems(){
 	
 }
 
+//修改查看订单时,辉县地址数据
+function fillOrderAddress(){
+	if(orderAddress){
+		for(var i=0;i<orderAddress.length;i++){
+			var row = orderAddress[i];
+			row.index = i+1;
+			$("#addressTable").bootstrapTable('insertRow', {
+			    index: i,
+			    row: orderAddress[i]
+			});
+		}
+	}
+}
 
 //获取session中用户信息
 function getUserDetail(){
@@ -125,7 +151,7 @@ function getUserDetail(){
 	    type: "get",
 	    success: function(data) {
 	    	$("#salesName").val(data.userName);
-	    	// $("#salesTelnumber").val(data.tel);
+	    	$("#salesTelnumber").val(data.tel);
 	    	$("#salesCode").val(data.userIdentity);
 	    }
 	});
@@ -359,7 +385,7 @@ function getAmount(obj){
     var exchangeRate = $("#exchangeRate").val()
 	var originalAmount = $(obj).val();
     var amount = exchangeRate*originalAmount
-    $("#contractAmount").val(amount);
+    $("#contractAmount").val(toDecimal2(amount)).change();
 }
 
 function queryMaterialTypeParams(params) {
@@ -616,62 +642,28 @@ function toDecimal2(x) {
    return s;
  }  
 //编辑购销明细
-function editMaterials(identification, index){
+function editMaterials(identification){
 	$('#subsidiaryModal').modal('show');
-	// $('#materialsModalType').val('edit');
-	// var identificationSplit = identification.split('|');
-	// var materialsType = identificationSplit[1];
-	// var index = identificationSplit[0];
-	// var tableData;
-	// if(materialsType=='T101'){
-	// 	tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
-	// }else if(materialsType=='T102'){
-	// 	tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
-	// }else if(materialsType=='T103'){
-	// 	tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
-	// }else if(materialsType=='T104'){
-	// 	tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
-	// }else if(materialsType=='T105'){
-	// 	tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
-	// }else if(materialsType=='T106'){
-	// 	tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
-	// }
-	//
-	// fillMaterailValue(tableData);
-	$('#materialTypeName').val(items[index].materialName);
-	$('#materialCode').val(items[index].materialCode);
-	$('#isPurchased').val(items[index].isPurchased);
-	$('#groupName').val(items[index].groupName);
-	$('#unitName').val(items[index].unitName);
-	$('#acturalPrice').val(items[index].acturalPrice);
-	// $('#acturalPriceAmount').val(items[index].acturalPriceAmount);
-	$('#transcationPrice').val(items[index].transcationPrice);
-	$('#acturalPricaOfOptional').val(items[index].acturalPricaOfOptional);
-	// $('#acturalPricaOfOptionalAmount').val(items[index].acturalPricaOfOptionalAmount);
-	$('#transcationPriceOfOptional').val(items[index].transcationPriceOfOptional);
-	$('#B2CPriceEstimated').val(items[index].B2CPriceEstimated);
-	// $('#B2CPriceEstimatedAmount').val(items[index].B2CPriceEstimatedAmount);
-	$('#B2CCostOfEstimated').val(items[index].B2CCostOfEstimated);
-	$('#acturalPriceTotal').val(items[index].acturalPriceTotal);
-	// $('#acturalPriceAmountTotal').val(items[index].acturalPriceAmountTotal);
-	$('#transcationPriceTotal').val(items[index].transcationPriceTotal);
-	$('#retailPrice').val(items[index].retailPrice);
-	// $('#retailPriceAmount').val(items[index].retailPriceAmount);
-	$('#discount').val(items[index].discount);
-	$('#itemCategory').val(items[index].itemCategory).change();
-	$('#itemRequirementPlan').val(items[index].itemRequirementPlan);//233
-	$('#producePeriod').val(items[index].producePeriod);
-	$('#deliveryDate').val(items[index].deliveryDate);
-	$('#produceDate').val(items[index].produceDate);
-	$('#shippDate').val(items[index].shippDate);
-	$('#materialAddress').val(items[index].materialAddress);
-	$('#onStoreDate').val(items[index].onStoreDate);
-	$('#purchasePeriod').val(items[index].purchasePeriod);
-	$('#specialRemark').val(items[index].specialComments);
-	$('#colorComments').val(items[index].colorComments);
-	$('#b2cRemark').val(items[index].b2cComments);
-	$('#amount').val(items[index].quantity);
-	amountChange();
+	$('#materialsModalType').val('edit');
+	var identificationSplit = identification.split('|');
+	var materialsType = identificationSplit[1];
+	var index = identificationSplit[0];
+	var tableData;
+	if(materialsType=='T101'){
+		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
+	}else if(materialsType=='T102'){
+		tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
+	}else if(materialsType=='T103'){
+		tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
+	}else if(materialsType=='T104'){
+		tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
+	}else if(materialsType=='T105'){
+		tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
+	}else if(materialsType=='T106'){
+		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
+	}
+	
+	fillMaterailValue(tableData);
 }
 //删除购销明细
 function removeMaterials(identification){
@@ -819,18 +811,26 @@ function initOrderFormValidator(){
     $('#orderForm').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
-			salesTelnumber: {
-				trigger:"change",
+            contractValue: {
                 validators: {
                     // notEmpty: {
                     //     message: '数量不能为空'
                     // },
-					phone: {
-						country: 'CN',
-						message: '请输入正确的电话号码'
-					}
+                    regexp: {
+                        regexp: /^\d+(\.\d{0,2})?$/,
+                        message: '请输入合法的金额，金额限制两位小数'
+                    }
                 }
-            }
+            },
+			contractRMBValue: {
+				trigger:"change",
+				validators: {
+					identical: {
+						field: 'itemsAmount',
+						message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
+					}
+				}
+			}
         }
     });
 }
@@ -1087,11 +1087,6 @@ function addMaterialAddress(){
 		}
 		
 	})
-}
-
-function addAddress(){
-	$("#addressModal").modal('show');
-	$("#addressModalType").val('new');
 }
 
 //打开调研表
@@ -1391,6 +1386,15 @@ function initMarialsTables(){
 	materialsTableall6.init();
 }
 
+function addAddress(){
+	$("#addressModal").modal('show');
+	$("#addressModalType").val('new');
+	$("#selectProvince").val('');
+	$("#citySelect").val('');
+	$("#selectDistrict").val('');
+	$("#shippingAddress").val('');
+}
+
 
 function editAddress(index){
 	var row = $('#addressTable').bootstrapTable('getData')[index];
@@ -1400,7 +1404,7 @@ function editAddress(index){
 	$("#selectProvince").val(row.provinceValue);
 	$("#citySelect").val(row.cityValue);
 	$("#selectDistrict").val(row.areaValue);
-	$("#shippingAddress").val(row.shippingAddress);
+	$("#shippingAddress").val(row.address);
 }
 
 function removeAddress(index){
@@ -1440,73 +1444,75 @@ function changeRequirement(obj){
 
 //保存提交订单
 function saveOrder(type){
-	var salesTelnumber = $("input[name='salesTelnumber']").val();
-	$("input[name='salesTelnumber']").val("1").change();
-	$("input[name='salesTelnumber']").val(salesTelnumber).change();
-	if (!$('#orderForm').data('bootstrapValidator').isValid()) {//判断校检是否通过
-		alert("表单验证不通过，请检查");
-		return;
-	}else {
-		$("#transferType").removeAttr("disabled");
-		 var version = $("#version").val();
-		 var payment = new Object();
-		 payment['termCode'] = $("#paymentType").val();
-		 payment['termName'] = $("#paymentType").find("option:selected").text();
-		 payment['percentage'] = "1";
-		 payment['payDate'] = $("#inputDate").val();
-		 //获取下拉框name
-		 getSelectName();
-		 var orderData = $("#orderForm").serializeObject();
-		 $('#transferType').attr("disabled",true);
-		 var payments=new Array();
-		 payments.push(payment);
-		 orderData.payments = payments;
-		 orderData['currentVersion'] = version;
-		 orderData['orderType'] = 'ZH0M';
-		 var items = $("#materialsTable").bootstrapTable('getData');
-		 orderData.items = items;
-		 for(var i=0;i<items.length;i++){
-			 var configData = localStorage[items[i].identification];
-			 items[i].isVirtual = 0;
-			 if(configData){
-				 var jsonObject = JSON.parse(configData);
-				 items[i]['configs']= jsonObject.configTableData;
-				 items[i]['configComments'] = jsonObject.remark
-			 } else{
-				 items[i]['configs'] = null;
-			 }
-		 }
-		 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
-		 if(type){
-			 $.ajax({
-				    url: "/steigenberger/order/dealer?action="+type,
-				    contentType: "application/json;charset=UTF-8",
-				    data: JSON.stringify(orderData),
-				    type: "POST",
-				    success: function(data) {
-				    	layer.alert('提交成功', {icon: 6});
-				    	//跳转到订单管理页面
-				    	window.location.href = '/steigenberger/menu/orderManageList';
-				    },
-				    error: function(){
-				    	layer.alert('提交失败', {icon: 5});
-				    }
-			});
-		 }else{
-			 $.ajax({
-				    url: "/steigenberger/order/dealer?action="+'save',
-				    contentType: "application/json;charset=UTF-8",
-				    data: JSON.stringify(orderData),
-				    type: "POST",
-				    success: function(data) {
-				    	layer.alert('保存成功', {icon: 6});
-				    },
-				    error: function(){
-				    	layer.alert('保存失败', {icon: 5});
-				    }
-			});
-		 }
+	if(type){
+		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if(!bootstrapValidator.isValid()){ 
+			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
+			return
+		}
+		
 	}
+	$("#transferType").removeAttr("disabled");
+	 var version = $("#version").val();
+	 var payment = new Object();
+	 payment['termCode'] = $("#paymentType").val();
+	 payment['termName'] = $("#paymentType").find("option:selected").text();
+	 payment['percentage'] = "1";
+	 payment['payDate'] = $("#inputDate").val();
+	 //获取下拉框name
+	 getSelectName();
+	 var orderData = $("#orderForm").serializeObject(); 
+	 $('#transferType').attr("disabled",true);
+	 var payments=new Array();
+	 payments.push(payment);
+	 orderData.payments = payments;
+	 orderData['currentVersion'] = version;
+	 orderData['orderType'] = 'ZH0D';
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 orderData.items = items;
+	 for(var i=0;i<items.length;i++){
+		 var configData = localStorage[items[i].identification];
+		 items[i].isVirtual = 0;
+		 if(configData){
+			 var jsonObject = JSON.parse(configData);
+			 items[i]['configs']= jsonObject.configTableData;
+			 items[i]['configComments'] = jsonObject.remark
+		 } else{
+			 items[i]['configs'] = null;
+		 }	 	 
+	 }
+	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+	 if(type){
+		 $.ajax({
+			    url: "/steigenberger/order/dealer?action="+type,
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	layer.alert('提交成功', {icon: 6});
+			    	//跳转到订单管理页面
+			    	window.location.href = '/steigenberger/menu/orderManageList';
+			    },
+			    error: function(){
+			    	layer.alert('提交失败', {icon: 5});
+			    }
+		});  
+	 }else{
+		 $.ajax({
+			    url: "/steigenberger/order/dealer?action="+'save',
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	layer.alert('保存成功', {icon: 6});
+			    },
+			    error: function(){
+			    	layer.alert('保存失败', {icon: 5});
+			    }
+		}); 
+	 }
+	 
 }
 
 

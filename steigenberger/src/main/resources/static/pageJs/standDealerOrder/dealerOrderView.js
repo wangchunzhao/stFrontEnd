@@ -9,7 +9,6 @@ $(function () {
 	
 	var installationTerm = installationTerms[$("#customerClazzCode").val()];
 	$.each(installationTerm, function (key, value) {
-		debugger
 		$("#installCode").val(key);
 		$("#installName").val(value);
 		
@@ -17,11 +16,13 @@ $(function () {
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
-	getUserDetail();
-	disableAll();
+	
+	$("#version").append("<option value='" + currentVersion + "'>" + currentVersion + "</option>");
 	fillItems();
 	//修改查看订单时,辉县地址数据
 	fillOrderAddress();
+	initDropDownList();
+	disableAll();
 });
 
 //初始化购销明细
@@ -110,6 +111,142 @@ function fillOrderAddress(){
 	}
 }
 
+function initDropDownList(){
+	$('#salesType').trigger("change");
+	$('#officeSelect').val($('#officeCode').val());
+	$('#officeSelect').trigger("change");
+	$('#selectGroup').val($('#groupCode').val());
+	$("#orignalContractAmount").val($("#contractValue").val());
+	$("#contractAmount").val($("#contractRMBValue").val());
+	
+}
+
+function salesTypeChange(obj,offices,taxRate,exchangeRate){
+	$("#orignalContractAmount").val("");
+	$("#exchangeRate").val("");
+	$("#contractAmount").val("");
+	var saleType = $(obj).val();
+	getCurrency(saleType,exchangeRate);
+	getIncoterm(saleType);
+	$("#taxtRate").val(taxRate[saleType]);
+	if(saleType=="20"){
+		$("#freightDiv").show();
+		$('#selectProvince').val('');
+		$('#citySelect').val('');
+		$('#selectDistrict').val('');
+		$('#citySelect').attr("disabled",true);
+		$('#selectDistrict').attr("disabled",true);	
+		$('#selectProvince').attr("disabled",true);
+		$('#currency').attr('disabled',false);
+		$('#incoterm').attr("readonly",false);
+		$('#incotermContect').attr("readonly",false);
+		$('#installCode').val('');
+		$('#installCode').attr("readonly",true);
+		$('#transferType').attr("disabled",true);
+		$('#contactor1Id').attr("readonly",true);
+		$('#contactor2Id').attr("readonly",true);
+		$('#contactor3Id').attr("readonly",true);
+		$('#contactor1Tel').attr("readonly",true);
+		$('#contactor2Tel').attr("readonly",true);
+		$('#contactor3Tel').attr("readonly",true);
+		$('#contactor1Id').val('');
+		$('#contactor2Id').val('');
+		$('#contactor3Id').val('');
+		$('#contactor1Tel').val('');
+		$('#contactor2Tel').val('');
+		$('#contactor3Tel').val('');
+	}else{
+		$('#freightDiv').hide();
+		$('#citySelect').attr("disabled",false);
+		$('#selectDistrict').attr("disabled",false);
+		$('#selectProvince').attr("disabled",false);
+		
+		$('#currency').attr('disabled',true);
+		$('#incoterm').attr("readonly",true);
+		$('#incotermContect').attr("readonly",true);
+		
+		$('#installCode').attr("readonly",false);
+		$('#transferType').attr("readonly",false);
+		$('#contactor1Id').attr("readonly",false);
+		$('#contactor2Id').attr("readonly",false);
+		$('#contactor3Id').attr("readonly",false);
+		$('#contactor1Tel').attr("readonly",false);
+		$('#contactor2Tel').attr("readonly",false);
+		$('#contactor3Tel').attr("readonly",false);
+	}
+	if ($(obj).val() == '') {
+		$("#officeSelect").html('');
+		$("#officeSelect").append("<option value=''>--选择大区--</option>");
+		$("#officeSelect").val('');
+		
+		$("#selectGroup").html('');
+		$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		$("#selectGroup").val('');
+	}else{
+		$("#officeSelect").html('');
+		$("#selectGroup").html('');
+		if($(obj).val() == '10'||$(obj).val() == '30'){
+			$("#officeSelect").attr("readonly",false);
+			$("#selectGroup").attr("readonly",false);
+			$("#officeSelect").append("<option value=''>--选择大区--</option>");
+			$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		}else{
+			$("#officeSelect").attr("readonly",true);
+			$("#selectGroup").attr("readonly",true);
+		}	
+		$("#officeSelect").val('');
+		var officesMap = offices[saleType];
+		$.each(officesMap, function (key,value) {
+				$("#officeSelect").append("<option value='" + key + "' readonly>" + value + "</option>");			
+		});
+	} 		
+}
+
+function getIncoterm(salesType){
+	$("#incoterm").html('');
+	if(salesType=='20'){
+		$.each(intercoms, function (key,value) {
+			$("#incoterm").append("<option value=" + key +">" + value + "</option>");			
+		});
+	}
+}
+function getCurrency(saleType,exchangeRates){
+	$("#currency").html("");
+	if(saleType==''){
+		$("#currency").html("");
+	}else if(saleType=='20'){
+		$("#currency").append("<option value=''>--选择币种--</option>");
+		var currency = exchangeRates[saleType];
+		$.each(currency, function (index,item) {
+			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");			
+		});
+	}else{
+		var currency = exchangeRates[saleType];
+		$.each(currency, function (index,item) {
+			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			$("#exchangeRate").val(item.rate);
+		});
+	}
+	
+}
+function getGroups(obj,groups){
+	var officeCode = $(obj).val();
+	if ($(obj).val() == '') {
+		$("#selectGroup").html('');
+		$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		$("#selectGroup").val('');
+	}else{
+		$("#selectGroup").html('');
+		$("#selectGroup").append("<option value=''>--选择中心--</option>");
+		$("#selectGroup").val('');
+		var groupsMap = groups[officeCode];
+		$.each(groupsMap, function (key,value) {
+				$("#selectGroup").append("<option value='" + key + "'>" + value + "</option>");			
+		});
+	} 		
+}
+
+
 function disableAll(){ 
   var form=document.forms[0];
   for(var i=0;i<form.length;i++){
@@ -125,26 +262,16 @@ function disableAll(){
   $("#collapseClose").attr('disabled',false);
   $("#reject").attr('disabled',false);
   $("#approve").attr('disabled',false);
+  $("#version").attr('disabled',false);
   if($("#expenseItem")){
 	  $("#expenseItem").find("*").each(function() {
 		 $(this).removeAttr("disabled");
 	  });
   }
+  if(orderModelType=="editB2C"){
+	  $("#materialsEdit").attr('disabled',false);
+  }
 }
-//获取session中用户信息
-function getUserDetail(){
-	// $.ajax({
-	//     url: "/steigenberger/order/user",
-	//     data: {},
-	//     type: "get",
-	//     success: function(data) {
-	//     	$("#salesName").val(data.userName);
-	//     	$("#salesTelnumber").val(data.tel);
-	//     	$("#salesCode").val(data.userIdentity);
-	//     }
-	// });
-}
-
 //打开调研表
 function openConfig(identification){
 	$("#materialconfigModal").modal('show');
@@ -243,6 +370,91 @@ function viewConfig(){
 	    	$("#viewError").attr("style","display:block;");
 	    }
 	});
+}
+
+//编辑购销明细
+function editMaterials(identification){
+	$('#subsidiaryModal').modal('show');
+	$('#materialsModalType').val('edit');
+	var identificationSplit = identification.split(',');
+	var materialsType = materialGroupMapGroupOrder[identificationSplit[0]];
+	var index = identificationSplit[1];
+	debugger
+	var tableData;
+	if(materialsType=='T101'){
+		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
+	}else if(materialsType=='T102'){
+		tableData = $('#materialsTableall2').bootstrapTable('getData')[index];
+	}else if(materialsType=='T103'){
+		tableData = $('#materialsTableall3').bootstrapTable('getData')[index];
+	}else if(materialsType=='T104'){
+		tableData = $('#materialsTableall4').bootstrapTable('getData')[index];
+	}else if(materialsType=='T105'){
+		tableData = $('#materialsTableall5').bootstrapTable('getData')[index];
+	}else if(materialsType=='T106'){
+		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
+	}
+	
+	fillMaterailValue(tableData);
+}
+
+//将查出来的物料信息填充到各个field中
+function fillMaterailValue(data){
+	if(data.materialName){
+		$("#materialTypeName").val(data.materialName);
+	}
+	if(data.materialCode){
+		$("#materialCode").val(data.materialCode);
+	}
+	if(data.b2cRemark){
+		$("#b2cRemark").val(data.b2cRemark);
+	}
+	if(data.colorComments){
+		$("#colorComments").val(data.colorComments);
+	}
+	if(data.specialRemark){
+		$("#specialRemark").val(data.specialRemark);
+	}
+	if(data.itemCategory){
+		$("#itemCategory").val(data.itemCategory)
+	}
+	$("#groupName").val(data.groupName);
+	$("#groupCode").val(data.groupCode);
+	$("#isConfigurable").val(data.configurable);
+	var materialsType = materialGroupMapGroupOrder[data.groupCode];
+	var amount = $("#amount").val();
+	$("#materialsType").val(materialsType);
+	$("#unitName").val(data.unitName);
+	$("#unitName").val(data.unitName);
+	$("#materialClazzCode").val(data.clazzCode);
+	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
+	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
+	$("#acturalPricaOfOptionalAmount").val(toDecimal2(amount*(data.acturalPricaOfOptional)));
+	$("#transcationPriceOfOptional").val(toDecimal2(data.transcationPriceOfOptional));
+	$("#B2CPriceEstimated").val(toDecimal2(data.b2CPriceEstimated));
+	$("#B2CPriceEstimatedAmount").val(toDecimal2((data.b2CPriceEstimated)*amount));
+	$("#B2CCostOfEstimated").val(toDecimal2(data.b2CCostOfEstimated));
+	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
+	$("#retailPrice").val(toDecimal2(data.retailPrice));
+	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
+	var discountValue = $("#discount").val();
+	var discount = discountValue.split("%")[0];
+	var acturalPrice = (data.retailPrice*discount)
+	$("#acturalPrice").val(toDecimal2(acturalPrice));
+	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
+	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
+	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
+	if($('#isPurchased').val()=='生产'){
+		$("#producePeriod").val(data.period);
+	}else{
+		$("#purchasePeriod").val(data.period);
+	}
+	$("#deliveryDate").val(data.deliveryDate);
+	$("#produceDate").val(data.produceDate);
+	$("#onStoreDate").val(data.onStoreDate);
+	$("#standardPrice").val(toDecimal2(data.standardPrice));
+	
+	
 }
 
 //查看毛利率信息

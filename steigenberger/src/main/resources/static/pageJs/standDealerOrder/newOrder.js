@@ -32,7 +32,7 @@ $(function () {
 		});
 	}
 	initSubsidiartFormValidator();
-    initOrderFormValidator();
+    //initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -177,7 +177,7 @@ function openSearchUnit(){
 		$("#contractUnitName").val('');
 		$("#contactorCode").val(row.code);
 		$("#customer").val(row.name);
-		$("#customerClazz").val(row.clazzName);
+		$("#customerClazz").val(row.clazzName).change();
 		$("#customerClazzName").val(row.clazzName);
 	})
 }
@@ -805,11 +805,110 @@ function initOrderFormValidator(){
     $('#orderForm').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
-            contractValue: {
+        	salesTelnumber: {
+        	    validators: {
+        	    	regexp: {
+        	    		regexp: /^1[3456789]\d{9}$/,
+        	            message: '不是合法的手机号'
+        	        }
+        	    }
+        	},
+        	saleType:{
+        	    validators: {
+        	    	 notEmpty: {
+                         message: '请选择销售类型'
+                    }
+        	    }
+        	},
+        	recordCode: {
                 validators: {
-                    // notEmpty: {
-                    //     message: '数量不能为空'
-                    // },
+                    notEmpty: {
+                         message: '请填写项目编号'
+                    }
+                }
+            },
+        	customerName: {
+                validators: {
+                    notEmpty: {
+                         message: '请填写店名'
+                    }
+                }
+            },
+            officeCode: {
+                validators: {
+                    notEmpty: {
+                         message: '请选择大区'
+                    }
+                }
+            },
+            groupCode: {
+                validators: {
+                    notEmpty: {
+                         message: '请选择中心'
+                    }
+                }
+            },
+            contactor1Id: {
+            	validators: {
+        	    	regexp: {
+        	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+        	            message: '请填写正确的身份证号'
+        	        }
+        	    }
+            },
+            contactor2Id: {
+            	validators: {
+        	    	regexp: {
+        	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+        	            message: '请填写正确的身份证号'
+        	        }
+        	    }
+            },
+            contactor3Id: {
+            	validators: {
+        	    	regexp: {
+        	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+        	            message: '请填写正确的身份证号'
+        	        }
+        	    }
+            },
+            contactor1Tel: {
+            	validators: {
+        	    	regexp: {
+        	    		regexp: /^1[3456789]\d{9}$/,
+        	            message: '请填写正确的手机号'
+        	        }
+        	    }
+            },
+            contactor2Tel: {
+            	validators: {
+        	    	regexp: {
+        	    		regexp: /^1[3456789]\d{9}$/,
+        	            message: '请填写正确的手机号'
+        	        }
+        	    }
+            },
+            contactor3Tel: {
+            	validators: {
+        	    	regexp: {
+        	    		regexp: /^1[3456789]\d{9}$/,
+        	            message: '请填写正确的手机号'
+        	        }
+        	    }
+            },
+            contractorclassname: {
+            	trigger:"change",
+                validators: {
+                    notEmpty: {
+                         message: '请选择签约单位'
+                    }
+                }
+            },
+        	contractValue: {
+                validators: {
+                    notEmpty: {
+                         message: '金额不能为空'
+                    },
                     regexp: {
                         regexp: /^\d+(\.\d{0,2})?$/,
                         message: '请输入合法的金额，金额限制两位小数'
@@ -824,6 +923,8 @@ function initOrderFormValidator(){
 						message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
 					}
 				}
+			},
+			itemsAmount: {
 			}
         }
     });
@@ -1421,24 +1522,42 @@ function removeAddress(index){
 
 function changeRequirement(obj){	
 	$("#itemRequirementPlan").html('');
-	var requireMent1='<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>'+
-	'<option value="Z004">物料需求计划</option>';
-	var requireMent2 = '<option value="Z004">物料需求计划</option>';
+	var requireMent1='<option value="Z004">物料需求计划</option>'+'<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>';
+	
+	/*var requireMent2 = '<option value="Z004">物料需求计划</option>';*/
 	var itemCategory = $(obj).val();
 	if(itemCategory!=''){
-		if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
+		/*if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
 			$("#itemRequirementPlan").append(requireMent2);
-		}else{
+		}else{*/
 			$("#itemRequirementPlan").append(requireMent1);
-		}
+		/*}*/
 	}else{
-		$("#itemRequirementPlan").append('<option value="="></option>');
+		$("#itemRequirementPlan").append('<option value="">请选择</option>');
 	}
+}
+
+function expandAll(){
+	$('#customerBasicInfo').collapse('show');
+	$('#contractBasicInfomation').collapse('show');
+	$('#contractDetailInfo').collapse('show');
+	$('#researchTableContent').collapse('show');
+	$('#paymentMethod').collapse('show');
+	$('#purchaseDetail').collapse('show');
+	$('#infoCheck').collapse('show');
+	$('#attachmentInfo').collapse('show');
 }
 
 //保存提交订单
 function saveOrder(type){
 	if(type){
+		 expandAll()
+		 initOrderFormValidator();
+		 var items = $("#materialsTable").bootstrapTable('getData');
+		 if(items.length==0){
+			 layer.alert('请添加购销明细', {icon: 5});
+			 return
+		 }
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
 		if(!bootstrapValidator.isValid()){ 
@@ -1471,6 +1590,16 @@ function saveOrder(type){
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 items[i]['configs']= jsonObject.configTableData;
+			 if(!items[i].isConfigurable){
+				if(items[i].itemCategory=='ZHD1'){
+					items[i].itemCategory='ZHD2';
+				}else if(items[i].itemCategory=='ZHD3'){
+					items[i].itemCategory='ZHD4';
+				}else{
+					items[i].itemCategory='ZHR2';
+				}
+				
+			 }
 			 items[i]['configComments'] = jsonObject.remark
 		 } else{
 			 items[i]['configs'] = null;
@@ -1611,7 +1740,7 @@ function viewGrossProfit(){
 	 }
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	$("#grossProfit").modal("show");
-	$("#grossSeqNum").val(sequenceNumber);
+	$("#grossSeqNum").val($("#sequenceNumber").val());
 	$("#grossVersion").val(version);
 	$("#grossContractRMBValue").val($("#contractAmount").val());
 	$("#grossPerson").val($("#salesName").val());

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,9 +89,11 @@ public class OrderController {
 	private final static String orderStatus0111="0111";//客户经理提交待B2C和工程审核
 	private final static String orderStatus0112="0112";//工程人员提交待B2C审核
 	private final static String orderStatus0101="0101";//客户经理提交待工程审核
+	private final static String orderStatus0102="0102";//工程提交待支持经理审核
+	private final static String orderStatus0120="0120";//B2C提交待待支持经理审核
 	private final static String orderStatus0121="0121";//B2C提交待工程审核
 	private final static String orderStatus0122="0122";//待支持经理审核
-	private final static String orderStatus8="8";//订单更改提交成功
+	
 	private final static String orderStatus9="9";//已下推SAP
 	private final static String orderStatus10="10";//BPM驳回
 	private final static String orderStatus11="11";//Selling Tool驳回
@@ -99,6 +102,7 @@ public class OrderController {
 	//订单类型
 	private final static String orderType1="ZH0D";//经销商订单
 	private final static String orderType2="ZH0M";//备货订单
+	private final static String orderType3= "ZH0T";//大客户订单
 
 
 	@Autowired
@@ -290,14 +294,17 @@ public class OrderController {
 			if(operationId.equals(SUPPORT_Order)) {
 				//支持经理
 				List list = new ArrayList();
-				list.add(orderStatus12);
+				list.add(orderStatus0120);
 				list.add(orderStatus0122);
 				list.add(orderStatus0100);
+				list.add(orderStatus0102);
 				query.setStatusList(list);
+				//本人保存的
 				List list2 = new ArrayList();
-				list.add(orderStatus0000);
+				list2.add(orderStatus0000);
 				query.setDominStatusList(list2);
 				query.setDominSalesCode(user.getUserIdentity());
+				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(ENGINEER_Order)) {
 				//工程人员
@@ -307,6 +314,11 @@ public class OrderController {
 				list.add(orderStatus0121);
 				query.setStatusList(list);
 //				query.setOrderType(orderType1);
+				//本人保存的
+				List list2 = new ArrayList();
+				list2.add(orderStatus0000);
+				query.setDominStatusList(list2);
+				query.setDominSalesCode(user.getUserIdentity());
 				query.setSalesCode("");
 				break;
 			}else if(operationId.equals(B2C_Order)) {
@@ -317,6 +329,11 @@ public class OrderController {
 				list.add(orderStatus0112);
 				query.setStatusList(list);
 //				query.setB2c("1");
+				//本人保存的
+				List list2 = new ArrayList();
+				list2.add(orderStatus0000);
+				query.setDominStatusList(list2);
+				query.setDominSalesCode(user.getUserIdentity());
 				query.setSalesCode("");
 				break;
 			}else {
@@ -504,6 +521,10 @@ public class OrderController {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
 		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+		boolean standard = false;
+		if(!StringUtils.isEmpty(oo.getStandardDiscount())) {
+			standard = (Double.valueOf(oo.getStandardDiscount())==order.getMainDiscount()&&Double.valueOf(oo.getStandardDiscount())==order.getBodyDiscount());
+		}
 		oo.setOrderTypeCode(orderType);	
 		ModelAndView mv = null;
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
@@ -511,20 +532,43 @@ public class OrderController {
 			String operationId = userOperationInfoList.get(i).getOperationId();
 			if(operationId.equals(SUPPORT_Order)) {
 				//支持经理
-				mv = new ModelAndView("dealerOrder/supportManagerOrder");
+				if(orderType.equals(orderType1)&&standard) {
+					mv = new ModelAndView("dealerOrder/supportManagerOrder");
+				}else if(orderType.equals(orderType1)&&standard) {
+					mv = new ModelAndView("nonStandardDealerOrder/supportManagerOrder");
+				}else if(orderType.equals(orderType2)) {
+					mv = new ModelAndView("stockUpOrder/supportManagerOrder");
+				}else if(orderType.equals(orderType3)) {
+					mv = new ModelAndView("directCustomerOrder/supportManagerOrder");
+				}			
 				break;
 			}else if(operationId.equals(ENGINEER_Order)) {
 				//工程人员
-				mv = new ModelAndView("dealerOrder/engineerManagerOrder");
+				mv = new ModelAndView("directCustomerOrder/engineerManagerOrder");
 				break;
 			}else if(operationId.equals(B2C_Order)) {
-				//B2C
-				mv = new ModelAndView("dealerOrder/b2cManagerOrder");
+				//B2C			
+				if(orderType.equals(orderType1)&&standard) {
+					mv = new ModelAndView("dealerOrder/b2cManagerOrder");
+				}else if(orderType.equals(orderType1)&&standard) {
+					mv = new ModelAndView("nonStandardDealerOrder/b2cManagerOrder");
+				}else if(orderType.equals(orderType2)) {
+					mv = new ModelAndView("stockUpOrder/b2cManagerOrder");
+				}else if(orderType.equals(orderType3)) {
+					mv = new ModelAndView("directCustomerOrder/b2cManagerOrder");
+				}	
 				break;
 			}else {
 				//客户经理
-				mv = new ModelAndView("dealerOrder/customerManagerOrder");
-				break;
+				if(orderType.equals(orderType1)&&standard) {
+					mv = new ModelAndView("dealerOrder/customerManagerOrder");
+				}else if(orderType.equals(orderType1)&&standard) {
+					mv = new ModelAndView("nonStandardDealerOrder/customerManagerOrder");
+				}else if(orderType.equals(orderType2)) {
+					mv = new ModelAndView("stockUpOrder/customerManagerOrder");
+				}else if(orderType.equals(orderType3)) {
+					mv = new ModelAndView("directCustomerOrder/customerManagerOrder");
+				}	
 			}
 			
 		}
