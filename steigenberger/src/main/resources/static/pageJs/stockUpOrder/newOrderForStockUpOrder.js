@@ -1493,6 +1493,7 @@ function saveOrder(type){
 				    }
 			});
 		 }else{
+			 orderData['customerClazzName'] = ""
 			 $.ajax({
 				    url: "/steigenberger/order/dealer?action="+'save',
 				    contentType: "application/json;charset=UTF-8",
