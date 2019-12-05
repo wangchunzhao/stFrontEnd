@@ -45,7 +45,7 @@ var TableInit = function () {
 				sortable : true
 			}, {
 				title : '签约单位',
-				field : 'contracterCode',
+				field : 'contracterName',
 				sortable : true
 			},{
 				title : '订单类型',
