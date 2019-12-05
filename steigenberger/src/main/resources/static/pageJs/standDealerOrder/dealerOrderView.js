@@ -413,8 +413,8 @@ function fillMaterailValue(data){
 	if(data.colorComments){
 		$("#colorComments").val(data.colorComments);
 	}
-	if(data.specialRemark){
-		$("#specialRemark").val(data.specialRemark);
+	if(data.specialComments){
+		$("#specialRemark").val(data.specialComments);
 	}
 	if(data.itemCategory){
 		$("#itemCategory").val(data.itemCategory)
@@ -427,6 +427,7 @@ function fillMaterailValue(data){
 	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
+	$("#amount").val(data.quantity);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
