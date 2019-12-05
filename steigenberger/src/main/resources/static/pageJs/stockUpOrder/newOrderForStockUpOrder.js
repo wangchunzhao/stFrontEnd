@@ -1477,6 +1477,7 @@ function saveOrder(type){
 			 }
 		 }
 		 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+		 orderData['customerClazzName'] = "";
 		 if(type){
 			 $.ajax({
 				    url: "/steigenberger/order/dealer?action="+type,
@@ -1493,7 +1494,6 @@ function saveOrder(type){
 				    }
 			});
 		 }else{
-			 orderData['customerClazzName'] = ""
 			 $.ajax({
 				    url: "/steigenberger/order/dealer?action="+'save',
 				    contentType: "application/json;charset=UTF-8",
