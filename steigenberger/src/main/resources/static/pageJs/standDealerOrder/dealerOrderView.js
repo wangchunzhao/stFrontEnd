@@ -373,13 +373,13 @@ function viewConfig(){
 }
 
 //编辑购销明细
-function editMaterials(row){
-	debugger
+function editMaterials(identification){
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
-	var identificationSplit = identification.split('|');
-	var materialsType = identificationSplit[1];
-	var index = identificationSplit[0];
+	var identificationSplit = identification.split(',');
+	var materialsType = materialGroupMapGroupOrder[identificationSplit[0]];
+	var index = identificationSplit[1];
+	debugger
 	var tableData;
 	if(materialsType=='T101'){
 		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
