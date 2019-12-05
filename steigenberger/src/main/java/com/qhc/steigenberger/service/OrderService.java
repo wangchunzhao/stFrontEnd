@@ -55,13 +55,13 @@ import reactor.core.publisher.Mono;
  */
 @Service
 public class OrderService {
-	private ObjectMapper mapper = new ObjectMapper().setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+	private ObjectMapper mapper = new ObjectMapper()
+			.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
 
-	private final static String ORDER_TYPE_DEALER = "ZH0D"; //'经销商订单'
-    private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
-    private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
+	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
+	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
+	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 
-	
 	private final static String URL_CUSTOMER = "customer";
 	private final static String URL_MATERIAL = "material";
 	private final static String URL_ORDER_OPTION = "order/option";
@@ -72,49 +72,53 @@ public class OrderService {
 	private final static String URL_D_ORDER = "order/dOrder";
 	private final static String URL_SEPERATOR = ",";
 	private final static String URL_PARAMETER_SEPERATOR = "/";
-	
+
 	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
 	private final static String URL_MATERIAL_CONFIG = "material/configurations";
 	private final static String URL_MATERIAL_BOM = "material/configuration";
-	
+
 	@Autowired
 	private FryeService fryeService;
-	
+
 	@Autowired
 	FryeService<DOrder> dOrderervice;
-	
-	
+
 	public DealerOrder getOrderBySequenceNumber(String sqNumber) {
 		return null;
 	}
+
 	public OrderOption getOrderOption() {
-		
-		Object obj =fryeService.getInfo(URL_ORDER_OPTION, OrderOption.class);
-		
+
+		Object obj = fryeService.getInfo(URL_ORDER_OPTION, OrderOption.class);
+
 		return (OrderOption) obj;
 	}
+
 	/**
 	 * 
-	 * @param name customer name 
-	 * @return  customer list
+	 * @param name customer name
+	 * @return customer list
 	 */
-	public PageHelper<Customer> findCustomer(String clazzCode,String name,int pageNo) {
-		return  (PageHelper<Customer>) fryeService.getInfo(URL_CUSTOMER+URL_PARAMETER_SEPERATOR+clazzCode+URL_SEPERATOR+name+URL_SEPERATOR+String.valueOf(pageNo),PageHelper.class);
+	public PageHelper<Customer> findCustomer(String clazzCode, String name, int pageNo) {
+		return (PageHelper<Customer>) fryeService.getInfo(URL_CUSTOMER + URL_PARAMETER_SEPERATOR + clazzCode
+				+ URL_SEPERATOR + name + URL_SEPERATOR + String.valueOf(pageNo), PageHelper.class);
 	}
-	
-	public PageHelper<Material> findMaterialsByName(String name,int pageNo) {
-		if(name==null) {
+
+	public PageHelper<Material> findMaterialsByName(String name, int pageNo) {
+		if (name == null) {
 			return null;
 		}
-		Map<String,String> pars = new HashMap<String,String>();
+		Map<String, String> pars = new HashMap<String, String>();
 		pars.put("name", name);
 		pars.put("pageNo", String.valueOf(pageNo));
-		
-		return (PageHelper<Material>) fryeService.postForm(URL_MATERIAL,pars,PageHelper.class);
+
+		return (PageHelper<Material>) fryeService.postForm(URL_MATERIAL, pars, PageHelper.class);
 	}
+
 	public Material getMaterial(String code) {
-		return (Material)fryeService.getInfo(URL_MATERIAL+URL_PARAMETER_SEPERATOR+code,Material.class);
+		return (Material) fryeService.getInfo(URL_MATERIAL + URL_PARAMETER_SEPERATOR + code, Material.class);
 	}
+
 //	/**
 //	 * 
 //	 * @return customer class map
@@ -151,17 +155,17 @@ public class OrderService {
 	public void saveOrder(DealerOrder form) {
 		fryeService.postJason(URL_ORDER, form);
 	}
-	
+
 	public DOrder getInfoById(String orderId) {
-		
-		return dOrderervice.getInfo(URL_D_ORDER+"/"+orderId,DOrder.class);
+
+		return dOrderervice.getInfo(URL_D_ORDER + "/" + orderId, DOrder.class);
 	}
-	
+
 	@Autowired
 	ApplicationConfig config;
-	
+
 	public List<SalesGroup> getGrossProfitList(SalesOrder salesOrder) {
-		
+
 		String url = config.getFryeURL() + URL_ABS_ORDER_SALESORDER;
 		@SuppressWarnings("unchecked")
 		Flux<SalesGroup> sgFlux = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -171,17 +175,17 @@ public class OrderService {
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
 				.bodyToFlux(SalesGroup.class);
 		return sgFlux.collectList().block();
-		
+
 	}
-	
+
 	public List<OrderVersion> findOrderVersions(String orderId) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+orderId+URL_PARAMETER_SEPERATOR+"version";
-		return (List<OrderVersion>)fryeService.getInfo(url,List.class);
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + orderId + URL_PARAMETER_SEPERATOR + "version";
+		return (List<OrderVersion>) fryeService.getInfo(url, List.class);
 	}
-	
+
 	public PageHelper<BaseOrder> findOrders(OrderQuery query) {
 		String url = "order/query";
-		PageHelper page = (PageHelper)fryeService.postInfo(query, url, PageHelper.class);
+		PageHelper page = (PageHelper) fryeService.postInfo(query, url, PageHelper.class);
 		try {
 			System.out.println(mapper.writeValueAsString(page));
 		} catch (JsonProcessingException e) {
@@ -189,78 +193,93 @@ public class OrderService {
 		}
 		JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, BaseOrder.class);
 //		page = mapper.convertValue(page, javaType);
-		
+
 		javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, BaseOrder.class);
 		page.setRows(mapper.convertValue(page.getRows(), javaType));
-		
+
 		return page;
 	}
-	
+
 	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {
-        String url = URL_MATERIAL_CONFIG+URL_PARAMETER_SEPERATOR+clazzCode+','+materialCode;
-        return (List<Characteristic>)fryeService.getInfo(url,List.class);
-    }
-	
+		String url = URL_MATERIAL_CONFIG + URL_PARAMETER_SEPERATOR + clazzCode + ',' + materialCode;
+		return (List<Characteristic>) fryeService.getInfo(url, List.class);
+	}
+
 //	public DealerOrder findDealerOrderDetail(String sequenceNumber, String version) {
 //		return (DealerOrder)findOrderDetail(sequenceNumber, version, ORDER_TYPE_DEALER);
 //	}
-	
+
 	public AbsOrder findOrderDetail(String sequenceNumber, String version, String orderType) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"detail?sequenceNumber=" + sequenceNumber + "&version=" + version;
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "detail?sequenceNumber=" + sequenceNumber + "&version="
+				+ version;
 		AbsOrder order = null;
-		order = (AbsOrder)fryeService.getInfo(url, BaseOrder.class);
+		String json = (String) fryeService.getInfo(url, String.class);
 		ObjectMapper mapper = new ObjectMapper();
-		switch(orderType) {
-			case ORDER_TYPE_DEALER:
+		mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+		switch (orderType) {
+		case ORDER_TYPE_DEALER:
 //				String json = (String)fryeService.getInfo(url, String.class);
-				order = mapper.convertValue(order, DealerOrder.class);
-//				mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
-//				try {
-//					order = mapper.readValue(json, DealerOrder.class);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-////				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
-				break;
-			case ORDER_TYPE_KEYACCOUNT:
+//				order = mapper.convertValue(order, DealerOrder.class);
+			try {
+				order = mapper.readValue(json, DealerOrder.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+//				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
+			break;
+		case ORDER_TYPE_KEYACCOUNT:
 //				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
-				order = mapper.convertValue(order, KeyAccountOrder.class);
-				break;
-			case ORDER_TYPE_BULK:
+//				order = mapper.convertValue(order, KeyAccountOrder.class);
+			try {
+				order = mapper.readValue(json, KeyAccountOrder.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case ORDER_TYPE_BULK:
 //				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
-				order = mapper.convertValue(order, BulkOrder.class);
-				break;
-			
-			default :
-				throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
+//				order = mapper.convertValue(order, BulkOrder.class);
+			try {
+				order = mapper.readValue(json, BulkOrder.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+
+		default:
+			throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
 		}
-		
+
 		return order;
 	}
-	
+
 	public String getOrderType(String sequenceNumber) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"type?sequenceNumber=" + sequenceNumber;
-		return (String)fryeService.getInfo(url, String.class);
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "type?sequenceNumber=" + sequenceNumber;
+		return (String) fryeService.getInfo(url, String.class);
 	}
-	
+
 	public String toSap(String sequenceNumber, String version) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"sap?sequenceNumber=" + sequenceNumber + "&version=" + version;
-		return (String)fryeService.postInfo("", url, String.class);
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "sap?sequenceNumber=" + sequenceNumber + "&version="
+				+ version;
+		return (String) fryeService.postInfo("", url, String.class);
 	}
 
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
-		return (BomExplosion)fryeService.postInfo(pars,URL_MATERIAL_BOM, HashMap.class);
+		return (BomExplosion) fryeService.postInfo(pars, URL_MATERIAL_BOM, HashMap.class);
 	}
+
 	public List<MaterialGroups> calcGrossProfit(BaseOrder order) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+"grossprofit";
-		return (List<MaterialGroups>)fryeService.postForm(url, order, ArrayList.class);
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "grossprofit";
+		return (List<MaterialGroups>) fryeService.postForm(url, order, ArrayList.class);
 	}
+
 	public List<MaterialGroups> calcWtwGrossProfit(String sequenceNumber, String version) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+sequenceNumber+"/" + version + "/wtwgrossprofit";
-		return (List<MaterialGroups>)fryeService.postForm(url, "", ArrayList.class);
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + sequenceNumber + "/" + version + "/wtwgrossprofit";
+		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
 	}
+
 	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
-		String url = URL_ORDER+URL_PARAMETER_SEPERATOR+sequenceNumber+"/" + version + "/grossprofit";
-		return (List<MaterialGroups>)fryeService.postForm(url, "", ArrayList.class);
+		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + sequenceNumber + "/" + version + "/grossprofit";
+		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
 	}
 }

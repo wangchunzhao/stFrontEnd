@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.qhc.steigenberger.domain.ContractSignSys;
 
 import cn.bestsign.ultimate.delta.api.client.BestSignClient;
 import cn.bestsign.ultimate.delta.api.domain.contract.sign.SignContractVO;
@@ -48,7 +49,8 @@ class BestsignServiceTest {
 
 	@Test
 	void testSyncContractSignSysData() throws JsonMappingException, JsonProcessingException {
-		bestsignService.syncContractSignSysData();
+		List<ContractSignSys> list = bestsignService.syncContractSignSysData();
+		System.out.println(list);
 	}
 
 	@Test
