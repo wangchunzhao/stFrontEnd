@@ -564,9 +564,14 @@ function fillMaterailValue(data){
 		$("#specialRemark").val(data.specialRemark);
 	}
 	if(data.itemCategory){
-		$("#itemCategory").val(data.itemCategory)
+		$("#itemCategory").val(data.itemCategory);
 	}
-	$("#groupName").val(data.groupName);
+	if(data.purchased){
+		$("#isPurchased").val("生产");
+	}else{
+		$("#isPurchased").val("采购");
+	}
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
@@ -592,7 +597,7 @@ function fillMaterailValue(data){
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	if($('#isPurchased').val()=='生产'){
+	if(data.purchased){
 		$("#producePeriod").val(data.period);
 	}else{
 		$("#purchasePeriod").val(data.period);

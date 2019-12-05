@@ -560,8 +560,8 @@ function fillMaterailValue(data){
 	if(data.materialCode){
 		$("#materialCode").val(data.materialCode);
 	}
-	if(data.b2cRemark){
-		$("#b2cRemark").val(data.b2cRemark);
+	if(data.b2cComments){
+		$("#b2cRemark").val(data.b2cComments);
 	}
 	if(data.colorComments){
 		$("#colorComments").val(data.colorComments);
@@ -572,9 +572,15 @@ function fillMaterailValue(data){
 	if(data.itemCategory){
 		$("#itemCategory").val(data.itemCategory)
 	}
-	$("#groupName").val(data.groupName);
+	if(data.purchased){
+		$("#isPurchased").val("采购");
+	}else{
+		$("#isPurchased").val("生产");
+	}
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
+	$("#amount").val(data.quantity);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
@@ -591,6 +597,7 @@ function fillMaterailValue(data){
 	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
+	$("#discount").val(data.discount);	
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
 	var acturalPrice = (data.retailPrice*discount)
@@ -598,17 +605,15 @@ function fillMaterailValue(data){
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	if($('#isPurchased').val()=='生产'){
-		$("#producePeriod").val(data.period);
-	}else{
+	if(data.purchased){
 		$("#purchasePeriod").val(data.period);
+	}else{	
+		$("#producePeriod").val(data.period);
 	}
 	$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
 	$("#onStoreDate").val(data.onStoreDate);
-	$("#standardPrice").val(toDecimal2(data.standardPrice));
-	
-	
+	$("#standardPrice").val(toDecimal2(data.standardPrice));	
 }
 
 //数量变化
@@ -645,9 +650,10 @@ function toDecimal2(x) {
 function editMaterials(identification){
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
-	var identificationSplit = identification.split('|');
-	var materialsType = identificationSplit[1];
-	var index = identificationSplit[0];
+	var identificationSplit = identification.split(',');
+	var materialsType = materialGroupMapGroupOrder[identificationSplit[0]];
+	var index = identificationSplit[1];
+	debugger
 	var tableData;
 	if(materialsType=='T101'){
 		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];

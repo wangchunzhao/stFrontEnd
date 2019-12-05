@@ -400,14 +400,15 @@ function editMaterials(identification){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
+	debugger
 	if(data.materialName){
 		$("#materialTypeName").val(data.materialName);
 	}
 	if(data.materialCode){
 		$("#materialCode").val(data.materialCode);
 	}
-	if(data.b2cRemark){
-		$("#b2cRemark").val(data.b2cRemark);
+	if(data.b2cComments){
+		$("#b2cRemark").val(data.b2cComments);
 	}
 	if(data.colorComments){
 		$("#colorComments").val(data.colorComments);
@@ -418,7 +419,12 @@ function fillMaterailValue(data){
 	if(data.itemCategory){
 		$("#itemCategory").val(data.itemCategory)
 	}
-	$("#groupName").val(data.groupName);
+	if(data.purchased){
+		$("#isPurchased").val("采购");
+	}else{
+		$("#isPurchased").val("生产");
+	}
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
@@ -437,6 +443,7 @@ function fillMaterailValue(data){
 	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
+	$("#discount").val(data.discount);	
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
 	var acturalPrice = (data.retailPrice*discount)
@@ -444,10 +451,10 @@ function fillMaterailValue(data){
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	if($('#isPurchased').val()=='生产'){
-		$("#producePeriod").val(data.period);
-	}else{
+	if(data.purchased){
 		$("#purchasePeriod").val(data.period);
+	}else{	
+		$("#producePeriod").val(data.period);
 	}
 	$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
@@ -457,6 +464,23 @@ function fillMaterailValue(data){
 	
 }
 
+function toDecimal2(x) {   
+    var f = parseFloat(x);   
+    if (isNaN(f)) {   
+     return 0;   
+    }   
+    var f = Math.round(x*100)/100;   
+    var s = f.toString();   
+    var rs = s.indexOf('.');   
+   if (rs < 0) {   
+    rs = s.length;   
+    s += '.';   
+   }   
+  while (s.length <= rs + 2) {   
+    s += '0';   
+  } 
+  return s;
+}  
 //查看毛利率信息
 function viewGrossProfit(){
 	$("#grossProfit").modal("show");
