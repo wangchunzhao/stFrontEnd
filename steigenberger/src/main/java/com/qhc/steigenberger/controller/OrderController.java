@@ -520,7 +520,7 @@ public class OrderController {
 		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+		AbsOrder order = orderService.findOrderDetail(sequenceNumber, version, orderType);
 		boolean standard = false;
 		if(!StringUtils.isEmpty(oo.getStandardDiscount())) {
 			standard = (Double.valueOf(oo.getStandardDiscount())==order.getMainDiscount()&&Double.valueOf(oo.getStandardDiscount())==order.getBodyDiscount());
