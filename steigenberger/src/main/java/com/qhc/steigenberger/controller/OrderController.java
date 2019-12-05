@@ -83,6 +83,9 @@ public class OrderController {
 	private final static String CREATE_BEIHUO_Order = "1018";//下备货订单
 	
 	//订单状态
+	private final static String orderStatus0010="0010";//订单新建保存
+	private final static String orderStatus0001="0001";//订单新建保存
+	private final static String orderStatus0011="0011";//订单新建保存
 	private final static String orderStatus0000="0000";//订单新建保存
 	private final static String orderStatus0100="0100";//客户经理提交待支持经理审核
 	private final static String orderStatus0110="0110";//客户经理提交待B2C审核
@@ -260,6 +263,16 @@ public class OrderController {
 			}
 			
 		}
+		//状态是需求单新建保存
+		if("0000".equals(query.getStatus())) {
+			List list = new ArrayList();
+			list.add(orderStatus0000);
+			list.add(orderStatus0010);
+			list.add(orderStatus0001);
+			list.add(orderStatus0011);
+			query.setStatusList(list);
+			query.setStatus("");
+		}
 		System.out.println(identityName+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
@@ -340,6 +353,9 @@ public class OrderController {
 				//客户经理
 				List list = new ArrayList();
 				list.add(orderStatus0000);
+				list.add(orderStatus0010);
+				list.add(orderStatus0001);
+				list.add(orderStatus0011);
 				list.add(orderStatus11);
 				query.setStatusList(list);
 				query.setSalesCode(user.getUserIdentity());

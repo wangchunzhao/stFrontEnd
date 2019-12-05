@@ -12,4 +12,5 @@ package com.qhc.steigenberger.domain.form;
  */
 public class BaseOrder extends AbsOrder{
 	
+	
 }
