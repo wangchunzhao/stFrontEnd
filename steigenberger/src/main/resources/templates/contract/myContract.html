@@ -607,12 +607,22 @@ var contractCols = [ {
     	var status = row.status;
     	var productionTime = row.productionTime;
     	var exists = !(contractId == undefined || contractId == null || contractId == '');
-		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
-    	if (exists) {
-			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
+    	if (!exists) {
+			actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
+    	} else {
+    		if (status == 1) {
+	    		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>编辑edit</a> ');
+    		}
+			actions.push('<a class="btn" onclick="view(\'' + index + '\')"><i class="fa fa-edit"></i>查看view</a> ');
+    		actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
 			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/export" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
 			//actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
-			actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
+			if (status == 1) {
+				actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
+			}
+			if (status == 5) {
+				actions.push('<a class="btn" onclick="sign(\'' + index + '\')"><i class="fa fa-edit"></i>签署sign</a> ');
+			}
     	}
 		return actions.join('');
     }
@@ -763,13 +773,25 @@ function save() {
 	var url = ctxPath + "contract/";
 	layer.confirm('是否发送邮件？', {
 		  btn: ['是', '否'] //可以无限个按钮
-		  ,btn1: function(index, layero){
+		  /* ,btn1: function(index, layero){
 			//按钮【按钮一】的回调
 		    url = url + "send";
 		  },btn2: function(index, layero){
 		    //按钮【按钮二】的回调
-		  }
+		  } */
+		},
+		function(index, layero){
+			//按钮【按钮一】的回调
+		    url = url + "send";
+			save2(url, json);
+		},
+	    function(index, layero){
+		    //按钮【按钮二】的回调
+			save2(url, json);
 		});
+}
+
+function save2(url, json) {
 	$.ajax({
 	    url: url,
 	    data: JSON.stringify(json),
@@ -777,7 +799,7 @@ function save() {
 	    contentType: "application/json;charset=UTF-8",
 	    success: function(data) {
 	    	if(data == null || data.status != 'ok') {
-	    		layer.alert("保存合同信息失败！" + data.msg);
+	    		layer.alert("操作失败！" + data.msg);
 	    	}else{
 	    		layer.alert("保存合同信息成功！");
 	    		$("#contractDialog").modal('hide');
@@ -804,6 +826,30 @@ function save() {
     a.href = url;// content为后台返回的下载地址
     a.click();// 设置点击事件 
 } */
+
+//查看
+function view(index) {
+	var row = $('#contractTable').bootstrapTable('getData')[index];	
+	var contractId = row.id;
+	var contract = {};
+	
+	$.ajax({
+	    url: ctxPath + "contract/" + contractId,
+	    // data: '',
+	    type: "GET",
+	    // dataType: "json",
+	    success: function(data) {
+	    	if(data == null || data.status != 'ok'){
+	    		layer.alert("查询合同信息失败！" + data.msg);
+	    	}else{
+	    		// console.log(data.data)
+	    		contract = data.data;
+	    		// setEditInfo(row, contract);
+	    		showEditModal(contract);
+	    	}      
+	    }
+	});		
+}
 
 /**
  * 发送合同文档给客户
@@ -833,6 +879,30 @@ function send(index) {
         },
 	    dataType: "json"
 	});
+}
+
+//签署
+function sign(index) {
+	var row = $('#contractTable').bootstrapTable('getData')[index];	
+	var contractId = row.id;
+	var contract = {};
+	
+	$.ajax({
+	    url: ctxPath + "contract/" + contractId + "/sign",
+	    // data: '',
+	    type: "PUT",
+	    // dataType: "json",
+	    success: function(data) {
+	    	if(data == null || data.status != 'ok'){
+	    		layer.alert("签署合同给客户失败！" + data.msg);
+	    	}else{
+	    		// console.log(data.data)
+	    		contract = data.data;
+	    		// setEditInfo(row, contract);
+	    		showEditModal(contract);
+	    	}      
+	    }
+	});		
 }
 
 function initValidator() {

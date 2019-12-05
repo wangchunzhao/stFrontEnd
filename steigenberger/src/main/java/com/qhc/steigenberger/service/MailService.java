@@ -274,6 +274,7 @@ public class MailService {
 			sendFlag = true;
 		} catch (Throwable e) {
 			logger.error("send email failed", (Throwable) e);
+			sendFlag = false;
 		}
 		return sendFlag;
 	}

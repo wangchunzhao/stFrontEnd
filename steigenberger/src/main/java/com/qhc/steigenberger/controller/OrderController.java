@@ -62,6 +62,7 @@ public class OrderController {
 //	private final static String FORM_ORDER_DEALER = "dealerOrder";
 
 	//
+	private final static String FORM_BPM = "bpm";
 	private final static String FORM_SUBMIT = "submit";
 //	private final static String FORM_SAVE = "save";
 	private final static String FORM_MARGIN = "margin";
@@ -127,6 +128,9 @@ public class OrderController {
 		}
 		switch (action) {
 
+			case FORM_BPM:
+				orderData.setSubmitType(5);
+				break;
 			case FORM_WTW_MARGIN:
 				orderData.setSubmitType(4);
 				break;

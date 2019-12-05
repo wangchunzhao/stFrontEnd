@@ -103,6 +103,10 @@ public class ContractService {
 					mapper.getTypeFactory().constructParametricType(Result.class, Contract.class));
 			deletePdf((Contract) result.getData());
 		}
+		
+		if (!result.getStatus().equals("ok")) {
+			throw new RuntimeException(result.getMsg());
+		}
 
 		return result;
 	}
@@ -429,7 +433,11 @@ public class ContractService {
 			mail.setSubject("【" + valMap.get("contractCode") + "】" + valMap.get("versionNo") + "版合同已制作请上传签署");
 
 			logger.info("contract mail body: " + body);
-			mailService.send(mail);
+			boolean sendStatus = mailService.send(mail);
+			
+			if (!sendStatus) {
+				throw new RuntimeException("发送邮件失败！");
+			}
 
 			String fileHashCode = bestsignService.generateShA1Code(docFile);
 			// update contract file_hash_code

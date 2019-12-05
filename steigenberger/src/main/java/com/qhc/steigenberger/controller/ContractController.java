@@ -69,28 +69,42 @@ public class ContractController {
 	@PostMapping("/")
 	@ResponseBody
 	public Result save(@RequestBody Contract contract, HttpServletRequest request) {
-		String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
 		Result r = null;
-		contract.setProductionTime(new Date());
-		// 设置状态为已制作
-		contract.setStatus(1);
-		// 设置操作人
-//		contract.seto
-		r = contractService.save(contract);
+		try {
+			String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
+			contract.setProductionTime(new Date());
+			// 设置状态为已制作
+			contract.setStatus(1);
+			// 设置操作人
+//		contract.set
+			r = contractService.save(contract);
+		} catch (Exception e) {
+			logger.error("Save Contract", e);
+			r = Result.error("保存失败！");
+		}
 		return r;
 	}
 
 	@PostMapping("/send")
 	@ResponseBody
 	public Result saveAndSend(@RequestBody Contract contract, HttpServletRequest request) {
-		String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
 		Result r = null;
-		contract.setProductionTime(new Date());
-		// 设置状态为已制作
-		contract.setStatus(1);
-		// 设置操作人
+		try {
+			String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
+			contract.setProductionTime(new Date());
+			// 设置状态为已制作
+			contract.setStatus(1);
+			// 设置操作人
 //		contract.seto
-		r = contractService.save(contract);
+			r = contractService.save(contract);
+			if (r.getStatus().equals("ok")) {
+				contractService.sendMailToCustomer((Contract)r.getData());
+			}
+			r = Result.ok("");
+		} catch (Exception e) {
+			logger.error("Save and send Contract", e);
+			r = Result.error("保存并发送合同给客户失败！" + e.getMessage());
+		}
 		return r;
 	}
 
