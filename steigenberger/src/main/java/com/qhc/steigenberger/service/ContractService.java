@@ -236,11 +236,7 @@ public class ContractService {
 				}
 				optionSum = Double.valueOf(optionSum.doubleValue() + optionSaleAmount.doubleValue());
 				// 计量单位
-//				MeasurementUnit measurementUnit = this.measurementUnitService.findByMsehi(item.getUnitName());
 				String unitNameCN = "";
-//				if (measurementUnit != null) {
-//					unitNameCN = measurementUnit.getMsehl();
-//				}
 				unitNameCN = item.getUnitName();
 				double needCount = (new Double(0.0D)).doubleValue();
 				// 数量
