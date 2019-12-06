@@ -478,38 +478,41 @@ public class ContractService {
 	 * @throws JsonMappingException
 	 */
 	public boolean doRefreshContractState() throws JsonMappingException, JsonProcessingException {
-		String states = "03,04,05,06";
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("statusList", "3,4,5,6");
-		List<Contract> contractList = (List<Contract>)((PageHelper)this.find(params).getData()).getRows();
-		List<ContractSignSys> signList = bestsignService.syncContractSignSysData();
-		if (signList == null || signList.size() <= 0) {
-			logger.info(System.currentTimeMillis() + ":--update contracts' state--Failed");
-			return false;
-		}
-
-		for (Contract contract : contractList) {
-			String fileHashCode = contract.getFileHashCode();
-			if (fileHashCode == null || fileHashCode.isEmpty())
-				continue;
-
-			Optional<ContractSignSys> signed = signList.stream().filter(s -> fileHashCode.equals(s.getFileHashCode()))
-					.findFirst();
-			String signContractId = signed.isPresent() ? signed.get().getSignContractId() : null;
-			String state = "03";
-			if (signContractId != null) {
-				state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
-			}
-			if (!contract.getStatus().equals(Integer.parseInt(state))) {
-				contract.setSignContractId(signContractId);
-				contract.setStatus(Integer.parseInt(state));
-
-				// 更新合同状态及电子签约合同ID
-				this.updateSignId(contract.getId(), signContractId, Integer.parseInt(state));
-//				this.updateStatus(contract.getId(), Integer.parseInt(state));
-			}
-		}
-		return true;
+		Result r = (Result)fryeService.putForm("/order/refreshState", "", Result.class);
+		return r.getStatus().equals("ok") && r.getData().toString().equals("true");
+		
+//		String states = "03,04,05,06";
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("statusList", "3,4,5,6");
+//		List<Contract> contractList = (List<Contract>)((PageHelper)this.find(params).getData()).getRows();
+//		List<ContractSignSys> signList = bestsignService.syncContractSignSysData();
+//		if (signList == null || signList.size() <= 0) {
+//			logger.info(System.currentTimeMillis() + ":--update contracts' state--Failed");
+//			return false;
+//		}
+//
+//		for (Contract contract : contractList) {
+//			String fileHashCode = contract.getFileHashCode();
+//			if (fileHashCode == null || fileHashCode.isEmpty())
+//				continue;
+//
+//			Optional<ContractSignSys> signed = signList.stream().filter(s -> fileHashCode.equals(s.getFileHashCode()))
+//					.findFirst();
+//			String signContractId = signed.isPresent() ? signed.get().getSignContractId() : null;
+//			String state = "03";
+//			if (signContractId != null) {
+//				state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
+//			}
+//			if (!contract.getStatus().equals(Integer.parseInt(state))) {
+//				contract.setSignContractId(signContractId);
+//				contract.setStatus(Integer.parseInt(state));
+//
+//				// 更新合同状态及电子签约合同ID
+//				this.updateSignId(contract.getId(), signContractId, Integer.parseInt(state));
+////				this.updateStatus(contract.getId(), Integer.parseInt(state));
+//			}
+//		}
+//		return true;
 	}
 
 	/**
@@ -522,25 +525,28 @@ public class ContractService {
 	 * @throws JsonMappingException
 	 */
 	public boolean doSignContract(int contractId) throws JsonMappingException, JsonProcessingException {
-		Contract contract = (Contract) this.find(Integer.valueOf(contractId)).getData();
-
-		if (contract == null)
-			return false;
-
-		// 电子签约中合同Id
-		String signContractId = contract.getSignContractId();
-		boolean result = bestsignService.doSignContract(signContractId);
-		String state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
-		System.out.println("state:" + state);
-		if (result || state.equals("06")) {
-//			contract.setState("06");
-			contract.setStatus(6);
-
-			// 使用上上签电子合同状态更新数据库更新合同状态
-			this.updateStatus(contractId, 6);
-		}
-
-		return false;
+		Result r = (Result)fryeService.putForm("/order/" + contractId + "/sign", null, Result.class);
+		return r.getStatus().equals("ok") && r.getData().toString().equals("true");
+		
+//		Contract contract = (Contract) this.find(Integer.valueOf(contractId)).getData();
+//
+//		if (contract == null)
+//			return false;
+//
+//		// 电子签约中合同Id
+//		String signContractId = contract.getSignContractId();
+//		boolean result = bestsignService.doSignContract(signContractId);
+//		String state = bestsignService.getContractStatus(signContractId, contract.getContractorName());
+//		System.out.println("state:" + state);
+//		if (result || state.equals("06")) {
+////			contract.setState("06");
+//			contract.setStatus(6);
+//
+//			// 使用上上签电子合同状态更新数据库更新合同状态
+//			this.updateStatus(contractId, 6);
+//		}
+//
+//		return false;
 	}
 	
 	public Result updateStatus(Integer contractId, Integer status) {
