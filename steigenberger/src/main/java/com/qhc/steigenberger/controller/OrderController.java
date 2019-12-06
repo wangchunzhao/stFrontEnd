@@ -1,12 +1,10 @@
 package com.qhc.steigenberger.controller;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
-import com.qhc.steigenberger.domain.Configuration;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
@@ -102,10 +99,9 @@ public class OrderController {
 	private final static String orderStatus11="11";//Selling Tool驳回
 	private final static String orderStatus12="12";//待支持经理审批
 	
-	//订单类型
-	private final static String orderType1="ZH0D";//经销商订单
-	private final static String orderType2="ZH0M";//备货订单
-	private final static String orderType3= "ZH0T";//大客户订单
+	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
+	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
+	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 
 
 	@Autowired
@@ -536,9 +532,23 @@ public class OrderController {
 		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		AbsOrder order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+		AbsOrder order = null;
+		
+		switch (orderType) {
+		case ORDER_TYPE_DEALER:
+			order =  orderService.findOrderDetail(sequenceNumber, version, orderType);
+			break;
+		case ORDER_TYPE_KEYACCOUNT:
+			order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+			break;
+		case ORDER_TYPE_BULK:
+			order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+			break;
+		default:
+			throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
+		}
 		boolean standard = false;
-		if(!StringUtils.isEmpty(oo.getStandardDiscount())) {
+		if(ORDER_TYPE_DEALER.equals(orderType)&&!StringUtils.isEmpty(oo.getStandardDiscount())) {
 			standard = (Double.valueOf(oo.getStandardDiscount())==order.getMainDiscount()&&Double.valueOf(oo.getStandardDiscount())==order.getBodyDiscount());
 		}
 		oo.setOrderTypeCode(orderType);	
@@ -548,13 +558,13 @@ public class OrderController {
 			String operationId = userOperationInfoList.get(i).getOperationId();
 			if(operationId.equals(SUPPORT_Order)) {
 				//支持经理
-				if(orderType.equals(orderType1)&&standard) {
+				if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("dealerOrder/supportManagerOrder");
-				}else if(orderType.equals(orderType1)&&standard) {
+				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("nonStandardDealerOrder/supportManagerOrder");
-				}else if(orderType.equals(orderType2)) {
+				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
 					mv = new ModelAndView("stockUpOrder/supportManagerOrder");
-				}else if(orderType.equals(orderType3)) {
+				}else if(orderType.equals(ORDER_TYPE_BULK)) {
 					mv = new ModelAndView("directCustomerOrder/supportManagerOrder");
 				}			
 				break;
@@ -564,25 +574,25 @@ public class OrderController {
 				break;
 			}else if(operationId.equals(B2C_Order)) {
 				//B2C			
-				if(orderType.equals(orderType1)&&standard) {
+				if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("dealerOrder/b2cManagerOrder");
-				}else if(orderType.equals(orderType1)&&standard) {
+				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("nonStandardDealerOrder/b2cManagerOrder");
-				}else if(orderType.equals(orderType2)) {
+				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
 					mv = new ModelAndView("stockUpOrder/b2cManagerOrder");
-				}else if(orderType.equals(orderType3)) {
+				}else if(orderType.equals(ORDER_TYPE_BULK)) {
 					mv = new ModelAndView("directCustomerOrder/b2cManagerOrder");
 				}	
 				break;
 			}else {
 				//客户经理
-				if(orderType.equals(orderType1)&&standard) {
+				if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("dealerOrder/customerManagerOrder");
-				}else if(orderType.equals(orderType1)&&standard) {
+				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("nonStandardDealerOrder/customerManagerOrder");
-				}else if(orderType.equals(orderType2)) {
+				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
 					mv = new ModelAndView("stockUpOrder/customerManagerOrder");
-				}else if(orderType.equals(orderType3)) {
+				}else if(orderType.equals(ORDER_TYPE_BULK)) {
 					mv = new ModelAndView("directCustomerOrder/customerManagerOrder");
 				}	
 			}

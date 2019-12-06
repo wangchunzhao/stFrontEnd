@@ -567,10 +567,11 @@ function fillMaterailValue(data){
 		$("#itemCategory").val(data.itemCategory);
 	}
 	if(data.purchased){
-		$("#isPurchased").val("生产");
-	}else{
-		$("#isPurchased").val("采购");
+		$("#purchasePeriod").val(data.period);
+	}else{	
+		$("#producePeriod").val(data.period);
 	}
+	var groupName = data.groupName;
 	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
@@ -1115,9 +1116,9 @@ function confirmRowData(index,identification){
 			materialCode:$("#materialCode").val(),
 			identification:idenf,
 			clazzCode:$("#materialClazzCode").val(),
-			isConfigurable:$("#isConfigurable").val(),
-			isPurchased:$("#isPurchased").val(),
-			groupName:$("#groupName").val(),
+			configurable:$("#isConfigurable").val(),
+			purchased:$("#purchasedCode").val(),
+			groupName:$("#materialGroupName").val(),
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),

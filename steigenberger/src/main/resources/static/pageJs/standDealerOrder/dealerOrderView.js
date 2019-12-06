@@ -268,8 +268,19 @@ function disableAll(){
 		 $(this).removeAttr("disabled");
 	  });
   }
-  if(orderModelType=="editB2C"){
+  if(orderModelType=="editB2C"){  
 	  $("#materialsEdit").attr('disabled',false);
+	  $("#B2CCostOfEstimated").attr('disabled',false);
+	  $("#amount").attr('disabled',true);
+	  $("#materialCode").attr('disabled',true);
+	  $("#showCustomer").attr('disabled',true);
+	  $("#itemCategory").attr('disabled',true);
+	  $("#B2CPriceEstimated").attr('disabled',true);
+	  $("#itemRequirementPlan").attr('disabled',true);
+	  $("#shippDate").attr('disabled',true);
+	  $("#showAddress").attr('disabled',true);
+	  $("#specialRemark").attr('disabled',true);
+	  $("#colorComments").attr('disabled',true);
   }
 }
 //打开调研表
@@ -400,7 +411,6 @@ function editMaterials(identification){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	debugger
 	if(data.materialName){
 		$("#materialTypeName").val(data.materialName);
 	}
@@ -421,8 +431,10 @@ function fillMaterailValue(data){
 	}
 	if(data.purchased){
 		$("#isPurchased").val("采购");
+		$("#purchasedCode").val(data.purchased)
 	}else{
 		$("#isPurchased").val("生产");
+		$("#purchasedCode").val(data.purchased)
 	}
 	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
@@ -465,6 +477,225 @@ function fillMaterailValue(data){
 	
 }
 
+//确认购销明细modal
+function confirmMaterials(){
+	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
+    bootstrapValidator.validate();
+    if(!bootstrapValidator.isValid()){
+    	return
+    }
+	var modalType = $("#materialsModalType").val();
+	var materialType = $("#materialsType").val();
+	var rowIndex = $("#materialsIndex").val();
+	var materialTypeName = $("#materialTypeName").val();
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+	var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
+	var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
+	var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
+	var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
+	var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
+	if(modalType=='new'){
+		if(materialType=='T101'){
+			var rowData = confirmRowData(countMaterialsTableall1,'');
+			$("#materialsTableall1").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall1,
+			    row: rowData
+			});
+			$("#second").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T102'){
+			var rowData = confirmRowData(countMaterialsTableall2,'');
+			$("#materialsTableall2").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall2,
+			    row: rowData
+			});
+			$("#third").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T103'){
+			var rowData = confirmRowData(countMaterialsTableall3,'');
+			$("#materialsTableall3").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall3,
+			    row: rowData
+			});
+			$("#four").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T104'){
+			var rowData = confirmRowData(countMaterialsTableall4,'');
+			$("#materialsTableall4").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall4,
+			    row: rowData
+			});
+			$("#five").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T105'){
+			var rowData = confirmRowData(countMaterialsTableall5,'');
+			$("#materialsTableall5").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall5,
+			    row: rowData
+			});
+			$("#six").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}else if(materialType=='T106'){
+			var rowData = confirmRowData(countMaterialsTableall6,'');
+			$("#materialsTableall6").bootstrapTable('insertRow', {
+			    index: countMaterialsTableall6,
+			    row: rowData
+			});
+			$("#seven").tab('show');
+			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			$("#materialsTable").bootstrapTable('insertRow', {
+			    index: countMaterialsTable,
+			    row: rowDataAll
+			});
+		}
+	}else{
+		$("#materialsTable").bootstrapTable('updateRow', {
+		    index: rowIndex,
+		    row: {
+		    	index:parseInt(rowIndex)+1,
+		    	materialTypeName:materialTypeName
+		    }
+		});
+	}
+	
+	$('#subsidiaryModal').modal('hide');
+	//计算最早发货时间，最早出货时间，购销明细合计
+	getAllCountFiled();
+}
+
+function getAllCountFiled(){
+	var tableData = $('#materialsTable').bootstrapTable('getData');
+	//工厂最早交货时间
+	var deliveryTime=[];
+	//要求发货时间
+	var  requiredDeliveryTime=[];
+	//购销明细金额
+	var itemsAmount = [];
+	$.each(tableData,function(index,item){
+		if(item.deliveryDate){
+			deliveryTime.push(moment(item.deliveryDate));
+		}
+		if(item.shippDate){
+			requiredDeliveryTime.push(moment(item.shippDate));
+		}
+		if(item.acturalPriceAmountTotal){
+			itemsAmount.push(item.acturalPriceAmountTotal);
+		}
+	})
+	var totalAmount = toDecimal2(calculationAmount(itemsAmount));
+	$("#itemsAmount").val(totalAmount);	
+	var earlyRequiredDeliveryTime = compareDate(requiredDeliveryTime);
+	if(earlyRequiredDeliveryTime){
+		$("#requiredDeliveryTime").val(moment(earlyRequiredDeliveryTime).format('YYYY-MM-DD'));
+	}else{
+		$("#requiredDeliveryTime").val('');
+	}	
+	var earlyDeliveryTime = compareDate(deliveryTime);
+	if(earlyDeliveryTime){
+		$("#deliveryTime").val(moment(earlyDeliveryTime).format('YYYY-MM-DD'));
+	}else{
+		$("#deliveryTime").val('');
+	}
+	
+}
+
+//计算购销明细金额
+function calculationAmount(amount){
+	var totalAmount=0.00;
+	if(amount.length!=0){	
+		$.each(amount,function(index,item){
+			totalAmount+=parseFloat(item);
+		})	
+	}
+	return totalAmount;
+}
+//时间比较
+
+function compareDate(date){
+	if(date.length==0){
+		return '';
+	}
+	var earlyDate = date[0];
+	$.each(date,function(index,item){
+		if(moment(item).isBefore(earlyDate)){
+			earlyDate = item;
+		}
+	})
+	return earlyDate;
+}
+
+function confirmRowData(index,identification,tabType){
+	var idenf = identification
+	if(idenf==''){
+		idenf=index+"|"+$("#materialsType").val()
+	}
+	var row = {
+			rowNumber:(index+1)*10,
+			tabType:tabType,
+			materialName:$("#materialTypeName").val(),
+			materialCode:$("#materialCode").val(),
+			identification:idenf,
+			clazzCode:$("#materialClazzCode").val(),
+			configurable:$("#isConfigurable").val(),
+			purchased:$("#isPurchased").val(),
+			groupName:$("#materialGroupName").val(),
+			groupCode:$("#groupCode").val(),
+			quantity:$("#amount").val(),
+			unitName:$("#unitName").val(),
+			standardPrice:$("#standardPrice").val(),
+			acturalPrice:$("#acturalPrice").val(),
+			acturalPriceAmount:$("#acturalPriceAmount").val(),
+			transcationPrice:$("#transcationPrice").val(),
+			acturalPricaOfOptional:$("#acturalPricaOfOptional").val(),
+			acturalPricaOfOptionalAmount:$("#acturalPricaOfOptionalAmount").val(),
+			transcationPriceOfOptional:$("#transcationPriceOfOptional").val(),
+			B2CPriceEstimated:$("#B2CPriceEstimated").val(),
+			B2CPriceEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
+			B2CCostOfEstimated:$("#B2CCostOfEstimated").val(),
+			acturalPriceTotal:$("#acturalPriceTotal").val(),
+			acturalPriceAmountTotal:$("#acturalPriceAmountTotal").val(),
+			transcationPriceTotal:$("#transcationPriceTotal").val(),
+			retailPrice:$("#retailPrice").val(),
+			retailPriceAmount:$("#retailPriceAmount").val(),
+			discount:$("#discount").val(),
+			itemCategory:$("#itemCategory").val(),
+			itemRequirementPlan:$("#itemRequirementPlan").val(),
+			producePeriod:$("#producePeriod").val(),
+			deliveryDate:$("#deliveryDate").val(),
+			produceDate:$("#produceDate").val(),
+			shippDate:$("#shippDate").val(),
+			materialAddress:$("#materialAddress").val(),
+			onStoreDate:$("#onStoreDate").val(),
+			purchasePeriod:$("#purchasePeriod").val(),
+			b2cComments:$("#b2cRemark").val(),
+			specialComments:$("#specialRemark").val(),
+			colorComments:$("#colorComments").val()
+	}
+	return row;
+}
+
+
 function toDecimal2(x) {   
     var f = parseFloat(x);   
     if (isNaN(f)) {   
@@ -481,7 +712,25 @@ function toDecimal2(x) {
     s += '0';   
   } 
   return s;
-}  
+} 
+
+function changeRequirement(obj){	
+	$("#itemRequirementPlan").html('');
+	var requireMent1='<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>'+
+	'<option value="Z004">物料需求计划</option>';
+	var requireMent2 = '<option value="Z004">物料需求计划</option>';
+	var itemCategory = $(obj).val();
+	if(itemCategory!=''){
+		if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
+			$("#itemRequirementPlan").append(requireMent2);
+		}else{
+			$("#itemRequirementPlan").append(requireMent1);
+		}
+	}else{
+		$("#itemRequirementPlan").append('<option value="="></option>');
+	}
+}
+
 //查看毛利率信息
 function viewGrossProfit(){
 	$("#grossProfit").modal("show");

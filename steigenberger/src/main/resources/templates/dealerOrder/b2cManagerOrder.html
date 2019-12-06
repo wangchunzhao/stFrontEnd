@@ -149,6 +149,7 @@
 								<div class="col-md-2">
 									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" name="contractValue" th:field="*{contractValue}">
 							    </div>
+							     <input type="hidden" id="contractValue" th:value="*{contractValue}">
 							    <span class="col-md-1 control-label">币种</span>
 								<div class="col-md-2">
 									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled th:field="*{currency}"><!--  th:field="*{currency}"-->
@@ -158,6 +159,7 @@
 								<div class="col-md-2">
 									<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" name="contractRMBValue" th:field="*{contractRMBValue}">
 							    </div>
+							    <input type="hidden" id="contractRMBValue" th:value="*{contractRMBValue}">
 							    <span class="col-md-1 control-label">购销明细金额合计</span>
 								<div class="col-md-2">
 									<input type="text" class="form-control" aria-describedby="emailHelp" id="itemsAmount" name="itemsAmount" readonly th:field="*{itemsAmount}">
