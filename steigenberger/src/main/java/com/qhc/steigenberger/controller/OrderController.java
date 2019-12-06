@@ -562,9 +562,9 @@ public class OrderController {
 					mv = new ModelAndView("dealerOrder/supportManagerOrder");
 				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("nonStandardDealerOrder/supportManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
-					mv = new ModelAndView("stockUpOrder/supportManagerOrder");
 				}else if(orderType.equals(ORDER_TYPE_BULK)) {
+					mv = new ModelAndView("stockUpOrder/supportManagerOrder");
+				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
 					mv = new ModelAndView("directCustomerOrder/supportManagerOrder");
 				}			
 				break;
@@ -578,9 +578,9 @@ public class OrderController {
 					mv = new ModelAndView("dealerOrder/b2cManagerOrder");
 				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("nonStandardDealerOrder/b2cManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
-					mv = new ModelAndView("stockUpOrder/b2cManagerOrder");
 				}else if(orderType.equals(ORDER_TYPE_BULK)) {
+					mv = new ModelAndView("stockUpOrder/b2cManagerOrder");
+				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
 					mv = new ModelAndView("directCustomerOrder/b2cManagerOrder");
 				}	
 				break;
