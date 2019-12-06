@@ -590,9 +590,9 @@ public class OrderController {
 					mv = new ModelAndView("dealerOrder/customerManagerOrder");
 				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
 					mv = new ModelAndView("nonStandardDealerOrder/customerManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
-					mv = new ModelAndView("stockUpOrder/customerManagerOrder");
 				}else if(orderType.equals(ORDER_TYPE_BULK)) {
+					mv = new ModelAndView("stockUpOrder/customerManagerOrder");
+				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
 					mv = new ModelAndView("directCustomerOrder/customerManagerOrder");
 				}	
 			}
