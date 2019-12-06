@@ -474,8 +474,8 @@ public class ContractService {
 	 * @throws JsonMappingException
 	 */
 	public boolean doRefreshContractState() throws JsonMappingException, JsonProcessingException {
-		Result r = (Result)fryeService.putForm("/order/refreshState", "", Result.class);
-		return r.getStatus().equals("ok") && r.getData().toString().equals("true");
+		Result r = (Result)fryeService.putForm("/contract/refreshState", "", Result.class);
+		return r.getStatus().equals("ok");
 		
 //		String states = "03,04,05,06";
 //		Map<String, Object> params = new HashMap<String, Object>();
@@ -521,8 +521,8 @@ public class ContractService {
 	 * @throws JsonMappingException
 	 */
 	public boolean doSignContract(int contractId) throws JsonMappingException, JsonProcessingException {
-		Result r = (Result)fryeService.putForm("/order/" + contractId + "/sign", null, Result.class);
-		return r.getStatus().equals("ok") && r.getData().toString().equals("true");
+		Result r = (Result)fryeService.putForm("/contract/" + contractId + "/sign", null, Result.class);
+		return r.getStatus().equals("ok");
 		
 //		Contract contract = (Contract) this.find(Integer.valueOf(contractId)).getData();
 //
