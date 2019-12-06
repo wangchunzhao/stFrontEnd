@@ -18,7 +18,7 @@ var materialsColumn = [{
 		width:60,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-	    	if(row.isConfigurable){
+	    	if(row.configurable){
 	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+row.materialCode+','+row.clazzCode +','+row.transcationPrice+ '\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
@@ -50,12 +50,19 @@ var materialsColumn = [{
 	    visible:false
 	},{
 		title:'',
-	    field: 'isConfigurable',
+	    field: 'configurable',
 	    visible:false
 	},{
 		title:'物料属性',
-	    field: 'isPurchased',
-	    width:80
+	    field: 'purchased',
+	    width:80,
+	    formatter: function(value, row, index) {
+	    	if(value){
+	    		return "采购";
+	    	}else{
+	    		return "生产";
+	    	}
+	    }
 	},{
 		title:'类型',
 	    field: 'groupName',
@@ -140,12 +147,36 @@ var materialsColumn = [{
 	},{
 		title:'行项目类别',
 	    field: 'itemCategory',
-	    width:150
+	    width:150,
+	    formatter: function(value, row, index) {
+	    	if(value=="ZHD1"){
+	    		return "标准";
+	    	}else if(value=="ZHD3"){
+	    		return "免费";
+	    	}else if(value=="ZHR1"){
+	    		return "退货";
+	    	}else{ 
+	    		return '';
+	    	}
+	    }
 
 	},{
 		title:'需求计划',
 	    field: 'itemRequirementPlan',
-	    width:150
+	    width:150,
+	    formatter: function(value, row, index) {
+	    	if(value=="Z004"){
+	    		return "物料需求计划";
+	    	}else if(value=="Z001"){
+	    		return "B2C";
+	    	}else if(value=="Z002"){
+	    		return "消化";
+	    	}else if(value=="Z003"){
+	    		return "调发";
+	    	}else{
+	    		return '';
+	    	}
+	    }
 	},{
 		title:'生产周期',
 	    field: 'producePeriod',
