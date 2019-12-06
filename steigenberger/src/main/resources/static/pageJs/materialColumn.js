@@ -171,7 +171,7 @@ var materialsColumn = [{
 	    		return "B2C";
 	    	}else if(value=="Z002"){
 	    		return "消化";
-	    	}else if(valu=="Z003"){
+	    	}else if(value=="Z003"){
 	    		return "调发";
 	    	}else{
 	    		return '';
