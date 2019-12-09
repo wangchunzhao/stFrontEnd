@@ -689,7 +689,6 @@ function edit(index) {
 		    contentType: "application/json;charset=UTF-8",
 		    // dataType: "json",
 		    success: function(data) {
-		    	alert(1);
 	    		checkLogout(data);
 		    	if(data == null || data.status != 'ok'){
 		    		layer.alert("查询合同信息失败！" + (data != null ? data.msg : ""));

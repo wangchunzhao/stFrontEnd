@@ -167,29 +167,30 @@ var ctxPath  = [[@{/}]];
 					  sValue:sValue,
 					  enableDate:enableDate
 					  }
-			$.ajax({  
-				type:"post",
-		      		   url: ctxPath+'parameterSetting/update',
-		      		   contentType:'application/json;charset=utf-8',
-		      		   async:false,
-		      		   data:JSON.stringify(data),
-		      		 	success: function(data){
-		       		     if(data.status>200){
-	 	       		    	// toastr.warning(data.msg);  
-	 	       		    	layer.alert(data.msg);
-		 	       		    /*setTimeout(function(){
-		 	       		    	window.location.reload();
-		 	       		     },2000);*/
-	 	       		       }
-	 	       		    else{
-	 	       		    	// toastr.success(data.msg);
-	 	       		    	layer.alert(data.msg);
-	 	       		       	setTimeout(function(){
-	 	       		    		window.location.href = ctxPath+"parameterSetting/index";
-	 	       		        },1000);
-	 	       		      } 				 
-		      		}});
-			});
+			$.ajax({
+				type: "post",
+				url: ctxPath+'parameterSetting/update',
+				contentType: 'application/json;charset=utf-8',
+				async: false,
+				data:JSON.stringify(data),
+				success: function(data) {
+					checkLogout(data);
+				   if(data.status > 200) {
+				   	// toastr.warning(data.msg);  
+				   	layer.alert(data.msg);
+				    /*setTimeout(function(){
+				    	window.location.reload();
+				     },2000);*/
+				   } else {
+				   	// toastr.success(data.msg);
+				   	layer.alert(data.msg);
+				      	setTimeout(function(){
+				   		window.location.href = ctxPath+"parameterSetting/index";
+				       }, 1000);
+				     } 				 
+		      	}
+	      	});
+		});
 	    
 		$(".settingform #btn_back").on("click",function(e){
 			  window.location.href = ctxPath+"parameterSetting/index";	

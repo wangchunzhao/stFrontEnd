@@ -141,8 +141,8 @@ function checkLogout(result) {
 	console.log(result);
 	console.log(result != null && result.status && result.status == 'logout');
 	if (result != null && result.status && result.status == 'logout') {
-		alert(result.msg);
 		window.location.href = "/steigenberger/";
+		alert(result.msg);
 	}
 }
 		
