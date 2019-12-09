@@ -22,8 +22,6 @@
 		<form method="post" role="form" id="orderForm" th:object="${order_option}">
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
 		<input type="hidden"  id="customerClazzName" name="customerClazzName">
-		<input type="hidden"  name="action" value="submit">
-		<input type="hidden"  id="orderModelType" value="new">
 		<input type="hidden"  name="salesCode" id="salesCode">
 		<input type="hidden" name="optTime" id="optTime">
 		<div id="page-wrapper">
@@ -735,7 +733,6 @@
 	var shippingTypesMap = [[${order_option.shippingTypes}]]
 	var version = getVersion();
 	$("#version").append("<option value='" + version + "'>" + version + "</option>");
-	var orderModelType = $("#orderModelType").val();
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;

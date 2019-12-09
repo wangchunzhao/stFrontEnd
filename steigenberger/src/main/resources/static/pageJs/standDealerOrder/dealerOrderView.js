@@ -37,14 +37,25 @@ function fillItems(){
 			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
 			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 			var materialType = materialGroupMapGroupOrder[items[i].groupCode];
+			var allType = "all";//标识是所有table中的行
 			if(materialType=='T101'){
+				var materialTypeRow = item[i]
+				//所有table中的唯标识
+				var identification = materialType+"|"+countMaterialsTableall1;
+				materialTypeRow["tableType"] = '';
+				//所有以外的行需要记录所有中的index
+				materialTypeRow["allIndex"] = countMaterialsTable;
+				materialTypeRow["identification"] = identification;
 				$("#materialsTableall1").bootstrapTable('insertRow', {
 				    index: countMaterialsTableall1,
-				    row: items[i]
+				    row: materialTypeRow[i]
 				});
+				var allTypeRow = item[i];
+				allTypeRow["identification"] = identification;
+				allTypeRow["tableType"] = "all";
 				$("#materialsTable").bootstrapTable('insertRow', {
 				    index: countMaterialsTable,
-				    row: items[i]
+				    row: allTypeRow
 				});
 			}else if(materialType=='T102'){
 				$("#materialsTableall2").bootstrapTable('insertRow', {
@@ -390,7 +401,6 @@ function editMaterials(identification){
 	var identificationSplit = identification.split(',');
 	var materialsType = materialGroupMapGroupOrder[identificationSplit[0]];
 	var index = identificationSplit[1];
-	debugger
 	var tableData;
 	if(materialsType=='T101'){
 		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
@@ -436,7 +446,7 @@ function fillMaterailValue(data){
 		$("#isPurchased").val("生产");
 		$("#purchasedCode").val(data.purchased)
 	}
-	$("#groupName").val(data.groupName);
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	$("#amount").val(data.quantity);
@@ -486,8 +496,6 @@ function confirmMaterials(){
     }
 	var modalType = $("#materialsModalType").val();
 	var materialType = $("#materialsType").val();
-	var rowIndex = $("#materialsIndex").val();
-	var materialTypeName = $("#materialTypeName").val();
 	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
 	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
 	var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
@@ -659,7 +667,7 @@ function confirmRowData(index,identification,tabType){
 			clazzCode:$("#materialClazzCode").val(),
 			configurable:$("#isConfigurable").val(),
 			purchased:$("#isPurchased").val(),
-			groupName:$("#groupName").val(),
+			groupName:$("#materialGroupName").val(),
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),

@@ -468,10 +468,24 @@
 					</div>
 					<div id="infoCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 						<div class="panel-body" style="height: auto;" mc-ace="~">
-
-							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfit" onclick="viewGrossProfit()" style="margin-right: 25px;">
-								查看毛利表 Gross profit table
-							</button>
+						   <div class="row">
+						    <div class="col-md-6">	
+								<button type="button" class="btn btn-primary btn-sm" id="showGrossProfit" onclick="viewGrossProfit()" style="margin-right: 25px;">
+									查看毛利表 Gross profit table
+								</button>
+								<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
+									查看合同 Look at the contract
+								</button>
+						    </div>
+						    <div class="row">
+									<div class="col-md-6">
+										客户确认资料 Customer data
+									</div>
+									<div class="col-md-6">
+										<input type="file" class="form-control-file">
+									</div>
+								</div> 	
+						</div>
 							<div class="modal fade" id="grossProfit" tabindex="-1" role="dialog">
 								<div class="modal-dialog" role="document" style="width:1000px">
 									<div class="modal-content">
@@ -555,9 +569,7 @@
 									</div>
 								</div>
 							</div>
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
-								查看合同 Look at the contract
-							</button><div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -572,25 +584,6 @@
 											<button type="button" class="btn btn-primary">保存 save</button>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab">
-						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#attachmentInfo" aria-expanded="true" class="">附件信息 Attachment information</a>
-						</h4>
-					</div>
-					<div id="attachmentInfo" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
-						<div class="panel-body" style="height: 83px;">
-							<div class="row">
-								<div class="col-xs-12 col-md-12">
-									客户确认资料 Customer data
-								</div>
-								<div class="col-xs-12 col-md-12">
-									<input type="file" class="form-control-file">
 								</div>
 							</div>
 						</div>

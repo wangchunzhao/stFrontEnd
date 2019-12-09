@@ -40,102 +40,8 @@ $(function () {
 	$("#inputDate").val(nowDateString);
 	$("#optTime").val(nowDateString);
 	defaultCollapse();
-	if(orderModelType=="new"){
-		getUserDetail();
-	}
-	if(orderModelType!="new"){
-		//修改订单查看订单，回显购销明细数据
-		fillItems();
-		//修改查看订单时,辉县地址数据
-		fillOrderAddress();
-	}
+	getUserDetail();
 });
-
-//修改订单查看订单，回显购销明细数据
-function fillItems(){
-	if(items){
-		for(var i=0;i<items.length;i++){
-			var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
-			var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
-			var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
-			var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
-			var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
-			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
-			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
-			var materialType = materialGroupMapGroupOrder[items[i].groupCode];
-			if(materialType=='T101'){
-				$("#materialsTableall1").bootstrapTable('insertRow', {
-				    index: countMaterialsTableall1,
-				    row: items[i]
-				});
-				$("#materialsTable").bootstrapTable('insertRow', {
-				    index: countMaterialsTable,
-				    row: items[i]
-				});
-			}else if(materialType=='T102'){
-				$("#materialsTableall2").bootstrapTable('insertRow', {
-				    index: countMaterialsTableall2,
-				    row: items[i]
-				});
-				$("#materialsTable").bootstrapTable('insertRow', {
-				    index: countMaterialsTable,
-				    row: items[i]
-				});
-			}else if(materialType=='T103'){
-				$("#materialsTableall3").bootstrapTable('insertRow', {
-				    index: countMaterialsTableall3,
-				    row: items[i]
-				});
-				$("#materialsTable").bootstrapTable('insertRow', {
-				    index: countMaterialsTable,
-				    row: items[i]
-				});
-			}else if(materialType=='T104'){
-				$("#materialsTableall4").bootstrapTable('insertRow', {
-				    index: countMaterialsTableall4,
-				    row: items[i]
-				});
-				$("#materialsTable").bootstrapTable('insertRow', {
-				    index: countMaterialsTable,
-				    row: items[i]
-				});
-			}else if(materialType=='T105'){
-				$("#materialsTableall5").bootstrapTable('insertRow', {
-				    index: countMaterialsTableall5,
-				    row: items[i]
-				});
-				$("#materialsTable").bootstrapTable('insertRow', {
-				    index: countMaterialsTable,
-				    row: item[i]
-				});
-			}else if(materialType=='T106'){
-				$("#materialsTableall6").bootstrapTable('insertRow', {
-				    index: countMaterialsTableall6,
-				    row: items[i]
-				});
-				$("#materialsTable").bootstrapTable('insertRow', {
-				    index: countMaterialsTable,
-				    row: items[i]
-				});
-			}
-		}
-	}
-	
-}
-
-//修改查看订单时,辉县地址数据
-function fillOrderAddress(){
-	if(orderAddress){
-		for(var i=0;i<orderAddress.length;i++){
-			var row = orderAddress[i];
-			row.index = i+1;
-			$("#addressTable").bootstrapTable('insertRow', {
-			    index: i,
-			    row: orderAddress[i]
-			});
-		}
-	}
-}
 
 //获取session中用户信息
 function getUserDetail(){
@@ -572,7 +478,7 @@ function fillMaterailValue(data){
 		$("#producePeriod").val(data.period);
 	}
 	var groupName = data.groupName;
-	$("#groupName").val(data.groupName);
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
@@ -624,30 +530,16 @@ function amountChange(){
 	$("#acturalPriceAmountTotal").val(toDecimal2(parseFloat($("#acturalPriceTotal").val())*amount));
 }
 
-function toDecimal2(x) {   
-     var f = parseFloat(x);   
-     if (isNaN(f)) {   
-      return 0;   
-     }   
-     var f = Math.round(x*100)/100;   
-     var s = f.toString();   
-     var rs = s.indexOf('.');   
-    if (rs < 0) {   
-     rs = s.length;   
-     s += '.';   
-    }   
-   while (s.length <= rs + 2) {   
-     s += '0';   
-   } 
-   return s;
- }  
 //编辑购销明细
 function editMaterials(identification){
+	debugger
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
 	var identificationSplit = identification.split('|');
-	var materialsType = identificationSplit[1];
-	var index = identificationSplit[0];
+	var materialsType = identificationSplit[0];
+	$('#materialsType').val(materialsType);
+	var materialType = $("#materialsType").val();
+	var index = identificationSplit[1];
 	var tableData;
 	if(materialsType=='T101'){
 		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
@@ -663,8 +555,64 @@ function editMaterials(identification){
 		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
 	}
 	
-	fillMaterailValue(tableData);
+	fillEditMaterailValue(tableData);
 }
+
+//编辑购销明细时页面值回显
+function fillEditMaterailValue(data){	
+	if(data.allIndex==0){
+		$("#allIndex").val(data.allIndex);
+	}
+	
+	if(data.allIndex){
+		$("#allIndex").val(data.allIndex);
+	}
+	
+	if(data.identification){
+		$("#identification").val(data.identification);
+	}
+	$("#rowNumber").val(data.rowNumber);
+	$("#identification").val(data.identification);
+	$("#materialTypeName").val(data.materialName);
+	$("#materialCode").val(data.materialCode);
+	$("#b2cRemark").val(data.b2cComments);
+	$("#colorComments").val(data.colorComments);
+	$("#specialRemark").val(data.specialComments);
+	$("#itemCategory").val(data.itemCategory);
+	$("#purchasePeriod").val(data.period);
+	$("#producePeriod").val(data.period);
+	$("#materialGroupName").val(data.groupName);
+	$("#groupCode").val(data.groupCode);
+	$("#isConfigurable").val(data.configurable);
+	$("#materialsType").val(materialsType);
+	$("#unitName").val(data.unitName);
+	$("#unitName").val(data.unitName);
+	$("#materialClazzCode").val(data.clazzCode);
+	$("#transcationPrice").val(data.transcationPrice);
+	$("#acturalPricaOfOptional").val(data.acturalPricaOfOptional);
+	$("#acturalPricaOfOptionalAmount").val(data.acturalPricaOfOptionalAmount);
+	$("#transcationPriceOfOptional").val(data.transcationPriceOfOptional);
+	$("#B2CPriceEstimated").val(data.b2CPriceEstimated);
+	$("#B2CPriceEstimatedAmount").val(data.B2CPriceEstimatedAmount);
+	$("#B2CCostOfEstimated").val(data.b2CCostOfEstimated);
+	$("#transcationPriceTotal").val(data.transcationPriceTotal);
+	$("#retailPrice").val(data.retailPrice);
+	$("#retailPriceAmount").val(data.retailPriceAmount);
+	$("#acturalPrice").val(data.acturalPrice);
+	$("#acturalPriceAmount").val(data.acturalPriceAmount);
+	$("#acturalPriceTotal").val(data.acturalPriceTotal);
+	$("#acturalPriceAmountTotal").val(data.acturalPriceAmountTotal);
+	if(data.purchased){
+		$("#producePeriod").val(data.period);
+	}else{
+		$("#purchasePeriod").val(data.period);
+	}
+	$("#deliveryDate").val(data.deliveryDate);
+	$("#produceDate").val(data.produceDate);
+	$("#onStoreDate").val(data.onStoreDate);
+	$("#standardPrice").val(toDecimal2(data.standardPrice));	
+}
+
 //删除购销明细
 function removeMaterials(identification){
 	$('#materialsTable').bootstrapTable('remove', {
@@ -774,179 +722,25 @@ function removeRelatedRow(identification){
 	}
 }
 
-function initSubsidiartFormValidator(){
-	 $('#subsidiaryForm').bootstrapValidator({
-	　　　　　　　　message: 'This value is not valid',
-		            fields: {
-		            	amount: {
-		            		validators: {
-		            			notEmpty: {
-		            	            message: '数量不能为空'
-		            	        },
-		            	        regexp: {
-		            	            regexp: /^[1-9]\d{0,4}$/,
-		            	            message: '只能输入小于十万的正整数'
-		            	        }
-		            	    }
-		                },
-		               itemRequirementPlan: {
-	                    validators: {
-	                        notEmpty: {
-	                            message: '请选择需求计划'
-	                        }
-	                    }
-		               },
-		               itemCategory: {
-		                    validators: {
-		                        notEmpty: {
-		                            message: '请选择行项目类别'
-		                        }
-		                    }
-			           }
-	            }
-	        });
-}
-
-function initOrderFormValidator(){
-    $('#orderForm').bootstrapValidator({
-        message: 'This value is not valid',
-        fields: {
-        	salesTelnumber: {
-        	    validators: {
-        	    	regexp: {
-        	    		regexp: /^1[3456789]\d{9}$/,
-        	            message: '不是合法的手机号'
-        	        }
-        	    }
-        	},
-        	saleType:{
-        	    validators: {
-        	    	 notEmpty: {
-                         message: '请选择销售类型'
-                    }
-        	    }
-        	},
-        	recordCode: {
-                validators: {
-                    notEmpty: {
-                         message: '请填写项目编号'
-                    }
-                }
-            },
-        	customerName: {
-                validators: {
-                    notEmpty: {
-                         message: '请填写店名'
-                    }
-                }
-            },
-            officeCode: {
-                validators: {
-                    notEmpty: {
-                         message: '请选择大区'
-                    }
-                }
-            },
-            groupCode: {
-                validators: {
-                    notEmpty: {
-                         message: '请选择中心'
-                    }
-                }
-            },
-            contactor1Id: {
-            	validators: {
-        	    	regexp: {
-        	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-        	            message: '请填写正确的身份证号'
-        	        }
-        	    }
-            },
-            contactor2Id: {
-            	validators: {
-        	    	regexp: {
-        	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-        	            message: '请填写正确的身份证号'
-        	        }
-        	    }
-            },
-            contactor3Id: {
-            	validators: {
-        	    	regexp: {
-        	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-        	            message: '请填写正确的身份证号'
-        	        }
-        	    }
-            },
-            contactor1Tel: {
-            	validators: {
-        	    	regexp: {
-        	    		regexp: /^1[3456789]\d{9}$/,
-        	            message: '请填写正确的手机号'
-        	        }
-        	    }
-            },
-            contactor2Tel: {
-            	validators: {
-        	    	regexp: {
-        	    		regexp: /^1[3456789]\d{9}$/,
-        	            message: '请填写正确的手机号'
-        	        }
-        	    }
-            },
-            contactor3Tel: {
-            	validators: {
-        	    	regexp: {
-        	    		regexp: /^1[3456789]\d{9}$/,
-        	            message: '请填写正确的手机号'
-        	        }
-        	    }
-            },
-            contractorclassname: {
-            	trigger:"change",
-                validators: {
-                    notEmpty: {
-                         message: '请选择签约单位'
-                    }
-                }
-            },
-        	contractValue: {
-                validators: {
-                    notEmpty: {
-                         message: '金额不能为空'
-                    },
-                    regexp: {
-                        regexp: /^\d+(\.\d{0,2})?$/,
-                        message: '请输入合法的金额，金额限制两位小数'
-                    }
-                }
-            },
-			contractRMBValue: {
-				trigger:"change",
-				validators: {
-					identical: {
-						field: 'itemsAmount',
-						message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
-					}
-				}
-			},
-			itemsAmount: {
-			}
-        }
-    });
-}
 
 //确认购销明细modal
 function confirmMaterials(){
+	debugger
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
     	return
     }
-	var modalType = $("#materialsModalType").val();
-	var materialType = $("#materialsType").val();
-	var rowIndex = $("#materialsIndex").val();
+    var allIndex = $("#allIndex").val();
+	var identification = $("#identification").val();
 	var materialTypeName = $("#materialTypeName").val();
+	var modalType = $("#materialsModalType").val();
+	var materialType;
+	if(modalType=="new"){
+		materialType = $("#materialsType").val();
+	}else{
+		materialType = identification.split("|")[0];
+	}	
 	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
 	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
 	var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
@@ -956,86 +750,190 @@ function confirmMaterials(){
 	var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 	if(modalType=='new'){
 		if(materialType=='T101'){
-			var rowData = confirmRowData(countMaterialsTableall1,'');
+			debugger
+			var rowData = confirmRowData(countMaterialsTable);
+			var identification = materialType+"|"+countMaterialsTableall1;//所有表格中行的唯一标识		
+			rowData["allIndex"] = countMaterialsTable;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
 			$("#materialsTableall1").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall1,
 			    row: rowData
 			});
 			$("#second").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			var rowDataAll = confirmRowData(countMaterialsTable);	
+			rowDataAll["allIndex"] = identification;	//所有以外的行需要记录所有中的index
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
 			    row: rowDataAll
 			});
 		}else if(materialType=='T102'){
-			var rowData = confirmRowData(countMaterialsTableall2,'');
+			var rowData = confirmRowData(countMaterialsTable);
+			var identification = materialType+"|"+countMaterialsTableall2;
+			rowData["allIndex"] = countMaterialsTable;
+			rowData["identification"] = identification;
 			$("#materialsTableall2").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall2,
 			    row: rowData
 			});
 			$("#third").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			var rowDataAll = confirmRowData(countMaterialsTable);	
+			rowDataAll["allIndex"] = identification;
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
 			    row: rowDataAll
 			});
 		}else if(materialType=='T103'){
-			var rowData = confirmRowData(countMaterialsTableall3,'');
+			var rowData = confirmRowData(countMaterialsTable);
+			var identification = materialType+"|"+countMaterialsTableall3;
+			rowData["allIndex"] = countMaterialsTable;
+			rowData["identification"] = identification;
 			$("#materialsTableall3").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall3,
 			    row: rowData
 			});
 			$("#four").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			var rowDataAll = confirmRowData(countMaterialsTable);	
+			rowDataAll["allIndex"] = identification;
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
 			    row: rowDataAll
 			});
 		}else if(materialType=='T104'){
-			var rowData = confirmRowData(countMaterialsTableall4,'');
+			var rowData = confirmRowData(countMaterialsTable);
+			var identification = materialType+"|"+countMaterialsTableall4;
+			rowData["allIndex"] = countMaterialsTable;
+			rowData["identification"] = identification;
 			$("#materialsTableall4").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall4,
 			    row: rowData
 			});
 			$("#five").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			var rowDataAll = confirmRowData(countMaterialsTable);	
+			rowDataAll["allIndex"] = identification;
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
 			    row: rowDataAll
 			});
 		}else if(materialType=='T105'){
-			var rowData = confirmRowData(countMaterialsTableall5,'');
+			var rowData = confirmRowData(countMaterialsTable);
+			var identification = materialType+"|"+countMaterialsTableall5;
+			rowData["allIndex"] = countMaterialsTable;
+			rowData["identification"] = identification;
 			$("#materialsTableall5").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall5,
 			    row: rowData
 			});
 			$("#six").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			var rowDataAll = confirmRowData(countMaterialsTable);	
+			rowDataAll["allIndex"] = identification;
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
 			    row: rowDataAll
 			});
 		}else if(materialType=='T106'){
-			var rowData = confirmRowData(countMaterialsTableall6,'');
+			var rowData = confirmRowData(countMaterialsTable);
+			var identification = materialType+"|"+countMaterialsTableall6;	
+			rowData["allIndex"] = countMaterialsTable;
+			rowData["identification"] = identification;
 			$("#materialsTableall6").bootstrapTable('insertRow', {
 			    index: countMaterialsTableall6,
 			    row: rowData
 			});
 			$("#seven").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable,rowData.identification);
+			var rowDataAll = confirmRowData(countMaterialsTable);
+			rowDataAll["allIndex"] = identification;
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
 			    row: rowDataAll
 			});
 		}
 	}else{
-		$("#materialsTable").bootstrapTable('updateRow', {
-		    index: rowIndex,
-		    row: {
-		    	index:parseInt(rowIndex)+1,
-		    	materialTypeName:materialTypeName
-		    }
-		});
+		var rowNumber = $("#rowNumber").val();
+		if(materialType=='T101'){
+			var rowData = confirmRowData(countMaterialsTable,rowNumber);	
+			rowData["allIndex"] = allIndex;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
+			var subTableIndex = identification.split("|")[1];
+			$("#materialsTableall1").bootstrapTable('updateRow', {
+			    index: subTableIndex,
+			    row: rowData
+			});
+			$("#second").tab('show');		
+			$("#materialsTable").bootstrapTable('updateRow', {
+			    index: allIndex,
+			    row: rowData
+			});
+		}else if(materialType=='T102'){
+			var rowData = confirmRowData(countMaterialsTable,rowNumber);	
+			rowData["allIndex"] = allIndex;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
+			var subTableIndex = identification.split("|")[1];
+			$("#materialsTableall2").bootstrapTable('updateRow', {
+			    index: subTableIndex,
+			    row: rowData
+			});
+			$("#second").tab('show');		
+			$("#materialsTable").bootstrapTable('updateRow', {
+			    index: allIndex,
+			    row: rowData
+			});
+		}else if(materialType=='T103'){
+			var rowData = confirmRowData(countMaterialsTable,rowNumber);	
+			rowData["allIndex"] = allIndex;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
+			var subTableIndex = identification.split("|")[1];
+			$("#materialsTableall3").bootstrapTable('updateRow', {
+			    index: subTableIndex,
+			    row: rowData
+			});
+			$("#third").tab('show');		
+			$("#materialsTable").bootstrapTable('updateRow', {
+			    index: allIndex,
+			    row: rowData
+			});
+		}else if(materialType=='T104'){
+			var rowData = confirmRowData(countMaterialsTable,rowNumber);	
+			rowData["allIndex"] = allIndex;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
+			var subTableIndex = identification.split("|")[1];
+			$("#materialsTableall4").bootstrapTable('updateRow', {
+			    index: subTableIndex,
+			    row: rowData
+			});
+			$("#third").tab('show');		
+			$("#materialsTable").bootstrapTable('updateRow', {
+			    index: allIndex,
+			    row: rowData
+			});
+		}else if(materialType=='T105'){
+			var rowData = confirmRowData(countMaterialsTable);	
+			rowData["allIndex"] = allIndex;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
+			var subTableIndex = identification.split("|")[1];
+			$("#materialsTableall5").bootstrapTable('updateRow', {
+			    index: subTableIndex,
+			    row: rowData
+			});
+			$("#third").tab('show');		
+			$("#materialsTable").bootstrapTable('updateRow', {
+			    index: allIndex,
+			    row: rowData
+			});
+		}else if(materialType=='T106'){
+			var rowData = confirmRowData(countMaterialsTable,rowNumber);	
+			rowData["allIndex"] = allIndex;	//所有以外的行需要记录所有中的index
+			rowData["identification"] = identification;
+			var subTableIndex = identification.split("|")[1];
+			$("#materialsTableall6").bootstrapTable('updateRow', {
+			    index: subTableIndex,
+			    row: rowData
+			});
+			$("#third").tab('show');		
+			$("#materialsTable").bootstrapTable('updateRow', {
+			    index: allIndex,
+			    row: rowData
+			});
+		}	
 	}
 	
 	$('#subsidiaryModal').modal('hide');
@@ -1079,6 +977,24 @@ function getAllCountFiled(){
 	
 }
 
+function toDecimal2(x) {   
+    var f = parseFloat(x);   
+    if (isNaN(f)) {   
+     return 0;   
+    }   
+    var f = Math.round(x*100)/100;   
+    var s = f.toString();   
+    var rs = s.indexOf('.');   
+   if (rs < 0) {   
+    rs = s.length;   
+    s += '.';   
+   }   
+  while (s.length <= rs + 2) {   
+    s += '0';   
+  } 
+  return s;
+}  
+
 //计算购销明细金额
 function calculationAmount(amount){
 	var totalAmount=0.00;
@@ -1105,20 +1021,15 @@ function compareDate(date){
 }
 //购销明细行数据
 
-function confirmRowData(index,identification){
-	var idenf = identification
-	if(idenf==''){
-		idenf=index+"|"+$("#materialsType").val()
-	}
+function confirmRowData(index,rowNumber){
 	var row = {
-			rowNumber:(index+1)*10,
+			rowNumber:rowNumber?rowNumber:(index+1)*10,
 			materialName:$("#materialTypeName").val(),
 			materialCode:$("#materialCode").val(),
-			identification:idenf,
 			clazzCode:$("#materialClazzCode").val(),
 			configurable:$("#isConfigurable").val(),
 			purchased:$("#purchasedCode").val(),
-			groupName:$("#groupName").val(),
+			groupName:$("#materialGroupName").val(),
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
@@ -1189,6 +1100,170 @@ function addMaterialAddress(){
 		
 	})
 }
+
+//确认购销明细校验
+function initSubsidiartFormValidator(){
+	 $('#subsidiaryForm').bootstrapValidator({
+	　　　　　　　　message: 'This value is not valid',
+		            fields: {
+		            	amount: {
+		            		validators: {
+		            			notEmpty: {
+		            	            message: '数量不能为空'
+		            	        },
+		            	        regexp: {
+		            	            regexp: /^[1-9]\d{0,4}$/,
+		            	            message: '只能输入小于十万的正整数'
+		            	        }
+		            	    }
+		                },
+		               itemRequirementPlan: {
+	                    validators: {
+	                        notEmpty: {
+	                            message: '请选择需求计划'
+	                        }
+	                    }
+		               },
+		               itemCategory: {
+		                    validators: {
+		                        notEmpty: {
+		                            message: '请选择行项目类别'
+		                        }
+		                    }
+			           }
+	            }
+	        });
+}
+//订单提交校验
+function initOrderFormValidator(){
+   $('#orderForm').bootstrapValidator({
+       message: 'This value is not valid',
+       fields: {
+       	salesTelnumber: {
+       	    validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '不是合法的手机号'
+       	        }
+       	    }
+       	},
+       	saleType:{
+       	    validators: {
+       	    	 notEmpty: {
+                        message: '请选择销售类型'
+                   }
+       	    }
+       	},
+       	recordCode: {
+               validators: {
+                   notEmpty: {
+                        message: '请填写项目编号'
+                   }
+               }
+           },
+       	customerName: {
+               validators: {
+                   notEmpty: {
+                        message: '请填写店名'
+                   }
+               }
+           },
+           officeCode: {
+               validators: {
+                   notEmpty: {
+                        message: '请选择大区'
+                   }
+               }
+           },
+           groupCode: {
+               validators: {
+                   notEmpty: {
+                        message: '请选择中心'
+                   }
+               }
+           },
+           contactor1Id: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+       	            message: '请填写正确的身份证号'
+       	        }
+       	    }
+           },
+           contactor2Id: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+       	            message: '请填写正确的身份证号'
+       	        }
+       	    }
+           },
+           contactor3Id: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+       	            message: '请填写正确的身份证号'
+       	        }
+       	    }
+           },
+           contactor1Tel: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '请填写正确的手机号'
+       	        }
+       	    }
+           },
+           contactor2Tel: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '请填写正确的手机号'
+       	        }
+       	    }
+           },
+           contactor3Tel: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '请填写正确的手机号'
+       	        }
+       	    }
+           },
+           contractorclassname: {
+           	trigger:"change",
+               validators: {
+                   notEmpty: {
+                        message: '请选择签约单位'
+                   }
+               }
+           },
+       	contractValue: {
+               validators: {
+                   notEmpty: {
+                        message: '金额不能为空'
+                   },
+                   regexp: {
+                       regexp: /^\d+(\.\d{0,2})?$/,
+                       message: '请输入合法的金额，金额限制两位小数'
+                   }
+               }
+           },
+			contractRMBValue: {
+				trigger:"change",
+				validators: {
+					identical: {
+						field: 'itemsAmount',
+						message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
+					}
+				}
+			},
+			itemsAmount: {
+			}
+       }
+   });
+}
+
 
 //打开调研表
 function openConfig(identification){
