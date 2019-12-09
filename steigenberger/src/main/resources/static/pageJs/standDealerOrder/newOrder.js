@@ -572,7 +572,7 @@ function fillMaterailValue(data){
 		$("#producePeriod").val(data.period);
 	}
 	var groupName = data.groupName;
-	$("#materialGroupName").val(data.groupName);
+	$("#groupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
@@ -1118,7 +1118,7 @@ function confirmRowData(index,identification){
 			clazzCode:$("#materialClazzCode").val(),
 			configurable:$("#isConfigurable").val(),
 			purchased:$("#purchasedCode").val(),
-			groupName:$("#materialGroupName").val(),
+			groupName:$("#groupName").val(),
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
