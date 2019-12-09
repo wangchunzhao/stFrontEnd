@@ -714,6 +714,7 @@
 <script th:inline="javascript" src="../pageJs/directCustomerOrder/directCustomerOrder.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
+	var shippingTypesMap = [[${order_option.shippingTypes}]]
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
 	var installationTerms = [[${order_option.installationTerms}]]
 	var intercoms = [[${order_option.intercoms}]]
