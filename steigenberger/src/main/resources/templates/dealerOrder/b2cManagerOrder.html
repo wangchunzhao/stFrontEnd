@@ -598,9 +598,9 @@
 				</div>
 			</div>
 			<button type="button" class="btn pull-right btn-warning"  style="margin-left: 10px;" id="back" onclick="window.location.href = '/steigenberger/menu/orderManageList';">返回</button>
-			<button type="button" class="btn btn-danger pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="" id="reject">驳回</button>		
-			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" id="approve">提交</button>
-			<button type="button" class="btn pull-right btn-success"  id="approve">保存</button>				
+			<button type="button" class="btn btn-danger pull-right" style="margin-left: 10px; margin-right: 10px;" onclick="approveB2c(0)" id="reject">驳回</button>		
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 10px; margin-right: 10px;" onclick="approveB2c(1)" id="approve">B2C提交</button>
+			<button type="button" class="btn pull-right btn-success"  onclick="saveOrder()" id="approve">保存</button>				
 		</div>
 		</form>
 	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
