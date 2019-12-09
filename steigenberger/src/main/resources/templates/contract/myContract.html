@@ -659,6 +659,7 @@ $('#contractTable').bootstrapTable({
 		};
 	},
 	responseHandler : function(res){
+		checkLogout(res);
 		if (res.status != 'ok') {
 			layer.alert(res.msg);
 			return {};
@@ -685,10 +686,13 @@ function edit(index) {
 		    url: ctxPath + "contract/" + contractId,
 		    // data: '',
 		    type: "GET",
+		    contentType: "application/json;charset=UTF-8",
 		    // dataType: "json",
 		    success: function(data) {
+		    	alert(1);
+	    		checkLogout(data);
 		    	if(data == null || data.status != 'ok'){
-		    		layer.alert("查询合同信息失败！" + data.msg);
+		    		layer.alert("查询合同信息失败！" + (data != null ? data.msg : ""));
 		    	}else{
 		    		// console.log(data.data)
 		    		contract = data.data;
@@ -798,8 +802,9 @@ function save2(url, json) {
 	    type: "POST",
 	    contentType: "application/json;charset=UTF-8",
 	    success: function(data) {
+    		checkLogout(data);
 	    	if(data == null || data.status != 'ok') {
-	    		layer.alert("操作失败！" + data.msg);
+	    		layer.alert("操作失败！" + (data != null ? data.msg : ""));
 	    	}else{
 	    		layer.alert("保存合同信息成功！");
 	    		$("#contractDialog").modal('hide');
@@ -839,8 +844,9 @@ function view(index) {
 	    type: "GET",
 	    // dataType: "json",
 	    success: function(data) {
+    		checkLogout(data);
 	    	if(data == null || data.status != 'ok'){
-	    		layer.alert("查询合同信息失败！" + data.msg);
+	    		layer.alert("查询合同信息失败！" + (data != null ? data.msg : ""));
 	    	}else{
 	    		// console.log(data.data)
 	    		contract = data.data;
@@ -867,8 +873,9 @@ function send(index) {
 	    type: "PUT",
 	    contentType: "application/json;charset=UTF-8",
 	    success: function(data) {
+    		checkLogout(data);
 	    	if(data == null || data.status != 'ok') {
-	    		layer.alert("发送合同失败！" + data.msg);
+	    		layer.alert("发送合同失败！" + (data != null ? data.msg : ""));
 	    	}else{
 	    		layer.alert("发送合同成功！");
 	    		refresh();
@@ -893,8 +900,9 @@ function sign(index) {
 	    type: "PUT",
 	    // dataType: "json",
 	    success: function(data) {
+    		checkLogout(data);
 	    	if(data == null || data.status != 'ok'){
-	    		layer.alert("签署合同给客户失败！" + data.msg);
+	    		layer.alert("签署合同给客户失败！" + (data != null ? data.msg : ""));
 	    	}else{
 	    		// console.log(data.data)
 	    		contract = data.data;

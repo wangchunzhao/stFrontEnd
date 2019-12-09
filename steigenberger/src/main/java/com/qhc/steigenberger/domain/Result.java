@@ -25,6 +25,13 @@ public class Result<T> implements Serializable {
 		return ok;
 	}
 	
+	public static final Result<String> logout() {
+		Result<String> logout = new Result<String>();
+		logout.setStatus("logout");
+		logout.setMsg("没有登录或长期没有操作！请重新登录！");
+		return logout;
+	}
+	
 	public String getStatus() {
 		return status;
 	}

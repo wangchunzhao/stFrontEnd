@@ -124,5 +124,25 @@ $.fn.serializeObject = function() {
         }  
     });  
     return o;  
-}	
+}
+
+function service(options) {
+	var success = options.success;
+	options.success = function(result,status,xhr) {
+		if (result != null && result.status && result.status == 'logout') {
+			alert(result.msg);
+			window.location.href = "/steigenberger/";
+		}
+	}
+	$.ajax(options);
+}
+
+function checkLogout(result) {
+	console.log(result);
+	console.log(result != null && result.status && result.status == 'logout');
+	if (result != null && result.status && result.status == 'logout') {
+		alert(result.msg);
+		window.location.href = "/steigenberger/";
+	}
+}
 		
