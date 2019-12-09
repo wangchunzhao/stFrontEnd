@@ -830,7 +830,7 @@ function approveB2c(isApproved){
 	for(var i=0;i<items.length;i++){
 		var b2cComment = new Object;
 		b2cComment["rowNumber"] = items[i].rowNumber;
-		b2cComment["cost"] = items[i].B2CPriceEstimated;
+		b2cComment["cost"] = 120.00;
 		b2cComment["b2cComments"] = items[i].b2cComments;
 		b2cComments.push(b2cComment);
 	 }
