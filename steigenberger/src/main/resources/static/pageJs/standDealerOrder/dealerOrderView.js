@@ -748,6 +748,109 @@ function viewGrossProfit(){
 	$("#grossProfitTable").bootstrapTable('refresh', opt);	
 }
 
+//保存提交订单
+function saveOrder(type){
+	if(type){
+		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if(!bootstrapValidator.isValid()){ 
+			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
+			return
+		}
+		
+	}
+	$("#transferType").removeAttr("disabled");
+	 var version = $("#version").val();
+	 var payment = new Object();
+	 payment['termCode'] = $("#paymentType").val();
+	 payment['termName'] = $("#paymentType").find("option:selected").text();
+	 payment['percentage'] = "1";
+	 payment['payDate'] = $("#inputDate").val();
+	 //获取下拉框name
+	 getSelectName();
+	 var orderData = $("#orderForm").serializeObject(); 
+	 $('#transferType').attr("disabled",true);
+	 var payments=new Array();
+	 payments.push(payment);
+	 orderData.payments = payments;
+	 orderData['currentVersion'] = version;
+	 orderData['orderType'] = 'ZH0D';
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 orderData.items = items;
+	 for(var i=0;i<items.length;i++){
+		 var configData = localStorage[items[i].identification];
+		 items[i].isVirtual = 0;
+		 if(configData){
+			 var jsonObject = JSON.parse(configData);
+			 items[i]['configs']= jsonObject.configTableData;
+			 items[i]['configComments'] = jsonObject.remark
+		 } else{
+			 items[i]['configs'] = null;
+		 }	 	 
+	 }
+	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+	 if(type){
+		 $.ajax({
+			    url: "/steigenberger/order/dealer?action="+type,
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	layer.alert('提交成功', {icon: 6});
+			    	//跳转到订单管理页面
+			    	window.location.href = '/steigenberger/menu/orderManageList';
+			    },
+			    error: function(){
+			    	layer.alert('提交失败', {icon: 5});
+			    }
+		});  
+	 }else{
+		 $.ajax({
+			    url: "/steigenberger/order/dealer?action="+'save',
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	layer.alert('保存成功', {icon: 6});
+			    },
+			    error: function(){
+			    	layer.alert('保存失败', {icon: 5});
+			    }
+		}); 
+	 }
+	 
+}
+
+//提交B2C 0：驳回 1：同意
+function approveB2c(isApproved){
+	var seqnum = $("#sequenceNumber").val(); 
+	var version = $("#version").val();
+	var b2cComments=new Array();
+	var items = $("#materialsTable").bootstrapTable('getData');
+	for(var i=0;i<items.length;i++){
+		var b2cComment = new Object;
+		b2cComment["rowNumber"] = items[i].rowNumber;
+		b2cComment["cost"] = items[i].B2CPriceEstimated;
+		b2cComment["b2cComments"] = items[i].b2cComments;
+		b2cComments.push(b2cComment);
+	 }
+	
+	$.ajax({
+	    url: "/steigenberger/order/b2c?isApproved="+isApproved+"&seqnum="+seqnum+"&version="+version,
+	    contentType: "application/json;charset=UTF-8",
+	    data: JSON.stringify(b2cComments),
+	    type: "POST",
+	    success: function(data) { 
+	    	layer.alert('提交成功', {icon: 6});
+	    	//跳转到订单管理页面
+	    	window.location.href = '/steigenberger/menu/orderManageList';
+	    },
+	    error: function(){
+	    	layer.alert('提交失败', {icon: 5});
+	    }
+});  
+}
+
 
 var grossProfitColumns=[
 	{

@@ -31,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.config.ApplicationConfig;
+import com.qhc.steigenberger.domain.B2CComments;
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Contract;
@@ -70,6 +71,7 @@ public class OrderService {
 //	private final static String URL_INCOTERMS = "incoterms";
 	private final static String URL_ORDER = "order";
 	private final static String URL_D_ORDER = "order/dOrder";
+	private final static String URL_B2C_ORDER = "order/b2c";
 	private final static String URL_SEPERATOR = ",";
 	private final static String URL_PARAMETER_SEPERATOR = "/";
 
@@ -281,5 +283,17 @@ public class OrderService {
 	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
 		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + sequenceNumber + "/" + version + "/grossprofit";
 		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
+	}
+
+	public void b2cCost(int isPro, String seqnum, String version, List<B2CComments> b2cs) {
+		String url = URL_B2C_ORDER + "?isApproved="+isPro+"&seqnum="+seqnum+"&version="+version;
+		fryeService.postJason(url,b2cs);
+		
+	}
+
+	public void enginingCost(String operator, boolean isPro, String seqnum, String version, double installation,
+			double materials, double electrical, double coolroom, double maintanance) {
+		// TODO Auto-generated method stub
+		
 	}
 }

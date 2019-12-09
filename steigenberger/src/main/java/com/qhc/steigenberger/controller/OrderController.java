@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.domain.B2CComments;
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
@@ -616,7 +617,24 @@ public class OrderController {
             pars.put("bom_code", model.getBomCode());
             return orderService.findBOMWithPrice(pars);    
     }
-
+    
+    @ApiOperation(value = "B2c审核订单", notes = "B2c审核订单")
+	@PostMapping(value = "b2c")
+	@ResponseStatus(HttpStatus.OK)
+	public void approvedByB2C(@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestBody List<B2CComments> b2cs) throws Exception{
+		orderService.b2cCost(isApproved, seqnum, version, b2cs);
+	}
+	
+	
+	@ApiOperation(value = "工程经理审核", notes = "工程经理审核订单")
+	@PostMapping(value = "order/engineering")
+	@ResponseStatus(HttpStatus.OK)
+	public void approvedByEngineering(@RequestParam String operator,@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestParam double installation,@RequestParam double materials,@RequestParam double electrical ,@RequestParam double coolroom,@RequestParam double maintanance) throws Exception{
+		boolean isPro = false;
+		if(isApproved!=0)
+			isPro = true;
+		orderService.enginingCost(operator,isPro, seqnum, version, installation,materials,electrical,coolroom,maintanance);
+	}
 
 
 }
