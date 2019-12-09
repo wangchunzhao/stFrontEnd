@@ -1656,7 +1656,7 @@ function getSelectName() {
 		}
 		
 	}
-	
+
 	var shippingTypeCode = $("#transferType").val();
 	if(shippingTypeCode){
 		$("#transferTypeName").val(shippingTypesMap[shippingTypeCode]);
