@@ -3,6 +3,8 @@ package com.qhc.steigenberger.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
@@ -50,6 +52,7 @@ public class BestsignService {
 	private String clientId;
 	@Value("${contract.bestsign.secrete}")
 	private String secrete;
+	// 图章名称
 	@Value("${contract.bestsign.sealname}")
 	private String sealName;
 	@Value("${contract.bestsign.entername}")
@@ -60,7 +63,7 @@ public class BestsignService {
 //	@Resource
 //	private ContractSignSysRepository contractSignSysRepository;
 	// 签约系统合同列表，缓存，模拟数据库表Repository
-	private List<ContractSignSys> signList = null;
+	private List<ContractSignSys> signList = new ArrayList<ContractSignSys>();
 
 	/**
 	 * 
@@ -96,12 +99,17 @@ public class BestsignService {
 		String result = getBestSignClient().executeRequest("/api/contracts/sign", "POST", signContractVO);
 		logger.debug("Auto sign info:" + result);
 		Map resultMap = (Map) mapper.readValue(result, HashMap.class);
-		String data = resultMap.get("data").toString();
-		// data":{"totalAmount":1,"successAmount":0,"failureAmount":1,"errorInfos":["[自动签署-出现异常：contract must not be null]"]}
-		Map dataMap = (Map) mapper.readValue(data, HashMap.class);
-		if (dataMap.get("successAmount").equals(dataMap.get("totalAmount")) ) {
-//				&& (dataMap.get("errorInfos") == null || dataMap.get("errorInfos").toString().equalsIgnoreCase("[]"))) {
-			return true;
+		if (resultMap.get("code").toString().equals("0")) {
+	//		String data = resultMap.get("data").toString();
+			// data":{"totalAmount":1,"successAmount":0,"failureAmount":1,"errorInfos":["[自动签署-出现异常：contract must not be null]"]}
+	//		Map dataMap = (Map) mapper.readValue(data, HashMap.class);
+			Map dataMap = (Map) resultMap.get("data");
+			if (dataMap.get("successAmount").equals(dataMap.get("totalAmount")) ) {
+	//				&& (dataMap.get("errorInfos") == null || dataMap.get("errorInfos").toString().equalsIgnoreCase("[]"))) {
+				return true;
+			}
+			
+			logger.error("Auto sign : {}", dataMap.get("errorInfos"));
 		}
 		return false;
 	}
@@ -120,27 +128,39 @@ public class BestsignService {
 		parameters.put("account", this.accountName);
 		parameters.put("enterpriseName", this.enterName);
 		paramsMap.put("operator", parameters);
-		String result = getBestSignClient().executeRequest("/api/contracts/search", "post", paramsMap);
-		logger.debug("Search result:" + result);
-		if (result == null || result.isEmpty()) {
+		paramsMap.put("pageIndex", 1);
+		paramsMap.put("pageSize", 50);
+		
+		List<String> list = new ArrayList<String>();
+		
+		boolean hasmore = false;
+		do {
+			String result = getBestSignClient().executeRequest("/api/contracts/search", "post", paramsMap);
+			logger.debug("Search result:" + result);
+			Map resultMap = (Map) mapper.readValue(result, HashMap.class);
+			if (resultMap.get("code").equals("0")) {
+				Map data = (Map)resultMap.get("data");
+				Integer pageIndex = Integer.valueOf(String.valueOf(data.get("pageIndex")));
+				Integer totalPages = Integer.valueOf(String.valueOf(data.get("totalPages")));
+				hasmore = pageIndex < totalPages;
+				List<Map> results = (List<Map>)data.get("results");
+				if (results != null && results.size() > 0) {
+					for (Map map : results) {
+						list.add((String)map.get("contractId"));
+					}
+				}
+			}
+			paramsMap.put("pageIndex", (Integer)paramsMap.get("pageIndex") + 1);
+		} while (hasmore);
+		
+		if (list.isEmpty()) {
 			return new ArrayList<ContractSignSys>();
 		}
-
-		Map resultMap = (Map) mapper.readValue(result, HashMap.class);
-		String data = resultMap.get("data").toString();
-		if (data == null || data.isEmpty()) {
-			return new ArrayList<ContractSignSys>();
-		}
-		Map dataMap = (Map) mapper.readValue(data, HashMap.class);
-		String results = dataMap.get("results").toString();
-		List<Map> itemMapList = (List<Map>) mapper.readValue(results, ArrayList.class);
 
 		// 从数据库查询删除标志为0的合同签署信息，现有系统用缓存代替
 //		List<ContractSignSys> signList = this.contractSignSysRepository.findContractByIsDelete("0");
-
-		for (int i = itemMapList.size() - 1; i >= 0; i--) {
-			Map item = itemMapList.get(i);
-			String contractId = item.get("contractId").toString();
+		for (int i = list.size() - 1; i >= 0; i--) {
+			String contractId = list.get(i);
 
 			boolean flag = false;
 			for (ContractSignSys one : signList) {
@@ -150,6 +170,7 @@ public class BestsignService {
 					break;
 				}
 			}
+			// 如果不存在则添加新的对象
 			if (!flag) {
 				ContractSignSys newOne = getNewContractSignSys(contractId);
 				if (newOne != null)
@@ -168,6 +189,13 @@ public class BestsignService {
 		}
 
 //		this.contractSignSysRepository.save(signList);
+		// 模拟保存，过滤掉isdelete为1的数据
+		signList = resultList;
+		// 初始化CurHave为false
+		for (ContractSignSys one : signList) {
+			one.setCurHave(false);
+		}
+
 		return resultList;
 	}
 
@@ -189,8 +217,9 @@ public class BestsignService {
 			return status;
 		}
 		String vAgentName = agentName;
-		String receivers = contractMap.get("receivers").toString();
-		List<Map> receiversMap = (List<Map>) mapper.readValue(receivers, ArrayList.class);
+//		String receivers = contractMap.get("receivers").toString();
+//		List<Map> receiversMap = (List<Map>) mapper.readValue(receivers, ArrayList.class);
+		List<Map> receiversMap = (List<Map>) contractMap.get("receivers");
 		boolean flag1 = false, flag2 = false;
 		for (Map receiver : receiversMap) {
 			String enterpriseName = receiver.get("enterpriseName").toString();
@@ -247,18 +276,35 @@ public class BestsignService {
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
 	 */
-	public Map getContractInfo(String contractId) throws JsonMappingException, JsonProcessingException {
+	public Map getContractInfo(String contractId) {
+		String accountName = this.accountName;
+		String enterpriseName = this.enterName;
+		try {
+			accountName = URLEncoder.encode(accountName, "UTF-8");
+			enterpriseName = URLEncoder.encode(enterpriseName, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String url = "/api/contracts/" + contractId + "?account=" + accountName + "&enterpriseName=" + enterpriseName;
+//		url = "/api/contracts/" + contractId;
 		String result = getBestSignClient().executeRequest(
-				"/api/contracts/" + contractId + "/?account=" + this.accountName + "&enterpriseName=" + this.enterName,
+				 url,
 				"get", null);
 		logger.info("getContractInfo(" + contractId + ") : " + result);
 
-		Map maps = (Map) mapper.readValue(result, HashMap.class);
+		Map maps = null;
+		try {
+			maps = (Map) mapper.readValue(result, HashMap.class);
+		} catch (Exception e) {
+			logger.error("", e);
+			return null;
+		}
 		if (maps.get("data") == null) {
 			return null;
 		}
-		String item = maps.get("data").toString();
-		Map itemMap = (Map) mapper.readValue(item, HashMap.class);
+//		String item = maps.get("data").toString();
+//		Map itemMap = (Map) mapper.readValue(item, HashMap.class);
+		Map itemMap = (Map)maps.get("data");
 		return itemMap;
 	}
 
@@ -272,15 +318,15 @@ public class BestsignService {
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
 	 */
-	public boolean containContractFileSha(String contractId, String fileSha1Code)
-			throws JsonMappingException, JsonProcessingException {
+	public boolean containContractFileSha(String contractId, String fileSha1Code) {
 		boolean flag = false;
 		Map itemMap = getContractInfo(contractId);
 		if (itemMap == null || itemMap.isEmpty()) {
 			return flag;
 		}
-		String docArray = itemMap.get("documents").toString();
-		List<Map> docmaps = (List<Map>) mapper.readValue(docArray, ArrayList.class);
+//		String docArray = itemMap.get("documents").toString();
+//		List<Map> docmaps = (List<Map>) mapper.readValue(docArray, ArrayList.class);
+		List<Map> docmaps = (List<Map>) itemMap.get("documents");
 		for (Map doc : docmaps) {
 			if (doc.get("sourceFileSHA1Hash") == null)
 				continue;
@@ -314,8 +360,9 @@ public class BestsignService {
 		newOne.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		newOne.setCurHave(Boolean.valueOf(true));
 
-		String docArray = itemMap.get("documents").toString();
-		List<Map> docmaps = (List<Map>) mapper.readValue(docArray, ArrayList.class);
+//		String docArray = itemMap.get("documents").toString();
+//		List<Map> docmaps = (List<Map>) mapper.readValue(docArray, ArrayList.class);
+		List<Map> docmaps = (List<Map>)itemMap.get("documents");
 		for (Map doc : docmaps) {
 			if (doc.get("sourceFileSHA1Hash") == null)
 				continue;
