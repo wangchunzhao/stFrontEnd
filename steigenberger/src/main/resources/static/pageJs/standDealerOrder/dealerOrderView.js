@@ -446,7 +446,7 @@ function fillMaterailValue(data){
 		$("#isPurchased").val("生产");
 		$("#purchasedCode").val(data.purchased)
 	}
-	$("#materialGroupName").val(data.groupName);
+	$("#groupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	$("#amount").val(data.quantity);
@@ -667,7 +667,7 @@ function confirmRowData(index,identification,tabType){
 			clazzCode:$("#materialClazzCode").val(),
 			configurable:$("#isConfigurable").val(),
 			purchased:$("#isPurchased").val(),
-			groupName:$("#materialGroupName").val(),
+			groupName:$("#groupName").val(),
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),

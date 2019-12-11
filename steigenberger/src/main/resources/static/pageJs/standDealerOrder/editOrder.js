@@ -1370,15 +1370,24 @@ function openConfig(identification){
 			var materialConfig = jsonObject.configTableData;
 			var materialDefaultConfigs = getDefaultConfigs(materialCode);
 			var editConfigs = [];
-			materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
-				materialConfig.forEach((item,index)=>{
-					if(item.code==defaultItem.code){
+			materialDefaultConfigs.forEach(function (defaultItem,defaultIndex) {
+				materialConfig.forEach(function (item,index) {
+					if (item.code == defaultItem.code()) {
 						var config = defaultItem;
-						config["configCodeValue"] = item.configCodeValue
-						editConfigs.push(config)
+						config["configCodeValue"] = item.configCodeValue;
+						editConfigs.push(config);
 					}
 				})
 			})
+			// materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
+			// 	materialConfig.forEach((item,index)=>{
+			// 		if(item.code==defaultItem.code){
+			// 			var config = defaultItem;
+			// 			config["configCodeValue"] = item.configCodeValue
+			// 			editConfigs.push(config)
+			// 		}
+			// 	})
+			// })
 			$("#configTable").bootstrapTable("removeAll");
 			for(var i=0;i<editConfigs.length;i++){
 				$("#configTable").bootstrapTable('insertRow',{
