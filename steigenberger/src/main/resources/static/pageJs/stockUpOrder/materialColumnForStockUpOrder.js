@@ -37,6 +37,10 @@ var materialsColumn = [{
 	    visible:false
 	},{
 		title:'',
+		field: 'allIndex',
+		visible:false
+	},{
+		title:'',
 	    field: 'clazzCode',
 	    visible:false
 	},
