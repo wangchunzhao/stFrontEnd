@@ -2,6 +2,7 @@ package com.qhc.steigenberger.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,25 +32,31 @@ class BestsignServiceTest {
 	}
 
 	@Test
-	void testDoSignContract() throws JsonMappingException, JsonProcessingException {
+	void testDoSignContract() throws JsonMappingException, JsonProcessingException  {
         boolean r = bestsignService.doSignContract("2202086693413060617");
         System.out.println(r);
 	}
 
 	@Test
-	void testSyncContractSignSysData() throws JsonMappingException, JsonProcessingException {
+	void testSyncContractSignSysData() throws JsonMappingException, JsonProcessingException  {
 		List<ContractSignSys> list = bestsignService.syncContractSignSysData();
 		System.out.println(list);
 	}
 
 	@Test
-	void testGetContractStatus() throws JsonMappingException, JsonProcessingException {
+	void testGenerateShA1Code()  {
+		String hash = bestsignService.generateShA1Code(new File("C:\\Users\\zsu4\\Downloads\\123-1(1-1-2).pdf"));
+		System.out.println(hash);
+	}
+
+	@Test
+	void testGetContractStatus()  {
 		String status = bestsignService.getContractStatus("2202086693413060617", "青岛海尔开利冷冻设备有限公司");
 		System.out.println(status);
 	}
 
 	@Test
-	void testGetContractInfo() throws JsonMappingException, JsonProcessingException {
+	void testGetContractInfo()  {
 		Map map = bestsignService.getContractInfo("2202086693413060617");
 		System.out.println(map);
 	}

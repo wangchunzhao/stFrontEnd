@@ -113,7 +113,7 @@ public class LoginController extends BaseController{
 			modelAndView.addObject("userName",userName);
 			modelAndView.addObject("msg","后台访问异常");
 			modelAndView.setViewName("login");
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 
        return modelAndView;

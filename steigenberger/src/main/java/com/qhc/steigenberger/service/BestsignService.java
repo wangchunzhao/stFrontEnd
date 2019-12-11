@@ -195,6 +195,8 @@ public class BestsignService {
 		for (ContractSignSys one : signList) {
 			one.setCurHave(false);
 		}
+		
+		logger.debug("Bestsign contract list: {}", signList);
 
 		return resultList;
 	}
@@ -209,8 +211,7 @@ public class BestsignService {
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
 	 */
-	public String getContractStatus(String contractId, String agentName)
-			throws JsonMappingException, JsonProcessingException {
+	public String getContractStatus(String contractId, String agentName) {
 		String status = "03";
 		Map contractMap = getContractInfo(contractId);
 		if (contractMap == null) {

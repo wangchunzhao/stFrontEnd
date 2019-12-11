@@ -441,7 +441,7 @@ public class ContractService {
 			this.updateFileHashCode(contractId, fileHashCode);
 			
 			// TODO 一期没有这行，状态待定
-			this.updateStatus(contractId, 2);
+			this.updateStatus(contractId, 3);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -521,7 +521,7 @@ public class ContractService {
 	 * @throws JsonMappingException
 	 */
 	public boolean doSignContract(int contractId) throws JsonMappingException, JsonProcessingException {
-		Result r = (Result)fryeService.putForm("/contract/" + contractId + "/sign", null, Result.class);
+		Result r = (Result)fryeService.putForm("/contract/" + contractId + "/sign", "", Result.class);
 		return r.getStatus().equals("ok");
 		
 //		Contract contract = (Contract) this.find(Integer.valueOf(contractId)).getData();
