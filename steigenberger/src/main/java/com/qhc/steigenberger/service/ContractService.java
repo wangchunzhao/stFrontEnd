@@ -439,9 +439,6 @@ public class ContractService {
 			// update contract file_hash_code
 //			contract.setFileHashCode(fileHashCode);
 			this.updateFileHashCode(contractId, fileHashCode);
-			
-			// TODO 一期没有这行，状态待定
-			this.updateStatus(contractId, 3);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
