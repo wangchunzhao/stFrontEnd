@@ -454,6 +454,7 @@ function getMaterialInfo(code){
 }
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
+	debugger
 	if(data.materialName){
 		$("#materialTypeName").val(data.materialName);
 	}
@@ -504,11 +505,6 @@ function fillMaterailValue(data){
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	if(data.purchased){
-		$("#producePeriod").val(data.period);
-	}else{
-		$("#purchasePeriod").val(data.period);
-	}
 	$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
 	$("#onStoreDate").val(data.onStoreDate);
@@ -537,8 +533,6 @@ function editMaterials(identification){
 	$('#materialsModalType').val('edit');
 	var identificationSplit = identification.split('|');
 	var materialsType = identificationSplit[0];
-	$('#materialsType').val(materialsType);
-	var materialType = $("#materialsType").val();
 	var index = identificationSplit[1];
 	var tableData;
 	if(materialsType=='T101'){
@@ -725,7 +719,6 @@ function removeRelatedRow(identification){
 
 //确认购销明细modal
 function confirmMaterials(){
-	debugger
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
@@ -760,11 +753,9 @@ function confirmMaterials(){
 			    row: rowData
 			});
 			$("#second").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable);	
-			rowDataAll["allIndex"] = identification;	//所有以外的行需要记录所有中的index
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
-			    row: rowDataAll
+			    row: rowData
 			});
 		}else if(materialType=='T102'){
 			var rowData = confirmRowData(countMaterialsTable);
@@ -776,11 +767,9 @@ function confirmMaterials(){
 			    row: rowData
 			});
 			$("#third").tab('show');
-			var rowDataAll = confirmRowData(countMaterialsTable);	
-			rowDataAll["allIndex"] = identification;
 			$("#materialsTable").bootstrapTable('insertRow', {
 			    index: countMaterialsTable,
-			    row: rowDataAll
+			    row: rowData
 			});
 		}else if(materialType=='T103'){
 			var rowData = confirmRowData(countMaterialsTable);
@@ -1987,7 +1976,7 @@ var configTableColumns = [
 	field:'code'
 },
 {
-	title:'test',
+	title:'',
 	visible:false,
 	field:'configValueCode'
 },
