@@ -33,7 +33,7 @@ $(function () {
 	}
 	initDropDownList();
 	initSubsidiartFormValidator();
-    initOrderFormValidator();
+    //initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -74,11 +74,10 @@ function fillItems(){
 				var rowData = fillItemToTableRow(items[i]);
 				rowData["allIndex"] = countMaterialsTable;
 				rowData["identification"] = identification;
-				var configData = new Object();
-				var remark = items[i].configComments;
-				configData.configTableData = items[i].configs;
-				configData.remark = remark
-				localStorage.setItem(identification+"edit", JSON.stringify(configData));
+				//添加调研表
+				if(rowData.configurable){
+					fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode);
+				}	
 				$("#materialsTableall1").bootstrapTable('insertRow', {
 				    index: countMaterialsTableall1,
 				    row: rowData
@@ -162,6 +161,38 @@ function fillItems(){
 	}
 	
 }
+
+function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
+	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
+	var editConfigs = [];
+	materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
+		configs.forEach((item,index)=>{
+			if(item.code==defaultItem.code){
+				var config = defaultItem;
+				config["configCodeValue"] = item.configCodeValue
+				editConfigs.push(config)
+			}
+		})
+	})
+	var configData = new Object();
+	configData.configTableData = editConfigs;
+	configData.remark = configRemark
+	localStorage.setItem(identification, JSON.stringify(configData));
+}
+
+function getDefaultConfigs(materialCode,clazzCode){
+	var materialDefaultConfigs;
+	$.ajax({
+	    url: "/steigenberger/order/material/configurations?clazzCode="+clazzCode+"&materialCode="+materialCode,
+	    type: "get",
+	    async:false,
+	    success: function(data) {
+	    	materialDefaultConfigs = data;
+	    }
+	});
+	return materialDefaultConfigs;
+}
+
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
 	var quantity = data.quantity;
@@ -788,7 +819,7 @@ function fillEditMaterailValue(data){
 	$("#colorComments").val(data.colorComments);
 	$("#specialRemark").val(data.specialComments);
 	$("#itemCategory").val(data.itemCategory);
-	$("#materialGroupName").val(data.groupName);
+	$("#groupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	$("#materialsType").val(materialsType);
@@ -970,21 +1001,121 @@ function initSubsidiartFormValidator(){
 	        });
 }
 
+//订单提交校验
 function initOrderFormValidator(){
-    $('#orderForm').bootstrapValidator({
-        message: 'This value is not valid',
-        fields: {
-            contractValue: {
-                validators: {
-                    // notEmpty: {
-                    //     message: '数量不能为空'
-                    // },
-                    regexp: {
-                        regexp: /^\d+(\.\d{0,2})?$/,
-                        message: '请输入合法的金额，金额限制两位小数'
-                    }
-                }
-            },
+   $('#orderForm').bootstrapValidator({
+       message: 'This value is not valid',
+       fields: {
+       	salesTelnumber: {
+       	    validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '不是合法的手机号'
+       	        }
+       	    }
+       	},
+       	saleType:{
+       	    validators: {
+       	    	 notEmpty: {
+                        message: '请选择销售类型'
+                   }
+       	    }
+       	},
+       	recordCode: {
+               validators: {
+                   notEmpty: {
+                        message: '请填写项目编号'
+                   }
+               }
+           },
+       	customerName: {
+               validators: {
+                   notEmpty: {
+                        message: '请填写店名'
+                   }
+               }
+           },
+           officeCode: {
+               validators: {
+                   notEmpty: {
+                        message: '请选择大区'
+                   }
+               }
+           },
+           groupCode: {
+               validators: {
+                   notEmpty: {
+                        message: '请选择中心'
+                   }
+               }
+           },
+           contactor1Id: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+       	            message: '请填写正确的身份证号'
+       	        }
+       	    }
+           },
+           contactor2Id: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+       	            message: '请填写正确的身份证号'
+       	        }
+       	    }
+           },
+           contactor3Id: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+       	            message: '请填写正确的身份证号'
+       	        }
+       	    }
+           },
+           contactor1Tel: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '请填写正确的手机号'
+       	        }
+       	    }
+           },
+           contactor2Tel: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '请填写正确的手机号'
+       	        }
+       	    }
+           },
+           contactor3Tel: {
+           	validators: {
+       	    	regexp: {
+       	    		regexp: /^1[3456789]\d{9}$/,
+       	            message: '请填写正确的手机号'
+       	        }
+       	    }
+           },
+           contractorclassname: {
+           	trigger:"change",
+               validators: {
+                   notEmpty: {
+                        message: '请选择签约单位'
+                   }
+               }
+           },
+       	contractValue: {
+               validators: {
+                   notEmpty: {
+                        message: '金额不能为空'
+                   },
+                   regexp: {
+                       regexp: /^\d+(\.\d{0,2})?$/,
+                       message: '请输入合法的金额，金额限制两位小数'
+                   }
+               }
+           },
 			contractRMBValue: {
 				trigger:"change",
 				validators: {
@@ -993,9 +1124,11 @@ function initOrderFormValidator(){
 						message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
 					}
 				}
+			},
+			itemsAmount: {
 			}
-        }
-    });
+       }
+   });
 }
 
 //确认购销明细modal
@@ -1348,6 +1481,7 @@ function openConfig(identification){
 	$("#identification").val(value[0]);
 	$("#viewPrice").val(value[3]);
 	var materialCode = value[1];
+	var clazzCode = value[2];
 	var url = "/steigenberger/order/material/configurations"
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
@@ -1364,30 +1498,21 @@ function openConfig(identification){
 		$("#configRemark").val(jsonObject.remark);
 		
 	}else{
-		var storageData =localStorage[value[0]+"edit"]; 
+		/*var storageData =localStorage[value[0]+"edit"]; 
 		if(storageData){
 			var jsonObject = JSON.parse(storageData);
 			var materialConfig = jsonObject.configTableData;
-			var materialDefaultConfigs = getDefaultConfigs(materialCode);
+			var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 			var editConfigs = [];
-			materialDefaultConfigs.forEach(function (defaultItem,defaultIndex) {
-				materialConfig.forEach(function (item,index) {
-					if (item.code == defaultItem.code()) {
+			materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
+				materialConfig.forEach((item,index)=>{
+					if(item.code==defaultItem.code){
 						var config = defaultItem;
-						config["configCodeValue"] = item.configCodeValue;
-						editConfigs.push(config);
+						config["configCodeValue"] = item.configCodeValue
+						editConfigs.push(config)
 					}
 				})
 			})
-			// materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
-			// 	materialConfig.forEach((item,index)=>{
-			// 		if(item.code==defaultItem.code){
-			// 			var config = defaultItem;
-			// 			config["configCodeValue"] = item.configCodeValue
-			// 			editConfigs.push(config)
-			// 		}
-			// 	})
-			// })
 			$("#configTable").bootstrapTable("removeAll");
 			for(var i=0;i<editConfigs.length;i++){
 				$("#configTable").bootstrapTable('insertRow',{
@@ -1396,32 +1521,20 @@ function openConfig(identification){
 				});
 			}
 			
-		}else{
+		}else{*/
 			$("#configTable").bootstrapTable('refresh',{
 				url:url,
-				query:{'clazzCode':'C98',
+				query:{'clazzCode':$("#materialConfigClazzCode").val(),
 					   'materialCode':$("#materialConfigCode").val()
 				}
 			});
-		}
+		/*}*/
 	}
 }
 
-function getDefaultConfigs(materialCode){
-	var materialDefaultConfigs;
-	$.ajax({
-	    url: "/steigenberger/order/material/configurations?clazzCode=C98&materialCode="+materialCode,
-	    type: "get",
-	    async:false,
-	    success: function(data) {
-	    	materialDefaultConfigs = data;
-	    }
-	});
-	return materialDefaultConfigs;
-}
 //调研表初始化查询参数
 function queryConfigParams(params) {
-    params.clazzCode = 'C98';
+    params.clazzCode = $("#materialConfigClazzCode").val();
     params.materialCode = $("#materialConfigCode").val();
     return params;
 }
@@ -1743,6 +1856,7 @@ function changeRequirement(obj){
 //保存提交订单
 function saveOrder(type){
 	if(type){
+		$("#orderForm").data("bootstrapValidator").resetForm();
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
 		if(!bootstrapValidator.isValid()){ 

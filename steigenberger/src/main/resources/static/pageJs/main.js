@@ -37,11 +37,13 @@ var userIdentity;
             	//判断权限
             	userIdentity = result.data.userIdentity;
             	var operationList = result.data.operations;
+            	
             	var operationNames = ",";
-            	for(var i=0;i<operationList.length;i++){
-            		operationNames+=operationList[i].id+",";
+            	if(operationList){
+            		for(var i=0;i<operationList.length;i++){
+                		operationNames+=operationList[i].id+",";
+                	}
             	}
-         
                if(operationNames.indexOf(",1001,")==-1){
             	   $('#todo').attr('href',ctxPath+"main/noAuthorization");
 	       		}
