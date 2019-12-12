@@ -162,6 +162,7 @@
 									    <!-- <option th:each="exchange : ${order_option.exchangeRate}" th:value="${exchange.key}" th:text="${exchange.value.name}"></option> -->
 									</select>
 							    </div>
+							    <input type="hidden" name="currencyName" id="currencyName">
 							    <span class="col-md-1 control-label">合同金额</span>
 								<div class="col-md-2">
 									<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" name="contractRMBValue"><!-- th:field="*{contractValue}" -->
