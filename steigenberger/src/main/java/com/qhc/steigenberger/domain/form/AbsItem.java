@@ -63,8 +63,47 @@ public abstract class AbsItem {
 	private String colorComments;
 	private String clazzCode;//物料分类代码
 	
+	private String proviceCode;
+	private String proviceName;
+	private String cityCode;
+	private String cityName;
+	private String address;
 	
 	
+	
+	public String getProviceCode() {
+		return proviceCode;
+	}
+	public void setProviceCode(String proviceCode) {
+		this.proviceCode = proviceCode;
+	}
+	public String getProviceName() {
+		return proviceName;
+	}
+	public void setProviceName(String proviceName) {
+		this.proviceName = proviceName;
+	}
+	public String getCityCode() {
+		return cityCode;
+	}
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public void setConfigurable(boolean configurable) {
+		this.configurable = configurable;
+	}
 	public String getClazzCode() {
 		return clazzCode;
 	}
