@@ -1,11 +1,16 @@
 $(function () {
+	
+	//modal 无法滚动问题
 	$('#specificationModal').on('hidden.bs.modal', function () {
 		$("body").addClass("modal-open");
 	});
 	$('#subsidiaryModal').on('hidden.bs.modal', function () {
 		$("body").removeClass("modal-open");
 	});
+	//进页面前清空缓存
 	localStorage.clear()
+	
+	//初始化付款方式页面
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
 	
@@ -32,7 +37,6 @@ $(function () {
 		});
 	}
 	initSubsidiartFormValidator();
-    //initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -478,15 +482,14 @@ function fillMaterailValue(data){
 	}else{	
 		$("#producePeriod").val(data.period);
 	}
-	var groupName = data.groupName;
-	$("#groupName").val(data.groupName);
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = materialGroupMapGroupOrder[data.groupCode];
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
-	$("#unitName").val(data.unitName);
+	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
 	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
 	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
@@ -575,7 +578,7 @@ function fillEditMaterailValue(data){
 	$("#itemCategory").val(data.itemCategory);
 	$("#purchasePeriod").val(data.period);
 	$("#producePeriod").val(data.period);
-	$("#groupName").val(data.groupName);
+	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	$("#materialsType").val(materialsType);
@@ -1018,7 +1021,7 @@ function confirmRowData(index,rowNumber){
 			clazzCode:$("#materialClazzCode").val(),
 			configurable:$("#isConfigurable").val(),
 			purchased:$("#purchasedCode").val(),
-			groupName:$("#groupName").val(),
+			groupName:$("#materialGroupName").val(),
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
@@ -1082,9 +1085,9 @@ function addMaterialAddress(){
 	$("#materialAddressTable").on('click-row.bs.table',function($element,row,field){
 		$('#materialAddressModal').modal('hide');
 		if(row.pca==''){
-			$("#materialAddress").val(row.address);
+			$("#materialAddress").val(row.address).change();
 		}else{
-			$("#materialAddress").val(row.pca+"/"+row.address);
+			$("#materialAddress").val(row.pca+"/"+row.address).change();
 		}
 		
 	})
@@ -1094,6 +1097,7 @@ function addMaterialAddress(){
 function initSubsidiartFormValidator(){
 	 $('#subsidiaryForm').bootstrapValidator({
 	　　　　　　　　message: 'This value is not valid',
+	        		excluded:[':hidden', ':not(:visible)'],
 		            fields: {
 		            	amount: {
 		            		validators: {
@@ -1107,6 +1111,7 @@ function initSubsidiartFormValidator(){
 		            	    }
 		                },
 		               itemRequirementPlan: {
+		            	   trigger:"change",
 	                    validators: {
 	                        notEmpty: {
 	                            message: '请选择需求计划'
@@ -1117,6 +1122,14 @@ function initSubsidiartFormValidator(){
 		                    validators: {
 		                        notEmpty: {
 		                            message: '请选择行项目类别'
+		                        }
+		                    }
+			           },
+			           materialAddress: {
+			        	   trigger:"change",
+		                    validators: {
+		                        notEmpty: {
+		                            message: '请添加地址'
 		                        }
 		                    }
 			           }
@@ -1436,6 +1449,7 @@ function getRowData(materialsTableData,type,newIndex){
 			groupCode:materialsTableData.groupCode,
 			amount:materialsTableData.amount,
 			unitName:materialsTableData.unitName,
+			unitCode:materialsTableData.unitCode,
 			standardPrice:materialsTableData.standardPrice,
 			acturalPrice:materialsTableData.acturalPrice,
 			acturalPriceAmount:materialsTableData.acturalPriceAmount,
@@ -1588,22 +1602,17 @@ function removeAddress(index){
 		$('#addressTable').bootstrapTable("updateCell",rows);
 	}
 }
-//获取需求计划
 
+//获取需求计划
 function changeRequirement(obj){	
 	$("#itemRequirementPlan").html('');
 	var requireMent1='<option value="Z004">物料需求计划</option>'+'<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>';
-	
-	/*var requireMent2 = '<option value="Z004">物料需求计划</option>';*/
 	var itemCategory = $(obj).val();
 	if(itemCategory!=''){
-		/*if(itemCategory=='ZHR1'||itemCategory=='ZHR2'){
-			$("#itemRequirementPlan").append(requireMent2);
-		}else{*/
-			$("#itemRequirementPlan").append(requireMent1);
-		/*}*/
+		$("#itemRequirementPlan").append(requireMent1);
+		$("#itemRequirementPlan").val("Z004").change();
 	}else{
-		$("#itemRequirementPlan").append('<option value="">请选择</option>');
+		$("#itemRequirementPlan").html('');
 	}
 }
 

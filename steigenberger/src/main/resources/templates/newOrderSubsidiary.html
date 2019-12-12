@@ -45,7 +45,7 @@
 							    <input type="hidden"  id="purchasedCode" disabled>
 							    <span class="col-md-1">类型</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="groupName" disabled>
+							      <input type="text" class="form-control" id="materialGroupName" disabled>
 							      <input type="hidden" id="groupCode">
 							    </div>
 							</div>
@@ -58,6 +58,7 @@
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="unitName" disabled>
 							    </div>
+							    <input type="hidden" id="unitCode">
 							    <span class="col-md-1">产品实卖价</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="acturalPrice" disabled>
@@ -141,7 +142,6 @@
 							    <span class="col-md-1">需求计划</span>
 								<div class="col-md-2">
 							      <select class="form-control" name="itemRequirementPlan" id="itemRequirementPlan">
-							      <option value="">请选择</option>
 									</select>
 							    </div>
 							    <span class="col-md-1">生产周期</span>
@@ -168,7 +168,7 @@
 							    <span class="col-md-1">地址</span>
 								<div class="col-md-2">
 								    <div class="input-group">
-					                    <input type="text" class="form-control" disabled id="materialAddress">
+					                    <input type="text" class="form-control" disabled id="materialAddress" name="materialAddress">
 					                    <span class="input-group-btn">
 					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()">
 					                        	<span class="glyphicon glyphicon-search"></span>

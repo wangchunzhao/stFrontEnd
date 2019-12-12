@@ -1998,10 +1998,6 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
-	if($("#orderModelType").val()=='edit'){
-		editViewGrossProfit();
-		return;
-	}
 	if(!$("#salesType").val()){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
