@@ -15,9 +15,9 @@ public class ApplicationOfRolechange implements Serializable{
 	private int id;
 
 	private String creator;
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:MM:SS",timezone = "GMT+8")
     private Date createTime;
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:MM:SS",timezone = "GMT+8")
     private Date approvalTime;
 
 	private String approverRequired;
