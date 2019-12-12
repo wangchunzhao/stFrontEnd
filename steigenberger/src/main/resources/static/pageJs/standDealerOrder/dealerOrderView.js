@@ -599,12 +599,12 @@ function fillEditMaterailValue(data){
 
 //确认购销明细modal
 function confirmMaterials(){
-	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
+	/*var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
     	return
     }
-    
+    */
     var allIndex = $("#allIndex").val();
 	var identification = $("#identification").val();
 	var materialTypeName = $("#materialTypeName").val();
