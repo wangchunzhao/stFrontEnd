@@ -168,8 +168,9 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 	materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
 		configs.forEach((item,index)=>{
 			if(item.code==defaultItem.code){
+				debugger
 				var config = defaultItem;
-				config["configCodeValue"] = item.configCodeValue
+				config["configValueCode"] = item.configValueCode
 				editConfigs.push(config)
 			}
 		})
