@@ -33,7 +33,7 @@ $(function () {
 	}
 	initDropDownList();
 	initSubsidiartFormValidator();
-    //initOrderFormValidator();
+    initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
@@ -1856,8 +1856,9 @@ function changeRequirement(obj){
 //保存提交订单
 function saveOrder(type){
 	if(type){
-		$("#orderForm").data("bootstrapValidator").resetForm();
+		/*$("#orderForm").data("bootstrapValidator").resetForm();*/
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
+		debugger
 		bootstrapValidator.validate();
 		if(!bootstrapValidator.isValid()){ 
 			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
