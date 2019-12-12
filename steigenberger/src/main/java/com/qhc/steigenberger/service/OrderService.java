@@ -285,8 +285,8 @@ public class OrderService {
 		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
 	}
 
-	public void b2cCost(int isPro, String seqnum, String version, List<B2CComments> b2cs) {
-		String url = URL_B2C_ORDER + "?isApproved="+isPro+"&seqnum="+seqnum+"&version="+version;
+	public void b2cCost(int isPro, String seqnum, String version,String operator, List<B2CComments> b2cs) {
+		String url = URL_B2C_ORDER + "?isApproved="+isPro+"&seqnum="+seqnum+"&version="+version+"&operator="+operator;
 		fryeService.postJason(url,b2cs);
 		
 	}

@@ -621,8 +621,9 @@ public class OrderController {
     @ApiOperation(value = "B2c审核订单", notes = "B2c审核订单")
 	@PostMapping(value = "b2c")
 	@ResponseStatus(HttpStatus.OK)
-	public void approvedByB2C(@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestBody List<B2CComments> b2cs) throws Exception{
-		orderService.b2cCost(isApproved, seqnum, version, b2cs);
+	public void approvedByB2C(HttpServletRequest request,@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestBody List<B2CComments> b2cs) throws Exception{
+    	String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();//
+		orderService.b2cCost(isApproved, seqnum, version, identityName, b2cs);
 	}
 	
 	
