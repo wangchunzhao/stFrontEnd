@@ -7,7 +7,6 @@
 <meta name="keywords" content="" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-<script src="../js/jquery-1.11.1.min.js"></script>
 <!-- Bootstrap Core CSS -->
 <link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
 <script src="../assets/drag/bootstrap-3.3.7/bootstrap/js/bootstrap.min.js"></script>
@@ -25,9 +24,9 @@
 <!-- //side nav css file -->
  
  <!-- js-->
-
+<script src="../js/jquery-1.11.1.min.js"></script>
 <script src="../js/modernizr.custom.js"></script>
-
+	
 <!--webfonts-->
 <!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
 <!--//webfonts--> 
@@ -55,7 +54,10 @@
 <link rel="stylesheet" href="../bootstrap-fileinput-master/css/fileinput.min.css"/>
 <script src="../bootstrap-fileinput-master/js/fileinput.min.js"></script>
 <script src="../bootstrap-fileinput-master/js/locales/zh.js"></script>
- 
+
+<script type="text/javascript">
+var ctxPath  = [[@{/}]];
+</script> 
 </head> 
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
@@ -141,9 +143,10 @@
    </script>	
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>	
+
    
 <!--  js -->  
 <script src="../pageJs/freight.js"></script>
-
+<script type="text/javascript" src="../pageJs/main.js"></script>
 </body>
 </html>

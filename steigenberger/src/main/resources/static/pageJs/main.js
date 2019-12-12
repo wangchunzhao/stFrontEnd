@@ -105,7 +105,7 @@ var userIdentity;
 	});
 //退出按钮点击事件	
 function signOut(){  
-    alert("你点击了按钮哦"); 
+ //   alert("你点击了按钮哦"); 
     $.post('/steigenberger/loginOut',null,function(ret){
 		window.location.href=ctxPath;
 	},null);
