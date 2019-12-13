@@ -40,6 +40,8 @@ $(function () {
 	$("#inputDate").val(nowDateString);
 	$("#optTime").val(nowDateString);
 	defaultCollapse();
+
+	var orderModelType = $("#orderModelType").val();
 	if(orderModelType=="new"){
 		getUserDetail();
 	}
