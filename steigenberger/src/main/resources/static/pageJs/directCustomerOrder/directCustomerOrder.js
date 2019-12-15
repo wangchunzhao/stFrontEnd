@@ -22,6 +22,9 @@ $(function () {
 	//初始化毛利率table
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 	grossProfitTable.init();
+
+	var version = getVersion();
+	$("#version").val(version);
 	
 	if(installationTerms){
 		var installationTerm = installationTerms[$("#customerClazzCode").val()];
@@ -1828,6 +1831,17 @@ function getSelectName() {
 	}
 	
 	$("#confirmTypeName").val($("#confirmType").find("option:selected").text());
+}
+
+//获取版本
+function  getVersion(){
+	var dateString = moment().format('YYYYMMDD');
+	var num = '';
+	for(var i=0;i<3;i++)
+	{
+		num+=Math.floor(Math.random()*10);
+	}
+	return 'V'+dateString+num;
 }
 
 
