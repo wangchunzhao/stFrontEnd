@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.User;
@@ -50,8 +52,8 @@ public class ParameterController {
 		Parameter result = new Parameter();
 		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		parameter.setOptTime(sdf.format(new Date()));
-//		User u = (User) request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
-		String identity = (String)request.getSession().getAttribute(userService.SESSION_USERIDENTITY);
+//		User u = (User) request.getSession().getAttribute(Constants.IDENTITY);
+		String identity = (String)request.getSession().getAttribute(Constants.IDENTITY);
 		parameter.setOperater(identity);
 		try {
 			result = parameterService.updateInfo(parameter);

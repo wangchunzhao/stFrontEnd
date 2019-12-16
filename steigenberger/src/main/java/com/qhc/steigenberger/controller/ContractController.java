@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.Contract;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.service.ContractService;
@@ -71,7 +72,7 @@ public class ContractController {
 	public Result save(@RequestBody Contract contract, HttpServletRequest request) {
 		Result r = null;
 		try {
-			String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
+			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 			contract.setProductionTime(new Date());
 			// 设置状态为已制作
 			contract.setStatus(1);
@@ -90,7 +91,7 @@ public class ContractController {
 	public Result saveAndSend(@RequestBody Contract contract, HttpServletRequest request) {
 		Result r = null;
 		try {
-			String identityName = request.getSession().getAttribute(UserService.SESSION_USERIDENTITY).toString();
+			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 			contract.setProductionTime(new Date());
 			// 设置状态为已制作
 			contract.setStatus(1);

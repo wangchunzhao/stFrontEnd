@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.SpecialDelivery;
@@ -74,7 +75,7 @@ public class SpecialController {
 		}
 		
 		try {
-			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 			User user = userService.selectUserIdentity(identityName);//identityName
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			
@@ -168,7 +169,7 @@ public class SpecialController {
 	@ResponseBody
 	public JsonResult saveApply(@RequestBody SpecialDelivery specialDelivery,HttpServletRequest request) {
 		
-		specialDelivery.setApplyer((String)request.getSession().getAttribute(userService.SESSION_USERIDENTITY));
+		specialDelivery.setApplyer((String)request.getSession().getAttribute(Constants.IDENTITY));
 		specialDelivery.setApplyId(0);
 		specialDelivery.setApplyStatus(1);
 		specialDelivery.setApplyTime(new Date());

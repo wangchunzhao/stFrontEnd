@@ -1,5 +1,9 @@
 server:
   port: 8880
+  session:
+    tracking-modes: cookie
+    cookie:
+      http-only: true
   servlet:
     context-path: /steigenberger
 

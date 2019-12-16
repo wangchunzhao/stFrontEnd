@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.B2CComments;
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
@@ -124,7 +125,7 @@ public class OrderController {
 			model.addObject("error", bindingResult.getFieldError().getDefaultMessage());
 			return MenuController.goDealerOrder();
 		}
-		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);
 		orderData.setCurrentUser(user.getUserIdentity());
 		if(user.getRegion()!=null){
@@ -178,7 +179,7 @@ public class OrderController {
 	public JsonResult permissionApply1(HttpServletRequest request) {
 
 		try {
-			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 			User user = userService.selectUserIdentity(identityName);
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
@@ -202,7 +203,7 @@ public class OrderController {
 	@ResponseBody
 	public JsonResult permissionApply(HttpServletRequest request) {
 		try {
-			String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 			User user = userService.selectUserIdentity(identityName);
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
@@ -242,7 +243,7 @@ public class OrderController {
 	@PostMapping(value = "query")
 	@ResponseBody
 	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
-		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
@@ -295,7 +296,7 @@ public class OrderController {
 	@ResponseBody
 	public PageHelper<BaseOrder> searchTodoOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
 		//取得session中的登陆用户域账号，查询权限
-		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
@@ -440,7 +441,7 @@ public class OrderController {
 	@RequestMapping(value = "user")
 	@ResponseBody
 	public User findUsetDetail(HttpServletRequest request) {
-		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		/*if(user!=null){
 			user.setUserName("test");
@@ -526,7 +527,7 @@ public class OrderController {
 	@ResponseBody
 	public ModelAndView approveOrder(HttpServletRequest request,String sequenceNumber, String orderType,String version,ModelAndView view) {
 		//取得session中的登陆用户域账号，查询权限
-		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		OrderOption oo = orderService.getOrderOption();
@@ -622,7 +623,7 @@ public class OrderController {
 	@PostMapping(value = "b2c")
 	@ResponseStatus(HttpStatus.OK)
 	public void approvedByB2C(HttpServletRequest request,@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestBody List<B2CComments> b2cs) throws Exception{
-    	String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();//
+    	String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();//
 		orderService.b2cCost(isApproved, seqnum, version, identityName, b2cs);
 	}
 	

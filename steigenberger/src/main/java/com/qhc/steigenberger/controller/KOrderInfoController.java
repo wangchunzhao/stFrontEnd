@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
@@ -51,7 +52,7 @@ public class KOrderInfoController extends BaseController{
 		}
 		
 		//取得session的用户域账号
-//		String identityName = request.getSession().getAttribute(userService.SESSION_USERIDENTITY).toString();
+//		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		try {
 			User user = userService.selectUserIdentity("wangch");//identityName
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);

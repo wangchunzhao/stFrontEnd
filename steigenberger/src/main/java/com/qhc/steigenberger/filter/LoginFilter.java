@@ -22,8 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.Result;
-import com.qhc.steigenberger.service.UserService;
 
 @Component
 @WebFilter(urlPatterns="/**",filterName="loginFilter")
@@ -86,8 +86,8 @@ public class LoginFilter implements Filter{
 	        logger.debug("Header X-Requested-With : {}", req.getHeader("X-Requested-With"));
 
 	        //业务代码
-	        HttpSession session = req.getSession();
-	        if (session == null || session.getAttribute(UserService.SESSION_USERIDENTITY) == null) {
+	        HttpSession session = req.getSession(true);
+	        if (session == null || session.getAttribute(Constants.IDENTITY) == null) {
 	        	logger.info("No Authorization info.");
 	        	
 	        	if (isNotJson) {
