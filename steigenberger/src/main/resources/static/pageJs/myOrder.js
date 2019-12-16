@@ -141,7 +141,7 @@ function formatOrderType(value, row, index){
 	}
 }
 function formatStatus(value, row, index) {
-
+    
 	if(value=="0000"){
 		return "订单新建保存";
 	}else if(value=="0010"){
@@ -168,10 +168,10 @@ function formatStatus(value, row, index) {
 		return "B2C提交待待支持经理审核";
 	}else if(value=="0102"){
 		return "工程提交待支持经理审核";
-	}else if(value=="10"){
-		return "BPM驳回";
-	}else if(value=="11"){
-		return "Selling Tool驳回";
+	}else if(value.substring(0,2)=="02"){
+		return "BPM审批中";
+	}else if(value.substring(0,2)=="03"){
+		return "BPM订单审批通过";
 	}else if(value=="12"){
 		return "待支持经理审批";
 	}

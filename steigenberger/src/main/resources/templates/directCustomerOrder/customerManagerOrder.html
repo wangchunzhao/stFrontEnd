@@ -23,7 +23,7 @@
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
 		<input type="hidden"  id="customerClazzName" name="customerClazzName" th:field="*{customerClazzName}">
 		<input type="hidden"  name="action" value="submit">
-		<input type="hidden"  name="salesCode" id="salesCode">
+		<input type="hidden"  name="salesCode" id="salesCode" th:field="*{salesCode}">
 		<input type="hidden"  id="orderModelType" value="edit">
 		<input type="hidden"  id="version" th:field="*{currentVersion}">
 		<div id="page-wrapper">
@@ -258,7 +258,8 @@
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{approvedDicount}">
+<!--									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{approvedDicount}">-->
+									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly>
 							    </div>
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
