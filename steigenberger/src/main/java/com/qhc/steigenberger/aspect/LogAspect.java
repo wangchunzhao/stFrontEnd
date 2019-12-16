@@ -1,5 +1,9 @@
 package com.qhc.steigenberger.aspect;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,7 +32,15 @@ public class LogAspect {
 
     @Around("apiLogAop()")
     public Object aroundApi(ProceedingJoinPoint point) throws Throwable {
-        logger.info("统一日志 ===== {}.{}() start =====,参数:{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName(), argsToString(point.getArgs()));
+    	Object[] args = point.getArgs();
+    	StringBuilder argStr = new StringBuilder(512);
+    	if (args != null) {
+    		for (Object arg : args) {
+    			argStr.append(",").append(argsToString(arg));
+			}
+    	}
+    	String strArg = argStr.length() > 0 ? argStr.substring(1) : "";
+        logger.info("统一日志 ===== {}.{}() start =====,参数:{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName(), strArg);
         DateTime startTime = new DateTime();
         DateTime endTime = null;
         Interval interval = null;
@@ -50,13 +62,16 @@ public class LogAspect {
     }
 
     private String argsToString(Object object) {
-//    	ObjectMapper mapper = new ObjectMapper();
-//    	mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-//        try {
-//            return mapper.writeValueAsString(object);
-//        } catch (Exception e) {
-//            logger.error("统一日志 ===== 转换json失败", e);
-//        }
+    	ObjectMapper mapper = new ObjectMapper();
+    	mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+    	if (object instanceof ServletRequest || object instanceof ServletResponse || object instanceof HttpSession) {
+    		return String.valueOf(object);
+    	}
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (Exception e) {
+            logger.error("统一日志 ===== 转换json失败", e);
+        }
         return String.valueOf(object);
     }
 
