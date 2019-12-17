@@ -67,9 +67,23 @@ public abstract class AbsItem {
 	private String provinceName;
 	private String cityCode;
 	private String cityName;
+	private String districtCode;
+	private String districtName;
 	private String address;
 	
 	
+	public String getDistrictCode() {
+		return districtCode;
+	}
+	public void setDistrictCode(String districtCode) {
+		this.districtCode = districtCode;
+	}
+	public String getDistrictName() {
+		return districtName;
+	}
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
 	public String getProvinceCode() {
 		return provinceCode;
 	}
