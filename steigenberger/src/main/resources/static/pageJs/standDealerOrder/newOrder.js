@@ -4,9 +4,13 @@ $(function () {
 	$('#specificationModal').on('hidden.bs.modal', function () {
 		$("body").addClass("modal-open");
 	});
+	$('#materialAddressModal').on('hidden.bs.modal', function () {
+		$("body").addClass("modal-open");
+	});
 	$('#subsidiaryModal').on('hidden.bs.modal', function () {
 		$("body").removeClass("modal-open");
 	});
+	
 	//进页面前清空缓存
 	localStorage.clear()
 	
