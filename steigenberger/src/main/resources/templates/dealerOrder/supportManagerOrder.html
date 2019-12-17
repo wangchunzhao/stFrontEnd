@@ -20,7 +20,7 @@
 		<input type="hidden"  id="customerClazzName" name="customerClazzName" th:field="*{customerClazzName}">
 		<input type="hidden"  name="action" value="submit">
 		<input type="hidden"  name="salesCode" id="salesCode">
-		<input type="hidden"  id="version" th:field="*{currentVersion}">
+		<input type="hidden"  id="currentVersion" th:field="*{currentVersion}">
 		<input type="hidden"  id="orderModelType" value="edit">
 		<div id="page-wrapper">
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
@@ -382,8 +382,7 @@
 								</div>
 								<div class="col-xs-3 col-md-3"></div>
 								<div class="col-xs-3 col-md-3">
-									<select class="form-control" >
-										<option value="1">history2019001</option>
+									<select class="form-control" id="version">
 									</select>
 								</div>
 							</div>

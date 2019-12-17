@@ -9,6 +9,9 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Metis Menu -->
 <script src="../pageJs/commonCss.js"></script>
+<style type="text/css">
+       .help-block {color:red;}
+</style>
 </head> 
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
@@ -22,9 +25,12 @@
 		<input type="hidden"  name="salesCode" id="salesCode">
 		<input type="hidden"  id="version">
 		<div id="page-wrapper">
-		<ul class="breadcrumb" style="margin-left: 3%;">
-			<li><a href="#">>新建订单>经销商标准折扣下订单</a></li>
-		</ul>
+		<nav>
+		 	<ol class="breadcrumb">
+		 		<li class="breadcrumb-item"><a href="#">&nbsp;新建订单</a></li>
+		 		<li class="breadcrumb-item"><a href="#">经销商非标准折扣下订单</a></li>
+		   </ol>
+		</nav> 
 			<div class="row navbar-fixed-top" style="margin-top: 70px;">
 				<div class="col-xs-12 col-md-6"></div>
 				<div class="col-xs-12 col-md-6">
@@ -749,7 +755,7 @@
 	<div th:replace="materialconfig::materialconfig"></div>
    <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../pageJs/commonJs.js"></script>
-<script th:inline="javascript" src="../pageJs/standDealerOrder/newOrder.js"></script>
+<script th:inline="javascript" src="../pageJs/nonStandardDealerOrder/newOrder.js"></script>
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" type="text/javascript">
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]

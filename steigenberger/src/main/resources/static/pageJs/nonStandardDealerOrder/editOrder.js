@@ -2,9 +2,6 @@ $(function () {
 	$('#specificationModal').on('hidden.bs.modal', function () {
 		$("body").addClass("modal-open");
 	});
-	$('#materialAddressModal').on('hidden.bs.modal', function () {
-		$("body").addClass("modal-open");
-	});
 	$('#subsidiaryModal').on('hidden.bs.modal', function () {
 		$("body").removeClass("modal-open");
 	});
