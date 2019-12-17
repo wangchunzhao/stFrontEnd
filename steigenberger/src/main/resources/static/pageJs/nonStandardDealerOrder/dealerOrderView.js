@@ -389,14 +389,11 @@ function disableAll(){
   $("#reject").attr('disabled',false);
   $("#approve").attr('disabled',false);
   $("#version").attr('disabled',false);
-  $("#materialsEdit").attr('disabled',true);
-  $("#copyMaterial").attr('disabled',true);  
   if($("#expenseItem")){
 	  $("#expenseItem").find("*").each(function() {
 		 $(this).removeAttr("disabled");
 	  });
   }
-  debugger
   if(orderModelType=="editB2C"){  
 	  $("#materialsEdit").attr('disabled',false);
 	  $("#B2CCostOfEstimated").attr('disabled',false);
