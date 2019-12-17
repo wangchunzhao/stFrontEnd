@@ -178,9 +178,9 @@ function operation(value, row, index) {
 	var orderType = row.orderType;
 	var currentVersion = row.currentVersion;
 	var currentVersionStatus = row.currentVersionStatus;
-	var buttonControl = row.buttonControl;
+//	var buttonControl = row.buttonControl;
 	var htm="";
-	if(currentVersionStatus=="5" && buttonControl ==null){
+	if(currentVersionStatus.substring(0,2)=="03"){
 		htm = "<button type='button' class='btn btn-warning' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>";
 	}else{
 		//var deletehtm = "<button class='btn btn-danger'>删除</button>";
