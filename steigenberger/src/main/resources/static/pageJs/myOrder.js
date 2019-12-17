@@ -166,6 +166,8 @@ function formatStatus(value, row, index) {
 		return "BPM审批中";
 	}else if(value.substring(0,2)=="03"){
 		return "BPM订单审批通过";
+	}else if(value.substring(0,2)=="10"){
+		return "ST驳回";
 	}else if(value=="12"){
 		return "待支持经理审批";
 	}
