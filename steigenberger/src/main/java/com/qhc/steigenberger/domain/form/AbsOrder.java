@@ -29,7 +29,8 @@ public abstract class AbsOrder {
 	 */
 	private String customerClazzCode;//客户性质分类代码
 	private String customerClazzName;//客户性质分类名称
-	private String terminalType;//终端客户性质
+	private String terminalIndustryCode;//终端客户性质
+	private String terminalIndustryName;//终端客户性质名称
 	private String contracterCode;//签约单位 Contract unit
 	private String contracterName;//签约单位名字
 	private String customerName;//店名 customer name
@@ -499,11 +500,18 @@ public abstract class AbsOrder {
 	public void setCustomerClazzName(String customerClazzName) {
 		this.customerClazzName = customerClazzName;
 	}
-	public String getTerminalType() {
-		return terminalType;
+	
+	public String getTerminalIndustryCode() {
+		return terminalIndustryCode;
 	}
-	public void setTerminalType(String terminalType) {
-		this.terminalType = terminalType;
+	public void setTerminalIndustryCode(String terminalIndustryCode) {
+		this.terminalIndustryCode = terminalIndustryCode;
+	}
+	public String getTerminalIndustryName() {
+		return terminalIndustryName;
+	}
+	public void setTerminalIndustryName(String terminalIndustryName) {
+		this.terminalIndustryName = terminalIndustryName;
 	}
 	public String getUserOfficeCode() {
 		return userOfficeCode;
