@@ -80,6 +80,7 @@ public class OrderController {
 	private final static String SUPPORT_Order = "1016";//支持经理审批订单
 	private final static String CREATE_Order = "1017";//下订单
 	private final static String CREATE_BEIHUO_Order = "1018";//下备货订单
+	private final static String TO_SAP = "1020";//推送订单到
 	
 	//订单状态
 	private final static String orderStatus0010="0010";//订单新建保存
@@ -95,16 +96,16 @@ public class OrderController {
 	private final static String orderStatus0120="0120";//B2C提交待待支持经理审核
 	private final static String orderStatus0121="0121";//B2C提交待工程审核
 	private final static String orderStatus0122="0122";//待支持经理审核
-	//st驳回
-	private final static String orderStatus1000="1000";//
-	private final static String orderStatus1010="1010";//
-	private final static String orderStatus1011="1011";//
-	private final static String orderStatus1012="1012";//
-	private final static String orderStatus1001="1001";//
-	private final static String orderStatus1002="1002";//
-	private final static String orderStatus1020="1020";//
-	private final static String orderStatus1021="1021";//
-	private final static String orderStatus1022="1022";//
+    //st驳回
+    private final static String orderStatus1000="1000";//
+    private final static String orderStatus1010="1010";//
+    private final static String orderStatus1011="1011";//
+    private final static String orderStatus1012="1012";//
+    private final static String orderStatus1001="1001";//
+    private final static String orderStatus1002="1002";//
+    private final static String orderStatus1020="1020";//
+    private final static String orderStatus1021="1021";//
+    private final static String orderStatus1022="1022";//
 	
 	private final static String orderStatus9="9";//已下推SAP
 	private final static String orderStatus10="10";//BPM驳回
@@ -256,6 +257,7 @@ public class OrderController {
 		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
+		Boolean toSap = userOperationInfoList.stream().anyMatch(e->e.getOperationId().equals(TO_SAP));
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
 			String operationId = userOperationInfoList.get(i).getOperationId();
 			if(operationId.equals(allOrder)) {
@@ -291,6 +293,10 @@ public class OrderController {
 //				((Map)list.get(i)).put("buttonControl", "0");
 //			}
 //		}
+		List<BaseOrder> list = order.getRows();
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setButtonControl(String.valueOf(toSap));
+		}
 		return order;
 	}
 	
@@ -365,16 +371,15 @@ public class OrderController {
 				list.add(orderStatus0001);
 				list.add(orderStatus0011);
 				
-				list.add(orderStatus1000);
-				list.add(orderStatus1010);
-				list.add(orderStatus1011);
-				list.add(orderStatus1012);
-				list.add(orderStatus1001);
-				list.add(orderStatus1002);
-				list.add(orderStatus1020);
-				list.add(orderStatus1021);
-				list.add(orderStatus1022);
-		
+                list.add(orderStatus1000);
+                list.add(orderStatus1010);
+                list.add(orderStatus1011);
+                list.add(orderStatus1012);
+                list.add(orderStatus1001);
+                list.add(orderStatus1002);
+                list.add(orderStatus1020);
+                list.add(orderStatus1021);
+                list.add(orderStatus1022);
 				query.setStatusList(list);
 				query.setSalesCode(user.getUserIdentity());
 			}
