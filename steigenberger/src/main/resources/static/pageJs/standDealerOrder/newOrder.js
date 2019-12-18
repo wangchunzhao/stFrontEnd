@@ -462,7 +462,6 @@ function getMaterialInfo(code){
 }
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	debugger
 	if(data.materialName){
 		$("#materialTypeName").val(data.materialName);
 	}
@@ -535,7 +534,6 @@ function amountChange(){
 
 //编辑购销明细
 function editMaterials(identification){
-	debugger
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
 	var identificationSplit = identification.split('|');
@@ -587,7 +585,7 @@ function fillEditMaterailValue(data){
 	$("#isConfigurable").val(data.configurable);
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
-	$("#unitName").val(data.unitName);
+	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
 	$("#transcationPrice").val(data.transcationPrice);
 	$("#acturalPricaOfOptional").val(data.acturalPricaOfOptional);
@@ -750,7 +748,6 @@ function confirmMaterials(){
 	var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 	if(modalType=='new'){
 		if(materialType=='T101'){
-			debugger
 			var rowData = confirmRowData(countMaterialsTable);
 			var identification = materialType+"|"+countMaterialsTableall1;//所有表格中行的唯一标识		
 			rowData["allIndex"] = countMaterialsTable;	//所有以外的行需要记录所有中的index
@@ -1029,6 +1026,7 @@ function confirmRowData(index,rowNumber){
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
+			unitCode:$("#unitCode").val(),
 			standardPrice:$("#standardPrice").val(),
 			acturalPrice:$("#acturalPrice").val(),
 			acturalPriceAmount:$("#acturalPriceAmount").val(),
@@ -1056,7 +1054,15 @@ function confirmRowData(index,rowNumber){
 			purchasePeriod:$("#purchasePeriod").val(),
 			b2cComments:$("#b2cRemark").val(),
 			specialComments:$("#specialRemark").val(),
-			colorComments:$("#colorComments").val()
+			colorComments:$("#colorComments").val(),
+			provinceCode:$("#materialProvinceCode").val(),
+			provinceName:$("#materialProvinceName").val(),
+			cityCode:$("#materialCityCode").val(),
+			cityName:$("#materialCityName").val(),
+			districtCode:$("#materialAreaCode").val(),
+			districtName:$("#materialAreaName").val(),
+			
+			
 	}
 	return row;
 }
@@ -1088,6 +1094,12 @@ function addMaterialAddress(){
 	}
 	$("#materialAddressTable").on('click-row.bs.table',function($element,row,field){
 		$('#materialAddressModal').modal('hide');
+		$('#materialProvinceCode').val(row.provinceCode);
+		$('#materialProvinceName').val(row.provinceName);
+		$('#materialCityCode').val(row.cityCode);
+		$('#materialCityName').val(row.cityName);
+		$('#materialAreaCode').val(row.distinctCode);
+		$('#materialAreaName').val(row.distinctName);
 		if(row.pca==''){
 			$("#materialAddress").val(row.address).change();
 		}else{
@@ -1530,9 +1542,12 @@ function confirmAddress(){
 		    row: {
 		    	index:count+1,
 		    	pca: pca,
-		    	provinceValue:provinceValue,
-		    	cityValue:cityValue,
-		    	areaValue:areaValue,
+		    	provinceCode:provinceValue,
+		    	provinceName:province,
+		    	cityCode:cityValue,
+		    	cityName:city,
+		    	distinctCode:areaValue,
+		    	distinctName:area,
 		    	address:shippingAddress
 		    }
 		});
@@ -1542,9 +1557,12 @@ function confirmAddress(){
 		    row: {
 		    	index:parseInt(rowIndex)+1,
 		    	pca: pca,
-		    	provinceValue:provinceValue,
-		    	cityValue:cityValue,
-		    	areaValue:areaValue,
+		    	provinceCode:provinceValue,
+		    	provinceName:province,
+		    	cityCode:cityValue,
+		    	cityName:city,
+		    	areaCode:areaValue,
+		    	areaName:area,
 		    	address:shippingAddress
 		    }
 		});
@@ -1783,6 +1801,7 @@ function viewConfig(){
 //设置配置值
 function setConfigValueCode(obj,index){
 	var configValueCode = $(obj).val();
+	debugger
 	$("#configTable").bootstrapTable('updateCell', {
 	    index: index,
 	    field:'configValueCode',
@@ -1913,15 +1932,26 @@ var addressColumns = [{
 	width:'35%'
 }, 
 {
-	field:'provinceValue',
+	field:'provinceCode',
 	visible:false
 },
 {
-	field:'cityValue',
+	field:'provinceName',
 	visible:false
 },
 {
-	field:'areaValue',
+	field:'cityCode',
+	visible:false
+},
+{
+	field:'cityName',
+	visible:false
+},{
+	field:'distinctCode',
+	visible:false
+},
+{
+	field:'distinctName',
 	visible:false
 },{
 	title : '到货地址',
@@ -1947,17 +1977,28 @@ var materialsAddressColumns = [{
 	title : '省市区',
 	field : 'pca',
 	width:'35%'
-}, 
+},
 {
-	field:'provinceValue',
+	field:'provinceCode',
 	visible:false
 },
 {
-	field:'cityValue',
+	field:'provinceName',
 	visible:false
 },
 {
-	field:'areaValue',
+	field:'cityCode',
+	visible:false
+},
+{
+	field:'cityName',
+	visible:false
+},
+{
+	field:'distinctCode',
+	visible:false
+},{
+	field:'distinctName',
 	visible:false
 },{
 	title : '到货地址',
@@ -1997,13 +2038,15 @@ var configTableColumns = [
 	title:'配置值',
 	field:'configs',
 	width:'50%',
-	formatter: function(value, row, index) {		
-    	var start = '<select class="form-control" name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
+	formatter: function(value, row, index) {
+		var id="configsId"+index;
+    	var start = '<select class="form-control" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
     	var end = '</select>';
+    	var configIdValue;
     	if(row.configValueCode){
     		$.each(value,function(index,item){
         		if(item.code==row.configValueCode){
-        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';	
         		}else{
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
@@ -2011,11 +2054,17 @@ var configTableColumns = [
     	}else{
     		$.each(value,function(index,item){
         		if(item.default){
-        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';
+        			configIdValue = item.code;
         		}else{
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
+        	$("#configTable").bootstrapTable('updateCell', {
+        	    index: index,
+        	    field:'configValueCode',
+        	    value:configIdValue
+        	});
     	}
     	
 		return start+end;

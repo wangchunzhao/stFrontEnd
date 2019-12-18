@@ -2204,6 +2204,7 @@ var configTableColumns = [
 	formatter: function(value, row, index) {		
     	var start = '<select class="form-control" name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
     	var end = '</select>';
+    	var configIdValue;
     	if(row.configValueCode){
     		$.each(value,function(index,item){
         		if(item.code==row.configValueCode){
@@ -2216,6 +2217,7 @@ var configTableColumns = [
     		$.each(value,function(index,item){
         		if(item.default){
         			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        			configIdValue = item.code
         		}else{
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	

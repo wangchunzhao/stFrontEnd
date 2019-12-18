@@ -81,6 +81,10 @@ var materialsColumn = [{
 	    field: 'unitName',
 	    width:80
 	},{
+		title:'',
+	    field: 'unitCode',
+	    visible:false
+	},{
 		title:'产品实卖价',
 	    field: 'acturalPrice',
 	    width:150
@@ -232,5 +236,28 @@ var materialsColumn = [{
 	    field: 'colorComments',
 	    width:150
 
+	},
+	{
+		field:'provinceCode',
+		visible:false
+	},
+	{
+		field:'provinceName',
+		visible:false
+	},
+	{
+		field:'cityCode',
+		visible:false
+	},
+	{
+		field:'cityName',
+		visible:false
+	},
+	{
+		field:'distinctCode',
+		visible:false
+	},{
+		field:'distinctName',
+		visible:false
 	}
 ]

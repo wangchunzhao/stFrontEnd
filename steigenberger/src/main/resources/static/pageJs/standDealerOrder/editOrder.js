@@ -171,7 +171,6 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 	materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
 		configs.forEach((item,index)=>{
 			if(item.code==defaultItem.code){
-				debugger
 				var config = defaultItem;
 				config["configValueCode"] = item.configValueCode
 				editConfigs.push(config)
@@ -272,19 +271,6 @@ function fillOrderAddress(){
 	}
 }
 
-//获取session中用户信息
-function getUserDetail(){
-	$.ajax({
-	    url: "/steigenberger/order/user",
-	    data: {},
-	    type: "get",
-	    success: function(data) {
-	    	$("#salesName").val(data.userName);
-	    	$("#salesTelnumber").val(data.tel);
-	    	$("#salesCode").val(data.userIdentity);
-	    }
-	});
-}
 //设置面板折叠显示
 
 function defaultCollapse(){
@@ -1862,7 +1848,6 @@ function saveOrder(type){
 	if(type){
 		/*$("#orderForm").data("bootstrapValidator").resetForm();*/
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
-		debugger
 		bootstrapValidator.validate();
 		if(!bootstrapValidator.isValid()){ 
 			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
@@ -2207,6 +2192,7 @@ var configTableColumns = [
 	formatter: function(value, row, index) {		
     	var start = '<select class="form-control" name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
     	var end = '</select>';
+    	var configIdValue;
     	if(row.configValueCode){
     		$.each(value,function(index,item){
         		if(item.code==row.configValueCode){
@@ -2219,10 +2205,17 @@ var configTableColumns = [
     		$.each(value,function(index,item){
         		if(item.default){
         			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        			configIdValue = item.code
         		}else{
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
-        		}	
+        		}
+        		
         	})
+        	$("#configTable").bootstrapTable('updateCell', {
+        	    index: index,
+        	    field:'configValueCode',
+        	    value:configIdValue
+        	});
     	}
     	
 		return start+end;

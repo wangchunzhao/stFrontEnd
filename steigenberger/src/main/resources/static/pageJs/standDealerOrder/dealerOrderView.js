@@ -228,6 +228,17 @@ function fillOrderAddress(){
 	if(orderAddress){
 		for(var i=0;i<orderAddress.length;i++){
 			var row = orderAddress[i];
+			var pca;
+			if(row.provinceName!=''){
+				pca = row.provinceName;
+				if(row.cityName!=''){
+					pca+="/"+row.cityName
+				}
+				if(row.distinctName!=''){
+					pca+="/"+row.distinctName
+				}
+			}
+			row.pca=pca;
 			row.index = i+1;
 			$("#addressTable").bootstrapTable('insertRow', {
 			    index: i,
