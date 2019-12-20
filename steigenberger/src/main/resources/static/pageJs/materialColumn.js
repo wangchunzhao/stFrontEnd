@@ -15,7 +15,7 @@ var materialsColumn = [{
 	},{
 		title:'调研表',
 		align: 'center',
-		width:60,
+		width:120,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
 	    	if(row.configurable){
@@ -254,10 +254,13 @@ var materialsColumn = [{
 		visible:false
 	},
 	{
-		field:'distinctCode',
+		field:'districtCode',
 		visible:false
 	},{
-		field:'distinctName',
+		field:'districtName',
+		visible:false
+	},{
+		field:'address',
 		visible:false
 	}
 ]

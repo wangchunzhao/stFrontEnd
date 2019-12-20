@@ -179,6 +179,19 @@ function fillItemToTableRow(data){
 	var acturalPriceAmount = toDecimal2(quantity*acturalPrice);
 	var acturalPriceTotal = toDecimal2(parseFloat(acturalPrice)+parseFloat(acturalPricaOfOptional));
 	var acturalPriceAmountTotal = toDecimal2(acturalPriceTotal*quantity);
+	var pcaAddress;
+	if(data.provinceName){
+		pcaAddress = data.provinceName;
+		if(data.cityName){
+			pcaAddress+="/"+data.cityName
+		}
+		if(data.districtName){
+			pcaAddress+="/"+data.districtName
+		}
+		if(data.address){
+			pcaAddress+=data.address
+		}
+	}
 	var row = {
 			rowNumber:data.rowNumber,
 			materialName:data.materialName,
@@ -212,12 +225,19 @@ function fillItemToTableRow(data){
 			deliveryDate:data.deliveryDate,
 			produceDate:data.produceDate,
 			shippDate:data.shippDate,
-			materialAddress:data.address,
+			materialAddress:pcaAddress,
 			onStoreDate:data.onStoreDate,
 			purchasePeriod:data.period,
 			b2cComments:data.b2cComments,
 			specialComments:data.specialComments,
-			colorComments:data.colorComments
+			colorComments:data.colorComments,
+			provinceCode:data.provinceCode,
+			provinceName:data.provinceName,
+			cityCode:data.provinceName,
+	        cityName:data.cityName,
+	        districtCode:data.districtCode,
+	        districtName:data.districtName,
+	        address:data.address
 	}
 	return row;
 }
@@ -249,6 +269,9 @@ function fillOrderAddress(){
 }
 
 function initDropDownList(){
+	if(orderPayments.length){
+		$("#orderPayment").val(orderPayments[0].termCode);
+	}
 	$('#salesType').trigger("change");
 	$('#officeSelect').val($('#officeCode').val());
 	$('#officeSelect').trigger("change");

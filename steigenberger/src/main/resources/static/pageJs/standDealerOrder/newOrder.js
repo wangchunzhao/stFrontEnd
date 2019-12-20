@@ -1061,6 +1061,7 @@ function confirmRowData(index,rowNumber){
 			cityName:$("#materialCityName").val(),
 			districtCode:$("#materialAreaCode").val(),
 			districtName:$("#materialAreaName").val(),
+			address: $('#materialModalAddress').val()
 			
 			
 	}
@@ -1100,6 +1101,7 @@ function addMaterialAddress(){
 		$('#materialCityName').val(row.cityName);
 		$('#materialAreaCode').val(row.distinctCode);
 		$('#materialAreaName').val(row.distinctName);
+		$('#materialModalAddress').val(row.address)
 		if(row.pca==''){
 			$("#materialAddress").val(row.address).change();
 		}else{
@@ -1766,6 +1768,7 @@ function getSelectName() {
 	}
 	
 	$("#confirmTypeName").val($("#confirmType").find("option:selected").text());
+	$("#terminalIndustryName").val($("#terminalIndustryCode").find("option:selected").text());
 }
 
 

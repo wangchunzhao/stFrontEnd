@@ -51,6 +51,9 @@ $(function () {
 });
 
 function initDropDownList(){
+	if(orderPayments.length){
+		$("#orderPayment").val(orderPayments[0].termCode);
+	}
 	$('#salesType').trigger("change");
 	$('#officeSelect').val($('#officeCode').val());
 	$('#officeSelect').trigger("change");
@@ -163,6 +166,7 @@ function fillItems(){
 		}
 	}
 	
+	getAllCountFiled();
 }
 
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
@@ -214,6 +218,19 @@ function fillItemToTableRow(data){
 	var acturalPriceAmount = toDecimal2(quantity*acturalPrice);
 	var acturalPriceTotal = toDecimal2(parseFloat(acturalPrice)+parseFloat(acturalPricaOfOptional));
 	var acturalPriceAmountTotal = toDecimal2(acturalPriceTotal*quantity);
+	var pcaAddress;
+	if(data.provinceName){
+		pcaAddress = data.provinceName;
+		if(data.cityName){
+			pcaAddress+="/"+data.cityName
+		}
+		if(data.districtName){
+			pcaAddress+="/"+data.districtName
+		}
+		if(data.address){
+			pcaAddress+=data.address
+		}
+	}
 	var row = {
 			rowNumber:data.rowNumber,
 			materialName:data.materialName,
@@ -225,6 +242,7 @@ function fillItemToTableRow(data){
 			groupCode:data.groupCode,
 			quantity:data.quantity,
 			unitName:data.unitName,
+			unitCode:data.unitCode,
 			standardPrice:data.standardPrice,
 			acturalPrice:acturalPrice,
 			acturalPriceAmount:acturalPriceAmount,
@@ -247,12 +265,20 @@ function fillItemToTableRow(data){
 			deliveryDate:data.deliveryDate,
 			produceDate:data.produceDate,
 			shippDate:data.shippDate,
-			materialAddress:data.address,
+			materialAddress:pcaAddress,
 			onStoreDate:data.onStoreDate,
 			purchasePeriod:data.period,
 			b2cComments:data.b2cComments,
 			specialComments:data.specialComments,
-			colorComments:data.colorComments
+			colorComments:data.colorComments,
+			provinceCode:data.provinceCode,
+			provinceName:data.provinceName,
+			cityCode:data.provinceName,
+	        cityName:data.cityName,
+	        districtCode:data.districtCode,
+	        districtName:data.districtName,
+	        address:data.address
+				
 	}
 	return row;
 }
@@ -262,6 +288,17 @@ function fillOrderAddress(){
 	if(orderAddress){
 		for(var i=0;i<orderAddress.length;i++){
 			var row = orderAddress[i];
+			var pca;
+			if(row.provinceName){
+				pca = row.provinceName;
+				if(row.cityName){
+					pca+="/"+row.cityName
+				}
+				if(row.distinctName){
+					pca+="/"+row.distinctName
+				}
+			}
+			row.pca=pca;
 			row.index = i+1;
 			$("#addressTable").bootstrapTable('insertRow', {
 			    index: i,
@@ -700,7 +737,7 @@ function fillMaterailValue(data){
 	var amount = $("#amount").val();
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
-	$("#unitName").val(data.unitName);
+	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
 	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
 	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
@@ -1322,6 +1359,7 @@ function confirmMaterials(){
 
 function getAllCountFiled(){
 	var tableData = $('#materialsTable').bootstrapTable('getData');
+	debugger
 	//工厂最早交货时间
 	var deliveryTime=[];
 	//要求发货时间
@@ -1394,6 +1432,7 @@ function confirmRowData(index,rowNumber){
 			groupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
+			unitCode:$("#unitCode").val(),
 			standardPrice:$("#standardPrice").val(),
 			acturalPrice:$("#acturalPrice").val(),
 			acturalPriceAmount:$("#acturalPriceAmount").val(),
@@ -1672,6 +1711,7 @@ function getRowData(materialsTableData,type,newIndex){
 			groupCode:materialsTableData.groupCode,
 			amount:materialsTableData.amount,
 			unitName:materialsTableData.unitName,
+			unitCode:materialsTableData.unitCode,
 			standardPrice:materialsTableData.standardPrice,
 			acturalPrice:materialsTableData.acturalPrice,
 			acturalPriceAmount:materialsTableData.acturalPriceAmount,
@@ -2013,8 +2053,9 @@ function viewGrossProfit(){
 			 items[i]['configs'] = null;
 		 }	 	 
 	 }
-	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+	orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	$("#grossProfit").modal("show");
+	var sequenceNumber = $("#sequenceNumber").val();
 	$("#grossSeqNum").val(sequenceNumber);
 	$("#grossVersion").val(version);
 	$("#grossContractRMBValue").val($("#contractAmount").val());
