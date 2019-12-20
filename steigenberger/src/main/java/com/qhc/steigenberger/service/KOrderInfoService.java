@@ -10,10 +10,10 @@ import com.qhc.steigenberger.util.PageHelper;
 public class KOrderInfoService {
 	
 	@Autowired
-	FryeService<KOrderInfo> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
-	FryeService<PageHelper> pageFryeService;
+	FryeService pageFryeService;
 	
 	private final static String URL_KORDERS = "kOrderInfo";
 	private final static String URL_KORDERS_LIST = "kOrderInfo/paging";

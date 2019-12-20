@@ -20,7 +20,7 @@ import com.qhc.steigenberger.util.EmailTool;
 public class BNotifyInforService {
 	
 	@Autowired
-	FryeService<BNotifyInfor> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
 	UserService userService;

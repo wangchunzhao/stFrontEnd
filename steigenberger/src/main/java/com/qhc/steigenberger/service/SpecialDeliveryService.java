@@ -10,7 +10,7 @@ import com.qhc.steigenberger.domain.SpecialDelivery;
 public class SpecialDeliveryService {
 	
 	@Autowired
-	FryeService<SpecialDelivery> fryeService;
+	FryeService fryeService;
 	
 	private final static String URL_SD = "specialDelivery";
 	private final static String URL_SD_ORDER = "specialApply";

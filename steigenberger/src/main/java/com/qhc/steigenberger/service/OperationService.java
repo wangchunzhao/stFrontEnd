@@ -9,7 +9,7 @@ import com.qhc.steigenberger.domain.Operations;
 public class OperationService{
 	
 	@Autowired
-	FryeService<Operations> fryeService;
+	FryeService fryeService;
 	
 	private final static String URL_OPERATIONS = "operations";
 

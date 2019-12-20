@@ -14,7 +14,7 @@ import com.qhc.steigenberger.domain.Parameter;
 public class ParameterService{
 	
 	@Autowired
-	FryeService<Parameter> fryeService;
+	FryeService fryeService;
 	
 	private final static String URL_SETTINGS = "parameterSettings";
 	public final static String CATCHE_SETTINGS_NAME = "catch_settings_name";

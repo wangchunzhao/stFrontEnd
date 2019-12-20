@@ -32,15 +32,8 @@ public class LogAspect {
 
     @Around("apiLogAop()")
     public Object aroundApi(ProceedingJoinPoint point) throws Throwable {
-    	Object[] args = point.getArgs();
-    	StringBuilder argStr = new StringBuilder(512);
-    	if (args != null) {
-    		for (Object arg : args) {
-    			argStr.append(",").append(argsToString(arg));
-			}
-    	}
-    	String strArg = argStr.length() > 0 ? argStr.substring(1) : "";
-        logger.info("统一日志 ===== {}.{}() start =====,参数:{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName(), strArg);
+    	logger.info("统一日志 ===== {}.{}() start =====,参数:{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName(), this.argsToString(point.getArgs()));
+    	
         DateTime startTime = new DateTime();
         DateTime endTime = null;
         Interval interval = null;
@@ -57,11 +50,23 @@ public class LogAspect {
         }
         endTime = new DateTime();
         interval = new Interval(startTime, endTime);
-        logger.info("统一日志 ===== {}.{}() end =====,响应时间:{}毫秒,响应内容:{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName(), interval.toDurationMillis(), argsToString(response));
+        logger.info("统一日志 ===== {}.{}() end =====,响应时间:{}毫秒,响应内容:{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName(), interval.toDurationMillis(), objectToJson(response));
         return response;
     }
 
-    private String argsToString(Object object) {
+    private String argsToString(Object[] args) {
+    	StringBuilder argStr = new StringBuilder(512);
+    	if (args != null) {
+    		for (Object arg : args) {
+    			argStr.append(",").append(String.valueOf(arg));
+			}
+    	}
+    	String strArg = argStr.length() > 0 ? argStr.substring(1) : "";
+    	
+    	return strArg;
+    }
+    
+    private String objectToJson(Object object) {
     	ObjectMapper mapper = new ObjectMapper();
     	mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     	if (object instanceof ServletRequest || object instanceof ServletResponse || object instanceof HttpSession) {

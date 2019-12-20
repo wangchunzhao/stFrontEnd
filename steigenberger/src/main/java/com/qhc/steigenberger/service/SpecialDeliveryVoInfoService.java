@@ -9,10 +9,10 @@ import com.qhc.steigenberger.util.PageHelper;
 public class SpecialDeliveryVoInfoService {
 	
 	@Autowired
-	FryeService<SpecialDeliveryVoInfo> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
-	FryeService<PageHelper> pageFryeService;
+	FryeService pageFryeService;
 	
 	private final static String SPECIAL_DELIVERY_VO_INFO = "specialDeliveryVoInfo";
 	

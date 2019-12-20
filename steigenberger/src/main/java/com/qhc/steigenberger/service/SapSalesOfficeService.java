@@ -8,7 +8,7 @@ import com.qhc.steigenberger.domain.SalesOffice;
 public class SapSalesOfficeService{
 	
 	@Autowired
-	FryeService<SalesOffice> fryeService;
+	FryeService fryeService;
 	
 	private final static String URL_SAPSALEOFFICE = "location/sapSalesOffice";
 

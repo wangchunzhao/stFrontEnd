@@ -18,22 +18,22 @@ public class RoleService{
 	OperationService operationService;
 	
 	@Autowired
-	FryeService<Role> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
-	FryeService<RestPage> pageFryeService;
+	FryeService pageFryeService;
 	
 	private final static String URL_ROLE = "role";
 	private final static String URL_ROLE_PERMESSION = "role/permessions";
 	
 	public PageInfo<Role> selectAndPage(int pageNum, int pageSize, Role role) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<Role> list=fryeService.getListInfo(URL_ROLE, Role.class);
+		List<Role> list=(List)fryeService.getListInfo(URL_ROLE, Role.class);
 		PageInfo<Role> pageInfo=new PageInfo<Role>(list);
 		return pageInfo;
 	}
 	
-	public RestPage<Role> getPageableList(int pageNum, int pageSize, Role role) {
+	public RestPage getPageableList(int pageNum, int pageSize, Role role) {
 		String url = URL_ROLE+"/"+pageNum+"/"+pageSize+"?isActive="+role.getIsActive();
 		
 		return pageFryeService.getInfo(url, RestPage.class);
@@ -42,7 +42,7 @@ public class RoleService{
 	
 	public Role selectRoleInfo(int id) {
 		String url = URL_ROLE+"/"+id;
-		return fryeService.getInfo(url, Role.class);
+		return (Role)fryeService.getInfo(url, Role.class);
 	}
 
 	

@@ -14,10 +14,10 @@ import com.qhc.steigenberger.util.PageHelper;
 public class BAreaService {
 	
 	@Autowired
-	FryeService<List<List<String>>> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
-	FryeService<PageHelper> pageFryeService;
+	FryeService pageFryeService;
 	
 	private final static String URL_KORDERS = "location/freight";
 	

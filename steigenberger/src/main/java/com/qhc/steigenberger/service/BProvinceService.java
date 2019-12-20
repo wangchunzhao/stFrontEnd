@@ -10,10 +10,10 @@ import com.qhc.steigenberger.util.PageHelper;
 public class BProvinceService {
 	
 	@Autowired
-	FryeService<BProvince> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
-	FryeService<PageHelper> pageFryeService;
+	FryeService pageFryeService;
 	
 	private final static String URL_KORDERS = "bProvince";
 	

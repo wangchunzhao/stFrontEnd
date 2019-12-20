@@ -14,10 +14,10 @@ import com.qhc.steigenberger.domain.User;
 public class UserService{
 	
 	@Autowired
-	FryeService<User> fryeService;
+	FryeService fryeService;
 	
 	@Autowired
-	FryeService<RestPage> pageFryeService;
+	FryeService pageFryeService;
 	@Autowired
 	RoleService roleService;
 	

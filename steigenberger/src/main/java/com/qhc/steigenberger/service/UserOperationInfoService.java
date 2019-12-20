@@ -4,17 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import com.qhc.steigenberger.domain.KOrderInfo;
-import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 
 @Service
 public class UserOperationInfoService {
 
 	@Autowired
-	FryeService<UserOperationInfo> fryeService;
+	FryeService fryeService;
 	
 	private final static String URL_KORDERS = "userOperationInfo";
 

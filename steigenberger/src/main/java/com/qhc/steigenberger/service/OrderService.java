@@ -28,6 +28,7 @@ import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.config.ApplicationConfig;
@@ -57,7 +58,9 @@ import reactor.core.publisher.Mono;
 @Service
 public class OrderService {
 	private ObjectMapper mapper = new ObjectMapper()
-			.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
+			.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM))
+			// 忽略不存在的字段
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
 
 	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
 	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
@@ -83,7 +86,7 @@ public class OrderService {
 	private FryeService fryeService;
 
 	@Autowired
-	FryeService<DOrder> dOrderervice;
+	FryeService dOrderervice;
 
 	public DealerOrder getOrderBySequenceNumber(String sqNumber) {
 		return null;

@@ -9,7 +9,7 @@ import com.qhc.steigenberger.util.PageHelper;
 public class ReportFormsInfoService {
 
 	@Autowired
-	FryeService<PageHelper> fryeService;
+	FryeService fryeService;
 	
 	private final static String REPORT_FORMS_INFO = "reportFormsInfo";
 

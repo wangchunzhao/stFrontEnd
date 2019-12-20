@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
  *
  */
 @Service
-public class FryeService<T> {
+public class FryeService {
 
 	@Autowired
 	ApplicationConfig config;
@@ -61,7 +61,7 @@ public class FryeService<T> {
 	 * @param path
 	 * @param params
 	 */
-	public void putJason(String path, T params) {
+	public <T> void putJason(String path, T params) {
 
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
 		Mono<String> response = webClient.put().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
@@ -77,7 +77,7 @@ public class FryeService<T> {
 	 * @param path
 	 * @param params
 	 */
-	public void postJason(String path, T params) {
+	public <T> void postJason(String path, T params) {
 		
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
 		Mono<String> response = webClient.post().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
@@ -106,7 +106,7 @@ public class FryeService<T> {
 		return response.block();
 	}
 
-	public List<T> getListInfo(String path, Class<T> T) {
+	public <T> List<T> getListInfo(String path, Class T) {
 		String url = config.getFryeURL() + path;
 		WebClient webClient = WebClient.create(url);
 		Flux<T> userFlux = webClient.get().uri(url).retrieve()
@@ -142,7 +142,7 @@ public class FryeService<T> {
 	 * @param T
 	 * @return
 	 */
-	public T postInfo(T t, String path, Class T) {
+	public <T> T postInfo(Object t, String path, Class T) {
 		String url = config.getFryeURL() + path;
 		@SuppressWarnings("unchecked")
 		Mono<T> resp = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -160,7 +160,7 @@ public class FryeService<T> {
 	 * @param T 
 	 * @return
 	 */
-	public T postForm(String path, Map<String,String> pars, Class T) {
+	public <T> T postForm(String path, Map<String,String> pars, Class T) {
 		String url = config.getFryeURL() + path;
 		
 		@SuppressWarnings("unchecked")
@@ -179,7 +179,7 @@ public class FryeService<T> {
 	 * @param T 
 	 * @return
 	 */
-	public T postForm(String path, Object pars, Class T) {
+	public <T> T postForm(String path, Object pars, Class T) {
 		String url = config.getFryeURL() + path;
 		
 		@SuppressWarnings("unchecked")
@@ -200,7 +200,7 @@ public class FryeService<T> {
 	 * @param T
 	 * @return
 	 */
-	public T putInfo(T t, String path, Class T) {
+	public <T> T putInfo(T t, String path, Class T) {
 		String url = config.getFryeURL() + path;
 		@SuppressWarnings("unchecked")
 		Mono<T> resp = WebClient.create().put().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -217,7 +217,7 @@ public class FryeService<T> {
 	 * @param path
 	 * @param params
 	 */
-	public T putForm(String path, Object params, Class T) {
+	public <T> T putForm(String path, Object params, Class T) {
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
 		Mono<String> response = webClient.put().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -236,7 +236,7 @@ public class FryeService<T> {
 	 * @param T
 	 * @return
 	 */
-	public T getInfo(String path, Class T) {
+	public <T> T getInfo(String path, Class T) {
 		String url = config.getFryeURL() + path;
 		WebClient webClient = WebClient.create();
 		Mono<T> mono = webClient.get().uri(url).retrieve().bodyToMono(T);
@@ -252,7 +252,7 @@ public class FryeService<T> {
 	 * @param T
 	 * @return
 	 */
-	public T getInfo(String path, Object params, Class T) {
+	public <T> T getInfo(String path, Object params, Class T) {
 		String url = config.getFryeURL() + path;
 		
 		Map<String, ?> map = new HashMap<String, Object>();
