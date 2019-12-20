@@ -135,6 +135,7 @@ function service(options) {
 			alert(result.msg);
 			window.location.href = "/steigenberger/";
 		}
+		success.call(result, status, xhr);
 	}
 	$.ajax(options);
 }

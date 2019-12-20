@@ -9,6 +9,8 @@ server:
 
 #thymeleaf
 spring:
+  profiles:
+    active: dev
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -59,7 +61,7 @@ qhc:
     frye: 
         protocal: http
         server: localhost
-        port: 8880
+        port: 8881
         application: frye
     ldap: false
 contract:
