@@ -89,10 +89,11 @@
 							    </div>
 								 <span class="col-md-1 control-label">终端客户性质</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="terminalType" th:field="*{terminalType}">
+							      <select class="form-control" th:field="*{terminalIndustryCode}">
 										<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 									</select>
 							    </div>
+							    <input type="hidden" th:field="*{terminalIndustryName}" id="terminalIndustryName">
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">便利店</span>
@@ -184,7 +185,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">录入日期</span>
 							    <div class="col-md-2">
-									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="createTime" readonly th:field="*{createTime}">
+									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="optTime" readonly th:value="${#dates.format(orderDetail.optTime, 'yyyy-MM-dd')}">
 							    </div>
 							</div>
 						</div>

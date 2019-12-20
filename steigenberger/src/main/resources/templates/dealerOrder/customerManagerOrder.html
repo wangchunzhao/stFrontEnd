@@ -23,7 +23,7 @@
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
 		<input type="hidden"  id="customerClazzName" name="customerClazzName" th:field="*{customerClazzName}">
 		<input type="hidden"  name="action" value="submit">
-		<input type="hidden"  name="salesCode" id="salesCode">
+		<input type="hidden"  name="salesCode" id="salesCode" th:field="*{salesCode}">
 		<input type="hidden"  id="orderModelType" value="edit">
 		<input type="hidden"  id="version" th:field="*{currentVersion}">
 		<div id="page-wrapper">
@@ -100,10 +100,11 @@
 							    </div>
 								 <span class="col-md-1 control-label">终端客户性质</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="terminalType" th:field="*{terminalType}">
+							      <select class="form-control" th:field="*{terminalIndustryCode}">
 										<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 									</select>
 							    </div>
+							    <input type="hidden" th:field="*{terminalIndustryName}" id="terminalIndustryName">
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">便利店</span>
@@ -196,7 +197,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">录入日期</span>
 							    <div class="col-md-2">
-									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="optTime" readonly th:field="*{createTime}">
+									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="optTime" readonly th:value="${#dates.format(orderDetail.optTime, 'yyyy-MM-dd')}">
 							    </div>
 							</div>
 						</div>
@@ -258,8 +259,10 @@
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="approvedDicount" id="approvedDicount" readonly th:field="*{approvedDicount}">
+									<input type="text" class="form-control" aria-describedby="emailHelp" id="approvedDicount" name="standardDiscount" th:value="${order_option.standardDiscount}">
 							    </div>
+							    <input type="hidden" name="mainDiscount" th:value="${order_option.standardDiscount}">
+							    <input type="hidden" name="bodyDiscount" th:value="${order_option.standardDiscount}">
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
 									<div class="col-md-2">
@@ -311,7 +314,7 @@
 								 <div class="row">
 								 	<span class="col-md-2 control-label">结算方式</span>
 									<div class="col-md-10">
-										<select class="form-control" name="paymentType" th:value="*{payments[0].termCode}"><!--  th:field="*{confirmTypeCode}" -->
+										<select class="form-control" name="paymentType" id="orderPayment"><!--  th:field="*{confirmTypeCode}" -->
 											<option th:each="payment : ${order_option.paymentType}" th:value="${payment.key}" th:text="${payment.value}"></option>
 										</select>
 							   		 </div>
@@ -689,10 +692,12 @@
 	var officesMap = [[${order_option.offices}]]
 	var groupsMap = [[${order_option.groups}]]
 	var shippingTypesMap = [[${order_option.shippingTypes}]]
+	var orderModelType = $("#orderModelType").val();
+	var orderPayments = [[${orderDetail.payments}]];
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-		showLeftPush = document.getElementById( 'showLeftPush' ),
-		body = document.body;
-	var orderModelType = $("#orderModelType").val();	
+	showLeftPush = document.getElementById( 'showLeftPush' ),
+	body = document.body;
+	
 	showLeftPush.onclick = function() {
 		classie.toggle( this, 'active' );
 		classie.toggle( body, 'cbp-spmenu-push-toright' );

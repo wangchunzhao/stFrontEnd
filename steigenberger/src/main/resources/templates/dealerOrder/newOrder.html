@@ -12,6 +12,68 @@
 <link href="../css/bootstrapValidator.min.css" rel='stylesheet' type='text/css' />
 <style type="text/css">
        .help-block {color:red;}
+       
+.tab .nav-tabs li a:hover{
+   background: #692f6c;
+   opacity: 0.8;
+}
+.tab .nav-tabs li.active a{
+   opacity: 1;
+}
+.tab .nav-tabs li.active a,
+.tab .nav-tabs li.active a:hover,
+.tab .nav-tabs li.active a:focus{
+   color: #fff;
+   background: #692f6c;
+   border: none;
+   border-radius: 0;
+}
+.tab .nav-tabs li a:before,
+.tab .nav-tabs li a:after{
+   content: "";
+   border-top: 42px solid transparent;
+   position: absolute;
+   top: -2px;
+}
+.tab .nav-tabs li a:before{
+   border-right: 15px solid #692f6c;
+   left: -15px;
+}
+.tab .nav-tabs li a:after{
+   border-left: 15px solid #692f6c;
+   right: -15px;
+}
+.tab .nav-tabs li a i,
+.tab .nav-tabs li.active a i{
+   display: inline-block;
+   padding-right: 5px;
+   font-size: 15px;
+   text-shadow: none;
+}
+.tab .nav-tabs li a span{
+   display: inline-block;
+   font-size: 14px;
+   letter-spacing: -9px;
+   opacity: 0;
+   transition: all 0.3s ease 0s;
+}
+.tab .nav-tabs li a:hover span,
+.tab .nav-tabs li.active a span{
+   letter-spacing: 1px;
+   opacity: 1;
+   transition: all 0.3s ease 0s;
+}
+.tab .tab-content{
+   padding: 30px;
+   background: #fff;
+   font-size: 16px;
+   color: #6c6c6c;
+   line-height: 25px;
+}
+.tab .tab-content h3{
+   font-size: 24px;
+   margin-top: 0;
+}
 </style>
 </head> 
 <body class="cbp-spmenu-push">
@@ -70,7 +132,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">性质分类</span>
 								<div class="col-md-2">
-							      		<input type="text" class="form-control" id="customerClazz" readonly name="contractorclassname">
+							      		<input type="text" class="form-control" id="customerClazz" readonly>
 
 							    </div>
 							    <span class="col-md-1 control-label">店名</span>
@@ -100,10 +162,11 @@
 							    </div>
 								 <span class="col-md-1 control-label">终端客户性质</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="customerNatureCode">
+							      <select class="form-control" name="terminalIndustryCode" id="terminalIndustryCode">
 										<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 									</select>
 							    </div>
+							    <input type="hidden" name="terminalIndustryName" id="terminalIndustryName">
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">便利店</span>

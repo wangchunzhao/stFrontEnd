@@ -15,7 +15,7 @@ var materialsColumn = [{
 	},{
 		title:'调研表',
 		align: 'center',
-		width:60,
+		width:120,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
 	    	if(row.configurable){
@@ -80,6 +80,10 @@ var materialsColumn = [{
 		title:'计量单位',
 	    field: 'unitName',
 	    width:80
+	},{
+		title:'',
+	    field: 'unitCode',
+	    visible:false
 	},{
 		title:'产品实卖价',
 	    field: 'acturalPrice',
@@ -232,5 +236,27 @@ var materialsColumn = [{
 	    field: 'colorComments',
 	    width:150
 
+	},{
+		field:'provinceCode',
+		visible:false
+	},
+	{
+		field:'provinceName',
+		visible:false
+	},
+	{
+		field:'cityCode',
+		visible:false
+	},
+	{
+		field:'cityName',
+		visible:false
+	},
+	{
+		field:'distinctName',
+		visible:false
+	},{
+		field:'districtName',
+		visible:false
 	}
 ]
