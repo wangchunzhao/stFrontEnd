@@ -15,12 +15,12 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.Constants;
-import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.SpecialDeliveryVoInfo;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
+import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.SpecialDeliveryService;
 import com.qhc.steigenberger.service.SpecialDeliveryVoInfoService;
@@ -144,7 +144,7 @@ public class SpecialController {
 	@RequestMapping("/toAdd")
 	public ModelAndView toAdd(@RequestParam String kOrderVersionId,String ordersId) {
 		
-		DOrder order = orderService.getInfoById(ordersId);
+		Order order = orderService.getInfoById(ordersId);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("order", order);
 		mv.addObject("kOrderVersionId", kOrderVersionId);
@@ -155,7 +155,7 @@ public class SpecialController {
 	@RequestMapping("/toShow")
 	public ModelAndView toShow(@RequestParam String applyId) {
 		SpecialDelivery sd = specialDeliveryService.findInfoById(applyId);
-		DOrder order = orderService.getInfoById(sd.getkOrderVersionId());
+		Order order = orderService.getInfoById(sd.getkOrderVersionId());
 		//todo，查询合同得到合同流水
 		
 		ModelAndView mv = new ModelAndView();

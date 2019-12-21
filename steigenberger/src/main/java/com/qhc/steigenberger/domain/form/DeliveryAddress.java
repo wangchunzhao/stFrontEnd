@@ -1,6 +1,6 @@
 package com.qhc.steigenberger.domain.form;
 
-public class OrderAddress {
+public class DeliveryAddress {
 	
 	
 	

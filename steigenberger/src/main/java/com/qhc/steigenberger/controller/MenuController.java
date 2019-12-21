@@ -23,7 +23,6 @@ import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.ParameterService;
@@ -220,7 +219,7 @@ public class MenuController {
 		
 		
 		SalesOrder salesOrder = new SalesOrder();
-		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
+//		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
 //		List<SalesGroup> list = staticOrderService.getGrossProfitList(salesOrder);
 //		mv.addObject(FORM_GROSS_PROFIT, list);
 		return mv;

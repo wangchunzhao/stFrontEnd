@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.domain.ApplicationOfRolechange;
-import com.qhc.steigenberger.domain.form.DealerOrder;
 
 @Service
 public class ApplicationOfRolechangeService {

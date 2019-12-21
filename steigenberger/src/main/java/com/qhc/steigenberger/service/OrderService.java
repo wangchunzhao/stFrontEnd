@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.qhc.steigenberger.domain.CustomerClazz;
-import com.qhc.steigenberger.domain.DOrder;
 import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
@@ -38,11 +37,7 @@ import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Contract;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.SpecialDelivery;
-import com.qhc.steigenberger.domain.form.AbsOrder;
-import com.qhc.steigenberger.domain.form.BaseOrder;
-import com.qhc.steigenberger.domain.form.BulkOrder;
-import com.qhc.steigenberger.domain.form.DealerOrder;
-import com.qhc.steigenberger.domain.form.KeyAccountOrder;
+import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.service.FryeService;
 import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
 import com.qhc.steigenberger.service.exception.URLNotFoundException;
@@ -88,7 +83,7 @@ public class OrderService {
 	@Autowired
 	FryeService dOrderervice;
 
-	public DealerOrder getOrderBySequenceNumber(String sqNumber) {
+	public Order getOrderBySequenceNumber(String sqNumber) {
 		return null;
 	}
 
@@ -157,13 +152,13 @@ public class OrderService {
 	 * 
 	 * @param form : order
 	 */
-	public void saveOrder(DealerOrder form) {
+	public void saveOrder(Order form) {
 		fryeService.postJason(URL_ORDER, form);
 	}
 
-	public DOrder getInfoById(String orderId) {
+	public Order getInfoById(String orderId) {
 
-		return dOrderervice.getInfo(URL_D_ORDER + "/" + orderId, DOrder.class);
+		return dOrderervice.getInfo(URL_D_ORDER + "/" + orderId, Order.class);
 	}
 
 	@Autowired
@@ -188,7 +183,7 @@ public class OrderService {
 		return (List<OrderVersion>) fryeService.getInfo(url, List.class);
 	}
 
-	public PageHelper<BaseOrder> findOrders(OrderQuery query) {
+	public PageHelper<Order> findOrders(OrderQuery query) {
 		String url = "order/query";
 		PageHelper page = (PageHelper) fryeService.postInfo(query, url, PageHelper.class);
 		try {
@@ -196,10 +191,10 @@ public class OrderService {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, BaseOrder.class);
+		JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Order.class);
 //		page = mapper.convertValue(page, javaType);
 
-		javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, BaseOrder.class);
+		javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, Order.class);
 		page.setRows(mapper.convertValue(page.getRows(), javaType));
 
 		return page;
@@ -214,10 +209,10 @@ public class OrderService {
 //		return (DealerOrder)findOrderDetail(sequenceNumber, version, ORDER_TYPE_DEALER);
 //	}
 
-	public AbsOrder findOrderDetail(String sequenceNumber, String version, String orderType) {
+	public Order findOrderDetail(String sequenceNumber, String version, String orderType) {
 		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "detail?sequenceNumber=" + sequenceNumber + "&version="
 				+ version;
-		AbsOrder order = null;
+		Order order = null;
 		String json = (String) fryeService.getInfo(url, String.class);
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
@@ -226,7 +221,7 @@ public class OrderService {
 //				String json = (String)fryeService.getInfo(url, String.class);
 //				order = mapper.convertValue(order, DealerOrder.class);
 			try {
-				order = mapper.readValue(json, DealerOrder.class);
+				order = mapper.readValue(json, Order.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -236,7 +231,7 @@ public class OrderService {
 //				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
 //				order = mapper.convertValue(order, KeyAccountOrder.class);
 			try {
-				order = mapper.readValue(json, KeyAccountOrder.class);
+				order = mapper.readValue(json, Order.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -245,7 +240,7 @@ public class OrderService {
 //				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
 //				order = mapper.convertValue(order, BulkOrder.class);
 			try {
-				order = mapper.readValue(json, BulkOrder.class);
+				order = mapper.readValue(json, Order.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -273,7 +268,7 @@ public class OrderService {
 		return (BomExplosion) fryeService.postInfo(pars, URL_MATERIAL_BOM, HashMap.class);
 	}
 
-	public List<MaterialGroups> calcGrossProfit(BaseOrder order) {
+	public List<MaterialGroups> calcGrossProfit(Order order) {
 		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "grossprofit";
 		return (List<MaterialGroups>) fryeService.postForm(url, order, ArrayList.class);
 	}

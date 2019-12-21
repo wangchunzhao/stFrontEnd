@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.qhc.steigenberger.domain.OrderQuery;
-import com.qhc.steigenberger.domain.form.AbsOrder;
+import com.qhc.steigenberger.domain.form.Order;
 
 @SpringBootTest
 class OrderServiceTest {
@@ -42,7 +42,7 @@ class OrderServiceTest {
 		Matcher matcher = p.matcher(text);
 		System.out.println(matcher.find());
 		System.out.println(text.substring(matcher.start() + pslen, matcher.end() - 1));
-		AbsOrder order = orderService.findOrderDetail("123", "1-2", "");
+		Order order = orderService.findOrderDetail("123", "1-2", "");
 		System.out.println(order.getCreateTime());
 	}
 

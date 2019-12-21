@@ -36,10 +36,8 @@ import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
-import com.qhc.steigenberger.domain.form.AbsOrder;
-import com.qhc.steigenberger.domain.form.BaseOrder;
+import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.domain.form.BomQueryModel;
-import com.qhc.steigenberger.domain.form.DealerOrder;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
@@ -128,7 +126,7 @@ public class OrderController {
 
 	@PostMapping("dealer")
 	@ResponseBody
-	public ModelAndView submitDlealerOrder(@RequestBody DealerOrder orderData, ModelAndView model,
+	public ModelAndView submitDlealerOrder(@RequestBody Order orderData, ModelAndView model,
 			@RequestParam(value = "action", required = true) String action, HttpServletRequest request,
 			BindingResult bindingResult) {
 
@@ -138,27 +136,26 @@ public class OrderController {
 		}
 		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);
-		orderData.setCurrentUser(user.getUserIdentity());
+//		orderData.setCurrentUser(user.getUserIdentity());
 		if(user.getRegion()!=null){
 			orderData.setUserOfficeCode(user.getRegion().getCode());
 		}
-		switch (action) {
-
-			case FORM_BPM:
-				orderData.setSubmitType(5);
-				break;
-			case FORM_WTW_MARGIN:
-				orderData.setSubmitType(4);
-				break;
-			case FORM_MARGIN:
-				orderData.setSubmitType(3);
-				break;
-			case FORM_SUBMIT:
-				orderData.setSubmitType(2);
-				break;
-			default:
-				orderData.setSubmitType(1);
-		}
+//		switch (action) {
+//			case FORM_BPM:
+//				orderData.setSubmitType(5);
+//				break;
+//			case FORM_WTW_MARGIN:
+//				orderData.setSubmitType(4);
+//				break;
+//			case FORM_MARGIN:
+//				orderData.setSubmitType(3);
+//				break;
+//			case FORM_SUBMIT:
+//				orderData.setSubmitType(2);
+//				break;
+//			default:
+//				orderData.setSubmitType(1);
+//		}
 		
 		orderService.saveOrder(orderData);
 		return MenuController.goDealerOrder();
@@ -253,7 +250,7 @@ public class OrderController {
 	@ApiOperation(value = "订单管理列表", notes = "订单管理列表")
 	@PostMapping(value = "query")
 	@ResponseBody
-	public PageHelper<BaseOrder> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
+	public PageHelper<Order> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
 		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
@@ -286,17 +283,17 @@ public class OrderController {
 		System.out.println(identityName+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
-		PageHelper<BaseOrder> order = orderService.findOrders(query);
+		PageHelper<Order> order = orderService.findOrders(query);
 //		if(!"".equals(query.getOfficeCode())) {
 //			List<BaseOrder> list = order.getRows();
 //			for(int i = 0; i < list.size(); i++) {
 //				((Map)list.get(i)).put("buttonControl", "0");
 //			}
 //		}
-		List<BaseOrder> list = order.getRows();
-		for(int i = 0; i < list.size(); i++) {
-			list.get(i).setButtonControl(String.valueOf(toSap));
-		}
+		List<Order> list = order.getRows();
+//		for(int i = 0; i < list.size(); i++) {
+//			list.get(i).setButtonControl(String.valueOf(toSap));
+//		}
 		return order;
 	}
 	
@@ -310,7 +307,7 @@ public class OrderController {
 	@ApiOperation(value = "代办列表", notes = "代办订单列表")
 	@PostMapping(value = "queryTodo")
 	@ResponseBody
-	public PageHelper<BaseOrder> searchTodoOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
+	public PageHelper<Order> searchTodoOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
 		//取得session中的登陆用户域账号，查询权限
 		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
@@ -387,7 +384,7 @@ public class OrderController {
 		}
 		// 只查询最新的版本
 		query.setLast(true);
-		PageHelper<BaseOrder> order = orderService.findOrders(query);
+		PageHelper<Order> order = orderService.findOrders(query);
 		
 		return order;
 	}
@@ -405,7 +402,7 @@ public class OrderController {
 	@ApiOperation(value = "查询订单详情", notes = "查询订单详情")
 	@GetMapping(value = "detail")
 	@ResponseBody
-	public AbsOrder getOrderDetail(@RequestParam String sequenceNumber, @RequestParam String version, @RequestParam(required = false) String orderType)
+	public Order getOrderDetail(@RequestParam String sequenceNumber, @RequestParam String version, @RequestParam(required = false) String orderType)
 			throws Exception {
 		if (orderType == null || orderType.trim().length() == 0) {
 			// get Order type with sequenceNumber
@@ -495,7 +492,7 @@ public class OrderController {
 	@PostMapping(value = "grossprofit")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<MaterialGroups> calcGrossProfit(@RequestBody BaseOrder order) throws Exception {
+	public List<MaterialGroups> calcGrossProfit(@RequestBody Order order) throws Exception {
 		return orderService.calcGrossProfit(order);
 	}
 	
@@ -509,7 +506,7 @@ public class OrderController {
 		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		AbsOrder order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+		Order order = orderService.findOrderDetail(sequenceNumber, version, orderType);
 		oo.setOrderTypeCode(orderType);	
 		mv.addObject("orderDetail",order);
 		return mv;
@@ -525,7 +522,7 @@ public class OrderController {
 		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		DealerOrder order = (DealerOrder) orderService.findOrderDetail(sequenceNumber, version, orderType);
+		Order order = (Order) orderService.findOrderDetail(sequenceNumber, version, orderType);
 		oo.setOrderTypeCode(orderType);	
 		mv.addObject("orderDetail",order);
 		return mv;
@@ -541,7 +538,7 @@ public class OrderController {
         if (orderType == null || orderType.trim().length() == 0) {
             orderType = orderService.getOrderType(sequenceNumber);
         }
-        AbsOrder order = orderService.findOrderDetail(sequenceNumber, version, orderType);
+        Order order = orderService.findOrderDetail(sequenceNumber, version, orderType);
         oo.setOrderTypeCode(orderType);
         mv.addObject("orderDetail",order);
         return mv;
@@ -559,7 +556,7 @@ public class OrderController {
 		if (orderType == null || orderType.trim().length() == 0) {
 			orderType = orderService.getOrderType(sequenceNumber);
 		}
-		AbsOrder order = null;
+		Order order = null;
 		
 		switch (orderType) {
 		case ORDER_TYPE_DEALER:

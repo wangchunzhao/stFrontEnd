@@ -35,9 +35,8 @@ import com.qhc.steigenberger.domain.ContractSignSys;
 import com.qhc.steigenberger.domain.Mail;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.Result;
-import com.qhc.steigenberger.domain.form.AbsOrder;
-import com.qhc.steigenberger.domain.form.BaseItem;
-import com.qhc.steigenberger.domain.form.BaseOrder;
+import com.qhc.steigenberger.domain.form.Order;
+import com.qhc.steigenberger.domain.form.Item;
 import com.qhc.steigenberger.util.NumberToCNUtil;
 import com.qhc.steigenberger.util.PageHelper;
 import com.qhc.steigenberger.util.Word2PdfUtil;
@@ -150,7 +149,7 @@ public class ContractService {
 			return pdfFile;
 		}
 
-		AbsOrder order = null;
+		Order order = null;
 		OrderQuery query = new OrderQuery();
 		query.setSequenceNumber(contract.getSequenceNumber());
 		query.setVersionId(contract.getVersionId());
@@ -160,10 +159,10 @@ public class ContractService {
 		List rows = page.getRows();
 		if (rows != null && rows.size() > 0) {
 			Object data = rows.get(0);
-			order = mapper.convertValue(data, BaseOrder.class);
+			order = mapper.convertValue(data, Order.class);
 		}
 
-		List<BaseItem> allList = order.getItems();
+		List<Item> allList = order.getItems();
 		Map<String, Object> paramSum = new HashMap<>();
 		Map<String, Object> params = new HashMap<>();
 		Map<String, Object> paraTable2 = new HashMap<>();
@@ -175,14 +174,14 @@ public class ContractService {
 		Double transferPrice = new Double(0.0D);
 		DecimalFormat df = new DecimalFormat("######0.00");
 		if (order != null) {
-			params.put("customerName", order.getContracterName());
+			params.put("customerName", order.getCustomerName());
 			params.put("companyAddress", contract.getPartyaAddress());
 			params.put("agentName", contract.getBroker());
 			params.put("companyPhone", contract.getCompanyTel());
 			params.put("bankName", contract.getBankName());
 			params.put("bankAccount", contract.getAccountNumber());
 			params.put("companyZipcode", contract.getInvoicePostCode());
-			paraTable2.put("customerName", order.getContracterName());
+			paraTable2.put("customerName", order.getCustomerName());
 			paraTable2.put("companyAddress", contract.getPartyaAddress());
 			paraTable2.put("agentName", contract.getBroker());
 			paraTable2.put("companyPhone", contract.getCompanyTel());
@@ -193,7 +192,7 @@ public class ContractService {
 		}
 
 		if (allList != null && allList.size() > 0) {
-			for (BaseItem item : allList) {
+			for (Item item : allList) {
 				String itemName = "";
 				if ("BG1P7E00000".equals(item.getMaterialCode())) {
 					// 产品实卖金额

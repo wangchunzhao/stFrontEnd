@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author wwang67
  *
  */
-public abstract class AbsCharacteristic {
+public class Characteristic {
 	
 	private Boolean optional;//可选、必选
 	@JsonProperty(value = "code")
 	private String configCode;//配置项
 	private String configValueCode;//配置值
 	
-	public AbsCharacteristic() {
+	public Characteristic() {
 		
 	}
 	
