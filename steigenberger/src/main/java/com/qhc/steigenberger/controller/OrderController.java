@@ -34,6 +34,7 @@ import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
+import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.Order;
@@ -47,29 +48,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("order")
-public class OrderController {
-
-//	private final static String CUSTOMER_CLASS_MAP = "customer_classes";
-//	private final static String SALES_TYPE_MAP = "sales_type";
-//	private final static String CURRENCY_MAP = "currencies";
-//	private final static String INCOTERMS_MAP = "incoterms";
-
-	//
-//	private final static String PAGE_DEALER = "newOrder/newOrder";
-//	//
-//	private final static String FORM_ORDER_DEALER = "dealerOrder";
-
-	//
-	private final static String FORM_BPM = "bpm";
-	private final static String FORM_SUBMIT = "submit";
-//	private final static String FORM_SAVE = "save";
-	private final static String FORM_MARGIN = "margin";
-	private final static String FORM_WTW_MARGIN = "wtw";
-
-	private final static String FORM_GROSS_PROFIT = "grossprofit";
-	private final static String FORM_SUBMIT_TYPE_3 = "3";
-	private final static String FORM_SUBMIT_TYPE_4 = "4";
-	
+public class OrderController extends BaseController {
 	//权限
 	private final static String allOrder = "1011";//查看所有订单
 	private final static String areaOrder = "1012";//查看本区域订单
@@ -105,10 +84,6 @@ public class OrderController {
     private final static String orderStatus1021="1021";//
     private final static String orderStatus1022="1022";//
 	
-	private final static String orderStatus9="9";//已下推SAP
-	private final static String orderStatus10="10";//BPM驳回
-	private final static String orderStatus11="11";//Selling Tool驳回
-	private final static String orderStatus12="12";//待支持经理审批
 	
 	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
 	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
@@ -140,25 +115,57 @@ public class OrderController {
 		if(user.getRegion()!=null){
 			orderData.setUserOfficeCode(user.getRegion().getCode());
 		}
-//		switch (action) {
-//			case FORM_BPM:
-//				orderData.setSubmitType(5);
-//				break;
-//			case FORM_WTW_MARGIN:
-//				orderData.setSubmitType(4);
-//				break;
-//			case FORM_MARGIN:
-//				orderData.setSubmitType(3);
-//				break;
-//			case FORM_SUBMIT:
-//				orderData.setSubmitType(2);
-//				break;
-//			default:
-//				orderData.setSubmitType(1);
-//		}
 		
 		orderService.saveOrder(orderData);
 		return MenuController.goDealerOrder();
+	}
+	
+	/**
+	 * 保存订单
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("")
+	public ModelAndView saveOrder(@RequestBody Order order, HttpServletRequest request) {
+		String identityName = getValueByAttribute(request, Constants.IDENTITY).toString();
+		
+		orderService.saveOrder(order);
+		
+		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
+			if (order.getIsSpecial() == 1) {
+				return MenuController.goNonStandardDealerOrder();
+			} else {
+				return MenuController.goDealerOrder();
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 保存订单
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("submit")
+	public ModelAndView submitOrder(@RequestBody Order order, HttpServletRequest request) {
+		String identityName = getValueByAttribute(request, Constants.IDENTITY).toString();
+		
+		orderService.submit(order);
+		
+		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
+			if (order.getIsSpecial() == 1) {
+				return MenuController.goNonStandardDealerOrder();
+			} else {
+				return MenuController.goDealerOrder();
+			}
+		}
+		
+		return null;
 	}
 
 	@RequestMapping("customers")

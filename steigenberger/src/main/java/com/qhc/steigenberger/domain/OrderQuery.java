@@ -8,7 +8,8 @@ import java.util.List;
  *
  */
 public class OrderQuery {
-	private String orderId;
+	private Integer id; // order info id
+	private Integer orderId; // order id
 	private String sequenceNumber;//模糊查询
 	private String status;
 	private String versionId;
@@ -35,10 +36,16 @@ public class OrderQuery {
 	
 	private boolean includeDetail = false;
 	
-	public String getOrderId() {
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(String orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 	public String getSequenceNumber() {

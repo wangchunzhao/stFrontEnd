@@ -1,53 +1,75 @@
-/**
- * 
- */
 package com.qhc.steigenberger.domain.form;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * @author wang@dxc.com
+ * @author Walker
  *
  */
-public abstract class Item {
-	private Integer rowNumber;//行号
-	private String materialCode;//物料号,专用号
+public class Item {
+	private Integer id;
+	private Integer rowNum;//行号
+	private String materialCode;//物料编码,专用号
 	private String materialName;//物料名称,规格型号
-	private boolean configurable;//是否为可配置物料
-	private boolean purchased;//类型  1:采购  0:生产
+	private Integer isConfigurable;//是否为可配置物料，物料信息带出
+	private Integer isPurchased;//物料属性  1:采购  0:生产物料类型，物料信息带出
+	private String materialGroupCode;//物料类型代码，SAP分组，物料信息带出
+	private String materialgroupName;//物料类型名称
+	private String unitCode;//计量单位code，物料信息带出
+	private String unitName;//计量单位名称，物料信息带出
 	private double quantity;//数量
-	private String unitName;//计量单位名称
-	private String unitCode;//计量单位code
-	private double acturalPrice;//产品实卖价
-	private double transcationPrice;//转移价
-	private double acturalPricaOfOptional;//可选项实卖价
-	private double transcationPriceOfOptional;//可选项转移价
-	private double B2CPriceEstimated;//B2C评估价
-	private double B2CCostOfEstimated;//B2C评估成本
-	private double retailPrice;//市场零售价
-	private double standardPrice;//标准价格
-	private double discount;//折扣
+	private double standardPrice;//标准价格，客户信息
+	private double retailPrice;//市场零售价，客户信息
+	private double retailAmount;// 市场零售金额
+	private double transationPrice;//转移价，客户信息
+	private double yearPurchasePrice;//年采价，大客户有，客户信息
+	private double actualPrice;//产品实卖价
+	private double actualAmount;//产品实卖金额
+	private double optionalActualPrica;//可选项实卖价
+	private double optionalActualAmount;//可选项实卖金额
+	private double optionalTransationPrice;//可选项转移价
+	private double b2cEstimatedPrice;//B2C预估价
+	private double b2cEstimatedAmount;// B2C预估金额
+	private double b2cEstimatedCost;//B2C预估成本
+	private double actualPriceSum;// 实卖价合计
+	private double actualAmountSum;// 实卖金额合计
+	private double transactionPriceSum;// 转移价合计
+	
+	private double discount;//折扣，商品折扣，柜体和机组有，其他默认为100
+	
+	private String itemCategory;//行项目类别
+	private String itemRequirementPlan;//需求计划
 	private int period;//生产、采购周期
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date deliveryDate;//最早交货时间
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
-	private Date shippDate; //要求发货时间  自己填
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date produceDate;//生产开始时间
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
-	private Date onStoreDate;//入库时间	
-	private String groupCode;//物料类型代码
-	private String groupName;//物料类型名称
-	private String itemCategory;//行项目类别
-	private String itemRequirementPlan;//需求计划
+	private Date shippDate; //要求发货时间  自己填
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
+	private Date onStoreDate;//入库时间
+	private Integer purchaseCycle; // 采购周期
+	
+	private Integer deliveryAddressSeq; // 发货地址序号
+	private Integer deliveryAddressId; // 发货地址ID
+	private String provinceCode; // 省code 从发货地址带出
+	private String provinceName; // 省code 从发货地址带出 
+	private String cityCode; // 市code 从发货地址带出
+	private String cityName; // 市code 从发货地址带出
+	private String districtCode; // 区code 从发货地址带出
+	private String districtName; // 区code 从发货地址带出
+	private String address; // 地址 从发货地址带出
+	
 	private String b2cComments;//B2C备注
 	private String specialComments;//特殊备注
+	private String colorComments; // color 备注
+	
+	
+	// TODO 经销商不涉及
 	private String configComments;//配置表备注(配置表页面)
 	private String mosaicImage;//拼接图备注(配置表页面)
 	private String attachedImage;//拼接图附件(配置表页面)
@@ -59,30 +81,237 @@ public abstract class Item {
 	private String requestPackage;
 	private String requestNameplate;
 	private String requestCircult;
+	
 	private String comments;
-	private String colorComments;
 	private String clazzCode;//物料分类代码
 	
-	private String provinceCode;
-	private String provinceName;
-	private String cityCode;
-	private String cityName;
-	private String districtCode;
-	private String districtName;
-	private String address;
-	
-	
-	public String getDistrictCode() {
-		return districtCode;
+	public Integer getId() {
+		return id;
 	}
-	public void setDistrictCode(String districtCode) {
-		this.districtCode = districtCode;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getDistrictName() {
-		return districtName;
+	public Integer getRowNum() {
+		return rowNum;
 	}
-	public void setDistrictName(String districtName) {
-		this.districtName = districtName;
+	public void setRowNum(Integer rowNum) {
+		this.rowNum = rowNum;
+	}
+	public String getMaterialCode() {
+		return materialCode;
+	}
+	public void setMaterialCode(String materialCode) {
+		this.materialCode = materialCode;
+	}
+	public String getMaterialName() {
+		return materialName;
+	}
+	public void setMaterialName(String materialName) {
+		this.materialName = materialName;
+	}
+	public Integer getIsConfigurable() {
+		return isConfigurable;
+	}
+	public void setIsConfigurable(Integer isConfigurable) {
+		this.isConfigurable = isConfigurable;
+	}
+	public Integer getIsPurchased() {
+		return isPurchased;
+	}
+	public void setIsPurchased(Integer isPurchased) {
+		this.isPurchased = isPurchased;
+	}
+	public String getMaterialGroupCode() {
+		return materialGroupCode;
+	}
+	public void setMaterialGroupCode(String materialGroupCode) {
+		this.materialGroupCode = materialGroupCode;
+	}
+	public String getMaterialgroupName() {
+		return materialgroupName;
+	}
+	public void setMaterialgroupName(String materialgroupName) {
+		this.materialgroupName = materialgroupName;
+	}
+	public String getUnitCode() {
+		return unitCode;
+	}
+	public void setUnitCode(String unitCode) {
+		this.unitCode = unitCode;
+	}
+	public String getUnitName() {
+		return unitName;
+	}
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+	public double getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+	public double getStandardPrice() {
+		return standardPrice;
+	}
+	public void setStandardPrice(double standardPrice) {
+		this.standardPrice = standardPrice;
+	}
+	public double getRetailPrice() {
+		return retailPrice;
+	}
+	public void setRetailPrice(double retailPrice) {
+		this.retailPrice = retailPrice;
+	}
+	public double getRetailAmount() {
+		return retailAmount;
+	}
+	public void setRetailAmount(double retailAmount) {
+		this.retailAmount = retailAmount;
+	}
+	public double getTransationPrice() {
+		return transationPrice;
+	}
+	public void setTransationPrice(double transationPrice) {
+		this.transationPrice = transationPrice;
+	}
+	public double getYearPurchasePrice() {
+		return yearPurchasePrice;
+	}
+	public void setYearPurchasePrice(double yearPurchasePrice) {
+		this.yearPurchasePrice = yearPurchasePrice;
+	}
+	public double getActualPrice() {
+		return actualPrice;
+	}
+	public void setActualPrice(double actualPrice) {
+		this.actualPrice = actualPrice;
+	}
+	public double getActualAmount() {
+		return actualAmount;
+	}
+	public void setActualAmount(double actualAmount) {
+		this.actualAmount = actualAmount;
+	}
+	public double getOptionalActualPrica() {
+		return optionalActualPrica;
+	}
+	public void setOptionalActualPrica(double optionalActualPrica) {
+		this.optionalActualPrica = optionalActualPrica;
+	}
+	public double getOptionalActualAmount() {
+		return optionalActualAmount;
+	}
+	public void setOptionalActualAmount(double optionalActualAmount) {
+		this.optionalActualAmount = optionalActualAmount;
+	}
+	public double getOptionalTransationPrice() {
+		return optionalTransationPrice;
+	}
+	public void setOptionalTransationPrice(double optionalTransationPrice) {
+		this.optionalTransationPrice = optionalTransationPrice;
+	}
+	public double getB2cEstimatedPrice() {
+		return b2cEstimatedPrice;
+	}
+	public void setB2cEstimatedPrice(double b2cEstimatedPrice) {
+		this.b2cEstimatedPrice = b2cEstimatedPrice;
+	}
+	public double getB2cEstimatedAmount() {
+		return b2cEstimatedAmount;
+	}
+	public void setB2cEstimatedAmount(double b2cEstimatedAmount) {
+		this.b2cEstimatedAmount = b2cEstimatedAmount;
+	}
+	public double getB2cEstimatedCost() {
+		return b2cEstimatedCost;
+	}
+	public void setB2cEstimatedCost(double b2cEstimatedCost) {
+		this.b2cEstimatedCost = b2cEstimatedCost;
+	}
+	public double getActualPriceSum() {
+		return actualPriceSum;
+	}
+	public void setActualPriceSum(double actualPriceSum) {
+		this.actualPriceSum = actualPriceSum;
+	}
+	public double getActualAmountSum() {
+		return actualAmountSum;
+	}
+	public void setActualAmountSum(double actualAmountSum) {
+		this.actualAmountSum = actualAmountSum;
+	}
+	public double getTransactionPriceSum() {
+		return transactionPriceSum;
+	}
+	public void setTransactionPriceSum(double transactionPriceSum) {
+		this.transactionPriceSum = transactionPriceSum;
+	}
+	public double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+	public String getItemCategory() {
+		return itemCategory;
+	}
+	public void setItemCategory(String itemCategory) {
+		this.itemCategory = itemCategory;
+	}
+	public String getItemRequirementPlan() {
+		return itemRequirementPlan;
+	}
+	public void setItemRequirementPlan(String itemRequirementPlan) {
+		this.itemRequirementPlan = itemRequirementPlan;
+	}
+	public int getPeriod() {
+		return period;
+	}
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+	public Date getProduceDate() {
+		return produceDate;
+	}
+	public void setProduceDate(Date produceDate) {
+		this.produceDate = produceDate;
+	}
+	public Date getShippDate() {
+		return shippDate;
+	}
+	public void setShippDate(Date shippDate) {
+		this.shippDate = shippDate;
+	}
+	public Date getOnStoreDate() {
+		return onStoreDate;
+	}
+	public void setOnStoreDate(Date onStoreDate) {
+		this.onStoreDate = onStoreDate;
+	}
+	public Integer getPurchaseCycle() {
+		return purchaseCycle;
+	}
+	public void setPurchaseCycle(Integer purchaseCycle) {
+		this.purchaseCycle = purchaseCycle;
+	}
+	public Integer getDeliveryAddressSeq() {
+		return deliveryAddressSeq;
+	}
+	public void setDeliveryAddressSeq(Integer deliveryAddressSeq) {
+		this.deliveryAddressSeq = deliveryAddressSeq;
+	}
+	public Integer getDeliveryAddressId() {
+		return deliveryAddressId;
+	}
+	public void setDeliveryAddressId(Integer deliveryAddressId) {
+		this.deliveryAddressId = deliveryAddressId;
 	}
 	public String getProvinceCode() {
 		return provinceCode;
@@ -108,20 +337,83 @@ public abstract class Item {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
+	public String getDistrictCode() {
+		return districtCode;
+	}
+	public void setDistrictCode(String districtCode) {
+		this.districtCode = districtCode;
+	}
+	public String getDistrictName() {
+		return districtName;
+	}
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
 	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public void setConfigurable(boolean configurable) {
-		this.configurable = configurable;
+	public String getB2cComments() {
+		return b2cComments;
 	}
-	public String getClazzCode() {
-		return clazzCode;
+	public void setB2cComments(String b2cComments) {
+		this.b2cComments = b2cComments;
 	}
-	public void setClazzCode(String clazzCode) {
-		this.clazzCode = clazzCode;
+	public String getSpecialComments() {
+		return specialComments;
+	}
+	public void setSpecialComments(String specialComments) {
+		this.specialComments = specialComments;
+	}
+	public String getColorComments() {
+		return colorComments;
+	}
+	public void setColorComments(String colorComments) {
+		this.colorComments = colorComments;
+	}
+	public String getConfigComments() {
+		return configComments;
+	}
+	public void setConfigComments(String configComments) {
+		this.configComments = configComments;
+	}
+	public String getMosaicImage() {
+		return mosaicImage;
+	}
+	public void setMosaicImage(String mosaicImage) {
+		this.mosaicImage = mosaicImage;
+	}
+	public String getAttachedImage() {
+		return attachedImage;
+	}
+	public void setAttachedImage(String attachedImage) {
+		this.attachedImage = attachedImage;
+	}
+	public List<Characteristic> getConfigs() {
+		return configs;
+	}
+	public void setConfigs(List<Characteristic> configs) {
+		this.configs = configs;
+	}
+	public int getIsVirtual() {
+		return isVirtual;
+	}
+	public void setIsVirtual(int isVirtual) {
+		this.isVirtual = isVirtual;
+	}
+	public double getVolumeCube() {
+		return volumeCube;
+	}
+	public void setVolumeCube(double volumeCube) {
+		this.volumeCube = volumeCube;
+	}
+	public double getFeight() {
+		return feight;
+	}
+	public void setFeight(double feight) {
+		this.feight = feight;
 	}
 	public String getRequestBrand() {
 		return requestBrand;
@@ -153,222 +445,39 @@ public abstract class Item {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public String getColorComments() {
-		return colorComments;
+	public String getClazzCode() {
+		return clazzCode;
 	}
-	public void setColorComments(String colorComments) {
-		this.colorComments = colorComments;
+	public void setClazzCode(String clazzCode) {
+		this.clazzCode = clazzCode;
 	}
-	public double getFeight() {
-		return feight;
-	}
-	public void setFeight(double feight) {
-		this.feight = feight;
-	}
-	public double getVolumeCube() {
-		return volumeCube;
-	}
-	public void setVolumeCube(double volumeCube) {
-		this.volumeCube = volumeCube;
-	}
-	public int getIsVirtual() {
-		return isVirtual;
-	}
-	public void setIsVirtual(int isVirtual) {
-		this.isVirtual = isVirtual;
-	}
-	public Integer getRowNumber() {
-		return rowNumber;
-	}
-	public void setRowNumber(Integer rowNumber) {
-		this.rowNumber = rowNumber;
-	}
-	public String getMaterialCode() {
-		return materialCode;
-	}
-	public void setMaterialCode(String materialCode) {
-		this.materialCode = materialCode;
-	}
-	public String getMaterialName() {
-		return materialName;
-	}
-	public void setMaterialName(String materialName) {
-		this.materialName = materialName;
+	@Override
+	public String toString() {
+		return "Item [rowNum=" + rowNum + ", materialCode=" + materialCode + ", materialName=" + materialName
+				+ ", isConfigurable=" + isConfigurable + ", isPurchased=" + isPurchased + ", materialGroupCode="
+				+ materialGroupCode + ", materialgroupName=" + materialgroupName + ", unitCode=" + unitCode
+				+ ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice=" + standardPrice
+				+ ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount + ", transationPrice="
+				+ transationPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice=" + actualPrice
+				+ ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrica
+				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransationPrice="
+				+ optionalTransationPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
+				+ b2cEstimatedAmount + ", b2cEstimatedCost=" + b2cEstimatedCost + ", actualPriceSum=" + actualPriceSum
+				+ ", actualAmountSum=" + actualAmountSum + ", transactionPriceSum=" + transactionPriceSum
+				+ ", discount=" + discount + ", itemCategory=" + itemCategory + ", itemRequirementPlan="
+				+ itemRequirementPlan + ", period=" + period + ", deliveryDate=" + deliveryDate + ", produceDate="
+				+ produceDate + ", shippDate=" + shippDate + ", onStoreDate=" + onStoreDate + ", purchaseCycle="
+				+ purchaseCycle + ", deliveryAddressSeq=" + deliveryAddressSeq + ", deliveryAddressId="
+				+ deliveryAddressId + ", provinceCode=" + provinceCode + ", provinceName=" + provinceName
+				+ ", cityCode=" + cityCode + ", cityName=" + cityName + ", districtCode=" + districtCode
+				+ ", districtName=" + districtName + ", address=" + address + ", b2cComments=" + b2cComments
+				+ ", specialComments=" + specialComments + ", colorComments=" + colorComments + ", configComments="
+				+ configComments + ", mosaicImage=" + mosaicImage + ", attachedImage=" + attachedImage + ", configs="
+				+ configs + ", isVirtual=" + isVirtual + ", volumeCube=" + volumeCube + ", feight=" + feight
+				+ ", requestBrand=" + requestBrand + ", requestPackage=" + requestPackage + ", requestNameplate="
+				+ requestNameplate + ", requestCircult=" + requestCircult + ", comments=" + comments + ", clazzCode="
+				+ clazzCode + "]";
 	}
 	
-	public boolean isConfigurable() {
-		return configurable;
-	}
-	public void setIsConfigurable(boolean configurable) {
-		this.configurable = configurable;
-	}
-	public boolean isPurchased() {
-		return purchased;
-	}
-	public void setPurchased(boolean purchased) {
-		this.purchased = purchased;
-	}
-	public double getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-	public String getUnitName() {
-		return unitName;
-	}
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
-	public String getUnitCode() {
-		return unitCode;
-	}
-	public void setUnitCode(String unitCode) {
-		this.unitCode = unitCode;
-	}
-	public double getActuralPrice() {
-		return acturalPrice;
-	}
-	public void setActuralPrice(double acturalPrice) {
-		this.acturalPrice = acturalPrice;
-	}
-	public double getTranscationPrice() {
-		return transcationPrice;
-	}
-	public void setTranscationPrice(double transcationPrice) {
-		this.transcationPrice = transcationPrice;
-	}
-	public double getActuralPricaOfOptional() {
-		return acturalPricaOfOptional;
-	}
-	public void setActuralPricaOfOptional(double acturalPricaOfOptional) {
-		this.acturalPricaOfOptional = acturalPricaOfOptional;
-	}
-	public double getTranscationPriceOfOptional() {
-		return transcationPriceOfOptional;
-	}
-	public void setTranscationPriceOfOptional(double transcationPriceOfOptional) {
-		this.transcationPriceOfOptional = transcationPriceOfOptional;
-	}
-	public double getB2CPriceEstimated() {
-		return B2CPriceEstimated;
-	}
-	public void setB2CPriceEstimated(double b2cPriceEstimated) {
-		B2CPriceEstimated = b2cPriceEstimated;
-	}
-	public double getB2CCostOfEstimated() {
-		return B2CCostOfEstimated;
-	}
-	public void setB2CCostOfEstimated(double b2cCostOfEstimated) {
-		B2CCostOfEstimated = b2cCostOfEstimated;
-	}
-	public double getRetailPrice() {
-		return retailPrice;
-	}
-	public void setRetailPrice(double retailPrice) {
-		this.retailPrice = retailPrice;
-	}
-	public double getStandardPrice() {
-		return standardPrice;
-	}
-	public void setStandardPrice(double standardPrice) {
-		this.standardPrice = standardPrice;
-	}
-	public double getDiscount() {
-		return discount;
-	}
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
-	public int getPeriod() {
-		return period;
-	}
-	public void setPeriod(int period) {
-		this.period = period;
-	}
-	public Date getDeliveryDate() {
-		return deliveryDate;
-	}
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
-	public Date getShippDate() {
-		return shippDate;
-	}
-	public void setShippDate(Date shippDate) {
-		this.shippDate = shippDate;
-	}
-	public Date getProduceDate() {
-		return produceDate;
-	}
-	public void setProduceDate(Date produceDate) {
-		this.produceDate = produceDate;
-	}
-	public Date getOnStoreDate() {
-		return onStoreDate;
-	}
-	public void setOnStoreDate(Date onStoreDate) {
-		this.onStoreDate = onStoreDate;
-	}
-	public String getGroupCode() {
-		return groupCode;
-	}
-	public void setGroupCode(String groupCode) {
-		this.groupCode = groupCode;
-	}
-	public String getGroupName() {
-		return groupName;
-	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-	public String getItemCategory() {
-		return itemCategory;
-	}
-	public void setItemCategory(String itemCategory) {
-		this.itemCategory = itemCategory;
-	}
-	public String getItemRequirementPlan() {
-		return itemRequirementPlan;
-	}
-	public void setItemRequirementPlan(String itemRequirementPlan) {
-		this.itemRequirementPlan = itemRequirementPlan;
-	}
-	public String getB2cComments() {
-		return b2cComments;
-	}
-	public void setB2cComments(String b2cComments) {
-		this.b2cComments = b2cComments;
-	}
-	public String getSpecialComments() {
-		return specialComments;
-	}
-	public void setSpecialComments(String specialComments) {
-		this.specialComments = specialComments;
-	}
-	public String getConfigComments() {
-		return configComments;
-	}
-	public void setConfigComments(String configComments) {
-		this.configComments = configComments;
-	}
-	public String getMosaicImage() {
-		return mosaicImage;
-	}
-	public void setMosaicImage(String mosaicImage) {
-		this.mosaicImage = mosaicImage;
-	}
-	public String getAttachedImage() {
-		return attachedImage;
-	}
-	public void setAttachedImage(String attachedImage) {
-		this.attachedImage = attachedImage;
-	}
-	public List<Characteristic> getConfigs() {
-		return configs;
-	}
-	public void setConfigs(List<Characteristic> configs) {
-		this.configs = configs;
-	}
 	
 }

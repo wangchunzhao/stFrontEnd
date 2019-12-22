@@ -13,11 +13,24 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  *
  */
 public class Order {
+	// 订单STATUS
+	public final static String ORDER_STATUS_STRAFT = "00"; //草稿
+	public final static String ORDER_STATUS_B2C = "01"; // 待B2C审批
+	public final static String ORDER_STATUS_ENGINER = "02"; // 待工程人员审批
+	public final static String ORDER_STATUS_MANAGER = "03"; // 待支持经理审批
+	public final static String ORDER_STATUS_BPM = "04"; // 提交到BPM
+	public final static String ORDER_STATUS_APPROVED = "05"; // BPM审批通过
+	public final static String ORDER_STATUS_APPROVED_UPDATE = "06"; // 订单变更BPM审批通过
+	public final static String ORDER_STATUS_SAP = "09"; // 已下推SAP
+	public final static String ORDER_STATUS_REJECT = "10"; // Selling Tool驳回
+	public final static String ORDER_STATUS_REJECT_BPM = "11"; // BPM驳回
 	
-	public final static String ORDER_TYPE_CODE_DEALER = "Z001";
-	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "Z002";
-	public final static String ORDER_TYPE_CODE_BULK = "Z003";
+	// 订单类型sap_order_type
+	public final static String ORDER_TYPE_CODE_DEALER = "ZH0D";
+	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "ZH0T";
+	public final static String ORDER_TYPE_CODE_BULK = "ZH0M";
 	
+	// 性质分类，客户性质 sap_customer_class
 	public final static String ORDER_CUSTOMER_DEALER_CODE="01";
 	public final static String ORDER_CUSTOMER_KEY_ACCOUNT_CODE="02";
 	
@@ -39,6 +52,15 @@ public class Order {
 	private String status; // 状态
 	private List<String> versions; // 历史版本
 	private String userOfficeCode;//用户所在销售办公室，创建人用户信息中带出
+	/**
+	 * 销售工具订单类型
+		1 经销商标准折扣下单
+		2 经销商非标准折扣下单
+		3 直签客户投标报价
+		4 直签客户下定单
+		5 备货 
+	 */
+	private String stOrderType; // 销售工具的订单类型
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
@@ -55,19 +77,19 @@ public class Order {
 	private String customerName;//签约单位 Contract Name
 	private String customerClazz;//性质分类代码，经销商/直签
 	private String customerClazzName;//性质分类名称
-	private String terminalType;//终端客户性质，是否是大客户的客户性质，即客户级别（sap_industry_code），由客户信息带出？？？，可以修改？客户信息中已有
+	private String terminalType;//终端客户性质，是否是大客户的客户性质，即客户级别（sap_industry_code），大客户由客户信息带出，经销商选择
 	private String terminalTypeName;//终端客户性质名称
 	private String shopName;//店名 shop name
 	private String recordCode;//项目报备编号
-	private String salesCode;//客户经理 Customer manager，创建人
+	private String salesCode;//客户经理 Customer manager
 	private String salesName;//客户经理 Customer manager
 	private String salesTel;//客户经理电话 Customer manager Tel
 	private int isConvenientStore;//是否便利店 convenience store
 	private int isNew;//是否新客户 new customer
 	private int isReformed;//是否改造店
 	private int isYearpurchase;// 是否年采价，客户信息带出
-	private String customerIndustry; // 隶属关系（sap_industry）
-	private String customerIndustryName; // 隶属关系（sap_industry）
+	private String customerIndustry; // 隶属关系（sap_industry）客户信息带出
+	private String customerIndustryName; // 隶属关系（sap_industry）客户信息带出
 	
 	/**
 	 * 合同详细信息 Contract details
@@ -86,7 +108,7 @@ public class Order {
 	private String currencyName;//币种名称
 	private double currencyExchange;//汇率 exchange rate
 	private double itemsAmount;//购销明细金额合计 Aggregate amount
-	private String contractManager;//合同管理员
+	private String contractManager;// 支持经理，合同管理员
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private String contractCreateTime;//合同录入时间，由合同信息（k_contract）带出
@@ -101,8 +123,8 @@ public class Order {
 	private int warranty;//保修年限，大客户可以修改
 	private String installType;//安装方式 installation
 	private String installTypeName;//安装方式名称
-	private String reveiveType;//收货方式 Receiving way
-	private String reveiveTypeName;//收货方式名称
+	private String receiveType;//收货方式 Receiving way
+	private String receiveTypeName;//收货方式名称
 	private String transferType;//运输类型code
 	private String transferTypeName;//运输类型名称
 	private double freight; // 外销运费	
@@ -135,6 +157,17 @@ public class Order {
 	private int isTerm1;//柜体控制阀件是否甲供
 	private int isTerm2;//分体柜是否远程监控
 	private int isTerm3;//立柜柜体是否在地下室
+
+	/* 工程安装费 */
+	private Double installFee = null;
+	/* 工程材料费 */
+	private Double materialFee = null;
+	/* 工程电气费 */
+	private Double electricalFee = null;
+	/* 工程冷库费 */
+	private Double refrigeratoryFee = null;
+	/* 工程维保费 */
+	private Double maintenanceFee = null;
 	
 	/**
 	 * 购销明细 Purchase and sale subsidiar
@@ -148,6 +181,7 @@ public class Order {
 
 	private List<Item> items;
 	private int isB2c; // 是否由B2C备注
+	private String grossProfitMargin; // 订单毛利率
 	
 	private String comments;//备注
 	
@@ -250,6 +284,14 @@ public class Order {
 
 	public void setUserOfficeCode(String userOfficeCode) {
 		this.userOfficeCode = userOfficeCode;
+	}
+
+	public String getStOrderType() {
+		return stOrderType;
+	}
+
+	public void setStOrderType(String stOrderType) {
+		this.stOrderType = stOrderType;
 	}
 
 	public Date getSubmitTime() {
@@ -588,20 +630,20 @@ public class Order {
 		this.installTypeName = installTypeName;
 	}
 
-	public String getReveiveType() {
-		return reveiveType;
+	public String getReceiveType() {
+		return receiveType;
 	}
 
-	public void setReveiveType(String reveiveType) {
-		this.reveiveType = reveiveType;
+	public void setReceiveType(String receiveType) {
+		this.receiveType = receiveType;
 	}
 
-	public String getReveiveTypeName() {
-		return reveiveTypeName;
+	public String getReceiveTypeName() {
+		return receiveTypeName;
 	}
 
-	public void setReveiveTypeName(String reveiveTypeName) {
-		this.reveiveTypeName = reveiveTypeName;
+	public void setReceiveTypeName(String receiveTypeName) {
+		this.receiveTypeName = receiveTypeName;
 	}
 
 	public String getTransferType() {
@@ -780,6 +822,46 @@ public class Order {
 		this.isTerm3 = isTerm3;
 	}
 
+	public Double getInstallFee() {
+		return installFee;
+	}
+
+	public void setInstallFee(Double installFee) {
+		this.installFee = installFee;
+	}
+
+	public Double getMaterialFee() {
+		return materialFee;
+	}
+
+	public void setMaterialFee(Double materialFee) {
+		this.materialFee = materialFee;
+	}
+
+	public Double getElectricalFee() {
+		return electricalFee;
+	}
+
+	public void setElectricalFee(Double electricalFee) {
+		this.electricalFee = electricalFee;
+	}
+
+	public Double getRefrigeratoryFee() {
+		return refrigeratoryFee;
+	}
+
+	public void setRefrigeratoryFee(Double refrigeratoryFee) {
+		this.refrigeratoryFee = refrigeratoryFee;
+	}
+
+	public Double getMaintenanceFee() {
+		return maintenanceFee;
+	}
+
+	public void setMaintenanceFee(Double maintenanceFee) {
+		this.maintenanceFee = maintenanceFee;
+	}
+
 	public Date getEarliestDeliveryDate() {
 		return earliestDeliveryDate;
 	}
@@ -810,6 +892,14 @@ public class Order {
 
 	public void setIsB2c(int isB2c) {
 		this.isB2c = isB2c;
+	}
+
+	public String getGrossProfitMargin() {
+		return grossProfitMargin;
+	}
+
+	public void setGrossProfitMargin(String grossProfitMargin) {
+		this.grossProfitMargin = grossProfitMargin;
 	}
 
 	public String getComments() {
@@ -867,16 +957,16 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "OrderDto [createTime=" + createTime + ", creater=" + creater + ", createrName=" + createrName
-				+ ", updateTime=" + updateTime + ", updater=" + updater + ", updaterName=" + updaterName + ", version="
-				+ version + ", status=" + status + ", versions=" + versions + ", userOfficeCode=" + userOfficeCode
-				+ ", submitTime=" + submitTime + ", submitBpmTime=" + submitBpmTime + ", orderType=" + orderType
-				+ ", customerCode=" + customerCode + ", customerName=" + customerName + ", customerClazz="
-				+ customerClazz + ", customerClazzName=" + customerClazzName + ", terminalType=" + terminalType
-				+ ", terminalTypeName=" + terminalTypeName + ", shopName=" + shopName + ", recordCode=" + recordCode
-				+ ", salesCode=" + salesCode + ", salesName=" + salesName + ", salesTel=" + salesTel
-				+ ", isConvenientStore=" + isConvenientStore + ", isNew=" + isNew + ", isReformed=" + isReformed
-				+ ", isYearpurchase=" + isYearpurchase + ", customerIndustry=" + customerIndustry
+		return "OrderDto [id=" + id + ", orderId=" + orderId + ", createTime=" + createTime + ", creater=" + creater
+				+ ", createrName=" + createrName + ", updateTime=" + updateTime + ", updater=" + updater
+				+ ", updaterName=" + updaterName + ", version=" + version + ", status=" + status + ", versions="
+				+ versions + ", userOfficeCode=" + userOfficeCode + ", submitTime=" + submitTime + ", submitBpmTime="
+				+ submitBpmTime + ", orderType=" + orderType + ", customerCode=" + customerCode + ", customerName="
+				+ customerName + ", customerClazz=" + customerClazz + ", customerClazzName=" + customerClazzName
+				+ ", terminalType=" + terminalType + ", terminalTypeName=" + terminalTypeName + ", shopName=" + shopName
+				+ ", recordCode=" + recordCode + ", salesCode=" + salesCode + ", salesName=" + salesName + ", salesTel="
+				+ salesTel + ", isConvenientStore=" + isConvenientStore + ", isNew=" + isNew + ", isReformed="
+				+ isReformed + ", isYearpurchase=" + isYearpurchase + ", customerIndustry=" + customerIndustry
 				+ ", customerIndustryName=" + customerIndustryName + ", sequenceNumber=" + sequenceNumber
 				+ ", contractNumber=" + contractNumber + ", saleType=" + saleType + ", taxRate=" + taxRate
 				+ ", incoterm=" + incoterm + ", incotermName=" + incotermName + ", incotermContect=" + incotermContect
@@ -885,8 +975,8 @@ public class Order {
 				+ ", itemsAmount=" + itemsAmount + ", contractManager=" + contractManager + ", contractCreateTime="
 				+ contractCreateTime + ", officeCode=" + officeCode + ", officeName=" + officeName + ", groupCode="
 				+ groupCode + ", groupName=" + groupName + ", warranty=" + warranty + ", installType=" + installType
-				+ ", installTypeName=" + installTypeName + ", reveiveType=" + reveiveType + ", reveiveTypeName="
-				+ reveiveTypeName + ", transferType=" + transferType + ", transferTypeName=" + transferTypeName
+				+ ", installTypeName=" + installTypeName + ", receiveType=" + receiveType + ", receiveTypeName="
+				+ receiveTypeName + ", transferType=" + transferType + ", transferTypeName=" + transferTypeName
 				+ ", freight=" + freight + ", contactor1Id=" + contactor1Id + ", contactor1Tel=" + contactor1Tel
 				+ ", contactor2Id=" + contactor2Id + ", contactor2Tel=" + contactor2Tel + ", contactor3Id="
 				+ contactor3Id + ", contactor3Tel=" + contactor3Tel + ", deliveryAddress=" + deliveryAddress
@@ -895,47 +985,8 @@ public class Order {
 				+ discount + ", isLongterm=" + isLongterm + ", isSpecial=" + isSpecial + ", paymentType=" + paymentType
 				+ ", payments=" + payments + ", isTerm1=" + isTerm1 + ", isTerm2=" + isTerm2 + ", isTerm3=" + isTerm3
 				+ ", earliestDeliveryDate=" + earliestDeliveryDate + ", earliestProductDate=" + earliestProductDate
-				+ ", items=" + items + ", isB2c=" + isB2c + ", comments=" + comments + ", attachments=" + attachments
-				+ ", getCreateTime()=" + getCreateTime() + ", getCreater()=" + getCreater() + ", getCreaterName()="
-				+ getCreaterName() + ", getUpdateTime()=" + getUpdateTime() + ", getUpdater()=" + getUpdater()
-				+ ", getUpdaterName()=" + getUpdaterName() + ", getVersion()=" + getVersion() + ", getStatus()="
-				+ getStatus() + ", getVersions()=" + getVersions() + ", getUserOfficeCode()=" + getUserOfficeCode()
-				+ ", getSubmitTime()=" + getSubmitTime() + ", getSubmitBpmTime()=" + getSubmitBpmTime()
-				+ ", getOrderType()=" + getOrderType() + ", getCustomerCode()=" + getCustomerCode()
-				+ ", getCustomerName()=" + getCustomerName() + ", getCustomerClazz()=" + getCustomerClazz()
-				+ ", getCustomerClazzName()=" + getCustomerClazzName() + ", getTerminalType()=" + getTerminalType()
-				+ ", getTerminalTypeName()=" + getTerminalTypeName() + ", getShopName()=" + getShopName()
-				+ ", getRecordCode()=" + getRecordCode() + ", getSalesCode()=" + getSalesCode() + ", getSalesName()="
-				+ getSalesName() + ", getSalesTel()=" + getSalesTel() + ", getIsConvenientStore()="
-				+ getIsConvenientStore() + ", getIsNew()=" + getIsNew() + ", getIsReformed()=" + getIsReformed()
-				+ ", getIsYearpurchase()=" + getIsYearpurchase() + ", getCustomerIndustry()=" + getCustomerIndustry()
-				+ ", getCustomerIndustryName()=" + getCustomerIndustryName() + ", getSequenceNumber()="
-				+ getSequenceNumber() + ", getContractNumber()=" + getContractNumber() + ", getSaleType()="
-				+ getSaleType() + ", getTaxRate()=" + getTaxRate() + ", getIncoterm()=" + getIncoterm()
-				+ ", getIncotermName()=" + getIncotermName() + ", getIncotermContect()=" + getIncotermContect()
-				+ ", getContractValue()=" + getContractValue() + ", getContractRmbValue()=" + getContractRmbValue()
-				+ ", getCurrency()=" + getCurrency() + ", getCurrencyName()=" + getCurrencyName()
-				+ ", getCurrencyExchange()=" + getCurrencyExchange() + ", getItemsAmount()=" + getItemsAmount()
-				+ ", getContractManager()=" + getContractManager() + ", getContractCreateTime()="
-				+ getContractCreateTime() + ", getOfficeCode()=" + getOfficeCode() + ", getOfficeName()="
-				+ getOfficeName() + ", getGroupCode()=" + getGroupCode() + ", getGroupName()=" + getGroupName()
-				+ ", getWarranty()=" + getWarranty() + ", getInstallType()=" + getInstallType()
-				+ ", getInstallTypeName()=" + getInstallTypeName() + ", getReveiveType()=" + getReveiveType()
-				+ ", getReveiveTypeName()=" + getReveiveTypeName() + ", getTransferType()=" + getTransferType()
-				+ ", getTransferTypeName()=" + getTransferTypeName() + ", getFreight()=" + getFreight()
-				+ ", getContactor1Id()=" + getContactor1Id() + ", getContactor1Tel()=" + getContactor1Tel()
-				+ ", getContactor2Id()=" + getContactor2Id() + ", getContactor2Tel()=" + getContactor2Tel()
-				+ ", getContactor3Id()=" + getContactor3Id() + ", getContactor3Tel()=" + getContactor3Tel()
-				+ ", getDeliveryAddress()=" + getDeliveryAddress() + ", getBodyDiscount()=" + getBodyDiscount()
-				+ ", getApprovedBodyDiscount()=" + getApprovedBodyDiscount() + ", getMainDiscount()="
-				+ getMainDiscount() + ", getApprovedMainDiscount()=" + getApprovedMainDiscount() + ", getDiscount()="
-				+ getDiscount() + ", getIsLongterm()=" + getIsLongterm() + ", getIsSpecial()=" + getIsSpecial()
-				+ ", getPaymentType()=" + getPaymentType() + ", getPayments()=" + getPayments() + ", getIsTerm1()="
-				+ getIsTerm1() + ", getIsTerm2()=" + getIsTerm2() + ", getIsTerm3()=" + getIsTerm3()
-				+ ", getEarliestDeliveryDate()=" + getEarliestDeliveryDate() + ", getEarliestProductDate()="
-				+ getEarliestProductDate() + ", getItems()=" + getItems() + ", getIsB2c()=" + getIsB2c()
-				+ ", getComments()=" + getComments() + ", getAttachments()=" + getAttachments() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", items=" + items + ", isB2c=" + isB2c + ", grossProfitMargin=" + grossProfitMargin + ", comments="
+				+ comments + ", attachments=" + attachments + "]";
 	}
 	
 }

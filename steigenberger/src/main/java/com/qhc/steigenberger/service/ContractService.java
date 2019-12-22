@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -31,7 +30,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.domain.Contract;
-import com.qhc.steigenberger.domain.ContractSignSys;
 import com.qhc.steigenberger.domain.Mail;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.Result;
@@ -197,13 +195,13 @@ public class ContractService {
 				if ("BG1P7E00000".equals(item.getMaterialCode())) {
 					// 产品实卖金额
 					Double saleAmount = new Double(0.0D);
-					if (item.getActuralPrice() != 0) {
-						saleAmount = item.getActuralPrice() * item.getQuantity();
+					if (item.getActualPrice() != 0) {
+						saleAmount = item.getActualPrice() * item.getQuantity();
 					}
 					transferPrice = Double.valueOf(transferPrice.doubleValue() + saleAmount.doubleValue());
 					continue;
 				}
-				String name = item.getGroupCode();
+				String name = item.getMaterialGroupCode();
 				if ("3101".equals(name) || "3102".equals(name)) {
 					itemName = "展示柜";
 				} else if ("3109".equals(name) || "3103".equals(name)) {
@@ -219,19 +217,19 @@ public class ContractService {
 				}
 				Double saleAmount = new Double(0.0D);
 				// // 产品实卖金额
-				if (item.getActuralPrice() != 0) {
-					saleAmount = item.getActuralPrice() * item.getQuantity();
+				if (item.getActualPrice() != 0) {
+					saleAmount = item.getActualPrice() * item.getQuantity();
 				}
 				Double B2cAmount = new Double(0.0D);
 				// B2C预估金额
-				if (item.getB2CPriceEstimated() != 0) {
-					B2cAmount = item.getB2CPriceEstimated() * item.getQuantity();
+				if (item.getB2cEstimatedPrice() != 0) {
+					B2cAmount = item.getB2cEstimatedPrice() * item.getQuantity();
 				}
 				b2cSum = Double.valueOf(b2cSum.doubleValue() + B2cAmount.doubleValue());
 				Double optionSaleAmount = new Double(0.0D);
 				// 可选项实卖金额
-				if (item.getActuralPricaOfOptional() != 0) {
-					optionSaleAmount = item.getActuralPricaOfOptional() * item.getQuantity();
+				if (item.getOptionalActualPrica() != 0) {
+					optionSaleAmount = item.getOptionalActualPrica() * item.getQuantity();
 				}
 				optionSum = Double.valueOf(optionSum.doubleValue() + optionSaleAmount.doubleValue());
 				// 计量单位

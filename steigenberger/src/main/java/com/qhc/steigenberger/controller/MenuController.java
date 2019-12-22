@@ -192,9 +192,6 @@ public class MenuController {
   		return freight;
   	}
 	
-
-	
-	
 	@RequestMapping("standardDiscount")
 	public static ModelAndView goDealerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER);
