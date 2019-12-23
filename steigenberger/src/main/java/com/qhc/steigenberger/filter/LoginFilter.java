@@ -31,24 +31,24 @@ public class LoginFilter implements Filter{
 	Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
     //排除不拦截的url
-    private List<String> excludeLocations = Arrays.asList(new String[]  { "/steigenberger/loginIn", 
-    		"/steigenberger/", 
-    		"/steigenberger", 
-    		"/steigenberger/menu/nologin"});
-    private List<String> excludePrefixs = Arrays.asList(new String[] {"/steigenberger/assets",
-    		"/steigenberger/bootstrap-date",
-    		"/steigenberger/bootstrap-fileinput-master",
-    		"/steigenberger/bootstrap-table-master",
-    		"/steigenberger/css",
-    		"/steigenberger/drag",
-    		"/steigenberger/fonts",
-    		"/steigenberger/images",
-    		"/steigenberger/index.html",
-    		"/steigenberger/js",
-    		"/steigenberger/lib",
-    		"/steigenberger/page",
-    		"/steigenberger/pageJs",
-    		"/steigenberger/view"});
+    private List<String> excludeLocations = Arrays.asList(new String[]  { "/loginIn", 
+    		"/", 
+    		"", 
+    		"/menu/nologin"});
+    private List<String> excludePrefixs = Arrays.asList(new String[] {"/assets",
+    		"/bootstrap-date",
+    		"/bootstrap-fileinput-master",
+    		"/bootstrap-table-master",
+    		"/css",
+    		"/drag",
+    		"/fonts",
+    		"/images",
+    		"/index.html",
+    		"/js",
+    		"/lib",
+    		"/page",
+    		"/pageJs",
+    		"/view"});
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -57,9 +57,10 @@ public class LoginFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse res = (HttpServletResponse)response;
+        
+        String ctx = req.getContextPath();
 
         // 获取请求url地址，不拦截excludePathPatterns中的url
         String url = req.getRequestURI();
@@ -91,7 +92,7 @@ public class LoginFilter implements Filter{
 	        	logger.info("No Authorization info.");
 	        	
 	        	if (isNotJson) {
-	        		res.sendRedirect("/steigenberger/menu/nologin");
+	        		res.sendRedirect(ctx + "/menu/nologin");
 	        	} else {
 	        		res.setStatus(HttpStatus.OK.value());
 	    			// 设置ContentType

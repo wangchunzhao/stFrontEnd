@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @SpringBootApplication
-public class SteigenbergerApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SteigenbergerApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
