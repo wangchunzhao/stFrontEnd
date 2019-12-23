@@ -5,7 +5,7 @@ server:
     cookie:
       http-only: true
   servlet:
-    context-path: /steigenberger
+    context-path: /st
 
 #thymeleaf
 spring:
