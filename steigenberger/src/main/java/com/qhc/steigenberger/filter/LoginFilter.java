@@ -67,13 +67,13 @@ public class LoginFilter implements Filter{
         logger.debug("request uri : " + url);
         boolean isStaticAssets = false;
         for (String prefix : excludePrefixs) {
-        	if(url.startsWith(prefix)) {
+        	if(url.startsWith(ctx + prefix)) {
         		isStaticAssets = true;
         		break;
         	}
 		}
         
-        if (excludeLocations.contains(url) || isStaticAssets) {
+        if (excludeLocations.contains(url.substring(ctx.length())) || isStaticAssets) {
             //放行，相当于第一种方法中LoginInterceptor返回值为true
 //            chain.doFilter(request, response);
 //            return;
