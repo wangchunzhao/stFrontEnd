@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class Order {
 	// 订单STATUS
-	public final static String ORDER_STATUS_STRAFT = "00"; //草稿
+	public final static String ORDER_STATUS_DRAFT = "00"; //草稿
 	public final static String ORDER_STATUS_B2C = "01"; // 待B2C审批
 	public final static String ORDER_STATUS_ENGINER = "02"; // 待工程人员审批
 	public final static String ORDER_STATUS_MANAGER = "03"; // 待支持经理审批
@@ -26,9 +26,9 @@ public class Order {
 	public final static String ORDER_STATUS_REJECT_BPM = "11"; // BPM驳回
 	
 	// 订单类型sap_order_type
-	public final static String ORDER_TYPE_CODE_DEALER = "ZH0D";
-	public final static String ORDER_TYPE_CODE_KEYACCOUNT = "ZH0T";
-	public final static String ORDER_TYPE_CODE_BULK = "ZH0M";
+	public final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
+	public final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
+	public final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 	
 	// 性质分类，客户性质 sap_customer_class
 	public final static String ORDER_CUSTOMER_DEALER_CODE="01";
@@ -49,6 +49,11 @@ public class Order {
 	private String updaterName; // 修改人姓名
 	
 	private String version;//版本
+	/* 版本序号，每次累加1 */
+	private Integer versionNum = null;
+	/* 最新版本，新的版本生成后旧的版本变为0， 新的版本为1
+            0 非最新，1 最新 */
+	private Integer isActive = null;
 	private String status; // 状态
 	private List<String> versions; // 历史版本
 	private String userOfficeCode;//用户所在销售办公室，创建人用户信息中带出
