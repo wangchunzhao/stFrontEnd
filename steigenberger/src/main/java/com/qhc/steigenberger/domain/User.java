@@ -19,6 +19,8 @@ public class User implements Serializable{
     public int isActive=1;
     
     public String userName;
+
+	public String name;
     
     public String tel;
     
@@ -113,9 +115,12 @@ public class User implements Serializable{
 		this.tel = tel;
 	}
 
+	public String getName() {
+		return name;
+	}
 
-	
-
-
+	public void setName(String name) {
+		this.name = name;
+	}
 }
 

@@ -82,6 +82,7 @@ public class UserController {
 		String msg = "";
 		int status = 0;
 		User result = userService.selectUserIdentity(userIdentity);
+		result.setUserName(result.getName());
 		if (result.getOperations() != null&&result.getOperations().size()>0) {
 			status = 200;
 			msg = "查询成功!";
