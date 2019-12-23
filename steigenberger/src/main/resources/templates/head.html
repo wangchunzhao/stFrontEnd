@@ -22,7 +22,7 @@
 								<span></span> 
 								<div class="user-name">
 									<img th:src="@{/images/user1.png}" class="img-circle">
-									<span th:text="${session.userIdentity}"></span>
+									<span th:text="${session.identity}"></span>
 								</div>
 								<i class="fa fa-angle-down lnr"></i>
 								<i class="fa fa-angle-up lnr"></i>
@@ -30,10 +30,10 @@
 							</div>	
 						</a>
 						<ul class="dropdown-menu drp-mnu">
-							<li> <a href="#"><i class="fa fa-user"></i> <span id="userName" >userIdentity</span></a> </li> 
-							<li> <a href="#"><i class="fa fa-home"></i> <span id="tel" >tel</span></a> </li> 
-							<li> <a href="#"><i class="fa fa-suitcase"></i><span id="userIdentity" >userName</span></a> </li> 
-							<li> <a href="#"><i class="fa fa-cog"></i><span id="userRoles">roles</span></a> </li>
+							<li> <a href="#"><i class="fa fa-user"></i> <span id="userName" ></span></a> </li>
+							<li> <a href="#"><i class="fa fa-home"></i> <span id="tel" ></span></a> </li>
+							<li> <a href="#"><i class="fa fa-suitcase"></i><span id="userIdentity" ></span></a> </li>
+							<li> <a href="#"><i class="fa fa-cog"></i><span id="userRoles"></span></a> </li>
 							<li><button type="button" id="signOut" onclick="signOut();">退出</button></li>
 						</ul>
 					</li>
