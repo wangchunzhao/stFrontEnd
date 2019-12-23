@@ -72,7 +72,7 @@ public class Order {
 	/**
 	 * 客户基本信息 Basic information
 	 */
-	private String orderType; // 订单类型，性质分类，ZH0D	经销商订单/	ZH0M	备货订单/ZH0T	大客户订单，固定
+	private String orderType; // 订单类型，ZH0D	经销商订单/	ZH0M	备货订单/ZH0T	大客户订单，固定
 	private String customerCode;//签约单位 Contract unit
 	private String customerName;//签约单位 Contract Name
 	private String customerClazz;//性质分类代码，经销商/直签
