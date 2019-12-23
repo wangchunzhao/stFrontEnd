@@ -61,8 +61,6 @@ public class OrderService {
 	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
 	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 
-	private final static String URL_CUSTOMER = "customer";
-	private final static String URL_MATERIAL = "material";
 	private final static String URL_ORDER_OPTION = "order/option";
 //	private final static String URL_SALES_TYPE = "order/salesType";
 //	private final static String URL_CURRENCY = "currency";
@@ -100,8 +98,8 @@ public class OrderService {
 	 * @return customer list
 	 */
 	public PageHelper<Customer> findCustomer(String clazzCode, String name, int pageNo) {
-		return (PageHelper<Customer>) fryeService.getInfo(URL_CUSTOMER + URL_PARAMETER_SEPERATOR + clazzCode
-				+ URL_SEPERATOR + name + URL_SEPERATOR + String.valueOf(pageNo), PageHelper.class);
+		return (PageHelper<Customer>) fryeService.getInfo("customer/" + clazzCode
+				+ "," + name + "," + String.valueOf(pageNo), PageHelper.class);
 	}
 
 	public PageHelper<Material> findMaterialsByName(String name, int pageNo) {
@@ -112,11 +110,11 @@ public class OrderService {
 		pars.put("name", name);
 		pars.put("pageNo", String.valueOf(pageNo));
 
-		return (PageHelper<Material>) fryeService.postForm(URL_MATERIAL, pars, PageHelper.class);
+		return (PageHelper<Material>) fryeService.postForm("material", pars, PageHelper.class);
 	}
 
 	public Material getMaterial(String code) {
-		return (Material) fryeService.getInfo(URL_MATERIAL + URL_PARAMETER_SEPERATOR + code, Material.class);
+		return (Material) fryeService.getInfo("material/" + code, Material.class);
 	}
 
 //	/**

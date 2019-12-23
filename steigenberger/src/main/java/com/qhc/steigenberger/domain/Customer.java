@@ -18,15 +18,17 @@ public class Customer implements Serializable {
 	private static final long serialVersionUID = -9169262959918008183L;
 
 
-	private String code;
-	private String name;
+	private String code; // 客户编码，专用号
+	private String name; // 客户名称，规格型号
 	private Date changedDate;
-	private String address;
-	private String clazzCode;
+	private String address; // 地址
+	private String clazzCode; // 客户分类
 	private String clazzName;
 
-	private String industryCodeCode;
+	private String industryCodeCode; // 客户级别
 	private String industryCodeName;
+	private String industryCode; // 大客户，隶属关系
+	private String industryName;
 	
 	public String getCode() {
 		return code;
@@ -76,7 +78,17 @@ public class Customer implements Serializable {
 	public void setIndustryCodeName(String industryCodeName) {
 		this.industryCodeName = industryCodeName;
 	}
-
-
+	public String getIndustryCode() {
+		return industryCode;
+	}
+	public void setIndustryCode(String industryCode) {
+		this.industryCode = industryCode;
+	}
+	public String getIndustryName() {
+		return industryName;
+	}
+	public void setIndustryName(String industryName) {
+		this.industryName = industryName;
+	}
 	
 }
