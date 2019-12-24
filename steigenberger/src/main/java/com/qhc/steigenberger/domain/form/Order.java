@@ -31,8 +31,8 @@ public class Order {
 	public final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 	
 	// 性质分类，客户性质 sap_customer_class
-	public final static String ORDER_CUSTOMER_KEY_ACCOUNT_CODE="01";
-	public final static String ORDER_CUSTOMER_DEALER_CODE="02";
+	public final static String ORDER_CUSTOMER_DEALER_CODE="01";
+	public final static String ORDER_CUSTOMER_KEY_ACCOUNT_CODE="02";
 	
 	private Integer id; // order info id;
 	private Integer orderId; // order id
@@ -66,6 +66,14 @@ public class Order {
 		5 备货 
 	 */
 	private String stOrderType; // 销售工具的订单类型
+	
+	/**
+	 * 报价单状态
+		00 报价单
+		01 已中标
+		02 已下单
+	 */
+	private String quoteStatus; // 报价单状态
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
@@ -82,7 +90,12 @@ public class Order {
 	private String customerName;//签约单位 Contract Name
 	private String customerClazz;//性质分类代码，经销商/直签
 	private String customerClazzName;//性质分类名称
-	private String terminalType;//终端客户性质，是否是大客户的客户性质，即客户级别（sap_industry_code），大客户由客户信息带出，经销商选择
+	/**
+	 * 01 连锁百强
+	 * 02 国际大连锁
+	 * 03 散户
+	 */
+	private String terminalType;//终端客户性质
 	private String terminalTypeName;//终端客户性质名称
 	private String shopName;//店名 shop name
 	private String recordCode;//项目报备编号
@@ -93,6 +106,8 @@ public class Order {
 	private int isNew;//是否新客户 new customer
 	private int isReformed;//是否改造店
 	private int isYearpurchase;// 是否年采价，客户信息带出
+	private String customerIndustryCode; // 客户分类（sap_industry_code）客户信息带出
+	private String customerIndustryCodeName; // 客户分类（sap_industry）客户信息带出
 	private String customerIndustry; // 隶属关系（sap_industry）客户信息带出
 	private String customerIndustryName; // 隶属关系（sap_industry）客户信息带出
 	
@@ -297,6 +312,14 @@ public class Order {
 
 	public void setStOrderType(String stOrderType) {
 		this.stOrderType = stOrderType;
+	}
+
+	public String getQuoteStatus() {
+		return quoteStatus;
+	}
+
+	public void setQuoteStatus(String quoteStatus) {
+		this.quoteStatus = quoteStatus;
 	}
 
 	public Date getSubmitTime() {

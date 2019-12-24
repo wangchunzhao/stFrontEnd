@@ -48,7 +48,12 @@ public class LoginFilter implements Filter{
     		"/lib",
     		"/page",
     		"/pageJs",
-    		"/view"});
+    		"/view",
+    		"/swagger-ui.html",
+    		"/webjars/",
+    		"/v2/",
+    		"/swagger-resources",
+    		"/csrf"});
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
