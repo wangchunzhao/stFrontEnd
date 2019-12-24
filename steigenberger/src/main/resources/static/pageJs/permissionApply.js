@@ -10,41 +10,48 @@ $(function(){
 //			$('#area').parents('.form-group').hide();
 //		}
 //	});
-	
-	function InitRoles(){
-		$.post('/st/permission/roleList',null,function(ret){
-			if(ret.status==200){
-				for(var i in ret.data){
-					var item = ret.data[i];
-					$('#roleName').append(BuildOption(item.name,item.id));
-				}
-			}else{
-				alert('角色列表请求错误！')
-			}
-		},'json');
-	}
-	
 	function BuildOption(name,val){
 		return "<option value='"+val+"'>"+name+"</option>";
-	}
-	
-	function InitSapSalesOffice(){
-		$.post('/st/permission/sapSalesOfficelist',null,function(ret){
-			if(ret.status==200){
-				for(var i in ret.data){
-					var item = ret.data[i];
-					$('#area').append(BuildAreaOption(item.name,item.code));
-				}
-			}else{
-				alert('区域列表请求错误！')
-			}
-		},'json');
 	}
 	
 	function BuildAreaOption(name,code){
 		return "<option value='"+code+"'>"+name+"</option>";
 	}
 });
+
+function InitRoles(){
+	var result = null;
+	$.ajax({ url: "/st/permission/roleList",
+		async: false,//改为同步方式
+		type: "POST",
+		data: { },
+		success: function(ret){
+			if(ret.status==200){
+				result = ret.data
+			}else{
+				alert('角色列表请求错误！')
+			}
+		}
+	});
+	return result;
+}
+
+function InitSapSalesOffice(){
+	var result = null;
+	$.ajax({ url: "/st/permission/sapSalesOfficelist",
+		async: false,//改为同步方式
+		type: "POST",
+		data: { },
+		success: function(ret){
+			if(ret.status==200){
+				result = ret.data
+			}else{
+				alert('区域列表请求错误！')
+			}
+		}
+	});
+	return result;
+}
 
 //提交表单
 function add(){
