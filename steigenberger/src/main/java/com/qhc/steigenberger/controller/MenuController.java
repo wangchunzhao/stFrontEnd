@@ -199,7 +199,7 @@ public class MenuController {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER);
 		OrderOption oo = staticOrderService.getOrderOption();
 		Order orderDetail = new Order();
-		orderDetail.setCustomerCode(Order.ORDER_CUSTOMER_DEALER_CODE);
+		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_DEALER_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_DEALER);
 		mv.addObject(ORDER_OPTION,oo);
 		mv.addObject(ORDER_DETAIL, orderDetail);
@@ -211,7 +211,7 @@ public class MenuController {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER_NON_STANDARD);
 		OrderOption oo = staticOrderService.getOrderOption();
 		Order orderDetail = new Order();
-		orderDetail.setCustomerCode(Order.ORDER_CUSTOMER_DEALER_CODE);
+		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_DEALER_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_DEALER);
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
@@ -223,7 +223,7 @@ public class MenuController {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER_DIRECT_CUSTOMER);
 		OrderOption oo = staticOrderService.getOrderOption();
 		Order orderDetail = new Order();
-		orderDetail.setCustomerCode(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
+		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_KEYACCOUNT);
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);

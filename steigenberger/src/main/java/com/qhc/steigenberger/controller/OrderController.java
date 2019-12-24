@@ -27,7 +27,6 @@ import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.B2CComments;
 import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
-import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
@@ -37,8 +36,8 @@ import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
-import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.domain.form.BomQueryModel;
+import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
@@ -170,9 +169,10 @@ public class OrderController extends BaseController {
 
 	@RequestMapping("customers")
 	@ResponseBody
-	public PageHelper<Customer> searchCustomer(String clazzCode, String customerName, int pageNo) {
-		PageHelper<Customer> cus = orderService.findCustomer(clazzCode, customerName, pageNo);
-		return cus;
+	public Result searchCustomer(String clazzCode, String customerName, int pageNo, int limit) {
+		Result result = null;
+		result = orderService.findCustomer(clazzCode, customerName, pageNo,limit);
+		return result;
 	}
 
 	@RequestMapping("materials")
@@ -444,25 +444,6 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "material/configurations")
 	@ResponseBody
 	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
-		/*List<Characteristic> ch = new ArrayList<>();
-		Characteristic c = new Characteristic();
-		c.setName("test");
-		c.setCode("2");
-		c.setOptional(true);
-		Set<Configuration> s = new HashSet<>();
-		Configuration con = new Configuration();
-		con.setCode("222");
-		con.setName("default");
-		con.setDefault(true);
-		Configuration con1 = new Configuration();
-		con1.setCode("2222");
-		con1.setName("test");
-		con1.setDefault(false);
-		s.add(con);
-		s.add(con1);
-		c.setConfigs(s);
-		ch.add(c);
-		return ch;*/
 		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
 
 	}
@@ -472,11 +453,6 @@ public class OrderController extends BaseController {
 	public User findUsetDetail(HttpServletRequest request) {
 		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 		User user = userService.selectUserIdentity(identityName);//identityName
-		/*if(user!=null){
-			user.setUserName("test");
-			user.setTel("1111111");
-			user.setUserIdentity("3121");
-		}*/
 		return user;
 
 	}

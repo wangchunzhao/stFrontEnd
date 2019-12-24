@@ -97,9 +97,14 @@ public class OrderService {
 	 * @param name customer name
 	 * @return customer list
 	 */
-	public PageHelper<Customer> findCustomer(String clazzCode, String name, int pageNo) {
-		return (PageHelper<Customer>) fryeService.getInfo("customer/" + clazzCode
-				+ "," + name + "," + String.valueOf(pageNo), PageHelper.class);
+	public Result findCustomer(String clazzCode, String name, int pageNo, int pageSize) {
+		Result result = (Result) fryeService.getInfo("customer/" + clazzCode
+				+ "," + name + "," + pageNo+","+pageSize, Result.class);
+		if("ok".equals(result.getStatus())){
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Customer.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
+		}
+		return result;
 	}
 
 	public PageHelper<Material> findMaterialsByName(String name, int pageNo) {

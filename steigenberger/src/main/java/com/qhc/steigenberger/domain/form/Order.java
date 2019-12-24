@@ -31,8 +31,8 @@ public class Order {
 	public final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
 	
 	// 性质分类，客户性质 sap_customer_class
-	public final static String ORDER_CUSTOMER_DEALER_CODE="01";
-	public final static String ORDER_CUSTOMER_KEY_ACCOUNT_CODE="02";
+	public final static String ORDER_CUSTOMER_DEALER_CODE="02";
+	public final static String ORDER_CUSTOMER_KEY_ACCOUNT_CODE="01";
 	
 	private Integer id; // order info id;
 	private Integer orderId; // order id
@@ -464,6 +464,22 @@ public class Order {
 
 	public void setIsYearpurchase(int isYearpurchase) {
 		this.isYearpurchase = isYearpurchase;
+	}
+	
+	public String getCustomerIndustryCode() {
+		return customerIndustryCode;
+	}
+
+	public void setCustomerIndustryCode(String customerIndustryCode) {
+		this.customerIndustryCode = customerIndustryCode;
+	}
+
+	public String getCustomerIndustryCodeName() {
+		return customerIndustryCodeName;
+	}
+
+	public void setCustomerIndustryCodeName(String customerIndustryCodeName) {
+		this.customerIndustryCodeName = customerIndustryCodeName;
 	}
 
 	public String getCustomerIndustry() {

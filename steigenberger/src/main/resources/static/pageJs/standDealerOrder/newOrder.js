@@ -21,8 +21,8 @@ $(function () {
 	var addressTable = new TableInit('addressTable','','',addressColumns)
 	addressTable.init();
 	//初始化客户查询Table
-	var contractUnitTable = new TableInit('contractUnitTable','',queryUnitParams,contractUnitTableColumn);
-	contractUnitTable.init();
+	var customerTable = new TableInit('customerTable','',queryUnitParams,customerTableColumn);
+	customerTable.init();
 	
 	//初始化物料查询table
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
@@ -54,12 +54,12 @@ $(function () {
 //获取session中用户信息
 function getUserDetail(){
 	$.ajax({
-	    url: "/steigenberger/order/user",
+	    url: ctxPath+"order/user",
 	    data: {},
 	    type: "get",
 	    success: function(data) {
-	    	$("#salesName").val(data.userName);
-	    	$("#salesTelnumber").val(data.tel);
+	    	$("#salesName").val(data.name);
+	    	$("#salesTel").val(data.tel);
 	    	$("#salesCode").val(data.userIdentity);
 	    }
 	});
@@ -81,29 +81,29 @@ function defaultCollapse(){
 
 //Customer basic infomation js start 
 function openSearchCustomer(){
-	$('#unitModal').modal('show');	
+	$('#customerSearchModal').modal('show');	
 	var opt = {
-				url: '/steigenberger/order/customers'
+				url: ctxPath+'order/customers'
 			   };
-	$("#contractUnitTable").bootstrapTable('refresh', opt);
-	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
-		$('#unitModal').modal('hide');
-		$("#contractUnitName").val('');
+	$("#customerTable").bootstrapTable('refresh', opt);
+	$("#customerTable").on('click-row.bs.table',function($element,row,field){
+		$('#customerSearchModal').modal('hide');
+		$("#customerSearchName").val('');
 		$("#customerCode").val(row.code);
-		$("#customer").val(row.name);
-		$("#customerClazz").val(row.clazzName).change();
+		$("#customerName").val(row.name);
 		$("#customerClazzName").val(row.clazzName);
+		$("#customerIndustryCode").val(row.industryCode);
 	})
 }
 
 function queryUnitParams(params) {
     params.pageNo = this.pageNumber;
-    params.customerName = $("#contractUnitName").val();
+    params.customerName = $("#customerSearchName").val();
     params.clazzCode = $("#customerClazzCode").val();
     return params;
 }
-function searchUnit(){
-	$('#contractUnitTable').bootstrapTable('refresh');
+function searchCustomer(){
+	$('#customerTable').bootstrapTable('refresh');
 }
 
 function getCity(obj,cityMaps){
@@ -147,14 +147,15 @@ function getDistrict(obj,districts){
 }
 
 function salesTypeChange(obj,offices,taxRate,exchangeRate){
-	debugger
 	$("#orignalContractAmount").val("");
 	$("#exchangeRate").val("");
 	$("#contractAmount").val("");
 	var saleType = $(obj).val();
 	getCurrency(saleType,exchangeRate);
 	getIncoterm(saleType);
-	$("#taxtRate").val(taxRate[saleType]);
+	if(taxRate){
+		$("#taxRate").val(taxRate[saleType]);
+	}
 	if(saleType=="20"){
 		$("#freightDiv").show();
 		$('#selectProvince').val('');
@@ -164,7 +165,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#selectDistrict').attr("disabled",true);	
 		$('#selectProvince').attr("disabled",true);
 		$('#currency').attr('disabled',false);
-		$('#incoterm').attr("readonly",false);
+		$('#incoterm').attr("disabled",false);
 		$('#incotermContect').attr("readonly",false);
 		$('#installCode').val('');
 		$('#installCode').attr("readonly",true);
@@ -188,7 +189,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#selectProvince').attr("disabled",false);
 		
 		$('#currency').attr('disabled',true);
-		$('#incoterm').attr("readonly",true);
+		$('#incoterm').attr("disabled",true);
 		$('#incotermContect').attr("readonly",true);
 		
 		$('#installCode').attr("readonly",false);
@@ -1518,6 +1519,25 @@ $.fn.serializeObject = function() {
 	return o;
 };
 
+
+
+function initMarialsTables(){
+	var materialsTable = new TableInit('materialsTable','','',materialsColumn);
+	materialsTable.init();
+	var materialsTableall1 = new TableInit('materialsTableall1','','',materialsColumn);
+	materialsTableall1.init();
+	var materialsTableall2 = new TableInit('materialsTableall2','','',materialsColumn);
+	materialsTableall2.init();
+	var materialsTableall3 = new TableInit('materialsTableall3','','',materialsColumn);
+	materialsTableall3.init();
+	var materialsTableall4 = new TableInit('materialsTableall4','','',materialsColumn);
+	materialsTableall4.init();
+	var materialsTableall5 = new TableInit('materialsTableall5','','',materialsColumn);
+	materialsTableall5.init();
+	var materialsTableall6 = new TableInit('materialsTableall6','','',materialsColumn);
+	materialsTableall6.init();
+}
+
 function confirmAddress(){
 	var province = $("#selectProvince").find("option:selected").text();
 	var provinceValue = $("#selectProvince").val();
@@ -1543,7 +1563,7 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('insertRow', {
 		    index: count,
 		    row: {
-		    	index:count+1,
+		    	seq:count+1
 		    	pca: pca,
 		    	provinceCode:provinceValue,
 		    	provinceName:province,
@@ -1558,7 +1578,7 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('updateRow', {
 		    index: rowIndex,
 		    row: {
-		    	index:parseInt(rowIndex)+1,
+		    	seq:count+1
 		    	pca: pca,
 		    	provinceCode:provinceValue,
 		    	provinceName:province,
@@ -1571,23 +1591,6 @@ function confirmAddress(){
 		});
 	}
 	$("#addressModal").modal('hide');
-}
-
-function initMarialsTables(){
-	var materialsTable = new TableInit('materialsTable','','',materialsColumn);
-	materialsTable.init();
-	var materialsTableall1 = new TableInit('materialsTableall1','','',materialsColumn);
-	materialsTableall1.init();
-	var materialsTableall2 = new TableInit('materialsTableall2','','',materialsColumn);
-	materialsTableall2.init();
-	var materialsTableall3 = new TableInit('materialsTableall3','','',materialsColumn);
-	materialsTableall3.init();
-	var materialsTableall4 = new TableInit('materialsTableall4','','',materialsColumn);
-	materialsTableall4.init();
-	var materialsTableall5 = new TableInit('materialsTableall5','','',materialsColumn);
-	materialsTableall5.init();
-	var materialsTableall6 = new TableInit('materialsTableall6','','',materialsColumn);
-	materialsTableall6.init();
 }
 
 function addAddress(){
@@ -1621,7 +1624,7 @@ function removeAddress(index){
 	for(var i=0;i<count;i++){
 		var rows = {
 				index: i,
-				field : "index",
+				field : "seq",
 				value : i+1
 			}
 		$('#addressTable').bootstrapTable("updateCell",rows);
@@ -1915,7 +1918,7 @@ var materialTypeColumn = [ {
 	field : 'description'
 }]
 
-var contractUnitTableColumn = [ {
+var customerTableColumn = [ {
 	title : '签约单位',
 	field : 'name'
 }, {
@@ -1928,7 +1931,7 @@ var contractUnitTableColumn = [ {
 
 var addressColumns = [{
 	title:'行号',
-    field: 'index',
+    field: 'seq',
     width:'5%'
 },{
 	title : '省市区',
@@ -2153,7 +2156,17 @@ var TableInit = function (id,url,params,tableColumns) {
 			pageSize : 10,//单页记录数,
 			showRefresh : false,//刷新按钮
 			queryParams : params,
-			columns : tableColumns
+			columns : tableColumns,
+			responseHandler : function(res){
+				if (res.status != 'ok') {
+					layer.alert(res.msg);
+					return {};
+				}
+				return {
+					total: res.data.total,
+					rows: res.data.rows
+				}
+			},
 		})
 	};
 	return oTableInit;

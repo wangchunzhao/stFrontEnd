@@ -59,6 +59,7 @@
 							    <div class="input-group">
 				                    <input type="text" class="form-control" readonly id="customerName" th:field="*{customerName}">
 				                    <input type="hidden" id="customerCode" th:field="*{customerCode}">
+				                    <input type="hidden" id="customerIndustryCode" th:field="*{customerIndustryCode}">
 				                    <span class="input-group-btn">
 				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchCustomer()">
 				                        	<span class="glyphicon glyphicon-search"></span>
@@ -162,7 +163,7 @@
 							    </div>
 							    <span class="col-md-1 control-label">币种</span>
 								<div class="col-md-2">
-									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled th:field="*{currency}">
+									<select class="form-control"  id="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled th:field="*{currency}">
 									    <option value="">--选择币种--</option>
 									</select>
 							    </div>
@@ -598,7 +599,7 @@
 			<button type="button" class="btn pull-right btn-warning">返回 back</button>
 		</div>
 		</form>
-	<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="customerSearchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="width:800px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -611,13 +612,13 @@
 							<div class="row">
 								<span class="col-md-2">签约单位</span>
 								<div class="col-md-6">
-							      <input type="text" class="form-control" id="contractUnitName">
+							      <input type="text" class="form-control" id="customerSearchName">
 							    </div>
-							    <button type="button" class="btn btn-default" onclick="searchUnit()">
+							    <button type="button" class="btn btn-default" onclick="searchCustomer()">
 							    	<span class="glyphicon glyphicon-search">查询</span>
 							    </button>
 							</div>
-							<table id="contractUnitTable" data-pagination="true"  data-height="900px" class="table table-hover"></table>
+							<table id="customerTable" data-pagination="true"  data-height="900px" class="table table-hover"></table>
 						</div>
 					</div>
 				</div>
@@ -687,7 +688,6 @@
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" src="../pageJs/standDealerOrder/newOrder.js"></script>
 <script th:inline="javascript" type="text/javascript">
-debugger
 	var ctxPath  = [[@{/}]];
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
 	var installationTerms =  [[${order_option.installationTerms}]]
