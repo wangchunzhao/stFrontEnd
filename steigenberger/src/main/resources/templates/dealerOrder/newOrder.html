@@ -12,68 +12,6 @@
 <link href="../css/bootstrapValidator.min.css" rel='stylesheet' type='text/css' />
 <style type="text/css">
        .help-block {color:red;}
-       
-.tab .nav-tabs li a:hover{
-   background: #692f6c;
-   opacity: 0.8;
-}
-.tab .nav-tabs li.active a{
-   opacity: 1;
-}
-.tab .nav-tabs li.active a,
-.tab .nav-tabs li.active a:hover,
-.tab .nav-tabs li.active a:focus{
-   color: #fff;
-   background: #692f6c;
-   border: none;
-   border-radius: 0;
-}
-.tab .nav-tabs li a:before,
-.tab .nav-tabs li a:after{
-   content: "";
-   border-top: 42px solid transparent;
-   position: absolute;
-   top: -2px;
-}
-.tab .nav-tabs li a:before{
-   border-right: 15px solid #692f6c;
-   left: -15px;
-}
-.tab .nav-tabs li a:after{
-   border-left: 15px solid #692f6c;
-   right: -15px;
-}
-.tab .nav-tabs li a i,
-.tab .nav-tabs li.active a i{
-   display: inline-block;
-   padding-right: 5px;
-   font-size: 15px;
-   text-shadow: none;
-}
-.tab .nav-tabs li a span{
-   display: inline-block;
-   font-size: 14px;
-   letter-spacing: -9px;
-   opacity: 0;
-   transition: all 0.3s ease 0s;
-}
-.tab .nav-tabs li a:hover span,
-.tab .nav-tabs li.active a span{
-   letter-spacing: 1px;
-   opacity: 1;
-   transition: all 0.3s ease 0s;
-}
-.tab .tab-content{
-   padding: 30px;
-   background: #fff;
-   font-size: 16px;
-   color: #6c6c6c;
-   line-height: 25px;
-}
-.tab .tab-content h3{
-   font-size: 24px;
-   margin-top: 0;
-}
 </style>
 </head> 
 <body class="cbp-spmenu-push">
@@ -81,11 +19,9 @@
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
 		<!-- //header-ends -->
 		<!-- main content start-->
-		<form method="post" role="form" id="orderForm" th:object="${order_option}">
-		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazzCode}">
-		<input type="hidden"  id="customerClazzName" name="customerClazzName">
-		<input type="hidden"  name="salesCode" id="salesCode">
-		<input type="hidden" name="optTime" id="optTime">
+		<form method="post" role="form" id="orderForm" th:object="${orderDetail}">
+		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazz}">
+<!-- 		<input type="hidden" name="optTime" id="optTime"> -->
 		<div id="page-wrapper">
 		<nav>
 		 	<ol class="breadcrumb">
@@ -121,64 +57,66 @@
 								<span class="col-md-1 control-label">签约单位</span>
 							    <div class="col-md-2">
 							    <div class="input-group">
-				                    <input type="text" class="form-control" readonly id="customer" name="contracterName">
+				                    <input type="text" class="form-control" readonly id="customerName" th:field="*{customerName}">
+				                    <input type="hidden" id="customerCode" th:field="*{customerCode}">
 				                    <span class="input-group-btn">
-				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchUnit()">
+				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchCustomer()">
 				                        	<span class="glyphicon glyphicon-search"></span>
 				                        </button>
 				                    </span>
 				                </div>			                
-				                <input type="hidden" name="contracterCode" id="contactorCode">
+				                
 							    </div>
 							    <span class="col-md-1 control-label">性质分类</span>
 								<div class="col-md-2">
-							      		<input type="text" class="form-control" id="customerClazz" readonly>
+							      		<input type="text" class="form-control" id="customerClazzName" readonly th:field="*{customerClazzName}">
 
 							    </div>
 							    <span class="col-md-1 control-label">店名</span>
 								<div class="col-md-2">
-								      		<input type="text" class="form-control" id="" name="customerName">
+								      	<input type="text" class="form-control" id="shopName" th:field="*{shopName}">
 							    </div>
 								<span class="col-md-1 control-label">项目报备编号</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="" name="recordCode">
+							      <input type="text" class="form-control" id="recordCode" th:field="*{recordCode}">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">客户经理</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="salesName" readonly name="salesName">
+							      <input type="text" class="form-control" id="salesName" readonly th:field="*{salesName}">
+							      <input type="hidden"  name="salesCode" id="salesCode" th:field="*{salesCode}">
 							    </div>
 							    <span class="col-md-1 control-label">客户经理电话</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="salesTelnumber" name="salesTelnumber">
+							      <input type="text" class="form-control" id="salesTel" th:field="*{salesTel}">
 							    </div>
 						    	<span class="col-md-1  control-label">是否改造店</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="isReformed">
+							      <select class="form-control" th:field="*{isReformed}">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
 							    </div>
 								 <span class="col-md-1 control-label">终端客户性质</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="terminalIndustryCode" id="terminalIndustryCode">
+							      <select class="form-control" id="industryCode"  th:field="*{terminalType}">
 										<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
-									</select>
+								  </select>
 							    </div>
-							    <input type="hidden" name="terminalIndustryName" id="terminalIndustryName">
+							    <input type="hidden" id="customerIndustryName" th:field="*{customerIndustryName}">
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">便利店</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="isConvenientStore">
+							      <select class="form-control" th:field="*{isConvenientStore}">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">新客户</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="isNew">
+							      <select class="form-control" th:field="*{isNew}">
 										<option value="1" class="">是</option>
 										<option value="0" class="">否</option>
 									</select>
@@ -203,40 +141,39 @@
 							    </div>
 							    <span class="col-md-1 control-label">合同号</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp"  naem="contractNumber" readonly> <!-- th:field="*{contractNumber}" -->
+									<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" readonly>
 							    </div>
 							    <span class="col-md-1 control-label">销售类型</span>
 								<div class="col-md-2">
-									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" name="saleType" id="salesType">
+									<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" th:field="*{saleType}" id="saleType">
 										<option value="">--请选择--</option>
 										<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 									</select>
 							    </div>
 							    <span class="col-md-1 control-label">税率</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxtRate" readonly name="taxRate">
+									<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxRate" readonly th:field="*{taxRate}" >
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">原币合同金额</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" name="contractValue" >
+									<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" th:field="*{contractValue}">
 							    </div>
 							    <span class="col-md-1 control-label">币种</span>
 								<div class="col-md-2">
-									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled><!--  th:field="*{currency}"-->
+									<select class="form-control"  id="currency" name="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled th:field="*{currency}">
 									    <option value="">--选择币种--</option>
-									    <!-- <option th:each="exchange : ${order_option.exchangeRate}" th:value="${exchange.key}" th:text="${exchange.value.name}"></option> -->
 									</select>
 							    </div>
-							    <input type="hidden" name="currencyName" id="currencyName">
+							    <input type="hidden" id="currencyName"  th:field="*{currencyName}">
 							    <span class="col-md-1 control-label">合同金额</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" name="contractRMBValue"><!-- th:field="*{contractValue}" -->
+									<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:field="*{contractRmbValue}">
 							    </div>
 							    <span class="col-md-1 control-label">购销明细金额合计</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" id="itemsAmount" name="itemsAmount" readonly>
+									<input type="text" class="form-control" id="itemsAmount" readonly th:field="*{itemsAmount}">
 							    </div>	
 							</div>
 							<div class="row" style="padding-top: 10px;">
@@ -246,22 +183,22 @@
 							    </div>
 							    <span class="col-md-1 control-label">国际贸易条件</span>
 								<div class="col-xs-12 col-md-1" style="padding-right: 1px;">
-									<select class="form-control" id="incoterm" name="incoterm" readonly><!-- th:field="*{incoterm}" -->
-									     <option></option>
-										<option th:each="incoterm : ${order_option.intercoms}" th:value="${incoterm.key}" th:text="${incoterm.value}"></option>
+									<select class="form-control" id="incoterm" disabled th:field="*{incoterm}">
+									     <option value=""></option>
+										<option th:each="com : ${order_option.intercoms}" th:value="${com.key}" th:text="${com.value}"></option>
 									</select>
 								</div>
-								<input type="hidden" name="incotermName" id="incotermName">
+								<input type="hidden" id="incotermName" th:field="*{incotermName}">
 								<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
-									<input type="text" class="form-control" aria-describedby="emailHelp" readonly id="incotermContect" name="incotermContect"><!--  th:field="*{incotermContect}"-->
+									<input type="text" class="form-control"readonly id="incotermContect" th:field="*{incotermContect}">
 								</div>
 								<span class="col-md-1 control-label">合同管理员</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" aria-describedby="emailHelp" name="contractManager" readonly>
+									<input type="text" class="form-control" aria-describedby="emailHelp" readonly th:field="*{contractManager}">
 							    </div>
 							    <span class="col-md-1 control-label">录入日期</span>
 							    <div class="col-md-2">
-									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" name="createTime" readonly>
+									<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" readonly th:field="*{contractCreateTime}">
 							    </div>
 							</div>
 						</div>
@@ -279,26 +216,26 @@
 							<div class="row">
 							 	<span class="col-md-1 control-label">大区</span>
 								<div class="col-md-2">
-									<select class="form-control" id="officeSelect" th:onchange="getGroups(this,[[${order_option.groups}]])" name="officeCode">
+									<select class="form-control" id="officeSelect" th:onchange="getGroups(this,[[${order_option.groups}]])" th:field="*{officeCode}">
 										<option value="">--选择大区--</option>
 									</select>
 							    </div>
 							    <input type="hidden" name="officeName" id="officeName">
 							    <span class="col-md-1 control-label">中心</span>
 								<div class="col-md-2">
-									<select class="form-control" id="selectGroup" name="groupCode">
+									<select class="form-control" id="selectGroup" th:field="*{groupCode}">
 										<option value="">--选择中心--</option>
 									</select>
 							    </div>
 							    <input type="hidden" name="groupName" id="groupName">
 							    <span class="col-md-1 control-label">保修年限(年)</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="warrenty" value="1" aria-describedby="emailHelp" name="warrenty" readonly><!-- th:field="*{warrenty}" -->
+									<input type="text" class="form-control" id="warrenty" value="1" aria-describedby="emailHelp" name="warrenty" readonly>
 							    </div>
 							    <span class="col-md-1 control-label">安装方式</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="installName" aria-describedby="emailHelp" name="installName" readonly>
-									<input type="hidden" id="installCode" name="installCode">
+									<input type="text" class="form-control" id="installTypeName" aria-describedby="emailHelp" readonly th:field="*{installTypeName}">
+									<input type="hidden" id="installType" th:field="*{installType}">
 							    </div>
 							</div>
 							<div class="row">
@@ -312,59 +249,57 @@
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">收货方式</span>
 								<div class="col-md-2">
-									<select class="form-control" name="confirmTypeCode" id="confirmType"><!--  th:field="*{confirmTypeCode}" -->
+									<select class="form-control" id="receiveType" th:field="*{receiveType}">
 										<option th:each="receiveTerm : ${order_option.receiveTerms}" th:value="${receiveTerm.key}" th:text="${receiveTerm.value}"></option>
 									</select>
 							    </div>
-							    <input type="hidden" id="confirmTypeName" name="confirmTypeName">
+							    <input type="hidden" id="receiveTypeName" th:field="*{receiveTypeName}">
 								<span class="col-md-1 control-label">运输方式</span>
 								<div class="col-md-2">
-									<select class="form-control" name="transferTypeCode" id="transferType">
+									<select class="form-control" id="transferType" th:field="*{transferType}">
 										<option th:each="shippingType : ${order_option.shippingTypes}" th:value="${shippingType.key}" th:text="${shippingType.value}"></option>
 									</select>
-									<input type="hidden" id="transferTypeName" name="transferTypeName">
+									<input type="hidden" id="transferTypeName" th:field="*{transferTypeName}">
 							    </div>
 							    <span class="col-md-1 control-label">标准折扣</span>
 								<div class="col-md-2">
-									<input type="text" class="form-control" id="approvedDicount" readonly name="standardDiscount" th:value="*{standardDiscount}">
+									<input type="text" class="form-control" id="standardDiscount" readonly th:value="${order_option.standardDiscount}">
 							    </div>
-							    <input type="hidden" name="mainDiscount" th:value="*{standardDiscount}">
-							    <input type="hidden" name="bodyDiscount" th:value="*{standardDiscount}">
 							    <div id="freightDiv" style="display:none;">
 								    <span class="col-md-1 control-label">外销运费</span>
 									<div class="col-md-2">
-										<input type="text" class="form-control" aria-describedby="emailHelp" id="freight" name="freight"><!-- th:field="*{freight}" -->
+										<input type="text" class="form-control" aria-describedby="emailHelp" id="freight" th:field="*{freight}"><!-- th:field="*{freight}" -->
 								    </div>
 							    </div>				
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">授权人1及身份证号</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contactor1Id" aria-describedby="emailHelp" name="contactor1Id"><!-- th:field="*{contactor1Id}" -->
+									<input type="text" class="form-control" id="contactor1Id" aria-describedby="emailHelp" th:field="*{contactor1Id}"><!-- th:field="*{contactor1Id}" -->
 							    </div>
 							    <span class="col-md-1 control-label">授权人1电话</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contactor1Tel" aria-describedby="emailHelp" name="contactor1Tel"><!-- th:field="*{contactor1Tel}"  -->
+									<input type="text" class="form-control" id="contactor1Tel" aria-describedby="emailHelp" th:field="*{contactor1Tel}"><!-- th:field="*{contactor1Tel}"  -->
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">授权人2及身份证号</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contactor2Id" aria-describedby="emailHelp" name="contactor2Id">
+									<input type="text" class="form-control" id="contactor2Id" aria-describedby="emailHelp" th:field="*{contactor2Id}">
 							    </div>
 							    <span class="col-md-1 control-label">授权人2电话</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contactor2Tel" aria-describedby="emailHelp" name="contactor2Tel">
+									<input type="text" class="form-control" id="contactor2Tel" aria-describedby="emailHelp" th:field="*{contactor2Tel}">
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 15px;">
 								<span class="col-md-1 control-label">授权人3及身份证号</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contactor3Id" aria-describedby="emailHelp" name="contactor3Id" >
+									<input type="text" class="form-control" id="contactor3Id" aria-describedby="emailHelp" th:field="*{contactor3Id}">
 							    </div>
 							    <span class="col-md-1 control-label">授权人3电话</span>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" name="contactor3Tel">
+									<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 							    </div>
 							</div>
 						</div>
@@ -381,7 +316,7 @@
 								 <div class="row">
 								 	<span class="col-md-2 control-label">结算方式</span>
 									<div class="col-md-10">
-										<select class="form-control" id="paymentType"><!--  th:field="*{confirmTypeCode}" -->
+										<select class="form-control" id="paymentType" th:field="*{paymentType}">
 											<option th:each="payment : ${order_option.paymentType}" th:value="${payment.key}" th:text="${payment.value}"></option>
 										</select>
 							   		 </div>
@@ -401,47 +336,6 @@
 						</div>
 					</div>
 				</div>
-<!-- 				<div class="panel panel-default">
-					<div class="panel-heading" role="tab">
-						<h4 class="panel-title">
-							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#researchTableContent"    >调研表相关内容 Research table related content</a>
-						</h4>
-					</div>
-					<div class="panel-collapse collapse in" role="tabpanel" id="researchTableContent">
-						<div class="panel-body" style="height: auto;">
-
-							<div class="row">
-								<div class="col-xs-12 col-md-4">
-									柜体控制阀件是否甲供
-								</div>
-								<div class="col-xs-12 col-md-4">
-									分体柜是否远程监控
-								</div>
-								<div class="col-xs-12 col-md-4">
-									立柜柜体是否在地下室
-								</div>
-								<div class="col-xs-12 col-md-4">
-									<select class="form-control" name="isTerm1">
-										<option value="1">是</option>
-										<option value="0">否</option>
-									</select>
-								</div>
-								<div class="col-xs-12 col-md-4">
-									<select class="form-control" name="isTerm2">
-										<option value="1">是</option>
-										<option value="0">否</option>
-									</select>
-								</div>
-								<div class="col-xs-12 col-md-4">
-									<select class="form-control" name="isTerm3">
-										<option value="1">是</option>
-										<option value="0">否</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -461,19 +355,19 @@
 									立柜柜体是否在地下室
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<select class="form-control" name="isTerm1">
+									<select class="form-control" th:field="*{isTerm1}">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<select class="form-control" name="isTerm2">
+									<select class="form-control" th:field="*{isTerm2}">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<select class="form-control" name="isTerm3">
+									<select class="form-control" th:field="*{isTerm3}">
 										<option value="1">是</option>
 										<option value="0">否</option>
 									</select>
@@ -487,10 +381,10 @@
 									要求发货时间 Required delivery time
 								</div>
 								<div class="col-xs-3 col-md-3">
-									<input type="text" class="form-control" id="deliveryTime" aria-describedby="emailHelp" readonly name="earliestProductDate">
+									<input type="text" class="form-control" id="deliveryTime" aria-describedby="emailHelp" readonly th:field="*{earliestProductDate}">
 								</div>
 								<div class="col-xs-3 col-md-3">
-										<input id="requiredDeliveryTime" class="form-control" type="text" readonly name="earliestDeliveryDate">
+										<input id="requiredDeliveryTime" class="form-control" type="text" readonly th:field="*{earliestDeliveryDate}">
 								</div>
 								<div class="col-xs-3 col-md-3"></div>
 								<div class="col-xs-3 col-md-3">
@@ -562,7 +456,7 @@
 									备注 Remark
 								</div>
 								<div class="col-xs-12 col-md-12">
-									<textarea class="form-control" rows="3" name="comments"></textarea>
+									<textarea class="form-control" rows="3" th:field="*{comments}"></textarea>
 								</div>
 							</div>
 						</div>
@@ -793,6 +687,8 @@
 <script th:inline="javascript" src="../pageJs/materialColumn.js"></script>
 <script th:inline="javascript" src="../pageJs/standDealerOrder/newOrder.js"></script>
 <script th:inline="javascript" type="text/javascript">
+debugger
+	var ctxPath  = [[@{/}]];
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
 	var installationTerms =  [[${order_option.installationTerms}]]
 	var intercoms = [[${order_option.intercoms}]]
@@ -831,7 +727,7 @@
 	}
 </script>	
 <script>
-$("#gid").on('shown.bs.select',function(e){
+/* $("#gid").on('shown.bs.select',function(e){
     //获取下拉select里的输入框,提示一下搜索下拉
     $(this).prev().find("input").attr('placeholder',"请输入公司名称搜索");
     //绑定一下键盘输入
@@ -846,8 +742,8 @@ $("#gid").on('shown.bs.select',function(e){
         	guestlist('#gid',datas);
     	},2000);
     })
-});
-function guestlist(obj,datas){
+}); */
+/* function guestlist(obj,datas){
     $(obj).empty();
     $.ajax({
         type: "post",
@@ -887,7 +783,7 @@ function guestlist(obj,datas){
 
         }
     });
-}
+} */
 </script>
 <script>
      $('.sidebar-menu').SidebarNav()

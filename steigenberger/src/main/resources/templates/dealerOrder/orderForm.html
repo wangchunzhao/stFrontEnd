@@ -109,7 +109,7 @@ var ctxPath  = [[@{/}]];
 	<!-- new added graphs chart js-->
 <div id="footer" class="container" th:replace="foot::foot"></div>
 <script src="../js/classie.js"></script>
-<script>
+<script> 
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
@@ -148,7 +148,7 @@ var ctxPath  = [[@{/}]];
 function doSomething(){
 	 var ret = false;
 	 $.ajax({
-		 url:'/steigenberger/order/createOrder',
+		 url:ctxPath+'order/createOrder',
 		 data:{ menu:'下单'},
 		 dataType:'json',
 		 method:'POST',
@@ -173,7 +173,7 @@ function doSomething(){
 function doBeihuoSomething(){
 	 var ret = false;
 	 $.ajax({
-		 url:'/steigenberger/order/createBeiOrder',
+		 url:ctxPath+'order/createBeiOrder',
 		 data:{ menu:'下单'},
 		 dataType:'json',
 		 method:'POST',
@@ -197,18 +197,18 @@ function doBeihuoSomething(){
 function toDifferentOrder(type){
 	if(type == '5'){
 		if(doBeihuoSomething()){
-			window.location.href="/steigenberger/menu/stockUpOrder";
+			window.location.href=ctxPath+"menu/stockUpOrder";
 		}
 	}else{
 		if(doSomething()){
 			if(type=='1'){
-				window.location.href="/steigenberger/menu/standardDiscount";	
+				window.location.href=ctxPath+"menu/standardDiscount";	
 			}else if(type=='2'){
-				window.location.href="/steigenberger/menu/nonStandardDiscount";
+				window.location.href=ctxPath+"menu/nonStandardDiscount";
 			}else if(type=='3'){
 				//window.location.href="/steigenberger/menu/directCustomerOrder";
 			}else if(type=='4'){
-				window.location.href="/steigenberger/menu/directCustomerOrder";
+				window.location.href=ctxPath+"menu/directCustomerOrder";
 			}
 		}
 	}
