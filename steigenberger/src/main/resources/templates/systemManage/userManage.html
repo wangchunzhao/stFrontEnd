@@ -255,7 +255,8 @@
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
                 <a class="" role="button" data-toggle="collapse" href="#collapseTwo-magical-coder-auto-id-1564457283858" aria-expanded="true">用户列表 List of users</a>
-            </h4>
+			</h4>
+			<button type="button" onclick="handleAddUserClick()" class="btn btn-primary" style="float: right;margin-top: -10px">用户新增</button>
         </div>
         <div id="collapseTwo-magical-coder-auto-id-1564457283858" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;">
@@ -330,6 +331,16 @@
 			classie.toggle( showLeftPush, 'disabled' );
 		}
 	}
+	function handleAddUserClick() {
+		layer.open({
+			type: 2,
+			title: '用户新增 Add User',
+			maxmin: true,
+			shadeClose: true, //点击遮罩关闭层
+			area : ['800px' , '520px'],
+			content: '../permission/permissionApply.html'
+		});
+	}
 </script>	
 <!--scrolling js-->
 <script src="../js/jquery.nicescroll.js"></script>
@@ -340,6 +351,7 @@
      $('.sidebar-menu').SidebarNav()
    </script>	
 <script src="../js/SimpleChart.js"></script>
-<script src="../js/bootstrap.js"> </script>	
+<script src="../js/bootstrap.js"> </script>
+<script src="../js/layer.js"></script>
 </body>
 </html>
