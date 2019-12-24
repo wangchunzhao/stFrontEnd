@@ -35,8 +35,8 @@ $(function () {
 	if(installationTerms){
 		var installationTerm = installationTerms[$("#customerClazzCode").val()];
 		$.each(installationTerm, function (key, value) {
-			$("#installCode").val(key);
-			$("#installName").val(value);
+			$("#installType").val(key);
+			$("#installTypeName").val(value);
 			
 		});
 	}
@@ -80,7 +80,7 @@ function defaultCollapse(){
 
 
 //Customer basic infomation js start 
-function openSearchUnit(){
+function openSearchCustomer(){
 	$('#unitModal').modal('show');	
 	var opt = {
 				url: '/steigenberger/order/customers'
@@ -89,7 +89,7 @@ function openSearchUnit(){
 	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
 		$('#unitModal').modal('hide');
 		$("#contractUnitName").val('');
-		$("#contactorCode").val(row.code);
+		$("#customerCode").val(row.code);
 		$("#customer").val(row.name);
 		$("#customerClazz").val(row.clazzName).change();
 		$("#customerClazzName").val(row.clazzName);
@@ -147,6 +147,7 @@ function getDistrict(obj,districts){
 }
 
 function salesTypeChange(obj,offices,taxRate,exchangeRate){
+	debugger
 	$("#orignalContractAmount").val("");
 	$("#exchangeRate").val("");
 	$("#contractAmount").val("");
@@ -278,7 +279,7 @@ function getExchangeRate(obj,currencies){
 		$("#contractAmount").val('');
 		return
 	}
-	var salesType = $("#salesType").val();
+	var salesType = $("#saleType").val();
 	var currency = currencies[salesType];
 	$.each(currency, function (index,item) {
 		if(item.code==currencyCode){
@@ -422,7 +423,7 @@ function addSubsidiary(){
 		$('#subsidiaryModal').modal('show');
 		$("#subsidiaryForm")[0].reset();
 		$('#amount').val(1);
-		$('#discount').val($("#approvedDicount").val());
+		$('#discount').val($("#standardDiscount").val());
 		var opt = {
 			url: "/steigenberger/order/materials"
 		};
@@ -1747,7 +1748,7 @@ function getSelectName() {
 	if(incotermCode){
 		$("#incotermName").val(intercoms[incotermCode]);
 	}
-	var salesType = $("#salesType").val();
+	var salesType = $("#saleType").val();
 	var officeCode = $("#officeSelect").val();
 	var groupCode = $("#selectGroup").val();
 	if(salesType){
@@ -1767,8 +1768,8 @@ function getSelectName() {
 		$("#transferTypeName").val(shippingTypesMap[shippingTypeCode]);
 	}
 	
-	$("#confirmTypeName").val($("#confirmType").find("option:selected").text());
-	$("#terminalIndustryName").val($("#terminalIndustryCode").find("option:selected").text());
+	$("#receiveTypeName").val($("#receiveType").find("option:selected").text());
+	$("#industryCode").val($("#industryCode").find("option:selected").text());
 }
 
 
@@ -1817,7 +1818,7 @@ function viewGrossProfit(){
 		editViewGrossProfit();
 		return;
 	}
-	if(!$("#salesType").val()){
+	if(!$("#saleType").val()){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
 	}

@@ -23,6 +23,7 @@ import com.qhc.steigenberger.domain.SalesGroup;
 import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.SalesOrder;
 import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.ParameterService;
@@ -36,6 +37,7 @@ import com.qhc.steigenberger.util.CacheUtil;
 public class MenuController {
 	
 	private final static String ORDER_OPTION = "order_option";
+	private final static String ORDER_DETAIL = "orderDetail";
 	//
 	private final static String PAGE_DEALER = "dealerOrder/newOrder";
 	private final static String PAGE_DEALER_NON_STANDARD = "nonStandardDealerOrder/newNonStandardOrder";
@@ -195,30 +197,12 @@ public class MenuController {
 	@RequestMapping("standardDiscount")
 	public static ModelAndView goDealerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER);
-//		Map<String, String> customerClassMap =null;// orderService.getCustomerClazz();
-//		Map<String, String> salesTypeMap = null;//orderService.getSalesType();
-//		Map<String, String> currencyMap = null;//orderService.getCurrency();
-//		Map<String, String> incotermMap = null;//orderService.getIncoterms();
-
 		OrderOption oo = staticOrderService.getOrderOption();
-		oo.setCustomerClazzCode("02");
-		String orderTypeCode =oo.getOrderTypes().get("02");
-		oo.setOrderTypeCode(orderTypeCode);	
+		Order orderDetail = new Order();
+		orderDetail.setCustomerCode(Order.ORDER_CUSTOMER_DEALER_CODE);
+		orderDetail.setOrderType(Order.ORDER_TYPE_DEALER);
 		mv.addObject(ORDER_OPTION,oo);
-//		//
-//		mv.addObject(CUSTOMER_CLASS_MAP, customerClassMap);
-//		mv.addObject(SALES_TYPE_MAP, salesTypeMap);
-//		mv.addObject(CURRENCY_MAP, currencyMap);
-//		mv.addObject(INCOTERMS_MAP, incotermMap);
-//		//
-		//
-//		mv.addObject(FORM_ORDER_DEALER, new DealerOrder());
-		
-		
-		SalesOrder salesOrder = new SalesOrder();
-//		salesOrder.setSubmitType(Integer.valueOf(FORM_SUBMIT_TYPE_3));
-//		List<SalesGroup> list = staticOrderService.getGrossProfitList(salesOrder);
-//		mv.addObject(FORM_GROSS_PROFIT, list);
+		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;
 	}
 	
@@ -226,10 +210,11 @@ public class MenuController {
 	public static ModelAndView goNonStandardDealerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER_NON_STANDARD);
 		OrderOption oo = staticOrderService.getOrderOption();
-		oo.setCustomerClazzCode("02");
-		String orderTypeCode =oo.getOrderTypes().get("02");
-		oo.setOrderTypeCode(orderTypeCode);	
-		mv.addObject(ORDER_OPTION,oo);		
+		Order orderDetail = new Order();
+		orderDetail.setCustomerCode(Order.ORDER_CUSTOMER_DEALER_CODE);
+		orderDetail.setOrderType(Order.ORDER_TYPE_DEALER);
+		mv.addObject(ORDER_OPTION,oo);	
+		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;
 	}
 	
@@ -237,10 +222,22 @@ public class MenuController {
 	public static ModelAndView goDirectCustomerOrder() {
 		ModelAndView mv = new ModelAndView(PAGE_DEALER_DIRECT_CUSTOMER);
 		OrderOption oo = staticOrderService.getOrderOption();
-		oo.setCustomerClazzCode("02");
-		String orderTypeCode =oo.getOrderTypes().get("02");
-		oo.setOrderTypeCode(orderTypeCode);	
-		mv.addObject(ORDER_OPTION,oo);		
+		Order orderDetail = new Order();
+		orderDetail.setCustomerCode(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
+		orderDetail.setOrderType(Order.ORDER_TYPE_KEYACCOUNT);
+		mv.addObject(ORDER_OPTION,oo);	
+		mv.addObject(ORDER_DETAIL, orderDetail);
+		return mv;
+	}
+	
+	@RequestMapping("/stockUpOrder")
+	public static ModelAndView goStockUpOrder() {
+		ModelAndView mv = new ModelAndView(stockUpOrder);
+		OrderOption oo = staticOrderService.getOrderOption();
+		Order orderDetail = new Order();
+		orderDetail.setOrderType(Order.ORDER_TYPE_BULK);
+		mv.addObject(ORDER_OPTION,oo);
+		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;
 	}
 	
@@ -249,15 +246,4 @@ public class MenuController {
   	public String nologin() {
   		return "noLogin";
   	}
-
-	@RequestMapping("/stockUpOrder")
-	public static ModelAndView goStockUpOrder() {
-		ModelAndView mv = new ModelAndView(stockUpOrder);
-		OrderOption oo = staticOrderService.getOrderOption();
-		oo.setCustomerClazzCode("02");
-		String orderTypeCode =oo.getOrderTypes().get("02");
-		oo.setOrderTypeCode(orderTypeCode);
-		mv.addObject(ORDER_OPTION,oo);
-		return mv;
-	}
 }
