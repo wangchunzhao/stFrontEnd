@@ -12,7 +12,7 @@ $(function(){
 //	});
 	
 	function InitRoles(){
-		$.post('/steigenberger/permission/roleList',null,function(ret){
+		$.post('/st/permission/roleList',null,function(ret){
 			if(ret.status==200){
 				for(var i in ret.data){
 					var item = ret.data[i];
@@ -29,7 +29,7 @@ $(function(){
 	}
 	
 	function InitSapSalesOffice(){
-		$.post('/steigenberger/permission/sapSalesOfficelist',null,function(ret){
+		$.post('/st/permission/sapSalesOfficelist',null,function(ret){
 			if(ret.status==200){
 				for(var i in ret.data){
 					var item = ret.data[i];
