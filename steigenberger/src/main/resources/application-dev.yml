@@ -19,7 +19,7 @@ mail:
 
 qhc:     
     frye: 
-        url: http://localhost:8881/frye
+        url: http://localhost:8881/frye/
     ldap: false
 contract:
     dir: ./contract
