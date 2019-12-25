@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.Result;
-import com.qhc.steigenberger.domain.form.Order;
 
 @SpringBootTest
 class OrderServiceTest {

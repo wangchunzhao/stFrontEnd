@@ -19,24 +19,20 @@ mail:
 
 qhc:     
     frye: 
-        protocal: http
-        server: localhost
-        port: 8881
-        application: frye
+        url: http://localhost:8881/frye
     ldap: false
 contract:
     dir: ./contract
     
     # Bestsign config
     bestsign:
-        contractDir: D:\\qhc\\contracts\\
+        # for Test
+        url: https://api.bestsign.info
+        accountname: yongzheng.wang@haiercarrier.com
+        entername: 青岛海尔开利冷冻设备有限公司
+        clientid: 1575947454016605528
+        secrete: jmx9U6HyaV1O54lxk1aLYgwhn4SCocwy
+        sealname: 青岛海尔开利冷冻设备
+        privatekey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJFstcFiHwxvod0kQU1KLi+Sy7bE3yrfVPeTd3jdPw3qmCik21wLUfXXO6/dSQyTWV3sSoJGNoK6jlhqKbbDottDOVE1T5G6Wc2Nz3YyfGq76EO9C+do7y4WPxqq+1tOoLi5DO7pjMdN7kXS0fyDFJhbUGWroPsNV1IbsGTB1ipzAgMBAAECgYA9z8cxe1NXJdvW8yIOiAk5j1unQ+bXgjXLRZLyfJfggmZKYEgcx3L+240zIwt5nOfPVDAXT2C8EC+QxQ8V7/G4OxpZ7XeVEP0MaI0qRZn7/J5BEsEpd1UNOJVWL7Sd0fl4EzL5nLerKLxjv1sNnXZhExtykbM81DwwaBx+/vRfgQJBAN51ykGBQ0IJHIqz1mpL7G4yUtNQ5iuzj7ZRrndz7sdfVnOiqf2K/YvxgC7OV1lZggNAIEcO42vPID4PxkvqP8UCQQCnWZxZQD2g4RxNIQnrvAWFfhYa+A/dha+ZsP/unTV5XdFRhJ55J8yx4/RKxVPFQ7PiwY0s73o6OcdeK6fEHezXAkBgKDoMpnsUCCw2KBX+TGMeHtJ+VPGo4iy0egoXyBzmQOd1hFJGLdX6r6DgmoBXNsFj9kv9awoSh61AJkFofxChAkBJTH2ntfSIX7EGs17mCr+cXcKO43IHhAOK3LTsrZz7YLVK8Dx9Mop8rCyXB2EOuP20ZzRPp0Cw+hexzos34ieXAkEAsZIOtp0UZU9KIK7SSwHuH2fqHGI/axqYCjYt1CO0l1DIySsCilPjiD6gkziz3ClJrYvR8KZU7+ZZe0udNg7/3g==
         
-        # for production
-        sign:
-           url: https://api.bestsign.cn
-           accountname: peng.liu@carrier.utc.com
-           entername: \u9752\u5C9B\u6D77\u5C14\u5F00\u5229\u51B7\u51BB\u8BBE\u5907\u6709\u9650\u516C\u53F8
-           clientid: 1555896956019659217
-           secrete: CRUhcOhYjL2zpCOMvLzuIKrnS4WKP1W6
-           sealname: \u6D77\u5C14\u5F00\u5229\u516C\u7AE0
-           privatekey: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCVWoXXGgYKtIlpT4l4exar2zsaVxF1QgKqHpz/HmJ9LBRGj7S7q/SDtPDgB+3OYE2WwgdjgJnMcMiT1GmLeEagaseIryZseREJcRE+rdiLh1bkN6r1G4SWF2xRvg5FDKSIt5GOnJrEuICImv5QRJeqHg+Cx7vFngp41vorGRB5w9qYZmPL09pcCSNgfqPBte+22CTLNS1C3hA1nzQSxnxN6Bh5caqMTcNy7LLTlbJtXUQ4Z1elo7gkfL44vIBtmvZj4lNiVZLmBLnHIQwDAauE1lkmVW9GA0mLjROmEzJ/qN/zgqjDe2jMkdGwrS2JuFBRdIldlSB8ySjVjomHgMVjAgMBAAECggEAQ2dUKeyjt2cc8LsllosugybwuIV86od8/lvMjNKgrk8bY3DtpxkGw/4AC4tohpAt1BEDFqPuRTbNPvJJI9mHPlSScpxhYekNiE5P8xKwPOA6lcqNzAq8PqSZjRaSCBWZl94IwezpaEjAMWaJyZ37OJpSc7pCgwA9R6X1x0eLiPfo5gZYn7N61HsOCQkfv30Cvk6rZ/zhBkgzd3kCAGuEj0ZQTvt6j8s0MN6RCCSXpRCZXo0mwq2oVc6Um+kr5pcQHg9kL1NjbDjGG6qWP/mOIBhn9Vc+j0F766uouaWagmcfBgSRfMGUE/qfIOSlvbBGKLN1n6d5jchoPE6XF1QfiQKBgQDod4O/WAhLbf62ZG875p09QfoM49erOEWkuVWIvuX7ywHvsSQYrHY7+TuVX7uTpd9TUMeHGfrC1sBDYV0BxXg+9TS1rf1YVn2VfOiYzWdiHA8F8HaO19kZ6k4boLZUOQaAqdGzJ+j+qwKY0ke9s7eRRmtLf9pTEULyrvqBPuPTPwKBgQCkeRcSL0ut4b4QRHg7mHpn1fXAQPaWOW17lCNLvh3/pKxlnlW+k7hM/YhZXhh+ITzHlS1lg8EHWJl3G0j1MbaNh9W/tsEo97g3AffUabxWDJXrcX7oIRjSZJEYo/GVY5KHeTrnhckpR7t1debfW4d8XME55G/Pek7XytL6vRqY3QKBgQCh2sSyLtrnmdgkqd0Audp00kEFRIXewrlKrXeuVCvQmlHoz08wlrNjom4n3JW/gVfyrGWf3SjJC7ilsV6OYy0LuLJQZKnmHaImuOdBrJH0r1COdBQ39HVGI+rqNYV9Mo8iehp1QK5q0ipmuNIWdNC0p3EBCi26dGRGkCn+XwlFBQKBgQCAUmmJqpTlKUdc8c7M0H5QHUMLqKO7OTsOO9n98mr9VcGb1xkXA7G7f+Otthht8Ai3vtAYb99el+XEY+lcRFklu2Etnqy+BegYItT1STnD+TXO6FIXUhtHq2b5To/h+joMsK0gjeUQ7AJ59m8WvRbMFKI9RNlniwmQm5JYRspFkQKBgQCRGys8S3rcVmoB/C0CC00CW9I5xMJFGK5gRo0HspJ92H4Ch90w0Uya4YnPBw7liIOvW2MjWhIKLN9cL1nTQ7V2ZFnwMgYdWCDEq77WqVVT6+YNy3NvnWV/GPpll3Gkthe/VG75vmkli1oSaXLrLHOm45uYCXZhA+K16Y4aJwgP/w==
+        contractDir: D:\\qhc\\contracts\\

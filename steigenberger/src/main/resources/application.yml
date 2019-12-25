@@ -57,13 +57,6 @@ logging:
     config: classpath:logback-spring.xml
     path: ./logs
    
-qhc:     
-    frye: 
-        protocal: http
-        server: localhost
-        port: 8881
-        application: frye
-    ldap: false
 contract:
     dir: ./contract
     
