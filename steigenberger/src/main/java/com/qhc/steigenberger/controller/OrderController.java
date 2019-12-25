@@ -97,28 +97,10 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
-
-	@PostMapping("dealer")
-	@ResponseBody
-	public ModelAndView submitDlealerOrder(@RequestBody Order orderData, ModelAndView model,
-			@RequestParam(value = "action", required = true) String action, HttpServletRequest request,
-			BindingResult bindingResult) {
-
-		if (bindingResult.hasErrors()) {
-			model.addObject("error", bindingResult.getFieldError().getDefaultMessage());
-			return MenuController.goDealerOrder();
-		}
-		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
-		User user = userService.selectUserIdentity(identityName);
-//		orderData.setCurrentUser(user.getUserIdentity());
-		if(user.getRegion()!=null){
-			orderData.setUserOfficeCode(user.getRegion().getCode());
-		}
-		
-		orderService.saveOrder(orderData);
-		return MenuController.goDealerOrder();
-	}
 	
+	@Autowired
+	MenuController menuController;
+
 	/**
 	 * 保存订单
 	 * 
@@ -127,16 +109,16 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("")
-	public ModelAndView saveOrder(@RequestBody Order order, HttpServletRequest request) {
-		String identityName = getValueByAttribute(request, Constants.IDENTITY).toString();
+	public ModelAndView saveOrder(@RequestBody Order order) {
+		String identity = getUserIdentity();
 		
-		orderService.saveOrder(order);
+		Result result = orderService.saveOrder(identity, order);
 		
 		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
 			if (order.getIsSpecial() == 1) {
-				return MenuController.goNonStandardDealerOrder();
+				return menuController.goNonStandardDealerOrder();
 			} else {
-				return MenuController.goDealerOrder();
+				return menuController.goDealerOrder();
 			}
 		}
 		
@@ -151,16 +133,40 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("submit")
-	public ModelAndView submitOrder(@RequestBody Order order, HttpServletRequest request) {
-		String identityName = getValueByAttribute(request, Constants.IDENTITY).toString();
+	public ModelAndView submitOrder(@RequestBody Order order) {
+		String identity = getUserIdentity();
 		
-		orderService.submit(order);
+		orderService.submitOrder(identity, order);
 		
 		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
 			if (order.getIsSpecial() == 1) {
-				return MenuController.goNonStandardDealerOrder();
+				return menuController.goNonStandardDealerOrder();
 			} else {
-				return MenuController.goDealerOrder();
+				return menuController.goDealerOrder();
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 保存订单
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("submitbpm")
+	public ModelAndView submitOrderToBpm(@RequestBody Order order) {
+		String identityName = this.getUserIdentity();
+		
+//		orderService.toSap(order);
+		
+		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
+			if (order.getIsSpecial() == 1) {
+				return menuController.goNonStandardDealerOrder();
+			} else {
+				return menuController.goDealerOrder();
 			}
 		}
 		
@@ -188,13 +194,13 @@ public class OrderController extends BaseController {
 		Material m = orderService.getMaterial(code);
 		return m;
 	}
+	
 	//判断有没有新建经销商和直签订单的权限
 	@PostMapping("createOrder")
 	@ResponseBody
 	public JsonResult permissionApply1(HttpServletRequest request) {
-
 		try {
-			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
+			String identityName = this.getUserIdentity();
 			User user = userService.selectUserIdentity(identityName);
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
@@ -218,7 +224,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public JsonResult permissionApply(HttpServletRequest request) {
 		try {
-			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
+			String identityName = this.getUserIdentity();
 			User user = userService.selectUserIdentity(identityName);
 			List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 			for (int i = 0; i < userOperationInfoList.size(); i++) {
@@ -258,8 +264,8 @@ public class OrderController extends BaseController {
 	@PostMapping(value = "query")
 	@ResponseBody
 	public PageHelper<Order> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
-		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
-		User user = userService.selectUserIdentity(identityName);//identityName
+		String identity = getUserIdentity();
+		User user = userService.selectUserIdentity(identity);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		Boolean toSap = userOperationInfoList.stream().anyMatch(e->e.getOperationId().equals(TO_SAP));
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
@@ -287,20 +293,21 @@ public class OrderController extends BaseController {
 			query.setStatusList(list);
 			query.setStatus("");
 		}
-		System.out.println(identityName+"======================");
+		System.out.println(identity+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
-		PageHelper<Order> order = orderService.findOrders(query);
-//		if(!"".equals(query.getOfficeCode())) {
-//			List<BaseOrder> list = order.getRows();
-//			for(int i = 0; i < list.size(); i++) {
-//				((Map)list.get(i)).put("buttonControl", "0");
-//			}
-//		}
+		Result result = orderService.findOrders(query);
+		PageHelper<Order> order = (PageHelper<Order>)result.getData();
+		if(!"".equals(query.getOfficeCode())) {
+			List<Order> list = order.getRows();
+			for(int i = 0; i < list.size(); i++) {
+				((Map)list.get(i)).put("buttonControl", "0");
+			}
+		}
 		List<Order> list = order.getRows();
-//		for(int i = 0; i < list.size(); i++) {
-//			list.get(i).setButtonControl(String.valueOf(toSap));
-//		}
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setButtonControl(String.valueOf(toSap));
+		}
 		return order;
 	}
 	
@@ -316,7 +323,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public PageHelper<Order> searchTodoOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
 		//取得session中的登陆用户域账号，查询权限
-		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
+		String identityName = this.getUserIdentity();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
@@ -391,7 +398,8 @@ public class OrderController extends BaseController {
 		}
 		// 只查询最新的版本
 		query.setLast(true);
-		PageHelper<Order> order = orderService.findOrders(query);
+		Result result = orderService.findOrders(query);
+		PageHelper<Order> order = (PageHelper<Order>)result.getData();
 		
 		return order;
 	}
@@ -409,13 +417,11 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "查询订单详情", notes = "查询订单详情")
 	@GetMapping(value = "detail")
 	@ResponseBody
-	public Order getOrderDetail(@RequestParam String sequenceNumber, @RequestParam String version, @RequestParam(required = false) String orderType)
+	public Result getOrderDetail(@RequestParam Integer orderInfoId)
 			throws Exception {
-		if (orderType == null || orderType.trim().length() == 0) {
-			// get Order type with sequenceNumber
-			orderType = orderService.getOrderType(sequenceNumber);
-		}
-		return orderService.findOrderDetail(sequenceNumber, version, orderType);
+		Result result = orderService.findOrderDetail(orderInfoId);
+		
+		return result;
 	}
 
 	/**
@@ -430,8 +436,9 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
 	@PostMapping(value = "sap")
 	@ResponseBody
-	public String toSap(@RequestParam String sequenceNumber, @RequestParam String currentVersion, String orderType) throws Exception {
-		return orderService.toSap(sequenceNumber, currentVersion);
+	public Result toSap(@RequestParam Integer orderInfoId) throws Exception {
+		String identity = getUserIdentity();
+		return orderService.sendToSap(identity, orderInfoId);
 	}
 
 	/**
@@ -451,7 +458,7 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "user")
 	@ResponseBody
 	public User findUsetDetail(HttpServletRequest request) {
-		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
+		String identityName = this.getUserIdentity();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		return user;
 
@@ -482,15 +489,16 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "查看订单", notes = "查看订单")
 	@RequestMapping(value="viewOrder")
 	@ResponseBody
-	public ModelAndView viewOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
+	public ModelAndView viewOrder(Integer orderInfoId, ModelAndView view) {
 		ModelAndView mv = new ModelAndView("dealerOrder/dealerOrderView");
 		OrderOption oo = orderService.getOrderOption();
 		mv.addObject("order_option",oo);
-		if (orderType == null || orderType.trim().length() == 0) {
-			orderType = orderService.getOrderType(sequenceNumber);
+		Result result = orderService.findOrderDetail(orderInfoId);
+		Order order = null; 
+		if (result.getStatus().equals("ok")) {
+			order = (Order)result.getData();
+			oo.setOrderTypeCode(order.getOrderType());	
 		}
-		Order order = orderService.findOrderDetail(sequenceNumber, version, orderType);
-		oo.setOrderTypeCode(orderType);	
 		mv.addObject("orderDetail",order);
 		return mv;
 	}
@@ -498,15 +506,16 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "修改订单", notes = "修改订单")
 	@RequestMapping(value="editOrder")
 	@ResponseBody
-	public ModelAndView editOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
-		ModelAndView mv = new ModelAndView("dealerOrder/editDealerOrder");
+	public ModelAndView editOrder(Integer orderInfoId, ModelAndView view) {
+		ModelAndView mv = new ModelAndView("order/editOrder");
 		OrderOption oo = orderService.getOrderOption();
 		mv.addObject("order_option",oo);
-		if (orderType == null || orderType.trim().length() == 0) {
-			orderType = orderService.getOrderType(sequenceNumber);
+		Result result = orderService.findOrderDetail(orderInfoId);
+		Order order = null; 
+		if (result.getStatus().equals("ok")) {
+			order = (Order)result.getData();
+			oo.setOrderTypeCode(order.getOrderType());	
 		}
-		Order order = (Order) orderService.findOrderDetail(sequenceNumber, version, orderType);
-		oo.setOrderTypeCode(orderType);	
 		mv.addObject("orderDetail",order);
 		return mv;
 	}
@@ -514,15 +523,16 @@ public class OrderController extends BaseController {
     @ApiOperation(value = "修改库存订单", notes = "修改库存订单")
     @RequestMapping(value="editStockUpOrder")
     @ResponseBody
-    public ModelAndView editStockUpOrder(String sequenceNumber, String orderType,String version,ModelAndView view) {
+    public ModelAndView editStockUpOrder(Integer orderInfoId,ModelAndView view) {
         ModelAndView mv = new ModelAndView("dealerOrder/editStockUpOrder");
         OrderOption oo = orderService.getOrderOption();
         mv.addObject("order_option",oo);
-        if (orderType == null || orderType.trim().length() == 0) {
-            orderType = orderService.getOrderType(sequenceNumber);
-        }
-        Order order = orderService.findOrderDetail(sequenceNumber, version, orderType);
-        oo.setOrderTypeCode(orderType);
+		Result result = orderService.findOrderDetail(orderInfoId);
+		Order order = null; 
+		if (result.getStatus().equals("ok")) {
+			order = (Order)result.getData();
+			oo.setOrderTypeCode(order.getOrderType());	
+		}
         mv.addObject("orderDetail",order);
         return mv;
     }
@@ -530,29 +540,19 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "审批订单", notes = "审批订单")
 	@RequestMapping(value="approveOrder")
 	@ResponseBody
-	public ModelAndView approveOrder(HttpServletRequest request,String sequenceNumber, String orderType,String version,ModelAndView view) {
+	public ModelAndView approveOrder(HttpServletRequest request,Integer orderInfoId,ModelAndView view) {
 		//取得session中的登陆用户域账号，查询权限
-		String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
-		User user = userService.selectUserIdentity(identityName);//identityName
+		String identity = getUserIdentity();
+		User user = userService.selectUserIdentity(identity);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		OrderOption oo = orderService.getOrderOption();
-		if (orderType == null || orderType.trim().length() == 0) {
-			orderType = orderService.getOrderType(sequenceNumber);
-		}
-		Order order = null;
-		
-		switch (orderType) {
-		case ORDER_TYPE_DEALER:
-			order =  orderService.findOrderDetail(sequenceNumber, version, orderType);
-			break;
-		case ORDER_TYPE_KEYACCOUNT:
-			order = orderService.findOrderDetail(sequenceNumber, version, orderType);
-			break;
-		case ORDER_TYPE_BULK:
-			order = orderService.findOrderDetail(sequenceNumber, version, orderType);
-			break;
-		default:
-			throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
+		Result result = orderService.findOrderDetail(orderInfoId);
+		Order order = null; 
+		String orderType = null;
+		if (result.getStatus().equals("ok")) {
+			order = (Order)result.getData();
+			orderType = order.getOrderType();
+			oo.setOrderTypeCode(orderType);	
 		}
 		boolean standard = false;
 		if(ORDER_TYPE_DEALER.equals(orderType)&&!StringUtils.isEmpty(oo.getStandardDiscount())) {
@@ -623,25 +623,5 @@ public class OrderController extends BaseController {
             pars.put("bom_code", model.getBomCode());
             return orderService.findBOMWithPrice(pars);    
     }
-    
-    @ApiOperation(value = "B2c审核订单", notes = "B2c审核订单")
-	@PostMapping(value = "b2c")
-	@ResponseStatus(HttpStatus.OK)
-	public void approvedByB2C(HttpServletRequest request,@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestBody List<B2CComments> b2cs) throws Exception{
-    	String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();//
-		orderService.b2cCost(isApproved, seqnum, version, identityName, b2cs);
-	}
-	
-	
-	@ApiOperation(value = "工程经理审核", notes = "工程经理审核订单")
-	@PostMapping(value = "order/engineering")
-	@ResponseStatus(HttpStatus.OK)
-	public void approvedByEngineering(@RequestParam String operator,@RequestParam int isApproved,@RequestParam String seqnum,@RequestParam String version,@RequestParam double installation,@RequestParam double materials,@RequestParam double electrical ,@RequestParam double coolroom,@RequestParam double maintanance) throws Exception{
-		boolean isPro = false;
-		if(isApproved!=0)
-			isPro = true;
-		orderService.enginingCost(operator,isPro, seqnum, version, installation,materials,electrical,coolroom,maintanance);
-	}
-
 
 }

@@ -209,6 +209,11 @@ public class Order {
 	 * 附件信息 Attachment information
 	 */
 	private List<Attachment> attachments;
+	
+	/**
+	 * 页面按钮控制
+	 */
+	String buttonControl = null;
 
 	public Integer getId() {
 		return id;
@@ -280,6 +285,22 @@ public class Order {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public Integer getVersionNum() {
+		return versionNum;
+	}
+
+	public void setVersionNum(Integer versionNum) {
+		this.versionNum = versionNum;
+	}
+
+	public Integer getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Integer isActive) {
+		this.isActive = isActive;
 	}
 
 	public String getStatus() {
@@ -960,6 +981,14 @@ public class Order {
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
+	}
+
+	public String getButtonControl() {
+		return buttonControl;
+	}
+
+	public void setButtonControl(String buttonControl) {
+		this.buttonControl = buttonControl;
 	}
 
 	@Override

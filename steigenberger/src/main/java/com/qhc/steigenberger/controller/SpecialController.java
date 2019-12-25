@@ -142,26 +142,26 @@ public class SpecialController {
 	}
 	
 	@RequestMapping("/toAdd")
-	public ModelAndView toAdd(@RequestParam String kOrderVersionId,String ordersId) {
+	public ModelAndView toAdd(@RequestParam String orderInfoId) {
 		
-		Order order = orderService.getInfoById(ordersId);
+//		Order order = orderService.findOrderDetail(orderInfoId);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("order", order);
-		mv.addObject("kOrderVersionId", kOrderVersionId);
-		mv.setViewName("special/specialApply");
+//		mv.addObject("order", order);
+//		mv.addObject("kOrderVersionId", kOrderVersionId);
+//		mv.setViewName("special/specialApply");
 		return mv;
 	}
 	
 	@RequestMapping("/toShow")
 	public ModelAndView toShow(@RequestParam String applyId) {
-		SpecialDelivery sd = specialDeliveryService.findInfoById(applyId);
-		Order order = orderService.getInfoById(sd.getkOrderVersionId());
+//		SpecialDelivery sd = specialDeliveryService.findInfoById(applyId);
+//		Order order = orderService.getInfoById(sd.getkOrderVersionId());
 		//todo，查询合同得到合同流水
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("order", order);
-		mv.addObject("apply", sd);
-		mv.setViewName("special/showApply");
+//		mv.addObject("order", order);
+//		mv.addObject("apply", sd);
+//		mv.setViewName("special/showApply");
 		return mv;
 	}
 	

@@ -153,7 +153,11 @@ public class ContractService {
 		query.setVersionId(contract.getVersionId());
 		query.setLast(false);
 		query.setIncludeDetail(true);
-		PageHelper page = orderService.findOrders(query);
+		Result result = orderService.findOrders(query);
+		PageHelper page = null; 
+		if(result.getStatus().equals("ok")) {
+			page = (PageHelper)result.getData();
+		}
 		List rows = page.getRows();
 		if (rows != null && rows.size() > 0) {
 			Object data = rows.get(0);

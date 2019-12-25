@@ -4,47 +4,28 @@
 package com.qhc.steigenberger.service;
 
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import com.qhc.steigenberger.domain.CustomerClazz;
-import com.qhc.steigenberger.domain.KOrderInfo;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qhc.steigenberger.domain.BomExplosion;
+import com.qhc.steigenberger.domain.Characteristic;
+import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.Result;
-import com.qhc.steigenberger.domain.SalesGroup;
-import com.qhc.steigenberger.domain.SalesOrder;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qhc.steigenberger.config.ApplicationConfig;
-import com.qhc.steigenberger.domain.B2CComments;
-import com.qhc.steigenberger.domain.BomExplosion;
-import com.qhc.steigenberger.domain.Characteristic;
-import com.qhc.steigenberger.domain.Contract;
-import com.qhc.steigenberger.domain.Customer;
-import com.qhc.steigenberger.domain.SpecialDelivery;
 import com.qhc.steigenberger.domain.form.Order;
-import com.qhc.steigenberger.service.FryeService;
-import com.qhc.steigenberger.service.exception.ExternalServerInternalException;
-import com.qhc.steigenberger.service.exception.URLNotFoundException;
 import com.qhc.steigenberger.util.PageHelper;
-
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * @author wang@dxc.com
@@ -57,24 +38,6 @@ public class OrderService {
 			// 忽略不存在的字段
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
 
-	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
-	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
-	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
-
-	private final static String URL_ORDER_OPTION = "order/option";
-//	private final static String URL_SALES_TYPE = "order/salesType";
-//	private final static String URL_CURRENCY = "currency";
-//	private final static String URL_INCOTERMS = "incoterms";
-	private final static String URL_ORDER = "order";
-	private final static String URL_D_ORDER = "order/dOrder";
-	private final static String URL_B2C_ORDER = "order/b2c";
-	private final static String URL_SEPERATOR = ",";
-	private final static String URL_PARAMETER_SEPERATOR = "/";
-
-	private final static String URL_ABS_ORDER_SALESORDER = "order/salesOrder";
-	private final static String URL_MATERIAL_CONFIG = "material/configurations";
-	private final static String URL_MATERIAL_BOM = "material/configuration";
-
 	@Autowired
 	private FryeService fryeService;
 
@@ -86,8 +49,7 @@ public class OrderService {
 	}
 
 	public OrderOption getOrderOption() {
-
-		Object obj = fryeService.getInfo(URL_ORDER_OPTION, OrderOption.class);
+		Object obj = fryeService.getInfo("order/option", OrderOption.class);
 
 		return (OrderOption) obj;
 	}
@@ -122,184 +84,100 @@ public class OrderService {
 		return (Material) fryeService.getInfo("material/" + code, Material.class);
 	}
 
-//	/**
-//	 * 
-//	 * @return customer class map
-//	 */
-//	public Map<String, String> getCustomerClazz() {
-//		//return  fryeService.getInfo(URL_CUSTOMER_CLASS);
-//		return null;
-//	}
-//	/**
-//	 * 
-//	 * @return sales type map
-//	 */
-//	public Map<String, String> getSalesType() {
-//		return  fryeService.getMapData(URL_SALES_TYPE);
-//	}
-//	/**
-//	 * 
-//	 * @return currency map
-//	 */
-//	public Map<String, String> getCurrency() {
-//		return  fryeService.getMapData(URL_CURRENCY);
-//	}
-//	/**
-//	 * 
-//	 * @return
-//	 */
-//	public Map<String,String> getIncoterms(){
-//		return fryeService.getMapData(URL_INCOTERMS);
-//	}
+	public List<OrderVersion> findOrderVersions(String sequenceNumber) {
+		String url = "order/" + sequenceNumber +"/version";
+		return (List<OrderVersion>) fryeService.getInfo(url, List.class);
+	}
+
+	public Result findOrders(OrderQuery query) {
+		String url = "order/query";
+		Result result = fryeService.postInfo(query, url, Result.class);
+		if("ok".equals(result.getStatus())){
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Order.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
+		}
+		return result;
+	}
+
+	public Result findOrderDetail(Integer orderInfoId) {
+		String url = "order/" + orderInfoId;
+		Result result = fryeService.getInfo(url, Result.class);
+		if("ok".equals(result.getStatus())){
+			JavaType javaType = mapper.getTypeFactory().constructType(Order.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
+		}
+
+		return result;
+	}
 	/**
 	 * 
 	 * @param form : order
 	 */
-	public void saveOrder(Order form) {
-		fryeService.postJason(URL_ORDER, form);
+	public Result saveOrder(String user, Order form) {
+		Result result = fryeService.postForm("order/" + user, form, Result.class);
+
+		return result;
+	}
+	/**
+	 * 
+	 * @param form : order
+	 */
+	public Result submitOrder(String user, Order form) {
+		String url = "order/submit/" + user;
+		Result result = fryeService.postForm(url, form, Result.class);
+
+		return result;
+	}
+	/**
+	 * 
+	 * @param form : order
+	 */
+	public Result submitbpmOrder(String user, Order form) {
+		String url = "order/submitbpm/" + user;
+		Result result = fryeService.postForm(url, form, Result.class);
+
+		return result;
+	}
+	/**
+	 * 
+	 * @param form : order
+	 */
+	public Result upgradeOrder(String user, Integer orderInfoId) {
+		String url = "order/" + orderInfoId + "/upgrade/" + user;
+		Result result = fryeService.postForm(url, (Object)new HashMap(), Result.class);
+
+		return result;
 	}
 
-	public Order getInfoById(String orderId) {
+	public Result sendToSap(String user, Integer orderInfoId) {
+		String url = "order/sap/" + user;
+		Result result = (Result)fryeService.postForm(url, (Object)new HashMap(), Result.class);
 
-		return dOrderervice.getInfo(URL_D_ORDER + "/" + orderId, Order.class);
-	}
-
-	@Autowired
-	ApplicationConfig config;
-
-	public List<SalesGroup> getGrossProfitList(SalesOrder salesOrder) {
-
-		String url = config.getFryeURL() + URL_ABS_ORDER_SALESORDER;
-		@SuppressWarnings("unchecked")
-		Flux<SalesGroup> sgFlux = WebClient.create().post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8)
-				.body(Mono.just(salesOrder), SalesOrder.class).retrieve()
-				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
-				.onStatus(HttpStatus::is5xxServerError,
-						clientResponse -> Mono.error(new ExternalServerInternalException()))
-				.bodyToFlux(SalesGroup.class);
-		return sgFlux.collectList().block();
-
-	}
-
-	public List<OrderVersion> findOrderVersions(String orderId) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + orderId + URL_PARAMETER_SEPERATOR + "version";
-		return (List<OrderVersion>) fryeService.getInfo(url, List.class);
-	}
-
-	public PageHelper<Order> findOrders(OrderQuery query) {
-		String url = "order/query";
-		PageHelper page = (PageHelper) fryeService.postInfo(query, url, PageHelper.class);
-		try {
-			System.out.println(mapper.writeValueAsString(page));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Order.class);
-//		page = mapper.convertValue(page, javaType);
-
-		javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, Order.class);
-		page.setRows(mapper.convertValue(page.getRows(), javaType));
-
-		return page;
+		return result;
 	}
 
 	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {
-		String url = URL_MATERIAL_CONFIG + URL_PARAMETER_SEPERATOR + clazzCode + ',' + materialCode;
+		String url = "material/configurations/" + clazzCode + ',' + materialCode;
 		return (List<Characteristic>) fryeService.getInfo(url, List.class);
 	}
 
-//	public DealerOrder findDealerOrderDetail(String sequenceNumber, String version) {
-//		return (DealerOrder)findOrderDetail(sequenceNumber, version, ORDER_TYPE_DEALER);
-//	}
-
-	public Order findOrderDetail(String sequenceNumber, String version, String orderType) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "detail?sequenceNumber=" + sequenceNumber + "&version="
-				+ version;
-		Order order = null;
-		String json = (String) fryeService.getInfo(url, String.class);
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM));
-		switch (orderType) {
-		case ORDER_TYPE_DEALER:
-//				String json = (String)fryeService.getInfo(url, String.class);
-//				order = mapper.convertValue(order, DealerOrder.class);
-			try {
-				order = mapper.readValue(json, Order.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-//				order = (DealerOrder)fryeService.getInfo(url, DealerOrder.class);
-			break;
-		case ORDER_TYPE_KEYACCOUNT:
-//				order = (KeyAccountOrder)fryeService.getInfo(url, KeyAccountOrder.class);
-//				order = mapper.convertValue(order, KeyAccountOrder.class);
-			try {
-				order = mapper.readValue(json, Order.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-		case ORDER_TYPE_BULK:
-//				order = (BulkOrder)fryeService.getInfo(url, BulkOrder.class);
-//				order = mapper.convertValue(order, BulkOrder.class);
-			try {
-				order = mapper.readValue(json, Order.class);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-
-		default:
-			throw new RuntimeException(MessageFormat.format("Unknown order type [{0}]", orderType));
-		}
-
-		return order;
-	}
-
-	public String getOrderType(String sequenceNumber) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "type?sequenceNumber=" + sequenceNumber;
-		return (String) fryeService.getInfo(url, String.class);
-	}
-
-	public String toSap(String sequenceNumber, String version) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "sap?sequenceNumber=" + sequenceNumber + "&version="
-				+ version;
-		return (String) fryeService.postInfo("", url, String.class);
-	}
-
 	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
-		return (BomExplosion) fryeService.postInfo(pars, URL_MATERIAL_BOM, HashMap.class);
+		return (BomExplosion) fryeService.postInfo(pars, "material/configuration", HashMap.class);
 	}
 
 	public List<MaterialGroups> calcGrossProfit(Order order) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + "grossprofit";
+		String url = "order/grossprofit";
 		return (List<MaterialGroups>) fryeService.postForm(url, order, ArrayList.class);
 	}
 
 	public List<MaterialGroups> calcWtwGrossProfit(String sequenceNumber, String version) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + sequenceNumber + "/" + version + "/wtwgrossprofit";
+		String url = "order/" + sequenceNumber + "/" + version + "/wtwgrossprofit";
 		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
 	}
 
 	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
-		String url = URL_ORDER + URL_PARAMETER_SEPERATOR + sequenceNumber + "/" + version + "/grossprofit";
+		String url = "order/" + sequenceNumber + "/" + version + "/grossprofit";
 		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
 	}
 
-	public void b2cCost(int isPro, String seqnum, String version,String operator, List<B2CComments> b2cs) {
-		String url = URL_B2C_ORDER + "?isApproved="+isPro+"&seqnum="+seqnum+"&version="+version+"&operator="+operator;
-		fryeService.postJason(url,b2cs);
-		
-	}
-
-	public void enginingCost(String operator, boolean isPro, String seqnum, String version, double installation,
-			double materials, double electrical, double coolroom, double maintanance) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void submit(Order order) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.qhc.steigenberger.domain.OrderQuery;
+import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.form.Order;
 
 @SpringBootTest
@@ -28,22 +29,24 @@ class OrderServiceTest {
 
 	@Test
 	void testFindOrderDetail() {
-		String startTag = "${";
-		String endTag = "}";
-		// parameter start tag size
-		int pslen = startTag.length();
-		// parameter end tag size
-		int pelen = endTag.length();
-		String regex = "\\$\\{.+?\\}";
-		regex = startTag.replace("$", "\\$").replace("{", "\\{") + ".+?" + endTag.replace("}", "\\}");
-		System.out.println(regex);
-		Pattern p = Pattern.compile(regex);
-		String text = "*****${abc}dddddd";
-		Matcher matcher = p.matcher(text);
-		System.out.println(matcher.find());
-		System.out.println(text.substring(matcher.start() + pslen, matcher.end() - 1));
-		Order order = orderService.findOrderDetail("123", "1-2", "");
-		System.out.println(order.getCreateTime());
+//		String startTag = "${";
+//		String endTag = "}";
+//		// parameter start tag size
+//		int pslen = startTag.length();
+//		// parameter end tag size
+//		int pelen = endTag.length();
+//		String regex = "\\$\\{.+?\\}";
+//		regex = startTag.replace("$", "\\$").replace("{", "\\{") + ".+?" + endTag.replace("}", "\\}");
+//		System.out.println(regex);
+//		Pattern p = Pattern.compile(regex);
+//		String text = "*****${abc}dddddd";
+//		Matcher matcher = p.matcher(text);
+//		System.out.println(matcher.find());
+//		System.out.println(text.substring(matcher.start() + pslen, matcher.end() - 1));
+		
+		
+		Result result = orderService.findOrderDetail(1);
+		System.out.println(result);
 	}
 
 }
