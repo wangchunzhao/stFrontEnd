@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 @Configuration
@@ -41,7 +42,9 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		DateFormat format = new ObjectMapperDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		ObjectMapper objectMapper = new ObjectMapper();
+		DateFormat dateFormat = objectMapper.getDateFormat();
+		DateFormat format = new ObjectMapperDateFormat(dateFormat);
 		// 设置转换器格式，和时区。
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
 				.indentOutput(true)

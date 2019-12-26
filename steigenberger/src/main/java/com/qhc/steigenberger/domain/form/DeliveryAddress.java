@@ -15,6 +15,30 @@ public class DeliveryAddress {
 	private String distinctName;// 区名称
 	private String address; // 收货地址
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getOrderInfoId() {
+		return orderInfoId;
+	}
+
+	public void setOrderInfoId(Integer orderInfoId) {
+		this.orderInfoId = orderInfoId;
+	}
+
+	public Integer getSeq() {
+		return seq;
+	}
+
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
+
 	public String getProvinceCode() {
 		return provinceCode;
 	}

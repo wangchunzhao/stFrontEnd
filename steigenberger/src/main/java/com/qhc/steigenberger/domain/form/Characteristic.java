@@ -1,45 +1,105 @@
-/**
- * 
- */
 package com.qhc.steigenberger.domain.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @author wwang67
+ * @author Walker
  *
  */
 public class Characteristic {
-	
-	private Boolean optional;//可选、必选
-	@JsonProperty(value = "code")
-	private String configCode;//配置项
-	private String configValueCode;//配置值
-	
-	public Characteristic() {
-		
+
+	/* Id */
+	private Integer id = null;
+
+	/* ItemDetailId */
+	private Integer itemId = null;
+
+	/* 选定的特征代码 */
+	private String keyCode = null;
+
+	/* 选定的特征代码 */
+	private String keyName = null;
+
+	/* 选定的特征值的代码 */
+	private String valueCode = null;
+
+	/* 选定的特征值的代码 */
+	private String valueName = null;
+
+	/* 可选 */
+	private boolean optional = false;
+
+	/* 可配置 */
+	private boolean configurable = false;
+
+	public Integer getId() {
+		return id;
 	}
-	
-	public Boolean getOptional() {
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getKeyCode() {
+		return keyCode;
+	}
+
+	public void setKeyCode(String keyCode) {
+		this.keyCode = keyCode;
+	}
+
+	public String getKeyName() {
+		return keyName;
+	}
+
+	public void setKeyName(String keyName) {
+		this.keyName = keyName;
+	}
+
+	public String getValueCode() {
+		return valueCode;
+	}
+
+	public void setValueCode(String valueCode) {
+		this.valueCode = valueCode;
+	}
+
+	public String getValueName() {
+		return valueName;
+	}
+
+	public void setValueName(String valueName) {
+		this.valueName = valueName;
+	}
+
+	public boolean isOptional() {
 		return optional;
 	}
 
-	public void setOptional(Boolean optional) {
+	public void setOptional(boolean optional) {
 		this.optional = optional;
 	}
 
-	public String getConfigCode() {
-		return configCode;
+	public boolean isConfigurable() {
+		return configurable;
 	}
-	public void setConfigCode(String configCode) {
-		this.configCode = configCode;
+
+	public void setConfigurable(boolean configurable) {
+		this.configurable = configurable;
 	}
-	public String getConfigValueCode() {
-		return configValueCode;
+
+	@Override
+	public String toString() {
+		return "Characteristic [id=" + id + ", itemId=" + itemId + ", keyCode=" + keyCode + ", keyName=" + keyName
+				+ ", valueCode=" + valueCode + ", valueName=" + valueName + ", optional=" + optional + ", configurable="
+				+ configurable + "]";
 	}
-	public void setConfigValueCode(String configValueCode) {
-		this.configValueCode = configValueCode;
-	}
-	
-	
 }

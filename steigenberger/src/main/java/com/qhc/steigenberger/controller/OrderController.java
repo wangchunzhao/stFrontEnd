@@ -15,7 +15,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -215,7 +214,7 @@ public class OrderController extends BaseController {
 		return orderService.sendToSap(identity, order);
 	}
 
-	@RequestMapping("customers")
+	@GetMapping("customers")
 	@ResponseBody
 	public Result searchCustomer(String clazzCode, String customerName, int pageNo, int limit) {
 		Result result = null;
@@ -223,14 +222,14 @@ public class OrderController extends BaseController {
 		return result;
 	}
 
-	@RequestMapping("materials")
+	@GetMapping("materials")
 	@ResponseBody
 	public Result searchMateril(String materialName, String industoryCode, int pageNo,int limit) {
 		Result materials = orderService.findMaterialsByName(materialName,industoryCode, pageNo,limit);
 		return materials;
 	}
 
-	@RequestMapping("material")
+	@GetMapping("material")
 	@ResponseBody
 	public Material getMaterilById(String code) {
 		Material m = orderService.getMaterial(code);
@@ -503,14 +502,14 @@ public class OrderController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "material/configurations")
+	@GetMapping(value = "material/configurations")
 	@ResponseBody
 	public List findCharacteristic(String clazzCode, String materialCode) {
 		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
 
 	}
 	
-	@RequestMapping(value = "user")
+	@GetMapping(value = "user")
 	@ResponseBody
 	public User findUsetDetail(HttpServletRequest request) {
 		String identityName = this.getUserIdentity();
@@ -520,14 +519,14 @@ public class OrderController extends BaseController {
 	}
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@RequestMapping(value = "{sequenceNumber}/{version}/wtwgrossprofit")
+	@GetMapping(value = "{sequenceNumber}/{version}/wtwgrossprofit")
 	@ResponseBody
 	public List<MaterialGroups> calcWtwGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
 		return orderService.calcWtwGrossProfit(sequenceNumber, version);
 	}
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@RequestMapping(value = "{sequenceNumber}/{version}/grossprofit")
+	@GetMapping(value = "{sequenceNumber}/{version}/grossprofit")
 	@ResponseBody
 	public List<MaterialGroups> calcGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
 		return orderService.calcGrossProfit(sequenceNumber, version);
@@ -535,14 +534,13 @@ public class OrderController extends BaseController {
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
-	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<MaterialGroups> calcGrossProfit(@RequestBody Order order) throws Exception {
 		return orderService.calcGrossProfit(order);
 	}
 	
 	@ApiOperation(value = "查看订单", notes = "查看订单")
-	@RequestMapping(value="viewOrder")
+	@GetMapping(value="viewOrder")
 	@ResponseBody
 	public ModelAndView viewOrder(Integer orderInfoId, ModelAndView view) {
 		ModelAndView mv = new ModelAndView("dealerOrder/dealerOrderView");
@@ -559,7 +557,7 @@ public class OrderController extends BaseController {
 	}
 	
 	@ApiOperation(value = "修改订单", notes = "修改订单")
-	@RequestMapping(value="editOrder")
+	@GetMapping(value="editOrder")
 	@ResponseBody
 	public ModelAndView editOrder(Integer orderInfoId, ModelAndView view) {
 		ModelAndView mv = new ModelAndView("order/editOrder");
@@ -576,7 +574,7 @@ public class OrderController extends BaseController {
 	}
 
     @ApiOperation(value = "修改库存订单", notes = "修改库存订单")
-    @RequestMapping(value="editStockUpOrder")
+    @GetMapping(value="editStockUpOrder")
     @ResponseBody
     public ModelAndView editStockUpOrder(Integer orderInfoId,ModelAndView view) {
         ModelAndView mv = new ModelAndView("dealerOrder/editStockUpOrder");
@@ -593,7 +591,7 @@ public class OrderController extends BaseController {
     }
 	
 	@ApiOperation(value = "审批订单", notes = "审批订单")
-	@RequestMapping(value="approveOrder")
+	@PostMapping(value="approveOrder")
 	@ResponseBody
 	public ModelAndView approveOrder(HttpServletRequest request,Integer orderInfoId,ModelAndView view) {
 		//取得session中的登陆用户域账号，查询权限
