@@ -3,13 +3,23 @@
  */
 package com.qhc.steigenberger.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,6 +33,7 @@ import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.Result;
+import com.qhc.steigenberger.domain.form.Attachment;
 import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.util.PageHelper;
 
@@ -35,7 +46,10 @@ public class OrderService {
 	private ObjectMapper mapper = new ObjectMapper()
 			.setDateFormat(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM))
 			// 忽略不存在的字段
-			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+	@Value("${qhc.order.path}")
+	private String orderFilePath;
 
 	@Autowired
 	private FryeService fryeService;
@@ -59,23 +73,23 @@ public class OrderService {
 	 * @return customer list
 	 */
 	public Result findCustomer(String clazzCode, String name, int pageNo, int pageSize) {
-		Result result = (Result) fryeService.getInfo("customer/" + clazzCode
-				+ "," + name + "," + pageNo+","+pageSize, Result.class);
-		if("ok".equals(result.getStatus())){
+		Result result = (Result) fryeService
+				.getInfo("customer/" + clazzCode + "," + name + "," + pageNo + "," + pageSize, Result.class);
+		if ("ok".equals(result.getStatus())) {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Customer.class);
 			result.setData(mapper.convertValue(result.getData(), javaType));
 		}
 		return result;
 	}
 
-	public Result findMaterialsByName(String name,String industoryCode, int pageNo,int pageSize) {
+	public Result findMaterialsByName(String name, String industoryCode, int pageNo, int pageSize) {
 		Map<String, String> pars = new HashMap<String, String>();
 		pars.put("name", name);
 		pars.put("industoryCode", industoryCode);
 		pars.put("pageNo", String.valueOf(pageNo));
 		pars.put("pageSize", String.valueOf(pageSize));
-		Result result = (Result)  fryeService.postForm("material", pars, Result.class);
-		if("ok".equals(result.getStatus())) {
+		Result result = (Result) fryeService.postForm("material", pars, Result.class);
+		if ("ok".equals(result.getStatus())) {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Material.class);
 			result.setData(mapper.convertValue(result.getData(), javaType));
 		}
@@ -87,14 +101,14 @@ public class OrderService {
 	}
 
 	public List<OrderVersion> findOrderVersions(String sequenceNumber) {
-		String url = "order/" + sequenceNumber +"/version";
+		String url = "order/" + sequenceNumber + "/version";
 		return (List<OrderVersion>) fryeService.getInfo(url, List.class);
 	}
 
 	public Result findOrders(OrderQuery query) {
 		String url = "order/query";
 		Result result = fryeService.postInfo(query, url, Result.class);
-		if("ok".equals(result.getStatus())){
+		if ("ok".equals(result.getStatus())) {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Order.class);
 			result.setData(mapper.convertValue(result.getData(), javaType));
 		}
@@ -104,13 +118,14 @@ public class OrderService {
 	public Result findOrderDetail(Integer orderInfoId) {
 		String url = "order/" + orderInfoId;
 		Result result = fryeService.getInfo(url, Result.class);
-		if("ok".equals(result.getStatus())){
+		if ("ok".equals(result.getStatus())) {
 			JavaType javaType = mapper.getTypeFactory().constructType(Order.class);
 			result.setData(mapper.convertValue(result.getData(), javaType));
 		}
 
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param form : order
@@ -120,6 +135,7 @@ public class OrderService {
 
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param form : order
@@ -130,6 +146,7 @@ public class OrderService {
 
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param form : order
@@ -140,20 +157,21 @@ public class OrderService {
 
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param form : order
 	 */
 	public Result upgradeOrder(String user, Integer orderInfoId) {
 		String url = "order/" + orderInfoId + "/upgrade/" + user;
-		Result result = fryeService.postForm(url, (Object)new HashMap(), Result.class);
+		Result result = fryeService.postForm(url, (Object) new HashMap(), Result.class);
 
 		return result;
 	}
 
 	public Result sendToSap(String user, Order order) {
 		String url = "order/sap/" + user;
-		Result result = (Result)fryeService.postForm(url, order, Result.class);
+		Result result = (Result) fryeService.postForm(url, order, Result.class);
 
 		return result;
 	}
@@ -180,6 +198,58 @@ public class OrderService {
 	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
 		String url = "order/" + sequenceNumber + "/" + version + "/grossprofit";
 		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
+	}
+
+	/**
+	 * 保存附件
+	 * 
+	 * @param fileName
+	 * @param inputStream
+	 * @return
+	 */
+	public Attachment writeAttachment(String fileName, InputStream inputStream) {
+		// 文件存储地址，相对路径，存储目录由配置文件指定
+		String fileUrl = String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + "/" + System.currentTimeMillis()
+				+ "_" + fileName;
+
+		File f = new File(orderFilePath, fileUrl);
+		if (!f.getParentFile().exists()) {
+			f.getParentFile().mkdirs();
+		}
+
+		try (FileOutputStream fout = new FileOutputStream(f)) {
+			IOUtils.copy(inputStream, fout);
+			Attachment attachment = new Attachment();
+			attachment.setFileName(fileName);
+			attachment.setFileUrl(fileUrl);
+
+			return attachment;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			IOUtils.closeQuietly(inputStream);
+		}
+
+		return null;
+	}
+
+	/**
+	 * 读取附件文件流
+	 * 
+	 * @param attachment
+	 * @return
+	 */
+	public InputStream readAttachment(Attachment attachment) {
+		try {
+			// 文件存储地址，相对路径，存储目录由配置文件指定
+			String fileUrl = attachment.getFileUrl();
+			File f = new File(orderFilePath, fileUrl);
+			
+			return new FileInputStream(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

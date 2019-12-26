@@ -17,6 +17,11 @@ spring:
     cache: false
     servlet:
       content-type: text/html
+      multipart: 
+         # 上传文件总的最大值
+         max-request-size: 20MB
+         # 单个文件的最大值
+         max-file-size: 20MB
     enabled: true
     encoding: UTF-8
     mode: HTML

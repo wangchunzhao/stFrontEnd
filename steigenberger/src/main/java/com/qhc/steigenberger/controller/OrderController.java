@@ -1,15 +1,21 @@
 package com.qhc.steigenberger.controller;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -18,8 +24,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.JsonResult;
@@ -85,7 +93,6 @@ public class OrderController extends BaseController {
 	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
 	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
 	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
-
 
 	@Autowired
 	UserService userService;
@@ -291,19 +298,13 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "上传订单资料", notes = "上传订单资料")
 	@GetMapping(value = "upload")
 	@ResponseBody
-	public Result upload() {
+	public Result upload(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
 		Result result = null;
 		
 		try {
 			// 上传到文件名
-			String fileName = null;
-			// 文件存储地址，相对路径，存储目录由配置文件指定
-			String fileUrl = null;
-			// TODO 
-			
-			Attachment attachment = new Attachment();
-			attachment.setFileName(fileName);
-			attachment.setFileUrl(fileUrl);
+			String fileName = file.getName();
+			Attachment attachment = orderService.writeAttachment(fileName, file.getInputStream());
 			
 			result.setData(attachment);
 		} catch (Exception e) {
@@ -317,14 +318,28 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "下载订单资料", notes = "下载订单资料")
 	@GetMapping(value = "download")
 	@ResponseBody
-	public void download(@RequestBody Attachment attachment) {
+	public void download(@RequestBody Attachment attachment, HttpServletResponse response) {
 		try {
 			// 文件名
 			String fileName = attachment.getFileName();
-			// 文件存储地址，相对路径，存储目录由配置文件指定
-			String fileUrl = attachment.getFileUrl();
-			// TODO 
 			
+			InputStream in = orderService.readAttachment(attachment);
+			
+			// 配置文件下载
+            response.setHeader("content-type", "application/octet-stream");
+            response.setContentType("application/octet-stream");
+            // 下载文件能正常显示中文
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            // 实现文件下载
+            try {
+                OutputStream os = response.getOutputStream();
+                IOUtils.copy(in, os);
+                System.out.println("Download  successfully!");
+            } catch (Exception e) {
+                System.out.println("Download  failed!");
+            } finally {
+            	IOUtils.closeQuietly(in);
+            }			
 		} catch (Exception e) {
 			logger.error("上传文件失败", e);
 		}
