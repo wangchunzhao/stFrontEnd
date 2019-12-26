@@ -69,15 +69,18 @@ public class OrderService {
 		return result;
 	}
 
-	public PageHelper<Material> findMaterialsByName(String name, int pageNo) {
-		if (name == null) {
-			return null;
-		}
+	public Result findMaterialsByName(String name,String industoryCode, int pageNo,int pageSize) {
 		Map<String, String> pars = new HashMap<String, String>();
 		pars.put("name", name);
+		pars.put("industoryCode", industoryCode);
 		pars.put("pageNo", String.valueOf(pageNo));
-
-		return (PageHelper<Material>) fryeService.postForm("material", pars, PageHelper.class);
+		pars.put("pageSize", String.valueOf(pageSize));
+		Result result = (Result)  fryeService.postForm("material", pars, Result.class);
+		if("ok".equals(result.getStatus())) {
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Material.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
+		}
+		return result;
 	}
 
 	public Material getMaterial(String code) {

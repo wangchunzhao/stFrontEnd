@@ -183,9 +183,9 @@ public class OrderController extends BaseController {
 
 	@RequestMapping("materials")
 	@ResponseBody
-	public PageHelper<Material> searchMateril(String materialName, int pageNo) {
-		PageHelper<Material> cms = orderService.findMaterialsByName(materialName, pageNo);
-		return cms;
+	public Result searchMateril(String materialName, String industoryCode, int pageNo,int limit) {
+		Result materials = orderService.findMaterialsByName(materialName,industoryCode, pageNo,limit);
+		return materials;
 	}
 
 	@RequestMapping("material")

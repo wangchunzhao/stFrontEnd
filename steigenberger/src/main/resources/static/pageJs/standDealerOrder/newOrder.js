@@ -298,13 +298,6 @@ function getAmount(obj){
     $("#contractAmount").val(toDecimal2(amount)).change();
 }
 
-function queryMaterialTypeParams(params) {
-    params.pageNo = this.pageNumber;
-    params.materialName = $("#materialsName").val();
-    return params;
-}
-
-
 function add(){
 	$('#paymentModal').modal('show');
 	$("#modalType").val("new");
@@ -419,29 +412,47 @@ function getPaymentAreaContent(){
 	
 }
 
-//打开物料规格查询框
+//打开添加物料规格modal
 function addSubsidiary(){
-		$('#subsidiaryModal').modal('show');
-		$("#subsidiaryForm")[0].reset();
-		$('#amount').val(1);
-		$('#discount').val($("#standardDiscount").val());
-		var opt = {
-			url: "/steigenberger/order/materials"
-		};
-		$("#materialTypeTable").bootstrapTable('refresh', opt);
-		$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
-			$('#specificationModal').modal('hide');
-			getMaterialInfo(row.code);
-			$("#materialTypeName").val(row.description);
-			$("#materialCode").val(row.code);
-			if(row.isPurchased=='0'){
-				$('#isPurchased').val('生产');
-			}else{
-				$('#isPurchased').val('采购');
-			}
-			$('#unitName').val(row.unitName);
-		})
+	$('#subsidiaryModal').modal('show');
+	$("#subsidiaryForm")[0].reset();
+	$('#amount').val(1);
+	$('#discount').val($("#standardDiscount").val());
 	$('#materialsModalType').val('new');
+}
+
+//打开规格查询框
+function searchSpecification(){
+	$('#specificationModal').modal('show');
+	var opt = {
+			url: ctxPath+"order/materials"
+	};
+	$("#materialTypeTable").bootstrapTable('refresh', opt);
+	$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
+		$('#specificationModal').modal('hide');
+		getMaterialInfo(row.code);
+		$("#materialTypeName").val(row.description);
+		$("#materialCode").val(row.code);
+		if(row.isPurchased=='0'){
+			$('#isPurchased').val('生产');
+		}else{
+			$('#isPurchased').val('采购');
+		}
+		$('#unitName').val(row.unitName);
+	})
+}
+
+function queryMaterialTypeParams(params) {
+    params.pageNo = this.pageNumber;
+    params.materialName = $("#materialsName").val();
+    params.industoryCode = $("#customerIndustryCode").val();
+    return params;
+}
+
+
+//查询规格
+function searchMaterilType(){
+	$('#materialTypeTable').bootstrapTable('refresh');
 }
 
 //点击查询出来的物料记录
@@ -1070,15 +1081,6 @@ function confirmRowData(index,rowNumber){
 	return row;
 }
 
-//打开规格查询框
-function searchSpecification(){
-	$('#specificationModal').modal('show');
-}
-
-//查询规格
-function searchMaterilType(){
-	$('#materialTypeTable').bootstrapTable('refresh');
-}
 
 
 //添加物料地址
@@ -1563,7 +1565,7 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('insertRow', {
 		    index: count,
 		    row: {
-		    	seq:count+1
+		    	seq:count+1,
 		    	pca: pca,
 		    	provinceCode:provinceValue,
 		    	provinceName:province,
@@ -1578,7 +1580,7 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('updateRow', {
 		    index: rowIndex,
 		    row: {
-		    	seq:count+1
+		    	seq:count+1,
 		    	pca: pca,
 		    	provinceCode:provinceValue,
 		    	provinceName:province,
