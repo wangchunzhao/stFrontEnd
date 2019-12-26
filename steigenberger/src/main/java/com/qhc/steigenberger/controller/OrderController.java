@@ -153,9 +153,9 @@ public class OrderController extends BaseController {
 	 */
 	@PostMapping("submitbpm")
 	public ModelAndView submitOrderToBpm(@RequestBody Order order) {
-		String identityName = this.getUserIdentity();
+		String identity = this.getUserIdentity();
 		
-//		orderService.toSap(order);
+		orderService.submitbpmOrder(identity, order);
 		
 		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
 			if (order.getIsSpecial() == 1) {
@@ -166,6 +166,43 @@ public class OrderController extends BaseController {
 		}
 		
 		return null;
+	}
+
+
+	/**
+	 * 查询订单
+	 * 
+	 * @param sequenceNumber
+	 * @param version
+	 * @param orderType
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "查询订单详情", notes = "查询订单详情")
+	@GetMapping(value = "{orderInfoId}")
+	@ResponseBody
+	public Result getOrderDetail(@PathVariable("orderInfoId") Integer orderInfoId)
+			throws Exception {
+		Result result = orderService.findOrderDetail(orderInfoId);
+		
+		return result;
+	}
+
+	/**
+	 * 推送订单到SAP
+	 * 
+	 * @param sequenceNumber
+	 * @param version
+	 * @param orderType
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
+	@PostMapping(value = "sap")
+	@ResponseBody
+	public Result toSap(@RequestBody Order order) throws Exception {
+		String identity = getUserIdentity();
+		return orderService.sendToSap(identity, order);
 	}
 
 	@RequestMapping("customers")
@@ -399,43 +436,6 @@ public class OrderController extends BaseController {
 		return order;
 	}
 
-
-	/**
-	 * 查询订单
-	 * 
-	 * @param sequenceNumber
-	 * @param version
-	 * @param orderType
-	 * @return
-	 * @throws Exception
-	 */
-	@ApiOperation(value = "查询订单详情", notes = "查询订单详情")
-	@GetMapping(value = "detail")
-	@ResponseBody
-	public Result getOrderDetail(@RequestParam Integer orderInfoId)
-			throws Exception {
-		Result result = orderService.findOrderDetail(orderInfoId);
-		
-		return result;
-	}
-
-	/**
-	 * 推送订单到SAP
-	 * 
-	 * @param sequenceNumber
-	 * @param version
-	 * @param orderType
-	 * @return
-	 * @throws Exception
-	 */
-	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
-	@PostMapping(value = "sap")
-	@ResponseBody
-	public Result toSap(@RequestParam Integer orderInfoId) throws Exception {
-		String identity = getUserIdentity();
-		return orderService.sendToSap(identity, orderInfoId);
-	}
-
 	/**
 	 * 查询物料配置
 	 * 
@@ -445,7 +445,7 @@ public class OrderController extends BaseController {
 	 */
 	@RequestMapping(value = "material/configurations")
 	@ResponseBody
-	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
+	public List findCharacteristic(String clazzCode, String materialCode) {
 		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
 
 	}

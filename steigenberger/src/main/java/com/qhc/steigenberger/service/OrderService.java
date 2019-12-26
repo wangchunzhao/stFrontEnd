@@ -115,8 +115,8 @@ public class OrderService {
 	 * 
 	 * @param form : order
 	 */
-	public Result saveOrder(String user, Order form) {
-		Result result = fryeService.postForm("order/" + user, form, Result.class);
+	public Result saveOrder(String user, Order order) {
+		Result result = fryeService.postForm("order/" + user, order, Result.class);
 
 		return result;
 	}
@@ -124,9 +124,9 @@ public class OrderService {
 	 * 
 	 * @param form : order
 	 */
-	public Result submitOrder(String user, Order form) {
+	public Result submitOrder(String user, Order order) {
 		String url = "order/submit/" + user;
-		Result result = fryeService.postForm(url, form, Result.class);
+		Result result = fryeService.postForm(url, order, Result.class);
 
 		return result;
 	}
@@ -134,9 +134,9 @@ public class OrderService {
 	 * 
 	 * @param form : order
 	 */
-	public Result submitbpmOrder(String user, Order form) {
+	public Result submitbpmOrder(String user, Order order) {
 		String url = "order/submitbpm/" + user;
-		Result result = fryeService.postForm(url, form, Result.class);
+		Result result = fryeService.postForm(url, order, Result.class);
 
 		return result;
 	}
@@ -151,16 +151,16 @@ public class OrderService {
 		return result;
 	}
 
-	public Result sendToSap(String user, Integer orderInfoId) {
+	public Result sendToSap(String user, Order order) {
 		String url = "order/sap/" + user;
-		Result result = (Result)fryeService.postForm(url, (Object)new HashMap(), Result.class);
+		Result result = (Result)fryeService.postForm(url, order, Result.class);
 
 		return result;
 	}
 
-	public List<Characteristic> getCharactersByClazzCode(String clazzCode, String materialCode) {
+	public List getCharactersByClazzCode(String clazzCode, String materialCode) {
 		String url = "material/configurations/" + clazzCode + ',' + materialCode;
-		return (List<Characteristic>) fryeService.getInfo(url, List.class);
+		return fryeService.getInfo(url, List.class);
 	}
 
 	public Result findBomPrice(Map<String, String> pars) {
