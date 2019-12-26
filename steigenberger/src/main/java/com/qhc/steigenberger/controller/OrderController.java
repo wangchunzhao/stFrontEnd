@@ -1,6 +1,5 @@
 package com.qhc.steigenberger.controller;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qhc.steigenberger.Constants;
-import com.qhc.steigenberger.domain.B2CComments;
-import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
@@ -613,7 +608,7 @@ public class OrderController extends BaseController {
     @ApiOperation(value = "根据BOM配置获取新的Characteristic和value")
     @PostMapping(value = "material/configuration")
     @ResponseStatus(HttpStatus.OK)
-    public BomExplosion findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
+    public Result findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
             Map<String, String> pars = new HashMap<>();
             List<String> configCodes = model.getConfigCode();
             List<String> configValueCodes = model.getConfigValueCode();
@@ -621,7 +616,7 @@ public class OrderController extends BaseController {
                 pars.put(configCodes.get(i), configValueCodes.get(i));
             }
             pars.put("bom_code", model.getBomCode());
-            return orderService.findBOMWithPrice(pars);    
+            return orderService.findBomPrice(pars);    
     }
 
 }

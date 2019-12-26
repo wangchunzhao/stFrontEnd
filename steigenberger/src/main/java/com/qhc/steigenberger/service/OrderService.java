@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qhc.steigenberger.domain.BomExplosion;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.Material;
@@ -164,8 +163,8 @@ public class OrderService {
 		return (List<Characteristic>) fryeService.getInfo(url, List.class);
 	}
 
-	public BomExplosion findBOMWithPrice(Map<String, String> pars) {
-		return (BomExplosion) fryeService.postInfo(pars, "material/configuration", HashMap.class);
+	public Result findBomPrice(Map<String, String> pars) {
+		return (Result) fryeService.postInfo(pars, "material/optionalbom", Result.class);
 	}
 
 	public List<MaterialGroups> calcGrossProfit(Order order) {
