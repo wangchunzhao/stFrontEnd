@@ -16,8 +16,10 @@ public class Item {
 	private String materialName;//物料名称,规格型号
 	private Integer isConfigurable;//是否为可配置物料，物料信息带出
 	private Integer isPurchased;//物料属性  1:采购  0:生产物料类型，物料信息带出
-	private String materialGroupCode;//物料类型代码，SAP分组，物料信息带出
-	private String materialgroupName;//物料类型名称
+	private String materialGroupCode;//SAP物料分组，物料信息带出
+	private String materialGroupName;//SAP物料分组名称
+	private String stMaterialGroupCode;//销售工具物料分组，物料信息带出
+	private String stMaterialGroupName;//销售工具物料分组名称
 	private String unitCode;//计量单位code，物料信息带出
 	private String unitName;//计量单位名称，物料信息带出
 	private double quantity;//数量
@@ -127,11 +129,23 @@ public class Item {
 	public void setMaterialGroupCode(String materialGroupCode) {
 		this.materialGroupCode = materialGroupCode;
 	}
-	public String getMaterialgroupName() {
-		return materialgroupName;
+	public String getMaterialGroupName() {
+		return materialGroupName;
 	}
-	public void setMaterialgroupName(String materialgroupName) {
-		this.materialgroupName = materialgroupName;
+	public void setMaterialGroupName(String materialGroupName) {
+		this.materialGroupName = materialGroupName;
+	}
+	public String getStMaterialGroupCode() {
+		return stMaterialGroupCode;
+	}
+	public void setStMaterialGroupCode(String stMaterialGroupCode) {
+		this.stMaterialGroupCode = stMaterialGroupCode;
+	}
+	public String getStMaterialGroupName() {
+		return stMaterialGroupName;
+	}
+	public void setStMaterialGroupName(String stMaterialGroupName) {
+		this.stMaterialGroupName = stMaterialGroupName;
 	}
 	public String getUnitCode() {
 		return unitCode;
@@ -453,13 +467,14 @@ public class Item {
 	}
 	@Override
 	public String toString() {
-		return "Item [rowNum=" + rowNum + ", materialCode=" + materialCode + ", materialName=" + materialName
-				+ ", isConfigurable=" + isConfigurable + ", isPurchased=" + isPurchased + ", materialGroupCode="
-				+ materialGroupCode + ", materialgroupName=" + materialgroupName + ", unitCode=" + unitCode
-				+ ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice=" + standardPrice
-				+ ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount + ", transationPrice="
-				+ transationPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice=" + actualPrice
-				+ ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrica
+		return "Item [id=" + id + ", rowNum=" + rowNum + ", materialCode=" + materialCode + ", materialName="
+				+ materialName + ", isConfigurable=" + isConfigurable + ", isPurchased=" + isPurchased
+				+ ", materialGroupCode=" + materialGroupCode + ", materialGroupName=" + materialGroupName
+				+ ", stMaterialGroupCode=" + stMaterialGroupCode + ", stMaterialGroupName=" + stMaterialGroupName
+				+ ", unitCode=" + unitCode + ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice="
+				+ standardPrice + ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount
+				+ ", transationPrice=" + transationPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice="
+				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrica
 				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransationPrice="
 				+ optionalTransationPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
 				+ b2cEstimatedAmount + ", b2cEstimatedCost=" + b2cEstimatedCost + ", actualPriceSum=" + actualPriceSum
@@ -478,6 +493,4 @@ public class Item {
 				+ requestNameplate + ", requestCircult=" + requestCircult + ", comments=" + comments + ", clazzCode="
 				+ clazzCode + "]";
 	}
-	
-	
 }
