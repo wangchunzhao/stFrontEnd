@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,12 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
@@ -31,6 +31,7 @@ import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
+import com.qhc.steigenberger.domain.form.Attachment;
 import com.qhc.steigenberger.domain.form.BomQueryModel;
 import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.service.OrderService;
@@ -43,6 +44,8 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("order")
 public class OrderController extends BaseController {
+	Logger logger = LoggerFactory.getLogger(OrderController.class);
+	
 	//权限
 	private final static String allOrder = "1011";//查看所有订单
 	private final static String areaOrder = "1012";//查看本区域订单
@@ -283,6 +286,48 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public List<OrderVersion> orderVersions(@PathVariable String sequenceNumber) throws Exception {
 		return orderService.findOrderVersions(sequenceNumber);
+	}
+	
+	@ApiOperation(value = "上传订单资料", notes = "上传订单资料")
+	@GetMapping(value = "upload")
+	@ResponseBody
+	public Result upload() {
+		Result result = null;
+		
+		try {
+			// 上传到文件名
+			String fileName = null;
+			// 文件存储地址，相对路径，存储目录由配置文件指定
+			String fileUrl = null;
+			// TODO 
+			
+			Attachment attachment = new Attachment();
+			attachment.setFileName(fileName);
+			attachment.setFileUrl(fileUrl);
+			
+			result.setData(attachment);
+		} catch (Exception e) {
+			logger.error("上传文件失败", e);
+			result.error("上传文件失败");
+		}
+		
+		return result;
+	}
+	
+	@ApiOperation(value = "下载订单资料", notes = "下载订单资料")
+	@GetMapping(value = "download")
+	@ResponseBody
+	public void download(@RequestBody Attachment attachment) {
+		try {
+			// 文件名
+			String fileName = attachment.getFileName();
+			// 文件存储地址，相对路径，存储目录由配置文件指定
+			String fileUrl = attachment.getFileUrl();
+			// TODO 
+			
+		} catch (Exception e) {
+			logger.error("上传文件失败", e);
+		}
 	}
 
 	/**
