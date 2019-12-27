@@ -39,6 +39,12 @@ public class RoleService{
 		return pageFryeService.getInfo(url, RestPage.class);
 	}
 
+	public RestPage getPageableListByName(int pageNum, int pageSize, Role role) {
+		String url = URL_ROLE+"/searchByName/" + role.getName();
+		RestPage df = pageFryeService.getInfo(url, RestPage.class);
+		return pageFryeService.getInfo(url, RestPage.class);
+	}
+
 	
 	public Role selectRoleInfo(int id) {
 		String url = URL_ROLE+"/"+id;

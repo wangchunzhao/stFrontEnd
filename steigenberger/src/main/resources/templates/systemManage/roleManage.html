@@ -67,11 +67,12 @@
 					</div> -->
 					<div class="row"> 
 	                   <div class="col-xs-3">
-	                        <select class="form-control  searchVal2" name="" th:value="${role1?.isActive}">
-	                        		<option value="2">全选</option>
-									<option value="1" th:selected="${role?.isActive }==1">启用</option>
-									<option value="0" th:selected="${role?.isActive }==0">停用</option>
-							</select>
+<!--	                        <select class="form-control  searchVal2" name="" th:value="${role1?.isActive}">-->
+<!--	                        		<option value="2">全选</option>-->
+<!--									<option value="1" th:selected="${role?.isActive }==1">启用</option>-->
+<!--									<option value="0" th:selected="${role?.isActive }==0">停用</option>-->
+<!--							</select>-->
+                           <input type="text" class="form-control" id="roleName" placeholder="请输入角色名称">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3"><button type="button" class="btn btn-primary" style="margin-top: 0px; margin-right: 15px;" id="btn_select">查询select</button> </div>
 	                </div>
@@ -95,7 +96,7 @@
 					<tr>
 						<th style="width: 10%;">编号</th>
 						<th style="width: 50%;">角色名称 Role name</th>
-						<th style="width: 25%;">状态 Status</th>
+<!--						<th style="width: 25%;">状态 Status</th>-->
 						<th style="width: 15%;">操作 Operation</th>
 					</tr>
 				</thead>
@@ -104,9 +105,9 @@
 						<tr th:each="role,roleStart: ${datas.content}">
 							<td th:text="${roleStart.count}">560001</td>
 							<td th:text="${role?.name}" value="${role?.name}">Bangalore</td>
-							<td >
-								<a href="javascript:void(0);" class="isActive" th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" th:onclick="'javascript:update('+${role.id}+')' "></a>
-							</td>
+<!--							<td >-->
+<!--								<a href="javascript:void(0);" class="isActive" th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" th:onclick="'javascript:update('+${role.id}+')' "></a>-->
+<!--							</td>-->
 							<td>
                                 <!-- <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal" th:title="${role.id}"
                                 data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
@@ -150,11 +151,17 @@
     	  
     	  
 	    	  $("#btn_select").on("click",function(){
-	    		  var name=$(".searchVal1").val();
-	    	      var isActive=$(".searchVal2").val();
-	    	      window.location.href = ctxPath+"role/index?isActive="+isActive; 
-	    	      return false;
+	    		  // var name=$(".searchVal1").val();
+	    	      // var isActive=$(".searchVal2").val();
+                  var roleName = $("#roleName").val();
+                  if (roleName == "") {
+                      window.location.href = ctxPath+"menu/roleIndex";
+                  }else {
+                      window.location.href = ctxPath+"role/index/" + roleName;
+                      return true;
+                  }
 	          });
+
 	    	  $(".update_auth").on("click",function(){
 	    		  var id= $(this).attr("title");
 	    	      window.location.href = ctxPath+"role/authorization?id="+id; 
