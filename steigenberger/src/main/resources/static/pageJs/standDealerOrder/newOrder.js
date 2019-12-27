@@ -1276,7 +1276,8 @@ function openConfig(identification){
 	$("#materialConfigClazzCode").val(value[2]);
 	$("#materialConfigCode").val(value[1]);
 	$("#identification").val(value[0]);
-	$("#viewPrice").val(value[3]);
+	$("#viewTransationPrice").val(value[3]);
+	$("#viewActualPrice").val(value[4]);
 	var url =ctxPath+"order/material/configurations"
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
@@ -1774,21 +1775,28 @@ function viewConfig(){
 	formData.bomCode = bomCode;
 	formData.configCode = configCode;
 	$.ajax({
-	    url: "/steigenberger/order/material/configuration",
+	    url: ctxPath+"order/material/configuration",
 	    contentType: "application/json;charset=UTF-8",
 	    data: JSON.stringify(formData),
 	    type: "POST",
 	    dataType: "json",
-	    success: function(data) { 
-	    	$("#moreConfig").attr("style","display:block;");
-	    	$("#viewCode").val($("#materialConfigCode").val());
-	    	$("#viewPrice").val($("#viewPrice").val());
-	    	$("#configPrice").val(data.priceGap);
+	    success: function(res) { 
+	    	if(res.status!="ok"){
+	    		$("#viewError").attr("style","display:block;");
+	    	}else{
+	    		$("#moreConfig").attr("style","display:block;");
+		    	$("#viewOptionalTransationPrice").val(res.data.price);
+		    	$("#viewActualPrice").val(res.data.transferPrice);
+	    	}	    	
 	    },
 	    error: function(){
 	    	$("#viewError").attr("style","display:block;");
 	    }
 	});
+}
+
+function calPrice(index,allIndex){
+	
 }
 
 //设置配置值
@@ -2148,10 +2156,15 @@ var TableInit = function (id,url,params,tableColumns) {
 					layer.alert(res.msg);
 					return {};
 				}
-				return {
-					total: res.data.total,
-					rows: res.data.rows
+				if(res.data.rows){
+					return {
+						total: res.data.total,
+						rows: res.data.rows
+					}	
+				}else{
+					return res.data;
 				}
+				
 			},
 		})
 	};

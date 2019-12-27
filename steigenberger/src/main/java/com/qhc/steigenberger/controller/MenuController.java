@@ -164,7 +164,7 @@ public class MenuController extends BaseController {
 	public ModelAndView goDealerOrder() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
-		if(result.getStatus()!="ok") {
+		if(!"ok".equals(result.getStatus())) {
 			mv.setViewName(ERROR_PAGE);
 			mv.addObject("msg", result.getMsg());
 			return mv;

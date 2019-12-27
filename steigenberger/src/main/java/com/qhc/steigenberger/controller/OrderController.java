@@ -489,9 +489,9 @@ public class OrderController extends BaseController {
 	 */
 	@GetMapping(value = "material/configurations")
 	@ResponseBody
-	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
-		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
-
+	public Result findCharacteristic(String clazzCode, String materialCode) {
+		Result result =  orderService.getCharactersByClazzCode(clazzCode, materialCode);
+		return result;
 	}
 	
 	@GetMapping(value = "user")
