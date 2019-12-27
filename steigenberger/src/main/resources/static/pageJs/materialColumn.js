@@ -51,7 +51,7 @@ var materialsColumn = [{
 	    visible:false
 	},{
 		title:'',
-	    field: 'groupCode',
+	    field: 'materialGroupCode',
 	    visible:false
 	},{
 		title:'',
@@ -70,7 +70,7 @@ var materialsColumn = [{
 	    }
 	},{
 		title:'类型',
-	    field: 'groupName',
+	    field: 'materialGroupName',
 	    width:80
 	},{
 		title:'数量',
@@ -90,7 +90,7 @@ var materialsColumn = [{
 	    width:150
 	},{
 		title:'产品实卖金额',
-	    field: 'acturalPriceAmount',
+	    field: 'actualAmount',
 	    width:150
 	},{
 		title:'产品转移价',
@@ -98,15 +98,15 @@ var materialsColumn = [{
 	    width:150
 	},{
 		title:'可选项实卖价',
-	    field: 'acturalPricaOfOptional',
+	    field: 'optionalActualPrice',
 	    width:150
 	},{
 		title:'可选项实卖金额',
-	    field: 'acturalPricaOfOptionalAmount',
+	    field: 'optionalActualAmount',
 	    width:150
 	},{
 		title:'可选项转移价',
-	    field: 'transcationPriceOfOptional',
+	    field: 'optionalTransationPrice',
 	    width:150
 
 	},{
@@ -125,17 +125,17 @@ var materialsColumn = [{
 	    width:150
 	},{
 		title:'实卖价合计',
-	    field: 'acturalPriceTotal',
+	    field: 'actualPriceSum',
 	    width:150
 
 	},{
 		title:'实卖金额合计',
-	    field: 'acturalPriceAmountTotal',
+	    field: 'actualAmountSum',
 	    width:150
 
 	},{
 		title:'转移价合计',
-	    field: 'transcationPriceTotal',
+	    field: 'transactionPriceSum',
 	    width:150
 
 	},{
@@ -145,7 +145,7 @@ var materialsColumn = [{
 
 	},{
 		title:'市场零售金额',
-	    field: 'retailPriceAmount',
+	    field: 'retailAmount',
 	    width:150
 
 	},{
@@ -206,6 +206,10 @@ var materialsColumn = [{
 	    field: 'shippDate',
 	    width:150
 
+	},{
+		title:'',
+	    field: 'deliveryAddressSeq',
+	    visible:false		
 	},{
 		title:'地址',
 	    field: 'materialAddress',

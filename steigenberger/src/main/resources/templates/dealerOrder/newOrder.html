@@ -19,6 +19,9 @@
 	<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>
 	<form method="post" role="form" id="orderForm" th:object="${orderDetail}">
 		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazz}">
+		<input type="hidden"  id="status" th:field="*{status}">
+		<input type="hidden" id="stOrderType" th:field="*{stOrderType}">
+		<input type="hidden" id="orderType" th:field="*{orderType}">
 		<div id="page-wrapper">
 			<div th:replace="orderCommons/orderCommons::path(mainPath=新建订单,subPath=标准折扣下单)">	</div>
 			<div th:replace="orderCommons/orderCommons::expandButton">	</div>
@@ -52,7 +55,7 @@
 	var officesMap = [[${order_option.offices}]]
 	var groupsMap = [[${order_option.groups}]]
 	var shippingTypesMap = [[${order_option.shippingTypes}]]
-	var version = getVersion();
+	/* var version = getVersion();
 	$("#version").append("<option value='" + version + "'>" + version + "</option>");	
 	//获取版本
 	function  getVersion(){
@@ -63,7 +66,7 @@
 	        num+=Math.floor(Math.random()*10);
 	    }
 	    return 'V'+dateString+num;
-	}
+	} */
 </script>
 </body>
 </html>

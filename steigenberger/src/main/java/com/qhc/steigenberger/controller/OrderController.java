@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
@@ -112,21 +113,13 @@ public class OrderController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("")
-	public ModelAndView saveOrder(@RequestBody Order order) {
+	@PostMapping("save")
+	public Result saveOrder(@RequestBody Order order) {
 		String identity = getUserIdentity();
 		
 		Result result = orderService.saveOrder(identity, order);
 		
-		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
-			if (order.getIsSpecial() == 1) {
-				return menuController.goNonStandardDealerOrder();
-			} else {
-				return menuController.goDealerOrder();
-			}
-		}
-		
-		return null;
+		return result;
 	}
 	
 	/**
@@ -137,20 +130,10 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("submit")
-	public ModelAndView submitOrder(@RequestBody Order order) {
-		String identity = getUserIdentity();
-		
-		orderService.submitOrder(identity, order);
-		
-		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
-			if (order.getIsSpecial() == 1) {
-				return menuController.goNonStandardDealerOrder();
-			} else {
-				return menuController.goDealerOrder();
-			}
-		}
-		
-		return null;
+	public Result submitOrder(@RequestBody Order order) {
+		String identity = getUserIdentity();	
+		Result result = orderService.submitOrder(identity, order);	
+		return result;
 	}
 	
 	/**
@@ -504,7 +487,7 @@ public class OrderController extends BaseController {
 	 */
 	@GetMapping(value = "material/configurations")
 	@ResponseBody
-	public List findCharacteristic(String clazzCode, String materialCode) {
+	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
 		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
 
 	}
@@ -544,7 +527,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public ModelAndView viewOrder(Integer orderInfoId, ModelAndView view) {
 		ModelAndView mv = new ModelAndView("dealerOrder/dealerOrderView");
-		OrderOption oo = orderService.getOrderOption();
+		OrderOption oo = null;//orderService.getOrderOption();
 		mv.addObject("order_option",oo);
 		Result result = orderService.findOrderDetail(orderInfoId);
 		Order order = null; 
@@ -561,7 +544,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public ModelAndView editOrder(Integer orderInfoId, ModelAndView view) {
 		ModelAndView mv = new ModelAndView("order/editOrder");
-		OrderOption oo = orderService.getOrderOption();
+		OrderOption oo = null;//orderService.getOrderOption();
 		mv.addObject("order_option",oo);
 		Result result = orderService.findOrderDetail(orderInfoId);
 		Order order = null; 
@@ -578,7 +561,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     public ModelAndView editStockUpOrder(Integer orderInfoId,ModelAndView view) {
         ModelAndView mv = new ModelAndView("dealerOrder/editStockUpOrder");
-        OrderOption oo = orderService.getOrderOption();
+        OrderOption oo = null;//orderService.getOrderOption();
         mv.addObject("order_option",oo);
 		Result result = orderService.findOrderDetail(orderInfoId);
 		Order order = null; 
@@ -598,7 +581,7 @@ public class OrderController extends BaseController {
 		String identity = getUserIdentity();
 		User user = userService.selectUserIdentity(identity);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
-		OrderOption oo = orderService.getOrderOption();
+		OrderOption oo = null;//orderService.getOrderOption();
 		Result result = orderService.findOrderDetail(orderInfoId);
 		Order order = null; 
 		String orderType = null;

@@ -414,6 +414,11 @@ function getPaymentAreaContent(){
 
 //打开添加物料规格modal
 function addSubsidiary(){
+	var customerName = $("#customerName").val();
+	if(customerName==""){
+		layer.alert('请先选择客户', {icon: 5});
+		return
+	}
 	$('#subsidiaryModal').modal('show');
 	$("#subsidiaryForm")[0].reset();
 	$('#amount').val(1);
@@ -430,15 +435,7 @@ function searchSpecification(){
 	$("#materialTypeTable").bootstrapTable('refresh', opt);
 	$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
 		$('#specificationModal').modal('hide');
-		getMaterialInfo(row.code);
-		$("#materialTypeName").val(row.description);
-		$("#materialCode").val(row.code);
-		if(row.isPurchased=='0'){
-			$('#isPurchased').val('生产');
-		}else{
-			$('#isPurchased').val('采购');
-		}
-		$('#unitName').val(row.unitName);
+		fillMaterailValue(row);
 	})
 }
 
@@ -455,67 +452,39 @@ function searchMaterilType(){
 	$('#materialTypeTable').bootstrapTable('refresh');
 }
 
-//点击查询出来的物料记录
-function getMaterialInfo(code){	
-	$.ajax({
-	    url: "/steigenberger/order/material",
-	    data: {code: code},
-	    type: "POST",
-	    dataType: "json",
-	    success: function(data) {
-	    	if(data){
-	    		$("#confirmMaterial").attr("disabled",false);
-	    		fillMaterailValue(data); 	   
-	    	}else{
-	    		alert("未查询到物料详细信息无法添加该物料！")
-		    	$("#confirmMaterial").attr("disabled",true);
-	    	}      
-	    }
-	});
-}
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	if(data.materialName){
-		$("#materialTypeName").val(data.materialName);
+	$("#materialTypeName").val(data.description);
+	$("#materialCode").val(data.code);
+	if(data.isPurchased){
+		$('#isPurchased').val('采购');
+	}else{
+		$('#isPurchased').val('生产');
 	}
-	if(data.materialCode){
-		$("#materialCode").val(data.materialCode);
-	}
-	if(data.b2cRemark){
-		$("#b2cRemark").val(data.b2cRemark);
-	}
-	if(data.colorComments){
-		$("#colorComments").val(data.colorComments);
-	}
-	if(data.specialRemark){
-		$("#specialRemark").val(data.specialRemark);
-	}
-	if(data.itemCategory){
-		$("#itemCategory").val(data.itemCategory);
-	}
-	if(data.purchased){
-		$("#purchasePeriod").val(data.period);
-	}else{	
-		$("#producePeriod").val(data.period);
-	}
+	$("#materialTypeName").val(data.description);	
 	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
-	var materialsType = materialGroupMapGroupOrder[data.groupCode];
-	var amount = $("#amount").val();
+	var materialsType = data.stGroupCode;
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
-	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
-	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
-	$("#acturalPricaOfOptionalAmount").val(toDecimal2(amount*(data.acturalPricaOfOptional)));
-	$("#transcationPriceOfOptional").val(toDecimal2(data.transcationPriceOfOptional));
-	$("#B2CPriceEstimated").val(toDecimal2(data.b2CPriceEstimated));
-	$("#B2CPriceEstimatedAmount").val(toDecimal2((data.b2CPriceEstimated)*amount));
-	$("#B2CCostOfEstimated").val(toDecimal2(data.b2CCostOfEstimated));
-	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
+	
+	//价格模块
+	var amount = $("#amount").val();
+	//市场零售价
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
+	//转移价
+	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
+	
+	$("#acturalPricaOfOptional").val(toDecimal2(0.00));
+	$("#acturalPricaOfOptionalAmount").val(toDecimal2(0.00));
+	$("#transcationPriceOfOptional").val(toDecimal2(0.00));
+	$("#B2CPriceEstimated").val(toDecimal2(0.00));
+	$("#B2CPriceEstimatedAmount").val(toDecimal2(0.00));
+	$("#B2CCostOfEstimated").val(toDecimal2(0.00));
+	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
@@ -524,9 +493,9 @@ function fillMaterailValue(data){
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	$("#deliveryDate").val(data.deliveryDate);
+	/*$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
-	$("#onStoreDate").val(data.onStoreDate);
+	$("#onStoreDate").val(data.onStoreDate);*/
 	$("#standardPrice").val(toDecimal2(data.standardPrice));
 	
 	
@@ -543,6 +512,12 @@ function amountChange(){
 	$("#B2CPriceEstimatedAmount").val(toDecimal2(amount*(parseFloat($("#B2CPriceEstimated").val()))));
 	$("#retailPriceAmount").val(toDecimal2(parseFloat($("#retailPrice").val())*amount));
 	$("#acturalPriceAmountTotal").val(toDecimal2(parseFloat($("#acturalPriceTotal").val())*amount));
+}
+//B2C预估价变化
+function getB2CAmount(obj){
+	var b2cPrice = $(obj).val();
+	var amount = $("#amount").val();
+	$("#B2CPriceEstimatedAmount").val(toDecimal2(amount*(parseFloat(b2cPrice))));
 }
 
 //编辑购销明细
@@ -1028,6 +1003,9 @@ function compareDate(date){
 //购销明细行数据
 
 function confirmRowData(index,rowNumber){
+	debugger
+	
+	var a = $("#acturalPriceAmount").val();
 	var row = {
 			rowNumber:rowNumber?rowNumber:(index+1)*10,
 			materialName:$("#materialTypeName").val(),
@@ -1035,26 +1013,26 @@ function confirmRowData(index,rowNumber){
 			clazzCode:$("#materialClazzCode").val(),
 			configurable:$("#isConfigurable").val(),
 			purchased:$("#purchasedCode").val(),
-			groupName:$("#materialGroupName").val(),
-			groupCode:$("#groupCode").val(),
+			materialGroupName:$("#materialGroupName").val(),
+			materialGroupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
 			unitCode:$("#unitCode").val(),
 			standardPrice:$("#standardPrice").val(),
 			acturalPrice:$("#acturalPrice").val(),
-			acturalPriceAmount:$("#acturalPriceAmount").val(),
+			actualAmount:$("#acturalPriceAmount").val(),
 			transcationPrice:$("#transcationPrice").val(),
-			acturalPricaOfOptional:$("#acturalPricaOfOptional").val(),
-			acturalPricaOfOptionalAmount:$("#acturalPricaOfOptionalAmount").val(),
-			transcationPriceOfOptional:$("#transcationPriceOfOptional").val(),
+			optionalActualPrice:$("#acturalPricaOfOptional").val(),
+			optionalActualAmount:$("#acturalPricaOfOptionalAmount").val(),
+			optionalTransationPrice:$("#transcationPriceOfOptional").val(),
 			B2CPriceEstimated:$("#B2CPriceEstimated").val(),
 			B2CPriceEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
 			B2CCostOfEstimated:$("#B2CCostOfEstimated").val(),
-			acturalPriceTotal:$("#acturalPriceTotal").val(),
-			acturalPriceAmountTotal:$("#acturalPriceAmountTotal").val(),
-			transcationPriceTotal:$("#transcationPriceTotal").val(),
+			actualPriceSum:$("#acturalPriceTotal").val(),
+			actualAmountSum:$("#acturalPriceAmountTotal").val(),
+			transactionPriceSum:$("#transcationPriceTotal").val(),
 			retailPrice:$("#retailPrice").val(),
-			retailPriceAmount:$("#retailPriceAmount").val(),
+			retailAmount:$("#retailPriceAmount").val(),
 			discount:$("#discount").val(),
 			itemCategory:$("#itemCategory").val(),
 			itemRequirementPlan:$("#itemRequirementPlan").val(),
@@ -1062,6 +1040,7 @@ function confirmRowData(index,rowNumber){
 			deliveryDate:$("#deliveryDate").val(),
 			produceDate:$("#produceDate").val(),
 			shippDate:$("#shippDate").val(),
+			deliveryAddressSeq:$("#deliveryAddressSeq").val(),
 			materialAddress:$("#materialAddress").val(),
 			onStoreDate:$("#onStoreDate").val(),
 			purchasePeriod:$("#purchasePeriod").val(),
@@ -1102,6 +1081,7 @@ function addMaterialAddress(){
 		$('#materialProvinceCode').val(row.provinceCode);
 		$('#materialProvinceName').val(row.provinceName);
 		$('#materialCityCode').val(row.cityCode);
+		$('#deliveryAddressSeq').val(row.seq);
 		$('#materialCityName').val(row.cityName);
 		$('#materialAreaCode').val(row.distinctCode);
 		$('#materialAreaName').val(row.distinctName);
@@ -1297,7 +1277,7 @@ function openConfig(identification){
 	$("#materialConfigCode").val(value[1]);
 	$("#identification").val(value[0]);
 	$("#viewPrice").val(value[3]);
-	var url = "/steigenberger/order/material/configurations"
+	var url =ctxPath+"order/material/configurations"
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
 	var configData = localStorage[value[0]];
@@ -1676,21 +1656,21 @@ function saveOrder(type){
 		
 	}
 	$("#transferType").removeAttr("disabled");
-	 var version = $("#version").val();
+	 /*var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
 	 payment['termName'] = $("#paymentType").find("option:selected").text();
 	 payment['percentage'] = "1";
-	 payment['payDate'] = $("#inputDate").val();
+	 payment['payDate'] = $("#inputDate").val();*/
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
-	 var payments=new Array();
+	 /*var payments=new Array();
 	 payments.push(payment);
 	 orderData.payments = payments;
 	 orderData['currentVersion'] = version;
-	 orderData['orderType'] = 'ZH0D';
+	 orderData['orderType'] = 'ZH0D';*/
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
@@ -1717,11 +1697,11 @@ function saveOrder(type){
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	 if(type){
 		 $.ajax({
-			    url: "/steigenberger/order/dealer?action="+type,
+			    url: ctxPath+"order/submit",
 			    contentType: "application/json;charset=UTF-8",
 			    data: JSON.stringify(orderData),
 			    type: "POST",
-			    success: function(data) { 
+			    success: function(result) { 
 			    	layer.alert('提交成功', {icon: 6});
 			    	//跳转到订单管理页面
 			    	window.location.href = '/steigenberger/menu/orderManageList';
@@ -1732,12 +1712,16 @@ function saveOrder(type){
 		});  
 	 }else{
 		 $.ajax({
-			    url: "/steigenberger/order/dealer?action="+'save',
+			    url: ctxPath+"order/save",
 			    contentType: "application/json;charset=UTF-8",
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(data) { 
-			    	layer.alert('保存成功', {icon: 6});
+			    	if(data == null || data.status != 'ok'){
+			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
+			    	}else{
+			    		layer.alert('保存成功', {icon: 6});
+			    	} 	
 			    },
 			    error: function(){
 			    	layer.alert('保存失败', {icon: 5});
@@ -1980,7 +1964,7 @@ var addressColumns = [{
 
 var materialsAddressColumns = [{
 	title:'行号',
-    field: 'index',
+    field: 'seq',
     width:'5%'
 },{
 	title : '省市区',

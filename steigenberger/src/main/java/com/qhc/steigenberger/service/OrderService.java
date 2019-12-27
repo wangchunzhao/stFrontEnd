@@ -61,10 +61,14 @@ public class OrderService {
 		return null;
 	}
 
-	public OrderOption getOrderOption() {
-		Object obj = fryeService.getInfo("order/option", OrderOption.class);
-
-		return (OrderOption) obj;
+	public Result getOrderOption() {
+		
+		Result result = fryeService.getInfo("order/option", Result.class);
+		if ("ok".equals(result.getStatus())) {
+			JavaType javaType = mapper.getTypeFactory().constructType(OrderOption.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
+		}
+		return result;
 	}
 
 	/**
@@ -85,7 +89,7 @@ public class OrderService {
 	public Result findMaterialsByName(String name, String industoryCode, int pageNo, int pageSize) {
 		Map<String, String> pars = new HashMap<String, String>();
 		pars.put("name", name);
-		pars.put("industoryCode", industoryCode);
+		pars.put("industryCode", industoryCode);
 		pars.put("pageNo", String.valueOf(pageNo));
 		pars.put("pageSize", String.valueOf(pageSize));
 		Result result = (Result) fryeService.postForm("material", pars, Result.class);

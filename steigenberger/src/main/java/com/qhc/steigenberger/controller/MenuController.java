@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Parameter;
+import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.form.Order;
@@ -29,6 +30,8 @@ public class MenuController extends BaseController {
 	
 	private final static String ORDER_OPTION = "order_option";
 	private final static String ORDER_DETAIL = "orderDetail";
+	
+	private final static String ERROR_PAGE = "error.html";
 	//
 	private final static String PAGE_DEALER = "dealerOrder/newOrder";
 	private final static String PAGE_DEALER_NON_STANDARD = "nonStandardDealerOrder/newNonStandardOrder";
@@ -162,11 +165,19 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping("standardDiscount")
 	public ModelAndView goDealerOrder() {
-		ModelAndView mv = new ModelAndView(PAGE_DEALER);
-		OrderOption oo = this.getOrderOption();
+		ModelAndView mv = new ModelAndView();
+		Result result = this.getOrderOption();
+		if(result.getStatus()!="ok") {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", result.getMsg());
+			return mv;
+		}
+		mv.setViewName(PAGE_DEALER);
+		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_DEALER_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_DEALER);
+		orderDetail.setStOrderType("1");
 		mv.addObject(ORDER_OPTION,oo);
 		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;
@@ -174,11 +185,19 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping("nonStandardDiscount")
 	public ModelAndView goNonStandardDealerOrder() {
-		ModelAndView mv = new ModelAndView(PAGE_DEALER_NON_STANDARD);
-		OrderOption oo = this.getOrderOption();
+		ModelAndView mv = new ModelAndView();
+		Result result = this.getOrderOption();
+		if(result.getStatus()!="ok") {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", result.getMsg());
+			return mv;
+		}
+		mv.setViewName(PAGE_DEALER_NON_STANDARD);
+		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_DEALER_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_DEALER);
+		orderDetail.setStOrderType("2");
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;
@@ -186,11 +205,19 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping("directCustomerOrder")
 	public ModelAndView goDirectCustomerOrder() {
-		ModelAndView mv = new ModelAndView(PAGE_DEALER_DIRECT_CUSTOMER);
-		OrderOption oo = this.getOrderOption();
+		ModelAndView mv = new ModelAndView();
+		Result result = this.getOrderOption();
+		if(result.getStatus()!="ok") {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", result.getMsg());
+			return mv;
+		}
+		mv.setViewName(PAGE_DEALER_DIRECT_CUSTOMER);
+		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_KEYACCOUNT);
+		orderDetail.setStOrderType("3");
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;
@@ -198,10 +225,18 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping("/stockUpOrder")
 	public ModelAndView goStockUpOrder() {
-		ModelAndView mv = new ModelAndView(stockUpOrder);
-		OrderOption oo = this.getOrderOption();
+		ModelAndView mv = new ModelAndView();
+		Result result = this.getOrderOption();
+		if(result.getStatus()!="ok") {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", result.getMsg());
+			return mv;
+		}
+		mv.setViewName(stockUpOrder);
+		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setOrderType(Order.ORDER_TYPE_BULK);
+		orderDetail.setStOrderType("5");
 		mv.addObject(ORDER_OPTION,oo);
 		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;

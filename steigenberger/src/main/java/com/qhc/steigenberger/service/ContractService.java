@@ -232,8 +232,8 @@ public class ContractService {
 				b2cSum = Double.valueOf(b2cSum.doubleValue() + B2cAmount.doubleValue());
 				Double optionSaleAmount = new Double(0.0D);
 				// 可选项实卖金额
-				if (item.getOptionalActualPrica() != 0) {
-					optionSaleAmount = item.getOptionalActualPrica() * item.getQuantity();
+				if (item.getOptionalActualPrice() != 0) {
+					optionSaleAmount = item.getOptionalActualPrice() * item.getQuantity();
 				}
 				optionSum = Double.valueOf(optionSum.doubleValue() + optionSaleAmount.doubleValue());
 				// 计量单位

@@ -30,7 +30,7 @@ public class Item {
 	private double yearPurchasePrice;//年采价，大客户有，客户信息
 	private double actualPrice;//产品实卖价
 	private double actualAmount;//产品实卖金额
-	private double optionalActualPrica;//可选项实卖价
+	private double optionalActualPrice;//可选项实卖价
 	private double optionalActualAmount;//可选项实卖金额
 	private double optionalTransationPrice;//可选项转移价
 	private double b2cEstimatedPrice;//B2C预估价
@@ -207,11 +207,11 @@ public class Item {
 	public void setActualAmount(double actualAmount) {
 		this.actualAmount = actualAmount;
 	}
-	public double getOptionalActualPrica() {
-		return optionalActualPrica;
+	public double getOptionalActualPrice() {
+		return optionalActualPrice;
 	}
-	public void setOptionalActualPrica(double optionalActualPrica) {
-		this.optionalActualPrica = optionalActualPrica;
+	public void setOptionalActualPrice(double optionalActualPrice) {
+		this.optionalActualPrice = optionalActualPrice;
 	}
 	public double getOptionalActualAmount() {
 		return optionalActualAmount;
@@ -474,7 +474,7 @@ public class Item {
 				+ ", unitCode=" + unitCode + ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice="
 				+ standardPrice + ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount
 				+ ", transationPrice=" + transationPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice="
-				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrica
+				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrice
 				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransationPrice="
 				+ optionalTransationPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
 				+ b2cEstimatedAmount + ", b2cEstimatedCost=" + b2cEstimatedCost + ", actualPriceSum=" + actualPriceSum

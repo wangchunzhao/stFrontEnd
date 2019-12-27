@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.OrderOption;
+import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserService;
@@ -123,19 +124,27 @@ public abstract class BaseController {
 	 * 
 	 * @return
 	 */
-	public OrderOption getOrderOption() {
+	public Result getOrderOption() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 	    HttpServletRequest request = servletRequestAttributes.getRequest();
 	    HttpServletResponse response = servletRequestAttributes.getResponse();
 	    HttpSession session = request.getSession();
 		
 	    OrderOption oo = (OrderOption)session.getAttribute("options");
+	    Result result = null;
 	    if (oo == null) {
-	    	oo = orderService.getOrderOption();
-	    	session.setAttribute("options", oo);
+	    	result = orderService.getOrderOption();
+	    	if("ok".equals(result.getStatus())) {
+	    		oo = (OrderOption)result.getData();
+	    		session.setAttribute("options", oo);
+	    	}    	
+	    }else {
+	    	result = new Result();
+	    	result.setData(oo);
+	    	result.setStatus("ok");
 	    }
 	    
-	    return oo;
+	    return result;
 	}
 
 }

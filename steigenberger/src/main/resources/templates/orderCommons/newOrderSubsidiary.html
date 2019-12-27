@@ -89,7 +89,7 @@
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">B2C预估价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="B2CPriceEstimated">
+							      <input type="text" class="form-control" id="B2CPriceEstimated" oninput="getB2CAmount(this)">
 							    </div>
 							    <span class="col-md-1">B2C预估金额</span>
 								<div class="col-md-2">
@@ -249,6 +249,7 @@
 			<input type="hidden"  id="materialAreaCode">
 			<input type="hidden"  id="materialAreaName">
 			<input type="hidden"  id="materialModalAddress">
+			<input type="hidden"  id="deliveryAddressSeq">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
