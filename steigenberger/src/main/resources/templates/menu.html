@@ -11,76 +11,70 @@
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="sidebar-menu">
-               <li class="treeview" >
+               <li class="treeview" th:if="${session.menus['1001']} != null">
                 <a th:href="@{/menu/todo}" id="todo">
-                <i class="fa fa-dashboard"></i> 
-				<span>待办任务</span>
+                <i class="fa fa-dashboard"></i>
+				<span th:text="${session.menus['1001'].name}"></span>
 				<span style="font-size:12px">To-do tasks</span>
-				
                 </a>
-				
               </li>
-              <li class="treeview" >
+
+              <li class="treeview" th:if="${session.menus['1002']} != null">
                 <a th:href="@{/menu/newOrder}" id="newOrder">
-                <i class="fa fa-dashboard"></i> 
-				<span>新建订单</span>
+                <i class="fa fa-dashboard"></i>
+				<span th:text="${session.menus['1002'].name}"></span>
 				<span style="font-size:12px">Create Order</span>
-				
                 </a>
-				
               </li>
-			 
-			   <li class="treeview" >
+
+			   <li class="treeview" th:if="${session.menus['1003']} != null">
                 <a th:href="@{/menu/orderManageList}" id="orderManage">
-                <i class="fa fa-dashboard"></i> 
-				<span>订单管理</span>
+                <i class="fa fa-dashboard"></i>
+				<span th:text="${session.menus['1003'].name}"></span>
 				<span style="font-size:12px">Order</span>
-				
                 </a>
-				
               </li>
-			  <li class="treeview">
+
+			  <li class="treeview" th:if="${session.menus['1004']} != null">
                 <a th:href="@{/menu/contract}" id="contract" >
                 <i class="fa fa-laptop"></i>
-                <span>合同管理 </span>
+                <span th:text="${session.menus['1004'].name}"></span>
 				<span style="font-size:12px">Contract</span>
-                
                 </a>
-                
               </li>
-              <li class="treeview" >
+
+              <li class="treeview" th:if="${session.menus['1005']} != null">
                 <a th:href="@{/menu/specialApplication}" id="special">
                 <i class="fa fa-pie-chart"></i>
-                <span>特批发货</span>
+                <span th:text="${session.menus['1005'].name}"></span>
 				<span style="font-size:12px">Special Delivery</span>
-                
                 </a>
-					
               </li>
-              <li class="treeview" >
+
+              <li class="treeview" th:if="${session.menus['800']} != null">
                 <a href="#" id="report">
                 <i class="fa fa-laptop"></i>
-                <span>报表管理 </span>
+                <span th:text="${session.menus['800'].name}"></span>
 				<span style="font-size:12px">Report</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li ><a th:href="@{/menu/purchaseAndSale}" id="report1"><i class="fa fa-angle-right"></i> <span>购销明细报表</span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
-                  <li ><a th:href="@{/menu/biddingDetail}" id="report2"><i class="fa fa-angle-right"></i> <span>投标跟踪表</span><span style="font-size:12px">Bid tracking report</span> </a></li>
+                  <li th:if="${session.menus['1006']} != null"><a th:href="@{/menu/purchaseAndSale}" id="report1"><i class="fa fa-angle-right"></i> <span th:text="${session.menus['1006'].name}"></span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
+                  <li th:if="${session.menus['1007']} != null" ><a th:href="@{/menu/biddingDetail}" id="report2"><i class="fa fa-angle-right"></i> <span th:text="${session.menus['1007'].name}"></span><span style="font-size:12px">Bid tracking report</span> </a></li>
                 </ul>
               </li>
-			  
-              <li class="treeview" id="sys"  >
+
+              <li class="treeview" id="sys" th:if="${session.menus['900']} != null">
 	              		<a href="#">
-			                <i class="fa fa-edit"></i> 
-							<span>系统管理</span> <span style="font-size:12px">System</span><i class="fa fa-angle-left pull-right"></i>
+			                <i class="fa fa-edit"></i>
+							<span th:text="${session.menus['900'].name}"></span> <span style="font-size:12px">System</span><i class="fa fa-angle-left pull-right"></i>
 		                </a>
 		                <ul class="treeview-menu">
-		                  <li ><a th:href="@{/menu/userIndex}" id="user" ><i class="fa fa-angle-right"></i>人员管理<span style="font-size:12px">Personnel manage</span> </a></li>
+		                  <li th:if="${session.menus['1008']} != null" ><a th:href="@{/menu/userIndex}" id="user" ><i class="fa fa-angle-right"></i><span th:text="${session.menus['1008'].name}"></span><span style="font-size:12px">Personnel manage</span> </a></li>
 <!--		                  <li ><a th:href="@{/menu/permissionApply}" id="permission"><i class="fa fa-angle-right"></i>用户新增 <span style="font-size:12px">Add User</span></a></li>-->
-						  <li ><a th:href="@{/menu/settingIndex}" id="parameterSetting" ><i class="fa fa-angle-right"></i>参数设置 <span style="font-size:12px">Parameter Settings</span></a></li>
-						  <li ><a th:href="@{/menu/roleIndex}" id="role" ><i class="fa fa-angle-right"></i>角色管理 <span style="font-size:12px">Role manage</span></a></li>
-						  <li ><a th:href="@{/menu/freight}" id="freight" ><i class="fa fa-angle-right"></i>三级运费导入 <span style="font-size:12px"></span></a></li>
+						  <li th:if="${session.menus['1010']} != null" ><a th:href="@{/menu/settingIndex}" id="parameterSetting" ><i class="fa fa-angle-right"></i><span th:text="${session.menus['1010'].name}"></span> <span style="font-size:12px">Parameter Settings</span></a></li>
+						  <li th:if="${session.menus['1009']} != null" ><a th:href="@{/menu/roleIndex}" id="role" ><i class="fa fa-angle-right"></i><span th:text="${session.menus['1009'].name}"></span> <span style="font-size:12px">Role manage</span></a></li>
+						  <li th:if="${session.menus['1019']} != null" ><a th:href="@{/menu/freight}" id="freight" ><i class="fa fa-angle-right"></i><span th:text="${session.menus['1019'].name}"></span> <span style="font-size:12px"></span></a></li>
 		                </ul>
               </li>
               </ul>
