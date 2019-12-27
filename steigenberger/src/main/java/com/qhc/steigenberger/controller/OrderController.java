@@ -114,6 +114,7 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("save")
+	@ResponseBody
 	public Result saveOrder(@RequestBody Order order) {
 		String identity = getUserIdentity();
 		
@@ -130,6 +131,7 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("submit")
+	@ResponseBody
 	public Result submitOrder(@RequestBody Order order) {
 		String identity = getUserIdentity();	
 		Result result = orderService.submitOrder(identity, order);	
@@ -648,7 +650,7 @@ public class OrderController extends BaseController {
 	
     @ApiOperation(value = "根据BOM配置获取新的Characteristic和value")
     @PostMapping(value = "material/configuration")
-    @ResponseStatus(HttpStatus.OK)
+	@ResponseBody
     public Result findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
             Map<String, String> pars = new HashMap<>();
             List<String> configCodes = model.getConfigCode();

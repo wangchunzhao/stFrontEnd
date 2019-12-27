@@ -1,5 +1,6 @@
 package com.qhc.steigenberger.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.qhc.steigenberger.domain.Operations;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserService;
 
@@ -29,9 +31,12 @@ public abstract class BaseController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	OrderService orderService;
+
+	@Autowired
+	private OperationService operationService;
 
 	/**
 	 * 得到当前用户对象
@@ -40,10 +45,11 @@ public abstract class BaseController {
 	 * @return
 	 */
 	public User getAccount() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-	    HttpServletRequest request = servletRequestAttributes.getRequest();
-	    HttpServletResponse response = servletRequestAttributes.getResponse();
-	    
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		HttpServletResponse response = servletRequestAttributes.getResponse();
+
 		HttpSession session = request.getSession();
 		return (User) session.getAttribute(Constants.ACCOUNT);
 	}
@@ -55,10 +61,11 @@ public abstract class BaseController {
 	 * @return
 	 */
 	public String getUserIdentity() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-	    HttpServletRequest request = servletRequestAttributes.getRequest();
-	    HttpServletResponse response = servletRequestAttributes.getResponse();
-	    
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		HttpServletResponse response = servletRequestAttributes.getResponse();
+
 		HttpSession session = request.getSession();
 		return (String) session.getAttribute(Constants.IDENTITY);
 	}
@@ -71,80 +78,85 @@ public abstract class BaseController {
 	 * @return
 	 */
 	public String getValueByAttribute(String attribute) {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-	    HttpServletRequest request = servletRequestAttributes.getRequest();
-	    HttpServletResponse response = servletRequestAttributes.getResponse();
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		HttpServletResponse response = servletRequestAttributes.getResponse();
 
 		HttpSession session = request.getSession();
 		return (String) session.getAttribute(attribute);
 	}
-	
+
 	/**
 	 * 获取当前用户的所有权限
 	 * 
 	 * @return
 	 */
 	public List<Operations> getPermissions() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-	    HttpServletRequest request = servletRequestAttributes.getRequest();
-	    HttpServletResponse response = servletRequestAttributes.getResponse();
-	    HttpSession session = request.getSession();
-		
-	    List<Operations> list = (List<Operations>)session.getAttribute("permissions");
-	    if (list == null) {
-// TODO	    	oo = orderService.getOrderOption();
-	    	session.setAttribute("permissions", list);
-	    }
-	    
-	    return list;
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		HttpServletResponse response = servletRequestAttributes.getResponse();
+		HttpSession session = request.getSession();
+
+		List<Operations> list = (List<Operations>) session.getAttribute("permissions");
+		if (list == null) {
+			list = operationService.findOperations(this.getUserIdentity());
+			session.setAttribute("permissions", list);
+		}
+
+		return list;
 	}
-	
+
 	/**
 	 * 获取当前用户的所有菜单
 	 * 
 	 * @return
 	 */
 	public Map<String, Operations> getMenus() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-	    HttpServletRequest request = servletRequestAttributes.getRequest();
-	    HttpServletResponse response = servletRequestAttributes.getResponse();
-	    HttpSession session = request.getSession();
-		
-	    Map<String, Operations> menus = (Map<String, Operations>)session.getAttribute("menus");
-	    if (menus == null) {
-// TODO	    	oo = orderService.getOrderOption();
-	    	session.setAttribute("menus", menus);
-	    }
-	    
-	    return menus;
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		HttpServletResponse response = servletRequestAttributes.getResponse();
+		HttpSession session = request.getSession();
+
+		Map<String, Operations> menus = (Map<String, Operations>) session.getAttribute("menus");
+		if (menus == null) {
+			menus = operationService.findMenus(this.getUserIdentity());
+			
+			session.setAttribute("menus", menus);
+		}
+
+		return menus;
 	}
-	
+
 	/**
 	 * 获取订单所有选项
 	 * 
 	 * @return
 	 */
 	public Result getOrderOption() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-	    HttpServletRequest request = servletRequestAttributes.getRequest();
-	    HttpServletResponse response = servletRequestAttributes.getResponse();
-	    HttpSession session = request.getSession();
-		
-	    OrderOption oo = (OrderOption)session.getAttribute("options");
-	    Result result = null;
-	    if (oo == null) {
-	    	result = orderService.getOrderOption();
-	    	if("ok".equals(result.getStatus())) {
-	    		oo = (OrderOption)result.getData();
-	    		session.setAttribute("options", oo);
-	    	}    	
-	    }else {
-	    	result = new Result();
-	    	result.setData(oo);
-	    	result.setStatus("ok");
-	    }
-	    
-	    return result;
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		HttpServletResponse response = servletRequestAttributes.getResponse();
+		HttpSession session = request.getSession();
+
+		OrderOption oo = (OrderOption) session.getAttribute("options");
+		Result result = null;
+		if (oo == null) {
+			result = orderService.getOrderOption();
+			if ("ok".equals(result.getStatus())) {
+				oo = (OrderOption) result.getData();
+				session.setAttribute("options", oo);
+			}
+		} else {
+			result = new Result();
+			result.setData(oo);
+			result.setStatus("ok");
+		}
+
+		return result;
 	}
 
 }

@@ -63,9 +63,6 @@ public class MenuController extends BaseController {
 	private RoleService roleService;
 	
 	@Autowired
-	private OperationService operationService;
-	
-	@Autowired
 	UserOperationInfoService userOperationInfoService;
 	
 	@PostConstruct
@@ -153,7 +150,7 @@ public class MenuController extends BaseController {
 		model.addAttribute("role1", entity);
 		model.addAttribute("datas", roleService.getPageableList(page, pageSize, entity));
 		model.addAttribute("currentPath", "/role/index?isActive="+entity.getIsActive());
-		model.addAttribute("operationList", operationService.getList());
+		model.addAttribute("operationList", this.getPermissions());
 		
 		return roleIndex;
 	}
