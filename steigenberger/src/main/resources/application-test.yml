@@ -1,0 +1,41 @@
+server:
+  port: 8880
+
+#for email setting
+mail:
+#the directory for temp files
+    files:
+        path: "d:/qhc/mail/files"
+########### test profile ###########
+    debug: true
+    host: 159.82.101.253
+    username: 
+    password: 
+    smtp:
+        from: ricoh-4000@carrier.utc.com
+        auth: false
+        timeout: 120000
+        port: 25
+
+qhc:     
+    frye: 
+        url: http://localhost:8881/frye/
+    ldap: false
+    order: 
+        path: D:\\qhc\\order\\
+
+contract:
+    dir: D:\\qhc\\contract\\
+    
+    # Bestsign config
+    bestsign:
+        # for Test
+        url: https://api.bestsign.info
+        accountname: yongzheng.wang@haiercarrier.com
+        entername: 青岛海尔开利冷冻设备有限公司
+        clientid: 1575947454016605528
+        secrete: jmx9U6HyaV1O54lxk1aLYgwhn4SCocwy
+        sealname: 青岛海尔开利冷冻设备
+        privatekey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJFstcFiHwxvod0kQU1KLi+Sy7bE3yrfVPeTd3jdPw3qmCik21wLUfXXO6/dSQyTWV3sSoJGNoK6jlhqKbbDottDOVE1T5G6Wc2Nz3YyfGq76EO9C+do7y4WPxqq+1tOoLi5DO7pjMdN7kXS0fyDFJhbUGWroPsNV1IbsGTB1ipzAgMBAAECgYA9z8cxe1NXJdvW8yIOiAk5j1unQ+bXgjXLRZLyfJfggmZKYEgcx3L+240zIwt5nOfPVDAXT2C8EC+QxQ8V7/G4OxpZ7XeVEP0MaI0qRZn7/J5BEsEpd1UNOJVWL7Sd0fl4EzL5nLerKLxjv1sNnXZhExtykbM81DwwaBx+/vRfgQJBAN51ykGBQ0IJHIqz1mpL7G4yUtNQ5iuzj7ZRrndz7sdfVnOiqf2K/YvxgC7OV1lZggNAIEcO42vPID4PxkvqP8UCQQCnWZxZQD2g4RxNIQnrvAWFfhYa+A/dha+ZsP/unTV5XdFRhJ55J8yx4/RKxVPFQ7PiwY0s73o6OcdeK6fEHezXAkBgKDoMpnsUCCw2KBX+TGMeHtJ+VPGo4iy0egoXyBzmQOd1hFJGLdX6r6DgmoBXNsFj9kv9awoSh61AJkFofxChAkBJTH2ntfSIX7EGs17mCr+cXcKO43IHhAOK3LTsrZz7YLVK8Dx9Mop8rCyXB2EOuP20ZzRPp0Cw+hexzos34ieXAkEAsZIOtp0UZU9KIK7SSwHuH2fqHGI/axqYCjYt1CO0l1DIySsCilPjiD6gkziz3ClJrYvR8KZU7+ZZe0udNg7/3g==
+        # 上上签合同文件临时目录
+        contractDir: D:\\qhc\\bestsign\\contract\\
