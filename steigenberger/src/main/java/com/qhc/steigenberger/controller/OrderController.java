@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
+import com.qhc.steigenberger.domain.MaterialBom;
 import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
@@ -652,14 +653,21 @@ public class OrderController extends BaseController {
     @PostMapping(value = "material/configuration")
 	@ResponseBody
     public Result findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
-            Map<String, String> pars = new HashMap<>();
-            List<String> configCodes = model.getConfigCode();
-            List<String> configValueCodes = model.getConfigValueCode();
-            for(int i=0;i<configCodes.size();i++){
-                pars.put(configCodes.get(i), configValueCodes.get(i));
-            }
-            pars.put("bom_code", model.getBomCode());
-            return orderService.findBomPrice(pars);    
+		/*
+		 * Map<String, String> pars = new HashMap<>(); List<String> configCodes =
+		 * model.getConfigCode(); List<String> configValueCodes =
+		 * model.getConfigValueCode(); for(int i=0;i<configCodes.size();i++){
+		 * pars.put(configCodes.get(i), configValueCodes.get(i)); } pars.put("bom_code",
+		 * model.getBomCode()); return orderService.findBomPrice(pars);
+		 */ 
+    	//测试数据
+    	MaterialBom bom = new MaterialBom();
+    	bom.setPrice(1200.00);
+    	bom.setTransferPrice(1300.00);
+    	Result result = new Result();
+    	result.setStatus("ok");
+    	result.setData(bom);
+    	return result;
     }
 
 }
