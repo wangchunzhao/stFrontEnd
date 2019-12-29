@@ -456,7 +456,7 @@ function searchMaterilType(){
 function fillMaterailValue(data){
 	$("#materialTypeName").val(data.description);
 	$("#materialCode").val(data.code);
-	if(data.isPurchased){
+	if(data.purchased){
 		$('#isPurchased').val('采购');
 	}else{
 		$('#isPurchased').val('生产');
@@ -488,9 +488,9 @@ function fillMaterailValue(data){
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
-	var acturalPrice = (data.retailPrice*discount)
-	$("#acturalPrice").val(toDecimal2(acturalPrice));
-	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
+	var actualPrice = (data.retailPrice*discount)
+	$("#acturalPrice").val(toDecimal2(actualPrice));
+	$("#acturalPriceAmount").val(toDecimal2(amount*(actualPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
 	/*$("#deliveryDate").val(data.deliveryDate);
@@ -552,18 +552,17 @@ function getTableDataByIndex(materialsType,index){
 
 //编辑购销明细时页面值回显
 function fillEditMaterailValue(data){	
-	if(data.allIndex==0){
+	if(data.allIndex){
 		$("#allIndex").val(data.allIndex);
 	}
-	
-	if(data.allIndex){
+	if(data.allIndex==0){
 		$("#allIndex").val(data.allIndex);
 	}
 	
 	if(data.identification){
 		$("#identification").val(data.identification);
 	}
-	$("#rowNumber").val(data.rowNumber);
+	$("#rowNumber").val(data.rowNum);
 	$("#identification").val(data.identification);
 	$("#materialTypeName").val(data.materialName);
 	$("#materialCode").val(data.materialCode);
@@ -573,28 +572,28 @@ function fillEditMaterailValue(data){
 	$("#itemCategory").val(data.itemCategory);
 	$("#purchasePeriod").val(data.period);
 	$("#producePeriod").val(data.period);
-	$("#materialGroupName").val(data.groupName);
-	$("#groupCode").val(data.groupCode);
-	$("#isConfigurable").val(data.configurable);
+	$("#materialGroupName").val(data.materialGroupName);
+	$("#groupCode").val(data.materialGroupCode);
+	$("#isConfigurable").val(data.isConfigurable);
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
 	$("#transcationPrice").val(data.transcationPrice);
-	$("#acturalPricaOfOptional").val(data.acturalPricaOfOptional);
-	$("#acturalPricaOfOptionalAmount").val(data.acturalPricaOfOptionalAmount);
-	$("#transcationPriceOfOptional").val(data.transcationPriceOfOptional);
-	$("#B2CPriceEstimated").val(data.b2CPriceEstimated);
-	$("#B2CPriceEstimatedAmount").val(data.B2CPriceEstimatedAmount);
-	$("#B2CCostOfEstimated").val(data.b2CCostOfEstimated);
-	$("#transcationPriceTotal").val(data.transcationPriceTotal);
+	$("#acturalPricaOfOptional").val(data.optionalActualPrice);
+	$("#acturalPricaOfOptionalAmount").val(data.optionalActualAmount);
+	$("#transcationPriceOfOptional").val(data.optionalTransationPrice);
+	$("#B2CPriceEstimated").val(data.b2cEstimatedPrice);
+	$("#B2CPriceEstimatedAmount").val(data.b2cEstimatedAmount);
+	$("#B2CCostOfEstimated").val(data.b2cEstimatedCost);
+	$("#transcationPriceTotal").val(data.transactionPriceSum);
 	$("#retailPrice").val(data.retailPrice);
-	$("#retailPriceAmount").val(data.retailPriceAmount);
-	$("#acturalPrice").val(data.acturalPrice);
-	$("#acturalPriceAmount").val(data.acturalPriceAmount);
-	$("#acturalPriceTotal").val(data.acturalPriceTotal);
-	$("#acturalPriceAmountTotal").val(data.acturalPriceAmountTotal);
-	if(data.purchased){
+	$("#retailPriceAmount").val(data.retailAmount);
+	$("#acturalPrice").val(data.actualPrice);
+	$("#acturalPriceAmount").val(data.actualAmount);
+	$("#acturalPriceTotal").val(data.actualPriceSum);
+	$("#acturalPriceAmountTotal").val(data.actualAmountSum);
+	if(data.isPurchased){
 		$("#producePeriod").val(data.period);
 	}else{
 		$("#purchasePeriod").val(data.period);
@@ -1008,29 +1007,28 @@ function compareDate(date){
 //购销明细行数据
 
 function confirmRowData(index,rowNumber){
-	var a = $("#acturalPriceAmount").val();
 	var row = {
-			rowNumber:rowNumber?rowNumber:(index+1)*10,
+			rowNum:rowNumber?rowNumber:(index+1)*10,
 			materialName:$("#materialTypeName").val(),
 			materialCode:$("#materialCode").val(),
 			clazzCode:$("#materialClazzCode").val(),
-			configurable:$("#isConfigurable").val(),
-			purchased:$("#purchasedCode").val(),
+			isConfigurable:$("#isConfigurable").val(),
+			isPurchased:$("#purchasedCode").val(),
 			materialGroupName:$("#materialGroupName").val(),
 			materialGroupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
 			unitCode:$("#unitCode").val(),
 			standardPrice:$("#standardPrice").val(),
-			acturalPrice:$("#acturalPrice").val(),
+			actualPrice:$("#acturalPrice").val(),
 			actualAmount:$("#acturalPriceAmount").val(),
 			transcationPrice:$("#transcationPrice").val(),
 			optionalActualPrice:$("#acturalPricaOfOptional").val(),
 			optionalActualAmount:$("#acturalPricaOfOptionalAmount").val(),
 			optionalTransationPrice:$("#transcationPriceOfOptional").val(),
-			B2CPriceEstimated:$("#B2CPriceEstimated").val(),
-			B2CPriceEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
-			B2CCostOfEstimated:$("#B2CCostOfEstimated").val(),
+			b2cEstimatedPrice:$("#B2CPriceEstimated").val(),
+			b2cEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
+			b2cEstimatedCost:$("#B2CCostOfEstimated").val(),
 			actualPriceSum:$("#acturalPriceTotal").val(),
 			actualAmountSum:$("#acturalPriceAmountTotal").val(),
 			transactionPriceSum:$("#transcationPriceTotal").val(),
@@ -1284,7 +1282,7 @@ function openConfig(identification){
 	$("#identification").val(identification);
 	$("#viewCode").val(tableData.materialCode);
 	$("#viewTransationPrice").val(tableData.transcationPrice);
-	$("#viewActualPrice").val(tableData.acturalPrice);
+	$("#viewActualPrice").val(tableData.actualPrice);
 	var url =ctxPath+"order/material/configurations";
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
@@ -1358,7 +1356,6 @@ function saveMaterialConfig(){
 
 //更新行项目价格信息
 function updateTableRowPrice(materialsType,index,tableData){
-	debugger
 	if(materialsType=='T101'){
 		$('#materialsTableall1').bootstrapTable('updateRow',{index: index, row: tableData});
 	}else if(materialsType=='T102'){
@@ -1375,11 +1372,12 @@ function updateTableRowPrice(materialsType,index,tableData){
 	$("#materialsTable").bootstrapTable('updateRow',{index: tableData.allIndex, row: tableData})
 }
 
+//计算可选项价格和总价格
 function calPrice(tableData){
 	//数量
 	var quantity = tableData.quantity;
 	//产品实卖价
-	var acturalPrice = tableData.acturalPrice;
+	var actualPrice = tableData.actualPrice;
 	//可选项实卖价格
 	var optionalActualPrice = tableData.optionalActualPrice;
 	//可选项实卖金额
@@ -1389,7 +1387,7 @@ function calPrice(tableData){
 	//可选项转移价
 	var optionalTransationPrice = tableData.optionalTransationPrice;
 	//实卖价合计
-	var actualPriceSum = toDecimal2(optionalActualPrice+acturalPrice);
+	var actualPriceSum = toDecimal2(optionalActualPrice+actualPrice);
 	//实卖金额合计
 	var actualAmountSum = toDecimal2(quantity*actualPriceSum);
 	//转移价合计
@@ -1507,24 +1505,24 @@ function copyMaterials(identification){
 
 //复制调研表时获取行数据
 function getRowData(materialsTableData,type,newIndex){
-	var identification = newIndex+'|'+type;
+	var identification = type+'|'+newIndex;
 	var rowNumber = (newIndex+1)*10;
 	var row = {
-			rowNumber:rowNumber,
+			rowNum:rowNumber,
 			materialName:materialsTableData.materialName,
 			materialCode:materialsTableData.materialCode,
 			identification:identification,
 			clazzCode:materialsTableData.clazzCode,
 			isConfigurable:materialsTableData.isConfigurable,
 			isPurchased:materialsTableData.isPurchased,
-			groupName:materialsTableData.groupName,
-			groupCode:materialsTableData.groupCode,
-			amount:materialsTableData.amount,
+			materialGroupName:materialsTableData.materialGroupName,
+			materialGroupCode:materialsTableData.materialGroupCode,
+			quantity:materialsTableData.quantity,
 			unitName:materialsTableData.unitName,
 			unitCode:materialsTableData.unitCode,
 			standardPrice:materialsTableData.standardPrice,
-			acturalPrice:materialsTableData.acturalPrice,
-			acturalPriceAmount:materialsTableData.acturalPriceAmount,
+			actualPrice:materialsTableData.actualPrice,
+			actualAmount:materialsTableData.actualAmount,
 			transcationPrice:materialsTableData.transcationPrice,
 			acturalPricaOfOptional:materialsTableData.acturalPricaOfOptional,
 			acturalPricaOfOptionalAmount:materialsTableData.acturalPricaOfOptionalAmount,
@@ -1532,8 +1530,8 @@ function getRowData(materialsTableData,type,newIndex){
 			B2CPriceEstimated:materialsTableData.B2CPriceEstimated,
 			B2CPriceEstimatedAmount:materialsTableData.B2CPriceEstimatedAmount,
 			B2CCostOfEstimated:materialsTableData.B2CCostOfEstimated,
-			acturalPriceTotal:materialsTableData.acturalPriceTotal,
-			acturalPriceAmountTotal:materialsTableData.acturalPriceAmountTotal,
+			actualPriceSum:materialsTableData.actualPriceSum,
+			actualAmountSum:materialsTableData.actualAmountSum,
 			transcationPriceTotal:materialsTableData.transcationPriceTotal,
 			retailPrice:materialsTableData.retailPrice,
 			retailPriceAmount:materialsTableData.retailPriceAmount,
@@ -1752,7 +1750,16 @@ function saveOrder(type){
 		 items[i].isVirtual = 0;
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
-			 items[i]['configs']= jsonObject.configTableData;
+			 var storedConfigs = jsonObject.configTableData;
+			 var config = new Object();
+			 var configs = new Array();
+			 for(var j=0;j<storedConfigs.length;j++){
+				 config['keyCode'] = storedConfigs[j].code;
+				 config['valueCode'] = storedConfigs[j].configValueCode;
+				 config['configurable'] = items[i].isConfigurable;
+				 configs.push(config);
+			 }
+			 items[i]['configs'] = configs; 
 			 if(!items[i].isConfigurable){
 				if(items[i].itemCategory=='ZHD1'){
 					items[i].itemCategory='ZHD2';
@@ -1768,7 +1775,7 @@ function saveOrder(type){
 			 items[i]['configs'] = null;
 		 }	 	 
 	 }
-	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
 	 if(type){
 		 $.ajax({
 			    url: ctxPath+"order/submit",

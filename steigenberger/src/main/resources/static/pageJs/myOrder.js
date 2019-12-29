@@ -39,7 +39,7 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'post',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/order/query",//请求路径
+			url : ctxPath+"order/query",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -115,11 +115,11 @@ var TableInit = function () {
 				visible: false  
 			},{
 				title : '订单状态',
-				field : 'currentVersionStatus',
+				field : 'status',
 				formatter : formatStatus
 			},{
 				title : '操作',
-				field : 'currentVersionStatus',
+				field : 'status',
 				formatter : operation,//对资源进行操作
 			} ]
 		})
@@ -179,7 +179,7 @@ function operation(value, row, index) {
 	var sequenceNumber = row.sequenceNumber;
 	var orderType = row.orderType;
 	var currentVersion = row.currentVersion;
-	var currentVersionStatus = row.currentVersionStatus;
+	var currentVersionStatus = row.status;
 	var buttonControl = row.buttonControl;
 	var htm="";
 	if(currentVersionStatus.substring(0,2)=="03"&&buttonControl=="true"){
@@ -199,7 +199,7 @@ function operation(value, row, index) {
 }
 
 function viewOrder(seqNumb,ordType,version){
-	jumpAjax("post", "/steigenberger/order/viewOrder", {
+	jumpAjax("post", ctxPath+"order/viewOrder", {
 		"sequenceNumber" : seqNumb,
 		"orderType" : ordType,
 		"version" : version
@@ -207,7 +207,7 @@ function viewOrder(seqNumb,ordType,version){
 }
 
 function editStockUpOrder(seqNumb,ordType,version){
-	jumpAjax("post", "/steigenberger/order/editStockUpOrder", {
+	jumpAjax("post",ctxPath+"order/editStockUpOrder", {
 		"sequenceNumber" : seqNumb,
 		"orderType" : ordType,
 		"version" : version
@@ -215,7 +215,7 @@ function editStockUpOrder(seqNumb,ordType,version){
 }
 
 function editOrder(seqNumb,ordType,version){
-	jumpAjax("post", "/steigenberger/order/editOrder", {
+	jumpAjax("post", ctxPath+"order/editOrder", {
 		"sequenceNumber" : seqNumb,
 		"orderType" : ordType,
 		"version" : version
@@ -223,7 +223,7 @@ function editOrder(seqNumb,ordType,version){
 }
 
 function tosap(seqNumb,ordType,version) {
-	$.post('/steigenberger/order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){
+	$.post(ctxPath+'order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){
 	
 		if(textStatus=="success"){
 			alert('下推订单成功！')
@@ -239,7 +239,7 @@ function tosap(seqNumb,ordType,version) {
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
-		url : '/steigenberger/order/query'
+		url : ctxPath+'order/query'
 	});
 })
 
@@ -257,7 +257,7 @@ $('#resetBtn').click(function() {
 
 
 function InitSapSalesOffice(){
-		$.post('/steigenberger/permission/sapSalesOfficelist',null,function(ret){
+		$.post(ctxPath+'permission/sapSalesOfficelist',null,function(ret){
 			if(ret.status==200){
 				for(var i in ret.data){
 					var item = ret.data[i];

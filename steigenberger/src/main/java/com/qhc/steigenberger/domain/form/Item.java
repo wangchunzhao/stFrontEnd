@@ -14,8 +14,8 @@ public class Item {
 	private Integer rowNum;//行号
 	private String materialCode;//物料编码,专用号
 	private String materialName;//物料名称,规格型号
-	private Integer isConfigurable;//是否为可配置物料，物料信息带出
-	private Integer isPurchased;//物料属性  1:采购  0:生产物料类型，物料信息带出
+	private Boolean isConfigurable;//是否为可配置物料，物料信息带出
+	private Boolean isPurchased;//物料属性  1:采购  0:生产物料类型，物料信息带出
 	private String materialGroupCode;//SAP物料分组，物料信息带出
 	private String materialGroupName;//SAP物料分组名称
 	private String stMaterialGroupCode;//销售工具物料分组，物料信息带出
@@ -111,16 +111,16 @@ public class Item {
 	public void setMaterialName(String materialName) {
 		this.materialName = materialName;
 	}
-	public Integer getIsConfigurable() {
+	public Boolean getIsConfigurable() {
 		return isConfigurable;
 	}
-	public void setIsConfigurable(Integer isConfigurable) {
+	public void setIsConfigurable(Boolean isConfigurable) {
 		this.isConfigurable = isConfigurable;
 	}
-	public Integer getIsPurchased() {
+	public Boolean getIsPurchased() {
 		return isPurchased;
 	}
-	public void setIsPurchased(Integer isPurchased) {
+	public void setIsPurchased(Boolean isPurchased) {
 		this.isPurchased = isPurchased;
 	}
 	public String getMaterialGroupCode() {
