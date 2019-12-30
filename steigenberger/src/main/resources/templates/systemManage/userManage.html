@@ -75,104 +75,104 @@
       	      window.location.href = ctxPath+"user/toUpdate?userIdentity="+userIdentity; 
       	      return false;
             });
-    	  
-    	  
+
+
     		var ctxPath  = [[@{/}]];
-    		var userIdentity;
-    		$.ajax({
-	            type: "GET",
-	            dataType: "json",
-	            url: ctxPath+"user/getOperations" ,
-	            async:false,
-	            success: function (result) {
-	            	console.log(result.data);
-	            	var user = result.data;
-	            	//profile赋值
-	            	//$("#userId").text("id:"+user.id);
-	            	//$("#userName").text("userName:"+user.userName);
-	            	//$("#userIdentity").text("userIdentity:"+user.userIdentity);
-	            	
-	            	$("#userId").text(user.id);
-	            	$("#userName").text(user.userName);
-	            	$("#userIdentity").text(user.userIdentity);
-	            	var roleList = user.roles;
-	            	var roleNames = "";
-	            	for(var i=0;i<roleList.length;i++){
-	            		if(i==roleList.length-1){
-	            			roleNames+=roleList[i].name;
-	            		}else{
-	            			roleNames+=roleList[i].name+",";
-	            		}
-	            	}
-	            	//$("#userRoles").text("userRoles:"+roleNames);
-	            	$("#userRoles").text(roleNames);
-	            	
-	            	//判断权限
-	            	userIdentity = result.data.userIdentity;
-	            	var operationList = result.data.operations;
-	            	var operationNames = "";
-	            	for(var i=0;i<operationList.length;i++){
-	            		operationNames+=operationList[i].name+",";
-	            	}
-	              	 //alert(operationNames);
-	               if(operationNames.indexOf("todo")==-1){
-	            	   $('#todo').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("newOrder")==-1){ 
-		       			$('#newOrder').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("orderManage")==-1){
-		       			$('#orderManage').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("contract")==-1){
-		       			$('#contract').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("newSpecial")==-1){
-		       			$('#newSpecial').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("report1")==-1){
-		       			$('#report1').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("report2")==-1){
-		       			$('#report2').attr('href','javascript:void(0);');
-		       		}
-		       		
-		       		if(operationNames.indexOf("report1")==-1&&operationNames.indexOf("report2")==-1){
-		       			$('#report').attr('href','javascript:void(0);');
-		       		}
-		       		
-		       		if(operationNames.indexOf("user")==-1){
-		       			$('#user').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("permission")==-1){
-		       			$('#permission').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("parameterSetting")==-1){
-		       			$('#parameterSetting').attr('href','javascript:void(0);');
-		       		}
-		       		if(operationNames.indexOf("role")==-1){
-		       			$('#role').attr('href','javascript:void(0);');
-		       		}
-		       		
-		       		if(operationNames.indexOf("user")==-1&&
-		       				operationNames.indexOf("permission")==-1&&
-		       				operationNames.indexOf("parameterSetting")==-1&&
-		       				operationNames.indexOf("role")==-1
-		       				){
-		       			
-		       			//$('#sys').style="display:none";
-		       			$('#sys').attr('style',"display:none");
-		       		}
-	                
-	            },
-	            error : function() {
-	                //alert("没有查到数据！");
-	            }
-	        }); 
-    			
-    		
-    	  
-    	  
+    		// var userIdentity;
+    		// $.ajax({
+	        //     type: "GET",
+	        //     dataType: "json",
+	        //     url: ctxPath+"user/getOperations" ,
+	        //     async:false,
+	        //     success: function (result) {
+	        //     	console.log(result.data);
+	        //     	var user = result.data;
+	        //     	//profile赋值
+	        //     	//$("#userId").text("id:"+user.id);
+	        //     	//$("#userName").text("userName:"+user.userName);
+	        //     	//$("#userIdentity").text("userIdentity:"+user.userIdentity);
+	        //
+	        //     	$("#userId").text(user.id);
+	        //     	$("#userName").text(user.userName);
+	        //     	$("#userIdentity").text(user.userIdentity);
+	        //     	var roleList = user.roles;
+	        //     	var roleNames = "";
+	        //     	for(var i=0;i<roleList.length;i++){
+	        //     		if(i==roleList.length-1){
+	        //     			roleNames+=roleList[i].name;
+	        //     		}else{
+	        //     			roleNames+=roleList[i].name+",";
+	        //     		}
+	        //     	}
+	        //     	//$("#userRoles").text("userRoles:"+roleNames);
+	        //     	$("#userRoles").text(roleNames);
+	        //
+	        //     	//判断权限
+	        //     	userIdentity = result.data.userIdentity;
+	        //     	var operationList = result.data.operations;
+	        //     	var operationNames = "";
+	        //     	for(var i=0;i<operationList.length;i++){
+	        //     		operationNames+=operationList[i].name+",";
+	        //     	}
+	        //       	 //alert(operationNames);
+	        //        if(operationNames.indexOf("todo")==-1){
+	        //     	   $('#todo').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("newOrder")==-1){
+		    //    			$('#newOrder').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("orderManage")==-1){
+		    //    			$('#orderManage').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("contract")==-1){
+		    //    			$('#contract').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("newSpecial")==-1){
+		    //    			$('#newSpecial').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("report1")==-1){
+		    //    			$('#report1').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("report2")==-1){
+		    //    			$('#report2').attr('href','javascript:void(0);');
+		    //    		}
+		    //
+		    //    		if(operationNames.indexOf("report1")==-1&&operationNames.indexOf("report2")==-1){
+		    //    			$('#report').attr('href','javascript:void(0);');
+		    //    		}
+		    //
+		    //    		if(operationNames.indexOf("user")==-1){
+		    //    			$('#user').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("permission")==-1){
+		    //    			$('#permission').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("parameterSetting")==-1){
+		    //    			$('#parameterSetting').attr('href','javascript:void(0);');
+		    //    		}
+		    //    		if(operationNames.indexOf("role")==-1){
+		    //    			$('#role').attr('href','javascript:void(0);');
+		    //    		}
+		    //
+		    //    		if(operationNames.indexOf("user")==-1&&
+		    //    				operationNames.indexOf("permission")==-1&&
+		    //    				operationNames.indexOf("parameterSetting")==-1&&
+		    //    				operationNames.indexOf("role")==-1
+		    //    				){
+		    //
+		    //    			//$('#sys').style="display:none";
+		    //    			$('#sys').attr('style',"display:none");
+		    //    		}
+	        //
+	        //     },
+	        //     error : function() {
+	        //         //alert("没有查到数据！");
+	        //     }
+	        // });
+
+
+
+
         });
      
       function showmsg(data){
@@ -274,7 +274,6 @@
 								<th>邮箱</th>
 								<th>域账号</th>
 								<th>区域</th>
-								<th>角色</th>
 								<th>账号状态</th>
 								<th>操作</th>
 							</tr>
@@ -282,16 +281,12 @@
                         <tbody>
 							<th:block th:if="${datas.content != null}">
 								<tr th:each="user,userStart: ${datas.content}">
-									<td th:text="${userStart.count}">560001</td>
-									<td th:text="${user.userName}">Bangalore</td>
-									<td th:text="${user.userMail}">Bangalore</td>
-									<td th:text="${user.userIdentity}">560001</td>
-									<td th:text="${user.region?.name}">Bangalore</td>
-								 	<td>
-									 <div th:each="role:${user.roles}">
-				                          <div th:text="${role.name }"></div>
-				                      </div>
-									</td>
+									<td th:text="${userStart.count}"></td>
+									<td th:text="${user.name}"></td>
+									<td th:text="${user.userMail}"></td>
+									<td th:text="${user.userIdentity}"></td>
+<!--									<td th:text="${user.region?.name}"></td>-->
+									<td>test</td>
 									<td th:text="${user.isActive>0?'启用' :'禁用'}" th:style="${user.isActive>0?'color:green' :'color:red'}">560001</td>
 									<td>
 									<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">
@@ -310,7 +305,7 @@
 						</tbody>
                     </table>
                 </div>
-				<div th:include="page :: pager" th:remove="tag"></div> 
+				<div th:include="page :: pager" th:remove="tag"></div>
             </div>
         </div>
     </div>
