@@ -150,7 +150,7 @@ public class MenuController extends BaseController {
 		model.addAttribute("role1", entity);
 		model.addAttribute("datas", roleService.getPageableList(page, pageSize, entity));
 		model.addAttribute("currentPath", "/role/index?isActive="+entity.getIsActive());
-		model.addAttribute("operationList", this.getPermissions());
+//		model.addAttribute("operationList", this.getPermissions());
 		
 		return roleIndex;
 	}

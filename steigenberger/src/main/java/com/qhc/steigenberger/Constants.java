@@ -15,5 +15,10 @@ public class Constants {
 	 * Session 当前用户权限变量名
 	 */
 	public static final String PERMISSIONS = "permissions";
+	
+	/**
+	 * Session 当前用户权限变量名
+	 */
+	public static final String MENUS = "menus";
 
 }
