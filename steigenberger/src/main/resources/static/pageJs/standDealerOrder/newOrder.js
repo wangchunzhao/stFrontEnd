@@ -44,7 +44,7 @@ $(function () {
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
 	defaultCollapse();
-	if(status=""){
+	if(status==null||status==""||status=="undefined"){
 		getUserDetail();
 	}else{
 		fillItems();
@@ -297,7 +297,8 @@ function fillItemToTableRow(data){
 	        cityName:data.cityName,
 	        districtCode:data.districtCode,
 	        districtName:data.districtName,
-	        address:data.address
+	        address:data.address,
+	        deliveryAddressSeq: data.deliveryAddressSeq
 	}
 	return row;
 }
@@ -334,7 +335,7 @@ function initDropDownList(){
 	$('#officeSelect').trigger("change");
 	$('#selectGroup').val($('#groupCode').val());
 	$("#orignalContractAmount").val($("#contractValue").val());
-	$("#contractAmount").val($("#contractRMBValue").val());
+	$("#contractAmount").val($("#contractRmbValue").val());
 	
 }
 
@@ -821,6 +822,13 @@ function fillEditMaterailValue(data){
 	if(data.identification){
 		$("#identification").val(data.identification);
 	}
+	$("#purchasedCode").val(data.isPurchased);
+	if(data.isPurchased){
+		$("#isPurchased").val("采购");
+	}else{
+		$("#isPurchased").val("生产");
+	}
+	$("#shippDate").val(data.shippDate)
 	$("#rowNumber").val(data.rowNum);
 	$("#identification").val(data.identification);
 	$("#materialTypeName").val(data.materialName);
@@ -829,9 +837,8 @@ function fillEditMaterailValue(data){
 	$("#b2cRemark").val(data.b2cComments);
 	$("#colorComments").val(data.colorComments);
 	$("#specialRemark").val(data.specialComments);
-	$("#itemCategory").val(data.itemCategory);
-	$("#purchasePeriod").val(data.period);
-	$("#producePeriod").val(data.period);
+	$("#itemCategory").val(data.itemCategory).change();
+	$("#itemRequirementPlan").val(data.itemRequirementPlan);
 	$("#materialGroupName").val(data.materialGroupName);
 	$("#groupCode").val(data.materialGroupCode);
 	$("#isConfigurable").val(data.isConfigurable);
@@ -861,7 +868,10 @@ function fillEditMaterailValue(data){
 	$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
 	$("#onStoreDate").val(data.onStoreDate);
-	$("#standardPrice").val(toDecimal2(data.standardPrice));	
+	$("#standardPrice").val(toDecimal2(data.standardPrice));
+	$("#discount").val(data.discount);
+	$("#materialAddress").val(data.materialAddress);
+	$("#deliveryAddressSeq").val(data.deliveryAddressSeq);
 }
 
 //删除购销明细
@@ -1584,7 +1594,6 @@ function closeMaterialConfig(){
 
 //保存调研表
 function saveMaterialConfig(){
-	debugger
 	var identification = $("#identification").val();
 	var materialType = identification.split('|')[0];
 	var index = identification.split('|')[1];
@@ -1966,7 +1975,6 @@ function saveOrder(type){
 			 layer.alert('请添加购销明细', {icon: 5});
 			 return
 		 }
-		 debugger
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
 		if(!bootstrapValidator.isValid()){ 
