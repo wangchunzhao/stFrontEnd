@@ -23,6 +23,9 @@
 		<input type="hidden" id="stOrderType" th:field="*{stOrderType}">
 		<input type="hidden" id="orderType" th:field="*{orderType}">
 		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{orderId}">
+		<input type="hidden" th:field="*{version}">
+		<input type="hidden" th:field="*{isActive}">
 		<div id="page-wrapper">
 			<div th:replace="orderCommons/orderCommons::path(mainPath=新建订单,subPath=标准折扣下单)">	</div>
 			<div th:replace="orderCommons/orderCommons::expandButton">	</div>

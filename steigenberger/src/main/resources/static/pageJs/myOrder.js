@@ -87,7 +87,7 @@ var TableInit = function () {
 				sortable : true
 			},{
 				title : '签约单位',
-				field : 'contracterName',
+				field : 'customerName',
 				sortable : true
 			},{
 				title : '订单类型',
@@ -145,36 +145,29 @@ function formatOrderType(value, row, index){
 	}
 }
 function formatStatus(value, row, index) {
-    
-	if(value.substring(0,2)=="00"){
-		return "订单新建保存";
-	}else if(value=="0100"){
-		return "客户经理提交待支持经理审核";
-	}else if(value=="0110"){
-		return "客户经理提交待B2C审核";
-	}else if(value=="0111"){
-		return "客户经理提交待B2C和工程审核";
-	}else if(value=="0112"){
-		return "工程人员提交待B2C审核";
-	}else if(value=="0101"){
-		return "客户经理提交待工程审核";
-	}else if(value=="0121"){
-		return "B2C提交待工程审核";
-	}else if(value=="0122"){
-		return "待支持经理审核";
-	}else if(value=="0120"){
-		return "B2C提交待待支持经理审核";
-	}else if(value=="0102"){
+	if(value=="00"){
+		return "草稿";
+	}else if(value=="01"){
+		return "待B2C审批";
+	}else if(value=="02"){
+		return "待工程人员审批";
+	}else if(value=="03"){
+		return "待支持经理审批";
+	}else if(value=="04"){
+		return "提交到BPM";
+	}else if(value=="05"){
+		return "提交到BPM";
+	}else if(value=="06"){
+		return "BPM审批通过";
+	}else if(value=="09"){
+		return "已下推SAP";
+	}else if(value=="10"){
+		return "Selling Tool驳回";
+	}else if(value=="11"){
 		return "工程提交待支持经理审核";
-	}else if(value.substring(0,2)=="02"){
-		return "BPM审批中";
-	}else if(value.substring(0,2)=="03"){
-		return "BPM订单审批通过";
-    }else if(value.substring(0,2)=="10"){
-        return "ST驳回";
-    }else if(value=="12"){
-        return "待支持经理审批";
-    }
+	}else if(value=="02"){
+		return "BPM驳回";
+	}
 }
 
  
