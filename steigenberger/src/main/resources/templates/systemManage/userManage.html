@@ -285,8 +285,7 @@
 									<td th:text="${user.name}"></td>
 									<td th:text="${user.userMail}"></td>
 									<td th:text="${user.userIdentity}"></td>
-<!--									<td th:text="${user.region?.name}"></td>-->
-									<td>test</td>
+									<td th:text="${user.officeCode}"></td>
 									<td th:text="${user.isActive>0?'启用' :'禁用'}" th:style="${user.isActive>0?'color:green' :'color:red'}">560001</td>
 									<td>
 									<!-- <a class="update" th:href="@{/user/update(id=${user?.id})}"  style="color: green;margin-right:20px;" th:title="${user.id}">

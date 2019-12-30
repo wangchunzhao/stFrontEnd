@@ -26,22 +26,17 @@ public class User implements Serializable{
     
     public List<ApplicationOfRolechange> apps;
 	
-    public SalesOffice region;//区域
+//    public SalesOffice region;//区域
    	
    	public List<Role> roles;
    	
    	public List<Operations> operations;//区域下对应的权限
-	
 
+	/* 销售办公室 */
+	private String officeCode = null;
 
-   	
-	public SalesOffice getRegion() {
-		return region;
-	}
-
-	public void setRegion(SalesOffice region) {
-		this.region = region;
-	}
+	//区域名字
+	public String officeName;
 
 	public String getUserName() {
 		return userName;
@@ -121,6 +116,22 @@ public class User implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
 	}
 }
 
