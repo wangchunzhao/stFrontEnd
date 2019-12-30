@@ -29,9 +29,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
+import com.qhc.steigenberger.domain.MaterialBom;
 import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
@@ -93,6 +95,8 @@ public class OrderController extends BaseController {
 	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
 	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
 	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
+	
+	private final static String ERROR_PAGE = "error.html"; 
 
 	@Autowired
 	UserService userService;
@@ -489,9 +493,9 @@ public class OrderController extends BaseController {
 	 */
 	@GetMapping(value = "material/configurations")
 	@ResponseBody
-	public List<Characteristic> findCharacteristic(String clazzCode, String materialCode) {
-		return orderService.getCharactersByClazzCode(clazzCode, materialCode);
-
+	public Result findCharacteristic(String clazzCode, String materialCode) {
+		Result result =  orderService.getCharactersByClazzCode(clazzCode, materialCode);
+		return result;
 	}
 	
 	@GetMapping(value = "user")
@@ -528,17 +532,53 @@ public class OrderController extends BaseController {
 	@GetMapping(value="viewOrder")
 	@ResponseBody
 	public ModelAndView viewOrder(Integer orderInfoId, ModelAndView view) {
-		ModelAndView mv = new ModelAndView("dealerOrder/dealerOrderView");
-		OrderOption oo = null;//orderService.getOrderOption();
+		ModelAndView mv = new ModelAndView();
+		OrderOption oo = null;
+		Result optionResult = orderService.getOrderOption();
+		if (optionResult.getStatus().equals("ok")) {
+			oo = (OrderOption)optionResult.getData();	
+		}else {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", optionResult.getMsg());
+			return mv;
+		}
 		mv.addObject("order_option",oo);
 		Result result = orderService.findOrderDetail(orderInfoId);
 		Order order = null; 
 		if (result.getStatus().equals("ok")) {
 			order = (Order)result.getData();
 			oo.setOrderTypeCode(order.getOrderType());	
+		}else {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", optionResult.getMsg());
+			return mv;
 		}
 		mv.addObject("orderDetail",order);
+		String page = goOrderViewPageByType(order.getStOrderType());
+		mv.setViewName(page);
 		return mv;
+	}
+	
+	private String goOrderViewPageByType(String stOrderType) {
+		String pageName = "";
+		switch(stOrderType){
+		case "1":
+			pageName = Constants.PAGE_DEALER;
+		    break;
+		case "2":
+			pageName = Constants.PAGE_DEALER_NON_STANDARD;
+		    break;
+		case "3":
+			pageName = Constants.PAGE_DIRECT_CUSTOMER_TENDER_OFFER;
+		    break;
+		case "4":
+			pageName = Constants.PAGE_DIRECT_CUSTOMER_CREATE_ORDER;
+		    break;
+		case "5":
+			pageName = Constants.PAGE_STOCK_UP;
+		    break;
+		}
+		return pageName;
 	}
 	
 	@ApiOperation(value = "修改订单", notes = "修改订单")
@@ -652,14 +692,21 @@ public class OrderController extends BaseController {
     @PostMapping(value = "material/configuration")
 	@ResponseBody
     public Result findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
-            Map<String, String> pars = new HashMap<>();
-            List<String> configCodes = model.getConfigCode();
-            List<String> configValueCodes = model.getConfigValueCode();
-            for(int i=0;i<configCodes.size();i++){
-                pars.put(configCodes.get(i), configValueCodes.get(i));
-            }
-            pars.put("bom_code", model.getBomCode());
-            return orderService.findBomPrice(pars);    
+		/*
+		 * Map<String, String> pars = new HashMap<>(); List<String> configCodes =
+		 * model.getConfigCode(); List<String> configValueCodes =
+		 * model.getConfigValueCode(); for(int i=0;i<configCodes.size();i++){
+		 * pars.put(configCodes.get(i), configValueCodes.get(i)); } pars.put("bom_code",
+		 * model.getBomCode()); return orderService.findBomPrice(pars);
+		 */ 
+    	//测试数据
+    	MaterialBom bom = new MaterialBom();
+    	bom.setPrice(1200.00);
+    	bom.setTransferPrice(1300.00);
+    	Result result = new Result();
+    	result.setStatus("ok");
+    	result.setData(bom);
+    	return result;
     }
 
 }

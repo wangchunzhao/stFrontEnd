@@ -5,11 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.service.OperationService;
@@ -24,16 +20,24 @@ public class RoleController {
 	@Autowired
 	OperationService operationService;
 
-
-	@RequestMapping("/index")
+	/**
+	 * 根据角色名查找角色
+	 * @param page
+	 * @param pageSize
+	 * @param entity
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@GetMapping(value = "index/{name}")
 	public String index(@RequestParam(defaultValue = "0", name = "page") Integer page,
 			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
 			Role entity, 
 			Model model,
 			HttpServletRequest request) {
 		model.addAttribute("role1", entity);
-		model.addAttribute("datas", roleService.getPageableList(page, pageSize, entity));
-		model.addAttribute("currentPath", "/role/index?isActive="+entity.getIsActive());
+		model.addAttribute("datas", roleService.getPageableListByName(page, pageSize, entity));
+		model.addAttribute("currentPath", "/role/index/" + entity.getName());
 		model.addAttribute("operationList", operationService.getList());
 		
 		return "systemManage/roleManage";

@@ -128,6 +128,8 @@ public class LoginController extends BaseController {
 				session.setAttribute(Constants.IDENTITY, userName);
 				// TODO find user's permissions
 //				session.setAttribute(Constants.PERMISSIONS, permissions);
+				getMenus();
+				getPermissions();
 				response.sendRedirect(request.getContextPath());
 			}
 		} catch (Exception e) {

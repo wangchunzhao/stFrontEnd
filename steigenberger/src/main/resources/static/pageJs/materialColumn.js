@@ -10,7 +10,7 @@ var materialsColumn = [{
 	    }
 	},{
 		title:'行号',
-	    field: 'rowNumber',
+	    field: 'rowNum',
 	    width:50
 	},{
 		title:'调研表',
@@ -18,8 +18,8 @@ var materialsColumn = [{
 		width:120,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-	    	if(row.configurable){
-	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+row.materialCode+','+row.clazzCode +','+row.transcationPrice+ '\')"><i class="fa fa-edit"></i></a> ');
+	    	if(row.isConfigurable){
+	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+'\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
 	    }
@@ -55,11 +55,11 @@ var materialsColumn = [{
 	    visible:false
 	},{
 		title:'',
-	    field: 'configurable',
+	    field: 'isConfigurable',
 	    visible:false
 	},{
 		title:'物料属性',
-	    field: 'purchased',
+	    field: 'isPurchased',
 	    width:80,
 	    formatter: function(value, row, index) {
 	    	if(value){
@@ -86,7 +86,7 @@ var materialsColumn = [{
 	    visible:false
 	},{
 		title:'产品实卖价',
-	    field: 'acturalPrice',
+	    field: 'actualPrice',
 	    width:150
 	},{
 		title:'产品实卖金额',
@@ -111,17 +111,17 @@ var materialsColumn = [{
 
 	},{
 		title:'B2C预估价',
-	    field: 'B2CPriceEstimated',
+	    field: 'b2cEstimatedPrice',
 	    width:150
 
 	},{
 		title:'B2C预估金额',
-	    field: 'B2CPriceEstimatedAmount',
+	    field: 'b2cEstimatedAmount',
 	    width:150
 
 	},{
 		title:'B2C预估成本',
-	    field: 'B2CCostOfEstimated',
+	    field: 'b2cEstimatedCost',
 	    width:150
 	},{
 		title:'实卖价合计',

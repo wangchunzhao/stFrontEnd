@@ -180,9 +180,14 @@ public class OrderService {
 		return result;
 	}
 
-	public List getCharactersByClazzCode(String clazzCode, String materialCode) {
+	public Result getCharactersByClazzCode(String clazzCode, String materialCode) {
 		String url = "material/configurations/" + clazzCode + ',' + materialCode;
-		return fryeService.getInfo(url, List.class);
+		Result result =  fryeService.getInfo(url, Result.class);
+		if ("ok".equals(result.getStatus())) {
+			JavaType javaType = mapper.getTypeFactory().constructType(List.class);
+			result.setData(mapper.convertValue(result.getData(), javaType));
+		}
+		return result;
 	}
 
 	public Result findBomPrice(Map<String, String> pars) {

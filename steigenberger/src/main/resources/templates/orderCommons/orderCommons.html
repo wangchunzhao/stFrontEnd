@@ -49,7 +49,7 @@
 						<span class="col-md-1 control-label">签约单位</span>
 					    <div class="col-md-2">
 					    <div class="input-group">
-		                    <input type="text" class="form-control" readonly id="customerName" th:field="*{customerName}">
+		                    <input type="text" class="form-control" disabled id="customerName" th:field="*{customerName}">
 		                    <input type="hidden" id="customerCode" th:field="*{customerCode}">
 		                    <input type="hidden" id="customerIndustryCode" th:field="*{customerIndustryCode}">
 		                    <span class="input-group-btn">
@@ -157,6 +157,7 @@
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" th:field="*{contractValue}">
 					    </div>
+					    <input type="hidden" id="contractValue" th:value="*{contractValue}">
 					    <span class="col-md-1 control-label">币种</span>
 						<div class="col-md-2">
 							<select class="form-control"  id="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled th:field="*{currency}">
@@ -168,9 +169,10 @@
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:field="*{contractRmbValue}">
 					    </div>
+					    <input type="hidden" id="contractValue" th:value="*{contractRmbValue}">
 					    <span class="col-md-1 control-label">购销明细金额合计</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="itemsAmount" readonly th:field="*{itemsAmount}">
+							<input type="text" class="form-control" id="itemsAmount" readonly>
 					    </div>	
 					</div>
 					<div class="row" style="padding-top: 10px;">
@@ -221,14 +223,14 @@
 								<option value="">--选择大区--</option>
 							</select>
 					    </div>
-					    <input type="hidden" name="officeName" id="officeName">
+					    <input type="hidden" th:value="*{officeCode}" id="officeCode">
 					    <span class="col-md-1 control-label">中心</span>
 						<div class="col-md-2">
 							<select class="form-control" id="selectGroup" th:field="*{groupCode}">
 								<option value="">--选择中心--</option>
 							</select>
 					    </div>
-					    <input type="hidden" name="groupName" id="groupName">
+					    <input type="hidden" id="groupCode" th:value="*{groupCode}">
 					    <span class="col-md-1 control-label">保修年限(年)</span>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="warrenty" value="1" aria-describedby="emailHelp" name="warrenty" readonly>
