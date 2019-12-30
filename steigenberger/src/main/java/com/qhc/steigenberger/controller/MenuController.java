@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.Result;
@@ -33,11 +34,6 @@ public class MenuController extends BaseController {
 	
 	private final static String ERROR_PAGE = "error.html";
 	//
-	private final static String PAGE_DEALER = "dealerOrder/newOrder";
-	private final static String PAGE_DEALER_NON_STANDARD = "nonStandardDealerOrder/newNonStandardOrder";
-	
-	private final static String PAGE_DEALER_DIRECT_CUSTOMER = "directCustomerOrder/directCustomerOrder";
-	//
 	private final static String specialApplication="special/specialList";
 	private final static String todo="todo/mytask";
 	private final static String newOrder="dealerOrder/orderForm";
@@ -51,7 +47,6 @@ public class MenuController extends BaseController {
 	private final static String roleIndex="systemManage/roleManage";
 	private final static String freight="systemManage/freight";
 
-	private final static String stockUpOrder = "dealerOrder/stockUpOrder";
 
 	@Autowired
 	private UserService userService;
@@ -169,7 +164,7 @@ public class MenuController extends BaseController {
 			mv.addObject("msg", result.getMsg());
 			return mv;
 		}
-		mv.setViewName(PAGE_DEALER);
+		mv.setViewName(Constants.PAGE_DEALER);
 		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_DEALER_CODE);
@@ -189,7 +184,7 @@ public class MenuController extends BaseController {
 			mv.addObject("msg", result.getMsg());
 			return mv;
 		}
-		mv.setViewName(PAGE_DEALER_NON_STANDARD);
+		mv.setViewName(Constants.PAGE_DEALER_NON_STANDARD);
 		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_DEALER_CODE);
@@ -200,8 +195,8 @@ public class MenuController extends BaseController {
 		return mv;
 	}
 	
-	@RequestMapping("directCustomerOrder")
-	public ModelAndView goDirectCustomerOrder() {
+	@RequestMapping("directCustomerTenderOff")
+	public ModelAndView goDirectCustomerTenderOff() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
 		if(result.getStatus()!="ok") {
@@ -209,7 +204,7 @@ public class MenuController extends BaseController {
 			mv.addObject("msg", result.getMsg());
 			return mv;
 		}
-		mv.setViewName(PAGE_DEALER_DIRECT_CUSTOMER);
+		mv.setViewName(Constants.PAGE_DIRECT_CUSTOMER_TENDER_OFFER);
 		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
@@ -220,7 +215,27 @@ public class MenuController extends BaseController {
 		return mv;
 	}
 	
-	@RequestMapping("/stockUpOrder")
+	@RequestMapping("directCustomerCreateOrder")
+	public ModelAndView goDirectCustomerCreateOrder() {
+		ModelAndView mv = new ModelAndView();
+		Result result = this.getOrderOption();
+		if(result.getStatus()!="ok") {
+			mv.setViewName(ERROR_PAGE);
+			mv.addObject("msg", result.getMsg());
+			return mv;
+		}
+		mv.setViewName(Constants.PAGE_DIRECT_CUSTOMER_CREATE_ORDER);
+		OrderOption oo = (OrderOption)result.getData();
+		Order orderDetail = new Order();
+		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
+		orderDetail.setOrderType(Order.ORDER_TYPE_KEYACCOUNT);
+		orderDetail.setStOrderType("3");
+		mv.addObject(ORDER_OPTION,oo);	
+		mv.addObject(ORDER_DETAIL, orderDetail);
+		return mv;
+	}
+	
+	@RequestMapping("stockUpOrder")
 	public ModelAndView goStockUpOrder() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
@@ -229,7 +244,7 @@ public class MenuController extends BaseController {
 			mv.addObject("msg", result.getMsg());
 			return mv;
 		}
-		mv.setViewName(stockUpOrder);
+		mv.setViewName(Constants.PAGE_STOCK_UP);
 		OrderOption oo = (OrderOption)result.getData();
 		Order orderDetail = new Order();
 		orderDetail.setOrderType(Order.ORDER_TYPE_BULK);

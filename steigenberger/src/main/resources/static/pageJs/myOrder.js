@@ -74,6 +74,10 @@ var TableInit = function () {
 			    return temp;
 			},
 			columns : [ {
+				title:'',
+			    field: 'id',
+			    visible:false
+			},{
 				title : '流水号',
 				field : 'sequenceNumber',
 				sortable : true
@@ -180,6 +184,7 @@ function operation(value, row, index) {
 	var orderType = row.orderType;
 	var currentVersion = row.currentVersion;
 	var currentVersionStatus = row.status;
+	var orderInfoId = row.id;
 	var buttonControl = row.buttonControl;
 	var htm="";
 	if(currentVersionStatus.substring(0,2)=="03"&&buttonControl=="true"){
@@ -192,17 +197,15 @@ function operation(value, row, index) {
 		} else {
 			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
 		}*/
-		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>查看</button>";
+		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</button>";
 		htm =htm+deletehtm+'&nbsp'+viewHtm;
 	}
 	return htm;
 }
 
-function viewOrder(seqNumb,ordType,version){
-	jumpAjax("post", ctxPath+"order/viewOrder", {
-		"sequenceNumber" : seqNumb,
-		"orderType" : ordType,
-		"version" : version
+function viewOrder(orderInfoId){
+	jumpAjax("get", ctxPath+"order/viewOrder", {
+		"orderInfoId" : orderInfoId
 	})
 }
 
