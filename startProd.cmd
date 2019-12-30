@@ -1,0 +1,1 @@
+java -Xms2048m -Xmx1024m -jar st-0.0.1.jar --server.port =8880 --spring.profiles.active=prod
