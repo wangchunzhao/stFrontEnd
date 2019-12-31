@@ -7,15 +7,15 @@
 <div th:fragment="pager">  
      <div class="text-right" >  
         <ul style="margin:0px;" class="pagination" >  
-            <li><a href="#" th:href="@{${currentPath}(page=0)}">首页</a></li>  
+            <li><a href="#" th:href="@{${currentPath}(page=1)}">首页</a></li>
             <li th:if="${datas.hasPrevious()}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber-1})}">上一页</a></li>  
             <div th:if="${(datas.totalPages le 10) and (datas.totalPages gt 0)}" th:remove="tag">  
                 <div th:each="pg : ${#numbers.sequence(0, datas.totalPages - 1)}" th:remove="tag">  
-                        <span th:if="${pg eq datas.getPageNumber()}" th:remove="tag">  
+                        <span th:if="${pg eq datas.getPageNumber()-1}" th:remove="tag">
                             <li class="active"><span class="current_page line_height" th:text="${pg+1}">${pageNumber}</span></li>  
                         </span>  
-                    <span th:unless="${pg eq datas.getPageNumber()}" th:remove="tag">  
-                            <li><a href="#" th:href="@{${currentPath}(page=${pg})}" th:text="${pg+1}"></a></li>  
+                    <span th:unless="${pg eq datas.getPageNumber()-1}" th:remove="tag">
+                            <li><a href="#" th:href="@{${currentPath}(page=${pg+1})}" th:text="${pg+1}"></a></li>
                         </span>  
                 </div>  
             </div>  
@@ -28,7 +28,7 @@
             </div>  
   
             <li th:if="${datas.hasNext()}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber+1})}">下一页</a></li>  
-            <li><a href="#" th:href="@{${currentPath}(page=${datas.totalPages-1})}">尾页</a></li>  
+            <li><a href="#" th:href="@{${currentPath}(page=${datas.totalPages})}">尾页</a></li>
             <!-- <li><a href="#" th:href="${datas.totalPages le 0 ? '${currentPath}?page=0':'${currentPath}?page=0&page='+(datas.totalPages-1)}">尾页</a></li>   -->
             <li><span th:utext="'共'+${datas.totalPages}+'页 / '+${datas.totalElements}+' 条'"></span></li>  
         </ul>  
