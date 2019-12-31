@@ -83,6 +83,7 @@ function add(){
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.status == 200) {
                     alert("保存成功");
+					window.location.href = ctxPath+"/menu/userIndex";
                 }else{
                 	var a = result.msg;
                 	alert(a);
