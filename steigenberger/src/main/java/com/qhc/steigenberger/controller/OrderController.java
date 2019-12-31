@@ -294,10 +294,10 @@ public class OrderController extends BaseController {
 			String fileName = file.getName();
 			Attachment attachment = orderService.writeAttachment(fileName, file.getInputStream());
 			
-			result.setData(attachment);
+			result = Result.ok(attachment);
 		} catch (Exception e) {
 			logger.error("上传文件失败", e);
-			result.error("上传文件失败");
+			result = result.error("上传文件失败");
 		}
 		
 		return result;
