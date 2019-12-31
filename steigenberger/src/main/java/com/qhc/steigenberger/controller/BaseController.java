@@ -8,22 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.qhc.steigenberger.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.qhc.steigenberger.Constants;
-import com.qhc.steigenberger.domain.Operations;
-import com.qhc.steigenberger.domain.OrderOption;
-import com.qhc.steigenberger.domain.Result;
-import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserService;
 
 /**
  * 提供Controller公共的方法
- * 
+ *
  * @author Walker
  *
  */
@@ -40,7 +37,7 @@ public abstract class BaseController {
 
 	/**
 	 * 得到当前用户对象
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -56,7 +53,7 @@ public abstract class BaseController {
 
 	/**
 	 * 得到当前用户identity
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -72,7 +69,7 @@ public abstract class BaseController {
 
 	/**
 	 * 从Session获取属性
-	 * 
+	 *
 	 * @param request
 	 * @param attribute
 	 * @return
@@ -89,7 +86,7 @@ public abstract class BaseController {
 
 	/**
 	 * 获取当前用户的所有权限
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Operations> getPermissions() {
@@ -110,20 +107,19 @@ public abstract class BaseController {
 
 	/**
 	 * 获取当前用户的所有菜单
-	 * 
+	 *
 	 * @return
 	 */
-	public Map<String, Operations> getMenus() {
+	public Map<String, MenusDto> getMenus() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
 				.getRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
 		HttpServletResponse response = servletRequestAttributes.getResponse();
 		HttpSession session = request.getSession();
 
-		Map<String, Operations> menus = (Map<String, Operations>) session.getAttribute("menus");
+		Map<String, MenusDto> menus = (Map<String, MenusDto>) session.getAttribute("menus");
 		if (menus == null) {
 			menus = operationService.findMenus(this.getUserIdentity());
-			
 			session.setAttribute("menus", menus);
 		}
 
@@ -132,7 +128,7 @@ public abstract class BaseController {
 
 	/**
 	 * 获取订单所有选项
-	 * 
+	 *
 	 * @return
 	 */
 	public Result getOrderOption() {

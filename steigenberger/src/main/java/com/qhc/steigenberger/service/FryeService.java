@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.qhc.steigenberger.domain.MenusDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -277,6 +278,18 @@ public class FryeService {
 		Mono<T> mono = webClient.get().uri(url, map).retrieve().bodyToMono(T);
 		T t = mono.block();
 		return t;
+	}
+
+	public Map<String,MenusDto> findMenus(String path) {
+		String url = fryeUrl + path;
+		WebClient webClient = getBuilder().baseUrl(url).build();
+		Mono<Map> response = webClient.get().uri(url)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(Map.class);
+		return response.block();
 	}
 
 }

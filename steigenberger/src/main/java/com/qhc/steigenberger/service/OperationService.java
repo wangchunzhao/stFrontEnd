@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.qhc.steigenberger.domain.MenusDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qhc.steigenberger.domain.Operations;
@@ -38,14 +39,15 @@ public class OperationService{
 	 * 
 	 * @return
 	 */
-	public Map<String, Operations> findMenus(String user) {
-		List<Operations> list = getList();
-		Map<String, Operations> menus = new HashMap<>();
-		// TODO demo 逻辑需要修改
-		for (Operations operations : list) {
-			menus.put(operations.getId(), operations);
-		}
-		
+	/**
+	 * 查询用户所有所有菜单
+	 *
+	 * @return
+	 */
+	public Map<String, MenusDto> findMenus(String user) {
+		//List<MenusDto> list = getList();
+		Map<String, MenusDto> menus = fryeService.findMenus("queryAllAserMenus/" + user);
+		//Map<String, MenusDto> menus = null;
 		return menus;
 	}
 }
