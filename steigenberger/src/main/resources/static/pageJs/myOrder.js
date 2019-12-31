@@ -156,16 +156,14 @@ function formatStatus(value, row, index) {
 	}else if(value=="04"){
 		return "提交到BPM";
 	}else if(value=="05"){
-		return "提交到BPM";
-	}else if(value=="06"){
 		return "BPM审批通过";
+	}else if(value=="06"){
+		return "订单更改审批通过";
 	}else if(value=="09"){
 		return "已下推SAP";
 	}else if(value=="10"){
 		return "Selling Tool驳回";
 	}else if(value=="11"){
-		return "工程提交待支持经理审核";
-	}else if(value=="02"){
 		return "BPM驳回";
 	}
 }

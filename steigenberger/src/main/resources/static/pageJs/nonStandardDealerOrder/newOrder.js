@@ -1,5 +1,4 @@
-$(function () {
-	
+$(function () {	
 	//modal 无法滚动问题
 	$('#specificationModal').on('hidden.bs.modal', function () {
 		$("body").addClass("modal-open");
@@ -10,6 +9,7 @@ $(function () {
 	$('#subsidiaryModal').on('hidden.bs.modal', function () {
 		$("body").removeClass("modal-open");
 	});
+	
 	//进页面前清空缓存
 	localStorage.clear()
 	
@@ -20,8 +20,8 @@ $(function () {
 	var addressTable = new TableInit('addressTable','','',addressColumns)
 	addressTable.init();
 	//初始化客户查询Table
-	var contractUnitTable = new TableInit('contractUnitTable','',queryUnitParams,contractUnitTableColumn);
-	contractUnitTable.init();
+	var customerTable = new TableInit('customerTable','',queryUnitParams,customerTableColumn);
+	customerTable.init();
 	
 	//初始化物料查询table
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
@@ -29,36 +29,44 @@ $(function () {
 	
 	//初始化毛利率table
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
-	grossProfitTable.init();
-	
+	grossProfitTable.init();	
 	if(installationTerms){
 		var installationTerm = installationTerms[$("#customerClazzCode").val()];
 		$.each(installationTerm, function (key, value) {
-			$("#installCode").val(key);
-			$("#installName").val(value);
+			$("#installType").val(key);
+			$("#installTypeName").val(value);
 			
 		});
 	}
 	initSubsidiartFormValidator();
+    initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
-	var nowDateString = moment(new Date()).format('YYYY-MM-DD');
-	$("#inputDate").val(nowDateString);
-	$("#optTime").val(nowDateString);
 	defaultCollapse();
-	getUserDetail();
+	if(status==null||status==""||status=="undefined"){
+		getUserDetail();
+	}else{
+		fillItems();
+		//修改查看订单时,辉县地址数据
+		fillOrderAddress();
+		initDropDownList();
+	}
+	
+	
 });
+
+
 
 //获取session中用户信息
 function getUserDetail(){
 	$.ajax({
-	    url: "/steigenberger/order/user",
+	    url: ctxPath+"order/user",
 	    data: {},
 	    type: "get",
 	    success: function(data) {
-	    	$("#salesName").val(data.userName);
-	    	$("#salesTelnumber").val(data.tel);
+	    	$("#salesName").val(data.name);
+	    	$("#salesTel").val(data.tel);
 	    	$("#salesCode").val(data.userIdentity);
 	    }
 	});
@@ -77,32 +85,285 @@ function defaultCollapse(){
 	
 }
 
+//修改订单查看订单，回显购销明细数据
+function fillItems(){
+	if(items){
+		for(var i=0;i<items.length;i++){
+			var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+			var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+			var countMaterialsTableall2 = $('#materialsTableall2').bootstrapTable('getData').length;
+			var countMaterialsTableall3 = $('#materialsTableall3').bootstrapTable('getData').length;
+			var countMaterialsTableall4 = $('#materialsTableall4').bootstrapTable('getData').length;
+			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
+			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
+			var materialType = items[i].stMaterialGroupCode;
+			if(materialType=='T101'){
+				var identification = materialType+"|"+countMaterialsTableall1;
+				var rowData = fillItemToTableRow(items[i]);
+				rowData["allIndex"] = countMaterialsTable;
+				rowData["identification"] = identification;
+				//添加调研表
+				if(rowData.configurable){
+					fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode);
+				}	
+				$("#materialsTableall1").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall1,
+				    row: rowData
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: rowData
+				});
+			}else if(materialType=='T102'){
+				var identification = materialType+"|"+countMaterialsTableall2;
+				var rowData = fillItemToTableRow(items[i]);
+				rowData["allIndex"] = countMaterialsTable
+				rowData["identification"] = identification
+				rowData["materialConfig"] = rowData.configs;
+				$("#materialsTableall2").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall2,
+				    row: rowData
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: rowData
+				});
+			}else if(materialType=='T103'){
+				var identification = materialType+"|"+countMaterialsTableall3;
+				var rowData = fillItemToTableRow(items[i]);
+				rowData["allIndex"] = countMaterialsTable
+				rowData["identification"] = identification
+				rowData["materialConfig"] = rowData.configs;
+				$("#materialsTableall3").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall3,
+				    row: rowData
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: rowData
+				});
+			}else if(materialType=='T104'){
+				var identification = materialType+"|"+countMaterialsTableall4;
+				var rowData = fillItemToTableRow(items[i]);
+				rowData["allIndex"] = countMaterialsTable
+				rowData["identification"] = identification
+				rowData["materialConfig"] = rowData.configs;
+				$("#materialsTableall4").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall4,
+				    row: rowData
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: rowData
+				});
+			}else if(materialType=='T105'){
+				var identification = materialType+"|"+countMaterialsTableall5;
+				var rowData = fillItemToTableRow(items[i])
+				rowData["allIndex"] = countMaterialsTable
+				rowData["identification"] = identification
+				rowData["materialConfig"] = rowData.configs
+				$("#materialsTableall5").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall5,
+				    row: rowData
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: rowData
+				});
+			}else if(materialType=='T106'){
+				var identification = materialType+"|"+countMaterialsTableall6;
+				var rowData = fillItemToTableRow(items[i]);
+				rowData["allIndex"] = countMaterialsTable
+				rowData["identification"] = identification
+				rowData["materialConfig"] = rowData.configs
+				$("#materialsTableall6").bootstrapTable('insertRow', {
+				    index: countMaterialsTableall6,
+				    row: rowData
+				});
+				$("#materialsTable").bootstrapTable('insertRow', {
+				    index: countMaterialsTable,
+				    row: rowData
+				});
+			}
+		}
+	}
+	getAllCountFiled();
+}
+
+function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
+	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
+	var editConfigs = [];
+	materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
+		configs.forEach((item,index)=>{
+			if(item.code==defaultItem.code){
+				var config = defaultItem;
+				config["configCodeValue"] = item.configCodeValue
+				editConfigs.push(config)
+			}
+		})
+	})
+	var configData = new Object();
+	configData.configTableData = editConfigs;
+	configData.remark = configRemark
+	localStorage.setItem(identification, JSON.stringify(configData));
+}
+
+function getDefaultConfigs(materialCode,clazzCode){
+	var materialDefaultConfigs;
+	$.ajax({
+	    url: "/steigenberger/order/material/configurations?clazzCode="+clazzCode+"&materialCode="+materialCode,
+	    type: "get",
+	    async:false,
+	    success: function(data) {
+	    	materialDefaultConfigs = data;
+	    }
+	});
+	return materialDefaultConfigs;
+}
+
+//修改查看订单时物料表格初始化
+function fillItemToTableRow(data){
+	var quantity = data.quantity;
+	var transcationPrice = toDecimal2(data.transcationPrice);
+	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
+	var optionalActualAmount = toDecimal2(quantity*(data.optionalActualPrice));
+	var optionalTransationPrice = toDecimal2(data.optionalTransationPrice);
+	var b2cEstimatedPrice = toDecimal2(data.b2cEstimatedPrice);
+	var b2cEstimatedAmount = toDecimal2((data.b2cEstimatedPrice)*quantity);
+	var b2cEstimatedCost = toDecimal2(data.b2cEstimatedCost);
+	var transcationPriceTotal = toDecimal2(parseFloat(transcationPrice)+parseFloat(optionalTransationPrice));
+	var retailPrice = toDecimal2(data.retailPrice);
+	var retailAmount = toDecimal2(quantity*retailPrice);
+	var discount = data.discount;
+	var actualPrice = toDecimal2(retailPrice*discount);
+	var actualAmount = toDecimal2(quantity*actualPrice);
+	var actualPriceSum = toDecimal2(parseFloat(actualPrice)+parseFloat(optionalActualPrice));
+	var actualAmountSum = toDecimal2(actualPriceSum*quantity);
+	var transactionPriceSum = toDecimal2(transcationPriceTotal*quantity);
+	var pcaAddress;
+	if(data.provinceName){
+		pcaAddress = data.provinceName;
+		if(data.cityName){
+			pcaAddress+="/"+data.cityName
+		}
+		if(data.districtName){
+			pcaAddress+="/"+data.districtName
+		}
+		if(data.address){
+			pcaAddress+=data.address
+		}
+	}
+	var row = {
+			rowNum:data.rowNum,
+			materialName:data.materialName,
+			materialCode:data.materialCode,
+			clazzCode:data.clazzCode,
+			isConfigurable:data.isConfigurable,
+			isPurchased:data.isPurchased,
+			materialGroupCode:data.materialGroupCode,
+			materialGroupName:data.materialGroupName,
+			quantity:data.quantity,
+			unitName:data.unitName,
+			actualPrice:actualPrice,
+			actualAmount:actualAmount,
+			transcationPrice:transcationPrice,
+			optionalActualPrice:optionalActualPrice,
+			optionalActualAmount:optionalActualAmount,
+			optionalTransationPrice:optionalTransationPrice,
+			b2cEstimatedPrice:b2cEstimatedPrice,
+			b2cEstimatedAmount:b2cEstimatedAmount,
+			b2cEstimatedCost:b2cEstimatedCost,
+			actualPriceSum:actualPriceSum,
+			actualAmountSum:actualAmountSum,
+			transactionPriceSum:transactionPriceSum,
+			retailPrice:retailPrice,
+			retailAmount:retailAmount,
+			discount:data.discount,
+			itemCategory:data.itemCategory,
+			itemRequirementPlan:data.itemRequirementPlan,
+			producePeriod:data.period,
+			deliveryDate:data.deliveryDate,
+			produceDate:data.produceDate,
+			shippDate:data.shippDate,
+			materialAddress:pcaAddress,
+			onStoreDate:data.onStoreDate,
+			purchasePeriod:data.period,
+			b2cComments:data.b2cComments,
+			specialComments:data.specialComments,
+			colorComments:data.colorComments,
+			provinceCode:data.provinceCode,
+			provinceName:data.provinceName,
+			cityCode:data.provinceName,
+	        cityName:data.cityName,
+	        districtCode:data.districtCode,
+	        districtName:data.districtName,
+	        address:data.address,
+	        deliveryAddressSeq: data.deliveryAddressSeq
+	}
+	return row;
+}
+
+
+//修改查看订单时,回显地址数据
+function fillOrderAddress(){
+	if(orderAddress){
+		for(var i=0;i<orderAddress.length;i++){
+			var row = orderAddress[i];
+			var pca;
+			if(row.provinceName){
+				pca = row.provinceName;
+				if(row.cityName){
+					pca+="/"+row.cityName
+				}
+				if(row.distinctName){
+					pca+="/"+row.distinctName
+				}
+			}
+			row.pca=pca;
+			row.index = i+1;
+			$("#addressTable").bootstrapTable('insertRow', {
+			    index: i,
+			    row: orderAddress[i]
+			});
+		}
+	}
+}
+
+function initDropDownList(){
+	$('#saleType').trigger("change");
+	$('#officeSelect').val($('#officeCode').val());
+	$('#officeSelect').trigger("change");
+	$('#selectGroup').val($('#groupCode').val());
+	$("#orignalContractAmount").val($("#contractValue").val());
+	$("#contractAmount").val($("#contractRmbValue").val());
+	
+}
 
 //Customer basic infomation js start 
-function openSearchUnit(){
-	$('#unitModal').modal('show');	
+function openSearchCustomer(){
+	$('#customerSearchModal').modal('show');	
 	var opt = {
-				url: '/steigenberger/order/customers'
+				url: ctxPath+'order/customers'
 			   };
-	$("#contractUnitTable").bootstrapTable('refresh', opt);
-	$("#contractUnitTable").on('click-row.bs.table',function($element,row,field){
-		$('#unitModal').modal('hide');
-		$("#contractUnitName").val('');
-		$("#contactorCode").val(row.code);
-		$("#customer").val(row.name);
-		$("#customerClazz").val(row.clazzName).change();
+	$("#customerTable").bootstrapTable('refresh', opt);
+	$("#customerTable").on('click-row.bs.table',function($element,row,field){
+		$('#customerSearchModal').modal('hide');
+		$("#customerSearchName").val('');
+		$("#customerCode").val(row.code);
+		$("#customerName").val(row.name).change();
 		$("#customerClazzName").val(row.clazzName);
+		$("#customerIndustryCode").val(row.industryCode);
 	})
 }
 
 function queryUnitParams(params) {
     params.pageNo = this.pageNumber;
-    params.customerName = $("#contractUnitName").val();
+    params.customerName = $("#customerSearchName").val();
     params.clazzCode = $("#customerClazzCode").val();
     return params;
 }
-function searchUnit(){
-	$('#contractUnitTable').bootstrapTable('refresh');
+function searchCustomer(){
+	$('#customerTable').bootstrapTable('refresh');
 }
 
 function getCity(obj,cityMaps){
@@ -152,7 +413,9 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 	var saleType = $(obj).val();
 	getCurrency(saleType,exchangeRate);
 	getIncoterm(saleType);
-	$("#taxtRate").val(taxRate[saleType]);
+	if(taxRate){
+		$("#taxRate").val(taxRate[saleType]);
+	}
 	if(saleType=="20"){
 		$("#freightDiv").show();
 		$('#selectProvince').val('');
@@ -162,7 +425,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#selectDistrict').attr("disabled",true);	
 		$('#selectProvince').attr("disabled",true);
 		$('#currency').attr('disabled',false);
-		$('#incoterm').attr("readonly",false);
+		$('#incoterm').attr("disabled",false);
 		$('#incotermContect').attr("readonly",false);
 		$('#installCode').val('');
 		$('#installCode').attr("readonly",true);
@@ -186,7 +449,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#selectProvince').attr("disabled",false);
 		
 		$('#currency').attr('disabled',true);
-		$('#incoterm').attr("readonly",true);
+		$('#incoterm').attr("disabled",true);
 		$('#incotermContect').attr("readonly",true);
 		
 		$('#installCode').attr("readonly",false);
@@ -277,7 +540,7 @@ function getExchangeRate(obj,currencies){
 		$("#contractAmount").val('');
 		return
 	}
-	var salesType = $("#salesType").val();
+	var salesType = $("#saleType").val();
 	var currency = currencies[salesType];
 	$.each(currency, function (index,item) {
 		if(item.code==currencyCode){
@@ -294,13 +557,6 @@ function getAmount(obj){
     var amount = exchangeRate*originalAmount
     $("#contractAmount").val(toDecimal2(amount)).change();
 }
-
-function queryMaterialTypeParams(params) {
-    params.pageNo = this.pageNumber;
-    params.materialName = $("#materialsName").val();
-    return params;
-}
-
 
 function add(){
 	$('#paymentModal').modal('show');
@@ -416,104 +672,90 @@ function getPaymentAreaContent(){
 	
 }
 
-//打开物料规格查询框
+//打开添加物料规格modal
 function addSubsidiary(){
-		$('#subsidiaryModal').modal('show');
-		$("#subsidiaryForm")[0].reset();
-		$('#amount').val(1);
-		$('#discount').val($("#approvedDicount").val());
-		var opt = {
-			url: "/steigenberger/order/materials"
-		};
-		$("#materialTypeTable").bootstrapTable('refresh', opt);
-		$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
-			$('#specificationModal').modal('hide');
-			getMaterialInfo(row.code);
-			$("#materialTypeName").val(row.description);
-			$("#materialCode").val(row.code);
-			if(row.isPurchased=='0'){
-				$('#isPurchased').val('生产');
-			}else{
-				$('#isPurchased').val('采购');
-			}
-			$('#unitName').val(row.unitName);
-		})
+	var customerName = $("#customerName").val();
+	if(customerName==""){
+		layer.alert('请先选择客户', {icon: 5});
+		return
+	}
+	$('#subsidiaryModal').modal('show');
+	$("#subsidiaryForm")[0].reset();
+	$('#amount').val(1);
+	$('#discount').val($("#standardDiscount").val());
 	$('#materialsModalType').val('new');
 }
 
-//点击查询出来的物料记录
-function getMaterialInfo(code){	
-	$.ajax({
-	    url: "/steigenberger/order/material",
-	    data: {code: code},
-	    type: "POST",
-	    dataType: "json",
-	    success: function(data) {
-	    	if(data){
-	    		$("#confirmMaterial").attr("disabled",false);
-	    		fillMaterailValue(data); 	   
-	    	}else{
-	    		alert("未查询到物料详细信息无法添加该物料！")
-		    	$("#confirmMaterial").attr("disabled",true);
-	    	}      
-	    }
-	});
+//打开规格查询框
+function searchSpecification(){
+	$('#specificationModal').modal('show');
+	var opt = {
+			url: ctxPath+"order/materials"
+	};
+	$("#materialTypeTable").bootstrapTable('refresh', opt);
+	$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
+		$('#specificationModal').modal('hide');
+		fillMaterailValue(row);
+	})
 }
+
+function queryMaterialTypeParams(params) {
+    params.pageNo = this.pageNumber;
+    params.materialName = $("#materialsName").val();
+    params.industoryCode = $("#customerIndustryCode").val();
+    return params;
+}
+
+
+//查询规格
+function searchMaterilType(){
+	$('#materialTypeTable').bootstrapTable('refresh');
+}
+
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	debugger
-	if(data.materialName){
-		$("#materialTypeName").val(data.materialName);
-	}
-	if(data.materialCode){
-		$("#materialCode").val(data.materialCode);
-	}
-	if(data.b2cRemark){
-		$("#b2cRemark").val(data.b2cRemark);
-	}
-	if(data.colorComments){
-		$("#colorComments").val(data.colorComments);
-	}
-	if(data.specialRemark){
-		$("#specialRemark").val(data.specialRemark);
-	}
-	if(data.itemCategory){
-		$("#itemCategory").val(data.itemCategory);
-	}
+	$("#materialTypeName").val(data.description);
+	$("#materialCode").val(data.code);
 	if(data.purchased){
-		$("#purchasePeriod").val(data.period);
-	}else{	
-		$("#producePeriod").val(data.period);
+		$('#isPurchased').val('采购');
+	}else{
+		$('#isPurchased').val('生产');
 	}
+	$("#materialTypeName").val(data.description);	
 	$("#materialGroupName").val(data.groupName);
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
-	var materialsType = materialGroupMapGroupOrder[data.groupCode];
-	var amount = $("#amount").val();
+	var materialsType = data.stGroupCode;
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
-	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
-	$("#acturalPricaOfOptional").val(toDecimal2(data.acturalPricaOfOptional));
-	$("#acturalPricaOfOptionalAmount").val(toDecimal2(amount*(data.acturalPricaOfOptional)));
-	$("#transcationPriceOfOptional").val(toDecimal2(data.transcationPriceOfOptional));
-	$("#B2CPriceEstimated").val(toDecimal2(data.b2CPriceEstimated));
-	$("#B2CPriceEstimatedAmount").val(toDecimal2((data.b2CPriceEstimated)*amount));
-	$("#B2CCostOfEstimated").val(toDecimal2(data.b2CCostOfEstimated));
-	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
+	
+	//价格模块
+	var amount = $("#amount").val();
+	//市场零售价
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
+	//转移价
+	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
+	
+	$("#acturalPricaOfOptional").val(toDecimal2(0.00));
+	$("#acturalPricaOfOptionalAmount").val(toDecimal2(0.00));
+	$("#transcationPriceOfOptional").val(toDecimal2(0.00));
+	$("#B2CPriceEstimated").val(toDecimal2(0.00));
+	$("#B2CPriceEstimatedAmount").val(toDecimal2(0.00));
+	$("#B2CCostOfEstimated").val(toDecimal2(0.00));
+	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
 	var discountValue = $("#discount").val();
 	var discount = discountValue.split("%")[0];
-	var acturalPrice = (data.retailPrice*discount)
-	$("#acturalPrice").val(toDecimal2(acturalPrice));
-	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
+	var actualPrice = (data.retailPrice*discount)
+	$("#acturalPrice").val(toDecimal2(actualPrice));
+	$("#acturalPriceAmount").val(toDecimal2(amount*(actualPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	$("#deliveryDate").val(data.deliveryDate);
+	/*$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
-	$("#onStoreDate").val(data.onStoreDate);
+	$("#onStoreDate").val(data.onStoreDate);*/
 	$("#standardPrice").val(toDecimal2(data.standardPrice));
 	
 	
@@ -531,15 +773,26 @@ function amountChange(){
 	$("#retailPriceAmount").val(toDecimal2(parseFloat($("#retailPrice").val())*amount));
 	$("#acturalPriceAmountTotal").val(toDecimal2(parseFloat($("#acturalPriceTotal").val())*amount));
 }
+//B2C预估价变化
+function getB2CAmount(obj){
+	var b2cPrice = $(obj).val();
+	var amount = $("#amount").val();
+	$("#B2CPriceEstimatedAmount").val(toDecimal2(amount*(parseFloat(b2cPrice))));
+}
 
 //编辑购销明细
 function editMaterials(identification){
-	debugger
 	$('#subsidiaryModal').modal('show');
 	$('#materialsModalType').val('edit');
 	var identificationSplit = identification.split('|');
 	var materialsType = identificationSplit[0];
 	var index = identificationSplit[1];
+	var tableData = getTableDataByIndex(materialsType,index);	
+	fillEditMaterailValue(tableData);
+}
+
+//根据index获取表格行数据
+function getTableDataByIndex(materialsType,index){
 	var tableData;
 	if(materialsType=='T101'){
 		tableData = $('#materialsTableall1').bootstrapTable('getData')[index];
@@ -554,55 +807,60 @@ function editMaterials(identification){
 	}else if(materialsType=='T106'){
 		tableData = $('#materialsTableall6').bootstrapTable('getData')[index];
 	}
-	
-	fillEditMaterailValue(tableData);
+	return tableData;
 }
 
 //编辑购销明细时页面值回显
 function fillEditMaterailValue(data){	
-	if(data.allIndex==0){
+	if(data.allIndex){
 		$("#allIndex").val(data.allIndex);
 	}
-	
-	if(data.allIndex){
+	if(data.allIndex==0){
 		$("#allIndex").val(data.allIndex);
 	}
 	
 	if(data.identification){
 		$("#identification").val(data.identification);
 	}
-	$("#rowNumber").val(data.rowNumber);
+	$("#purchasedCode").val(data.isPurchased);
+	if(data.isPurchased){
+		$("#isPurchased").val("采购");
+	}else{
+		$("#isPurchased").val("生产");
+	}
+	$("#shippDate").val(data.shippDate)
+	$("#rowNumber").val(data.rowNum);
 	$("#identification").val(data.identification);
 	$("#materialTypeName").val(data.materialName);
 	$("#materialCode").val(data.materialCode);
+	$("#amount").val(data.quantity);
 	$("#b2cRemark").val(data.b2cComments);
 	$("#colorComments").val(data.colorComments);
 	$("#specialRemark").val(data.specialComments);
-	$("#itemCategory").val(data.itemCategory);
-	$("#purchasePeriod").val(data.period);
-	$("#producePeriod").val(data.period);
-	$("#materialGroupName").val(data.groupName);
-	$("#groupCode").val(data.groupCode);
-	$("#isConfigurable").val(data.configurable);
+	$("#itemCategory").val(data.itemCategory).change();
+	$("#itemRequirementPlan").val(data.itemRequirementPlan);
+	$("#materialGroupName").val(data.materialGroupName);
+	$("#groupCode").val(data.materialGroupCode);
+	$("#isConfigurable").val(data.isConfigurable);
 	$("#materialsType").val(materialsType);
 	$("#unitName").val(data.unitName);
-	$("#unitName").val(data.unitName);
+	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
 	$("#transcationPrice").val(data.transcationPrice);
-	$("#acturalPricaOfOptional").val(data.acturalPricaOfOptional);
-	$("#acturalPricaOfOptionalAmount").val(data.acturalPricaOfOptionalAmount);
-	$("#transcationPriceOfOptional").val(data.transcationPriceOfOptional);
-	$("#B2CPriceEstimated").val(data.b2CPriceEstimated);
-	$("#B2CPriceEstimatedAmount").val(data.B2CPriceEstimatedAmount);
-	$("#B2CCostOfEstimated").val(data.b2CCostOfEstimated);
-	$("#transcationPriceTotal").val(data.transcationPriceTotal);
+	$("#acturalPricaOfOptional").val(data.optionalActualPrice);
+	$("#acturalPricaOfOptionalAmount").val(data.optionalActualAmount);
+	$("#transcationPriceOfOptional").val(data.optionalTransationPrice);
+	$("#B2CPriceEstimated").val(data.b2cEstimatedPrice);
+	$("#B2CPriceEstimatedAmount").val(data.b2cEstimatedAmount);
+	$("#B2CCostOfEstimated").val(data.b2cEstimatedCost);
+	$("#transcationPriceTotal").val(data.transactionPriceSum);
 	$("#retailPrice").val(data.retailPrice);
-	$("#retailPriceAmount").val(data.retailPriceAmount);
-	$("#acturalPrice").val(data.acturalPrice);
-	$("#acturalPriceAmount").val(data.acturalPriceAmount);
-	$("#acturalPriceTotal").val(data.acturalPriceTotal);
-	$("#acturalPriceAmountTotal").val(data.acturalPriceAmountTotal);
-	if(data.purchased){
+	$("#retailPriceAmount").val(data.retailAmount);
+	$("#acturalPrice").val(data.actualPrice);
+	$("#acturalPriceAmount").val(data.actualAmount);
+	$("#acturalPriceTotal").val(data.actualPriceSum);
+	$("#acturalPriceAmountTotal").val(data.actualAmountSum);
+	if(data.isPurchased){
 		$("#producePeriod").val(data.period);
 	}else{
 		$("#purchasePeriod").val(data.period);
@@ -610,7 +868,10 @@ function fillEditMaterailValue(data){
 	$("#deliveryDate").val(data.deliveryDate);
 	$("#produceDate").val(data.produceDate);
 	$("#onStoreDate").val(data.onStoreDate);
-	$("#standardPrice").val(toDecimal2(data.standardPrice));	
+	$("#standardPrice").val(toDecimal2(data.standardPrice));
+	$("#discount").val(data.discount);
+	$("#materialAddress").val(data.materialAddress);
+	$("#deliveryAddressSeq").val(data.deliveryAddressSeq);
 }
 
 //删除购销明细
@@ -723,7 +984,7 @@ function removeRelatedRow(identification){
 }
 
 
-//确认购销明细modal
+//点击确认购销明细
 function confirmMaterials(){
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
@@ -749,7 +1010,6 @@ function confirmMaterials(){
 	var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 	if(modalType=='new'){
 		if(materialType=='T101'){
-			debugger
 			var rowData = confirmRowData(countMaterialsTable);
 			var identification = materialType+"|"+countMaterialsTableall1;//所有表格中行的唯一标识		
 			rowData["allIndex"] = countMaterialsTable;	//所有以外的行需要记录所有中的index
@@ -951,8 +1211,8 @@ function getAllCountFiled(){
 		if(item.shippDate){
 			requiredDeliveryTime.push(moment(item.shippDate));
 		}
-		if(item.acturalPriceAmountTotal){
-			itemsAmount.push(item.acturalPriceAmountTotal);
+		if(item.actualAmountSum){
+			itemsAmount.push(item.actualAmountSum);
 		}
 	})
 	var totalAmount = toDecimal2(calculationAmount(itemsAmount));
@@ -1018,31 +1278,32 @@ function compareDate(date){
 
 function confirmRowData(index,rowNumber){
 	var row = {
-			rowNumber:rowNumber?rowNumber:(index+1)*10,
+			rowNum:rowNumber?rowNumber:(index+1)*10,
 			materialName:$("#materialTypeName").val(),
 			materialCode:$("#materialCode").val(),
 			clazzCode:$("#materialClazzCode").val(),
-			configurable:$("#isConfigurable").val(),
-			purchased:$("#purchasedCode").val(),
-			groupName:$("#materialGroupName").val(),
-			groupCode:$("#groupCode").val(),
+			isConfigurable:$("#isConfigurable").val(),
+			isPurchased:$("#purchasedCode").val(),
+			materialGroupName:$("#materialGroupName").val(),
+			materialGroupCode:$("#groupCode").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
+			unitCode:$("#unitCode").val(),
 			standardPrice:$("#standardPrice").val(),
-			acturalPrice:$("#acturalPrice").val(),
-			acturalPriceAmount:$("#acturalPriceAmount").val(),
+			actualPrice:$("#acturalPrice").val(),
+			actualAmount:$("#acturalPriceAmount").val(),
 			transcationPrice:$("#transcationPrice").val(),
-			acturalPricaOfOptional:$("#acturalPricaOfOptional").val(),
-			acturalPricaOfOptionalAmount:$("#acturalPricaOfOptionalAmount").val(),
-			transcationPriceOfOptional:$("#transcationPriceOfOptional").val(),
-			B2CPriceEstimated:$("#B2CPriceEstimated").val(),
-			B2CPriceEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
-			B2CCostOfEstimated:$("#B2CCostOfEstimated").val(),
-			acturalPriceTotal:$("#acturalPriceTotal").val(),
-			acturalPriceAmountTotal:$("#acturalPriceAmountTotal").val(),
-			transcationPriceTotal:$("#transcationPriceTotal").val(),
+			optionalActualPrice:$("#acturalPricaOfOptional").val(),
+			optionalActualAmount:$("#acturalPricaOfOptionalAmount").val(),
+			optionalTransationPrice:$("#transcationPriceOfOptional").val(),
+			b2cEstimatedPrice:$("#B2CPriceEstimated").val(),
+			b2cEstimatedAmount:$("#B2CPriceEstimatedAmount").val(),
+			b2cEstimatedCost:$("#B2CCostOfEstimated").val(),
+			actualPriceSum:$("#acturalPriceTotal").val(),
+			actualAmountSum:$("#acturalPriceAmountTotal").val(),
+			transactionPriceSum:$("#transcationPriceTotal").val(),
 			retailPrice:$("#retailPrice").val(),
-			retailPriceAmount:$("#retailPriceAmount").val(),
+			retailAmount:$("#retailPriceAmount").val(),
 			discount:$("#discount").val(),
 			itemCategory:$("#itemCategory").val(),
 			itemRequirementPlan:$("#itemRequirementPlan").val(),
@@ -1050,25 +1311,26 @@ function confirmRowData(index,rowNumber){
 			deliveryDate:$("#deliveryDate").val(),
 			produceDate:$("#produceDate").val(),
 			shippDate:$("#shippDate").val(),
+			deliveryAddressSeq:$("#deliveryAddressSeq").val(),
 			materialAddress:$("#materialAddress").val(),
 			onStoreDate:$("#onStoreDate").val(),
 			purchasePeriod:$("#purchasePeriod").val(),
 			b2cComments:$("#b2cRemark").val(),
 			specialComments:$("#specialRemark").val(),
-			colorComments:$("#colorComments").val()
+			colorComments:$("#colorComments").val(),
+			provinceCode:$("#materialProvinceCode").val(),
+			provinceName:$("#materialProvinceName").val(),
+			cityCode:$("#materialCityCode").val(),
+			cityName:$("#materialCityName").val(),
+			districtCode:$("#materialAreaCode").val(),
+			districtName:$("#materialAreaName").val(),
+			address: $('#materialModalAddress').val()
+			
+			
 	}
 	return row;
 }
 
-//打开规格查询框
-function searchSpecification(){
-	$('#specificationModal').modal('show');
-}
-
-//查询规格
-function searchMaterilType(){
-	$('#materialTypeTable').bootstrapTable('refresh');
-}
 
 
 //添加物料地址
@@ -1087,6 +1349,14 @@ function addMaterialAddress(){
 	}
 	$("#materialAddressTable").on('click-row.bs.table',function($element,row,field){
 		$('#materialAddressModal').modal('hide');
+		$('#materialProvinceCode').val(row.provinceCode);
+		$('#materialProvinceName').val(row.provinceName);
+		$('#materialCityCode').val(row.cityCode);
+		$('#deliveryAddressSeq').val(row.seq);
+		$('#materialCityName').val(row.cityName);
+		$('#materialAreaCode').val(row.distinctCode);
+		$('#materialAreaName').val(row.distinctName);
+		$('#materialModalAddress').val(row.address)
 		if(row.pca==''){
 			$("#materialAddress").val(row.address).change();
 		}else{
@@ -1144,7 +1414,7 @@ function initOrderFormValidator(){
    $('#orderForm').bootstrapValidator({
        message: 'This value is not valid',
        fields: {
-       	salesTelnumber: {
+    	   salesTel: {
        	    validators: {
        	    	regexp: {
        	    		regexp: /^1[3456789]\d{9}$/,
@@ -1166,10 +1436,11 @@ function initOrderFormValidator(){
                    }
                }
            },
-       	customerName: {
+           customerName: {
                validators: {
+            	   trigger:"change",
                    notEmpty: {
-                        message: '请填写店名'
+                        message: '请选择签约单位'
                    }
                }
            },
@@ -1219,30 +1490,22 @@ function initOrderFormValidator(){
        	        }
        	    }
            },
-           contactor2Tel: {
-           	validators: {
-       	    	regexp: {
-       	    		regexp: /^1[3456789]\d{9}$/,
-       	            message: '请填写正确的手机号'
-       	        }
-       	    }
-           },
-           contactor3Tel: {
-           	validators: {
-       	    	regexp: {
-       	    		regexp: /^1[3456789]\d{9}$/,
-       	            message: '请填写正确的手机号'
-       	        }
-       	    }
-           },
-           contractorclassname: {
-           	trigger:"change",
-               validators: {
-                   notEmpty: {
-                        message: '请选择签约单位'
-                   }
-               }
-           },
+       contactor2Tel: {
+       	validators: {
+   	    	regexp: {
+   	    		regexp: /^1[3456789]\d{9}$/,
+   	            message: '请填写正确的手机号'
+   	        }
+   	    }
+       },
+       contactor3Tel: {
+       	validators: {
+   	    	regexp: {
+   	    		regexp: /^1[3456789]\d{9}$/,
+   	            message: '请填写正确的手机号'
+   	        }
+   	    }
+       },
        	contractValue: {
                validators: {
                    notEmpty: {
@@ -1273,15 +1536,20 @@ function initOrderFormValidator(){
 //打开调研表
 function openConfig(identification){
 	$("#materialconfigModal").modal('show');
-	var value = identification.split(',')
-	$("#materialConfigClazzCode").val(value[2]);
-	$("#materialConfigCode").val(value[1]);
-	$("#identification").val(value[0]);
-	$("#viewPrice").val(value[3]);
-	var url = "/steigenberger/order/material/configurations"
+	var identificationSplit = identification.split('|');
+	var materialsType = identificationSplit[0];
+	var index = identificationSplit[1];
+	var tableData = getTableDataByIndex(materialsType,index);
+	$("#materialConfigClazzCode").val(tableData.clazzCode);
+	$("#materialConfigCode").val(tableData.materialCode);
+	$("#identification").val(identification);
+	$("#viewCode").val(tableData.materialCode);
+	$("#viewTransationPrice").val(tableData.transcationPrice);
+	$("#viewActualPrice").val(tableData.actualPrice);
+	var url =ctxPath+"order/material/configurations";
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
-	var configData = localStorage[value[0]];
+	var configData = localStorage[identification];
 	if(configData){
 		$("#configTable").bootstrapTable("removeAll");
 		var jsonObject = JSON.parse(configData);
@@ -1312,11 +1580,11 @@ function queryConfigParams(params) {
 //还原标准配置
 function resetStandardConfiguration(){
 	$("#configTable").bootstrapTable('refresh',{
-		url:'/steigenberger/order/material/configurations',
+		url:ctxPath+'order/material/configurations',
 		query:{'clazzCode':$("#materialConfigClazzCode").val(),
 			   'materialCode':$("#materialConfigCode").val()
 		}
-	});
+	});	
 }
 
 //关闭调研表
@@ -1327,6 +1595,18 @@ function closeMaterialConfig(){
 //保存调研表
 function saveMaterialConfig(){
 	var identification = $("#identification").val();
+	var materialType = identification.split('|')[0];
+	var index = identification.split('|')[1];
+	var tableData = getTableDataByIndex(materialType,index);
+	//获取调研表配置价格
+	viewConfigPrice("cal");
+	var optionalTransationPrice = $("#viewOptionalTransationPrice").val();
+	var optionalActualPrice = $("#viewOptionalActualPrice").val();
+	tableData.optionalTransationPrice = toDecimal2(optionalTransationPrice);
+	tableData.optionalActualPrice = toDecimal2(optionalActualPrice);
+	tableData = calPrice(tableData);
+	//更新表格价格数据
+	updateTableRowPrice(materialType,index,tableData);
 	var configData = new Object();
 	var remark = $("#configRemark").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
@@ -1335,6 +1615,55 @@ function saveMaterialConfig(){
 	localStorage.setItem(identification, JSON.stringify(configData));
 	$("#materialconfigModal").modal('hide');
 }
+
+//更新行项目价格信息
+function updateTableRowPrice(materialsType,index,tableData){
+	if(materialsType=='T101'){
+		$('#materialsTableall1').bootstrapTable('updateRow',{index: index, row: tableData});
+	}else if(materialsType=='T102'){
+		$('#materialsTableall2').bootstrapTable('updateRow',{index: index, row: tableData});
+	}else if(materialsType=='T103'){
+		$('#materialsTableall3').bootstrapTable('updateRow',{index: index, row: tableData});
+	}else if(materialsType=='T104'){
+		$('#materialsTableall4').bootstrapTable('updateRow',{index: index, row: tableData});
+	}else if(materialsType=='T105'){
+		$('#materialsTableall5').bootstrapTable('updateRow',{index: index, row: tableData});
+	}else if(materialsType=='T106'){
+		$('#materialsTableall6').bootstrapTable('updateRow',{index: index, row: tableData});
+	}
+	$("#materialsTable").bootstrapTable('updateRow',{index: tableData.allIndex, row: tableData})
+}
+
+//计算可选项价格和总价格
+function calPrice(tableData){
+	//数量
+	var quantity = tableData.quantity;
+	//产品实卖价
+	var actualPrice = tableData.actualPrice;
+	//可选项实卖价格
+	var optionalActualPrice = tableData.optionalActualPrice;
+	//可选项实卖金额
+	var optionalActualAmount = toDecimal2(quantity*optionalActualPrice);
+	//转移价
+	var transcationPrice = tableData.transcationPrice;
+	//可选项转移价
+	var optionalTransationPrice = tableData.optionalTransationPrice;
+	//实卖价合计
+	var actualPriceSum = toDecimal2(optionalActualPrice+actualPrice);
+	//实卖金额合计
+	var actualAmountSum = toDecimal2(quantity*actualPriceSum);
+	//转移价合计
+	var transactionPriceSum = toDecimal2(transcationPrice+optionalTransationPrice);
+	
+	tableData.optionalActualAmount = optionalActualAmount;
+	
+	tableData.actualPriceSum = actualPriceSum;
+	
+	tableData.actualAmountSum = actualAmountSum;
+	
+	return tableData;
+}
+
 //复制调研表
 function copyMaterials(identification){
 	var identificationSplit = identification.split('|');
@@ -1438,24 +1767,24 @@ function copyMaterials(identification){
 
 //复制调研表时获取行数据
 function getRowData(materialsTableData,type,newIndex){
-	var identification = newIndex+'|'+type;
+	var identification = type+'|'+newIndex;
 	var rowNumber = (newIndex+1)*10;
 	var row = {
-			rowNumber:rowNumber,
+			rowNum:rowNumber,
 			materialName:materialsTableData.materialName,
 			materialCode:materialsTableData.materialCode,
 			identification:identification,
 			clazzCode:materialsTableData.clazzCode,
 			isConfigurable:materialsTableData.isConfigurable,
 			isPurchased:materialsTableData.isPurchased,
-			groupName:materialsTableData.groupName,
-			groupCode:materialsTableData.groupCode,
-			amount:materialsTableData.amount,
+			materialGroupName:materialsTableData.materialGroupName,
+			materialGroupCode:materialsTableData.materialGroupCode,
+			quantity:materialsTableData.quantity,
 			unitName:materialsTableData.unitName,
 			unitCode:materialsTableData.unitCode,
 			standardPrice:materialsTableData.standardPrice,
-			acturalPrice:materialsTableData.acturalPrice,
-			acturalPriceAmount:materialsTableData.acturalPriceAmount,
+			actualPrice:materialsTableData.actualPrice,
+			actualAmount:materialsTableData.actualAmount,
 			transcationPrice:materialsTableData.transcationPrice,
 			acturalPricaOfOptional:materialsTableData.acturalPricaOfOptional,
 			acturalPricaOfOptionalAmount:materialsTableData.acturalPricaOfOptionalAmount,
@@ -1463,8 +1792,8 @@ function getRowData(materialsTableData,type,newIndex){
 			B2CPriceEstimated:materialsTableData.B2CPriceEstimated,
 			B2CPriceEstimatedAmount:materialsTableData.B2CPriceEstimatedAmount,
 			B2CCostOfEstimated:materialsTableData.B2CCostOfEstimated,
-			acturalPriceTotal:materialsTableData.acturalPriceTotal,
-			acturalPriceAmountTotal:materialsTableData.acturalPriceAmountTotal,
+			actualPriceSum:materialsTableData.actualPriceSum,
+			actualAmountSum:materialsTableData.actualAmountSum,
 			transcationPriceTotal:materialsTableData.transcationPriceTotal,
 			retailPrice:materialsTableData.retailPrice,
 			retailPriceAmount:materialsTableData.retailPriceAmount,
@@ -1502,6 +1831,25 @@ $.fn.serializeObject = function() {
 	return o;
 };
 
+
+
+function initMarialsTables(){
+	var materialsTable = new TableInit('materialsTable','','',materialsColumn);
+	materialsTable.init();
+	var materialsTableall1 = new TableInit('materialsTableall1','','',materialsColumn);
+	materialsTableall1.init();
+	var materialsTableall2 = new TableInit('materialsTableall2','','',materialsColumn);
+	materialsTableall2.init();
+	var materialsTableall3 = new TableInit('materialsTableall3','','',materialsColumn);
+	materialsTableall3.init();
+	var materialsTableall4 = new TableInit('materialsTableall4','','',materialsColumn);
+	materialsTableall4.init();
+	var materialsTableall5 = new TableInit('materialsTableall5','','',materialsColumn);
+	materialsTableall5.init();
+	var materialsTableall6 = new TableInit('materialsTableall6','','',materialsColumn);
+	materialsTableall6.init();
+}
+
 function confirmAddress(){
 	var province = $("#selectProvince").find("option:selected").text();
 	var provinceValue = $("#selectProvince").val();
@@ -1527,11 +1875,14 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('insertRow', {
 		    index: count,
 		    row: {
-		    	index:count+1,
+		    	seq:count+1,
 		    	pca: pca,
-		    	provinceValue:provinceValue,
-		    	cityValue:cityValue,
-		    	areaValue:areaValue,
+		    	provinceCode:provinceValue,
+		    	provinceName:province,
+		    	cityCode:cityValue,
+		    	cityName:city,
+		    	distinctCode:areaValue,
+		    	distinctName:area,
 		    	address:shippingAddress
 		    }
 		});
@@ -1539,33 +1890,19 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('updateRow', {
 		    index: rowIndex,
 		    row: {
-		    	index:parseInt(rowIndex)+1,
+		    	seq:count+1,
 		    	pca: pca,
-		    	provinceValue:provinceValue,
-		    	cityValue:cityValue,
-		    	areaValue:areaValue,
+		    	provinceCode:provinceValue,
+		    	provinceName:province,
+		    	cityCode:cityValue,
+		    	cityName:city,
+		    	areaCode:areaValue,
+		    	areaName:area,
 		    	address:shippingAddress
 		    }
 		});
 	}
 	$("#addressModal").modal('hide');
-}
-
-function initMarialsTables(){
-	var materialsTable = new TableInit('materialsTable','','',materialsColumn);
-	materialsTable.init();
-	var materialsTableall1 = new TableInit('materialsTableall1','','',materialsColumn);
-	materialsTableall1.init();
-	var materialsTableall2 = new TableInit('materialsTableall2','','',materialsColumn);
-	materialsTableall2.init();
-	var materialsTableall3 = new TableInit('materialsTableall3','','',materialsColumn);
-	materialsTableall3.init();
-	var materialsTableall4 = new TableInit('materialsTableall4','','',materialsColumn);
-	materialsTableall4.init();
-	var materialsTableall5 = new TableInit('materialsTableall5','','',materialsColumn);
-	materialsTableall5.init();
-	var materialsTableall6 = new TableInit('materialsTableall6','','',materialsColumn);
-	materialsTableall6.init();
 }
 
 function addAddress(){
@@ -1599,7 +1936,7 @@ function removeAddress(index){
 	for(var i=0;i<count;i++){
 		var rows = {
 				index: i,
-				field : "index",
+				field : "seq",
 				value : i+1
 			}
 		$('#addressTable').bootstrapTable("updateCell",rows);
@@ -1632,9 +1969,7 @@ function expandAll(){
 
 //保存提交订单
 function saveOrder(type){
-	if(type){
-		 expandAll()
-		 initOrderFormValidator();
+	if(type){		 
 		 var items = $("#materialsTable").bootstrapTable('getData');
 		 if(items.length==0){
 			 layer.alert('请添加购销明细', {icon: 5});
@@ -1644,26 +1979,31 @@ function saveOrder(type){
 		bootstrapValidator.validate();
 		if(!bootstrapValidator.isValid()){ 
 			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
+			expandAll()
 			return
 		}
 		
 	}
 	$("#transferType").removeAttr("disabled");
-	 var version = $("#version").val();
+	 /*var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
 	 payment['termName'] = $("#paymentType").find("option:selected").text();
 	 payment['percentage'] = "1";
-	 payment['payDate'] = $("#inputDate").val();
+	 payment['payDate'] = $("#inputDate").val();*/
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
-	 var payments=new Array();
+	 /*var payments=new Array();
 	 payments.push(payment);
 	 orderData.payments = payments;
 	 orderData['currentVersion'] = version;
-	 orderData['orderType'] = 'ZH0D';
+	 orderData['orderType'] = 'ZH0D';*/
+	 var payments=new Array();
+	 orderData.payments= payments;
+	 var attachments = new Array();
+	 orderData.attachments = new Array()
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
@@ -1671,7 +2011,16 @@ function saveOrder(type){
 		 items[i].isVirtual = 0;
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
-			 items[i]['configs']= jsonObject.configTableData;
+			 var storedConfigs = jsonObject.configTableData;
+			 var config = new Object();
+			 var configs = new Array();
+			 for(var j=0;j<storedConfigs.length;j++){
+				 config['keyCode'] = storedConfigs[j].code;
+				 config['valueCode'] = storedConfigs[j].configValueCode;
+				 config['configurable'] = items[i].isConfigurable;
+				 configs.push(config);
+			 }
+			 items[i]['configs'] = configs; 
 			 if(!items[i].isConfigurable){
 				if(items[i].itemCategory=='ZHD1'){
 					items[i].itemCategory='ZHD2';
@@ -1687,17 +2036,17 @@ function saveOrder(type){
 			 items[i]['configs'] = null;
 		 }	 	 
 	 }
-	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
+	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
 	 if(type){
 		 $.ajax({
-			    url: "/steigenberger/order/dealer?action="+type,
+			    url: ctxPath+"order/submit",
 			    contentType: "application/json;charset=UTF-8",
 			    data: JSON.stringify(orderData),
 			    type: "POST",
-			    success: function(data) { 
+			    success: function(result) { 
 			    	layer.alert('提交成功', {icon: 6});
 			    	//跳转到订单管理页面
-			    	window.location.href = '/steigenberger/menu/orderManageList';
+			    	//window.location.href = ctxPath+'menu/orderManageList';
 			    },
 			    error: function(){
 			    	layer.alert('提交失败', {icon: 5});
@@ -1705,12 +2054,17 @@ function saveOrder(type){
 		});  
 	 }else{
 		 $.ajax({
-			    url: "/steigenberger/order/dealer?action="+'save',
+			    url: ctxPath+"order/save",
 			    contentType: "application/json;charset=UTF-8",
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(data) { 
-			    	layer.alert('保存成功', {icon: 6});
+			    	if(data == null || data.status != 'ok'){
+			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
+			    	}else{
+			    		layer.alert('保存成功', {icon: 6});
+			    		window.location.href = ctxPath+'menu/orderManageList';
+			    	} 	
 			    },
 			    error: function(){
 			    	layer.alert('保存失败', {icon: 5});
@@ -1726,7 +2080,7 @@ function getSelectName() {
 	if(incotermCode){
 		$("#incotermName").val(intercoms[incotermCode]);
 	}
-	var salesType = $("#salesType").val();
+	var salesType = $("#saleType").val();
 	var officeCode = $("#officeSelect").val();
 	var groupCode = $("#selectGroup").val();
 	if(salesType){
@@ -1746,12 +2100,13 @@ function getSelectName() {
 		$("#transferTypeName").val(shippingTypesMap[shippingTypeCode]);
 	}
 	
-	$("#confirmTypeName").val($("#confirmType").find("option:selected").text());
+	$("#receiveTypeName").val($("#receiveType").find("option:selected").text());
+	$("#industryCode").val($("#industryCode").find("option:selected").text());
 }
 
 
 //调研表查看物料
-function viewConfig(){
+function viewConfigPrice( type){
 	var bomCode = $("#materialConfigCode").val();
 	var formData = $("#materialConfigForm").serializeObject();
 	var configTableData = $("#configTable").bootstrapTable('getData');
@@ -1762,16 +2117,25 @@ function viewConfig(){
 	formData.bomCode = bomCode;
 	formData.configCode = configCode;
 	$.ajax({
-	    url: "/steigenberger/order/material/configuration",
+	    url: ctxPath+"order/material/configuration",
 	    contentType: "application/json;charset=UTF-8",
 	    data: JSON.stringify(formData),
 	    type: "POST",
 	    dataType: "json",
-	    success: function(data) { 
-	    	$("#moreConfig").attr("style","display:block;");
-	    	$("#viewCode").val($("#materialConfigCode").val());
-	    	$("#viewPrice").val($("#viewPrice").val());
-	    	$("#configPrice").val(data.priceGap);
+	    success: function(res) { 
+	    	if(type=="view"){
+	    		if(res.status!="ok"){
+		    		$("#viewError").attr("style","display:block;");
+		    	}else{
+		    		$("#moreConfig").attr("style","display:block;");
+			    	$("#viewOptionalTransationPrice").val(res.data.transferPrice);
+			    	$("#viewOptionalActualPrice").val(res.data.price);
+		    	}	    
+	    	}else{
+	    		$("#viewOptionalTransationPrice").val(res.data.transferPrice);
+		    	$("#viewOptionalActualPrice").val(res.data.price);
+	    	}
+	    		
 	    },
 	    error: function(){
 	    	$("#viewError").attr("style","display:block;");
@@ -1794,7 +2158,7 @@ function viewGrossProfit(){
 		editViewGrossProfit();
 		return;
 	}
-	if(!$("#salesType").val()){
+	if(!$("#saleType").val()){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
 	}
@@ -1891,7 +2255,7 @@ var materialTypeColumn = [ {
 	field : 'description'
 }]
 
-var contractUnitTableColumn = [ {
+var customerTableColumn = [ {
 	title : '签约单位',
 	field : 'name'
 }, {
@@ -1904,7 +2268,7 @@ var contractUnitTableColumn = [ {
 
 var addressColumns = [{
 	title:'行号',
-    field: 'index',
+    field: 'seq',
     width:'5%'
 },{
 	title : '省市区',
@@ -1912,15 +2276,26 @@ var addressColumns = [{
 	width:'35%'
 }, 
 {
-	field:'provinceValue',
+	field:'provinceCode',
 	visible:false
 },
 {
-	field:'cityValue',
+	field:'provinceName',
 	visible:false
 },
 {
-	field:'areaValue',
+	field:'cityCode',
+	visible:false
+},
+{
+	field:'cityName',
+	visible:false
+},{
+	field:'distinctCode',
+	visible:false
+},
+{
+	field:'distinctName',
 	visible:false
 },{
 	title : '到货地址',
@@ -1940,23 +2315,34 @@ var addressColumns = [{
 
 var materialsAddressColumns = [{
 	title:'行号',
-    field: 'index',
+    field: 'seq',
     width:'5%'
 },{
 	title : '省市区',
 	field : 'pca',
 	width:'35%'
-}, 
+},
 {
-	field:'provinceValue',
+	field:'provinceCode',
 	visible:false
 },
 {
-	field:'cityValue',
+	field:'provinceName',
 	visible:false
 },
 {
-	field:'areaValue',
+	field:'cityCode',
+	visible:false
+},
+{
+	field:'cityName',
+	visible:false
+},
+{
+	field:'distinctCode',
+	visible:false
+},{
+	field:'distinctName',
 	visible:false
 },{
 	title : '到货地址',
@@ -1996,13 +2382,15 @@ var configTableColumns = [
 	title:'配置值',
 	field:'configs',
 	width:'50%',
-	formatter: function(value, row, index) {		
-    	var start = '<select class="form-control" name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
+	formatter: function(value, row, index) {
+		var id="configsId"+index;
+    	var start = '<select class="form-control" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
     	var end = '</select>';
+    	var configIdValue;
     	if(row.configValueCode){
     		$.each(value,function(index,item){
         		if(item.code==row.configValueCode){
-        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';	
         		}else{
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
@@ -2010,11 +2398,17 @@ var configTableColumns = [
     	}else{
     		$.each(value,function(index,item){
         		if(item.default){
-        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>'
+        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';
+        			configIdValue = item.code;
         		}else{
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
+        	$("#configTable").bootstrapTable('updateCell', {
+        	    index: index,
+        	    field:'configValueCode',
+        	    value:configIdValue
+        	});
     	}
     	
 		return start+end;
@@ -2099,7 +2493,22 @@ var TableInit = function (id,url,params,tableColumns) {
 			pageSize : 10,//单页记录数,
 			showRefresh : false,//刷新按钮
 			queryParams : params,
-			columns : tableColumns
+			columns : tableColumns,
+			responseHandler : function(res){
+				if (res.status != 'ok') {
+					layer.alert(res.msg);
+					return {};
+				}
+				if(res.data.rows){
+					return {
+						total: res.data.total,
+						rows: res.data.rows
+					}	
+				}else{
+					return res.data;
+				}
+				
+			},
 		})
 	};
 	return oTableInit;

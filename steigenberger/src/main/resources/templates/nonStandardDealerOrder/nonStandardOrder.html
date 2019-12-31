@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Order</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Metis Menu -->
+<script src="../pageJs/commonCss.js"></script>
+<link href="../css/bootstrapValidator.min.css" rel='stylesheet' type='text/css' />
+<style type="text/css">
+       .help-block {color:red;}
+</style>
+</head> 
+<body class="cbp-spmenu-push">
+	<div class="sticky-header header-section " th:replace="head::head">	</div>
+	<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>
+	<form method="post" role="form" id="orderForm" th:object="${orderDetail}">
+		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazz}">
+		<input type="hidden"  id="status" th:field="*{status}">
+		<input type="hidden" id="stOrderType" th:field="*{stOrderType}">
+		<input type="hidden" id="orderType" th:field="*{orderType}">
+		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{orderId}">
+		<input type="hidden" th:field="*{version}">
+		<input type="hidden" th:field="*{isActive}">
+		<div id="page-wrapper">
+			<div th:replace="orderCommons/orderCommons::path(mainPath=新建订单,subPath=非标准折扣下单)">	</div>
+			<div th:replace="orderCommons/orderCommons::expandButton">	</div>
+			<div id="accordion1" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 10px; margin-left: 20px; margin-right: 20px;">
+				<div th:replace="orderCommons/orderCommons::customerBasicInfo(2)">	</div>	
+				<div th:replace="orderCommons/orderCommons::contractBasicInfo(2)">	</div>
+				<div th:replace="orderCommons/orderCommons::contractDetailInfo(2)">	</div>		
+				<div th:replace="orderCommons/orderCommons::paymentType(2)">	</div>	
+				<div th:replace="orderCommons/orderCommons::purchaseAndSubsidisry(2)">	</div>	
+				<div th:replace="orderCommons/orderCommons::viewInfo">	</div>	
+			</div>
+			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()">保存 save</button>
+			<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')">提交 submit</button>
+			<button type="button" class="btn pull-right btn-warning">返回 back</button>
+		</div>
+	</form>
+	<div id="footer" class="container" th:replace="foot::foot"></div>
+	<div th:replace="orderCommons/orderModalCommons::searchCustomerModal"></div>
+	<div th:replace="orderCommons/orderModalCommons::paymentTypeModal"></div>
+	<div th:replace="orderCommons/orderModalCommons::addressModal"></div>
+	<div th:replace="orderCommons/newOrderSubsidiary::subsidiary"></div>
+	<div th:replace="orderCommons/materialconfig::materialconfig"></div> 	
+<script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
+<script th:inline="javascript" th:src="@{/pageJs/materialColumn.js}"></script>
+<script th:inline="javascript" th:src="@{/pageJs/nonStandardDealerOrder/newOrder.js}"></script>
+<script th:inline="javascript" type="text/javascript">
+	var ctxPath  = [[@{/}]];
+	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
+	var installationTerms =  [[${order_option.installationTerms}]]
+	var intercoms = [[${order_option.intercoms}]]
+	var officesMap = [[${order_option.offices}]]
+	var groupsMap = [[${order_option.groups}]]
+	var items = [[${orderDetail.items}]]
+	var orderAddress = [[${orderDetail.deliveryAddress}]]
+	var status = [[${orderDetail.status}]]
+	var shippingTypesMap = [[${order_option.shippingTypes}]]
+
+	/* var version = getVersion();
+	$("#version").append("<option value='" + version + "'>" + version + "</option>");	
+	//获取版本
+	function  getVersion(){
+		var dateString = moment().format('YYYYMMDD');
+		var num = '';
+	    for(var i=0;i<3;i++)
+	    {
+	        num+=Math.floor(Math.random()*10);
+	    }
+	    return 'V'+dateString+num;
+	} */
+</script>
+</body>
+</html>
