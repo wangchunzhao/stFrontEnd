@@ -85,11 +85,14 @@ public class PermissionApplyController extends BaseController{
 			User user = new User();
 			user.setUserMail(useremil);
 			user.setIsActive(1);
-			user.setUserName(userName);
+			user.setName(userName);
 			user.setUserIdentity(userid);
 			user.setTel(tel);
 			user.setCreater(creater);
-			 
+			user.setCreateTime(new Date(System.currentTimeMillis()));
+			user.setUpdater(creater);
+			user.setUpdateTime(new Date(System.currentTimeMillis()));
+//
 			ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
 			applicationOfRolechange.setCreator("admin");
 			applicationOfRolechange.setCreateTime(new Date(System.currentTimeMillis()));
