@@ -107,10 +107,10 @@ var ctxPath  = [[@{/}]];
 	                        <input type="text" id="s_contractNumber" name="s_contractNumber" class="form-control" aria-describedby="emailHelp">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
-	                        <input type="text" id="s_createTime" name="s_createTime" class="form-control" aria-describedby="emailHelp">
+	                        <input type="text" id="s_orderCreateTime" name="s_orderCreateTime" class="form-control" aria-describedby="emailHelp">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
-	                        <input type="text" id="s_productionTime" name="s_productionTime" class="form-control" aria-describedby="emailHelp">
+	                        <input type="text" id="s_createTime" name="s_createTime" class="form-control" aria-describedby="emailHelp">
 	                    </div>
 	                </div>
 	                <div class="row" style="margin-top: 3px;">
@@ -124,7 +124,7 @@ var ctxPath  = [[@{/}]];
 	                        合同状态 contract status
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
-	                        <input type="text" id="s_contractorName" name="s_contractorName" class="form-control" aria-describedby="emailHelp">
+	                        <input type="text" id="s_customerName" name="s_customerName" class="form-control" aria-describedby="emailHelp">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
 	                        <input type="text" id="s_contractManager" name="s_contractManager" class="form-control" readonly>
@@ -260,13 +260,16 @@ var ctxPath  = [[@{/}]];
 <script id="contract-edit-tpl" type="text/html">
 <form id="contractForm">
 <input type="hidden" name="id" value="{{id}}">
-<input type="hidden" name="orderVersionId" value="{{orderVersionId}}">
-<input type="hidden" name="receiveTermsName" value="{{receiveTermsName}}" >
-<input type="hidden" name="mail" value="{{mail}}" >
-<input type="hidden" name="partyaCode" value="{{partyaCode}}" >
-<input type="hidden" name="partyaName" value="{{partyaName}}" >
-<input type="hidden" name="productionTime" value="{{productionTime}}" >
+<input type="hidden" name="orderInfoId" value="{{orderInfoId}}">
+<input type="hidden" name="version" value="{{version}}">
+<input type="hidden" name="receiveType" value="{{receiveType}}" >
+<input type="hidden" name="receiveTypeName" value="{{receiveTypeName}}" >
+<input type="hidden" name="customerEmail" value="{{customerEmail}}" >
+<input type="hidden" name="customerCode" value="{{customerCode}}" >
+<input type="hidden" name="createTime" value="{{createTime}}" >
 <input type="hidden" name="status" value="{{status}}" >
+<input type="hidden" name="fileHashcode" value="{{fileHashcode}}" >
+<input type="hidden" name="signContractid" value="{{signContractid}}" >
 <div id="contract-edit-dialog-content" class="panel-group"
 	role="tablist" aria-multiselectable="true"
 	style="margin-bottom: 20px; margin-left: 50px; margin-right: 25px;">
@@ -296,12 +299,12 @@ var ctxPath  = [[@{/}]];
 							value="{{sequenceNumber}}" class="form-control" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractorName"
-							value="{{contractorName}}" class="form-control" readonly>
+						<input type="text" name="customerName"
+							value="{{customerName}}" class="form-control" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="amountOnContract"
-							value="{{amountOnContract}}" class="form-control" readonly>
+						<input type="text" name="contractRmbValue"
+							value="{{contractRmbValue}}" class="form-control" readonly>
 					</div>
 				</div>
 			</div>
@@ -321,19 +324,18 @@ var ctxPath  = [[@{/}]];
 			<div class="panel-body" style="height: auto;">
 				<div class="row">
 					<div class="col-md-6 col-xs-6">收到需方预付款后几日内发货</div>
-					<div class="col-md-6 col-xs-6">* 接货方式</div>
+					<div class="col-md-6 col-xs-6">接货方式</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="deliveryDaysAfterPrepay" value="{{deliveryDaysAfterPrepay}}" 
+						<input type="text" name="deliveryDays" value="{{deliveryDays}}" 
 							class="form-control" aria-describedby="emailHelp">
 					</div>
 					<div class="col-md-3 col-xs-3"></div>
 					<div class="col-md-3 col-xs-3">
-						<label class="checkbox-inline"> 
-							<input type="radio" name="receiveTermsCode" value="1" onclick="receiveTermsName('盖章接货');" {{if receiveTermsCode == '1'}}checked{{/if}}>盖章接货
-						</label>
-						<label class="checkbox-inline"> 
-							<input type="radio" name="receiveTermsCode" value="2" onlick="receiveTermsName('签字接货');" {{if receiveTermsCode == '2'}}checked{{/if}}>签字接货
-						</label> 
+						<select name="receiveType" class="form-control input" disabled>
+							<option value="01" {{if receiveType == '01'}}selected{{/if}}>盖章接货</option>
+							<option value="02" {{if receiveType == '02'}}selected{{/if}}>授权人签字</option>
+							<option value="03" {{if receiveType == '03'}}selected{{/if}}>其它</option>
+						</select>
 					</div>
 				</div>
 				<div class="row" style="margin-top: 2px;">
@@ -342,20 +344,20 @@ var ctxPath  = [[@{/}]];
 					<div class="col-md-3 col-xs-3">接货人2电话</div>
 					<div class="col-md-3 col-xs-3">接货人2及身份证号</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractor1Tel" value="{{contractor1Tel}}" 
-							class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="contactor1Tel" value="{{contactor1Tel}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractor1Id" value="{{contractor1Id}}" 
-							class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="contactor1Id" value="{{contactor1Id}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractor2Tel" value="{{contractor2Tel}}" 
-							class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="contactor2Tel" value="{{contactor2Tel}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractor2Id" value="{{contractor2Id}}"
-							class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="contactor2Id" value="{{contactor2Id}}"
+							class="form-control" aria-describedby="emailHelp" readonly>
 					</div>
 				</div>
 				<div class="row" style="margin-top: 2px;">
@@ -364,13 +366,13 @@ var ctxPath  = [[@{/}]];
 					<div class="col-md-3 col-xs-3">* 终端客户名称</div>
 					<div class="col-md-3 col-xs-3">* 实际安装地点</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractor3Tel"
-							value="{{contractor3Tel}}" class="form-control"
-							aria-describedby="emailHelp">
+						<input type="text" name="contactor3Tel"
+							value="{{contactor3Tel}}" class="form-control"
+							aria-describedby="emailHelp" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="contractor3Id" value="{{contractor3Id}}"
-							class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="contactor3Id" value="{{contactor3Id}}"
+							class="form-control" aria-describedby="emailHelp" readonly>
 					</div>
 					<div class="col-md-3 col-xs-3">
 						<input type="text" name="clientName" value="{{clientName}}"
@@ -387,25 +389,24 @@ var ctxPath  = [[@{/}]];
 					<div class="col-md-6 col-xs-6">* 验收标准（方法）</div>
 					<div class="col-md-3 col-xs-3">* 签约单位邮箱</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="qualityStand" value="{{qualityStand}}" 
-							class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="installType" value="{{installTypeName}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
 					</div>
 					<div class="col-md-6 col-xs-6">
-						<label class="checkbox-inline"> 
-							<input type="radio" name="acceptanceCriteriaCode" value="1001" {{if acceptanceCriteriaCode == '1001'}}checked{{/if}}>需方负责安装调试
-						</label>
-						<label class="checkbox-inline">
-							<input type="radio" name="acceptanceCriteriaCode" value="1002" {{if acceptanceCriteriaCode == '1002'}}checked{{/if}}>供方负责安装调试
-						</label>
+						<select id="acceptanceCriteriaCode" name="acceptanceCriteriaCode" class="form-control input">
+							<option value="" {{if acceptanceCriteriaCode == ''}}selected{{/if}}>-- 请选择 --</option>
+							<option value="1001" {{if acceptanceCriteriaCode == '1001'}}selected{{/if}}>需方负责安装调试</option>
+							<option value="1002" {{if acceptanceCriteriaCode == '1002'}}selected{{/if}}>供方负责安装调试</option>
+						</select>
 					</div>
 					<div class="col-md-3 col-xs-3"> 
-						<input type="text" name="partyaMail" value="{{partyaMail}}" class="form-control" aria-describedby="emailHelp">
+						<input type="text" name="customerEmail" value="{{customerEmail}}" class="form-control" aria-describedby="emailHelp">
 					</div>
 				</div>
 				<div class="row" style="margin-top: 2px;">
 					<div class="col-xs-6 col-md-12">结算方式</div>
 					<div class="col-xs-6">
-						<textarea name="settlement" class="form-control" rows="3">{{settlement}}</textarea>
+						<textarea name="paymentType" class="form-control" rows="3" readonly>{{paymentType}}</textarea>
 					</div>
 					<div class="col-xs-6"></div>
 				</div>
@@ -459,7 +460,7 @@ var ctxPath  = [[@{/}]];
 					<div class="col-md-9 col-xs-9">单位地址</div>
 					<div class="col-md-3 col-xs-3">公司邮政编码</div>
 					<div class="col-md-9 col-xs-9">
-						<input type="text" name="partyaAddress" value="{{partyaAddress}}" 
+						<input type="text" name="companyAddress" value="{{companyAddress}}" 
 							class="form-control" aria-describedby="emailHelp">
 					</div>
 					<div class="col-md-3 col-xs-3">
@@ -502,24 +503,14 @@ function refresh() {
 	$('#contractTable').bootstrapTable('refresh');
 }
 
-function receiveTermsName(name) {
-	$('[name=receiveTermsName]', $('#contractForm')).val(name);
-}
-
 var contractCols = [ {
 	field : 'id',
 	visible : false
 }, {
-	field : 'versionId',
+	field : 'orderInfoId',
 	visible : false
 }, {
-	field : 'amountOnContract',
-	visible : false
-}, {
-	field : 'contractorCode',
-	visible : false
-}, {
-	field : 'contractorName',
+	field : 'contractRmbValue',
 	visible : false
 }, {
 	title : '序号 Number',
@@ -538,37 +529,30 @@ var contractCols = [ {
 	title : '合同号Contract Code',
 	width : '5%'
 }, {
-	field : 'contractorCode',
+	field : 'customerCode',
 	visible : false
 }, {
-	field : 'contractorName',
+	field : 'customerName',
 	title : '签约单位 Contract Unit',
 	width : '5%'
 }, {
-	field : 'contractorClassCode',
+	field : 'customerClazz',
 	visible : false
 }, {
-	field : 'contractorClassName',
+	field : 'customerClazzName',
 	title : '性质分类 Classification',
 	width : '5%'
 }, {
-	field : 'createTime',
+	field : 'orderCreateTime',
 	title : '创建时间 Creation Time',
 	width : '5%'
 }, {
-	field : 'productionTime',
+	field : 'createTime',
 	title : '合同制作时间 Contract Date',
 	width : '5%'
 }, {
-	field : 'versionId',
-	visible : false
-}, {
 	field : 'version',
 	title : '版本号 Version Number',
-	width : '5%'
-}, {
-	field : 'status',
-	title : '合同状态 Contract Status',
 	width : '5%'
 }, {
 	field : 'status',
@@ -577,22 +561,22 @@ var contractCols = [ {
 	formatter: function(value, row, index) {
     	if(value == null){
     		return '待制定'
-    	}else if(value == '1' || value == '2'){
+    	}else if(value == '01' || value == '02'){
     		return '已制定'
-    	}else if(value == '3'){
+    	}else if(value == '03'){
     		return '已发送'
-    	}else if(value == '4'){
+    	}else if(value == '04'){
     		return '客户已上传'
-    	}else if(value == '5'){
+    	}else if(value == '05'){
     		return '客户已签署'
-    	}else if(value == '6'){
+    	}else if(value == '06'){
     		return '已签署'
     	}else{
     		return '待制定'
     	}
     }
 }, {
-	field : 'opteratorDomainId',
+	field : 'contractManager',
 	title : '签约人 Customer Manager',
 	width : '5%'
 }, {
@@ -612,17 +596,17 @@ var contractCols = [ {
     	if (!exists) {
 			actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>制作making</a> ');
     	} else {
-    		if (status == 1) {
+    		if (status == '01') {
 	    		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>编辑edit</a> ');
     		}
 			actions.push('<a class="btn" onclick="view(\'' + index + '\')"><i class="fa fa-edit"></i>查看view</a> ');
     		actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
 			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/export" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
 			//actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
-			if (status == 1) {
+			if (status == '01') {
 				actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
 			}
-			if (status == 5) {
+			if (status == '05') {
 				actions.push('<a class="btn" onclick="sign(\'' + index + '\')"><i class="fa fa-edit"></i>签署sign</a> ');
 			}
     	}
@@ -654,9 +638,9 @@ $('#contractTable').bootstrapTable({
 			sequenceNumber: $('#s_sequenceNumber').val(),
 			contractNumber: $('#s_contractNumber').val(),
 			contractManager: $('#s_contractManager').val(),
-			contractorName: $('#s_contractorName').val(),
+			customerName: $('#s_customerName').val(),
 			createTime: $('#s_createTime').val(),
-			productionTime: $('#s_productionTime').val(),
+			createTime: $('#s_createTime').val(),
 			status: $('#s_status').val()
 		};
 	},
@@ -727,18 +711,28 @@ function setEditInfo(row, contract) {
 	// $('[name=contractNumber]').val(row.contractNumber);
 	contract.contractNumber = row.contractNumber;
 	contract.sequenceNumber = row.sequenceNumber;
-	contract.contractorName = row.contractorName;
-	contract.amountOnContract = row.amountOnContract;
-	contract.orderVersionId = row.versionId;
-	contract.partyaCode = row.contractorCode;
-	contract.partyaName = row.contractorName;
+	contract.customerName = row.customerName;
+	contract.contractRmbValue = row.contractRmbValue;
+	contract.version = row.version;
+	contract.customerCode = row.customerCode;
+	contract.customerName = row.customerName;
+	contract.receiveType = row.receiveType;
+	contract.installType = row.installType;
+	contract.orderCreateTime = row.orderCreateTime;
+	contract.contractManager = row.contractManager;
+	contract.contactor1Id = row.contactor1Id;
+	contract.contactor1Tel = row.contactor1Tel;
+	contract.contactor2Id = row.contactor2Id;
+	contract.contactor2Tel = row.contactor2Tel;
+	contract.contactor3Id = row.contactor3Id;
+	contract.contactor3Tel = row.contactor3Tel;
 }
 
 // 保存合同信息
 function save() {
 	var json = $('#contractForm').serializeObject();
 	json.partyaName='abc';
-	json.mail=json.partyaMail;
+	json.mail=json.customerMail;
 	
 	/*var bootstrapValidator = $("#contractForm").data('bootstrapValidator');
     bootstrapValidator.validate();
@@ -746,16 +740,12 @@ function save() {
     	return;
     }*/
 	
-	if ($.trim(json.partyaMail) == ''){
+	if ($.trim(json.customerEmail) == ''){
 		layer.alert('签约单位邮箱不能为空！');
 		return;
 	}
 	if ($.trim(json.acceptanceCriteriaCode) == ''){
 		layer.alert('验收标准（方法）不能为空！');
-		return;
-	}
-	if ($.trim(json.receiveTermsCode) == ''){
-		layer.alert('接货方式不能为空！');
 		return;
 	}
 	if ($.trim(json.installLocation) == ''){
@@ -766,11 +756,11 @@ function save() {
 		layer.alert('终端客户名称不能为空！');
 		return;
 	}
-	if ($.trim(json.deliveryDaysAfterPrepay) == ''){
+	if ($.trim(json.deliveryDays) == ''){
 		layer.alert('收到需方预付款后几日内发货不能为空！');
 		return;
 	}
-	if (!/^[1-9]\d*$/.test($.trim(json.deliveryDaysAfterPrepay))){
+	if (!/^[1-9]\d*$/.test($.trim(json.deliveryDays))){
 		layer.alert('收到需方预付款后几日内发货必须是有效的数字！');
 		return;
 	}
@@ -923,17 +913,6 @@ function initValidator() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-			receiveTermsCode: {
-				validators: {
-					notEmpty: {
-						message: '接货方式不能为空'
-					},
-					regexp: {
-						regexp: /^[1-9]\d*$/,
-						message: '只能输入正整数'
-					}
-				}
-			},
 			clientName: {
 				validators: {
 					notEmpty: {
@@ -962,14 +941,14 @@ function initValidator() {
 					}
 				}
 			},*/
-			partyaMail: {
+			customerEmail: {
 				validators: {
 					notEmpty: {
 						message: '签约单位邮箱不能为空'
 					}
 				}
 			},
-			deliveryDaysAfterPrepay: {
+			deliveryDays: {
 				validators: {
 					notEmpty: {
 						message: '预付款后几日内发货不能为空'
@@ -992,7 +971,30 @@ function initValidator() {
 <!-- side nav js -->
 <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
 <script>
-  $('.sidebar-menu').SidebarNav()
+$('.sidebar-menu').SidebarNav()
+  
+$(document).ready(function() {
+	$('#s_createTime').daterangepicker( {
+		autoUpdateInput:true,
+		startDate: moment().subtract('days', 7),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+		endDate: moment()
+		}, 
+		function(start, end, label) {
+			 $('#s_createTime').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+			console.log(start.toISOString(), end.toISOString(), label);
+		}
+	);
+	$('#s_orderCreateTime').daterangepicker( {
+			autoUpdateInput:true,
+			startDate: moment().subtract('days', 6),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+			endDate: moment()
+		}, function(start, end, label) {
+	    	console.log(start.toISOString(), end.toISOString(), label);
+		});
+	}
+);
+
+  
 </script>
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>	

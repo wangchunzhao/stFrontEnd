@@ -73,9 +73,9 @@ public class ContractController {
 		Result r = null;
 		try {
 			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
-			contract.setProductionTime(new Date());
+			contract.setCreateTime(new Date());
 			// 设置状态为已制作
-			contract.setStatus(1);
+			contract.setStatus("01");
 			// 设置操作人
 //		contract.set
 			r = contractService.save(contract);
@@ -92,9 +92,9 @@ public class ContractController {
 		Result r = null;
 		try {
 			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
-			contract.setProductionTime(new Date());
+			contract.setCreateTime(new Date());
 			// 设置状态为已制作
-			contract.setStatus(1);
+			contract.setStatus("01");
 			// 设置操作人
 //		contract.seto
 			r = contractService.save(contract);
@@ -247,11 +247,11 @@ public class ContractController {
 		String idStr = request.getParameter("id");
 		Contract contract = this.contractService.find(Integer.valueOf(idStr)).getData();
 
-		String signContractId = contract.getSignContractId();
+		String signContractId = contract.getSignContractid();
 		byte[] zipBytes = this.contractService.doDownloadFromSignSystem(signContractId);
 
 		String time = String.valueOf(System.currentTimeMillis());
-		String path = this.contractDir + contract.getSequenceNumber() + "_" + contract.getContractorName() + "_" + time
+		String path = this.contractDir + contract.getSequenceNumber() + "_" + contract.getCustomerName() + "_" + time
 				+ ".zip";
 		ZipFile zf = null;
 		InputStream in = null;
@@ -274,8 +274,8 @@ public class ContractController {
 		}
 
 		String customerName = "";
-		if (contract.getContractorName() != null) {
-			customerName = new String(contract.getContractorName().getBytes("gb2312"), "ISO8859-1");
+		if (contract.getCustomerName() != null) {
+			customerName = new String(contract.getCustomerName().getBytes("gb2312"), "ISO8859-1");
 		}
 		String pdfFileName = contract.getSequenceNumber() + "-" + customerName + "(" + contract.getContractNumber()
 				+ ").pdf";
