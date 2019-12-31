@@ -72,6 +72,7 @@ public class PermissionApplyController extends BaseController{
 		String area = request.getParameter("area");
 		String isactive = "1";//全是启用
 		String tel = request.getParameter("telnum");
+		String creater = request.getParameter("creater");
 		//获取域用户
 //		User usersession = getAccount(request);
 		String msg = "";
@@ -87,6 +88,7 @@ public class PermissionApplyController extends BaseController{
 			user.setUserName(userName);
 			user.setUserIdentity(userid);
 			user.setTel(tel);
+			user.setCreater(creater);
 			 
 			ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
 			applicationOfRolechange.setCreator("admin");

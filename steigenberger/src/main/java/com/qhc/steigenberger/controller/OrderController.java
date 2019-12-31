@@ -67,31 +67,19 @@ public class OrderController extends BaseController {
 	private final static String TO_SAP = "1020";//推送订单到
 	
 	//订单状态
-	private final static String orderStatus0010="0010";//订单新建保存
-	private final static String orderStatus0001="0001";//订单新建保存
-	private final static String orderStatus0011="0011";//订单新建保存
-	private final static String orderStatus0000="0000";//订单新建保存
-	private final static String orderStatus0100="0100";//客户经理提交待支持经理审核
-	private final static String orderStatus0110="0110";//客户经理提交待B2C审核
-	private final static String orderStatus0111="0111";//客户经理提交待B2C和工程审核
-	private final static String orderStatus0112="0112";//工程人员提交待B2C审核
-	private final static String orderStatus0101="0101";//客户经理提交待工程审核
-	private final static String orderStatus0102="0102";//工程提交待支持经理审核
-	private final static String orderStatus0120="0120";//B2C提交待待支持经理审核
-	private final static String orderStatus0121="0121";//B2C提交待工程审核
-	private final static String orderStatus0122="0122";//待支持经理审核
-    //st驳回
-    private final static String orderStatus1000="1000";//
-    private final static String orderStatus1010="1010";//
-    private final static String orderStatus1011="1011";//
-    private final static String orderStatus1012="1012";//
-    private final static String orderStatus1001="1001";//
-    private final static String orderStatus1002="1002";//
-    private final static String orderStatus1020="1020";//
-    private final static String orderStatus1021="1021";//
-    private final static String orderStatus1022="1022";//
-	
-	
+	private final static String orderStatus00="00";//订单新建保存
+	private final static String orderStatus01="01";//客户经理提交待B2C审批
+	private final static String orderStatus02="02";//客户经理提交待工程审批
+	private final static String orderStatus03="03";//待支持经理审批
+	private final static String orderStatus04="04";//提交到BPM
+	private final static String orderStatus05="05";//BPM审批通过
+	private final static String orderStatus06="06";//订单变更BPM审批通过
+	private final static String orderStatus07="07";//
+	private final static String orderStatus08="08";//
+	private final static String orderStatus09="09";//已下推SAP
+	private final static String orderStatus10="10";//ST驳回
+	private final static String orderStatus11="11";//BPM驳回
+	//订单类型
 	private final static String ORDER_TYPE_DEALER = "ZH0D"; // '经销商订单'
 	private final static String ORDER_TYPE_BULK = "ZH0M"; // '备货订单'
 	private final static String ORDER_TYPE_KEYACCOUNT = "ZH0T"; // '大客户订单'
@@ -284,9 +272,9 @@ public class OrderController extends BaseController {
 	}
 	
 	@ApiOperation(value = "上传订单资料", notes = "上传订单资料")
-	@GetMapping(value = "upload")
+	@PostMapping(value = "upload")
 	@ResponseBody
-	public Result upload(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
+	public Result upload(@RequestParam(value = "file_data") MultipartFile file, HttpServletRequest request) {
 		Result result = null;
 		
 		try {
@@ -294,10 +282,10 @@ public class OrderController extends BaseController {
 			String fileName = file.getName();
 			Attachment attachment = orderService.writeAttachment(fileName, file.getInputStream());
 			
-			result.setData(attachment);
+			result = Result.ok(attachment);
 		} catch (Exception e) {
 			logger.error("上传文件失败", e);
-			result.error("上传文件失败");
+			result = result.error("上传文件失败");
 		}
 		
 		return result;
@@ -344,36 +332,22 @@ public class OrderController extends BaseController {
 	@PostMapping(value = "query")
 	@ResponseBody
 	public PageHelper<Order> searchOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
+		String operationId = ",";
 		String identity = getUserIdentity();
 		User user = userService.selectUserIdentity(identity);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		Boolean toSap = userOperationInfoList.stream().anyMatch(e->e.getOperationId().equals(TO_SAP));
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
-			String operationId = userOperationInfoList.get(i).getOperationId();
-			if(operationId.equals(allOrder)) {
-				query.setSalesCode("");
-				query.setOfficeCode("");
-				break;
-			}else if(operationId.equals(areaOrder)) {
-				query.setSalesCode("");
-				query.setOfficeCode(userOperationInfoList.get(i).getAttachedCode());
-				break;
-			}else {
-				query.setSalesCode(user.getUserIdentity());
-			}
-			
+			operationId += userOperationInfoList.get(i).getOperationId() + ",";
 		}
-		//状态是需求单新建保存
-		if("0000".equals(query.getStatus())) {
-			List list = new ArrayList();
-			list.add(orderStatus0000);
-			list.add(orderStatus0010);
-			list.add(orderStatus0001);
-			list.add(orderStatus0011);
-			query.setStatusList(list);
-			query.setStatus("");
+		//判断权限确定能查看的订单范围
+		if(operationId.contains(allOrder)) {//查询全部
+			System.out.println("查询全部");
+		}else if(operationId.contains(areaOrder)) {
+			query.setOfficeCode(user.getOfficeCode());
+		}else {
+			query.setSalesCode(user.getUserIdentity());
 		}
-		System.out.println(identity+"======================");
 		// 只查询最新的版本
 		query.setLast(true);
 		Result result = orderService.findOrders(query);
@@ -402,79 +376,57 @@ public class OrderController extends BaseController {
 	@PostMapping(value = "queryTodo")
 	@ResponseBody
 	public PageHelper<Order> searchTodoOrder(@RequestBody OrderQuery query,HttpServletRequest request) throws Exception {
+		String operationId = ",";
 		//取得session中的登陆用户域账号，查询权限
 		String identityName = this.getUserIdentity();
 		User user = userService.selectUserIdentity(identityName);//identityName
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
 		for(int i = 0; i < userOperationInfoList.size(); i++) {
 			//查询权限id
-			String operationId = userOperationInfoList.get(i).getOperationId();
-			if(operationId.equals(SUPPORT_Order)) {
-				//支持经理
-				List list = new ArrayList();
-				list.add(orderStatus0120);
-				list.add(orderStatus0122);
-				list.add(orderStatus0100);
-				list.add(orderStatus0102);
-				query.setStatusList(list);
-				//本人保存的
-				List list2 = new ArrayList();
-				list2.add(orderStatus0000);
-				query.setDominStatusList(list2);
-				query.setDominSalesCode(user.getUserIdentity());
-				query.setSalesCode("");
-				break;
-			}else if(operationId.equals(ENGINEER_Order)) {
-				//工程人员
-				List list = new ArrayList();
-				list.add(orderStatus0111);
-				list.add(orderStatus0101);
-				list.add(orderStatus0121);
-				query.setStatusList(list);
-//				query.setOrderType(orderType1);
-				//本人保存的
-				List list2 = new ArrayList();
-				list2.add(orderStatus0000);
-				query.setDominStatusList(list2);
-				query.setDominSalesCode(user.getUserIdentity());
-				query.setSalesCode("");
-				break;
-			}else if(operationId.equals(B2C_Order)) {
-				//B2C
-				List list = new ArrayList();
-				list.add(orderStatus0110);
-				list.add(orderStatus0111);
-				list.add(orderStatus0112);
-				query.setStatusList(list);
-//				query.setB2c("1");
-				//本人保存的
-				List list2 = new ArrayList();
-				list2.add(orderStatus0000);
-				query.setDominStatusList(list2);
-				query.setDominSalesCode(user.getUserIdentity());
-				query.setSalesCode("");
-				break;
-			}else {
-				//客户经理
-				List list = new ArrayList();
-				list.add(orderStatus0000);
-				list.add(orderStatus0010);
-				list.add(orderStatus0001);
-				list.add(orderStatus0011);
-				
-                list.add(orderStatus1000);
-                list.add(orderStatus1010);
-                list.add(orderStatus1011);
-                list.add(orderStatus1012);
-                list.add(orderStatus1001);
-                list.add(orderStatus1002);
-                list.add(orderStatus1020);
-                list.add(orderStatus1021);
-                list.add(orderStatus1022);
-				query.setStatusList(list);
-				query.setSalesCode(user.getUserIdentity());
-			}
-			
+			operationId += userOperationInfoList.get(i).getOperationId() + ",";
+		}
+		//判断权限确定能查看的订单范围
+		if(operationId.contains(SUPPORT_Order)) {
+			//支持经理
+			List list = new ArrayList();
+			list.add(orderStatus03);
+			list.add(orderStatus11);
+			query.setStatusList(list);
+			//本人保存的
+			List list2 = new ArrayList();
+			list2.add(orderStatus00);
+			query.setDominStatusList(list2);
+			query.setDominSalesCode(user.getUserIdentity());
+		}else if(operationId.contains(ENGINEER_Order)) {
+			//工程人员
+			List list = new ArrayList();
+			list.add(orderStatus02);
+			query.setStatusList(list);
+//			query.setOrderType(orderType1);
+			//本人保存的
+			List list2 = new ArrayList();
+			list2.add(orderStatus00);
+			query.setDominStatusList(list2);
+			query.setDominSalesCode(user.getUserIdentity());
+		}else if(operationId.contains(B2C_Order)) {
+			//B2C
+			List list = new ArrayList();
+			list.add(orderStatus01);
+			query.setStatusList(list);
+//			query.setB2c("1");
+			//本人保存的
+			List list2 = new ArrayList();
+			list2.add(orderStatus00);
+			query.setDominStatusList(list2);
+			query.setDominSalesCode(user.getUserIdentity());
+		}else {
+			//客户经理
+			List list = new ArrayList();
+			list.add(orderStatus00);
+			list.add(orderStatus10);
+			list.add(orderStatus11);
+			query.setStatusList(list);
+			query.setSalesCode(user.getUserIdentity());
 		}
 		// 只查询最新的版本
 		query.setLast(true);

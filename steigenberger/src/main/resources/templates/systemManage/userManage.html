@@ -367,6 +367,7 @@
 								{{/each}}
 							</select>
 						</div>
+						<input type="hidden" class="form-control" id="creater" name="creater" value="{{creater}}" required/>
 						<button type="submit" class="btn btn-default" onclick="add()">Submit</button>
 					</form>
 				</div>
@@ -436,6 +437,7 @@
 		var data = {}
 		data.roles = Roles;
 		data.sapSalesOffice = SapSalesOffice;
+		data.creater = "[[${session.identity}]]"
 		console.log(data)
 		var html = template('add-user-tpl', data);
 		layer.open({

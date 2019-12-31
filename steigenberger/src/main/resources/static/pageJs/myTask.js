@@ -12,7 +12,7 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'post',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/order/queryTodo",//请求路径
+			url : ctxPath+"order/queryTodo",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -97,42 +97,35 @@ function formatOrderType(value, row, index){
 		return "大客户订单";
 	}
 }
+
 function formatStatus(value, row, index) {
-	if(value.substring(0,2)=="00"){
-		return "订单新建保存";
-	}else if(value=="0100"){
-		return "客户经理提交待支持经理审核";
-	}else if(value=="0110"){
-		return "客户经理提交待B2C审核";
-	}else if(value=="0111"){
-		return "客户经理提交待B2C和工程审核";
-	}else if(value=="0112"){
-		return "工程人员提交待B2C审核";
-	}else if(value=="0101"){
-		return "客户经理提交待工程审核";
-	}else if(value=="0121"){
-		return "B2C提交待工程审核";
-	}else if(value=="0122"){
-		return "待支持经理审核";
-	}else if(value=="0120"){
-		return "B2C提交待待支持经理审核";
-	}else if(value=="0102"){
-		return "工程提交待支持经理审核";
-	}else if(value.substring(0,2)=="02"){
-		return "BPM审批中";
-	}else if(value.substring(0,2)=="03"){
-		return "BPM订单审批通过";
-	}else if(value.substring(0,2)=="10"){
-		return "ST驳回";
-	}else if(value=="12"){
+	if(value=="00"){
+		return "草稿";
+	}else if(value=="01"){
+		return "待B2C审批";
+	}else if(value=="02"){
+		return "待工程人员审批";
+	}else if(value=="03"){
 		return "待支持经理审批";
+	}else if(value=="04"){
+		return "提交到BPM";
+	}else if(value=="05"){
+		return "BPM审批通过";
+	}else if(value=="06"){
+		return "订单更改审批通过";
+	}else if(value=="09"){
+		return "已下推SAP";
+	}else if(value=="10"){
+		return "Selling Tool驳回";
+	}else if(value=="11"){
+		return "BPM驳回";
 	}
 }
 
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
-		url : '/steigenberger/order/queryTodo'
+		url : ctxPath+'order/queryTodo'
 	});
 })
 
@@ -157,7 +150,7 @@ function operation(value, row, index) {
 function approveOrder(seqNumb,ordType,version){
 	var myForm = document.createElement("form");       
 	    myForm.method = "post";  
-	    myForm.action = "/steigenberger/order/approveOrder";        
+	    myForm.action = ctxPath+"order/approveOrder";        
 		var seq = document.createElement("input");       
 		seq.setAttribute("name", "sequenceNumber");  
 		seq.setAttribute("value", seqNumb);  
@@ -176,7 +169,7 @@ function approveOrder(seqNumb,ordType,version){
 }
 
 function InitSapSalesOffice(){
-	$.post('/steigenberger/permission/sapSalesOfficelist',null,function(ret){
+	$.post(ctxPath+'permission/sapSalesOfficelist',null,function(ret){
 		if(ret.status==200){
 			for(var i in ret.data){
 				var item = ret.data[i];

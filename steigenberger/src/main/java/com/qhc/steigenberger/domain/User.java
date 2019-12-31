@@ -3,54 +3,57 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class User implements Serializable{
-
+	
 	private static final long serialVersionUID = 1L;
 
 	public int id;
-
-	public String userMail;
-
-	public String userIdentity;
-
-	public int isActive=1;
-
-	public String userName;
+	
+    public String userMail;
+    
+    public String userIdentity;
+    
+    public int isActive=1;
+    
+    public String userName;
 
 	public String name;
+    
+    public String tel;
+    
+    public List<ApplicationOfRolechange> apps;
+	
+//    public SalesOffice region;//区域
+   	
+   	public List<Role> roles;
+   	
+   	public List<Operations> operations;//区域下对应的权限	/* 创建人域账号 */
 
-	public String tel;
-
-	public List<ApplicationOfRolechange> apps;
-
-	public SalesOffice region;//区域
-
-	public List<Role> roles;
-
-	public List<Operations> operations;//区域下对应的权限
-
-	/* 创建人域账号 */
-	private String creater;
+	private String creater = null;
 
 	/* 创建时间 */
-	private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+	private Date createTime = null;
+
+	/* 修改人账号 */
+	private String updater = null;
+
+	/* 修改时间 */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+	private Date updateTime = null;
+
 	/* 销售办公室 */
 	private String officeCode = null;
 
-	/* 修改人账号 */
-	private String updater;
-
-	/* 修改时间 */
-	private Date updateTime;
-
-
-	public SalesOffice getRegion() {
-		return region;
-	}
 	//区域名字
 	public String officeName;
 
