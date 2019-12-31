@@ -229,7 +229,7 @@ public class MenuController extends BaseController {
 		Order orderDetail = new Order();
 		orderDetail.setCustomerClazz(Order.ORDER_CUSTOMER_KEY_ACCOUNT_CODE);
 		orderDetail.setOrderType(Order.ORDER_TYPE_KEYACCOUNT);
-		orderDetail.setStOrderType("3");
+		orderDetail.setStOrderType("4");
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
 		return mv;

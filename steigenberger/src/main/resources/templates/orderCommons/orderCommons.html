@@ -305,6 +305,47 @@
 							<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 					    </div>
 					</div>
+					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
+						<span class="col-md-1 control-label">批准折扣</span>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="contactor3Id" aria-describedby="emailHelp" name="contactor3Id" disabled>
+					    </div>
+					    <span class="col-md-1 control-label">柜体申请折扣</span>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input type="text" class="form-control" id="bodyDiscount" aria-describedby="emailHelp" name="bodyDiscount">
+								<span class="input-group-btn">
+			                        <button id="" class="btn btn-default btn-flat" type="button" title="应用">
+			                        	<span class="glyphicon glyphicon-ok"></span>
+			                        </button>
+			                    </span>
+			                </div>
+						</div>
+					    <span class="col-md-1 control-label">机组申请折扣</span>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input type="text" class="form-control" id="mainDiscount" aria-describedby="emailHelp" name="mainDiscount">
+								<span class="input-group-btn">
+			                        <button id="" class="btn btn-default btn-flat" type="button" title="应用">
+			                        	<span class="glyphicon glyphicon-ok"></span>
+			                        </button>
+			                    </span>
+			                 </div>
+					    </div>
+						    <span class="col-md-1 control-label">合并折扣折扣</span>
+							<div class="col-md-2">
+								<input type="text" class="form-control" id="discount" aria-describedby="emailHelp" th:filed="*{discount}" readonly>
+						    </div>
+					</div>
+					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
+						<span class="col-md-1 control-label">是否为长期折扣</span>
+						<div class="col-md-2">
+					      <select class="form-control" th:filed="*{isLongterm}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
+					    </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -312,7 +353,7 @@
 	
 	<!--结算方式  -->
 	<div th:fragment="paymentType(orderType)">
-		<div class="panel panel-default">
+		<div class="panel panel-default" th:if="${orderType!=3&&orderType!=4}">
 			<div class="panel-heading" role="tab">
 				<h4 class="panel-title">
 					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#paymentMethod" aria-expanded="false">结算方式 Method of payment</a>
@@ -328,6 +369,36 @@
 								</select>
 					   		 </div>
 						 </div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default" th:if="${orderType==3||orderType==4}">
+			<div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#paymentMethod" aria-expanded="false">结算方式 Method of payment</a>
+				</h4>
+			</div>
+			<div id="paymentMethod" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
+				<div class="panel-body" style="height: auto;">
+						 <!-- <div class="row">
+						 	<span class="col-md-2 control-label">结算方式</span>
+							<div class="col-md-10">
+								<select class="form-control" name="paymentType"> th:field="*{confirmTypeCode}"
+									<option th:each="payment : ${order_option.paymentType}" th:value="${payment.key}" th:text="${payment.value}"></option>
+								</select>
+					   		 </div>
+						 </div> -->
+					<div class="row" style="margin-bottom: 15px;">
+						<div class="col-xs-12 col-md-12">
+							结算方式 Method of payment
+						</div>
+						<div class="col-xs-12 col-md-12">
+							<span class="text-info" id="paymentArea"></span>
+						</div>
+					</div>
+					<div class="container" id="box" style="width:100%;">
+					  <table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;" id="paymentTable" data-pagination="false" ></table>
+						</div>
 				</div>
 			</div>
 		</div>
@@ -488,7 +559,7 @@
 								客户确认资料 Customer data
 							</div>
 							<div class="col-md-6">
-								<input type="file" class="form-control-file">
+								<input id="f_upload" type="file" class="file" data-show-preview="false" data-show-caption="true" data-language="zh" data-upload-url="/st/order/upload"/>
 							</div>
 						</div> 						
 					</div>

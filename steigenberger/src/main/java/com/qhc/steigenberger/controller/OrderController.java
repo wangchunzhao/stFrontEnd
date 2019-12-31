@@ -284,9 +284,9 @@ public class OrderController extends BaseController {
 	}
 	
 	@ApiOperation(value = "上传订单资料", notes = "上传订单资料")
-	@GetMapping(value = "upload")
+	@PostMapping(value = "upload")
 	@ResponseBody
-	public Result upload(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
+	public Result upload(@RequestParam(value = "file_data") MultipartFile file, HttpServletRequest request) {
 		Result result = null;
 		
 		try {
