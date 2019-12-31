@@ -1,40 +1,56 @@
 package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class User implements Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public int id;
-	
-    public String userMail;
-    
-    public String userIdentity;
-    
-    public int isActive=1;
-    
-    public String userName;
+
+	public String userMail;
+
+	public String userIdentity;
+
+	public int isActive=1;
+
+	public String userName;
 
 	public String name;
-    
-    public String tel;
-    
-    public List<ApplicationOfRolechange> apps;
-	
-//    public SalesOffice region;//区域
-   	
-   	public List<Role> roles;
-   	
-   	public List<Operations> operations;//区域下对应的权限
 
+	public String tel;
+
+	public List<ApplicationOfRolechange> apps;
+
+	public SalesOffice region;//区域
+
+	public List<Role> roles;
+
+	public List<Operations> operations;//区域下对应的权限
+
+	/* 创建人域账号 */
+	private String creater;
+
+	/* 创建时间 */
+	private Date createTime;
 	/* 销售办公室 */
 	private String officeCode = null;
 
+	/* 修改人账号 */
+	private String updater;
+
+	/* 修改时间 */
+	private Date updateTime;
+
+
+	public SalesOffice getRegion() {
+		return region;
+	}
 	//区域名字
 	public String officeName;
 
@@ -132,6 +148,38 @@ public class User implements Serializable{
 
 	public void setOfficeName(String officeName) {
 		this.officeName = officeName;
+	}
+
+	public String getCreater() {
+		return creater;
+	}
+
+	public void setCreater(String creater) {
+		this.creater = creater;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getUpdater() {
+		return updater;
+	}
+
+	public void setUpdater(String updater) {
+		this.updater = updater;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 }
 
