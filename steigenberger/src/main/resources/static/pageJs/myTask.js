@@ -112,7 +112,7 @@ function formatStatus(value, row, index) {
 	}else if(value=="05"){
 		return "BPM审批通过";
 	}else if(value=="06"){
-		return "订单变更BPM审批通过";
+		return "订单更改审批通过";
 	}else if(value=="09"){
 		return "已下推SAP";
 	}else if(value=="10"){

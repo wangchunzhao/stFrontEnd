@@ -70,10 +70,10 @@ public class OrderController extends BaseController {
 	private final static String orderStatus00="00";//订单新建保存
 	private final static String orderStatus01="01";//客户经理提交待B2C审批
 	private final static String orderStatus02="02";//客户经理提交待工程审批
-	private final static String orderStatus03="03";//支持经理提交至BPM
-	private final static String orderStatus04="04";//BPM审批通过过
-	private final static String orderStatus05="05";//订单更改审批通过
-	private final static String orderStatus06="06";//
+	private final static String orderStatus03="03";//待支持经理审批
+	private final static String orderStatus04="04";//提交到BPM
+	private final static String orderStatus05="05";//BPM审批通过
+	private final static String orderStatus06="06";//订单变更BPM审批通过
 	private final static String orderStatus07="07";//
 	private final static String orderStatus08="08";//
 	private final static String orderStatus09="09";//已下推SAP
@@ -389,6 +389,7 @@ public class OrderController extends BaseController {
 		if(operationId.contains(SUPPORT_Order)) {
 			//支持经理
 			List list = new ArrayList();
+			list.add(orderStatus03);
 			list.add(orderStatus11);
 			query.setStatusList(list);
 			//本人保存的
