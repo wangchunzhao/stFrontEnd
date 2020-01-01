@@ -3,6 +3,8 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 
  * Function: Data transfer object. <br>
@@ -74,18 +76,21 @@ public class Contract implements Serializable {
 	private String creater = null;
 
 	/* 合同制作时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date createTime = null;
 
 	/* 合同发送人 */
 	private String sender = null;
 
 	/* 合同发送时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date sendTime = null;
 
 	/* 合同签署人 */
 	private String signer = null;
 
 	/* 合同签署时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date signTime = null;
 
 	/* 合同文档Hash值 */
@@ -100,6 +105,7 @@ public class Contract implements Serializable {
 	private String version = null;
 	
 	/* 订单创建时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date orderCreateTime = null;
 
 	/* SequenceNumber */

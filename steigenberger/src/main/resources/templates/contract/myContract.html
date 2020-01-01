@@ -7,8 +7,13 @@
 <meta name="keywords" content="" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
+ <!-- js-->
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/modernizr.custom.js"></script>
+
 <!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+<script src="../assets/drag/bootstrap-3.3.7/bootstrap/js/bootstrap.min.js"></script>
+<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="../css/style.css" rel='stylesheet' type='text/css' />
@@ -20,10 +25,6 @@
 <!-- side nav css file -->
 <link href='../css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
 <!-- //side nav css file -->
-
- <!-- js-->
-<script src="../js/jquery-1.11.1.min.js"></script>
-<script src="../js/modernizr.custom.js"></script>
 
 <!--webfonts-->
 <link href="##3##" rel="stylesheet">
@@ -48,8 +49,13 @@
 <script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 
 <!-- bootstrapValidator -->
+<link rel="stylesheet" type="text/css" media="all" href="../bootstrap-date/daterangepicker/daterangepicker-bs3.css"/>
 <link href="../css/bootstrapValidator.min.css" rel='stylesheet' type='text/css' />
 <script src="../js/bootstrapValidator.min.js"> </script>
+
+<!-- Daterangepicker -->
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/moment.js"></script>
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/daterangepicker.js"></script>
 
 <!-- Art Template -->
 <script type="text/javascript" src="../js/template-web.js"></script>
@@ -107,10 +113,10 @@ var ctxPath  = [[@{/}]];
 	                        <input type="text" id="s_contractNumber" name="s_contractNumber" class="form-control" aria-describedby="emailHelp">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
-	                        <input type="text" id="s_orderCreateTime" name="s_orderCreateTime" class="form-control" aria-describedby="emailHelp">
+	                        <input type="text" id="s_orderCreateTime" name="s_orderCreateTime" class="form-control">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
-	                        <input type="text" id="s_createTime" name="s_createTime" class="form-control" aria-describedby="emailHelp">
+	                        <input type="text" id="s_createTime" name="s_createTime" class="form-control">
 	                    </div>
 	                </div>
 	                <div class="row" style="margin-top: 3px;">
@@ -264,7 +270,6 @@ var ctxPath  = [[@{/}]];
 <input type="hidden" name="version" value="{{version}}">
 <input type="hidden" name="receiveType" value="{{receiveType}}" >
 <input type="hidden" name="receiveTypeName" value="{{receiveTypeName}}" >
-<input type="hidden" name="customerEmail" value="{{customerEmail}}" >
 <input type="hidden" name="customerCode" value="{{customerCode}}" >
 <input type="hidden" name="createTime" value="{{createTime}}" >
 <input type="hidden" name="status" value="{{status}}" >
@@ -464,7 +469,7 @@ var ctxPath  = [[@{/}]];
 							class="form-control" aria-describedby="emailHelp">
 					</div>
 					<div class="col-md-3 col-xs-3">
-						<input type="text" name="" value="{{}}" 
+						<input type="text" name="companyPostCode" value="{{companyPostCode}}" 
 							class="form-control" aria-describedby="emailHelp">
 					</div>
 				</div>
@@ -702,13 +707,7 @@ function showEditModal(contract) {
 
 //将行记录中属于订单的信息设置到合同中
 function setEditInfo(row, contract) {
-	// var row = $('#contractTable').bootstrapTable('getData')[index];	
-	
-	/* $('[name=contractNumber]').val(row.contractNumber);
-	$('[name=sequenceNumber]').val(row.sequenceNumber);
-	$('[name=contractorName]').val(row.contractorName); */
-	// $('[name=amount]').val(row.contractNumber);
-	// $('[name=contractNumber]').val(row.contractNumber);
+	contract.orderInfoId = row.orderInfoId;
 	contract.contractNumber = row.contractNumber;
 	contract.sequenceNumber = row.sequenceNumber;
 	contract.customerName = row.customerName;
@@ -975,18 +974,22 @@ $('.sidebar-menu').SidebarNav()
   
 $(document).ready(function() {
 	$('#s_createTime').daterangepicker( {
-		autoUpdateInput:true,
-		startDate: moment().subtract('days', 7),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
-		endDate: moment()
+			autoUpdateInput:true,
+			endDate: moment(new Date()), //设置结束器日期
+			maxDate: moment(new Date()).add('days', 1), //设置最大日期
+			startDate: moment().subtract('days', 7),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+			endDate: moment()
 		}, 
 		function(start, end, label) {
-			 $('#s_createTime').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+			// $('#s_createTime').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
 			console.log(start.toISOString(), end.toISOString(), label);
 		}
 	);
 	$('#s_orderCreateTime').daterangepicker( {
 			autoUpdateInput:true,
-			startDate: moment().subtract('days', 6),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+			endDate: moment(new Date()), //设置结束器日期
+			maxDate: moment(new Date()).add('days', 1), //设置最大日期
+			startDate: moment().subtract('days', 7),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
 			endDate: moment()
 		}, function(start, end, label) {
 	    	console.log(start.toISOString(), end.toISOString(), label);
@@ -997,7 +1000,6 @@ $(document).ready(function() {
   
 </script>
 <script src="../js/SimpleChart.js"></script>
-<script src="../js/bootstrap.js"> </script>	
    
 <!--  js -->  
 <script src="../pageJs/permissionApply.js"></script>
