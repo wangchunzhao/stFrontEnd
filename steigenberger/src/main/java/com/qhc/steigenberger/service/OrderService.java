@@ -248,10 +248,9 @@ public class OrderService {
 	 * @param attachment
 	 * @return
 	 */
-	public InputStream readAttachment(Attachment attachment) {
+	public InputStream readAttachment(String fileUrl) {
 		try {
 			// 文件存储地址，相对路径，存储目录由配置文件指定
-			String fileUrl = attachment.getFileUrl();
 			File f = new File(orderFilePath, fileUrl);
 			
 			return new FileInputStream(f);

@@ -555,13 +555,21 @@
 							</button>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-2">
 								客户确认资料 Customer data
 							</div>
-							<div class="col-md-6">
-								<input id="f_upload" type="file" class="file" data-show-preview="false" data-show-caption="true" data-language="zh" data-upload-url="/st/order/upload"/>
+							<div class="col-md-6">						
+								<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
 							</div>
-						</div> 						
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+							</div>
+							<!-- style="display:none;" -->
+							<div class="col-md-6" >						
+								<table id="fileList" data-pagination="false"  class="table table-hover"></table>
+							</div>
+						</div> 		 						
 					</div>
 					<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">

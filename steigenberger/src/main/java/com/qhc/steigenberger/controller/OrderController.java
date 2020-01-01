@@ -279,7 +279,7 @@ public class OrderController extends BaseController {
 		
 		try {
 			// 上传到文件名
-			String fileName = file.getName();
+			String fileName = file.getOriginalFilename();
 			Attachment attachment = orderService.writeAttachment(fileName, file.getInputStream());
 			
 			result = Result.ok(attachment);
@@ -294,12 +294,9 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "下载订单资料", notes = "下载订单资料")
 	@GetMapping(value = "download")
 	@ResponseBody
-	public void download(@RequestBody Attachment attachment, HttpServletResponse response) {
-		try {
-			// 文件名
-			String fileName = attachment.getFileName();
-			
-			InputStream in = orderService.readAttachment(attachment);
+	public void download(@RequestParam String fileName, @RequestParam String fileUrl, HttpServletResponse response) {
+		try {		
+			InputStream in = orderService.readAttachment(fileUrl);
 			
 			// 配置文件下载
             response.setHeader("content-type", "application/octet-stream");
