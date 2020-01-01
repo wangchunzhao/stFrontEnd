@@ -143,26 +143,23 @@ function operation(value, row, index) {
 	var sequenceNumber = row.sequenceNumber;
 	var orderType = row.orderType;
 	var currentVersion = row.currentVersion;
-	var viewHtm = "<a type='button' class='btn btn-primary' id='approveOrder' onclick='approveOrder(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>审批</button>";
+	var orderInfoId = row.id;
+	var viewHtm = "<a type='button' class='btn btn-primary' id='approveOrder' onclick='approveOrder(\""+orderInfoId+"\")'>审批</button>";
 	return viewHtm;
 }
 
-function approveOrder(seqNumb,ordType,version){
+function approveOrder(orderInfoId){
 	var myForm = document.createElement("form");       
 	    myForm.method = "post";  
 	    myForm.action = ctxPath+"order/approveOrder";        
 		var seq = document.createElement("input");       
-		seq.setAttribute("name", "sequenceNumber");  
-		seq.setAttribute("value", seqNumb);  
+		seq.setAttribute("name", "orderInfoId");  
+		seq.setAttribute("value", orderInfoId);  
 		myForm.appendChild(seq);
-		var type = document.createElement("input");       
-		type.setAttribute("name", "orderType");  
-		type.setAttribute("value", ordType);  
-		myForm.appendChild(type);  
-		var ver = document.createElement("input");       
-		ver.setAttribute("name", "version");  
-		ver.setAttribute("value", version);  
-		myForm.appendChild(ver);    
+		var seq1 = document.createElement("input");       
+		seq1.setAttribute("name", "orderOperationType");  
+		seq1.setAttribute("value", "3");  
+		myForm.appendChild(seq1);
 		document.body.appendChild(myForm);     
 		myForm.submit();   
 		document.body.removeChild(myForm); 	

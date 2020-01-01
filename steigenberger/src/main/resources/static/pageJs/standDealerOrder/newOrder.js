@@ -74,9 +74,35 @@ $(function () {
 		initDropDownList();
 		fillAttachments();
 	}
+	if(orderOperationType=="2"){
+		disableAll();
+	}
 });
 
-
+function disableAll(){ 
+	  var form=document.forms[0];
+	  for(var i=0;i<form.length;i++){
+	    var element=form.elements[i];
+	    element.disabled=true;
+	  }
+	  $("#back").attr('disabled',false);
+	  $("#grossClose").attr('disabled',false);
+	  $("#showGrossProfit").attr('disabled',false);
+	  $("#grossCloseb").attr('disabled',false);
+	  $("#grossExport").attr('disabled',false);
+	  $("#collapseShow").attr('disabled',false);
+	  $("#collapseClose").attr('disabled',false);
+	  $("#reject").attr('disabled',false);
+	  $("#approve").attr('disabled',false);
+	  $("#version").attr('disabled',false);
+	  $("#materialsEdit").attr('disabled',true);
+	  $("#copyMaterial").attr('disabled',true);  
+	  if($("#expenseItem")){
+		  $("#expenseItem").find("*").each(function() {
+			 $(this).removeAttr("disabled");
+		  });
+	  }
+}
 
 //获取session中用户信息
 function getUserDetail(){

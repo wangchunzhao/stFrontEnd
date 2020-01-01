@@ -430,7 +430,6 @@ function disableAll(){
 		 $(this).removeAttr("disabled");
 	  });
   }
-  debugger
   if(orderModelType=="editB2C"){  
 	  $("#materialsEdit").attr('disabled',false);
 	  $("#B2CCostOfEstimated").attr('disabled',false);
