@@ -76,7 +76,7 @@
 	    	//alert("#userIdentity:"+userIdentity);
 	    	
 	    	userId=parseInt(userId);
-	    	var data={id:userId,name:userName,tel:tel,userMail:userMail,userIdentity:userIdentity,roles:ops,officeCode: regionCode,isActive:isActive};
+	    	var data={id:userId,userName:userName,tel:tel,userMail:userMail,userIdentity:userIdentity,roles:ops,officeCode: regionCode,isActive:isActive};
 	    	$.ajax({  
 	    		   type:"post",
 	      		   url: ctxPath+'user/update',
