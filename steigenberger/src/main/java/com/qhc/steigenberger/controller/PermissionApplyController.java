@@ -71,7 +71,7 @@ public class PermissionApplyController extends BaseController{
 		String userid = request.getParameter("userid");
 		String roleId = request.getParameter("roleName");
 		String area = request.getParameter("area");
-		String isactive = "1";//全是启用
+		Integer isactive = 1;//全是启用
 		String tel = request.getParameter("telnum");
 		String creater = request.getParameter("creater");
 		String updater = request.getParameter("updater");
@@ -87,7 +87,7 @@ public class PermissionApplyController extends BaseController{
 			User user = new User();
 			user.setUserName(userName);
 			user.setUserMail(useremil);
-			user.setIsActive(1);
+			user.setIsActive(isactive);
 			user.setName(userName);
 			user.setUserIdentity(userid);
 			List<Role> roleList = new ArrayList<>();
@@ -99,8 +99,8 @@ public class PermissionApplyController extends BaseController{
 			user.setIsActive(1);
 			user.setTel(tel);
 			user.setCreater(creater);
+			user.setUpdater(updater);
 			user.setCreateTime(new Date(System.currentTimeMillis()));
-			user.setUpdater(creater);
 			user.setUpdateTime(new Date(System.currentTimeMillis()));
 //
 			ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
@@ -136,11 +136,12 @@ public class PermissionApplyController extends BaseController{
 //
 //				ApplicationOfRolechange addresult = applicationOfRolechangeService.add(applicationOfRolechange);
 //				if (addresult != null) {
-//					bol = true;
+//
 //				}else {
 //					bol = false;
 //				}
-				return true;
+
+                bol = true;
 			} else {
 				bol = false;
 			}
