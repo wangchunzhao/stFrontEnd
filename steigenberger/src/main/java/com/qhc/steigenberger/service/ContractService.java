@@ -92,8 +92,8 @@ public class ContractService {
 	 * @return
 	 */
 	public Result save(Contract contract) {
-		Result result = null;
-		contract.setStatus(1);
+		Result result;
+		contract.setStatus("01");
 		result = (Result) fryeService.postForm("/contract", contract, Result.class);
 		if (result.getStatus().equals("ok")) {
 			result = mapper.convertValue(result,
@@ -150,7 +150,7 @@ public class ContractService {
 		Order order = null;
 		OrderQuery query = new OrderQuery();
 		query.setSequenceNumber(contract.getSequenceNumber());
-		query.setVersionId(contract.getVersionId());
+		query.setId(contract.getOrderInfoId());
 		query.setLast(false);
 		query.setIncludeDetail(true);
 		Result result = orderService.findOrders(query);
@@ -177,14 +177,14 @@ public class ContractService {
 		DecimalFormat df = new DecimalFormat("######0.00");
 		if (order != null) {
 			params.put("customerName", order.getCustomerName());
-			params.put("companyAddress", contract.getPartyaAddress());
+			params.put("companyAddress", contract.getCompanyAddress());
 			params.put("agentName", contract.getBroker());
 			params.put("companyPhone", contract.getCompanyTel());
 			params.put("bankName", contract.getBankName());
 			params.put("bankAccount", contract.getAccountNumber());
 			params.put("companyZipcode", contract.getInvoicePostCode());
 			paraTable2.put("customerName", order.getCustomerName());
-			paraTable2.put("companyAddress", contract.getPartyaAddress());
+			paraTable2.put("companyAddress", contract.getCompanyAddress());
 			paraTable2.put("agentName", contract.getBroker());
 			paraTable2.put("companyPhone", contract.getCompanyTel());
 			paraTable2.put("bankName", contract.getBankName());
@@ -273,17 +273,17 @@ public class ContractService {
 		paramSum.put("finalSumCN", NumberToCNUtil.number2CNMontrayUnit(new BigDecimal(finalSum.doubleValue())));
 
 		params.put("contractCode", contract.getContractNumber());
-		params.put("deliveryIndays", "" + contract.getDeliveryDaysAfterPrepay());
+		params.put("deliveryIndays", "" + contract.getDeliveryDays());
 		// 接货方式-盖章接货
-		params.put("receiveWaysSeal", XwpfUtil.map.get(contract.getReceiveTermsCode().equals("2")));
-		// 接货方式-盖章接货
-		params.put("receiveWaysSign", XwpfUtil.map.get(contract.getReceiveTermsCode().equals("1")));
+		params.put("receiveWaysSeal", XwpfUtil.map.get(contract.getReceiveType().equals("01")));
+		// 接货方式-授权人签字
+		params.put("receiveWaysSign", XwpfUtil.map.get(contract.getReceiveType().equals("02")));
 		// 接货方式-其他
-		params.put("receiveWaysOther", XwpfUtil.map.get(contract.getReceiveTermsCode().equals("0")));
+		params.put("receiveWaysOther", XwpfUtil.map.get(contract.getReceiveType().equals("03")));
 		// 接货人1姓名
-		params.put("receiverUser1", contract.getContractor1Tel());
+		params.put("receiverUser1", contract.getContactor1Tel());
 		// 接货人1身份证号
-		params.put("receiverIdcard1", contract.getContractor1Id());
+		params.put("receiverIdcard1", contract.getContactor1Id());
 		// 终端客户名称
 		params.put("terminalCustname", contract.getClientName());
 		// 实际安装地点
@@ -291,16 +291,16 @@ public class ContractService {
 
 		// 质量标准-其他
 		params.put("qualityStandardOther",
-				XwpfUtil.map.get(contract.getQualityStand() == null || contract.getQualityStand().equals("")));
+				XwpfUtil.map.get(contract.getInstallType() == null || contract.getInstallType().equals("01")));
 		// 质量标准-自安自保
 		params.put("qualityStandardSelfHode",
-				XwpfUtil.map.get(!(contract.getQualityStand() == null || contract.getQualityStand().equals(""))));
+				XwpfUtil.map.get(!(contract.getInstallType() == null || contract.getInstallType().equals("02"))));
 		// 验收标准（方法）-需方负责安装调试
 		params.put("acceptanceStandardBuyer", XwpfUtil.map.get(contract.getAcceptanceCriteriaCode().equals("1001")));
 		// 验收标准（方法）-供方负责安装调试
 		params.put("acceptanceStandardSupplier", XwpfUtil.map.get(contract.getAcceptanceCriteriaCode().equals("1002")));
 		// 结算方式
-		params.put("accountWay", contract.getSettlement());
+		params.put("accountWay", contract.getPaymentType());
 
 		// 发票邮寄地址
 		params.put("invoiceToaddress", contract.getInvoiceAddress());
@@ -357,7 +357,7 @@ public class ContractService {
 
 	private File getPdfFile(Contract contract) {
 		Calendar c = Calendar.getInstance();
-		c.setTime(contract.getProductionTime());
+		c.setTime(contract.getCreateTime());
 		File path = new File(contractDir, String.valueOf(c.get(Calendar.YEAR)));
 		if (!path.exists()) {
 			path.mkdirs();
@@ -366,10 +366,10 @@ public class ContractService {
 		// 需求流水号-签约单位-合同号(核算号)
 		String pdfFileName = "";
 		if (contract.getVersion() != null && !contract.getVersion().isEmpty()) {
-			pdfFileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "("
+			pdfFileName = contract.getSequenceNumber() + "-" + contract.getCustomerName() + "("
 					+ contract.getContractNumber() + "-" + contract.getVersion() + ").pdf";
 		} else {
-			pdfFileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "("
+			pdfFileName = contract.getSequenceNumber() + "-" + contract.getCustomerName() + "("
 					+ contract.getContractNumber() + ").pdf";
 		}
 		File pdfFile = new File(path, pdfFileName);
@@ -378,14 +378,14 @@ public class ContractService {
 
 	private File getWordFile(Contract contract) {
 		Calendar c = Calendar.getInstance();
-		c.setTime(contract.getProductionTime());
+		c.setTime(contract.getCreateTime());
 		File path = new File(contractDir, String.valueOf(c.get(Calendar.YEAR)));
 		if (!path.exists()) {
 			path.mkdirs();
 		}
 
 		// 需求流水号-签约单位-版本号
-		String fileName = contract.getSequenceNumber() + "-" + contract.getContractorName() + "-"
+		String fileName = contract.getSequenceNumber() + "-" + contract.getCustomerName() + "-"
 				+ contract.getVersion() + ".docx";
 		// 需求流水号-签约单位-合同号(核算号)
 		File wordFile = new File(path, fileName);
@@ -404,21 +404,21 @@ public class ContractService {
 
 			Map<String, Object> valMap = new HashMap<>();
 			// 签约单位
-			valMap.put("customerName", contract.getContractorClassName());
+			valMap.put("customerName", contract.getCustomerClazzName());
 			// 合同号(核算号)
 			valMap.put("contractCode", contract.getContractNumber());
 			// 版本号，XX_fXX_yyyy.MM.dd
 			valMap.put("versionNo", contract.getVersion());
 			// 创建日期
-			valMap.put("createDate", contract.getProductionTime());
+			valMap.put("createDate", contract.getCreateTime());
 
-			String filename = contract.getSequenceNumber() + "-" + contract.getContractorCode() + "-"
+			String filename = contract.getSequenceNumber() + "-" + contract.getCustomerCode() + "-"
 					+ contract.getVersion() + ".pdf";
 
 			Mail mail = new Mail();
 			mail.setId(UUID.randomUUID().toString());
 			mail.setFrom(null);
-			mail.setTo(contract.getPartyaMail());
+			mail.setTo(contract.getCustomerEmail());
 			// LinkedHashMap<String, String> attachments = createAttachments(docFile,
 			// fileName);
 			LinkedHashMap<String, File> attachments = new LinkedHashMap<String, File>();

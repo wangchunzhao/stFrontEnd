@@ -31,6 +31,8 @@ public class MenuController extends BaseController {
 	
 	private final static String ORDER_OPTION = "order_option";
 	private final static String ORDER_DETAIL = "orderDetail";
+	//操作订单的类型:1.新增, 2.查看,3修改 
+	private final static String ORDER_OPERATION_TYPE = "orderOperationType";
 	
 	private final static String ERROR_PAGE = "error.html";
 	//
@@ -172,6 +174,7 @@ public class MenuController extends BaseController {
 		orderDetail.setStOrderType("1");
 		mv.addObject(ORDER_OPTION,oo);
 		mv.addObject(ORDER_DETAIL, orderDetail);
+		mv.addObject(ORDER_OPERATION_TYPE, "1");	
 		return mv;
 	}
 	
@@ -192,6 +195,7 @@ public class MenuController extends BaseController {
 		orderDetail.setStOrderType("2");
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
+		mv.addObject(ORDER_OPERATION_TYPE, "1");
 		return mv;
 	}
 	
@@ -212,6 +216,7 @@ public class MenuController extends BaseController {
 		orderDetail.setStOrderType("3");
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
+		mv.addObject(ORDER_OPERATION_TYPE, "1");
 		return mv;
 	}
 	
@@ -232,6 +237,7 @@ public class MenuController extends BaseController {
 		orderDetail.setStOrderType("4");
 		mv.addObject(ORDER_OPTION,oo);	
 		mv.addObject(ORDER_DETAIL, orderDetail);
+		mv.addObject(ORDER_OPERATION_TYPE, "1");
 		return mv;
 	}
 	
@@ -251,6 +257,7 @@ public class MenuController extends BaseController {
 		orderDetail.setStOrderType("5");
 		mv.addObject(ORDER_OPTION,oo);
 		mv.addObject(ORDER_DETAIL, orderDetail);
+		mv.addObject(ORDER_OPERATION_TYPE, "1");
 		return mv;
 	}
 	

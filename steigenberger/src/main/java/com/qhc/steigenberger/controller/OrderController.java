@@ -279,7 +279,7 @@ public class OrderController extends BaseController {
 		
 		try {
 			// 上传到文件名
-			String fileName = file.getName();
+			String fileName = file.getOriginalFilename();
 			Attachment attachment = orderService.writeAttachment(fileName, file.getInputStream());
 			
 			result = Result.ok(attachment);
@@ -294,12 +294,9 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "下载订单资料", notes = "下载订单资料")
 	@GetMapping(value = "download")
 	@ResponseBody
-	public void download(@RequestBody Attachment attachment, HttpServletResponse response) {
-		try {
-			// 文件名
-			String fileName = attachment.getFileName();
-			
-			InputStream in = orderService.readAttachment(attachment);
+	public void download(@RequestParam String fileName, @RequestParam String fileUrl, HttpServletResponse response) {
+		try {		
+			InputStream in = orderService.readAttachment(fileUrl);
 			
 			// 配置文件下载
             response.setHeader("content-type", "application/octet-stream");
@@ -480,11 +477,13 @@ public class OrderController extends BaseController {
 		return orderService.calcGrossProfit(order);
 	}
 	
-	@ApiOperation(value = "查看订单", notes = "查看订单")
-	@GetMapping(value="viewOrder")
+	@ApiOperation(value = "列表跳转不同订单页面", notes = "列表跳转不同订单页面")
+	@GetMapping(value="toOrderPage")
 	@ResponseBody
-	public ModelAndView viewOrder(Integer orderInfoId, ModelAndView view) {
+	public ModelAndView viewOrder(Integer orderInfoId,String orderOperationType, ModelAndView view) {
 		ModelAndView mv = new ModelAndView();
+		//操作订单的类型:1.新增, 2.查看,3修改 前台传入
+		mv.addObject("orderOperationType", orderOperationType);
 		OrderOption oo = null;
 		Result optionResult = orderService.getOrderOption();
 		if (optionResult.getStatus().equals("ok")) {
@@ -566,79 +565,6 @@ public class OrderController extends BaseController {
         mv.addObject("orderDetail",order);
         return mv;
     }
-	
-	@ApiOperation(value = "审批订单", notes = "审批订单")
-	@PostMapping(value="approveOrder")
-	@ResponseBody
-	public ModelAndView approveOrder(HttpServletRequest request,Integer orderInfoId,ModelAndView view) {
-		//取得session中的登陆用户域账号，查询权限
-		String identity = getUserIdentity();
-		User user = userService.selectUserIdentity(identity);//identityName
-		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findByUserId(user.id);
-		OrderOption oo = null;//orderService.getOrderOption();
-		Result result = orderService.findOrderDetail(orderInfoId);
-		Order order = null; 
-		String orderType = null;
-		if (result.getStatus().equals("ok")) {
-			order = (Order)result.getData();
-			orderType = order.getOrderType();
-			oo.setOrderTypeCode(orderType);	
-		}
-		boolean standard = false;
-		if(ORDER_TYPE_DEALER.equals(orderType)&&!StringUtils.isEmpty(oo.getStandardDiscount())) {
-			standard = (Double.valueOf(oo.getStandardDiscount())==order.getMainDiscount()&&Double.valueOf(oo.getStandardDiscount())==order.getBodyDiscount());
-		}
-		oo.setOrderTypeCode(orderType);	
-		ModelAndView mv = null;
-		for(int i = 0; i < userOperationInfoList.size(); i++) {
-			//查询权限id
-			String operationId = userOperationInfoList.get(i).getOperationId();
-			if(operationId.equals(SUPPORT_Order)) {
-				//支持经理
-				if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
-					mv = new ModelAndView("dealerOrder/supportManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
-					mv = new ModelAndView("nonStandardDealerOrder/supportManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_BULK)) {
-					mv = new ModelAndView("stockUpOrder/supportManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
-					mv = new ModelAndView("directCustomerOrder/supportManagerOrder");
-				}			
-				break;
-			}else if(operationId.equals(ENGINEER_Order)) {
-				//工程人员
-				mv = new ModelAndView("directCustomerOrder/engineerManagerOrder");
-				break;
-			}else if(operationId.equals(B2C_Order)) {
-				//B2C			
-				if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
-					mv = new ModelAndView("dealerOrder/b2cManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
-					mv = new ModelAndView("nonStandardDealerOrder/b2cManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_BULK)) {
-					mv = new ModelAndView("stockUpOrder/b2cManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
-					mv = new ModelAndView("directCustomerOrder/b2cManagerOrder");
-				}	
-				break;
-			}else {
-				//客户经理
-				if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
-					mv = new ModelAndView("dealerOrder/customerManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_DEALER)&&standard) {
-					mv = new ModelAndView("nonStandardDealerOrder/customerManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_BULK)) {
-					mv = new ModelAndView("stockUpOrder/customerManagerOrder");
-				}else if(orderType.equals(ORDER_TYPE_KEYACCOUNT)) {
-					mv = new ModelAndView("directCustomerOrder/customerManagerOrder");
-				}	
-			}
-			
-		}
-		mv.addObject("order_option",oo);
-		mv.addObject("orderDetail",order);
-		return mv;
-	}
 	
     @ApiOperation(value = "根据BOM配置获取新的Characteristic和value")
     @PostMapping(value = "material/configuration")

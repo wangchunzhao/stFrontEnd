@@ -27,6 +27,27 @@ $(function () {
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
 	materialTypeTable.init();
 	
+	//文件列表初始化
+	var fileListTable = new TableInit('fileList','','',fileListColumns)
+	fileListTable.init();
+	
+	//文件上传成功处理方法
+	$("#f_upload").on("fileuploaded", function(event, data, previewId, index) {
+		var attachment = data.response.data;
+		var a = $('#fileList').bootstrapTable('getData');
+		var fileListLength = $('#fileList').bootstrapTable('getData').length;
+		$("#fileList").bootstrapTable('insertRow', {
+		    index: fileListLength,
+		    row: {
+		    	index:fileListLength,
+		    	fileName:attachment.fileName,
+		    	fileUrl:attachment.fileUrl
+		    }
+		});
+		//清空文件选择框
+		$(".file-caption-name").val('');
+	});
+	
 	//初始化毛利率table
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 	grossProfitTable.init();	
@@ -51,12 +72,37 @@ $(function () {
 		//修改查看订单时,辉县地址数据
 		fillOrderAddress();
 		initDropDownList();
+		fillAttachments();
 	}
-	
-	
+	if(orderOperationType=="2"){
+		disableAll();
+	}
 });
 
-
+function disableAll(){ 
+	  var form=document.forms[0];
+	  for(var i=0;i<form.length;i++){
+	    var element=form.elements[i];
+	    element.disabled=true;
+	  }
+	  $("#back").attr('disabled',false);
+	  $("#grossClose").attr('disabled',false);
+	  $("#showGrossProfit").attr('disabled',false);
+	  $("#grossCloseb").attr('disabled',false);
+	  $("#grossExport").attr('disabled',false);
+	  $("#collapseShow").attr('disabled',false);
+	  $("#collapseClose").attr('disabled',false);
+	  $("#reject").attr('disabled',false);
+	  $("#approve").attr('disabled',false);
+	  $("#version").attr('disabled',false);
+	  $("#materialsEdit").attr('disabled',true);
+	  $("#copyMaterial").attr('disabled',true);  
+	  if($("#expenseItem")){
+		  $("#expenseItem").find("*").each(function() {
+			 $(this).removeAttr("disabled");
+		  });
+	  }
+}
 
 //获取session中用户信息
 function getUserDetail(){
@@ -324,6 +370,19 @@ function fillOrderAddress(){
 			$("#addressTable").bootstrapTable('insertRow', {
 			    index: i,
 			    row: orderAddress[i]
+			});
+		}
+	}
+}
+
+//修改查看订单时,回显上传附件列表
+function fillAttachments(){
+	if(attachments){
+		for(var i=0;i<attachments.length;i++){
+			var row = attachments[i];
+			$("#fileList").bootstrapTable('insertRow', {
+			    index: i,
+			    row: attachments[i]
 			});
 		}
 	}
@@ -1956,6 +2015,33 @@ function changeRequirement(obj){
 	}
 }
 
+//删除已上传文件
+function removeFile(index){
+	$('#fileList').bootstrapTable('remove', {
+        field: "index",
+        values: index
+    });
+}
+//下载已上传文件
+function downloadFile(fileInfo){
+	var fileName = fileInfo.split(',')[0];
+	var fileUrl = fileInfo.split(',')[1];
+	var myForm = document.createElement("form");
+    myForm.method = "get";
+    myForm.action = ctxPath+"order/download";
+    var seq = document.createElement("input");
+    seq.setAttribute("name", "fileName");
+    seq.setAttribute("value", fileName);
+    var seq1 = document.createElement("input");
+    seq1.setAttribute("name", "fileUrl");
+    seq1.setAttribute("value", fileUrl);
+    myForm.appendChild(seq);
+    myForm.appendChild(seq1);
+    document.body.appendChild(myForm);
+    myForm.submit();
+    document.body.removeChild(myForm);  
+}
+
 function expandAll(){
 	$('#customerBasicInfo').collapse('show');
 	$('#contractBasicInfomation').collapse('show');
@@ -2002,8 +2088,8 @@ function saveOrder(type){
 	 orderData['orderType'] = 'ZH0D';*/
 	 var payments=new Array();
 	 orderData.payments= payments;
-	 var attachments = new Array();
-	 orderData.attachments = new Array()
+	 var attachments = $("#fileList").bootstrapTable('getData');
+	 orderData.attachments = attachments
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
@@ -2243,6 +2329,47 @@ var grossProfitColumns=[
 	{
 		 field: 'grossProfitMargin',
 		 title: '毛利率'
+	}
+]
+
+var fileListColumns=[
+	{
+		 field: 'index',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'id',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'orderInfoId',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'fileName',
+		 title: '已上传文件名称',
+		 width:'75%',
+		 formatter: function(value, row, index) {
+		    	var actions = [];
+				actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+row.fileUrl + '\')">'+value+'</a>');
+				return actions.join('');
+		}
+	},{
+		 field: 'fileUrl',
+		 title: '文件路径',
+		 visible:false
+	},{
+	    title: '操作',
+	    align: 'center',
+	    width:'25%',
+	    formatter: function(value, row, index) {
+	    	var actions = [];
+			actions.push('<a class="btn" onclick="removeFile(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+			return actions.join('');
+		}
 	}
 ]
 

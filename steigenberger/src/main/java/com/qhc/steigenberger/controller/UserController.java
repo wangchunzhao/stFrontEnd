@@ -57,12 +57,14 @@ public class UserController {
 		
 		String msg = "";
 		int status = 0;
-		ApplicationOfRolechange app = new ApplicationOfRolechange();
-		String creator = (String) request.getSession().getAttribute(Constants.IDENTITY);
-		app.setCreator(creator);
-		List<ApplicationOfRolechange> list = new ArrayList<ApplicationOfRolechange>();
-		list.add(app);
-		user.setApps(list);
+//		ApplicationOfRolechange app = new ApplicationOfRolechange();
+//		String creator = (String) request.getSession().getAttribute(Constants.IDENTITY);
+		String updater = (String) request.getSession().getAttribute(Constants.IDENTITY);
+//		app.setCreator(creator);
+//		List<ApplicationOfRolechange> list = new ArrayList<ApplicationOfRolechange>();
+//		list.add(app);
+//		user.setApps(list);
+		user.setUpdater(updater);
 		User result = userService.updateUserInfo(user);
 		if (result != null) {
 			status = 200;
@@ -72,7 +74,6 @@ public class UserController {
 			msg = "操作失败";
 		}
 		return JsonResult.build(status, "角色" + msg, result);
-
 	}
 
 	@RequestMapping("/getOperations")

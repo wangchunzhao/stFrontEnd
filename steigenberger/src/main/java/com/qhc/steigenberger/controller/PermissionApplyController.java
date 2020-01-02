@@ -1,6 +1,7 @@
 package com.qhc.steigenberger.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,7 @@ public class PermissionApplyController extends BaseController{
 		String isactive = "1";//全是启用
 		String tel = request.getParameter("telnum");
 		String creater = request.getParameter("creater");
+		String updater = request.getParameter("updater");
 		//获取域用户
 //		User usersession = getAccount(request);
 		String msg = "";
@@ -83,10 +85,18 @@ public class PermissionApplyController extends BaseController{
 			msg = "该用户已存在";
 		}else {
 			User user = new User();
+			user.setUserName(userName);
 			user.setUserMail(useremil);
 			user.setIsActive(1);
 			user.setName(userName);
 			user.setUserIdentity(userid);
+			List<Role> roleList = new ArrayList<>();
+			Role role = new Role();
+			role.setId(Integer.parseInt(roleId));
+			roleList.add(role);
+			user.setRoles(roleList);
+			user.setOfficeCode(area);
+			user.setIsActive(1);
 			user.setTel(tel);
 			user.setCreater(creater);
 			user.setCreateTime(new Date(System.currentTimeMillis()));
@@ -122,14 +132,15 @@ public class PermissionApplyController extends BaseController{
 		try {
 			User result = userService.add(user);
 			if (result != null && !"".equals(result)) {
-				applicationOfRolechange.setbusersId(result.getId());
-				
-				ApplicationOfRolechange addresult = applicationOfRolechangeService.add(applicationOfRolechange);
-				if (addresult != null) {
-					bol = true;
-				}else {
-					bol = false;
-				}
+//				applicationOfRolechange.setbusersId(result.getId());
+//
+//				ApplicationOfRolechange addresult = applicationOfRolechangeService.add(applicationOfRolechange);
+//				if (addresult != null) {
+//					bol = true;
+//				}else {
+//					bol = false;
+//				}
+				return true;
 			} else {
 				bol = false;
 			}

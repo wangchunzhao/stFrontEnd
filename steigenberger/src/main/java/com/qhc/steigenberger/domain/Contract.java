@@ -1,598 +1,449 @@
 package com.qhc.steigenberger.domain;
 
-
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * 
- * Function: Data transfer object. <br> 
+ * Function: Data transfer object. <br>
  *
  * @author walker
  */
-public class Contract
-		implements Serializable {
+public class Contract implements Serializable {
 	private static final long serialVersionUID = -7870996928236577566L;
-	
+
 	/* Id */
 	private Integer id = null;
+
+	/* OrderInfoId */
+	private Integer orderInfoId = null;
+
+	/* 收到预付款后发货时间 */
+	private Integer deliveryDays = null;
+
+	/* 终端用户店名 */
+	private String clientName = null;
+
+	/* 安装地点 */
+	private String installLocation = null;
+
+	/*
+	 * 验收标准 1001 需方负责安装调试 1002 供方负责安装调试
+	 */
+	private String acceptanceCriteriaCode = null;
+
+	/* 签约单位邮箱 */
+	private String customerEmail = null;
+
+	/* 发票地址 */
+	private String invoiceAddress = null;
+
+	/* 邮政编码 */
+	private String invoicePostCode = null;
+
+	/* 发票接收人 */
+	private String invoiceReceiver = null;
+
+	/* 联系电话 */
+	private String invoiceTel = null;
+
+	/* 委托代理人 */
+	private String broker = null;
+
+	/* 公司电话 */
+	private String companyTel = null;
+
+	/* 银行名称 */
+	private String bankName = null;
+
+	/* 银行账号 */
+	private String accountNumber = null;
+
+	/* 单位地址 */
+	private String companyAddress = null;
+
+	/* 单位邮政编码 */
+	private String companyPostCode = null;
+
+	/*
+	 * 合同状态 01 已制作 02 已发送 03 已发送 04 已上传 05 客户已签署 06 已签署
+	 */
+	private String status = null;
+
+	/* 合同制作人 */
+	private String creater = null;
+
+	/* 合同制作时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
+	private Date createTime = null;
+
+	/* 合同发送人 */
+	private String sender = null;
+
+	/* 合同发送时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
+	private Date sendTime = null;
+
+	/* 合同签署人 */
+	private String signer = null;
+
+	/* 合同签署时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
+	private Date signTime = null;
+
+	/* 合同文档Hash值 */
+	private String fileHashcode = null;
+
+	/* 电子签约中合同Id，存放上上签中的contractId */
+	private String signContractid = null;
+
+	/**
+	 * Order information
+	 */
+	private String version = null;
+	
+	/* 订单创建时间 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
+	private Date orderCreateTime = null;
 
 	/* SequenceNumber */
 	private String sequenceNumber = null;
 
-	/* PartyaCode */
-	private String partyaCode = null;
+	private String contractNumber = null;
 
-	/* PartyaName */
-	private String partyaName = null;
+	private String contractManager = null;
 
-	/* PartyaMail */
-	private String partyaMail = null;
+	private String customerCode;// 签约单位 Contract unit
+	private String customerName;// 签约单位 Contract Name
 
 	/* AmountOnContract */
-	private BigDecimal amountOnContract = null;
-
-	/* DeliveryDaysAfterPrepay */
-	private Short deliveryDaysAfterPrepay = null;
-
-	/* ClientName */
-	private String clientName = null;
-
-	/* InstallLocation */
-	private String installLocation = null;
-
-	/* QualityStand */
-	private String qualityStand = null;
+	private Double contractRmbValue = null;
 
 	/* Settlement */
-	private String settlement = null;
-
-	/* partyaAddress */
-	private String partyaAddress = null;
-
-	/* InvoiceAddress */
-	private String invoiceAddress = null;
-
-	/* Broker */
-	private String broker = null;
-
-	/* InvoiceReceiver */
-	private String invoiceReceiver = null;
-
-	/* InvoiceTel */
-	private String invoiceTel = null;
-
-	/* InvoicePostCode */
-	private String invoicePostCode = null;
-
-	/* CompanyTel */
-	private String companyTel = null;
-
-	/* BankName */
-	private String bankName = null;
-
-	/* AccountNumber */
-	private String accountNumber = null;
-
-	/* OrderVersionId */
-	private String orderVersionId = null;
+	private String paymentType = null;
 
 	/* ReceiveTermsCode */
-	private String receiveTermsCode = null;
+	private String receiveType = null;
 
 	/* ReceiveTermsName */
-	private String receiveTermsName = null;
+	private String receiveTypeName = null;
 
-	/* KAcceptanceCriteriaCode */
-	private String acceptanceCriteriaCode = null;
+	private String contactor1Id;// 授权人1及身份证号
+	private String contactor1Tel;// 授权人1电话
+	private String contactor2Id;// 授权人2及身份证号
+	private String contactor2Tel;// 授权人2电话
+	private String contactor3Id;// 授权人3及身份证号
+	private String contactor3Tel;// 授权人3电话
 
-	/* Mail */
-//	private String mail = null;
+	private String customerClazz;// 性质分类代码，经销商/直签
+	private String customerClazzName;// 性质分类名称
 
-	/* Contractor1Id */
-	private String contractor1Id = null;
-
-	/* Contractor1Tel */
-	private String contractor1Tel = null;
-
-	/* Contractor2Id */
-	private String contractor2Id = null;
-
-	/* Contractor2Tel */
-	private String contractor2Tel = null;
-
-	/* Contractor3Id */
-	private String contractor3Id = null;
-
-	/* Contractor3Tel */
-	private String contractor3Tel = null;
-
-	/* 合同制作时间 */
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-	private Date productionTime = null;
-
-	/* 合同发送时间 */
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-	private Date sendTime = null;
-
-	/* 合同状态：1 未发送 2 已发送 */
-	private Integer status = null;
-
-	// 订单信息
-	/* order id */
-	private String orderId = null;
-
-	/* order version id */
-	private String versionId = null;
-
-	/* order version */
-	private String version = null;
+	private String installType;//安装方式 installation
+	private String installTypeName;//安装方式名称
 	
-	private String contractNumber = null;
-	
-	private String opteratorDomainId = null;
-	
-	private String contractorCode = null;
-	
-	private String contractorName = null;
-	
-	private String contractorClassCode = null;
-	
-	private String contractorClassName = null;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-	private Date createTime = null;
-	
-	@ApiModelProperty("文档Hash值")
-	private String fileHashCode;
-	
-	@ApiModelProperty("电子签约中合同Id")
-	private String signContractId;
-
-
-	public Contract(){
-	}
-
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	 
-	public String getSequenceNumber() {
-		return this.sequenceNumber;
+	public Integer getOrderInfoId() {
+		return orderInfoId;
 	}
-
-	public void setSequenceNumber(String sequenceNumber) {
-		this.sequenceNumber = sequenceNumber;
+	public void setOrderInfoId(Integer orderInfoId) {
+		this.orderInfoId = orderInfoId;
 	}
-	 
-	public String getPartyaCode() {
-		return this.partyaCode;
+	public Integer getDeliveryDays() {
+		return deliveryDays;
 	}
-
-	public void setPartyaCode(String partyaCode) {
-		this.partyaCode = partyaCode;
+	public void setDeliveryDays(Integer deliveryDays) {
+		this.deliveryDays = deliveryDays;
 	}
-	 
-	public String getPartyaName() {
-		return this.partyaName;
-	}
-
-	public void setPartyaName(String partyaName) {
-		this.partyaName = partyaName;
-	}
-	 
-	public String getPartyaMail() {
-		return this.partyaMail;
-	}
-
-	public void setPartyaMail(String partyaMail) {
-		this.partyaMail = partyaMail;
-	}
-	 
-	public BigDecimal getAmountOnContract() {
-		return this.amountOnContract;
-	}
-
-	public void setAmountOnContract(BigDecimal amountOnContract) {
-		this.amountOnContract = amountOnContract;
-	}
-	 
-	public Short getDeliveryDaysAfterPrepay() {
-		return this.deliveryDaysAfterPrepay;
-	}
-
-	public void setDeliveryDaysAfterPrepay(Short deliveryDaysAfterPrepay) {
-		this.deliveryDaysAfterPrepay = deliveryDaysAfterPrepay;
-	}
-	 
 	public String getClientName() {
-		return this.clientName;
+		return clientName;
 	}
-
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
 	}
-	 
 	public String getInstallLocation() {
-		return this.installLocation;
+		return installLocation;
 	}
-
 	public void setInstallLocation(String installLocation) {
 		this.installLocation = installLocation;
 	}
-	 
-	public String getQualityStand() {
-		return this.qualityStand;
-	}
-
-	public void setQualityStand(String qualityStand) {
-		this.qualityStand = qualityStand;
-	}
-	 
-	public String getSettlement() {
-		return this.settlement;
-	}
-
-	public void setSettlement(String settlement) {
-		this.settlement = settlement;
-	}
-	 
-	public String getPartyaAddress() {
-		return partyaAddress;
-	}
-
-	public void setPartyaAddress(String partyaAddress) {
-		this.partyaAddress = partyaAddress;
-	}
-
-	public String getInvoiceAddress() {
-		return this.invoiceAddress;
-	}
-
-	public void setInvoiceAddress(String invoiceAddress) {
-		this.invoiceAddress = invoiceAddress;
-	}
-	 
-	public String getBroker() {
-		return this.broker;
-	}
-
-	public void setBroker(String broker) {
-		this.broker = broker;
-	}
-	 
-	public String getInvoiceReceiver() {
-		return this.invoiceReceiver;
-	}
-
-	public void setInvoiceReceiver(String invoiceReceiver) {
-		this.invoiceReceiver = invoiceReceiver;
-	}
-	 
-	public String getInvoiceTel() {
-		return this.invoiceTel;
-	}
-
-	public void setInvoiceTel(String invoiceTel) {
-		this.invoiceTel = invoiceTel;
-	}
-	 
-	public String getInvoicePostCode() {
-		return this.invoicePostCode;
-	}
-
-	public void setInvoicePostCode(String invoicePostCode) {
-		this.invoicePostCode = invoicePostCode;
-	}
-	 
-	public String getCompanyTel() {
-		return this.companyTel;
-	}
-
-	public void setCompanyTel(String companyTel) {
-		this.companyTel = companyTel;
-	}
-	 
-	public String getBankName() {
-		return this.bankName;
-	}
-
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
-	 
-	public String getAccountNumber() {
-		return this.accountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-	 
-	public String getReceiveTermsCode() {
-		return this.receiveTermsCode;
-	}
-
-	public void setReceiveTermsCode(String receiveTermsCode) {
-		this.receiveTermsCode = receiveTermsCode;
-	}
-	 
-	public String getReceiveTermsName() {
-		return this.receiveTermsName;
-	}
-
-	public void setReceiveTermsName(String receiveTermsName) {
-		this.receiveTermsName = receiveTermsName;
-	}
-	 
-	public String getOrderVersionId() {
-		return orderVersionId;
-	}
-
-	public void setOrderVersionId(String orderVersionId) {
-		this.orderVersionId = orderVersionId;
-	}
-
 	public String getAcceptanceCriteriaCode() {
 		return acceptanceCriteriaCode;
 	}
-
 	public void setAcceptanceCriteriaCode(String acceptanceCriteriaCode) {
 		this.acceptanceCriteriaCode = acceptanceCriteriaCode;
 	}
-
-//	public String getMail() {
-//		return this.mail;
-//	}
-//
-//	public void setMail(String mail) {
-//		this.mail = mail;
-//	}
-	 
-	public String getContractor1Id() {
-		return this.contractor1Id;
+	public String getCustomerEmail() {
+		return customerEmail;
 	}
-
-	public void setContractor1Id(String contractor1Id) {
-		this.contractor1Id = contractor1Id;
+	public void setCustomerEmail(String customerEmail) {
+		this.customerEmail = customerEmail;
 	}
-	 
-	public String getContractor1Tel() {
-		return this.contractor1Tel;
+	public String getInvoiceAddress() {
+		return invoiceAddress;
 	}
-
-	public void setContractor1Tel(String contractor1Tel) {
-		this.contractor1Tel = contractor1Tel;
+	public void setInvoiceAddress(String invoiceAddress) {
+		this.invoiceAddress = invoiceAddress;
 	}
-	 
-	public String getContractor2Id() {
-		return this.contractor2Id;
+	public String getInvoicePostCode() {
+		return invoicePostCode;
 	}
-
-	public void setContractor2Id(String contractor2Id) {
-		this.contractor2Id = contractor2Id;
+	public void setInvoicePostCode(String invoicePostCode) {
+		this.invoicePostCode = invoicePostCode;
 	}
-	 
-	public String getContractor2Tel() {
-		return this.contractor2Tel;
+	public String getInvoiceReceiver() {
+		return invoiceReceiver;
 	}
-
-	public void setContractor2Tel(String contractor2Tel) {
-		this.contractor2Tel = contractor2Tel;
+	public void setInvoiceReceiver(String invoiceReceiver) {
+		this.invoiceReceiver = invoiceReceiver;
 	}
-	 
-	public String getContractor3Id() {
-		return this.contractor3Id;
+	public String getInvoiceTel() {
+		return invoiceTel;
 	}
-
-	public void setContractor3Id(String contractor3Id) {
-		this.contractor3Id = contractor3Id;
+	public void setInvoiceTel(String invoiceTel) {
+		this.invoiceTel = invoiceTel;
 	}
-	 
-	public String getContractor3Tel() {
-		return this.contractor3Tel;
+	public String getBroker() {
+		return broker;
 	}
-
-	public void setContractor3Tel(String contractor3Tel) {
-		this.contractor3Tel = contractor3Tel;
+	public void setBroker(String broker) {
+		this.broker = broker;
 	}
-	 
-	public Date getProductionTime() {
-		return this.productionTime;
+	public String getCompanyTel() {
+		return companyTel;
 	}
-
-	public void setProductionTime(Date productionTime) {
-		this.productionTime = productionTime;
+	public void setCompanyTel(String companyTel) {
+		this.companyTel = companyTel;
 	}
-	 
-	public Date getSendTime() {
-		return this.sendTime;
+	public String getBankName() {
+		return bankName;
 	}
-
-	public void setSendTime(Date sendTime) {
-		this.sendTime = sendTime;
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
 	}
-	 
-	public Integer getStatus() {
-		return this.status;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
-
-	public void setStatus(Integer status) {
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getCompanyAddress() {
+		return companyAddress;
+	}
+	public void setCompanyAddress(String companyAddress) {
+		this.companyAddress = companyAddress;
+	}
+	public String getCompanyPostCode() {
+		return companyPostCode;
+	}
+	public void setCompanyPostCode(String companyPostCode) {
+		this.companyPostCode = companyPostCode;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	 
-	public String getOrderId() {
-		return orderId;
+	public String getCreater() {
+		return creater;
 	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setCreater(String creater) {
+		this.creater = creater;
 	}
-
-	public String getVersionId() {
-		return versionId;
-	}
-
-	public void setVersionId(String versionId) {
-		this.versionId = versionId;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	public String getContractNumber() {
-		return contractNumber;
-	}
-
-	public void setContractNumber(String contractNumber) {
-		this.contractNumber = contractNumber;
-	}
-
-	public String getOpteratorDomainId() {
-		return opteratorDomainId;
-	}
-
-	public void setOpteratorDomainId(String opteratorDomainId) {
-		this.opteratorDomainId = opteratorDomainId;
-	}
-
-	public String getContractorCode() {
-		return contractorCode;
-	}
-
-	public void setContractorCode(String contractorCode) {
-		this.contractorCode = contractorCode;
-	}
-
-	public String getContractorName() {
-		return contractorName;
-	}
-
-	public void setContractorName(String contractorName) {
-		this.contractorName = contractorName;
-	}
-
-	public String getContractorClassCode() {
-		return contractorClassCode;
-	}
-
-	public void setContractorClassCode(String contractorClassCode) {
-		this.contractorClassCode = contractorClassCode;
-	}
-
-	public String getContractorClassName() {
-		return contractorClassName;
-	}
-
-	public void setContractorClassName(String contractorClassName) {
-		this.contractorClassName = contractorClassName;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
-
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-	public String getFileHashCode() {
-		return fileHashCode;
+	public String getSender() {
+		return sender;
 	}
-
-	public void setFileHashCode(String fileHashCode) {
-		this.fileHashCode = fileHashCode;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
-
-	public String getSignContractId() {
-		return signContractId;
+	public Date getSendTime() {
+		return sendTime;
 	}
-
-	public void setSignContractId(String signContractId) {
-		this.signContractId = signContractId;
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
 	}
-
+	public String getSigner() {
+		return signer;
+	}
+	public void setSigner(String signer) {
+		this.signer = signer;
+	}
+	public Date getSignTime() {
+		return signTime;
+	}
+	public void setSignTime(Date signTime) {
+		this.signTime = signTime;
+	}
+	public String getFileHashcode() {
+		return fileHashcode;
+	}
+	public void setFileHashcode(String fileHashcode) {
+		this.fileHashcode = fileHashcode;
+	}
+	public String getSignContractid() {
+		return signContractid;
+	}
+	public void setSignContractid(String signContractid) {
+		this.signContractid = signContractid;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public Date getOrderCreateTime() {
+		return orderCreateTime;
+	}
+	public void setOrderCreateTime(Date orderCreateTime) {
+		this.orderCreateTime = orderCreateTime;
+	}
+	public String getSequenceNumber() {
+		return sequenceNumber;
+	}
+	public void setSequenceNumber(String sequenceNumber) {
+		this.sequenceNumber = sequenceNumber;
+	}
+	public String getContractNumber() {
+		return contractNumber;
+	}
+	public void setContractNumber(String contractNumber) {
+		this.contractNumber = contractNumber;
+	}
+	public String getContractManager() {
+		return contractManager;
+	}
+	public void setContractManager(String contractManager) {
+		this.contractManager = contractManager;
+	}
+	public String getCustomerCode() {
+		return customerCode;
+	}
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public Double getContractRmbValue() {
+		return contractRmbValue;
+	}
+	public void setContractRmbValue(Double contractRmbValue) {
+		this.contractRmbValue = contractRmbValue;
+	}
+	public String getPaymentType() {
+		return paymentType;
+	}
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+	public String getReceiveType() {
+		return receiveType;
+	}
+	public void setReceiveType(String receiveType) {
+		this.receiveType = receiveType;
+	}
+	public String getReceiveTypeName() {
+		return receiveTypeName;
+	}
+	public void setReceiveTypeName(String receiveTypeName) {
+		this.receiveTypeName = receiveTypeName;
+	}
+	public String getContactor1Id() {
+		return contactor1Id;
+	}
+	public void setContactor1Id(String contactor1Id) {
+		this.contactor1Id = contactor1Id;
+	}
+	public String getContactor1Tel() {
+		return contactor1Tel;
+	}
+	public void setContactor1Tel(String contactor1Tel) {
+		this.contactor1Tel = contactor1Tel;
+	}
+	public String getContactor2Id() {
+		return contactor2Id;
+	}
+	public void setContactor2Id(String contactor2Id) {
+		this.contactor2Id = contactor2Id;
+	}
+	public String getContactor2Tel() {
+		return contactor2Tel;
+	}
+	public void setContactor2Tel(String contactor2Tel) {
+		this.contactor2Tel = contactor2Tel;
+	}
+	public String getContactor3Id() {
+		return contactor3Id;
+	}
+	public void setContactor3Id(String contactor3Id) {
+		this.contactor3Id = contactor3Id;
+	}
+	public String getContactor3Tel() {
+		return contactor3Tel;
+	}
+	public void setContactor3Tel(String contactor3Tel) {
+		this.contactor3Tel = contactor3Tel;
+	}
+	public String getCustomerClazz() {
+		return customerClazz;
+	}
+	public void setCustomerClazz(String customerClazz) {
+		this.customerClazz = customerClazz;
+	}
+	public String getCustomerClazzName() {
+		return customerClazzName;
+	}
+	public void setCustomerClazzName(String customerClazzName) {
+		this.customerClazzName = customerClazzName;
+	}
+	public String getInstallType() {
+		return installType;
+	}
+	public void setInstallType(String installType) {
+		this.installType = installType;
+	}
+	public String getInstallTypeName() {
+		return installTypeName;
+	}
+	public void setInstallTypeName(String installTypeName) {
+		this.installTypeName = installTypeName;
+	}
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Contract other = (Contract) obj;
-		return (this.id == null ? other.id == null : this.id.equals(other.id));
-	}
-	
 	public String toString() {
-	    final String tab = "  ";
-	    String str = "";
-	    str = "Contract ( "
-	        + "id = " + this.id + tab
-	        + "sequenceNumber = " + this.sequenceNumber + tab
-	        + "partyaCode = " + this.partyaCode + tab
-	        + "partyaName = " + this.partyaName + tab
-	        + "partyaMail = " + this.partyaMail + tab
-	        + "amountOnContract = " + this.amountOnContract + tab
-	        + "deliveryDaysAfterPrepay = " + this.deliveryDaysAfterPrepay + tab
-	        + "clientName = " + this.clientName + tab
-	        + "installLocation = " + this.installLocation + tab
-	        + "qualityStand = " + this.qualityStand + tab
-	        + "settlement = " + this.settlement + tab
-	        + "partyaAddress = " + this.partyaAddress + tab
-	        + "invoiceAddress = " + this.invoiceAddress + tab
-	        + "broker = " + this.broker + tab
-	        + "invoiceReceiver = " + this.invoiceReceiver + tab
-	        + "invoiceTel = " + this.invoiceTel + tab
-	        + "invoicePostCode = " + this.invoicePostCode + tab
-	        + "companyTel = " + this.companyTel + tab
-	        + "bankName = " + this.bankName + tab
-	        + "accountNumber = " + this.accountNumber + tab
-	        + "kOrderVersionId = " + this.orderVersionId + tab
-	        + "receiveTermsCode = " + this.receiveTermsCode + tab
-	        + "receiveTermsName = " + this.receiveTermsName + tab
-	        + "kAcceptanceCriteriaCode = " + this.acceptanceCriteriaCode + tab
-//	        + "mail = " + this.mail + tab
-	        + "contractor1Id = " + this.contractor1Id + tab
-	        + "contractor1Tel = " + this.contractor1Tel + tab
-	        + "contractor2Id = " + this.contractor2Id + tab
-	        + "contractor2Tel = " + this.contractor2Tel + tab
-	        + "contractor3Id = " + this.contractor3Id + tab
-	        + "contractor3Tel = " + this.contractor3Tel + tab
-	        + "productionTime = " + this.productionTime + tab
-	        + "sendTime = " + this.sendTime + tab
-	        + "status = " + this.status + tab
-	        + " )";
-	
-	    return str;
+		return "Contract [id=" + id + ", orderInfoId=" + orderInfoId + ", deliveryDays=" + deliveryDays
+				+ ", clientName=" + clientName + ", installLocation=" + installLocation + ", acceptanceCriteriaCode="
+				+ acceptanceCriteriaCode + ", customerEmail=" + customerEmail + ", invoiceAddress=" + invoiceAddress
+				+ ", invoicePostCode=" + invoicePostCode + ", invoiceReceiver=" + invoiceReceiver + ", invoiceTel="
+				+ invoiceTel + ", broker=" + broker + ", companyTel=" + companyTel + ", bankName=" + bankName
+				+ ", accountNumber=" + accountNumber + ", companyAddress=" + companyAddress + ", companyPostCode="
+				+ companyPostCode + ", status=" + status + ", creater=" + creater + ", createTime=" + createTime
+				+ ", sender=" + sender + ", sendTime=" + sendTime + ", signer=" + signer + ", signTime=" + signTime
+				+ ", fileHashcode=" + fileHashcode + ", signContractid=" + signContractid + ", version=" + version
+				+ ", orderCreateTime=" + orderCreateTime + ", sequenceNumber=" + sequenceNumber + ", contractNumber="
+				+ contractNumber + ", contractManager=" + contractManager + ", customerCode=" + customerCode
+				+ ", customerName=" + customerName + ", contractRmbValue=" + contractRmbValue + ", paymentType="
+				+ paymentType + ", receiveType=" + receiveType + ", receiveTypeName=" + receiveTypeName
+				+ ", contactor1Id=" + contactor1Id + ", contactor1Tel=" + contactor1Tel + ", contactor2Id="
+				+ contactor2Id + ", contactor2Tel=" + contactor2Tel + ", contactor3Id=" + contactor3Id
+				+ ", contactor3Tel=" + contactor3Tel + ", customerClazz=" + customerClazz + ", customerClazzName="
+				+ customerClazzName + ", installType=" + installType + ", installTypeName=" + installTypeName + "]";
 	}
 
 }

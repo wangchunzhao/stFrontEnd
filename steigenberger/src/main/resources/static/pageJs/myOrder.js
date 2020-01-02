@@ -195,8 +195,9 @@ function operation(value, row, index) {
 }
 
 function viewOrder(orderInfoId){
-	jumpAjax("get", ctxPath+"order/viewOrder", {
-		"orderInfoId" : orderInfoId
+	jumpAjax("get", ctxPath+"order/toOrderPage", {
+		"orderInfoId" : orderInfoId,
+		"orderOperationType" : "2"
 	})
 }
 
