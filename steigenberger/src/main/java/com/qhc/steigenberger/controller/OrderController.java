@@ -109,8 +109,14 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public Result saveOrder(@RequestBody Order order) {
 		String identity = getUserIdentity();
+		Result result;
 		
-		Result result = orderService.saveOrder(identity, order);
+		try {
+			result = orderService.saveOrder(identity, order);
+		} catch (Exception e) {
+			logger.error("保存订单失败", e);
+			result = Result.error("保存订单失败");
+		}
 		
 		return result;
 	}
@@ -126,7 +132,15 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public Result submitOrder(@RequestBody Order order) {
 		String identity = getUserIdentity();	
-		Result result = orderService.submitOrder(identity, order);	
+		Result result;
+		
+		try {
+			result = orderService.submitOrder(identity, order);
+		} catch (Exception e) {
+			logger.error("提交订单失败", e);
+			result = Result.error("提交订单失败");
+		}
+		
 		return result;
 	}
 	
@@ -138,20 +152,19 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("submitbpm")
-	public ModelAndView submitOrderToBpm(@RequestBody Order order) {
+	public Result submitOrderToBpm(@RequestBody Order order) {
 		String identity = this.getUserIdentity();
 		
-		orderService.submitbpmOrder(identity, order);
+		Result result;
 		
-		if (order.getCustomerClazz().equals(Order.ORDER_CUSTOMER_DEALER_CODE)) {
-			if (order.getIsSpecial() == 1) {
-				return menuController.goNonStandardDealerOrder();
-			} else {
-				return menuController.goDealerOrder();
-			}
+		try {
+			result = orderService.submitbpmOrder(identity, order);
+		} catch (Exception e) {
+			logger.error("提交BPM失败", e);
+			result = Result.error("提交BPM失败");
 		}
 		
-		return null;
+		return result;
 	}
 
 
