@@ -706,7 +706,6 @@ function showEditModal(contract) {
 	
 	if (!contract.isedit) {
 		$(":input", "#contractForm").each(function(index,element) {
-			console.log("index : " + index + element);
 			$(element).attr('disabled', true);
 		});
 	}
