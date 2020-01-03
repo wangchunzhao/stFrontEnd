@@ -2131,8 +2131,7 @@ function saveOrder(type){
 			    type: "POST",
 			    success: function(result) { 
 			    	layer.alert('提交成功', {icon: 6});
-			    	//跳转到订单管理页面
-			    	//window.location.href = ctxPath+'menu/orderManageList';
+			    	window.location.href = ctxPath+'menu/orderManageList';
 			    },
 			    error: function(){
 			    	layer.alert('提交失败', {icon: 5});
@@ -2158,6 +2157,88 @@ function saveOrder(type){
 		}); 
 	 }
 	 
+}
+
+
+function goBpm(){	 
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 if(items.length==0){
+		 layer.alert('请添加购销明细', {icon: 5});
+		 return
+	 }
+	var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
+	bootstrapValidator.validate();
+	if(!bootstrapValidator.isValid()){ 
+		layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
+		expandAll()
+		return
+	}
+	$("#transferType").removeAttr("disabled");
+	 /*var version = $("#version").val();
+	 var payment = new Object();
+	 payment['termCode'] = $("#paymentType").val();
+	 payment['termName'] = $("#paymentType").find("option:selected").text();
+	 payment['percentage'] = "1";
+	 payment['payDate'] = $("#inputDate").val();*/
+	 //获取下拉框name
+	 getSelectName();
+	 var orderData = $("#orderForm").serializeObject(); 
+	 $('#transferType').attr("disabled",true);
+	 /*var payments=new Array();
+	 payments.push(payment);
+	 orderData.payments = payments;
+	 orderData['currentVersion'] = version;
+	 orderData['orderType'] = 'ZH0D';*/
+	 var payments=new Array();
+	 orderData.payments= payments;
+	 var attachments = $("#fileList").bootstrapTable('getData');
+	 orderData.attachments = attachments
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 orderData.items = items;
+	 for(var i=0;i<items.length;i++){
+		 var configData = localStorage[items[i].identification];
+		 items[i].isVirtual = 0;
+		 if(configData){
+			 var jsonObject = JSON.parse(configData);
+			 var storedConfigs = jsonObject.configTableData;
+			 var config = new Object();
+			 var configs = new Array();
+			 for(var j=0;j<storedConfigs.length;j++){
+				 config['keyCode'] = storedConfigs[j].code;
+				 config['valueCode'] = storedConfigs[j].configValueCode;
+				 config['configurable'] = items[i].isConfigurable;
+				 configs.push(config);
+			 }
+			 items[i]['configs'] = configs; 
+			 if(!items[i].isConfigurable){
+				if(items[i].itemCategory=='ZHD1'){
+					items[i].itemCategory='ZHD2';
+				}else if(items[i].itemCategory=='ZHD3'){
+					items[i].itemCategory='ZHD4';
+				}else{
+					items[i].itemCategory='ZHR2';
+				}
+				
+			 }
+			 items[i]['configComments'] = jsonObject.remark
+		 } else{
+			 items[i]['configs'] = null;
+		 }	 	 
+	 }
+	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
+	 $.ajax({
+		    url: ctxPath+"order/submitbpm",
+		    contentType: "application/json;charset=UTF-8",
+		    data: JSON.stringify(orderData),
+		    type: "POST",
+		    success: function(result) { 
+		    	layer.alert('提交成功', {icon: 6});
+		    	window.location.href = ctxPath+'menu/orderManageList';
+		    },
+		    error: function(){
+		    	layer.alert('提交失败', {icon: 5});
+		    }
+	});  
 }
 
 
@@ -2279,7 +2360,7 @@ function viewGrossProfit(){
 	$("#grossDate").val($("#inputDate").val());
 	$("#grossClazz").val($("#customerClazz").val());
 	$.ajax({
-	    url: "/steigenberger/order/grossprofit",
+	    url: ctxPath+"order/grossprofit",
 	    contentType: "application/json;charset=UTF-8",
 	    data: JSON.stringify(orderData),
 	    type: "POST",
