@@ -150,8 +150,8 @@ function operation(value, row, index) {
 
 function approveOrder(orderInfoId){
 	var myForm = document.createElement("form");       
-	    myForm.method = "post";  
-	    myForm.action = ctxPath+"order/approveOrder";        
+	    myForm.method = "get";  
+	    myForm.action = ctxPath+"order/toOrderPage";        
 		var seq = document.createElement("input");       
 		seq.setAttribute("name", "orderInfoId");  
 		seq.setAttribute("value", orderInfoId);  
