@@ -79,23 +79,29 @@ $(function () {
 	}
 });
 
+//查看订单页面不能修改
 function disableAll(){ 
 	  var form=document.forms[0];
 	  for(var i=0;i<form.length;i++){
 	    var element=form.elements[i];
 	    element.disabled=true;
 	  }
-	  $("#back").attr('disabled',false);
-	  $("#grossClose").attr('disabled',false);
-	  $("#showGrossProfit").attr('disabled',false);
-	  $("#grossCloseb").attr('disabled',false);
-	  $("#grossExport").attr('disabled',false);
-	  $("#collapseShow").attr('disabled',false);
-	  $("#collapseClose").attr('disabled',false);
-	  $("#reject").attr('disabled',false);
+	  enableButton();
+}
+//设置按钮可用
+function enableButton(){
+	  $(".close").attr('disabled',false);
+	  $("#backButton").attr('disabled',false);
+	  $("#grossProfitCloseBt").attr('disabled',false);
+	  $("#grossProfitExportBt").attr('disabled',false);
+	  $("#showGrossProfitBt").attr('disabled',false);
+	  $("#expandBt").attr('disabled',false);
+	  $("#closeBt").attr('disabled',false);
 	  $("#approve").attr('disabled',false);
 	  $("#version").attr('disabled',false);
 	  $("#materialsEdit").attr('disabled',true);
+	  $("#editAddressBt").attr('disabled',true);
+	  $("#removeAddressBt").attr('disabled',true);
 	  $("#copyMaterial").attr('disabled',true);  
 	  if($("#expenseItem")){
 		  $("#expenseItem").find("*").each(function() {
@@ -2365,29 +2371,12 @@ function viewGrossProfit(){
 	    data: JSON.stringify(orderData),
 	    type: "POST",
 	    success: function(data) { 
-	    	$("#grossProfitTable").bootstrapTable('load', data);
+	    	$("#grossProfitTable").bootstrapTable('load', data.data);
 	    },
 	    error: function(){
 	    	layer.alert('毛利率查看失败', {icon: 5});
 	    }
 	});  
-}
-
-//修改订单时查看毛利率
-function editViewGrossProfit(){
-	$("#grossProfit").modal("show");
-	var version = $("#version").val();
-	var sequenceNumber = $("#sequenceNumber").val();
-	$("#grossSeqNum").val(sequenceNumber);
-	$("#grossVersion").val(version);
-	$("#grossContractRMBValue").val($("#contractAmount").val());
-	$("#grossPerson").val($("#salesName").val());
-	$("#grossDate").val($("#inputDate").val());
-	$("#grossClazz").val($("#customerClazz").val());
-	var opt = {
-			url: '/steigenberger/order/'+sequenceNumber+'/'+version+'/grossprofit'
-	};
-	$("#grossProfitTable").bootstrapTable('refresh', opt);	
 }
 
 var grossProfitColumns=[
@@ -2515,8 +2504,8 @@ var addressColumns = [{
     width:'15%',
     formatter: function(value, row, index) {
     	var actions = [];
-		actions.push('<a class="btn" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-		actions.push('<a class="btn" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+		actions.push('<a class="btn" id="editAddressBt" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		actions.push('<a class="btn" id="removeAddressBt" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
 		return actions.join('');
     }
 }]
