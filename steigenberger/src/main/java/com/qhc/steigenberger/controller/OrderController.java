@@ -182,7 +182,14 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public Result getOrderDetail(@PathVariable("orderInfoId") Integer orderInfoId)
 			throws Exception {
-		Result result = orderService.findOrderDetail(orderInfoId);
+		Result result;
+		
+		try {
+			result = orderService.findOrderDetail(orderInfoId);
+		} catch (Exception e) {
+			logger.error("查询订单详情", e);
+			result = Result.error("查询订单详情");
+		}
 		
 		return result;
 	}
@@ -201,7 +208,39 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public Result toSap(@RequestBody Order order) throws Exception {
 		String identity = getUserIdentity();
-		return orderService.sendToSap(identity, order);
+		Result result;
+		
+		try {
+			result = orderService.sendToSap(identity, order);
+		} catch (Exception e) {
+			logger.error("订单推送到sap", e);
+			result = Result.error("订单推送到sap失败");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 订单变更
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("{orderInfoId}/upgrade")
+	public Result upgrade(@PathVariable("orderInfoId") Integer orderInfoId) {
+		String identity = this.getUserIdentity();
+		
+		Result result;
+		
+		try {
+			result = orderService.upgradeOrder(identity, orderInfoId);
+		} catch (Exception e) {
+			logger.error("订单变更失败", e);
+			result = Result.error("订单变更失败");
+		}
+		
+		return result;
 	}
 
 	@GetMapping("customers")
