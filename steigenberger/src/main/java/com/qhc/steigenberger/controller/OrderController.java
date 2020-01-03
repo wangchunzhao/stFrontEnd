@@ -456,19 +456,19 @@ public class OrderController extends BaseController {
 
 	}
 
-	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@GetMapping(value = "{sequenceNumber}/{version}/wtwgrossprofit")
-	@ResponseBody
-	public List<MaterialGroups> calcWtwGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
-		return orderService.calcWtwGrossProfit(sequenceNumber, version);
-	}
-
-	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@GetMapping(value = "{sequenceNumber}/{version}/grossprofit")
-	@ResponseBody
-	public List<MaterialGroups> calcGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
-		return orderService.calcGrossProfit(sequenceNumber, version);
-	}
+//	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+//	@GetMapping(value = "{sequenceNumber}/{version}/wtwgrossprofit")
+//	@ResponseBody
+//	public List<MaterialGroups> calcWtwGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
+//		return orderService.calcWtwGrossProfit(sequenceNumber, version);
+//	}
+//
+//	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+//	@GetMapping(value = "{sequenceNumber}/{version}/grossprofit")
+//	@ResponseBody
+//	public List<MaterialGroups> calcGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
+//		return orderService.calcGrossProfit(sequenceNumber, version);
+//	}
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
