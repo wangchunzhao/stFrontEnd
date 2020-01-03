@@ -115,6 +115,10 @@
 									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
                                     		编辑 edit
                                 </button>
+                                <button type="button" class="btn btn-danger btn-lg" th:title="${role.id}"
+                                        style="font-size: 13px; padding: 3px 10px;" th:id="${role.id}" onclick="handleDeleteRoleClick(this)">
+                                    DELETE
+                                </button>
 							</td>
 						</tr>
 					</th:block>
@@ -210,6 +214,36 @@
 	    	      return false;
 	          });
           });
+
+        function handleDeleteRoleClick(obj) {
+            var id = $(obj).attr("id");
+            var data={id:id,isActive:0};
+            layer.confirm('是否删除该角色？', {
+                btn: ['删除','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: ctxPath+'role/deleteRole',
+                    contentType:'application/json;charset=utf-8',
+                    data:JSON.stringify(data),
+                    async:false,
+                    success: function (result) {
+                        if (result.status == 200) {
+                            layer.msg('删除成功', {icon: 1});
+                            window.location.href = window.location.href
+                        } else if (result.status == 500) {
+                            layer.msg('删除失败', {icon: 5});
+                        }
+                    },
+                    error : function() {
+                        alert("服务器错误，请稍后再试")
+                    }
+                });
+            }, function(index){
+                layer.close(index)
+            });
+        }
 
         function handleAddRoleClick() {
             var data = {}

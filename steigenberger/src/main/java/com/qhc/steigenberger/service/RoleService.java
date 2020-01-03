@@ -111,5 +111,9 @@ public class RoleService{
 		
 		return fryeService.putInfo(role, URL_ROLE, Role.class);
 	}
+
+	public Role deleteRole(Role role) {
+		return fryeService.postInfo(role, "deleteRole", Role.class);
+	}
 }
 

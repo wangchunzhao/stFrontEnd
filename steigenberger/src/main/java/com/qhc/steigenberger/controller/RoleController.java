@@ -98,5 +98,22 @@ public class RoleController {
 		}
 		return JsonResult.build(status, "角色" + msg, "");
 	}
+
+	@PostMapping("/deleteRole")
+	@ResponseBody
+	public JsonResult deleteRole(@RequestBody Role role) {
+		String msg = "";
+		int status = 0;
+		Role result = roleService.deleteRole(role);
+
+		if (result != null) {
+			status = 200;
+			msg = "删除权限成功";
+		} else {
+			status = 500;
+			msg = "删除权限失败";
+		}
+		return JsonResult.build(status, "角色" + msg, "");
+	}
 	 
 }
