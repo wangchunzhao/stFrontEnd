@@ -473,7 +473,7 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
 	@ResponseBody
-	public List<MaterialGroups> calcGrossProfit(@RequestBody Order order) throws Exception {
+	public Object calcGrossProfit(@RequestBody Order order) throws Exception {
 		return orderService.calcGrossProfit(order);
 	}
 	

@@ -22,8 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.Customer;
@@ -194,20 +197,29 @@ public class OrderService {
 		return (Result) fryeService.postInfo(pars, "material/optionalbom", Result.class);
 	}
 
-	public List<MaterialGroups> calcGrossProfit(Order order) {
+	public Object calcGrossProfit(Order order) {
 		String url = "order/grossprofit";
-		return (List<MaterialGroups>) fryeService.postForm(url, order, ArrayList.class);
+		String json = fryeService.postForm(url, order, String.class);
+		try {
+			return new ObjectMapper().readTree(json);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
-	public List<MaterialGroups> calcWtwGrossProfit(String sequenceNumber, String version) {
-		String url = "order/" + sequenceNumber + "/" + version + "/wtwgrossprofit";
-		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
-	}
-
-	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
-		String url = "order/" + sequenceNumber + "/" + version + "/grossprofit";
-		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
-	}
+//	public List<MaterialGroups> calcWtwGrossProfit(String sequenceNumber, String version) {
+//		String url = "order/" + sequenceNumber + "/" + version + "/wtwgrossprofit";
+//		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
+//	}
+//
+//	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
+//		String url = "order/" + sequenceNumber + "/" + version + "/grossprofit";
+//		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
+//	}
 
 	/**
 	 * 保存附件
