@@ -686,6 +686,7 @@ function edit(index) {
 		    	}else{
 		    		// console.log(data.data)
 		    		contract = data.data;
+		    		contract.isedit = true;
 		    		// setEditInfo(row, contract);
 		    		showEditModal(contract);
 		    	}      
@@ -693,6 +694,7 @@ function edit(index) {
 		});		
 	} else {
 		setEditInfo(row, contract);
+		contract.isedit = true;
 		showEditModal(contract);
 	}
 }
@@ -701,6 +703,13 @@ function edit(index) {
 function showEditModal(contract) {	
 	var html = template('contract-edit-tpl', contract);
 	$("#contractDialogBody").html(html);
+	
+	if (!contract.isedit) {
+		$(":input", "#contractForm").each(function(index,element) {
+			console.log("index : " + index + element);
+			$(element).attr('disabled', true);
+		});
+	}
 	// initValidator();
 	$("#contractDialog").modal('show');
 }
