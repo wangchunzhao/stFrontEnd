@@ -298,6 +298,10 @@
 												data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
                                     		 edit
                                 		</button>
+										<button type="button" class="btn btn-danger btn-lg" th:title="${user.userIdentity}"
+												style="font-size: 13px; padding: 3px 10px;" th:id="${user.id}" onclick="handleDeleteUserClick(this)">
+											DELETE
+										</button>
 									</td>
 								</tr>
 							</th:block>
@@ -450,6 +454,35 @@
 			cancel: function(){
 				layer.msg('test', {time: 5000, icon:6});
 			}
+		});
+	}
+	function handleDeleteUserClick(obj) {
+		var id = $(obj).attr("id");
+		var data={id:id,isActive:0};
+		layer.confirm('是否删除该用户？', {
+			btn: ['删除','取消'] //按钮
+		}, function(){
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: ctxPath+'user/update',
+				contentType:'application/json;charset=utf-8',
+				data:JSON.stringify(data),
+				async:false,
+				success: function (result) {
+					if (result.status == 200) {
+						layer.msg('删除成功', {icon: 1});
+						window.location.href = window.location.href
+					} else if (result.status == 500) {
+						layer.msg('删除失败', {icon: 5});
+					}
+				},
+				error : function() {
+					alert("服务器错误，请稍后再试")
+				}
+			});
+		}, function(index){
+			layer.close(index)
 		});
 	}
 </script>	
