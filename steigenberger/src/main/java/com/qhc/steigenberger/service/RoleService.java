@@ -25,6 +25,10 @@ public class RoleService{
 	
 	private final static String URL_ROLE = "role";
 	private final static String URL_ROLE_PERMESSION = "role/permessions";
+
+	public Role addRole(Role role) {
+		return fryeService.postInfo(role, URL_ROLE, Role.class);
+	}
 	
 	public PageInfo<Role> selectAndPage(int pageNum, int pageSize, Role role) {
 		PageHelper.startPage(pageNum, pageSize);

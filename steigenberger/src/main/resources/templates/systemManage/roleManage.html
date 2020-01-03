@@ -23,6 +23,10 @@
 <script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
 <!-- //chart -->
 
+<!-- Art Template -->
+<script type="text/javascript" src="../js/template-web.js"></script>
+<!-- // Art Template -->
+
 <!-- Metis Menu -->
 <script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
 <script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
@@ -86,6 +90,7 @@
             <h4 class="panel-title">
                 <a class="" role="button" data-toggle="collapse"  href="#collapseTwo-magical-coder-auto-id-1564364869430" aria-expanded="true">角色列表 Role list</a>
             </h4>
+            <button type="button" onclick="handleAddRoleClick()" class="btn btn-primary" style="float: right;margin-top: -10px">角色新增</button>
         </div>
         <div  class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;" mc-ace="~">
@@ -105,19 +110,11 @@
 						<tr th:each="role,roleStart: ${datas.content}">
 							<td th:text="${roleStart.count}">560001</td>
 							<td th:text="${role?.name}" value="${role?.name}">Bangalore</td>
-<!--							<td >-->
-<!--								<a href="javascript:void(0);" class="isActive" th:text="${role.isActive>0?'启用' :'禁用'}" th:style="${role.isActive>0?'color:green' :'color:red'}" th:onclick="'javascript:update('+${role.id}+')' "></a>-->
-<!--							</td>-->
 							<td>
-                                <!-- <button type="button" class="btn btn-primary btn-lg update" data-toggle="modal" th:title="${role.id}"
-                                data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
-                                    		编辑 edit
-                                </button> -->
                                 <button type="button" class="btn btn-primary btn-lg update_auth"  th:title="${role.id}"
 									data-target="#magicalcoderMyModal-magical-coder-auto-id-1564365300654" style="font-size: 13px; padding: 3px 10px;">
                                     		编辑 edit
                                 </button>
-                                
 							</td>
 						</tr>
 					</th:block>
@@ -130,6 +127,53 @@
     </div>
 </div>
 </div>
+
+<!-- 新增角色模板 -->
+<script id="add-role-tpl" type="text/html">
+    <div class="panel-body" style="height: auto;">
+        <form role="form"  class="form">
+            <input type="hidden" id="roleId"/>
+            <div class="row" style="padding: 3px 10px;margin-top:15px;margin-right:15px">
+                <div class="col-xs-12">名称</div>
+            </div>
+            <div class="row" style="padding: 3px 10px;margin-right:15px">
+                <div class="col-xs-12">
+                    <input type="text" class="form-control" id="name"/>
+                </div>
+            </div>
+            <div class="form-group text-righ" style="padding: 3px 10px;margin-top:65px;margin-right:15px">
+                <button type="button" class="submit btn btn-primary pull-right "
+                        style="font-size: 15px; padding: 3px 10px;float:right;margin-right:15px" onclick="AddRole()">新增</button>
+            </div>
+        </form>
+    </div>
+</script>
+<script>
+    function AddRole() {
+        var name = $("#name").val();
+        var data={name:name};
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: ctxPath+'role/add',
+            contentType:'application/json;charset=utf-8',
+            data:JSON.stringify(data),
+            async:false,
+            success: function (result) {
+                if (result.status == 200) {
+                    layer.msg('添加角色成功', {icon: 1});
+                    window.location.href = window.location.href
+                } else if (result.status == 500) {
+                    layer.msg('添加角色失败', {icon: 5});
+                }
+            },
+            error : function() {
+                alert("服务器错误，请稍后再试")
+            }
+        });
+    }
+</script>
+
 <!--<script src="../js/classie.js"></script>-->
 <script type="text/javascript">
 	var ctxPath  = [[@{/}]];
@@ -147,8 +191,7 @@
 	  				$(".roleform .isActive").val(0);
 	  			}
     	  });
-    	  
-    	  
+
 	    	  $("#btn_select").on("click",function(){
 	    		  // var name=$(".searchVal1").val();
 	    	      // var isActive=$(".searchVal2").val();
@@ -167,31 +210,20 @@
 	    	      return false;
 	          });
           });
-      
-		function update(id){
-			var url=ctxPath+"role/update?id="+id;
-			 $.ajax(
- 		      		{type:"GET",
- 		      		   url: url,
- 		      		   contentType:'application/json;charset=utf-8',
- 		      		   success: function(data){	  
- 		      			if(data.status>200){
- 	 	       		    	toastr.warning(data.msg);  
-	 	 	       		    setTimeout(function(){
-	 	 	       		    	window.location.reload();
-	 	 	       		     },2000);
- 	 	       		    }else{
- 	 	       		    	toastr.success(data.msg);
- 	 	       		        setTimeout(function(){
- 	 	       		    	window.location.href = ctxPath+"/role/index";
- 	 	       		        },2000);
- 	 	       		    } 		
- 		      		   },
- 		      		  error: function (xhr) {
- 		      	        console.log(xhr);
- 		      	    } });
-	
-		}
+
+        function handleAddRoleClick() {
+            var data = {}
+            var html = template('add-role-tpl', data);
+            layer.open({
+                type: 1,
+                area: ['640px', '320px'], //宽高
+                shadeClose: false, //点击遮罩关闭
+                content: html,
+                cancel: function(){
+
+                }
+            });
+        }
 
 		function showmsg(data){
 	    	  if(data.status>200){
@@ -240,9 +272,10 @@
       	}
       </script>
  	  <script src="../pageJs/main.js" type="text/javascript" ></script>
-      <!--scrolling js-->
-      <script src="../js/jquery.nicescroll.js"></script>
-      <script src="../js/scripts.js"></script>
+        <!--scrolling js-->
+        <script src="../js/jquery.nicescroll.js"></script>
+        <script src="../js/scripts.js"></script>
+        <script src="../js/layer.js"></script>
       <!-- side nav js -->
       <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
       <script>

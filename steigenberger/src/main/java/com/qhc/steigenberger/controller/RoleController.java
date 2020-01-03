@@ -43,7 +43,22 @@ public class RoleController {
 		return "systemManage/roleManage";
 	}
 
-	
+	@PostMapping("/add")
+	@ResponseBody
+	public JsonResult add(@RequestBody Role role) {
+		String msg = "";
+		int status = 0;
+		Role result = roleService.addRole(role);
+		if (result != null) {
+			status = 200;
+			msg = "操作成功！";
+		} else {
+			status = 500;
+			msg = "操作失败";
+		}
+		return JsonResult.build(status, "角色" + msg, "");
+	}
+
 	@RequestMapping("/update")
 	@ResponseBody
 	public JsonResult update(@RequestParam Integer id,HttpServletRequest request) {
@@ -58,7 +73,6 @@ public class RoleController {
 			msg = "操作失败";
 		}
 		return JsonResult.build(status, "角色" + msg, "");
-
 	}
 	
 	 @GetMapping("/authorization")
