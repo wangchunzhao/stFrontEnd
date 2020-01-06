@@ -228,6 +228,7 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("{orderInfoId}/upgrade")
+	@ResponseBody
 	public Result upgrade(@PathVariable("orderInfoId") Integer orderInfoId) {
 		String identity = this.getUserIdentity();
 		
