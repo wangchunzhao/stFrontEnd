@@ -177,21 +177,18 @@ function operation(value, row, index) {
 	var currentVersionStatus = row.status;
 	var orderInfoId = row.id;
 	var buttonControl = row.buttonControl;
-	var htm="";
-	if(currentVersionStatus.substring(0,2)=="03"&&buttonControl=="true"){
-		htm = "<button type='button' class='btn btn-warning' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>";
-	}else{
-		//var deletehtm = "<button class='btn btn-danger'>删除</button>";
-		var deletehtm = "";
-		/*if (orderType == "ZH0M") {
-			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editStockUpOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
-		} else {
-			var editHtml = "<a type='button' class='btn btn-primary' id='editOrder' onclick='editOrder(\"" + sequenceNumber + "\",\"" + orderType + "\",\"" + currentVersion + "\")'>编辑</button>";
-		}*/
-		var viewHtm = "<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</button>";
-		htm =htm+deletehtm+'&nbsp'+viewHtm;
+	var actions = [];
+	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</button>");
+	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
+	if(currentVersionStatus=="05"&&buttonControl=="true"){
+		actions.push("<button type='button' class='btn btn-warning' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>");
+		actions.push("<button type='button' class='btn btn-warning' id=tosap' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</button>");
 	}
-	return htm;
+	if(currentVersionStatus=="09"&&buttonControl=="true"){
+		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
+	}
+
+	return actions.join('');
 }
 
 function viewOrder(orderInfoId){
@@ -229,6 +226,26 @@ function tosap(seqNumb,ordType,version) {
 			alert('下推订单失败！')
 		}
 	},'text');
+}
+
+function upgradeOrder(orderInfoId){
+	layer.confirm("确定要变更订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+        var url = ctxPath+"order/"+parseInt(orderInfoId)+"/upgrade";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: null,
+            dataType: "json",
+            success: function (data) {
+            	if(data == null || data.status != 'ok'){
+		    		layer.alert("订单变更失败：：" + (result != null ? result.msg : ""));
+		    	}else{
+		    		layer.alert('订单变更成功', {icon: 6});
+		    		$('#mytab').bootstrapTable('refresh');
+		    	} 	
+            }
+        });
+    });
 }
 
 //查询按钮事件
