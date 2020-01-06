@@ -545,31 +545,30 @@
 			<div id="infoCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
-						<div class="col-md-6">							
+						<div class="col-md-3">
 							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()" style="margin-right: 25px;">
 								查看毛利表 Gross profit table
 							</button>
-							
+						</div>
+						<div class="col-md-3">
 							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}"data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
 								查看合同 Look at the contract
 							</button>
 						</div>
-						<div class="row">
-							<div class="col-md-2">
-								客户确认资料 Customer data
-							</div>
-							<div class="col-md-6">						
-								<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3" style="text-align: center;">
+							客户确认资料 Customer data
 						</div>
-						<div class="row">
-							<div class="col-md-6">
-							</div>
-							<!-- style="display:none;" -->
-							<div class="col-md-6" >						
-								<table id="fileList" data-pagination="false"  class="table table-hover"></table>
-							</div>
-						</div> 		 						
+						<div class="col-md-8">
+							<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-12" >
+							<table id="fileList" data-pagination="false"  class="table table-hover"></table>
+						</div>
 					</div>
 					<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
@@ -677,7 +676,7 @@
 	</div>
 	
 	<!-- 底部Button  -->
-	<div th:fragment="footerButton">
+	<div th:fragment="footerButton" style="margin-top: 10px">
 		<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()" th:if="${orderOperationType=='1'||orderOperationType=='3'}" id="saveButton">保存 save</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='1'||(orderOperationType=='3'&&(orderDetail.status=='00'||orderDetail.status=='02'))}" id="submitButton">提交 submit</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="goBpm()" th:if="${orderOperationType=='3'&&orderDetail.status=='03'}" id="bpmSubmitButton">提交 BPM</button>
