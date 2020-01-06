@@ -2136,8 +2136,12 @@ function saveOrder(type){
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(result) { 
-			    	layer.alert('提交成功', {icon: 6});
-			    	window.location.href = ctxPath+'menu/orderManageList';
+			    	if(result == null || result.status != 'ok'){
+			    		layer.alert("提交订单失败:" + (result != null ? result.msg : ""));
+			    	}else{
+			    		layer.alert('提交订单成功', {icon: 6});
+			    		window.location.href = ctxPath+'menu/orderManageList';
+			    	} 	
 			    },
 			    error: function(){
 			    	layer.alert('提交失败', {icon: 5});
@@ -2238,8 +2242,12 @@ function goBpm(){
 		    data: JSON.stringify(orderData),
 		    type: "POST",
 		    success: function(result) { 
-		    	layer.alert('提交成功', {icon: 6});
-		    	window.location.href = ctxPath+'menu/orderManageList';
+		    	if(result == null || result.status != 'ok'){
+		    		layer.alert("提交BPM失败：" + (result != null ? result.msg : ""));
+		    	}else{
+		    		layer.alert('提交BPM成功', {icon: 6});
+		    		window.location.href = ctxPath+'menu/orderManageList';
+		    	} 	
 		    },
 		    error: function(){
 		    	layer.alert('提交失败', {icon: 5});

@@ -228,7 +228,7 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("{orderInfoId}/upgrade")
-	public Result upgrade(@PathVariable("orderInfoId") Integer orderInfoId) {
+	public Result upgrade(@PathVariable("orderInfoId") int orderInfoId) {
 		String identity = this.getUserIdentity();
 		
 		Result result;
