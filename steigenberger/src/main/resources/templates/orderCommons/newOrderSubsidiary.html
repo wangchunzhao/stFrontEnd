@@ -125,7 +125,7 @@
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">折扣率</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="discount" disabled>
+							      <input type="text" class="form-control" id="discount" th:attr="disabled=${orderDetail.stOrderType!='2'}">
 							    </div>
 							    <span class="col-md-1">行项目类别</span>
 								<div class="col-md-2">

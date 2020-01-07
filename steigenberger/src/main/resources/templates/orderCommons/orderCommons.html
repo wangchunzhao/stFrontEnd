@@ -334,7 +334,7 @@
 					    </div>
 						    <span class="col-md-1 control-label">合并折扣折扣</span>
 							<div class="col-md-2">
-								<input type="text" class="form-control" id="discount" aria-describedby="emailHelp" th:filed="*{discount}" readonly>
+								<input type="text" class="form-control" aria-describedby="emailHelp" th:filed="*{discount}" readonly>
 						    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
@@ -546,7 +546,7 @@
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
 						<div class="col-md-3">
-							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()" style="margin-right: 25px;">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
 								查看毛利表 Gross profit table
 							</button>
 						</div>
@@ -555,18 +555,17 @@
 								查看合同 Look at the contract
 							</button>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3" style="text-align: center;">
+						<div class="col-md-3" style="text-align: left;">
 							客户确认资料 Customer data
 						</div>
-						<div class="col-md-8">
+						<div class="col-md-3">
 							<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
 						</div>
-						<div class="col-md-1"></div>
 					</div>
 					<div class="row">
-						<div class="col-md-12" >
+						<div class="col-md-6">
+						</div>
+						<div class="col-md-6" >
 							<table id="fileList" data-pagination="false"  class="table table-hover"></table>
 						</div>
 					</div>
