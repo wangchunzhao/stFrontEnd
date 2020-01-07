@@ -2099,7 +2099,10 @@ function saveOrder(type){
 	 orderData['orderType'] = 'ZH0D';*/
 	 var payments=new Array();
 	 orderData.payments= payments;
-	 var attachments = $("#fileList").bootstrapTable('getData');
+	 var attachments = [];
+	 if($("#fileList").length>0){
+		 attachments = $("#fileList").bootstrapTable('getData');
+	 }
 	 orderData.attachments = attachments
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
