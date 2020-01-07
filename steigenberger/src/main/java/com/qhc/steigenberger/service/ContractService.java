@@ -76,12 +76,29 @@ public class ContractService {
 		return result;
 	}
 
-	public Result<Contract> find(Integer contractId) {
+	public Result find(Integer contractId) {
 		Result result = (Result) fryeService.getInfo("/contract/" + contractId, Result.class);
 		if (result.getStatus().equals("ok")) {
 			Contract contract = new ObjectMapper().convertValue(result.getData(), Contract.class);
 			result.setData(contract);
 		}
+		return result;
+	}
+
+	public Result findByOrderInfoId(Integer orderInfoId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("orderInfoId", orderInfoId);
+		Result result = (Result) fryeService.getInfo("/contract", params, Result.class);
+		if (result.getStatus().equals("ok")) {
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(PageHelper.class, Contract.class);
+			PageHelper<Contract> page = mapper.convertValue(result.getData(), javaType);
+			if (page.getRows() != null && page.getRows().size() > 0) {
+				result.setData(page.getRows().get(0));
+			} else {
+				result.setData(null);
+			}
+		}
+
 		return result;
 	}
 

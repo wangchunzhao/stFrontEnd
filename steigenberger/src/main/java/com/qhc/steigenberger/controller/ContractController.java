@@ -245,7 +245,7 @@ public class ContractController {
 	@RequestMapping({ "{id}/download" })
 	public void downloadContract(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String idStr = request.getParameter("id");
-		Contract contract = this.contractService.find(Integer.valueOf(idStr)).getData();
+		Contract contract = (Contract)this.contractService.find(Integer.valueOf(idStr)).getData();
 
 		String signContractId = contract.getSignContractid();
 		byte[] zipBytes = this.contractService.doDownloadFromSignSystem(signContractId);

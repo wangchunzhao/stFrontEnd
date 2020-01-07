@@ -15,9 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.Constants;
-import com.qhc.steigenberger.domain.Characteristic;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialBom;
-import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
@@ -44,6 +39,7 @@ import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.domain.form.Attachment;
 import com.qhc.steigenberger.domain.form.BomQueryModel;
 import com.qhc.steigenberger.domain.form.Order;
+import com.qhc.steigenberger.service.ContractService;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
@@ -94,9 +90,9 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
-	
+
 	@Autowired
-	MenuController menuController;
+	ContractService contractService;
 
 	/**
 	 * 保存订单
@@ -239,6 +235,30 @@ public class OrderController extends BaseController {
 		} catch (Exception e) {
 			logger.error("订单变更失败", e);
 			result = Result.error("订单变更失败");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 订单对应的合同
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("{orderInfoId}/contract")
+	@ResponseBody
+	public Result contract(@PathVariable("orderInfoId") Integer orderInfoId) {
+		String identity = this.getUserIdentity();
+		
+		Result result;
+		
+		try {
+			result = contractService.findByOrderInfoId(orderInfoId);
+		} catch (Exception e) {
+			logger.error("查询订单合同失败", e);
+			result = Result.error("查询订单合同失败");
 		}
 		
 		return result;
