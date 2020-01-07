@@ -71,8 +71,9 @@
 					    </div>
 						<span class="col-md-1 control-label">项目报备编号</span>
 						<div class="col-md-2">
-					      <input type="text" class="form-control" id="recordCode" th:field="*{recordCode}">
-					    </div>
+					      <input type="text" class="form-control" id="recordCode" th:if="${orderType!=4}" th:field="*{recordCode}">
+							<input type="text" class="form-control" readonly id="recordCode" th:if="${orderType==4}" th:field="*{recordCode}">
+						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
 						<span class="col-md-1 control-label">客户经理</span>
@@ -91,12 +92,19 @@
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-						 <span class="col-md-1 control-label">终端客户性质</span>
-						<div class="col-md-2">
+						<span class="col-md-1 control-label" th:if="${orderType!=4}">终端客户性质</span>
+						<div class="col-md-2" th:if="${orderType!=4}">
 					      <select class="form-control" id="industryCode"  th:field="*{terminalType}">
 								<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 						  </select>
 					    </div>
+						<span class="col-md-1 control-label" th:if="${orderType==4}">是否年采客户</span>
+						<div class="col-md-2" th:if="${orderType==4}">
+							<select class="form-control" readonly disabled th:field="*{isYearpurchase}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
+						</div>
 					    <input type="hidden" id="customerIndustryName" th:field="*{customerIndustryName}">
 					</div>
 					<div class="row" style="margin-top: 15px;">
@@ -114,6 +122,14 @@
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
+						<span class="col-md-1 control-label" th:if="${orderType==4}">隶属关系</span>
+						<div class="col-md-2" th:if="${orderType==4}">
+							<input type="text" class="form-control" id="customerIndustryName" readonly th:field="*{customerIndustryName}">
+						</div>
+						<span class="col-md-1 control-label" th:if="${orderType==4}">客户分类</span>
+						<div class="col-md-2" th:if="${orderType==4}">
+							<input type="text" class="form-control" id="customerIndustryCodeName" readonly th:field="*{customerIndustryCodeName}">
+						</div>
 					</div>
 				</div>
 			</div>
