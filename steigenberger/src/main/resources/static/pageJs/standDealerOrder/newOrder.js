@@ -767,7 +767,12 @@ function searchSpecification(){
 function queryMaterialTypeParams(params) {
     params.pageNo = this.pageNumber;
     params.materialName = $("#materialsName").val();
-    params.industoryCode = $("#customerIndustryCode").val();
+    //经销商先固定为unkn
+   if($("#orderType").val()=="ZH0D"){
+    	params.industoryCode = "unkn";	
+    }else{
+    	 params.industoryCode = $("#customerIndustryCode").val();
+   }  
     return params;
 }
 

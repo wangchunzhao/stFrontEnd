@@ -27,7 +27,7 @@
 		<input type="hidden" th:field="*{version}">
 		<input type="hidden" th:field="*{isActive}">
 		<div id="page-wrapper">
-			<div th:replace="orderCommons/orderCommons::path(mainPath=新建订单,subPath=标准折扣下单)">	</div>
+			<div th:replace="orderCommons/orderCommons::path(mainPath=新建需求,subPath=直签客户投标报价)">	</div>
 			<div th:replace="orderCommons/orderCommons::expandButton">	</div>
 			<div id="accordion1" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 10px; margin-left: 20px; margin-right: 20px;">
 				<div th:replace="orderCommons/orderCommons::customerBasicInfo(4)">	</div>	
@@ -35,7 +35,8 @@
 				<div th:replace="orderCommons/orderCommons::contractDetailInfo(4)">	</div>		
 				<div th:replace="orderCommons/orderCommons::paymentType(4)">	</div>	
 				<div th:replace="orderCommons/orderCommons::purchaseAndSubsidisry(4)">	</div>	
-				<div th:replace="orderCommons/orderCommons::viewInfo">	</div>	
+				<div th:replace="orderCommons/orderCommons::viewInfoForDirectCustomer">	</div>
+				<div th:replace="orderCommons/orderCommons::viewAttachmentInformation">	</div>
 			</div>
 			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()">保存 save</button>
 			<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')">提交 submit</button>
@@ -50,7 +51,7 @@
 	<div th:replace="orderCommons/materialconfig::materialconfig"></div> 	
 <script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
 <script th:inline="javascript" th:src="@{/pageJs/materialColumn.js}"></script>
-<script th:inline="javascript" th:src="@{/pageJs/standDealerOrder/newOrder.js}"></script>
+<script th:inline="javascript" th:src="@{/pageJs/directCustomerOrder/newOrder.js}"></script>
 <script th:inline="javascript" type="text/javascript">
 	var ctxPath  = [[@{/}]];
 	var materialGroupMapGroupOrder = [[${order_option.materialGroupMapGroupOrder}]]
@@ -75,6 +76,10 @@
 	    }
 	    return 'V'+dateString+num;
 	} */
+		var status = $("#status").val();
+		var shippingTypesMap = [[${order_option.shippingTypes}]]
+		var attachments = [[${orderDetail.attachments}]]
+		var orderOperationType = [[${orderOperationType}]]
 </script>
 </body>
 </html>
