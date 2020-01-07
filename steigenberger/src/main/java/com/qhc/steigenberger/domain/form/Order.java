@@ -201,6 +201,12 @@ public class Order {
 
 	private List<Item> items;
 	private int isB2c; // 是否由B2C备注
+	/* 是否全部为散件 */
+	private Integer isBulkCargo = null;
+	/* 是否特批发货/紧急发货 */
+	private Integer isUrgentDelivery = null;
+	/* 不可预估项 */
+	private String unpredictable = null;
 	private String grossProfitMargin; // 订单毛利率
 	
 	private String comments;//备注
@@ -959,6 +965,30 @@ public class Order {
 		this.isB2c = isB2c;
 	}
 
+	public Integer getIsBulkCargo() {
+		return isBulkCargo;
+	}
+
+	public void setIsBulkCargo(Integer isBulkCargo) {
+		this.isBulkCargo = isBulkCargo;
+	}
+
+	public Integer getIsUrgentDelivery() {
+		return isUrgentDelivery;
+	}
+
+	public void setIsUrgentDelivery(Integer isUrgentDelivery) {
+		this.isUrgentDelivery = isUrgentDelivery;
+	}
+
+	public String getUnpredictable() {
+		return unpredictable;
+	}
+
+	public void setUnpredictable(String unpredictable) {
+		this.unpredictable = unpredictable;
+	}
+
 	public String getGrossProfitMargin() {
 		return grossProfitMargin;
 	}
@@ -1030,36 +1060,43 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "OrderDto [id=" + id + ", orderId=" + orderId + ", createTime=" + createTime + ", creater=" + creater
+		return "Order [id=" + id + ", orderId=" + orderId + ", createTime=" + createTime + ", creater=" + creater
 				+ ", createrName=" + createrName + ", updateTime=" + updateTime + ", updater=" + updater
-				+ ", updaterName=" + updaterName + ", version=" + version + ", status=" + status + ", versions="
-				+ versions + ", userOfficeCode=" + userOfficeCode + ", submitTime=" + submitTime + ", submitBpmTime="
-				+ submitBpmTime + ", orderType=" + orderType + ", customerCode=" + customerCode + ", customerName="
-				+ customerName + ", customerClazz=" + customerClazz + ", customerClazzName=" + customerClazzName
-				+ ", terminalType=" + terminalType + ", terminalTypeName=" + terminalTypeName + ", shopName=" + shopName
-				+ ", recordCode=" + recordCode + ", salesCode=" + salesCode + ", salesName=" + salesName + ", salesTel="
-				+ salesTel + ", isConvenientStore=" + isConvenientStore + ", isNew=" + isNew + ", isReformed="
-				+ isReformed + ", isYearpurchase=" + isYearpurchase + ", customerIndustry=" + customerIndustry
-				+ ", customerIndustryName=" + customerIndustryName + ", sequenceNumber=" + sequenceNumber
-				+ ", contractNumber=" + contractNumber + ", saleType=" + saleType + ", taxRate=" + taxRate
-				+ ", incoterm=" + incoterm + ", incotermName=" + incotermName + ", incotermContect=" + incotermContect
-				+ ", contractValue=" + contractValue + ", contractRmbValue=" + contractRmbValue + ", currency="
-				+ currency + ", currencyName=" + currencyName + ", currencyExchange=" + currencyExchange
-				+ ", itemsAmount=" + itemsAmount + ", contractManager=" + contractManager + ", contractCreateTime="
-				+ contractCreateTime + ", officeCode=" + officeCode + ", officeName=" + officeName + ", groupCode="
-				+ groupCode + ", groupName=" + groupName + ", warranty=" + warranty + ", installType=" + installType
-				+ ", installTypeName=" + installTypeName + ", receiveType=" + receiveType + ", receiveTypeName="
-				+ receiveTypeName + ", transferType=" + transferType + ", transferTypeName=" + transferTypeName
-				+ ", freight=" + freight + ", contactor1Id=" + contactor1Id + ", contactor1Tel=" + contactor1Tel
-				+ ", contactor2Id=" + contactor2Id + ", contactor2Tel=" + contactor2Tel + ", contactor3Id="
-				+ contactor3Id + ", contactor3Tel=" + contactor3Tel + ", deliveryAddress=" + deliveryAddress
-				+ ", bodyDiscount=" + bodyDiscount + ", approvedBodyDiscount=" + approvedBodyDiscount
-				+ ", mainDiscount=" + mainDiscount + ", approvedMainDiscount=" + approvedMainDiscount + ", discount="
-				+ discount + ", isLongterm=" + isLongterm + ", isSpecial=" + isSpecial + ", paymentType=" + paymentType
-				+ ", payments=" + payments + ", isTerm1=" + isTerm1 + ", isTerm2=" + isTerm2 + ", isTerm3=" + isTerm3
-				+ ", earliestDeliveryDate=" + earliestDeliveryDate + ", earliestProductDate=" + earliestProductDate
-				+ ", items=" + items + ", isB2c=" + isB2c + ", grossProfitMargin=" + grossProfitMargin + ", comments="
-				+ comments + ", attachments=" + attachments + "]";
+				+ ", updaterName=" + updaterName + ", version=" + version + ", versionNum=" + versionNum + ", isActive="
+				+ isActive + ", status=" + status + ", versions=" + versions + ", userOfficeCode=" + userOfficeCode
+				+ ", stOrderType=" + stOrderType + ", quoteStatus=" + quoteStatus + ", submitTime=" + submitTime
+				+ ", submitBpmTime=" + submitBpmTime + ", orderType=" + orderType + ", customerCode=" + customerCode
+				+ ", customerName=" + customerName + ", customerClazz=" + customerClazz + ", customerClazzName="
+				+ customerClazzName + ", terminalType=" + terminalType + ", terminalTypeName=" + terminalTypeName
+				+ ", shopName=" + shopName + ", recordCode=" + recordCode + ", salesCode=" + salesCode + ", salesName="
+				+ salesName + ", salesTel=" + salesTel + ", isConvenientStore=" + isConvenientStore + ", isNew=" + isNew
+				+ ", isReformed=" + isReformed + ", isYearpurchase=" + isYearpurchase + ", customerIndustryCode="
+				+ customerIndustryCode + ", customerIndustryCodeName=" + customerIndustryCodeName
+				+ ", customerIndustry=" + customerIndustry + ", customerIndustryName=" + customerIndustryName
+				+ ", sequenceNumber=" + sequenceNumber + ", contractNumber=" + contractNumber + ", saleType=" + saleType
+				+ ", taxRate=" + taxRate + ", incoterm=" + incoterm + ", incotermName=" + incotermName
+				+ ", incotermContect=" + incotermContect + ", contractValue=" + contractValue + ", contractRmbValue="
+				+ contractRmbValue + ", currency=" + currency + ", currencyName=" + currencyName + ", currencyExchange="
+				+ currencyExchange + ", itemsAmount=" + itemsAmount + ", contractManager=" + contractManager
+				+ ", contractCreateTime=" + contractCreateTime + ", officeCode=" + officeCode + ", officeName="
+				+ officeName + ", groupCode=" + groupCode + ", groupName=" + groupName + ", warranty=" + warranty
+				+ ", installType=" + installType + ", installTypeName=" + installTypeName + ", receiveType="
+				+ receiveType + ", receiveTypeName=" + receiveTypeName + ", transferType=" + transferType
+				+ ", transferTypeName=" + transferTypeName + ", freight=" + freight + ", contactor1Id=" + contactor1Id
+				+ ", contactor1Tel=" + contactor1Tel + ", contactor2Id=" + contactor2Id + ", contactor2Tel="
+				+ contactor2Tel + ", contactor3Id=" + contactor3Id + ", contactor3Tel=" + contactor3Tel
+				+ ", deliveryAddress=" + deliveryAddress + ", bodyDiscount=" + bodyDiscount + ", approvedBodyDiscount="
+				+ approvedBodyDiscount + ", mainDiscount=" + mainDiscount + ", approvedMainDiscount="
+				+ approvedMainDiscount + ", discount=" + discount + ", isLongterm=" + isLongterm + ", isSpecial="
+				+ isSpecial + ", paymentType=" + paymentType + ", payments=" + payments + ", isTerm1=" + isTerm1
+				+ ", isTerm2=" + isTerm2 + ", isTerm3=" + isTerm3 + ", installFee=" + installFee + ", materialFee="
+				+ materialFee + ", electricalFee=" + electricalFee + ", refrigeratoryFee=" + refrigeratoryFee
+				+ ", maintenanceFee=" + maintenanceFee + ", earliestDeliveryDate=" + earliestDeliveryDate
+				+ ", earliestProductDate=" + earliestProductDate + ", items=" + items + ", isB2c=" + isB2c
+				+ ", isBulkCargo=" + isBulkCargo + ", isUrgentDelivery=" + isUrgentDelivery + ", unpredictable="
+				+ unpredictable + ", grossProfitMargin=" + grossProfitMargin + ", comments=" + comments
+				+ ", attachments=" + attachments + ", buttonControl=" + buttonControl + "]";
 	}
+
 	
 }

@@ -12,18 +12,15 @@ public class UserOperationInfoService {
 
 	@Autowired
 	FryeService fryeService;
-	
-	private final static String URL_KORDERS = "userOperationInfo";
 
 	public List<UserOperationInfo> findByUserId(Integer userId) {
-		String url =URL_KORDERS+"/"+userId;
-		return fryeService.getListInfo(url,UserOperationInfo.class);
-    }
-	
+		String url = "userOperationInfo/" + userId;
+		return fryeService.getListInfo(url, UserOperationInfo.class);
+	}
+
 	public List<UserOperationInfo> findAll() {
-		String url =URL_KORDERS;
-		return fryeService.getListInfo(url,UserOperationInfo.class);
-    }
-	
-	
+		String url = "userOperationInfo";
+		return fryeService.getListInfo(url, UserOperationInfo.class);
+	}
+
 }
