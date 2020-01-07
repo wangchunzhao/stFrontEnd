@@ -285,9 +285,9 @@
 							</select>
 							<input type="hidden" id="transferTypeName" th:field="*{transferTypeName}">
 					    </div>
-					    <span class="col-md-1 control-label">标准折扣</span>
+					    <span class="col-md-1 control-label" th:if="${orderType!=4}">标准折扣</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="standardDiscount" readonly th:value="${order_option.standardDiscount}">
+							<input type="text" class="form-control" id="standardDiscount" readonly th:if="${orderType!=4}" th:value="${order_option.standardDiscount}">
 					    </div>
 					    <div id="freightDiv" style="display:none;">
 						    <span class="col-md-1 control-label">外销运费</span>
@@ -325,6 +325,19 @@
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 					    </div>
+					</div>
+					<div class="row" style="margin-top: 15px;" th:if="${orderType==4}">
+						<span class="col-md-1 control-label">是否全部为散件</span>
+						<div class="col-md-2">
+							<select class="form-control" th:field="*{isNew}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
+						</div>
+						<span class="col-md-1 control-label">不可预估项</span>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="itemsAmount">
+						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
 						<span class="col-md-1 control-label">批准折扣</span>
@@ -479,7 +492,7 @@
 						</div>
 						<div class="col-xs-3 col-md-3"></div>
 						<div class="col-xs-3 col-md-3">
-							<select class="form-control" id="version">
+							<select class="form-control" id="version" th:if="${orderType!=4}">
 							</select>
 						</div>
 					</div>
@@ -572,7 +585,7 @@
 							</button>
 						</div>
 						<div class="col-md-3">
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}"data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
 								查看合同 Look at the contract
 							</button>
 						</div>
@@ -580,7 +593,7 @@
 							客户确认资料 Customer data
 						</div>
 						<div class="col-md-3">
-							<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
+							<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload" th:if="${orderType!=4}"/>
 						</div>
 					</div>
 					<div class="row">
@@ -689,6 +702,55 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--信息查看 For ViewInfoForDirectCustomer  -->
+	<div th:fragment="viewInfoForDirectCustomer">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#infoCheck" aria-expanded="true" class="">信息查看 Check the information</a>
+				</h4>
+			</div>
+			<div id="infoCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+				<div class="panel-body" style="height: auto;" mc-ace="~">
+					<div class="row">
+						<div class="col-md-3">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
+								查看毛利表 Gross profit table
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--附件信息-->
+	<div th:fragment="viewAttachmentInformation">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#attachmentInformationCheck" aria-expanded="true" class="">附件信息 Attachment Information</a>
+				</h4>
+			</div>
+			<div id="attachmentInformationCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+				<div class="row" style="margin-right: 10px;margin-bottom: 10px;">
+					<div class="col-md-2" style="text-align: center;color: #686868;">
+						客户合同：
+					</div>
+					<div class="col-md-4">
+						<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
+					</div>
+					<div class="col-md-2" style="text-align: center;color: #686868;">
+						商务招标方案：
+					</div>
+					<div class="col-md-4">
+						<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload"/>
 					</div>
 				</div>
 			</div>
