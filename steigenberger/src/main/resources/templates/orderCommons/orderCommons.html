@@ -152,10 +152,14 @@
 						<div class="col-md-2">
 					      <input type="text" class="form-control" id="sequenceNumber" aria-describedby="emailHelp" th:field="*{sequenceNumber}" readonly>
 					    </div>
-					    <span class="col-md-1 control-label">合同号</span>
-						<div class="col-md-2">
+					    <span class="col-md-1 control-label" th:if="${orderType!=4}">合同号</span>
+						<div class="col-md-2" th:if="${orderType!=4}">
 							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" readonly>
 					    </div>
+						<span class="col-md-1 control-label" th:if="${orderType==4}">核算号</span>
+						<div class="col-md-2" th:if="${orderType==4}">
+							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" readonly>
+						</div>
 					    <span class="col-md-1 control-label">销售类型</span>
 						<div class="col-md-2">
 							<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" th:field="*{saleType}" id="saleType">
@@ -183,8 +187,9 @@
 					    <input type="hidden" id="currencyName"  th:field="*{currencyName}">
 					    <span class="col-md-1 control-label">合同金额</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:field="*{contractRmbValue}">
-					    </div>
+							<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:if="${orderType!=4}" th:field="*{contractRmbValue}">
+							<input type="text" class="form-control" id="contractAmount" aria-describedby="emailHelp" th:if="${orderType==4}" th:field="*{contractRmbValue}">
+						</div>
 					    <input type="hidden" id="contractRmbValue" th:value="*{contractRmbValue}">
 					    <span class="col-md-1 control-label">购销明细金额合计</span>
 						<div class="col-md-2">
