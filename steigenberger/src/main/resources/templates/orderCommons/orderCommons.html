@@ -329,14 +329,14 @@
 					<div class="row" style="margin-top: 15px;" th:if="${orderType==4}">
 						<span class="col-md-1 control-label">是否全部为散件</span>
 						<div class="col-md-2">
-<!--							<select class="form-control" th:field="*{isNew}">-->
-<!--								<option value="1" class="">是</option>-->
-<!--								<option value="0" class="">否</option>-->
-<!--							</select>-->
+							<select class="form-control" th:field="*{isBulkCargo}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
 						</div>
 						<span class="col-md-1 control-label">不可预估项</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="itemsAmount">
+							<input type="text" class="form-control" id="unpredictable" th:field="*{unpredictable}">
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
