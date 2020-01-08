@@ -1,63 +1,103 @@
-/**
- * 
- */
 package com.qhc.steigenberger.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-
+/**
+ * @author Walker
+ *
+ */
 public class Characteristic {
-	private String classCode;
-	private String code;
-	private String name;
-	private boolean isOptional;
-	private Set<Configuration> configs;
-	
-	public Characteristic() {
-		configs = new HashSet<Configuration>();
+
+	/* Id */
+	private Integer id = null;
+
+	/* ItemDetailId */
+	private Integer itemId = null;
+
+	/* 选定的特征代码 */
+	private String keyCode = null;
+
+	/* 选定的特征代码 */
+	private String keyName = null;
+
+	/* 选定的特征值的代码 */
+	private String valueCode = null;
+
+	/* 选定的特征值的代码 */
+	private String valueName = null;
+
+	/* 可选 */
+	private boolean optional = false;
+
+	/* 可配置 */
+	private boolean configurable = false;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public String getClassCode() {
-		return classCode;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setClassCode(String classCode) {
-		this.classCode = classCode;
+	public Integer getItemId() {
+		return itemId;
 	}
 
-	public String getCode() {
-		return code;
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public String getKeyCode() {
+		return keyCode;
 	}
 
-	public String getName() {
-		return name;
+	public void setKeyCode(String keyCode) {
+		this.keyCode = keyCode;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getKeyName() {
+		return keyName;
+	}
+
+	public void setKeyName(String keyName) {
+		this.keyName = keyName;
+	}
+
+	public String getValueCode() {
+		return valueCode;
+	}
+
+	public void setValueCode(String valueCode) {
+		this.valueCode = valueCode;
+	}
+
+	public String getValueName() {
+		return valueName;
+	}
+
+	public void setValueName(String valueName) {
+		this.valueName = valueName;
 	}
 
 	public boolean isOptional() {
-		return isOptional;
+		return optional;
 	}
 
-	public void setOptional(boolean isOptional) {
-		this.isOptional = isOptional;
+	public void setOptional(boolean optional) {
+		this.optional = optional;
 	}
 
-	public Set<Configuration> getConfigs() {
-		return configs;
+	public boolean isConfigurable() {
+		return configurable;
 	}
 
-	public void setConfigs(Set<Configuration> configs) {
-		this.configs = configs;
+	public void setConfigurable(boolean configurable) {
+		this.configurable = configurable;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Characteristic [id=" + id + ", itemId=" + itemId + ", keyCode=" + keyCode + ", keyName=" + keyName
+				+ ", valueCode=" + valueCode + ", valueName=" + valueName + ", optional=" + optional + ", configurable="
+				+ configurable + "]";
+	}
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.qhc.steigenberger.domain.form;
+package com.qhc.steigenberger.domain;
 
 import java.util.Date;
 

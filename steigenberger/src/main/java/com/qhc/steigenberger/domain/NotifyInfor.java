@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import com.qhc.steigenberger.util.Page;
 
-public class BNotifyInfor extends Page implements Serializable {
+public class NotifyInfor extends Page implements Serializable {
 	
 	private int id;
 	

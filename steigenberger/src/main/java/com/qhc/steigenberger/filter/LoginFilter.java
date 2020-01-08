@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.Constants;
@@ -93,7 +94,7 @@ public class LoginFilter implements Filter{
 
 	        //业务代码
 	        HttpSession session = req.getSession(true);
-	        if (session == null || session.getAttribute(Constants.IDENTITY) == null) {
+	        if (session == null || StringUtils.isEmpty(session.getAttribute(Constants.IDENTITY))) {
 	        	logger.info("No Authorization info.");
 	        	
 	        	if (isNotJson) {
@@ -121,7 +122,6 @@ public class LoginFilter implements Filter{
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
     }
 
 }

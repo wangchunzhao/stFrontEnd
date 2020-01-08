@@ -5,14 +5,10 @@ package com.qhc.steigenberger.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,18 +22,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qhc.steigenberger.domain.Characteristic;
+import com.qhc.steigenberger.domain.Attachment;
 import com.qhc.steigenberger.domain.Customer;
 import com.qhc.steigenberger.domain.Material;
-import com.qhc.steigenberger.domain.MaterialGroups;
+import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
 import com.qhc.steigenberger.domain.OrderVersion;
 import com.qhc.steigenberger.domain.Result;
-import com.qhc.steigenberger.domain.form.Attachment;
-import com.qhc.steigenberger.domain.form.Order;
 import com.qhc.steigenberger.util.PageHelper;
 
 /**

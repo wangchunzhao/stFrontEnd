@@ -3,11 +3,11 @@ package com.qhc.steigenberger.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qhc.steigenberger.domain.BProvince;
+import com.qhc.steigenberger.domain.City;
 import com.qhc.steigenberger.util.PageHelper;
 
 @Service
-public class BProvinceService {
+public class CityService {
 	
 	@Autowired
 	FryeService fryeService;
@@ -15,11 +15,11 @@ public class BProvinceService {
 	@Autowired
 	FryeService pageFryeService;
 	
-	private final static String URL_KORDERS = "bProvince";
+	private final static String URL_KORDERS = "bCity";
 	
 	
-	public BProvince add(BProvince bProvince) {
-		return fryeService.postInfo(bProvince,URL_KORDERS, BProvince.class);
+	public City add(City bCity) {
+		return fryeService.postInfo(bCity,URL_KORDERS, City.class);
 	}
 
 }

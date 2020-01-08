@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qhc.steigenberger.Constants;
-import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
@@ -24,7 +23,7 @@ import com.qhc.steigenberger.service.UserService;
 
 @RequestMapping("user")
 @Controller
-public class UserController {
+public class UserController extends BaseController {
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -79,20 +78,7 @@ public class UserController {
 	@RequestMapping("/getOperations")
 	@ResponseBody
 	public JsonResult getOperations(HttpServletRequest request) {
-		String userIdentity = (String)request.getSession().getAttribute(Constants.IDENTITY);
-		String msg = "";
-		int status = 0;
-		User result = userService.selectUserIdentity(userIdentity);
-		result.setUserName(result.getName());
-		if (result.getOperations() != null&&result.getOperations().size()>0) {
-			status = 200;
-			msg = "查询成功!";
-		} else {
-			status = 500;
-			msg = "查询失败";
-		}
-		return JsonResult.build(status,msg,result);
-
+		return JsonResult.build(200,"查询成功!",getAccount());
 	}
 	
 	

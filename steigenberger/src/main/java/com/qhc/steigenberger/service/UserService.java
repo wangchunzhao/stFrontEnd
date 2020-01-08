@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.RestPage;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
@@ -21,15 +20,11 @@ public class UserService{
 	@Autowired
 	RoleService roleService;
 	
-	private final static String URL_USER_PAGEABLELIST = "user/paging";
-	
-	private final static String URL_USER = "user";
-
 	public List<User> getList(User user) {
 		Integer isActive = user.getIsActive();
 		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
 		String userMail = user.getUserMail()==null?"":user.getUserMail();
-		String url = URL_USER+"?userIdentity"+userIdentity+"&userMail="+userMail+"&isActive="+isActive;
+		String url = "user?userIdentity"+userIdentity+"&userMail="+userMail+"&isActive="+isActive;
 		return  fryeService.getListInfo(url,User.class);
 	}
 	
@@ -38,7 +33,7 @@ public class UserService{
 		String userMail = user.getUserMail()==null?"":user.getUserMail();
 		String userIdentity = user.getUserIdentity()==null?"":user.getUserIdentity();
 
-		String url = URL_USER+"/"+pageNum+"/"+pageSize+"?isActive="+
+		String url = "user/"+pageNum+"/"+pageSize+"?isActive="+
 		isActive+"&userIdentity="+userIdentity+"&userMail="+userMail;
 		
 		return pageFryeService.getInfo(url, RestPage.class);
@@ -47,24 +42,24 @@ public class UserService{
 
 	public User saveUserInfo(User user) {
 		
-		return fryeService.postInfo(user,URL_USER, User.class);
+		return fryeService.postInfo(user,"user", User.class);
 	}
 	
 	
 	public User updateUserInfo(User user) {
 		
-		return fryeService.postInfo(user,URL_USER, User.class);
+		return fryeService.postInfo(user,"user", User.class);
 	}
 	
 	
 	public User add(User user) {
 		
-		return fryeService.postInfo(user,URL_USER, User.class);
+		return fryeService.postInfo(user,"user", User.class);
 	}
 	
 	
 	public User selectUserIdentity(String str) {
-		String url = URL_USER+"/"+str;
+		String url = "user/"+str;
 		return fryeService.getInfo(url, User.class);
 	}
 

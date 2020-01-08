@@ -23,7 +23,7 @@ public class OrderOption {
 	private String sequenceNumber;
 	private Map<String,String> provinces;//Map<province code,province name>
 	private Map<String,Map<String,String>> citys;//Map<province code,Map<city code,city name>>
-	private Set<BArea> districts;
+	private Set<Area> districts;
 	private Map<String,String> termialClass;
 	/**sale type code**/
 	private Map<String,String> saleTypes;
@@ -101,11 +101,11 @@ public class OrderOption {
 		this.citys = citys;
 	}
 
-	public Set<BArea> getDistricts() {
+	public Set<Area> getDistricts() {
 		return districts;
 	}
 
-	public void setDistricts(Set<BArea> districts) {
+	public void setDistricts(Set<Area> districts) {
 		this.districts = districts;
 	}
 

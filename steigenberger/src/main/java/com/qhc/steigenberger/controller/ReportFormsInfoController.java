@@ -21,10 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mangofactory.swagger.models.dto.Model;
-import com.qhc.steigenberger.domain.KOrderInfo;
+import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.ReportFormsInfo;
 import com.qhc.steigenberger.domain.SalesOffice;
-import com.qhc.steigenberger.service.KOrderInfoService;
 import com.qhc.steigenberger.service.ReportFormsInfoService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
@@ -95,7 +94,7 @@ public class ReportFormsInfoController{
 	
 	@RequestMapping("/exportExcel")
 	@ResponseBody
-	public void exportExcel(KOrderInfo kOrderInfo,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void exportExcel(Order order,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
 		String customer = request.getParameter("customer");
 		String area = request.getParameter("area");
@@ -103,8 +102,8 @@ public class ReportFormsInfoController{
 		if(createTime !=null && !"".equals(createTime)) {
 			String startTime = createTime.substring(0, 10);
 			String endTime = createTime.substring(createTime.length()-10);
-			kOrderInfo.setStartTime(startTime);
-			kOrderInfo.setEndTime(endTime);
+//			order.setStartTime(startTime);
+//			order.setEndTime(endTime);
 		}
 		
 		List<HashMap<String, Object>> listMap = new ArrayList<>();

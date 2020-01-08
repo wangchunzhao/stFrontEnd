@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.qhc.steigenberger.util.Page;
 
-public class BArea extends Page implements Serializable{
+public class Area extends Page implements Serializable{
 	
 	public String code;
 	

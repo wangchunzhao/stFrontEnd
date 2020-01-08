@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qhc.steigenberger.Constants;
+import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.domain.form.Order;
-import com.qhc.steigenberger.service.OperationService;
 import com.qhc.steigenberger.service.ParameterService;
 import com.qhc.steigenberger.service.RoleService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
@@ -182,7 +181,7 @@ public class MenuController extends BaseController {
 	public ModelAndView goNonStandardDealerOrder() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
-		if(result.getStatus()!="ok") {
+		if(!"ok".equals(result.getStatus())) {
 			mv.setViewName(ERROR_PAGE);
 			mv.addObject("msg", result.getMsg());
 			return mv;
@@ -203,7 +202,7 @@ public class MenuController extends BaseController {
 	public ModelAndView goDirectCustomerTenderOff() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
-		if(result.getStatus()!="ok") {
+		if(!"ok".equals(result.getStatus())) {
 			mv.setViewName(ERROR_PAGE);
 			mv.addObject("msg", result.getMsg());
 			return mv;
@@ -224,7 +223,7 @@ public class MenuController extends BaseController {
 	public ModelAndView goDirectCustomerCreateOrder() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
-		if(result.getStatus()!="ok") {
+		if(!"ok".equals(result.getStatus())) {
 			mv.setViewName(ERROR_PAGE);
 			mv.addObject("msg", result.getMsg());
 			return mv;
@@ -245,7 +244,7 @@ public class MenuController extends BaseController {
 	public ModelAndView goStockUpOrder() {
 		ModelAndView mv = new ModelAndView();
 		Result result = this.getOrderOption();
-		if(result.getStatus()!="ok") {
+		if(!"ok".equals(result.getStatus())) {
 			mv.setViewName(ERROR_PAGE);
 			mv.addObject("msg", result.getMsg());
 			return mv;

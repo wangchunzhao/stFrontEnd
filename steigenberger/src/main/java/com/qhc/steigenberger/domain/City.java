@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.qhc.steigenberger.util.Page;
 
-public class BCity extends Page implements Serializable{
+public class City extends Page implements Serializable{
 	
 	public String code;
 	

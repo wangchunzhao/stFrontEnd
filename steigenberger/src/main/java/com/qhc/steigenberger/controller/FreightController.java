@@ -1,35 +1,24 @@
 package com.qhc.steigenberger.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.qhc.steigenberger.domain.BArea;
-import com.qhc.steigenberger.domain.BCity;
-import com.qhc.steigenberger.domain.BProvince;
 import com.qhc.steigenberger.domain.Freight;
 import com.qhc.steigenberger.domain.JsonResult;
-import com.qhc.steigenberger.domain.KOrderInfo;
-import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.domain.UserOperationInfo;
-import com.qhc.steigenberger.service.BAreaService;
-import com.qhc.steigenberger.service.BCityService;
-import com.qhc.steigenberger.service.BProvinceService;
+import com.qhc.steigenberger.service.AreaService;
+import com.qhc.steigenberger.service.CityService;
+import com.qhc.steigenberger.service.ProvinceService;
 import com.qhc.steigenberger.util.ExcelUtil;
-import com.qhc.steigenberger.util.FileHandleUtil;
 import com.qhc.steigenberger.util.ObjectConvertUtils;
 import com.qhc.steigenberger.util.PageHelper;
 
@@ -40,13 +29,13 @@ import com.qhc.steigenberger.util.PageHelper;
 public class FreightController {
 	
 	@Autowired
-	BProvinceService bProvinceService;
+	ProvinceService bProvinceService;
 	
 	@Autowired
-	BCityService bCityService;
+	CityService bCityService;
 	
 	@Autowired
-	BAreaService bAreaService;
+	AreaService bAreaService;
 	
 	
 	@RequestMapping("/index")

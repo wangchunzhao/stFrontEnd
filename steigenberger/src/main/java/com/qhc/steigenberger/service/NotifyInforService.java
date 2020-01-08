@@ -8,16 +8,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qhc.steigenberger.domain.ApplicationOfRolechange;
-import com.qhc.steigenberger.domain.BNotifyInfor;
+import com.qhc.steigenberger.domain.NotifyInfor;
+import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.JsonResult;
-import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.domain.UserOperationInfo;
 import com.qhc.steigenberger.util.EmailTool;
 
 @Service
-public class BNotifyInforService {
+public class NotifyInforService {
 	
 	@Autowired
 	FryeService fryeService;
@@ -35,14 +34,14 @@ public class BNotifyInforService {
 	
 	private final static String URL = "bNotifyInfor";
 	
-	public BNotifyInfor add(BNotifyInfor bNotifyInfor) {
+	public NotifyInfor add(NotifyInfor bNotifyInfor) {
 		
-		return fryeService.postInfo(bNotifyInfor,URL, BNotifyInfor.class);
+		return fryeService.postInfo(bNotifyInfor,URL, NotifyInfor.class);
 		
 	}
 	
 	//订单编号，客户经理，订单类型，签约人，发送人员组
-	public void sendEmail(KOrderInfo kOrderInfo) {
+	public void sendEmail(Order order) {
 		
 		List<UserOperationInfo> userOperationInfoList = userOperationInfoService.findAll();
 		List<String> list = new ArrayList<String>();
@@ -60,16 +59,16 @@ public class BNotifyInforService {
 		String join = String.join(",", list);
 		System.out.println(array[0]);
 		//准备信息发邮件
-		String title = "您好:"+kOrderInfo.getCreateId()+"申请的"+kOrderInfo.getContractUnit()+"的"+kOrderInfo.getOrderType()+"（需求流水号："+kOrderInfo.getId()+"）需批准";
-		String content = "您好:"+kOrderInfo.getCreateId()+"申请的"+kOrderInfo.getContractUnit()+"的"+kOrderInfo.getOrderType()+"（需求流水号："+kOrderInfo.getId()+"）需要您的批准，谢谢。请勿回复此邮件";
+		String title = "您好:"+order.getCreaterName()+"申请的"+order.getCustomerName()+"的"+order.getOrderType()+"（需求流水号："+order.getId()+"）需批准";
+		String content = "您好:"+order.getCreaterName()+"申请的"+order.getCustomerName()+"的"+order.getOrderType()+"（需求流水号："+order.getId()+"）需要您的批准，谢谢。请勿回复此邮件";
 		Map<String, Object> map = new HashMap<>();
 		map.put("to", array);
 		map.put("title", title);
 		map.put("content", content);
 		emailTool.sendSimpleMail(map);
 		//存记录
-		BNotifyInfor bNotifyInfor = new BNotifyInfor();
-		bNotifyInfor.setId(kOrderInfo.getId());
+		NotifyInfor bNotifyInfor = new NotifyInfor();
+		bNotifyInfor.setId(order.getId());
 		bNotifyInfor.setHasSend(1);
 		bNotifyInfor.setMsg_from("111");
 		bNotifyInfor.setMsg_to(join);
@@ -90,7 +89,7 @@ public class BNotifyInforService {
 		map.put("content", content);
 		emailTool.sendSimpleMail(map);
 		//存记录
-		BNotifyInfor bNotifyInfor = new BNotifyInfor();
+		NotifyInfor bNotifyInfor = new NotifyInfor();
 		bNotifyInfor.setId(orderId);
 		bNotifyInfor.setHasSend(1);
 		bNotifyInfor.setMsg_from("111");

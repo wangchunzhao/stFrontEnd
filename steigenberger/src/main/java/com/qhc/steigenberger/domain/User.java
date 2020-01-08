@@ -27,11 +27,7 @@ public class User implements Serializable{
 	public String name;
     
     public String tel;
-    
-    public List<ApplicationOfRolechange> apps;
 	
-//    public SalesOffice region;//区域
-   	
    	public List<Role> roles;
    	
    	public List<Operations> operations;//区域下对应的权限	/* 创建人域账号 */
@@ -111,14 +107,6 @@ public class User implements Serializable{
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
-	}
-
-	public List<ApplicationOfRolechange> getApps() {
-		return apps;
-	}
-
-	public void setApps(List<ApplicationOfRolechange> apps) {
-		this.apps = apps;
 	}
 
 	public String getTel() {

@@ -9,12 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.qhc.steigenberger.domain.ApplicationOfRolechange;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.SalesOffice;
 import com.qhc.steigenberger.domain.User;
-import com.qhc.steigenberger.service.ApplicationOfRolechangeService;
 import com.qhc.steigenberger.service.RoleService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
 import com.qhc.steigenberger.service.UserService;
@@ -34,9 +32,6 @@ public class PermissionApplyController extends BaseController{
 	
 	@Autowired
 	SapSalesOfficeService sapSalesOfficeService;
-	
-	@Autowired
-	ApplicationOfRolechangeService applicationOfRolechangeService;
 	
 	@RequestMapping("/permissionApply")
 	public String permissionApply() {
@@ -103,18 +98,8 @@ public class PermissionApplyController extends BaseController{
 			user.setCreateTime(new Date(System.currentTimeMillis()));
 			user.setUpdateTime(new Date(System.currentTimeMillis()));
 //
-			ApplicationOfRolechange applicationOfRolechange = new ApplicationOfRolechange();
-			applicationOfRolechange.setCreator("admin");
-			applicationOfRolechange.setCreateTime(new Date(System.currentTimeMillis()));
-			applicationOfRolechange.setApprovalTime(new Date(System.currentTimeMillis()));
-			applicationOfRolechange.setApproverFact("admin");
-			applicationOfRolechange.setApproverRequired("admin");
-			applicationOfRolechange.setAttachedCode(area);
-			applicationOfRolechange.setIsactive(1);
-			applicationOfRolechange.setbRolesId(Integer.valueOf(roleId));
-			
 //			System.out.println(usersession.getUserIdentity());
-			Boolean result = addStatus(user,applicationOfRolechange);
+			Boolean result = addStatus(user);
 //			String result = userService.updateUserInfo(user);
 			if (result) {
 				status = 200;
@@ -127,20 +112,11 @@ public class PermissionApplyController extends BaseController{
 		return JsonResult.build(status, msg, "");
 	}
 	
-	public Boolean addStatus(User user,ApplicationOfRolechange applicationOfRolechange) {
+	public Boolean addStatus(User user) {
 		Boolean bol = false;
 		try {
 			User result = userService.add(user);
 			if (result != null && !"".equals(result)) {
-//				applicationOfRolechange.setbusersId(result.getId());
-//
-//				ApplicationOfRolechange addresult = applicationOfRolechangeService.add(applicationOfRolechange);
-//				if (addresult != null) {
-//
-//				}else {
-//					bol = false;
-//				}
-
                 bol = true;
 			} else {
 				bol = false;

@@ -126,8 +126,7 @@ public class LoginController extends BaseController {
 				System.out.println("身份验证成功!");
 				session.setAttribute(Constants.ACCOUNT, user);
 				session.setAttribute(Constants.IDENTITY, userName);
-				// TODO find user's permissions
-//				session.setAttribute(Constants.PERMISSIONS, permissions);
+				session.setAttribute(Constants.PERMISSIONS, user.getOperations());
 				getMenus();
 				getPermissions();
 				response.sendRedirect(request.getContextPath());

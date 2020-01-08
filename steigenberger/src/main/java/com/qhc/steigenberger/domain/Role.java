@@ -5,7 +5,6 @@ package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 import org.springframework.stereotype.Component;
 
 
@@ -19,8 +18,6 @@ public class Role implements Serializable{
     public String name;
     
     public int isActive=1;
-	
-    public Set<ApplicationOfRolechange> apps;
 	
 	public List<Operations> operations;
 	
@@ -58,14 +55,6 @@ public class Role implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<ApplicationOfRolechange> getApps() {
-		return apps;
-	}
-
-	public void setApps(Set<ApplicationOfRolechange> apps) {
-		this.apps = apps;
 	}
 
 	public List<Operations> getOperations() {

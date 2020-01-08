@@ -5,13 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qhc.steigenberger.domain.BArea;
 import com.qhc.steigenberger.domain.Freight;
-import com.qhc.steigenberger.domain.KOrderInfo;
 import com.qhc.steigenberger.util.PageHelper;
 
 @Service
-public class BAreaService {
+public class AreaService {
 	
 	@Autowired
 	FryeService fryeService;
