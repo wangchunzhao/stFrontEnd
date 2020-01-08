@@ -2090,6 +2090,10 @@ function saveOrder(type){
 	 payment['payDate'] = $("#inputDate").val();*/
 	 //获取下拉框name
 	 getSelectName();
+	 //初始化订单状态，防止提交报错
+	 if(status==null||status==""||status=="undefined"){
+		 $("#status").val("00");
+	 }
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
 	 /*var payments=new Array();
