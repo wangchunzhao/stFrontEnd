@@ -23,7 +23,7 @@
 		<input type="hidden" id="stOrderType" th:field="*{stOrderType}">
 		<input type="hidden" id="orderType" th:field="*{orderType}">
 		<input type="hidden" th:field="*{id}">
-		<input type="hidden" th:field="*{orderId}">
+		<input type="hidden" th:field="*{orderId}" id="orderInfoId">
 		<input type="hidden" th:field="*{version}">
 		<input type="hidden" th:field="*{isActive}">
 		<div id="page-wrapper">
@@ -45,7 +45,8 @@
 	<div th:replace="orderCommons/orderModalCommons::paymentTypeModal"></div>
 	<div th:replace="orderCommons/orderModalCommons::addressModal"></div>
 	<div th:replace="orderCommons/newOrderSubsidiary::subsidiary"></div>
-	<div th:replace="orderCommons/materialconfig::materialconfig"></div> 	
+	<div th:replace="orderCommons/materialconfig::materialconfig"></div> 
+	<div th:replace="orderCommons/orderModalCommons::viewContract"></div>	
 <script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
 <script th:inline="javascript" th:src="@{/pageJs/materialColumn.js}"></script>
 <script th:inline="javascript" th:src="@{/pageJs/standDealerOrder/newOrder.js}"></script>
@@ -75,6 +76,222 @@
 	    }
 	    return 'V'+dateString+num;
 	} */
+</script>
+<script id="contract-edit-tpl" type="text/html">
+<form id="contractForm">
+<input type="hidden" name="id" value="{{id}}">
+<input type="hidden" name="orderInfoId" value="{{orderInfoId}}">
+<input type="hidden" name="version" value="{{version}}">
+<input type="hidden" name="receiveType" value="{{receiveType}}" >
+<input type="hidden" name="receiveTypeName" value="{{receiveTypeName}}" >
+<input type="hidden" name="customerCode" value="{{customerCode}}" >
+<input type="hidden" name="createTime" value="{{createTime}}" >
+<input type="hidden" name="status" value="{{status}}" >
+<input type="hidden" name="fileHashcode" value="{{fileHashcode}}" >
+<input type="hidden" name="signContractid" value="{{signContractid}}" >
+<div id="contract-edit-dialog-content" class="panel-group"
+	role="tablist" aria-multiselectable="true"
+	style="margin-bottom: 20px; margin-left: 50px; margin-right: 25px;">
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse"
+					href="#collapseOne-magical-coder-auto-id-1565148333801"
+					aria-expanded="false" class="collapsed">基本信息</a>
+			</h4>
+		</div>
+		<div id="collapseOne-magical-coder-auto-id-1565148333801"
+			class="panel-collapse collapse in" role="tabpanel"
+			aria-expanded="false">
+			<div class="panel-body" style="height: auto;">
+				<div class="row">
+					<div class="col-md-3 col-xs-3">合同号（核算号）</div>
+					<div class="col-md-3 col-xs-3">流水号</div>
+					<div class="col-md-3 col-xs-3">签约单位</div>
+					<div class="col-md-3 col-xs-3">合同金额</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractNumber"
+							value="{{contractNumber}}" class="form-control" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="sequenceNumber"
+							value="{{sequenceNumber}}" class="form-control" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="customerName"
+							value="{{customerName}}" class="form-control" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contractRmbValue"
+							value="{{contractRmbValue}}" class="form-control" readonly>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab">
+			<h4 class="panel-title">
+				<a class="" role="button" data-toggle="collapse"
+					href="#collapseTwo-magical-coder-auto-id-1565148324973"
+					aria-expanded="true">合同信息</a>
+			</h4>
+		</div>
+		<div id="collapseTwo-magical-coder-auto-id-1565148324973"
+			class="panel-collapse collapse in" role="tabpanel"
+			aria-expanded="true">
+			<div class="panel-body" style="height: auto;">
+				<div class="row">
+					<div class="col-md-6 col-xs-6">收到需方预付款后几日内发货</div>
+					<div class="col-md-6 col-xs-6">接货方式</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="deliveryDays" value="{{deliveryDays}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3"></div>
+					<div class="col-md-3 col-xs-3">
+						<select name="receiveType" class="form-control input" disabled>
+							<option value="01" {{if receiveType == '01'}}selected{{/if}}>盖章接货</option>
+							<option value="02" {{if receiveType == '02'}}selected{{/if}}>授权人签字</option>
+							<option value="03" {{if receiveType == '03'}}selected{{/if}}>其它</option>
+						</select>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">接货人1电话</div>
+					<div class="col-md-3 col-xs-3">接货人1及身份证号</div>
+					<div class="col-md-3 col-xs-3">接货人2电话</div>
+					<div class="col-md-3 col-xs-3">接货人2及身份证号</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contactor1Tel" value="{{contactor1Tel}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contactor1Id" value="{{contactor1Id}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contactor2Tel" value="{{contactor2Tel}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contactor2Id" value="{{contactor2Id}}"
+							class="form-control" aria-describedby="emailHelp" readonly>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">接货人3电话</div>
+					<div class="col-md-3 col-xs-3">接货人3及身份证号</div>
+					<div class="col-md-3 col-xs-3">* 终端客户名称</div>
+					<div class="col-md-3 col-xs-3">* 实际安装地点</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contactor3Tel"
+							value="{{contactor3Tel}}" class="form-control"
+							aria-describedby="emailHelp" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="contactor3Id" value="{{contactor3Id}}"
+							class="form-control" aria-describedby="emailHelp" readonly>
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="clientName" value="{{clientName}}"
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="installLocation"
+							value="{{installLocation}}" class="form-control"
+							aria-describedby="emailHelp">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">质量标准</div>
+					<div class="col-md-6 col-xs-6">* 验收标准（方法）</div>
+					<div class="col-md-3 col-xs-3">* 签约单位邮箱</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="installType" value="{{installTypeName}}" 
+							class="form-control" aria-describedby="emailHelp" readonly>
+					</div>
+					<div class="col-md-6 col-xs-6">
+						<select id="acceptanceCriteriaCode" name="acceptanceCriteriaCode" class="form-control input">
+							<option value="" {{if acceptanceCriteriaCode == ''}}selected{{/if}}>-- 请选择 --</option>
+							<option value="1001" {{if acceptanceCriteriaCode == '1001'}}selected{{/if}}>需方负责安装调试</option>
+							<option value="1002" {{if acceptanceCriteriaCode == '1002'}}selected{{/if}}>供方负责安装调试</option>
+						</select>
+					</div>
+					<div class="col-md-3 col-xs-3"> 
+						<input type="text" name="customerEmail" value="{{customerEmail}}" class="form-control" aria-describedby="emailHelp">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-xs-6 col-md-12">结算方式</div>
+					<div class="col-xs-6">
+						<textarea name="paymentType" class="form-control" rows="3" readonly>{{paymentType}}</textarea>
+					</div>
+					<div class="col-xs-6"></div>
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">发票邮寄地址</div>
+					<div class="col-md-3 col-xs-3">邮编</div>
+					<div class="col-md-3 col-xs-3">发票接收人</div>
+					<div class="col-md-3 col-xs-3">联系电话</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoiceAddress" value="{{invoiceAddress}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoicePostCode" value="{{invoicePostCode}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoiceReceiver" value="{{invoiceReceiver}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="invoiceTel" value="{{invoiceTel}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-3 col-xs-3">委托代理人</div>
+					<div class="col-md-3 col-xs-3">公司电话</div>
+					<div class="col-md-3 col-xs-3">开户银行</div>
+					<div class="col-md-3 col-xs-3">银行账号</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="broker" value="{{broker}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="companyTel" value="{{companyTel}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="bankName" value="{{bankName}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="accountNumber" value="{{accountNumber}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+
+				</div>
+				<div class="row" style="margin-top: 2px;">
+					<div class="col-md-9 col-xs-9">单位地址</div>
+					<div class="col-md-3 col-xs-3">公司邮政编码</div>
+					<div class="col-md-9 col-xs-9">
+						<input type="text" name="companyAddress" value="{{companyAddress}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+					<div class="col-md-3 col-xs-3">
+						<input type="text" name="companyPostCode" value="{{companyPostCode}}" 
+							class="form-control" aria-describedby="emailHelp">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
 </script>
 </body>
 </html>

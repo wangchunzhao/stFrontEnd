@@ -2396,6 +2396,43 @@ function viewGrossProfit(){
 	});  
 }
 
+
+//查看合同
+function viewContract(){
+	var orderInfoId = $("#orderInfoId").val();
+	var url = ctxPath+"order/"+parseInt("22")+"/contract";
+    $.ajax({
+        type: "post",
+        url: url,
+        data: null,
+        dataType: "json",
+        success: function (data) {
+        	if(data.data == null){
+        		$('#noContractModal').modal('show');
+	    	}else if(data.status != 'ok'){
+	    		layer.alert('订单变更成功', {icon: 6});
+	    		$('#mytab').bootstrapTable('refresh');
+	    	}else{
+	    		var contract = data.data;
+	    		showEditModal(contract);
+	    	} 	
+        }
+    });
+}
+
+//显示合同编辑对话框
+function showEditModal(contract) {	
+	var html = template('contract-edit-tpl', contract);
+	$("#contractDialogBody").html(html);
+	
+	if (!contract.isedit) {
+		$(":input", "#contractForm").each(function(index,element) {
+			$(element).attr('disabled', true);
+		});
+	}
+	$("#contractDialog").modal('show');
+}
+
 var grossProfitColumns=[
 	{
 		 field: 'name',

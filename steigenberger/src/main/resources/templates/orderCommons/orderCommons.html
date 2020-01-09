@@ -617,7 +617,7 @@
 							<table id="fileList" data-pagination="false"  class="table table-hover"></table>
 						</div>
 					</div>
-					<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal fade" id="noContractModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -761,7 +761,7 @@
 							</button>
 						</div>
 						<div class="col-md-3">
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}" onclick="viewContract()">
 								查看合同 Look at the contract
 							</button>
 						</div>
