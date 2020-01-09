@@ -1966,8 +1966,8 @@ function confirmAddress(){
 		    	provinceName:province,
 		    	cityCode:cityValue,
 		    	cityName:city,
-		    	areaCode:areaValue,
-		    	areaName:area,
+		    	distinctCode:areaValue,
+		    	distinctName:area,
 		    	address:shippingAddress
 		    }
 		});
@@ -1990,16 +1990,16 @@ function editAddress(index){
 	$("#addressIndex").val(index);
 	$("#addressModalType").val("edit");
 	$("#addressModal").modal('show');
-	$("#selectProvince").val(row.provinceValue);
-	$("#citySelect").val(row.cityValue);
-	$("#selectDistrict").val(row.areaValue);
+	$("#selectProvince").val(row.provinceCode).change();
+	$("#citySelect").val(row.cityCode).change();
+	$("#selectDistrict").val(row.distinctCode);
 	$("#shippingAddress").val(row.address);
 }
 
 function removeAddress(index){
 	var delIndex = [parseInt(index)+1];
 	$('#addressTable').bootstrapTable('remove', {
-        field: "index",
+		field: "seq",
         values: delIndex
     });
 	var count = $('#addressTable').bootstrapTable('getData').length;
