@@ -49,6 +49,6 @@ public class Constants {
 	/**
 	 * 备货
 	 */
-	public final static String PAGE_STOCK_UP = "stockUp/stockUp";
+	public final static String PAGE_STOCK_UP = "stockUpOrder/stockUpOrder";
 
 }

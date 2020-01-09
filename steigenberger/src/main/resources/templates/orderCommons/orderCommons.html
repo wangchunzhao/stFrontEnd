@@ -71,8 +71,8 @@
 					    </div>
 						<span class="col-md-1 control-label">项目报备编号</span>
 						<div class="col-md-2">
-					      <input type="text" class="form-control" id="recordCode" th:if="${orderType!=4}" th:field="*{recordCode}">
-							<input type="text" class="form-control" readonly id="recordCode" th:if="${orderType==4}" th:field="*{recordCode}">
+					      <input type="text" class="form-control" id="recordCode" th:if="${orderType!=4 && orderType!=5}" th:field="*{recordCode}">
+							<input type="text" class="form-control" readonly id="recordCode" th:if="${orderType==4 || orderType==5}" th:field="*{recordCode}">
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
@@ -87,19 +87,23 @@
 					    </div>
 				    	<span class="col-md-1  control-label">是否改造店</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:field="*{isReformed}">
+					      <select class="form-control" th:if="${orderType!=5}" th:field="*{isReformed}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
+							<select class="form-control" readonly disabled th:if="${orderType==5}" th:field="*{isReformed}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType!=4}">终端客户性质</span>
-						<div class="col-md-2" th:if="${orderType!=4}">
+						<span class="col-md-1 control-label" th:if="${orderType!=4 && orderType!=5}">终端客户性质</span>
+						<div class="col-md-2" th:if="${orderType!=4 && orderType!=5}">
 					      <select class="form-control" id="industryCode"  th:field="*{terminalType}">
 								<option th:each="dealerIndustry : ${order_option.dealerIndustryCodes}" th:value="${dealerIndustry.key}" th:text="${dealerIndustry.value}"></option>
 						  </select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType==4}">是否年采客户</span>
-						<div class="col-md-2" th:if="${orderType==4}">
+						<span class="col-md-1 control-label" th:if="${orderType==4 || orderType==5}">是否年采客户</span>
+						<div class="col-md-2" th:if="${orderType==4 || orderType==5}">
 							<select class="form-control" readonly disabled th:field="*{isYearpurchase}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
@@ -108,16 +112,24 @@
 					    <input type="hidden" id="customerIndustryName" th:field="*{customerIndustryName}">
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">便利店</span>
+						<span class="col-md-1 control-label">是否便利店</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:field="*{isConvenientStore}">
+					      <select class="form-control" th:if="${orderType!=5}" th:field="*{isConvenientStore}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
+							<select class="form-control" readonly disabled th:if="${orderType==5}" th:field="*{isConvenientStore}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-					    <span class="col-md-1 control-label">新客户</span>
+					    <span class="col-md-1 control-label">是否新客户</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:field="*{isNew}">
+					      <select class="form-control" th:if="${orderType!=5}" th:field="*{isNew}">
+								<option value="1" class="">是</option>
+								<option value="0" class="">否</option>
+							</select>
+							<select class="form-control" readonly disabled th:if="${orderType==5}" th:field="*{isNew}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
@@ -169,8 +181,9 @@
 					    </div>
 					    <span class="col-md-1 control-label">税率</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxRate" readonly th:field="*{taxRate}" >
-					    </div>
+							<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxRate" th:if="${orderType!=5}" readonly th:field="*{taxRate}" >
+							<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxRate" th:if="${orderType==5}" readonly disabled th:field="*{taxRate}" >
+						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
 						<span class="col-md-1 control-label">原币合同金额</span>
@@ -193,7 +206,8 @@
 					    <input type="hidden" id="contractRmbValue" th:value="*{contractRmbValue}">
 					    <span class="col-md-1 control-label">购销明细金额合计</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="itemsAmount" readonly>
+							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType!=5}" readonly>
+							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType==5}" readonly disabled>
 					    </div>	
 					</div>
 					<div class="row" style="padding-top: 10px;">
@@ -723,6 +737,146 @@
 							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
 								查看毛利表 Gross profit table
 							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--信息查看 For ViewInfoForStockUp  -->
+	<div th:fragment="ViewInfoForStockUp">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#infoCheck" aria-expanded="true" class="">信息查看 Check the information</a>
+				</h4>
+			</div>
+			<div id="infoCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+				<div class="panel-body" style="height: auto;" mc-ace="~">
+					<div class="row">
+						<div class="col-md-3">
+							<button type="button" class="btn btn-primary btn-sm" disabled id="showGrossProfitBt" onclick="viewGrossProfit()">
+								查看毛利表 Gross profit table
+							</button>
+						</div>
+						<div class="col-md-3">
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
+								查看合同 Look at the contract
+							</button>
+						</div>
+						<div class="col-md-3" style="text-align: left;">
+							客户确认资料 Customer data
+						</div>
+						<div class="col-md-3">
+							<input id="f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload" th:if="${orderType!=4}"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+						</div>
+						<div class="col-md-6" >
+							<table id="fileList" data-pagination="false"  class="table table-hover"></table>
+						</div>
+					</div>
+					<div class="modal fade" id="magicalcoderMyModal-magical-coder-auto-id-1565064088178" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+									<h4 class="modal-title" id="myModalLabel">合同信息 contract information</h4>
+								</div>
+								<div class="modal-body">
+									还没制作合同 We haven't made the contract yet
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭 close</button>
+									<button type="button" class="btn btn-primary">保存 save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="grossProfit" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document" style="width:1000px">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
+									<h4 class="modal-title" id="myModalLabel">毛利表信息</h4>
+								</div>
+								<div class="modal-body">
+									<div id="accordion-magical-coder-auto-id-1564367406503" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab">
+												<h4 class="panel-title">
+													<a role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseOne-magical-coder-auto-id-1564367403401" aria-expanded="true" class="">基本信息</a>
+												</h4>
+											</div>
+											<div id="collapseOne-magical-coder-auto-id-1564367403401" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+												<div class="panel-body" style="height: auto;">
+
+													<div class="row">
+														<div class="col-md-3 col-xs-3">需求流水号</div>
+														<div class="col-md-3 col-xs-3">合同号</div>
+														<div class="col-md-3 col-xs-3">合同名称</div>
+														<div class="col-md-3 col-xs-3">合同金额</div>
+														<div class="col-md-3 col-xs-3">
+															<input type="text" class="form-control" aria-describedby="emailHelp" id="grossSeqNum" disabled>
+														</div>
+														<div class="col-md-3 col-xs-3">
+															<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+														</div>
+														<div class="col-md-3 col-xs-3">
+															<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+														</div>
+														<div class="col-md-3 col-xs-3">
+															<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractRMBValue" disabled>
+														</div>
+													</div><div class="row" style="margin-top: 4px;">
+													<div class="col-xs-6 col-md-3">性质分类</div>
+													<div class="col-xs-6 col-md-3">版本号</div>
+													<div class="col-xs-6 col-md-3">操作人</div>
+													<div class="col-xs-6 col-md-3">操作时间</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control"  id="grossClazz" disabled>
+													</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control"  disabled id="grossVersion">
+													</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control"  id="grossPerson" disabled>
+													</div>
+													<div class="col-xs-6 col-md-3">
+														<input type="text" class="form-control" id="grossDate" disabled>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab">
+												<h4 class="panel-title">
+													<a class="" role="button" data-toggle="collapse" data-parent="#accordion-magical-coder-auto-id-1564367406503" href="#collapseTwo-magical-coder-auto-id-1564367403394" aria-expanded="true">
+														毛利信息
+													</a>
+												</h4>
+											</div>
+											<div id="collapseTwo-magical-coder-auto-id-1564367403394" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+												<div class="panel-body" style="height: auto;">
+													<div class="table-responsive">
+														<table class="table" id="grossProfitTable">
+														</table>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal" id="grossProfitCloseBt">关闭</button>
+									<button type="button" class="btn btn-primary" id="grossProfitExportBt">导出</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
