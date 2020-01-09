@@ -574,8 +574,9 @@ function getCurrency(saleType,exchangeRates){
 		});
 	}else{
 		var currency = exchangeRates[saleType];
+		$("#currency").append("<option value=''>--选择币种--</option>");
 		$.each(currency, function (index,item) {
-			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			$("#currency").append("<option selected value=" + item.code + ">" + item.name + "</option>");
 			$("#exchangeRate").val(item.rate);
 		});
 	}
@@ -1960,7 +1961,7 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('updateRow', {
 		    index: rowIndex,
 		    row: {
-		    	seq:count+1,
+		    	seq:parseInt(rowIndex)+1,
 		    	pca: pca,
 		    	provinceCode:provinceValue,
 		    	provinceName:province,
@@ -2002,15 +2003,18 @@ function removeAddress(index){
 		field: "seq",
         values: delIndex
     });
-	var count = $('#addressTable').bootstrapTable('getData').length;
-	for(var i=0;i<count;i++){
-		var rows = {
-				index: i,
-				field : "seq",
-				value : i+1
-			}
-		$('#addressTable').bootstrapTable("updateCell",rows);
-	}
+	
+	if(status==null||status==""||status=="undefined"){
+		var count = $('#addressTable').bootstrapTable('getData').length;
+		for(var i=0;i<count;i++){
+			var rows = {
+					index: i,
+					field : "seq",
+					value : i+1
+				}
+			$('#addressTable').bootstrapTable("updateCell",rows);
+		}
+	}	
 }
 
 //获取需求计划
@@ -2081,7 +2085,8 @@ function saveOrder(type){
 		}
 		
 	}
-	$("#transferType").removeAttr("disabled");
+	$('#transferType').attr("disabled",false);
+	$("#currency").attr("disabled",false);
 	 /*var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
@@ -2192,7 +2197,8 @@ function goBpm(){
 		expandAll()
 		return
 	}
-	$("#transferType").removeAttr("disabled");
+	$('#transferType').attr("disabled",false);
+	$("#currency").attr("disabled",false);
 	 /*var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
