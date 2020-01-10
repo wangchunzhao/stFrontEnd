@@ -149,13 +149,15 @@ function fillItems(){
 			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
 			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 			var materialType = items[i].stMaterialGroupCode;
-			if(materialType=='T101'){
+			if(materialType=='T101'){			
 				var identification = materialType+"|"+countMaterialsTableall1;
 				var rowData = fillItemToTableRow(items[i]);
+				var m = items[i];
+				var a = items[i].configs;
 				rowData["allIndex"] = countMaterialsTable;
 				rowData["identification"] = identification;
 				//添加调研表
-				if(rowData.configurable){
+				if(rowData.isConfigurable&&items[i].configs!=null){
 					fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode);
 				}	
 				$("#materialsTableall1").bootstrapTable('insertRow', {
@@ -276,7 +278,7 @@ function getDefaultConfigs(materialCode,clazzCode){
 	    type: "get",
 	    async:false,
 	    success: function(data) {
-	    	materialDefaultConfigs = data;
+	    	materialDefaultConfigs = data.data;
 	    }
 	});
 	return materialDefaultConfigs;
@@ -1631,22 +1633,50 @@ function openConfig(identification){
 	configTable.init();
 	var configData = localStorage[identification];
 	if(configData){
-		$("#configTable").bootstrapTable("removeAll");
 		var jsonObject = JSON.parse(configData);
-		for(var i=0;i<jsonObject.configTableData.length;i++){
-			$("#configTable").bootstrapTable('insertRow',{
-				index:i,
-				row:jsonObject.configTableData[i]
-			});
+		if(jsonObject.configTableData.length>0){
+			$("#configTable").bootstrapTable("removeAll");
+			var jsonObject = JSON.parse(configData);
+			for(var i=0;i<jsonObject.configTableData.length;i++){
+				$("#configTable").bootstrapTable('insertRow',{
+					index:i,
+					row:jsonObject.configTableData[i]
+				});
+			}
+			$("#configRemark").val(jsonObject.remark);
+		}else{
+			insertDefaultConfigs()
 		}
-		$("#configRemark").val(jsonObject.remark);
 		
 	}else{
-		$("#configTable").bootstrapTable('refresh',{
+		insertDefaultConfigs()
+		
+		/*$("#configTable").bootstrapTable('refresh',{
 			url:url,
 			query:{'clazzCode':$("#materialConfigClazzCode").val(),
 				   'materialCode':$("#materialConfigCode").val()
 			}
+		});*/
+	}
+}
+
+function insertDefaultConfigs(){
+	$("#configTable").bootstrapTable("removeAll");
+	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
+	var insertConfigs = new Array();
+	$.each(defaultConfigs,function(index,item){
+		var config = item;
+		$.each(item.configs,function(index,value){
+			if(value.default){
+				config['configValueCode'] = value.code
+			}
+		})
+		insertConfigs.push(config);
+	})
+	for(var i=0;i<insertConfigs.length;i++){
+		$("#configTable").bootstrapTable('insertRow',{
+			index:i,
+			row:insertConfigs[i]
 		});
 	}
 }
@@ -1659,12 +1689,24 @@ function queryConfigParams(params) {
 
 //还原标准配置
 function resetStandardConfiguration(){
-	$("#configTable").bootstrapTable('refresh',{
-		url:ctxPath+'order/material/configurations',
-		query:{'clazzCode':$("#materialConfigClazzCode").val(),
-			   'materialCode':$("#materialConfigCode").val()
-		}
-	});	
+	$("#configTable").bootstrapTable("removeAll");
+	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
+	var insertConfigs = new Array();
+	$.each(defaultConfigs,function(index,item){
+		var config = item;
+		$.each(item.configs,function(index,value){
+			if(value.default){
+				config['configValueCode'] = value.code
+			}
+		})
+		insertConfigs.push(config);
+	})
+	for(var i=0;i<insertConfigs.length;i++){
+		$("#configTable").bootstrapTable('insertRow',{
+			index:i,
+			row:insertConfigs[i]
+		});
+	}
 }
 
 //关闭调研表
@@ -1690,6 +1732,7 @@ function saveMaterialConfig(){
 	var configData = new Object();
 	var remark = $("#configRemark").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
+	debugger
 	configData.configTableData = configTableData;
 	configData.remark = remark
 	localStorage.setItem(identification, JSON.stringify(configData));
@@ -1716,6 +1759,7 @@ function updateTableRowPrice(materialsType,index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
+	debugger
 	//数量
 	var quantity = tableData.quantity;
 	//产品实卖价
@@ -1729,11 +1773,11 @@ function calPrice(tableData){
 	//可选项转移价
 	var optionalTransationPrice = tableData.optionalTransationPrice;
 	//实卖价合计
-	var actualPriceSum = toDecimal2(optionalActualPrice+actualPrice);
+	var actualPriceSum = toDecimal2(parseFloat(optionalActualPrice)+parseFloat(actualPrice));
 	//实卖金额合计
 	var actualAmountSum = toDecimal2(quantity*actualPriceSum);
 	//转移价合计
-	var transactionPriceSum = toDecimal2(transcationPrice+optionalTransationPrice);
+	var transactionPriceSum = toDecimal2(parseFloat(transcationPrice)+parseFloat(optionalTransationPrice));
 	
 	tableData.optionalActualAmount = optionalActualAmount;
 	
@@ -2127,9 +2171,9 @@ function saveOrder(type){
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
-			 var config = new Object();
 			 var configs = new Array();
 			 for(var j=0;j<storedConfigs.length;j++){
+				 var config = new Object();
 				 config['keyCode'] = storedConfigs[j].code;
 				 config['valueCode'] = storedConfigs[j].configValueCode;
 				 config['configurable'] = items[i].isConfigurable;
@@ -2661,7 +2705,7 @@ var configTableColumns = [
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
-    	}else{
+    	}/*else{
     		$.each(value,function(index,item){
         		if(item.default){
         			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';
@@ -2670,14 +2714,14 @@ var configTableColumns = [
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
-        	/*$("#"+id).val(configIdValue).change();
-        	$("#configTable").bootstrapTable('updateCell', {
+        	$("#"+id).val(configIdValue).change();
+    		$("#configTable").bootstrapTable('updateCell', {
         	    index: index,
         	    field:'configValueCode',
         	    value:configIdValue
-        	});*/
+        	});
     	}
-    	
+    	*/
 		return start+end;
     }
 }
