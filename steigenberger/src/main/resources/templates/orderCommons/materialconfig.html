@@ -154,11 +154,11 @@
 											<input type="text" class="form-control" id="viewOptionalActualPrice"readonly>
 										</div>
 									</div>
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-md-12">										
 											<a href="standardDiscount" target="_blank"><strong>点击查看对比项</strong></a>
 										</div>
-									</div>
+									</div> -->
 									</div>
 								</div>
 							</div>
@@ -170,11 +170,11 @@
 			</div>
 			<div class="row" style="margin-left: 5%; margin-right: 5%;">
 				<div class="col-xs-6">
-					<button type="button" class="btn btn-danger" style="margin-left: 3%; margin-right: 5px;" onclick="resetStandardConfiguration()">一键还原标准配置</button>
+					<button type="button" class="btn btn-danger" style="margin-left: 3%; margin-right: 5px;" onclick="resetStandardConfiguration()" th:if="${orderOperationType=='1'||orderOperationType=='3'}">一键还原标准配置</button>
 				</div>
 				<div class="col-xs-6">
-					<button type="button" class="btn pull-right btn-warning" style="margin-right: 0%; margin-left: 5px;" onclick="closeMaterialConfig()">返回</button>
-					<button type="button" class="btn pull-right btn-success" onclick="saveMaterialConfig()">保存</button>
+					<button type="button" class="btn pull-right btn-warning" style="margin-right: 0%; margin-left: 5px;" onclick="closeMaterialConfig()">关闭</button>
+					<button type="button" class="btn pull-right btn-success" id="" onclick="saveMaterialConfig()" th:if="${orderOperationType=='1'||orderOperationType=='3'}">保存</button>
 				</div>
 			</div>		
 			</div>

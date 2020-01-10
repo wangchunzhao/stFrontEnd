@@ -178,11 +178,11 @@ function operation(value, row, index) {
 	var orderInfoId = row.id;
 	var buttonControl = row.buttonControl;
 	var actions = [];
-	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</button>");
+	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
 	if(currentVersionStatus=="05"&&buttonControl=="true"){
-		actions.push("<button type='button' class='btn btn-warning' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</button>");
-		actions.push("<button type='button' class='btn btn-warning' id=tosap' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</button>");
+		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</a>");
+		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
@@ -215,12 +215,11 @@ function editOrder(seqNumb,ordType,version){
 }
 
 function tosap(seqNumb,ordType,version) {
-	$.post(ctxPath+'order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){
-	
+	$.post(ctxPath+'order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){	
 		if(textStatus=="success"){
 			alert('下推订单成功！')
 			$('#mytab').bootstrapTable('refresh', {
-				url : '/steigenberger/order/query'
+				url : ctxPath+'order/query'
 			});
 		}else{
 			alert('下推订单失败！')
