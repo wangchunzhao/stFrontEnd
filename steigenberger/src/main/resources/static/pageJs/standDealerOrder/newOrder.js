@@ -245,8 +245,8 @@ function fillItems(){
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
 	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 	var editConfigs = [];
-	materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
-		configs.forEach((item,index)=>{
+	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
+		$.each(configs,function(index,item){
 			if(item.code==defaultItem.code){
 				var config = defaultItem;
 				config["configCodeValue"] = item.configCodeValue
@@ -254,6 +254,15 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 			}
 		})
 	})
+	/*materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
+		configs.forEach((item,index)=>{
+			if(item.code==defaultItem.code){
+				var config = defaultItem;
+				config["configCodeValue"] = item.configCodeValue
+				editConfigs.push(config)
+			}
+		})
+	})*/
 	var configData = new Object();
 	configData.configTableData = editConfigs;
 	configData.remark = configRemark
@@ -263,7 +272,7 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 function getDefaultConfigs(materialCode,clazzCode){
 	var materialDefaultConfigs;
 	$.ajax({
-	    url: "/steigenberger/order/material/configurations?clazzCode="+clazzCode+"&materialCode="+materialCode,
+	    url: ctxPath+"order/material/configurations?clazzCode="+clazzCode+"&materialCode="+materialCode,
 	    type: "get",
 	    async:false,
 	    success: function(data) {
@@ -2661,11 +2670,12 @@ var configTableColumns = [
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
+        	/*$("#"+id).val(configIdValue).change();
         	$("#configTable").bootstrapTable('updateCell', {
         	    index: index,
         	    field:'configValueCode',
         	    value:configIdValue
-        	});
+        	});*/
     	}
     	
 		return start+end;
