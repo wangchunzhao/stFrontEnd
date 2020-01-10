@@ -169,9 +169,9 @@ public class OrderService {
 		return result;
 	}
 
-	public Result sendToSap(String user, Order order) {
-		String url = "order/sap/" + user;
-		Result result = (Result) fryeService.postForm(url, order, Result.class);
+	public Result sendToSap(String user, Integer orderInfoId) {
+		String url = "order/" + orderInfoId + "/sap/" + user;
+		Result result = (Result) fryeService.postForm(url, "", Result.class);
 
 		return result;
 	}

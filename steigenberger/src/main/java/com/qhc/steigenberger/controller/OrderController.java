@@ -200,14 +200,14 @@ public class OrderController extends BaseController {
 	 * @throws Exception
 	 */
 	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
-	@PostMapping(value = "sap")
+	@PostMapping(value = "{orderInfoId}/sap")
 	@ResponseBody
-	public Result toSap(@RequestBody Order order) throws Exception {
+	public Result toSap(@PathVariable("orderInfoId") Integer orderInfoId) throws Exception {
 		String identity = getUserIdentity();
 		Result result;
 		
 		try {
-			result = orderService.sendToSap(identity, order);
+			result = orderService.sendToSap(identity, orderInfoId);
 		} catch (Exception e) {
 			logger.error("订单推送到sap", e);
 			result = Result.error("订单推送到sap失败");
