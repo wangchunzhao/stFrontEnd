@@ -180,10 +180,10 @@ function operation(value, row, index) {
 	var actions = [];
 	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
-	if(currentVersionStatus=="05"&&buttonControl=="true"){
-		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+sequenceNumber+"\",\""+orderType+"\",\""+currentVersion+"\")'>下推订单</a>");
-		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
-	}
+	/*if(currentVersionStatus=="05"&&buttonControl=="true"){*/
+		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+"\")'>下推订单</a>");
+		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
+	/*}*/
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
@@ -214,8 +214,26 @@ function editOrder(seqNumb,ordType,version){
 	})
 }
 
-function tosap(seqNumb,ordType,version) {
-	$.post(ctxPath+'order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){	
+function tosap(orderInfoId) {
+	
+	layer.confirm("确定要下推订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+        var url = ctxPath+"order/"+orderInfoId+"/sap";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: null,
+            dataType: "json",
+            success: function (data) {
+            	if(data == null || data.status != 'ok'){
+		    		layer.alert("订单下推失败：：" + (result != null ? result.msg : ""));
+		    	}else{
+		    		layer.alert('订单下推成功', {icon: 6});
+		    		$('#mytab').bootstrapTable('refresh');
+		    	} 	
+            }
+        });
+    });
+	/*$.post(ctxPath+'order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){	
 		if(textStatus=="success"){
 			alert('下推订单成功！')
 			$('#mytab').bootstrapTable('refresh', {
@@ -224,7 +242,7 @@ function tosap(seqNumb,ordType,version) {
 		}else{
 			alert('下推订单失败！')
 		}
-	},'text');
+	},'text');*/
 }
 
 function upgradeOrder(orderInfoId){

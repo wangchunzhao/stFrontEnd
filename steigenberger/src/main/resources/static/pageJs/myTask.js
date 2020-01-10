@@ -45,7 +45,7 @@ var TableInit = function () {
 				sortable : true
 			}, {
 				title : '签约单位',
-				field : 'contracterName',
+				field : 'customerName',
 				sortable : true
 			},{
 				title : '订单类型',
@@ -73,11 +73,11 @@ var TableInit = function () {
 				visible: false 
 			},{
 				title : '订单状态',
-				field : 'currentVersionStatus',
+				field : 'status',
 				formatter : formatStatus
 			},{
 				title : '操作',
-				field : 'currentVersionStatus',
+				field : 'status',
 				formatter : operation,//对资源进行操作
 			} ]
 		})
