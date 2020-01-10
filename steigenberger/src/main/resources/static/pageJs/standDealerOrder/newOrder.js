@@ -249,10 +249,11 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 	var editConfigs = [];
 	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
 		$.each(configs,function(index,item){
-			if(item.code==defaultItem.code){
+			if(item.keyCode==defaultItem.code){
 				var config = defaultItem;
-				config["configCodeValue"] = item.configCodeValue
+				config["configValueCode"] = item.valueCode
 				editConfigs.push(config)
+				
 			}
 		})
 	})
@@ -1732,7 +1733,6 @@ function saveMaterialConfig(){
 	var configData = new Object();
 	var remark = $("#configRemark").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
-	debugger
 	configData.configTableData = configTableData;
 	configData.remark = remark
 	localStorage.setItem(identification, JSON.stringify(configData));
@@ -1759,7 +1759,6 @@ function updateTableRowPrice(materialsType,index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
-	debugger
 	//数量
 	var quantity = tableData.quantity;
 	//产品实卖价
