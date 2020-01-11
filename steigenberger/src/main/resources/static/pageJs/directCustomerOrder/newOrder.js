@@ -2098,25 +2098,34 @@ function saveOrder(type){
 	 var version = $("#version").val();
 	 //封装结算方式
 	 var payment = new Object();
-	/* 回款条款code */
-	payment['code'] = $("#paymentType").find("option:selected").text();
-	/* 回款比例 */
-	payment['percentage'] = $("#proportion").val();
-	/* 预算回款原币金额 */
-	payment['amount'] = $("#originalBudgetReturnAmount").val();
-	/* 回款起始日期 */
-	payment['payDate'] = $("#paymentTime").val();
-	/* 备注 */
-	payment['reason'] = $("#remark").val();
-	/* 预算回款金额 */
-	payment['rmbAmount'] = $("#budgetReturnAmount").val();
+	if ($("#paymentType").find("option:selected").text() == "全款" && $("#proportion").val() == "" && $("#originalBudgetReturnAmount").val() == "" && $("#paymentTime").val() == "" && $("#remark").val() == "" && $("#budgetReturnAmount").val() == "") {
+		payment = $('#paymentTable').bootstrapTable('getData')
+		console.log(payment)
+	} else {
+		/* 回款条款code */
+		payment['code'] = $("#paymentType").find("option:selected").text();
+		/* 回款比例 */
+		payment['percentage'] = $("#proportion").val();
+		/* 预算回款原币金额 */
+		payment['amount'] = $("#originalBudgetReturnAmount").val();
+		/* 回款起始日期 */
+		payment['payDate'] = $("#paymentTime").val();
+		/* 备注 */
+		payment['reason'] = $("#remark").val();
+		/* 预算回款金额 */
+		payment['rmbAmount'] = $("#budgetReturnAmount").val();
+	}
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
-	 var payments=new Array();
-	 payments.push(payment);
-	 orderData.payments = payments;
+	 if(payment instanceof Array){
+		 orderData.payments = payment;
+	 }else {
+		 var payments=new Array();
+		 payments.push(payment);
+		 orderData.payments = payments;
+	 }
 	 /*orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';*/
 	 //var payments=new Array();
