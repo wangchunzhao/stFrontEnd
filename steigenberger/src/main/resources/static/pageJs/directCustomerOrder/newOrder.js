@@ -726,12 +726,12 @@ function editPayment(index){
 	$('#paymentModal').modal('show');
 	$("#index").val(index);
 	$("#modalType").val("edit");
-	$("#paymentType").val(row.paymentTypeValue);
-	$("#paymentTime").val(row.paymentTime);
-	$("#proportion").val(row.proportion);
-	$("#remark").val(row.remark);
-	$("#budgetReturnAmount").val(row.budgetReturnAmount);
-	$("#originalBudgetReturnAmount").val(row.originalBudgetReturnAmount);
+	$("#paymentType").val(row.code);
+	$("#paymentTime").val(row.payDate);
+	$("#proportion").val(row.percentage);
+	$("#remark").val(row.reason);
+	$("#budgetReturnAmount").val(row.rmbAmount);
+	$("#originalBudgetReturnAmount").val(row.amount);
 }
 
 function getPaymentAreaContent(){
