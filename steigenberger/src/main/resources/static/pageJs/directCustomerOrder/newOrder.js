@@ -73,6 +73,7 @@ $(function () {
 		fillOrderAddress();
 		initDropDownList();
 		fillAttachments();
+		fillOrderSettlementMethod();
 	}
 	if(orderOperationType=="2"){
 		disableAll();
@@ -389,6 +390,19 @@ function fillAttachments(){
 			$("#fileList").bootstrapTable('insertRow', {
 			    index: i,
 			    row: attachments[i]
+			});
+		}
+	}
+}
+
+//修改查看订单时,回显结算方式数据
+function fillOrderSettlementMethod(){
+	if(orderSettlementMethod){
+		for(var i=0;i<orderSettlementMethod.length;i++){
+			orderSettlementMethod[i]["index"] = i + 1;
+			$("#paymentTable").bootstrapTable('insertRow', {
+				index: i,
+				row: orderSettlementMethod[i]
 			});
 		}
 	}
@@ -2083,14 +2097,20 @@ function saveOrder(type){
 	}
 	$("#transferType").removeAttr("disabled");
 	 var version = $("#version").val();
+	 //封装结算方式
 	 var payment = new Object();
-		payment['id'] = $("#paymentType").val();
-		payment['code'] = $("#paymentType").find("option:selected").text();
-		payment['name'] = "1";
-		payment['amount'] = $("#inputDate").val();
-		payment['payDate'] = "1";
-		payment['reason'] = "1";
-		payment['orderInfoId'] = "1";
+	/* 回款条款code */
+	payment['code'] = $("#paymentType").find("option:selected").text();
+	/* 回款比例 */
+	payment['percentage'] = $("#proportion").val();
+	/* 预算回款原币金额 */
+	payment['amount'] = $("#originalBudgetReturnAmount").val();
+	/* 回款起始日期 */
+	payment['payDate'] = $("#paymentTime").val();
+	/* 备注 */
+	payment['reason'] = $("#remark").val();
+	/* 预算回款金额 */
+	payment['rmbAmount'] = $("#budgetReturnAmount").val();
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
@@ -2640,37 +2660,37 @@ var paymentColumns = [
 	 width:'5%'
 },
 {
-    field: 'paymentType',
+    field: 'code',
     title: '回款类型',
     width:'15%'
 },
+// {
+// 	field:'paymentTypeValue',
+// 	visible:false
+// },
 {
-	field:'paymentTypeValue',
-	visible:false
-},
-{
-    field: 'paymentTime',
+    field: 'payDate',
     title: '回款起始时间',
     width:'10%'
 },
 {
-    field: 'budgetReturnAmount',
+    field: 'rmbAmount',
     title: '预算回款金额',
     width:'10%'
 },
 {
-    field: 'originalBudgetReturnAmount',
+    field: 'amount',
     title: '预算回款金额(原币)',
     width:'15%'
     	
 },
 {
-    field: 'proportion',
+    field: 'percentage',
     title: '所占比列',
     width:'10%'
 },
 {
-    field: 'remark',
+    field: 'reason',
     title: '备注',
     width:'20%'
 },

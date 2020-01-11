@@ -170,7 +170,7 @@
 								    <div class="input-group">
 					                    <input type="text" class="form-control" disabled id="materialAddress" name="materialAddress">
 					                    <span class="input-group-btn">
-					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()" th:attr="readonly=${orderType==5}">
+					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()" th:attr="disabled=${orderType==5}">
 					                        	<span class="glyphicon glyphicon-search"></span>
 					                        </button>
 					                    </span>
