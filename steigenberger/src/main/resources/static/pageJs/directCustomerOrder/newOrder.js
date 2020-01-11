@@ -2082,22 +2082,25 @@ function saveOrder(type){
 		
 	}
 	$("#transferType").removeAttr("disabled");
-	 /*var version = $("#version").val();
+	 var version = $("#version").val();
 	 var payment = new Object();
-	 payment['termCode'] = $("#paymentType").val();
-	 payment['termName'] = $("#paymentType").find("option:selected").text();
-	 payment['percentage'] = "1";
-	 payment['payDate'] = $("#inputDate").val();*/
+		payment['id'] = $("#paymentType").val();
+		payment['code'] = $("#paymentType").find("option:selected").text();
+		payment['name'] = "1";
+		payment['amount'] = $("#inputDate").val();
+		payment['payDate'] = "1";
+		payment['reason'] = "1";
+		payment['orderInfoId'] = "1";
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
-	 /*var payments=new Array();
+	 var payments=new Array();
 	 payments.push(payment);
 	 orderData.payments = payments;
-	 orderData['currentVersion'] = version;
+	 /*orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';*/
-	 var payments=new Array();
+	 //var payments=new Array();
 	 orderData.payments= payments;
 	 var attachments = [];
 	 if($("#fileList").length>0){
@@ -2165,8 +2168,8 @@ function saveOrder(type){
 			    	if(data == null || data.status != 'ok'){
 			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
 			    	}else{
-			    		layer.alert('保存成功', {icon: 6});
-			    		window.location.href = ctxPath+'menu/orderManageList';
+			    		layer.alert('保存成功233', {icon: 6});
+			    		// window.location.href = ctxPath+'menu/orderManageList';
 			    	} 	
 			    },
 			    error: function(){

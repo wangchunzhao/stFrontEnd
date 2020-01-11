@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div  class="container" th:fragment="subsidiary">
+<div  class="container" th:fragment="subsidiary(orderType)">
     	<div class="modal fade" id="subsidiaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="width:1200px">
 			<div class="modal-content">
@@ -170,7 +170,7 @@
 								    <div class="input-group">
 					                    <input type="text" class="form-control" disabled id="materialAddress" name="materialAddress">
 					                    <span class="input-group-btn">
-					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()">
+					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()" th:attr="readonly=${orderType==5}">
 					                        	<span class="glyphicon glyphicon-search"></span>
 					                        </button>
 					                    </span>

@@ -1467,15 +1467,16 @@ function initSubsidiartFormValidator(){
 		                            message: '请选择行项目类别'
 		                        }
 		                    }
-			           },
-			           materialAddress: {
-			        	   trigger:"change",
-		                    validators: {
-		                        notEmpty: {
-		                            message: '请添加地址'
-		                        }
-		                    }
 			           }
+			           // ,
+			           // materialAddress: {
+			        	//    trigger:"change",
+		               //      validators: {
+		               //          notEmpty: {
+		               //              message: '请添加地址'
+		               //          }
+		               //      }
+			           // }
 	            }
 	        });
 }
