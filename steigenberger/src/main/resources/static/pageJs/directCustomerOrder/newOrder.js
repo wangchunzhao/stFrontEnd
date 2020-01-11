@@ -648,7 +648,7 @@ function add(){
 	$("#originalBudgetReturnAmount").val('');
 }
 
-function confirmPayment(){
+function confirmPayment() {
 	var modalType = $("#modalType").val();
 	var paymentType = $("#paymentType").find("option:selected").text();
 	var paymentTypeValue = $("#paymentType").val();
@@ -659,36 +659,35 @@ function confirmPayment(){
 	var originalBudgetReturnAmount = $("#originalBudgetReturnAmount").val();
 	var count = $('#paymentTable').bootstrapTable('getData').length;
 	var rowIndex = $("#index").val()
-	if(modalType=='new'){
+	if (modalType == 'new') {
 		$("#paymentTable").bootstrapTable('insertRow', {
-		    index: count,
-		    row: {
-		    	index:count+1,
-		    	paymentType: paymentType,
-		    	paymentTypeValue:paymentTypeValue,
-		    	paymentTime: paymentTime,
-		    	budgetReturnAmount: budgetReturnAmount,
-		    	originalBudgetReturnAmount:originalBudgetReturnAmount,
-		    	proportion:proportion+'%',
-		    	remark:remark
-		    }
+			index: count,
+			row: {
+				index: count + 1,
+				code: paymentType,
+				// paymentTypeValue:paymentTypeValue,
+				payDate: paymentTime,
+				rmbAmount: budgetReturnAmount,
+				amount: originalBudgetReturnAmount,
+				percentage: proportion + '%',
+				reason: remark
+			}
 		});
-	}else{
+	} else{
 		$("#paymentTable").bootstrapTable('updateRow', {
-		    index: rowIndex,
-		    row: {
-		    	index:parseInt(rowIndex)+1,
-		    	paymentType: paymentType,
-		    	paymentTypeValue:paymentTypeValue,
-		    	paymentTime: paymentTime,
-		    	budgetReturnAmount: budgetReturnAmount,
-		    	originalBudgetReturnAmount:originalBudgetReturnAmount,
-		    	proportion:proportion+'%',
-		    	remark:remark
-		    }
+			index: rowIndex,
+			row: {
+				index: parseInt(rowIndex) + 1,
+				code: paymentType,
+				// paymentTypeValue:paymentTypeValue,
+				payDate: paymentTime,
+				rmbAmount: budgetReturnAmount,
+				amount: originalBudgetReturnAmount,
+				percentage: proportion + '%',
+				reason: remark
+			}
 		});
-	}
-	
+}
 	$('#paymentModal').modal('hide');
 	getPaymentAreaContent();
 }
