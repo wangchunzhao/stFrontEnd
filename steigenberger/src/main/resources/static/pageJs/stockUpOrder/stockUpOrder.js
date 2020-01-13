@@ -1567,7 +1567,7 @@ function removeAddress(index){
 
 function changeRequirement(obj){
 	$("#itemRequirementPlan").html('');
-	var requireMent1='<option value="Z004">物料需求计划</option>'+'<option value="Z001">B2C</option>'+'<option value="Z002">消化</option>'+'<option value="Z003">调发</option>';
+	var requireMent1='<option value="004">物料需求计划</option>'+'<option value="001">B2C</option>'+'<option value="002">消化</option>'+'<option value="003">调发</option>';
 
 	/*var requireMent2 = '<option value="Z004">物料需求计划</option>';*/
 	var itemCategory = $(obj).val();
