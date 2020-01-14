@@ -1633,6 +1633,7 @@ function openConfig(identification){
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
 	var configData = localStorage[identification];
+	debugger
 	if(configData){
 		var jsonObject = JSON.parse(configData);
 		if(jsonObject.configTableData.length>0){
@@ -1672,6 +1673,10 @@ function insertDefaultConfigs(){
 				config['configValueCode'] = value.code
 			}
 		})
+		//没有默认的取第一个
+		if(!config.configValueCode){
+			config['configValueCode'] = item.configs[0].code;
+		}
 		insertConfigs.push(config);
 	})
 	for(var i=0;i<insertConfigs.length;i++){
@@ -1700,6 +1705,9 @@ function resetStandardConfiguration(){
 				config['configValueCode'] = value.code
 			}
 		})
+		if(!config.configValueCode){
+			config['configValueCode'] = item.configs[0].code;
+		}
 		insertConfigs.push(config);
 	})
 	for(var i=0;i<insertConfigs.length;i++){
