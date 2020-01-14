@@ -27,6 +27,27 @@ $(function () {
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
 	materialTypeTable.init();
 	
+	//文件列表初始化
+	var fileListTable = new TableInit('fileList','','',fileListColumns)
+	fileListTable.init();
+	
+	//文件上传成功处理方法
+	$("#f_upload").on("fileuploaded", function(event, data, previewId, index) {
+		var attachment = data.response.data;
+		var a = $('#fileList').bootstrapTable('getData');
+		var fileListLength = $('#fileList').bootstrapTable('getData').length;
+		$("#fileList").bootstrapTable('insertRow', {
+		    index: fileListLength,
+		    row: {
+		    	index:fileListLength,
+		    	fileName:attachment.fileName,
+		    	fileUrl:attachment.fileUrl
+		    }
+		});
+		//清空文件选择框
+		$(".file-caption-name").val('');
+	});
+	
 	//初始化毛利率table
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 	grossProfitTable.init();	
@@ -51,12 +72,43 @@ $(function () {
 		//修改查看订单时,辉县地址数据
 		fillOrderAddress();
 		initDropDownList();
+		fillAttachments();
 	}
-	
-	
+	if(orderOperationType=="2"){
+		disableAll();
+	}
 });
 
-
+//查看订单页面不能修改
+function disableAll(){ 
+	  var form=document.forms[0];
+	  for(var i=0;i<form.length;i++){
+	    var element=form.elements[i];
+	    element.disabled=true;
+	  }
+	  enableButton();
+}
+//设置按钮可用
+function enableButton(){
+	  $(".close").attr('disabled',false);
+	  $("#backButton").attr('disabled',false);
+	  $("#grossProfitCloseBt").attr('disabled',false);
+	  $("#grossProfitExportBt").attr('disabled',false);
+	  $("#showGrossProfitBt").attr('disabled',false);
+	  $("#expandBt").attr('disabled',false);
+	  $("#closeBt").attr('disabled',false);
+	  $("#approve").attr('disabled',false);
+	  $("#version").attr('disabled',false);
+	  $("#materialsEdit").attr('disabled',true);
+	  $("#editAddressBt").attr('disabled',true);
+	  $("#removeAddressBt").attr('disabled',true);
+	  $("#copyMaterial").attr('disabled',true);  
+	  if($("#expenseItem")){
+		  $("#expenseItem").find("*").each(function() {
+			 $(this).removeAttr("disabled");
+		  });
+	  }
+}
 
 //获取session中用户信息
 function getUserDetail(){
@@ -97,13 +149,15 @@ function fillItems(){
 			var countMaterialsTableall5 = $('#materialsTableall5').bootstrapTable('getData').length;
 			var countMaterialsTableall6 = $('#materialsTableall6').bootstrapTable('getData').length;
 			var materialType = items[i].stMaterialGroupCode;
-			if(materialType=='T101'){
+			if(materialType=='T101'){			
 				var identification = materialType+"|"+countMaterialsTableall1;
 				var rowData = fillItemToTableRow(items[i]);
+				var m = items[i];
+				var a = items[i].configs;
 				rowData["allIndex"] = countMaterialsTable;
 				rowData["identification"] = identification;
 				//添加调研表
-				if(rowData.configurable){
+				if(rowData.isConfigurable&&items[i].configs!=null){
 					fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode);
 				}	
 				$("#materialsTableall1").bootstrapTable('insertRow', {
@@ -193,7 +247,17 @@ function fillItems(){
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
 	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 	var editConfigs = [];
-	materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
+	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
+		$.each(configs,function(index,item){
+			if(item.keyCode==defaultItem.code){
+				var config = defaultItem;
+				config["configValueCode"] = item.valueCode
+				editConfigs.push(config)
+				
+			}
+		})
+	})
+	/*materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
 		configs.forEach((item,index)=>{
 			if(item.code==defaultItem.code){
 				var config = defaultItem;
@@ -201,7 +265,7 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 				editConfigs.push(config)
 			}
 		})
-	})
+	})*/
 	var configData = new Object();
 	configData.configTableData = editConfigs;
 	configData.remark = configRemark
@@ -211,11 +275,11 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 function getDefaultConfigs(materialCode,clazzCode){
 	var materialDefaultConfigs;
 	$.ajax({
-	    url: "/steigenberger/order/material/configurations?clazzCode="+clazzCode+"&materialCode="+materialCode,
+	    url: ctxPath+"order/material/configurations?clazzCode="+clazzCode+"&materialCode="+materialCode,
 	    type: "get",
 	    async:false,
 	    success: function(data) {
-	    	materialDefaultConfigs = data;
+	    	materialDefaultConfigs = data.data;
 	    }
 	});
 	return materialDefaultConfigs;
@@ -324,6 +388,19 @@ function fillOrderAddress(){
 			$("#addressTable").bootstrapTable('insertRow', {
 			    index: i,
 			    row: orderAddress[i]
+			});
+		}
+	}
+}
+
+//修改查看订单时,回显上传附件列表
+function fillAttachments(){
+	if(attachments){
+		for(var i=0;i<attachments.length;i++){
+			var row = attachments[i];
+			$("#fileList").bootstrapTable('insertRow', {
+			    index: i,
+			    row: attachments[i]
 			});
 		}
 	}
@@ -509,8 +586,9 @@ function getCurrency(saleType,exchangeRates){
 		});
 	}else{
 		var currency = exchangeRates[saleType];
+		$("#currency").append("<option value=''>--选择币种--</option>");
 		$.each(currency, function (index,item) {
-			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			$("#currency").append("<option selected value=" + item.code + ">" + item.name + "</option>");
 			$("#exchangeRate").val(item.rate);
 		});
 	}
@@ -679,10 +757,23 @@ function addSubsidiary(){
 		layer.alert('请先选择客户', {icon: 5});
 		return
 	}
+	if($("#stOrderType").val()=="2"&&$("#bodyDiscount").val()==""){
+        layer.msg('请先录入柜体申请折扣！', function(){
+        });
+    }
+    
+    if($("#stOrderType").val()=="2"&&$("#mainDiscount").val()==""){
+        layer.msg('请先录入机组申请折扣！', function(){
+        });
+    }
+    openMaterialAddModal();
+}
+
+function openMaterialAddModal(){
 	$('#subsidiaryModal').modal('show');
 	$("#subsidiaryForm")[0].reset();
 	$('#amount').val(1);
-	$('#discount').val($("#standardDiscount").val());
+	$('#discount').val(100);
 	$('#materialsModalType').val('new');
 }
 
@@ -702,7 +793,12 @@ function searchSpecification(){
 function queryMaterialTypeParams(params) {
     params.pageNo = this.pageNumber;
     params.materialName = $("#materialsName").val();
-    params.industoryCode = $("#customerIndustryCode").val();
+    //经销商先固定为unkn
+   if($("#orderType").val()=="ZH0D"){
+    	params.industoryCode = "unkn";	
+    }else{
+    	 params.industoryCode = $("#customerIndustryCode").val();
+   }  
     return params;
 }
 
@@ -714,7 +810,6 @@ function searchMaterilType(){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	$("#materialTypeName").val(data.description);
 	$("#materialCode").val(data.code);
 	if(data.purchased){
 		$('#isPurchased').val('采购');
@@ -746,8 +841,14 @@ function fillMaterailValue(data){
 	$("#B2CCostOfEstimated").val(toDecimal2(0.00));
 	$("#transcationPriceTotal").val(toDecimal2(parseFloat($("#transcationPrice").val())+parseFloat($("#transcationPriceOfOptional").val())));
 	$("#retailPriceAmount").val(toDecimal2(amount*(data.retailPrice)));
+	if($("#stOrderType").val()=="2"&&materialsType=="T101"&&$("#bodyDiscount").val()){
+        $("#discount").val($("#bodyDiscount").val());
+    }
+	if($("#stOrderType").val()=="2"&&materialsType=="T102"&&$("#mainDiscount").val()){
+        $("#discount").val($("#mainDiscount").val());
+    }
 	var discountValue = $("#discount").val();
-	var discount = discountValue.split("%")[0];
+	var discount = (discountValue/100).toFixed(2);
 	var actualPrice = (data.retailPrice*discount)
 	$("#acturalPrice").val(toDecimal2(actualPrice));
 	$("#acturalPriceAmount").val(toDecimal2(amount*(actualPrice)));
@@ -1551,22 +1652,50 @@ function openConfig(identification){
 	configTable.init();
 	var configData = localStorage[identification];
 	if(configData){
-		$("#configTable").bootstrapTable("removeAll");
 		var jsonObject = JSON.parse(configData);
-		for(var i=0;i<jsonObject.configTableData.length;i++){
-			$("#configTable").bootstrapTable('insertRow',{
-				index:i,
-				row:jsonObject.configTableData[i]
-			});
+		if(jsonObject.configTableData.length>0){
+			$("#configTable").bootstrapTable("removeAll");
+			var jsonObject = JSON.parse(configData);
+			for(var i=0;i<jsonObject.configTableData.length;i++){
+				$("#configTable").bootstrapTable('insertRow',{
+					index:i,
+					row:jsonObject.configTableData[i]
+				});
+			}
+			$("#configRemark").val(jsonObject.remark);
+		}else{
+			insertDefaultConfigs()
 		}
-		$("#configRemark").val(jsonObject.remark);
 		
 	}else{
-		$("#configTable").bootstrapTable('refresh',{
+		insertDefaultConfigs()
+		
+		/*$("#configTable").bootstrapTable('refresh',{
 			url:url,
 			query:{'clazzCode':$("#materialConfigClazzCode").val(),
 				   'materialCode':$("#materialConfigCode").val()
 			}
+		});*/
+	}
+}
+
+function insertDefaultConfigs(){
+	$("#configTable").bootstrapTable("removeAll");
+	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
+	var insertConfigs = new Array();
+	$.each(defaultConfigs,function(index,item){
+		var config = item;
+		$.each(item.configs,function(index,value){
+			if(value.default){
+				config['configValueCode'] = value.code
+			}
+		})
+		insertConfigs.push(config);
+	})
+	for(var i=0;i<insertConfigs.length;i++){
+		$("#configTable").bootstrapTable('insertRow',{
+			index:i,
+			row:insertConfigs[i]
 		});
 	}
 }
@@ -1579,12 +1708,24 @@ function queryConfigParams(params) {
 
 //还原标准配置
 function resetStandardConfiguration(){
-	$("#configTable").bootstrapTable('refresh',{
-		url:ctxPath+'order/material/configurations',
-		query:{'clazzCode':$("#materialConfigClazzCode").val(),
-			   'materialCode':$("#materialConfigCode").val()
-		}
-	});	
+	$("#configTable").bootstrapTable("removeAll");
+	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
+	var insertConfigs = new Array();
+	$.each(defaultConfigs,function(index,item){
+		var config = item;
+		$.each(item.configs,function(index,value){
+			if(value.default){
+				config['configValueCode'] = value.code
+			}
+		})
+		insertConfigs.push(config);
+	})
+	for(var i=0;i<insertConfigs.length;i++){
+		$("#configTable").bootstrapTable('insertRow',{
+			index:i,
+			row:insertConfigs[i]
+		});
+	}
 }
 
 //关闭调研表
@@ -1649,11 +1790,11 @@ function calPrice(tableData){
 	//可选项转移价
 	var optionalTransationPrice = tableData.optionalTransationPrice;
 	//实卖价合计
-	var actualPriceSum = toDecimal2(optionalActualPrice+actualPrice);
+	var actualPriceSum = toDecimal2(parseFloat(optionalActualPrice)+parseFloat(actualPrice));
 	//实卖金额合计
 	var actualAmountSum = toDecimal2(quantity*actualPriceSum);
 	//转移价合计
-	var transactionPriceSum = toDecimal2(transcationPrice+optionalTransationPrice);
+	var transactionPriceSum = toDecimal2(parseFloat(transcationPrice)+parseFloat(optionalTransationPrice));
 	
 	tableData.optionalActualAmount = optionalActualAmount;
 	
@@ -1890,14 +2031,14 @@ function confirmAddress(){
 		$("#addressTable").bootstrapTable('updateRow', {
 		    index: rowIndex,
 		    row: {
-		    	seq:count+1,
+		    	seq:parseInt(rowIndex)+1,
 		    	pca: pca,
 		    	provinceCode:provinceValue,
 		    	provinceName:province,
 		    	cityCode:cityValue,
 		    	cityName:city,
-		    	areaCode:areaValue,
-		    	areaName:area,
+		    	distinctCode:areaValue,
+		    	distinctName:area,
 		    	address:shippingAddress
 		    }
 		});
@@ -1920,27 +2061,30 @@ function editAddress(index){
 	$("#addressIndex").val(index);
 	$("#addressModalType").val("edit");
 	$("#addressModal").modal('show');
-	$("#selectProvince").val(row.provinceValue);
-	$("#citySelect").val(row.cityValue);
-	$("#selectDistrict").val(row.areaValue);
+	$("#selectProvince").val(row.provinceCode).change();
+	$("#citySelect").val(row.cityCode).change();
+	$("#selectDistrict").val(row.distinctCode);
 	$("#shippingAddress").val(row.address);
 }
 
 function removeAddress(index){
 	var delIndex = [parseInt(index)+1];
 	$('#addressTable').bootstrapTable('remove', {
-        field: "index",
+		field: "seq",
         values: delIndex
     });
-	var count = $('#addressTable').bootstrapTable('getData').length;
-	for(var i=0;i<count;i++){
-		var rows = {
-				index: i,
-				field : "seq",
-				value : i+1
-			}
-		$('#addressTable').bootstrapTable("updateCell",rows);
-	}
+	
+	if(status==null||status==""||status=="undefined"){
+		var count = $('#addressTable').bootstrapTable('getData').length;
+		for(var i=0;i<count;i++){
+			var rows = {
+					index: i,
+					field : "seq",
+					value : i+1
+				}
+			$('#addressTable').bootstrapTable("updateCell",rows);
+		}
+	}	
 }
 
 //获取需求计划
@@ -1954,6 +2098,33 @@ function changeRequirement(obj){
 	}else{
 		$("#itemRequirementPlan").html('');
 	}
+}
+
+//删除已上传文件
+function removeFile(index){
+	$('#fileList').bootstrapTable('remove', {
+        field: "index",
+        values: index
+    });
+}
+//下载已上传文件
+function downloadFile(fileInfo){
+	var fileName = fileInfo.split(',')[0];
+	var fileUrl = fileInfo.split(',')[1];
+	var myForm = document.createElement("form");
+    myForm.method = "get";
+    myForm.action = ctxPath+"order/download";
+    var seq = document.createElement("input");
+    seq.setAttribute("name", "fileName");
+    seq.setAttribute("value", fileName);
+    var seq1 = document.createElement("input");
+    seq1.setAttribute("name", "fileUrl");
+    seq1.setAttribute("value", fileUrl);
+    myForm.appendChild(seq);
+    myForm.appendChild(seq1);
+    document.body.appendChild(myForm);
+    myForm.submit();
+    document.body.removeChild(myForm);  
 }
 
 function expandAll(){
@@ -1984,7 +2155,120 @@ function saveOrder(type){
 		}
 		
 	}
-	$("#transferType").removeAttr("disabled");
+	$('#transferType').attr("disabled",false);
+	$("#currency").attr("disabled",false);
+	 /*var version = $("#version").val();
+	 var payment = new Object();
+	 payment['termCode'] = $("#paymentType").val();
+	 payment['termName'] = $("#paymentType").find("option:selected").text();
+	 payment['percentage'] = "1";
+	 payment['payDate'] = $("#inputDate").val();*/
+	 //获取下拉框name
+	 getSelectName();
+	 //初始化订单状态，防止提交报错
+	 if(status==null||status==""||status=="undefined"){
+		 $("#status").val("00");
+	 }
+	 var orderData = $("#orderForm").serializeObject(); 
+	 $('#transferType').attr("disabled",true);
+	 /*var payments=new Array();
+	 payments.push(payment);
+	 orderData.payments = payments;
+	 orderData['currentVersion'] = version;
+	 orderData['orderType'] = 'ZH0D';*/
+	 var payments=new Array();
+	 orderData.payments= payments;
+	 var attachments = $("#fileList").bootstrapTable('getData');
+	 orderData.attachments = attachments
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 orderData.items = items;
+	 for(var i=0;i<items.length;i++){
+		 var configData = localStorage[items[i].identification];
+		 items[i].isVirtual = 0;
+		 if(configData){
+			 var jsonObject = JSON.parse(configData);
+			 var storedConfigs = jsonObject.configTableData;
+			 var configs = new Array();
+			 for(var j=0;j<storedConfigs.length;j++){
+				 var config = new Object();
+				 config['keyCode'] = storedConfigs[j].code;
+				 config['valueCode'] = storedConfigs[j].configValueCode;
+				 config['configurable'] = items[i].isConfigurable;
+				 configs.push(config);
+			 }
+			 items[i]['configs'] = configs; 
+			 if(!items[i].isConfigurable){
+				if(items[i].itemCategory=='ZHD1'){
+					items[i].itemCategory='ZHD2';
+				}else if(items[i].itemCategory=='ZHD3'){
+					items[i].itemCategory='ZHD4';
+				}else{
+					items[i].itemCategory='ZHR2';
+				}
+				
+			 }
+			 items[i]['configComments'] = jsonObject.remark
+		 } else{
+			 items[i]['configs'] = null;
+		 }	 	 
+	 }
+	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
+	 if(type){
+		 $.ajax({
+			    url: ctxPath+"order/submit",
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(result) { 
+			    	if(result == null || result.status != 'ok'){
+			    		layer.alert("提交订单失败:" + (result != null ? result.msg : ""));
+			    	}else{
+			    		layer.alert('提交订单成功', {icon: 6});
+			    		window.location.href = ctxPath+'menu/orderManageList';
+			    	} 	
+			    },
+			    error: function(){
+			    	layer.alert('提交失败', {icon: 5});
+			    }
+		});  
+	 }else{
+		 $.ajax({
+			    url: ctxPath+"order/save",
+			    contentType: "application/json;charset=UTF-8",
+			    data: JSON.stringify(orderData),
+			    type: "POST",
+			    success: function(data) { 
+			    	if(data == null || data.status != 'ok'){
+			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
+			    	}else{
+			    		layer.alert('保存成功', {icon: 6});
+			    		window.location.href = ctxPath+'menu/orderManageList';
+			    	} 	
+			    },
+			    error: function(){
+			    	layer.alert('保存失败', {icon: 5});
+			    }
+		}); 
+	 }
+	 
+}
+
+
+function goBpm(){	 
+	 var items = $("#materialsTable").bootstrapTable('getData');
+	 if(items.length==0){
+		 layer.alert('请添加购销明细', {icon: 5});
+		 return
+	 }
+	var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
+	bootstrapValidator.validate();
+	if(!bootstrapValidator.isValid()){ 
+		layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
+		expandAll()
+		return
+	}
+	$('#transferType').attr("disabled",false);
+	$("#currency").attr("disabled",false);
 	 /*var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
@@ -2002,8 +2286,8 @@ function saveOrder(type){
 	 orderData['orderType'] = 'ZH0D';*/
 	 var payments=new Array();
 	 orderData.payments= payments;
-	 var attachments = new Array();
-	 orderData.attachments = new Array()
+	 var attachments = $("#fileList").bootstrapTable('getData');
+	 orderData.attachments = attachments
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
@@ -2037,41 +2321,23 @@ function saveOrder(type){
 		 }	 	 
 	 }
 	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
-	 if(type){
-		 $.ajax({
-			    url: ctxPath+"order/submit",
-			    contentType: "application/json;charset=UTF-8",
-			    data: JSON.stringify(orderData),
-			    type: "POST",
-			    success: function(result) { 
-			    	layer.alert('提交成功', {icon: 6});
-			    	//跳转到订单管理页面
-			    	//window.location.href = ctxPath+'menu/orderManageList';
-			    },
-			    error: function(){
-			    	layer.alert('提交失败', {icon: 5});
-			    }
-		});  
-	 }else{
-		 $.ajax({
-			    url: ctxPath+"order/save",
-			    contentType: "application/json;charset=UTF-8",
-			    data: JSON.stringify(orderData),
-			    type: "POST",
-			    success: function(data) { 
-			    	if(data == null || data.status != 'ok'){
-			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
-			    	}else{
-			    		layer.alert('保存成功', {icon: 6});
-			    		window.location.href = ctxPath+'menu/orderManageList';
-			    	} 	
-			    },
-			    error: function(){
-			    	layer.alert('保存失败', {icon: 5});
-			    }
-		}); 
-	 }
-	 
+	 $.ajax({
+		    url: ctxPath+"order/submitbpm",
+		    contentType: "application/json;charset=UTF-8",
+		    data: JSON.stringify(orderData),
+		    type: "POST",
+		    success: function(result) { 
+		    	if(result == null || result.status != 'ok'){
+		    		layer.alert("提交BPM失败：" + (result != null ? result.msg : ""));
+		    	}else{
+		    		layer.alert('提交BPM成功', {icon: 6});
+		    		window.location.href = ctxPath+'menu/orderManageList';
+		    	} 	
+		    },
+		    error: function(){
+		    	layer.alert('提交失败', {icon: 5});
+		    }
+	});  
 }
 
 
@@ -2193,12 +2459,12 @@ function viewGrossProfit(){
 	$("#grossDate").val($("#inputDate").val());
 	$("#grossClazz").val($("#customerClazz").val());
 	$.ajax({
-	    url: "/steigenberger/order/grossprofit",
+	    url: ctxPath+"order/grossprofit",
 	    contentType: "application/json;charset=UTF-8",
 	    data: JSON.stringify(orderData),
 	    type: "POST",
 	    success: function(data) { 
-	    	$("#grossProfitTable").bootstrapTable('load', data);
+	    	$("#grossProfitTable").bootstrapTable('load', data.data);
 	    },
 	    error: function(){
 	    	layer.alert('毛利率查看失败', {icon: 5});
@@ -2206,21 +2472,93 @@ function viewGrossProfit(){
 	});  
 }
 
-//修改订单时查看毛利率
-function editViewGrossProfit(){
-	$("#grossProfit").modal("show");
-	var version = $("#version").val();
-	var sequenceNumber = $("#sequenceNumber").val();
-	$("#grossSeqNum").val(sequenceNumber);
-	$("#grossVersion").val(version);
-	$("#grossContractRMBValue").val($("#contractAmount").val());
-	$("#grossPerson").val($("#salesName").val());
-	$("#grossDate").val($("#inputDate").val());
-	$("#grossClazz").val($("#customerClazz").val());
-	var opt = {
-			url: '/steigenberger/order/'+sequenceNumber+'/'+version+'/grossprofit'
-	};
-	$("#grossProfitTable").bootstrapTable('refresh', opt);	
+
+//查看合同
+function viewContract(){
+	var orderInfoId = $("#orderInfoId").val();
+	var url = ctxPath+"order/"+parseInt("22")+"/contract";
+    $.ajax({
+        type: "post",
+        url: url,
+        data: null,
+        dataType: "json",
+        success: function (data) {
+        	if(data.data == null){
+        		$('#noContractModal').modal('show');
+	    	}else if(data.status != 'ok'){
+	    		layer.alert('订单变更成功', {icon: 6});
+	    		$('#mytab').bootstrapTable('refresh');
+	    	}else{
+	    		var contract = data.data;
+	    		showEditModal(contract);
+	    	} 	
+        }
+    });
+}
+
+//显示合同编辑对话框
+function showEditModal(contract) {	
+	var html = template('contract-edit-tpl', contract);
+	$("#contractDialogBody").html(html);
+	
+	if (!contract.isedit) {
+		$(":input", "#contractForm").each(function(index,element) {
+			$(element).attr('disabled', true);
+		});
+	}
+	$("#contractDialog").modal('show');
+}
+
+function applyBodyDiscount(){
+	var discount = $("#bodyDiscount").val();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	if(countMaterialsTable)
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialsRowData = materialsTable[i];
+		var identification = materialsRowData.identification;
+		var materialType = identification.split('|')[0];
+		var allIndex = materialsRowData.allIndex;
+		if(materialType=='T101'){		
+			applyDiscountForRow(allIndex,discount,materialsRowData,"#materialsTable");
+		}
+	}
+	var materialsTableall1 = $('#materialsTableall1').bootstrapTable('getData');
+	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+	for(var i=0;i<countMaterialsTableall1;i++){
+		var materialsRowData = materialsTableall1[i];
+		var identification = materialsRowData.identification;
+		var materialType = identification.split('|')[0];
+		var index = identification.split('|')[1];
+		if(materialType=='T101'){
+			applyDiscountForRow(index,discount,materialsRowData,"#materialsTableall1");
+		}
+	}
+}
+
+function applyMainDiscount(){
+	
+}
+
+function applyDiscountForRow(index,discount,materialsRowData,tableId){
+	var discountValue = (discount/100).toFixed(2);
+	var quantity = materialsRowData.quantity;
+	var retailPrice = materialsRowData.retailPrice
+	var optionalActualPrice = materialsRowData.optionalActualPrice;
+	var actualPrice = toDecimal2(retailPrice*discountValue);
+	var actualAmount = toDecimal2(quantity*actualPrice);
+	var actualPriceSum = toDecimal2(parseFloat(actualPrice)+parseFloat(optionalActualPrice));
+	var actualAmountSum = toDecimal2(actualPriceSum*quantity);
+	$(tableId).bootstrapTable('updateRow', {
+	    index:index,
+	    row: {
+	    	discount:discount,
+	    	actualPrice:actualPrice,
+	    	actualAmount:actualAmount,
+	    	actualPriceSum:actualPriceSum,
+	    	actualAmountSum:actualAmountSum	    	
+	    }
+	});
 }
 
 var grossProfitColumns=[
@@ -2243,6 +2581,47 @@ var grossProfitColumns=[
 	{
 		 field: 'grossProfitMargin',
 		 title: '毛利率'
+	}
+]
+
+var fileListColumns=[
+	{
+		 field: 'index',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'id',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'orderInfoId',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'fileName',
+		 title: '已上传文件名称',
+		 width:'75%',
+		 formatter: function(value, row, index) {
+		    	var actions = [];
+				actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+row.fileUrl + '\')">'+value+'</a>');
+				return actions.join('');
+		}
+	},{
+		 field: 'fileUrl',
+		 title: '文件路径',
+		 visible:false
+	},{
+	    title: '操作',
+	    align: 'center',
+	    width:'25%',
+	    formatter: function(value, row, index) {
+	    	var actions = [];
+			actions.push('<a class="btn" onclick="removeFile(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+			return actions.join('');
+		}
 	}
 ]
 
@@ -2307,8 +2686,8 @@ var addressColumns = [{
     width:'15%',
     formatter: function(value, row, index) {
     	var actions = [];
-		actions.push('<a class="btn" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-		actions.push('<a class="btn" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+		actions.push('<a class="btn" id="editAddressBt" onclick="editAddress(\'' + index + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		actions.push('<a class="btn" id="removeAddressBt" onclick="removeAddress(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
 		return actions.join('');
     }
 }]
@@ -2395,7 +2774,7 @@ var configTableColumns = [
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
-    	}else{
+    	}/*else{
     		$.each(value,function(index,item){
         		if(item.default){
         			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';
@@ -2404,13 +2783,14 @@ var configTableColumns = [
         			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
         		}	
         	})
-        	$("#configTable").bootstrapTable('updateCell', {
+        	$("#"+id).val(configIdValue).change();
+    		$("#configTable").bootstrapTable('updateCell', {
         	    index: index,
         	    field:'configValueCode',
         	    value:configIdValue
         	});
     	}
-    	
+    	*/
 		return start+end;
     }
 }
