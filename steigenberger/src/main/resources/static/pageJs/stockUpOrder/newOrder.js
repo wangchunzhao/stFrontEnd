@@ -418,6 +418,7 @@ function openSearchCustomer(){
 		$("#customerName").val(row.name).change();
 		$("#customerClazzName").val(row.clazzName);
 		$("#customerIndustryCode").val(row.industryCode);
+		$("#customerClazz").val(row.clazzCode);
 	})
 }
 
