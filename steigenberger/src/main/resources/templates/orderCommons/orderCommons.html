@@ -197,7 +197,7 @@
 							    <option value="">--选择币种--</option>
 							</select>
 					    </div>
-					    <input type="hidden" id="currencyName"  th:field="*{currencyName}">
+					    <input type="hidden" id="currencyName"  th:value="*{currency}">
 					    <span class="col-md-1 control-label">合同金额</span>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:if="${orderType!=4}" th:field="*{contractRmbValue}">

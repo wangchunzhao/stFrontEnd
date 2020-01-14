@@ -576,6 +576,7 @@ function getIncoterm(salesType){
 	}
 }
 function getCurrency(saleType,exchangeRates){
+	var currencyName = $("#currencyName").val();
 	$("#currency").html("");
 	if(saleType==''){
 		$("#currency").html("");
@@ -583,7 +584,12 @@ function getCurrency(saleType,exchangeRates){
 		$("#currency").append("<option value=''>--选择币种--</option>");
 		var currency = exchangeRates[saleType];
 		$.each(currency, function (index,item) {
-			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			if(currencyName == item.code){
+				$("#currency").append("<option selected value=" + item.code + ">" + item.name + "</option>");
+				$("#exchangeRate").val(item.rate);
+			}else {
+				$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			}
 		});
 	}else{
 		var currency = exchangeRates[saleType];
