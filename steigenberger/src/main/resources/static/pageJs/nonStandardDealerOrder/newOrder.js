@@ -1690,6 +1690,9 @@ function insertDefaultConfigs(){
 				config['configValueCode'] = value.code
 			}
 		})
+		if(!config.configValueCode){
+			config['configValueCode'] = item.configs[0].code;
+		}
 		insertConfigs.push(config);
 	})
 	for(var i=0;i<insertConfigs.length;i++){
@@ -1718,6 +1721,9 @@ function resetStandardConfiguration(){
 				config['configValueCode'] = value.code
 			}
 		})
+		if(!config.configValueCode){
+			config['configValueCode'] = item.configs[0].code;
+		}
 		insertConfigs.push(config);
 	})
 	for(var i=0;i<insertConfigs.length;i++){
@@ -2537,7 +2543,30 @@ function applyBodyDiscount(){
 }
 
 function applyMainDiscount(){
-	
+	var discount = $("#bodyDiscount").val();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	if(countMaterialsTable)
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialsRowData = materialsTable[i];
+		var identification = materialsRowData.identification;
+		var materialType = identification.split('|')[0];
+		var allIndex = materialsRowData.allIndex;
+		if(materialType=='T102'){		
+			applyDiscountForRow(allIndex,discount,materialsRowData,"#materialsTable");
+		}
+	}
+	var materialsTableall1 = $('#materialsTableall1').bootstrapTable('getData');
+	var countMaterialsTableall1 = $('#materialsTableall1').bootstrapTable('getData').length;
+	for(var i=0;i<countMaterialsTableall1;i++){
+		var materialsRowData = materialsTableall1[i];
+		var identification = materialsRowData.identification;
+		var materialType = identification.split('|')[0];
+		var index = identification.split('|')[1];
+		if(materialType=='T102'){
+			applyDiscountForRow(index,discount,materialsRowData,"#materialsTableall1");
+		}
+	}
 }
 
 function applyDiscountForRow(index,discount,materialsRowData,tableId){
