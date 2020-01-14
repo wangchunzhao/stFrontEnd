@@ -430,6 +430,7 @@ function openSearchCustomer(){
 		$("#customerName").val(row.name).change();
 		$("#customerClazzName").val(row.clazzName);
 		$("#customerIndustryCode").val(row.industryCode);
+		$("#customerClazzItem").val(row.clazzCode);
 	})
 }
 
@@ -2207,6 +2208,7 @@ function saveOrder(type){
 		deliveryAddressItem = $("#addressTable").bootstrapTable('getData');
 	}
 	orderData.deliveryAddress = deliveryAddressItem;
+	orderData['customerClazz'] = $("#customerClazzItem").val();
 	if(type){
 		$.ajax({
 			url: ctxPath+"order/submit",
