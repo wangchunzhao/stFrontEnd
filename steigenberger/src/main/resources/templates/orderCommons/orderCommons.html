@@ -221,6 +221,7 @@
 							     <option value=""></option>
 								<option th:each="com : ${order_option.intercoms}" th:value="${com.key}" th:text="${com.value}"></option>
 							</select>
+							<input type="hidden" id="incotermItem"  th:value="*{incoterm}">
 						</div>
 						<input type="hidden" id="incotermName" th:field="*{incotermName}">
 						<div class="col-xs-12 col-md-1" style="padding-left: 1px;">

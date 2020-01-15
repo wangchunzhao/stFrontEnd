@@ -568,10 +568,16 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 }
 
 function getIncoterm(salesType){
+	debugger
+	var incotermItem = $("#incotermItem").val();
 	$("#incoterm").html('');
 	if(salesType=='20'){
 		$.each(intercoms, function (key,value) {
-			$("#incoterm").append("<option value=" + key +">" + value + "</option>");
+			if(incotermItem == key){
+				$("#incoterm").append("<option selected value=" + key +">" + value + "</option>");
+			}else {
+				$("#incoterm").append("<option value=" + key +">" + value + "</option>");
+			}
 		});
 	}
 }
