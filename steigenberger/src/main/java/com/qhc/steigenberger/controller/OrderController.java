@@ -241,6 +241,30 @@ public class OrderController extends BaseController {
 	}
 	
 	/**
+	 * 修改订单报价状态
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("{orderInfoId}/quote/{status}")
+	@ResponseBody
+	public Result updateQuoteStatus(@PathVariable("orderInfoId") Integer orderInfoId, @PathVariable("status") String quoteStatus) {
+		String identity = this.getUserIdentity();
+		
+		Result result;
+		
+		try {
+			result = orderService.updateQuoteStatus(identity, orderInfoId, quoteStatus);
+		} catch (Exception e) {
+			logger.error("修改报价状态失败", e);
+			result = Result.error("修改报价状态失败");
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * 订单对应的合同
 	 * 
 	 * @param order

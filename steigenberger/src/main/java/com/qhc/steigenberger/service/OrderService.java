@@ -204,16 +204,6 @@ public class OrderService {
 		return null;
 	}
 
-//	public List<MaterialGroups> calcWtwGrossProfit(String sequenceNumber, String version) {
-//		String url = "order/" + sequenceNumber + "/" + version + "/wtwgrossprofit";
-//		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
-//	}
-//
-//	public List<MaterialGroups> calcGrossProfit(String sequenceNumber, String version) {
-//		String url = "order/" + sequenceNumber + "/" + version + "/grossprofit";
-//		return (List<MaterialGroups>) fryeService.postForm(url, "", ArrayList.class);
-//	}
-
 	/**
 	 * 保存附件
 	 * 
@@ -263,6 +253,20 @@ public class OrderService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * 修改订单报价状态
+	 * 
+	 * @param identity
+	 * @param orderInfoId
+	 * @param quoteStatus
+	 * @return
+	 */
+	public Result updateQuoteStatus(String identity, Integer orderInfoId, String quoteStatus) {
+		String url = "order/quote/" + identity + ',' + orderInfoId + ',' + quoteStatus;
+		Result result =  fryeService.getInfo(url, Result.class);
+		return result;
 	}
 
 }
