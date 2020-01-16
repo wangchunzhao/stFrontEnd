@@ -541,6 +541,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 
 		$('#currency').attr('disabled',true);
 		$('#incoterm').attr("disabled",true);
+		$("#incotermContect").val("");
 		$('#incotermContect').attr("readonly",true);
 
 		$('#installCode').attr("readonly",false);
@@ -581,14 +582,21 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 }
 
 function getIncoterm(salesType){
+	debugger
+	var incotermItem = $("#incotermItem").val();
 	$("#incoterm").html('');
 	if(salesType=='20'){
 		$.each(intercoms, function (key,value) {
-			$("#incoterm").append("<option value=" + key +">" + value + "</option>");
+			if(incotermItem == key){
+				$("#incoterm").append("<option selected value=" + key +">" + value + "</option>");
+			}else {
+				$("#incoterm").append("<option value=" + key +">" + value + "</option>");
+			}
 		});
 	}
 }
 function getCurrency(saleType,exchangeRates){
+	var currencyName = $("#currencyName").val();
 	$("#currency").html("");
 	if(saleType==''){
 		$("#currency").html("");
@@ -596,7 +604,12 @@ function getCurrency(saleType,exchangeRates){
 		$("#currency").append("<option value=''>--选择币种--</option>");
 		var currency = exchangeRates[saleType];
 		$.each(currency, function (index,item) {
-			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			if(currencyName == item.code){
+				$("#currency").append("<option selected value=" + item.code + ">" + item.name + "</option>");
+				$("#exchangeRate").val(item.rate);
+			}else {
+				$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			}
 		});
 	}else{
 		var currency = exchangeRates[saleType];
@@ -754,9 +767,9 @@ function getPaymentAreaContent(){
 	}else{
 		var paymentAreaContent = '';
 		$.each(paymentTableData, function(i, item) {
-			paymentAreaContent = paymentAreaContent+"  行号"+item.index+";回款类型:"+item.paymentType+";"+"回款起始时间:"
-				+item.paymentTime+";"+"预算回款金额:"+item.budgetReturnAmount+";"+"预算回款金额(原币)"+item.originalBudgetReturnAmount
-				+";"+"所占比例:"+item.proportion+";"+"备注:"+item.remark+";";
+			paymentAreaContent = paymentAreaContent+"  行号"+item.index+";回款类型:"+item.code+";"+"回款起始时间:"
+				+item.payDate+";"+"预算回款金额:"+item.rmbAmount+";"+"预算回款金额(原币)"+item.amount
+				+";"+"所占比例:"+item.percentage+";"+"备注:"+item.reason+";";
 		});
 		$("#paymentArea").text(paymentAreaContent);
 	}

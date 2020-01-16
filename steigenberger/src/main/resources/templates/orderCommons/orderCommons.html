@@ -357,7 +357,7 @@
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
 						<span class="col-md-1 control-label">批准折扣</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="contactor3Id" aria-describedby="emailHelp" name="contactor3Id" disabled>
+							<input type="text" class="form-control" id="approveDiscount" aria-describedby="emailHelp" name="approveDiscount" disabled>
 					    </div>
 					    <span class="col-md-1 control-label">柜体申请折扣</span>
 						<div class="col-md-2">
@@ -381,9 +381,9 @@
 			                    </span>
 			                 </div>
 					    </div>
-						    <span class="col-md-1 control-label">合并折扣折扣</span>
+						    <span class="col-md-1 control-label">合并折扣</span>
 							<div class="col-md-2">
-								<input type="text" class="form-control" aria-describedby="emailHelp" th:filed="*{discount}" readonly>
+								<input type="text" class="form-control" id="discount" aria-describedby="emailHelp" th:filed="*{discount}" readonly>
 						    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">

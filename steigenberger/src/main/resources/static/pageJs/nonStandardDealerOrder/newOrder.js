@@ -242,6 +242,9 @@ function fillItems(){
 		}
 	}
 	getAllCountFiled();
+	if($("#stOrderType").val()=="2"){
+		calMergeDiscount();
+	}
 }
 
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
@@ -1295,6 +1298,9 @@ function confirmMaterials(){
 	$('#subsidiaryModal').modal('hide');
 	//计算最早发货时间，最早出货时间，购销明细合计
 	getAllCountFiled();
+	if($("#stOrderType").val()=='2'){
+		calMergeDiscount();
+	}	
 }
 
 function getAllCountFiled(){
@@ -2567,6 +2573,7 @@ function applyMainDiscount(){
 			applyDiscountForRow(index,discount,materialsRowData,"#materialsTableall1");
 		}
 	}
+	calMergeDiscount();
 }
 
 function applyDiscountForRow(index,discount,materialsRowData,tableId){
@@ -2588,6 +2595,44 @@ function applyDiscountForRow(index,discount,materialsRowData,tableId){
 	    	actualAmountSum:actualAmountSum	    	
 	    }
 	});
+	calMergeDiscount();
+}
+
+function calMergeDiscount(){
+	//折后零售金额集合
+	var discountRetailAmountsArray = new Array();
+	//实际零售金额集合
+	var retailAmountsArray = new Array();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	if(countMaterialsTable==0){
+		return;
+	}
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialRowData = materialsTable[i];
+		var identification = materialRowData.identification;
+		var materialType = identification.split("|")[0];
+		if(materialType=="T101"||materialType=="T102"){
+			var discount = materialRowData.discount;
+			var retailAmount = materialRowData.retailAmount;
+			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(1);
+			discountRetailAmountsArray.push(discountRetailAmount);
+			retailAmountsArray.push(retailAmount);
+		}
+	}
+	var discountRetailAmounts =parseFloat(0).toFixed(1);
+	$.each(discountRetailAmountsArray,function(index,value){
+		discountRetailAmounts=accAdd(discountRetailAmounts,parseFloat(value));
+	});
+	var retailAmounts = parseFloat(0).toFixed(1);
+	$.each(retailAmountsArray,function(index,value){
+		retailAmounts=accAdd(retailAmounts,parseFloat(value));
+	});
+	var mergerDiscount = (accMul(accDiv(discountRetailAmounts,retailAmounts),100)).toFixed(1);
+	$("#discount").val(mergerDiscount);
+	$("#approveDiscount").val(mergerDiscount);
+	
+	
 }
 
 var grossProfitColumns=[
