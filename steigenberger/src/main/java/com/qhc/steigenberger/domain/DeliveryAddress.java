@@ -11,8 +11,8 @@ public class DeliveryAddress {
 	private String provinceName;// 省名称
 	private String cityCode;// 市代码
 	private String cityName;// 市名称
-	private String distinctCode;// 区代码
-	private String distinctName;// 区名称
+	private String districtCode;// 区代码
+	private String districtName;// 区名称
 	private String address; // 收货地址
 
 	public Integer getId() {
@@ -71,20 +71,20 @@ public class DeliveryAddress {
 		this.cityName = cityName;
 	}
 
-	public String getDistinctCode() {
-		return distinctCode;
+	public String getDistrictCode() {
+		return districtCode;
 	}
 
-	public void setDistinctCode(String distinctCode) {
-		this.distinctCode = distinctCode;
+	public void setDistrictCode(String districtCode) {
+		this.districtCode = districtCode;
 	}
 
-	public String getDistinctName() {
-		return distinctName;
+	public String getDistrictName() {
+		return districtName;
 	}
 
-	public void setDistinctName(String distinctName) {
-		this.distinctName = distinctName;
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
 	}
 
 	public String getAddress() {
