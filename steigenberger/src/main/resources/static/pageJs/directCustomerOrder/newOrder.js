@@ -767,9 +767,9 @@ function getPaymentAreaContent(){
 	}else{
 		var paymentAreaContent = '';
 		$.each(paymentTableData, function(i, item) {
-			paymentAreaContent = paymentAreaContent+"  行号"+item.index+";回款类型:"+item.paymentType+";"+"回款起始时间:"
-				+item.paymentTime+";"+"预算回款金额:"+item.budgetReturnAmount+";"+"预算回款金额(原币)"+item.originalBudgetReturnAmount
-				+";"+"所占比例:"+item.proportion+";"+"备注:"+item.remark+";";
+			paymentAreaContent = paymentAreaContent+"  行号"+item.index+";回款类型:"+item.code+";"+"回款起始时间:"
+				+item.payDate+";"+"预算回款金额:"+item.rmbAmount+";"+"预算回款金额(原币)"+item.amount
+				+";"+"所占比例:"+item.percentage+";"+"备注:"+item.reason+";";
 		});
 		$("#paymentArea").text(paymentAreaContent);
 	}
