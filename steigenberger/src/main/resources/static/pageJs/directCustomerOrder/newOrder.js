@@ -581,14 +581,21 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 }
 
 function getIncoterm(salesType){
+	debugger
+	var incotermItem = $("#incotermItem").val();
 	$("#incoterm").html('');
 	if(salesType=='20'){
 		$.each(intercoms, function (key,value) {
-			$("#incoterm").append("<option value=" + key +">" + value + "</option>");
+			if(incotermItem == key){
+				$("#incoterm").append("<option selected value=" + key +">" + value + "</option>");
+			}else {
+				$("#incoterm").append("<option value=" + key +">" + value + "</option>");
+			}
 		});
 	}
 }
 function getCurrency(saleType,exchangeRates){
+	var currencyName = $("#currencyName").val();
 	$("#currency").html("");
 	if(saleType==''){
 		$("#currency").html("");
@@ -596,7 +603,12 @@ function getCurrency(saleType,exchangeRates){
 		$("#currency").append("<option value=''>--选择币种--</option>");
 		var currency = exchangeRates[saleType];
 		$.each(currency, function (index,item) {
-			$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			if(currencyName == item.code){
+				$("#currency").append("<option selected value=" + item.code + ">" + item.name + "</option>");
+				$("#exchangeRate").val(item.rate);
+			}else {
+				$("#currency").append("<option value=" + item.code + ">" + item.name + "</option>");
+			}
 		});
 	}else{
 		var currency = exchangeRates[saleType];
