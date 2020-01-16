@@ -68,10 +68,9 @@ public class PermissionApplyController extends BaseController{
 		String area = request.getParameter("area");
 		Integer isactive = 1;//全是启用
 		String tel = request.getParameter("telnum");
-		String creater = request.getParameter("creater");
-		String updater = request.getParameter("updater");
+		String creater = this.getUserIdentity();
+		String updater = creater;
 		//获取域用户
-//		User usersession = getAccount(request);
 		String msg = "";
 		int status = 0;
 		User userch = userService.selectUserIdentity(userid);
@@ -82,26 +81,20 @@ public class PermissionApplyController extends BaseController{
 			User user = new User();
 			user.setUserName(userName);
 			user.setUserMail(useremil);
-			user.setIsActive(isactive);
+			user.setIsActive(1);
 			user.setName(userName);
 			user.setUserIdentity(userid);
+			user.setOfficeCode(area);
+			user.setCreater(creater);
+			user.setUpdater(updater);
+			user.setTel(tel);
 			List<Role> roleList = new ArrayList<>();
 			Role role = new Role();
 			role.setId(Integer.parseInt(roleId));
 			roleList.add(role);
 			user.setRoles(roleList);
-			user.setOfficeCode(area);
-			user.setIsActive(1);
-			user.setTel(tel);
-			user.setCreater(creater);
-			user.setUpdater(updater);
-			user.setCreateTime(new Date(System.currentTimeMillis()));
-			user.setUpdateTime(new Date(System.currentTimeMillis()));
-//
-//			System.out.println(usersession.getUserIdentity());
-			Boolean result = addStatus(user);
-//			String result = userService.updateUserInfo(user);
-			if (result) {
+			User u = userService.add(user);
+			if (u != null && !"".equals(u)) {
 				status = 200;
 				msg = "操作成功！";
 			} else {
@@ -111,21 +104,5 @@ public class PermissionApplyController extends BaseController{
 		}
 		return JsonResult.build(status, msg, "");
 	}
-	
-	public Boolean addStatus(User user) {
-		Boolean bol = false;
-		try {
-			User result = userService.add(user);
-			if (result != null && !"".equals(result)) {
-                bol = true;
-			} else {
-				bol = false;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-		return bol;
-	}
-	
 	
 }

@@ -145,12 +145,12 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = "loginOut")
 	public String loginOut(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
-		System.out.println("222222222222222222222");
 		// 干掉cookie和session
 		HttpSession session = request.getSession();
 		session.removeAttribute(Constants.IDENTITY);
 		session.removeAttribute(Constants.ACCOUNT);
 		session.removeAttribute(Constants.PERMISSIONS);
+		session.removeAttribute(Constants.MENUS);
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 0) {

@@ -96,7 +96,7 @@ public abstract class BaseController {
 		HttpServletResponse response = servletRequestAttributes.getResponse();
 		HttpSession session = request.getSession();
 
-		List<Operations> list = (List<Operations>) session.getAttribute("permissions");
+		List<Operations> list = (List<Operations>) session.getAttribute(Constants.PERMISSIONS);
 		if (list == null) {
 			list = operationService.findOperations(this.getUserIdentity());
 			session.setAttribute("permissions", list);
@@ -117,7 +117,7 @@ public abstract class BaseController {
 		HttpServletResponse response = servletRequestAttributes.getResponse();
 		HttpSession session = request.getSession();
 
-		Map<String, MenusDto> menus = (Map<String, MenusDto>) session.getAttribute("menus");
+		Map<String, MenusDto> menus = (Map<String, MenusDto>) session.getAttribute(Constants.MENUS);
 		if (menus == null) {
 			menus = operationService.findMenus(this.getUserIdentity());
 			session.setAttribute("menus", menus);

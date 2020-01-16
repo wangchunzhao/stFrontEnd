@@ -30,7 +30,6 @@ public class OperationService{
 	 * @return
 	 */
 	public List<Operations> findOperations(String user) {
-		// TODO 缺少后端接口
 		return fryeService.getListInfo("operations/" + user, Operations.class);
 	}
 	
@@ -46,7 +45,7 @@ public class OperationService{
 	 */
 	public Map<String, MenusDto> findMenus(String user) {
 		//List<MenusDto> list = getList();
-		Map<String, MenusDto> menus = fryeService.findMenus("queryAllAserMenus/" + user);
+		Map<String, MenusDto> menus = fryeService.findMenus("menus/" + user);
 		//Map<String, MenusDto> menus = null;
 		return menus;
 	}
