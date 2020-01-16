@@ -541,6 +541,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 
 		$('#currency').attr('disabled',true);
 		$('#incoterm').attr("disabled",true);
+		$("#incotermContect").val("");
 		$('#incotermContect').attr("readonly",true);
 
 		$('#installCode').attr("readonly",false);
