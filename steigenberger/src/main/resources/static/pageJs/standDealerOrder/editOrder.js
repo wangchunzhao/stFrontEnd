@@ -294,8 +294,8 @@ function fillOrderAddress(){
 				if(row.cityName){
 					pca+="/"+row.cityName
 				}
-				if(row.distinctName){
-					pca+="/"+row.distinctName
+				if(row.districtName){
+					pca+="/"+row.districtName
 				}
 			}
 			row.pca=pca;

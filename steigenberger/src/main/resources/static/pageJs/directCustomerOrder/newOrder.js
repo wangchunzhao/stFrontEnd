@@ -380,8 +380,8 @@ function fillOrderAddress(){
 				if(row.cityName){
 					pca+="/"+row.cityName
 				}
-				if(row.distinctName){
-					pca+="/"+row.distinctName
+				if(row.districtName){
+					pca+="/"+row.districtName
 				}
 			}
 			row.pca=pca;
@@ -1463,8 +1463,8 @@ function addMaterialAddress(){
 		$('#materialCityCode').val(row.cityCode);
 		$('#deliveryAddressSeq').val(row.seq);
 		$('#materialCityName').val(row.cityName);
-		$('#materialAreaCode').val(row.distinctCode);
-		$('#materialAreaName').val(row.distinctName);
+		$('#materialAreaCode').val(row.districtCode);
+		$('#materialAreaName').val(row.districtName);
 		$('#materialModalAddress').val(row.address)
 		if(row.pca==''){
 			$("#materialAddress").val(row.address).change();
@@ -2038,8 +2038,8 @@ function confirmAddress(){
 				provinceName:province,
 				cityCode:cityValue,
 				cityName:city,
-				distinctCode:areaValue,
-				distinctName:area,
+				districtCode:areaValue,
+				districtName:area,
 				address:shippingAddress
 			}
 		});
@@ -2053,8 +2053,8 @@ function confirmAddress(){
 				provinceName:province,
 				cityCode:cityValue,
 				cityName:city,
-				distinctCode:areaValue,
-				distinctName:area,
+				districtCode:areaValue,
+				districtName:area,
 				address:shippingAddress
 			}
 		});
@@ -2079,7 +2079,7 @@ function editAddress(index){
 	$("#addressModal").modal('show');
 	$("#selectProvince").val(row.provinceCode).change();
 	$("#citySelect").val(row.cityCode).change();
-	$("#selectDistrict").val(row.distinctCode);
+	$("#selectDistrict").val(row.districtCode);
 	$("#shippingAddress").val(row.address);
 }
 
@@ -2636,11 +2636,11 @@ var addressColumns = [{
 		field:'cityName',
 		visible:false
 	},{
-		field:'distinctCode',
+		field:'districtCode',
 		visible:false
 	},
 	{
-		field:'distinctName',
+		field:'districtName',
 		visible:false
 	},{
 		title : '到货地址',
@@ -2684,10 +2684,10 @@ var materialsAddressColumns = [{
 		visible:false
 	},
 	{
-		field:'distinctCode',
+		field:'districtCode',
 		visible:false
 	},{
-		field:'distinctName',
+		field:'districtName',
 		visible:false
 	},{
 		title : '到货地址',
