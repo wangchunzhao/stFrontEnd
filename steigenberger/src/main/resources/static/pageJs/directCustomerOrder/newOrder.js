@@ -410,6 +410,9 @@ function fillAttachments(){
 
 //修改查看订单时,回显结算方式数据
 function fillOrderSettlementMethod(){
+	orderSettlementMethod.forEach(function (item, index) {
+		item.percentage = item.percentage + "%"
+	})
 	if(orderSettlementMethod){
 		for(var i=0;i<orderSettlementMethod.length;i++){
 			orderSettlementMethod[i]["index"] = i + 1;
@@ -681,6 +684,9 @@ function confirmPayment() {
 	var paymentTypeValue = $("#paymentType").val();
 	var paymentTime = $("#paymentTime").val();
 	var proportion = $("#proportion").val();
+	if(proportion.indexOf("%") != -1){
+		proportion = proportion.replace("%", "");
+	}
 	var remark = $("#remark").val();
 	var budgetReturnAmount = $("#budgetReturnAmount").val();
 	var originalBudgetReturnAmount = $("#originalBudgetReturnAmount").val();
