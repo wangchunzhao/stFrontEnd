@@ -1545,13 +1545,6 @@ function initOrderFormValidator(){
 					}
 				}
 			},
-			recordCode: {
-				validators: {
-					notEmpty: {
-						message: '请填写项目编号'
-					}
-				}
-			},
 			customerName: {
 				validators: {
 					trigger:"change",
