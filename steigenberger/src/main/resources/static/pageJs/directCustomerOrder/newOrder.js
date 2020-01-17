@@ -64,6 +64,7 @@ $(function () {
 	initMarialsTables();
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
+	$('#paymentTime').datepicker();
 	defaultCollapse();
 	if(status==null||status==""||status=="undefined"){
 		getUserDetail();
