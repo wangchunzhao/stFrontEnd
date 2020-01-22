@@ -37,7 +37,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
-			url : "/steigenberger/report/index",//请求路径
+			url : ctxPath + "report/index",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -251,7 +251,7 @@ var materialTableInit = function () {
 	mTableInit.Init = function () {
 		$('#mytab2').bootstrapTable({
 			method : 'get',
-			url : "/steigenberger/report/index",//请求路径
+			url : ctxPath + "report/index",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,

@@ -34,20 +34,6 @@ public class MenuController extends BaseController {
 	private final static String ORDER_OPERATION_TYPE = "orderOperationType";
 	
 	private final static String ERROR_PAGE = "error.html";
-	//
-	private final static String specialApplication="special/specialList";
-	private final static String todo="todo/mytask";
-	private final static String newOrder="dealerOrder/orderForm";
-	private final static String orderManageList="orderManage/myOrder";
-	private final static String contract="contract/myContract";
-	private final static String purchaseAndSale="report/purchaseAndSale";
-	private final static String biddingDetail="report/biddingDetail";
-	private final static String userIndex="systemManage/userManage";
-	private final static String permissionApply="permission/permissionApply";
-	private final static String settingIndex="systemManage/parameterSetting";
-	private final static String roleIndex="systemManage/roleManage";
-	private final static String freight="systemManage/freight";
-
 
 	@Autowired
 	private UserService userService;
@@ -67,32 +53,32 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping("/specialApplication")
 	public String index() {
-		return specialApplication;
+		return "special/specialList";
 	}
 	
 	@RequestMapping("/todo")
   	public String todo() {
-  		return todo;
+  		return "todo/mytask";
   	}
 	
 	@RequestMapping("/newOrder")
   	public String newOrder() {
-  		return newOrder;
+  		return "dealerOrder/orderForm";
   	}
 	
 	@RequestMapping("/orderManageList")
   	public String orderManage() {
-  		return orderManageList;
+  		return "orderManage/myOrder";
   	}
 	
 	@RequestMapping("/contract")
   	public String contract() {
-  		return contract;
+  		return "contract/myContract";
   	}
 	
 	@RequestMapping("/purchaseAndSale")
   	public String purchaseAndSale() {
-  		return purchaseAndSale;
+  		return "report/purchaseAndSale";
   	}
 	
 	@RequestMapping("/biddingDetail")
@@ -102,7 +88,18 @@ public class MenuController extends BaseController {
 		
 //		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
 //		mv.addObject("areaList", areaList);
-		mv.setViewName(biddingDetail);
+		mv.setViewName("report/biddingDetail");
+		return mv;
+	}
+	
+	@RequestMapping("/orderSummary")
+	public ModelAndView orderSummary() {
+		ModelAndView mv = new ModelAndView();
+		//销售订单汇总    TODO
+		
+//		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
+//		mv.addObject("areaList", areaList);
+		mv.setViewName("report/orderSummary");
 		return mv;
 	}
 	
@@ -121,12 +118,12 @@ public class MenuController extends BaseController {
 		String pp = "/user/index?isActive="+entity.getIsActive()+"&userMail="+userMail+"&userIdentity="+userIdentity;
 		model.addAttribute("currentPath", pp);
 		
-		return userIndex;
+		return "systemManage/userManage";
 	}
 	
 	@RequestMapping("/permissionApply")
 	public String permissionApply() {
-		return permissionApply;
+		return "permission/permissionApply";
 	}
 	
 	@RequestMapping("/settingIndex")
@@ -134,7 +131,7 @@ public class MenuController extends BaseController {
 		List<Parameter> parameters = parameterService.getList();
 		model.addAttribute("parameters", parameters);
 //		request.getSession().setAttribute("parameterSettings",parameters);
-		return settingIndex;
+		return "systemManage/parameterSetting";
 	}
 	
 	@RequestMapping("/roleIndex")
@@ -148,12 +145,12 @@ public class MenuController extends BaseController {
 		model.addAttribute("currentPath", "/menu/roleIndex?isActive="+entity.getIsActive());
 //		model.addAttribute("operationList", this.getPermissions());
 		
-		return roleIndex;
+		return "systemManage/roleManage";
 	}
 	
 	@RequestMapping("/freight")
   	public String freight() {
-  		return freight;
+  		return "systemManage/freight";
   	}
 	
 	@RequestMapping("standardDiscount")

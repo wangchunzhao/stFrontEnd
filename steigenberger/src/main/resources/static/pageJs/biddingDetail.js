@@ -13,7 +13,7 @@ $(function () {
     //查询按钮事件
     $('#search_btn').click(function() {
     	$('#mytab').bootstrapTable('refresh', {
-    		url : '/steigenberger/report/biddingDetailList'
+    		url : ctxPath + 'report/biddingDetailList'
     	});
     });
 
@@ -54,7 +54,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
-			url : "/steigenberger/report/biddingDetailList",//请求路径
+			url : ctxPath+"report/biddingDetailList",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -142,23 +142,3 @@ function formatTrue(value, row, index) {
 	return value == 1 ? "是" : "否";
 	//或者 return row.sex == 1 ? "男" : "女";
 }
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

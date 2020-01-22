@@ -61,6 +61,7 @@
                 <ul class="treeview-menu">
                   <li th:if="${session.menus['1006']} != null"><a th:href="@{/menu/purchaseAndSale}" id="report1"><i class="fa fa-angle-right"></i> <span th:text="${session.menus['1006'].name}"></span><span style="font-size:12px">Detailed statement of purchase and sale</span> </a></li>
                   <li th:if="${session.menus['1007']} != null" ><a th:href="@{/menu/biddingDetail}" id="report2"><i class="fa fa-angle-right"></i> <span th:text="${session.menus['1007'].name}"></span><span style="font-size:12px">Bid tracking report</span> </a></li>
+                  <li th:if="${session.menus['1021']} != null" ><a th:href="@{/menu/orderSummary}" id="report3"><i class="fa fa-angle-right"></i> <span th:text="${session.menus['1021'].name}"></span><span style="font-size:12px">Sales order summary report</span> </a></li>
                 </ul>
               </li>
 
