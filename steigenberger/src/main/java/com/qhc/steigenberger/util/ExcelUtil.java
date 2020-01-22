@@ -23,10 +23,10 @@ public class ExcelUtil {
         return readXlsx(input);
     }
  
-    public static List<List<String>> readXls(String path) throws IOException {
-        InputStream input = new FileInputStream(path);
-        return readXls(input);
-    }
+//    public static List<List<String>> readXls(String path) throws IOException {
+//        InputStream input = new FileInputStream(path);
+//        return readXls(input);
+//    }
  
     public static List<List<String>> readXlsx(InputStream input) throws IOException {
         List<List<String>> result = new ArrayList<List<String>>();
@@ -54,46 +54,46 @@ public class ExcelUtil {
         return result;
     }
  
-    public static List<List<String>> readXls(InputStream input) throws IOException {
-        List<List<String>> result = new ArrayList<List<String>>();
-        HSSFWorkbook workbook = new HSSFWorkbook(input);
-        for (int numSheet = 0; numSheet < workbook.getNumberOfSheets(); numSheet++) {
-            HSSFSheet sheet = workbook.getSheetAt(numSheet);
-            if (sheet == null) {
-                continue;
-            }
-            for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
-                HSSFRow row = sheet.getRow(rowNum);
-                int minCellNum = row.getFirstCellNum();
-                int maxCellNum = row.getLastCellNum();
-                List<String> rowList = new ArrayList<String>();
-                for (int i = minCellNum; i < maxCellNum; i++) {
-                    HSSFCell cell = row.getCell(i);
-                    if (cell == null) {
-                        continue;
-                    }
-                    rowList.add(getStringVal(cell));
-                }
-                result.add(rowList);
-            }
-        }
-        return result;
-    }
+//    public static List<List<String>> readXls(InputStream input) throws IOException {
+//        List<List<String>> result = new ArrayList<List<String>>();
+//        HSSFWorkbook workbook = new HSSFWorkbook(input);
+//        for (int numSheet = 0; numSheet < workbook.getNumberOfSheets(); numSheet++) {
+//            HSSFSheet sheet = workbook.getSheetAt(numSheet);
+//            if (sheet == null) {
+//                continue;
+//            }
+//            for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
+//                HSSFRow row = sheet.getRow(rowNum);
+//                int minCellNum = row.getFirstCellNum();
+//                int maxCellNum = row.getLastCellNum();
+//                List<String> rowList = new ArrayList<String>();
+//                for (int i = minCellNum; i < maxCellNum; i++) {
+//                    HSSFCell cell = row.getCell(i);
+//                    if (cell == null) {
+//                        continue;
+//                    }
+//                    rowList.add(getStringVal(cell));
+//                }
+//                result.add(rowList);
+//            }
+//        }
+//        return result;
+//    }
  
-    private static String getStringVal(HSSFCell cell) {
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_BOOLEAN:
-                return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
-            case Cell.CELL_TYPE_FORMULA:
-                return cell.getCellFormula();
-            case Cell.CELL_TYPE_NUMERIC:
-                cell.setCellType(Cell.CELL_TYPE_STRING);
-                return cell.getStringCellValue();
-            case Cell.CELL_TYPE_STRING:
-                return cell.getStringCellValue();
-            default:
-                return null;
-        }
-    }
+//    private static String getStringVal(HSSFCell cell) {
+//        switch (cell.getCellType()) {
+//            case Cell.CELL_TYPE_BOOLEAN:
+//                return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
+//            case Cell.CELL_TYPE_FORMULA:
+//                return cell.getCellFormula();
+//            case Cell.CELL_TYPE_NUMERIC:
+//                cell.setCellType(Cell.CELL_TYPE_STRING);
+//                return cell.getStringCellValue();
+//            case Cell.CELL_TYPE_STRING:
+//                return cell.getStringCellValue();
+//            default:
+//                return null;
+//        }
+//    }
 
 }

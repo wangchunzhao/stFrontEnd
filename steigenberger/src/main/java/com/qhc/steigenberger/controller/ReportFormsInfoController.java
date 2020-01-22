@@ -131,7 +131,7 @@ public class ReportFormsInfoController{
         
         
         ExportExcel ex = new ExportExcel("orderInfo","报表数据（按订单查询）", rowsName, dataList);
-        ex.export(response);
+//        ex.export(response);
 		
 	}
 	
