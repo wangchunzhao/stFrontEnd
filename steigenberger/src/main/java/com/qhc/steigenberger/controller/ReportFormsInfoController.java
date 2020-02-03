@@ -22,18 +22,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.ReportFormsInfo;
 import com.qhc.steigenberger.domain.SalesOffice;
-import com.qhc.steigenberger.service.ReportFormsInfoService;
+import com.qhc.steigenberger.service.ReportService;
 import com.qhc.steigenberger.service.SapSalesOfficeService;
-import com.qhc.steigenberger.util.ExportExcel;
+//import com.qhc.steigenberger.util.ExportExcel;
 import com.qhc.steigenberger.util.FileUploadAndDown;
 import com.qhc.steigenberger.util.PageHelper;
 
 @Controller
-@RequestMapping("/report")
+//@RequestMapping("/report")
 public class ReportFormsInfoController{
 	
 	@Autowired
-	ReportFormsInfoService reportFormsInfoService;
+	ReportService reportFormsInfoService;
 
 	@Autowired
 	SapSalesOfficeService sapSalesOfficeService;
@@ -130,7 +130,7 @@ public class ReportFormsInfoController{
         }
         
         
-        ExportExcel ex = new ExportExcel("orderInfo","报表数据（按订单查询）", rowsName, dataList);
+//        ExportExcel ex = new ExportExcel("orderInfo","报表数据（按订单查询）", rowsName, dataList);
 //        ex.export(response);
 		
 	}

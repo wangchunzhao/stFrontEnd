@@ -6,7 +6,7 @@ import com.qhc.steigenberger.domain.ReportFormsInfo;
 import com.qhc.steigenberger.util.PageHelper;
 
 @Service
-public class ReportFormsInfoService {
+public class ReportService {
 
 	@Autowired
 	FryeService fryeService;
