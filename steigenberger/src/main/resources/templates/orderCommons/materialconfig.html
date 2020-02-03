@@ -112,7 +112,14 @@
 											拼接图附件
 										</div>
 										<div class="col-xs-6 col-md-12">
-											<input type="file" class="form-control-file">
+											<input id="item_f_upload" type="file" class="file" data-show-remove="false" data-show-preview="false" data-language="zh" data-upload-url="/st/order/upload" th:if="${orderType!=4}"/>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+										</div>
+										<div class="col-md-12" >
+											<table id="itemFileList" data-pagination="false"  class="table table-hover"></table>
 										</div>
 									</div>
 									<div class="row">
