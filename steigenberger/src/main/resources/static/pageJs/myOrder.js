@@ -177,15 +177,23 @@ function operation(value, row, index) {
 	var currentVersionStatus = row.status;
 	var orderInfoId = row.id;
 	var buttonControl = row.buttonControl;
+	var stOrderType = row.stOrderType;
+	var quoteStatus = row.quoteStatus;
 	var actions = [];
 	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
-	if(currentVersionStatus=="05"&&buttonControl=="true"){
+	if(stOrderType!="3"&&currentVersionStatus=="05"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+"\")'>下推订单</a>");
 		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
+	}
+	if(stOrderType=="3"&&status=="05"&&quoteStatus=="00"&&buttonControl=="true"){
+		actions.push("<a type='button' class='btn btn-primary' id='tenderOffer' onclick='tenderOffer(\""+orderInfoId+"\")'>中标</a>");
+	}
+	if(stOrderType=="3"&&status=="05"&&quoteStatus=="01"&&buttonControl=="true"){
+		actions.push("<a type='button' class='btn btn-primary' id='createOrder' onclick='createOrder(\""+orderInfoId+"\")'>下单</a>");
 	}
 
 	return actions.join('');
@@ -265,6 +273,48 @@ function upgradeOrder(orderInfoId){
     });
 }
 
+//确认中标
+function tenderOffer(orderInfoId){
+    layer.confirm("确认中标吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+	    var url = ctxPath+"order/"+orderInfoId+"quote/00";
+	    $.ajax({
+	        type: "post",
+	        url: url,
+	        data: null,
+	        dataType: "json",
+	        async: false,
+	        success: function (data) {
+	        	if(result == null || result.status != 'ok'){
+		    		layer.alert("确认中标失败:" + (result != null ? result.msg : ""));
+		    	}else{
+		    		layer.alert('确认中标成功！', {icon: 6});
+		    		$('#mytab').bootstrapTable('refresh');
+		    	} 	
+	        }
+	    });
+    });
+}
+//确认下单
+function createOrder(orderInfoId){
+	layer.confirm("确认中标吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+	    var url = ctxPath+"order/"+orderInfoId+"quote/01";
+	    $.ajax({
+	        type: "post",
+	        url: url,
+	        data: null,
+	        dataType: "json",
+	        async: false,
+	        success: function (data) {
+	        	if(result == null || result.status != 'ok'){
+		    		layer.alert("确认下单失败:" + (result != null ? result.msg : ""));
+		    	}else{
+		    		layer.alert('确认下单成功！', {icon: 6});
+		    		$('#mytab').bootstrapTable('refresh');
+		    	} 	
+	        }
+	    });
+    });
+}
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
