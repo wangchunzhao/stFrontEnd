@@ -3,13 +3,9 @@
  */
 package com.qhc.steigenberger.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 
@@ -71,10 +67,13 @@ public class OrderOption {
 	private Map<String, String> intercoms;
 	
 	// 安装方式
-	private Map<String, Map<String, String>> installationTerms;
+	private Map<String, String> installationTerms;
 	
 	// 标准折扣
 	private String standardDiscount;
+
+	// 经销商计算方式
+	public static Map<String, String> dealerPaymentTerms = null;
 
 
 	public String getSequenceNumber() {
@@ -258,11 +257,11 @@ public class OrderOption {
 		this.intercoms = intercoms;
 	}
 
-	public Map<String, Map<String, String>> getInstallationTerms() {
+	public Map<String, String> getInstallationTerms() {
 		return installationTerms;
 	}
 
-	public void setInstallationTerms(Map<String, Map<String, String>> installationTerms) {
+	public void setInstallationTerms(Map<String, String> installationTerms) {
 		this.installationTerms = installationTerms;
 	}
 
@@ -272,6 +271,14 @@ public class OrderOption {
 
 	public void setStandardDiscount(String standardDiscount) {
 		this.standardDiscount = standardDiscount;
+	}
+
+	public static Map<String, String> getDealerPaymentTerms() {
+		return dealerPaymentTerms;
+	}
+
+	public static void setDealerPaymentTerms(Map<String, String> dealerPaymentTerms) {
+		OrderOption.dealerPaymentTerms = dealerPaymentTerms;
 	}
 	
 }

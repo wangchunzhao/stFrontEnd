@@ -138,12 +138,13 @@ var ctxPath  = [[@{/}]];
 	                    <div class="col-md-3 col-xs-3">
 	                        <select class="form-control" id="s_status" name="s_status">
 	                            <option value="">-- 请选择 --</option>
-	                            <!-- <option value="1">已制作</option>
-	                            <option value="2">已发送</option> -->
-	                            <option value="3">已发送</option>
-	                            <option value="4">已上传</option>
-	                            <option value="5">客户已签署</option>
-	                            <option value="6">已签署</option>
+	                            <option value="00">待制作</option>
+	                            <option value="01">已制作</option>
+	                            <!--  <option value="2">已发送</option> -->
+	                            <option value="03">已发送</option>
+	                            <option value="04">客户已上传</option>
+	                            <option value="05">客户已签署</option>
+	                            <option value="06">已签署</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
@@ -565,9 +566,9 @@ var contractCols = [ {
 	width : '5%',
 	formatter: function(value, row, index) {
     	if(value == null){
-    		return '待制定'
+    		return '待制作'
     	}else if(value == '01' || value == '02'){
-    		return '已制定'
+    		return '已制作'
     	}else if(value == '03'){
     		return '已发送'
     	}else if(value == '04'){
@@ -605,7 +606,7 @@ var contractCols = [ {
 	    		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>编辑edit</a> ');
     		}
 			actions.push('<a class="btn" onclick="view(\'' + index + '\')"><i class="fa fa-edit"></i>查看view</a> ');
-    		actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>');
+    		/* actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>'); */
 			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/export" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
 			//actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
 			if (status == '01') {

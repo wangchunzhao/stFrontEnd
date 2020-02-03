@@ -27,11 +27,11 @@ $(function () {
 	var materialTypeTable = new TableInit('materialTypeTable','',queryMaterialTypeParams,materialTypeColumn)
 	materialTypeTable.init();
 	
-	//文件列表初始化
+	//订单文件列表初始化
 	var fileListTable = new TableInit('fileList','','',fileListColumns)
 	fileListTable.init();
 	
-	//文件上传成功处理方法
+	//订单文件上传成功处理方法
 	$("#f_upload").on("fileuploaded", function(event, data, previewId, index) {
 		var attachment = data.response.data;
 		var a = $('#fileList').bootstrapTable('getData');
@@ -39,6 +39,29 @@ $(function () {
 		$("#fileList").bootstrapTable('insertRow', {
 		    index: fileListLength,
 		    row: {
+		    	type:'fileList',
+		    	index:fileListLength,
+		    	fileName:attachment.fileName,
+		    	fileUrl:attachment.fileUrl
+		    }
+		});
+		//清空文件选择框
+		$(".file-caption-name").val('');
+	});
+	
+	//调研表文件列表初始化
+	var itemFileListTable = new TableInit('itemFileList','','',fileListColumns)
+	itemFileListTable.init();
+	
+	//订单文件上传成功处理方法
+	$("#item_f_upload").on("fileuploaded", function(event, data, previewId, index) {
+		var attachment = data.response.data;
+		var a = $('#itemFileList').bootstrapTable('getData');
+		var fileListLength = $('#itemFileList').bootstrapTable('getData').length;
+		$("#itemFileList").bootstrapTable('insertRow', {
+		    index: fileListLength,
+		    row: {
+		    	type:'itemFileList',
 		    	index:fileListLength,
 		    	fileName:attachment.fileName,
 		    	fileUrl:attachment.fileUrl
@@ -152,13 +175,12 @@ function fillItems(){
 			if(materialType=='T101'){			
 				var identification = materialType+"|"+countMaterialsTableall1;
 				var rowData = fillItemToTableRow(items[i]);
-				var m = items[i];
-				var a = items[i].configs;
+				var configAttachments = items[i].attachments
 				rowData["allIndex"] = countMaterialsTable;
 				rowData["identification"] = identification;
 				//添加调研表
 				if(rowData.isConfigurable&&items[i].configs!=null){
-					fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode);
+					fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode,configAttachments);
 				}	
 				$("#materialsTableall1").bootstrapTable('insertRow', {
 				    index: countMaterialsTableall1,
@@ -244,7 +266,7 @@ function fillItems(){
 	getAllCountFiled();
 }
 
-function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode){
+function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode,configAttachments){
 	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 	var editConfigs = [];
 	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
@@ -269,6 +291,7 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 	var configData = new Object();
 	configData.configTableData = editConfigs;
 	configData.remark = configRemark
+	configData.attachments = configAttachments;
 	localStorage.setItem(identification, JSON.stringify(configData));
 }
 
@@ -1633,7 +1656,6 @@ function openConfig(identification){
 	var configTable = new TableInit('configTable','','',configTableColumns);
 	configTable.init();
 	var configData = localStorage[identification];
-	debugger
 	if(configData){
 		var jsonObject = JSON.parse(configData);
 		if(jsonObject.configTableData.length>0){
@@ -1645,14 +1667,26 @@ function openConfig(identification){
 					row:jsonObject.configTableData[i]
 				});
 			}
-			$("#configRemark").val(jsonObject.remark);
 		}else{
 			insertDefaultConfigs()
+		}
+		$("#configRemark").val(jsonObject.remark);
+		if(jsonObject.attachments.length>0){
+			$("#itemFileList").bootstrapTable("removeAll");
+			var jsonObject = JSON.parse(configData);
+			for(var i=0;i<jsonObject.attachments.length;i++){
+				$("#itemFileList").bootstrapTable('insertRow',{
+					index:i,
+					row:jsonObject.attachments[i]
+				});
+			}
+		}else{
+			$("#itemFileList").bootstrapTable("removeAll");
 		}
 		
 	}else{
 		insertDefaultConfigs()
-		
+		$("#itemFileList").bootstrapTable("removeAll");
 		/*$("#configTable").bootstrapTable('refresh',{
 			url:url,
 			query:{'clazzCode':$("#materialConfigClazzCode").val(),
@@ -1741,8 +1775,10 @@ function saveMaterialConfig(){
 	var configData = new Object();
 	var remark = $("#configRemark").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
+	var attachs = $("#itemFileList").bootstrapTable('getData');
 	configData.configTableData = configTableData;
 	configData.remark = remark
+	configData.attachments = attachs
 	localStorage.setItem(identification, JSON.stringify(configData));
 	$("#materialconfigModal").modal('hide');
 }
@@ -2091,8 +2127,10 @@ function changeRequirement(obj){
 }
 
 //删除已上传文件
-function removeFile(index){
-	$('#fileList').bootstrapTable('remove', {
+function removeFile(type_index){
+	var type = type_index.split(',')[0];
+	var index = type_index.split(',')[1];
+	$('#'+type).bootstrapTable('remove', {
         field: "index",
         values: index
     });
@@ -2194,9 +2232,9 @@ function saveOrder(type){
 					items[i].itemCategory='ZHD4';
 				}else{
 					items[i].itemCategory='ZHR2';
-				}
-				
+				}			
 			 }
+			 items[i]['attachments'] = jsonObject.attachments;
 			 items[i]['configComments'] = jsonObject.remark
 		 } else{
 			 items[i]['configs'] = null;
@@ -2466,7 +2504,7 @@ function viewGrossProfit(){
 //查看合同
 function viewContract(){
 	var orderInfoId = $("#orderInfoId").val();
-	var url = ctxPath+"order/"+parseInt("22")+"/contract";
+	var url = ctxPath+"order/"+parseInt(orderInfoId)+"/contract";
     $.ajax({
         type: "post",
         url: url,
@@ -2476,7 +2514,7 @@ function viewContract(){
         	if(data.data == null){
         		$('#noContractModal').modal('show');
 	    	}else if(data.status != 'ok'){
-	    		layer.alert('订单变更成功', {icon: 6});
+	    		layer.alert('查看合同失败', {icon: 6});
 	    		$('#mytab').bootstrapTable('refresh');
 	    	}else{
 	    		var contract = data.data;
@@ -2524,6 +2562,11 @@ var grossProfitColumns=[
 
 var fileListColumns=[
 	{
+		 field: 'type',
+		 title: '',
+		 visible:false
+	},
+	{
 		 field: 'index',
 		 title: '',
 		 visible:false
@@ -2557,7 +2600,7 @@ var fileListColumns=[
 	    width:'25%',
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-			actions.push('<a class="btn" onclick="removeFile(\'' + index + '\')"><i class="fa fa-remove"></i>删除</a>');
+			actions.push('<a class="btn" onclick="removeFile(\'' + row.type+','+index + '\')"><i class="fa fa-remove"></i>删除</a>');
 			return actions.join('');
 		}
 	}
