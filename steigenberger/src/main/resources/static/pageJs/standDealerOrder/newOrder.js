@@ -2504,7 +2504,7 @@ function viewGrossProfit(){
 //查看合同
 function viewContract(){
 	var orderInfoId = $("#orderInfoId").val();
-	var url = ctxPath+"order/"+parseInt("22")+"/contract";
+	var url = ctxPath+"order/"+parseInt(orderInfoId)+"/contract";
     $.ajax({
         type: "post",
         url: url,
@@ -2514,7 +2514,7 @@ function viewContract(){
         	if(data.data == null){
         		$('#noContractModal').modal('show');
 	    	}else if(data.status != 'ok'){
-	    		layer.alert('订单变更成功', {icon: 6});
+	    		layer.alert('查看合同失败', {icon: 6});
 	    		$('#mytab').bootstrapTable('refresh');
 	    	}else{
 	    		var contract = data.data;
