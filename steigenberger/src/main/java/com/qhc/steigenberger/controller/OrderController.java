@@ -707,5 +707,32 @@ public class OrderController extends BaseController {
     	result.setData(bom);
     	return result;
     }
+	
+    @ApiOperation(value = "查询客户最后一条订单的地址列表")
+    @PostMapping(value = "address/{customerCode}")
+	@ResponseBody
+    public Result findLastAddress(@PathVariable(name="customerCode", required = true)  String customerCode)  throws Exception{
+    	OrderQuery query = new OrderQuery();
+    	query.setCustomerCode(customerCode);
+    	query.setIncludeDetail(true);
+		// 只查询最新的版本
+		query.setLast(true);
+		query.setPageNo(0);
+		query.setPageSize(1);
+		query.setOrderByClause("oi.create_time desc");
+		
+		Result result = orderService.findOrders(query);
+		if (result.getStatus().equals("ok")) {
+			PageHelper<Order> orders = (PageHelper<Order>)result.getData();
+			List<Order> list = orders.getRows();
+			if (list != null && list.size() > 0) {
+				result.setData(list.get(0).getDeliveryAddress());
+			} else {
+				result.setData(new ArrayList());
+			}
+		}
+		
+		return result;
+    }
 
 }
