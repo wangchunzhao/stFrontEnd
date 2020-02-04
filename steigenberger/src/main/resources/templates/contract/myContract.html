@@ -669,8 +669,9 @@ $('#contractTable').bootstrapTable({
 
 // 新增或编辑合同
 function edit(index) {
-	var row = $('#contractTable').bootstrapTable('getData')[index];	
+	var row = $('#contractTable').bootstrapTable('getData')[index];
 	var contractId = row.id;
+	var customerCode = row.customerCode;
 	var contract = {};
 	
 	if (contractId) {
@@ -694,9 +695,37 @@ function edit(index) {
 		    }
 		});		
 	} else {
-		setEditInfo(row, contract);
-		contract.isedit = true;
-		showEditModal(contract);
+		// 取客户最后一次合同信息
+		$.ajax({
+		    url: ctxPath + "contract/last/" + customerCode,
+		    // data: '',
+		    type: "GET",
+		    contentType: "application/json;charset=UTF-8",
+		    // dataType: "json",
+		    success: function(data) {
+	    		checkLogout(data);
+		    	if(data == null || data.status != 'ok'){
+		    	}else{
+		    		var c = data.data;
+		    		if (c) {
+		    			contract.customerEmail = c.customerEmail;
+		    			contract.invoiceAddress = c.invoiceAddress;
+		    			contract.invoicePostCode = c.invoicePostCode;
+		    			contract.invoiceReceiver = c.invoiceReceiver;
+		    			contract.invoiceTel = c.invoiceTel;
+		    			contract.broker = c.broker;
+		    			contract.companyTel = c.companyTel;
+		    			contract.bankName = c.bankName;
+		    			contract.accountNumber = c.accountNumber;
+		    			contract.companyAddress = c.companyAddress;
+		    			contract.companyPostCode = c.companyPostCode;
+		    		}
+		    	} 
+				setEditInfo(row, contract);
+				contract.isedit = true;
+				showEditModal(contract);
+		    }
+		});	
 	}
 }
 

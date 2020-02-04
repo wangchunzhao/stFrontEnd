@@ -103,6 +103,32 @@ public class ContractService {
 	}
 
 	/**
+	 * 查询客户的最后一份合同信息
+	 * @param customerCode
+	 * @return
+	 */
+	public Result findLastContract(String customerCode) {
+		// 设置分页信息
+		int pageNo = 0;
+		int pageSize =1;
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("customerCode", customerCode);
+		Result result = this.find(params);
+		
+		if (result.getData() instanceof PageHelper) {
+			PageHelper pageHelper = (PageHelper)result.getData();
+			if (pageHelper.getRows()  != null && pageHelper.getRows().size() > 0 ) {
+				result.setData(pageHelper.getRows().get(0));
+			} else {
+				result.setData(null);
+			}
+		}
+
+		return result;
+	}
+
+	/**
 	 * 新增或修改合同信息
 	 * 
 	 * @param contract

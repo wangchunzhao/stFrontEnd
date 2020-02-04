@@ -67,6 +67,14 @@ public class ContractController {
 		return r;
 	}
 
+	@GetMapping("last/{customerCode}")
+	@ResponseBody
+	public Result getLast(@PathVariable("customerCode") String customerCode) {
+		Result r = null;
+		r = contractService.findLastContract(customerCode);
+		return r;
+	}
+
 	@PostMapping("/")
 	@ResponseBody
 	public Result save(@RequestBody Contract contract, HttpServletRequest request) {
@@ -165,7 +173,7 @@ public class ContractController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping({ "/{id}/export" })
+	@GetMapping({ "/{id}/export" })
 	public void exportContract(@PathVariable("id") Integer contractId, HttpServletRequest request,
 			HttpServletResponse response) {
 		File pdfFile = null;
@@ -202,7 +210,7 @@ public class ContractController {
 	 * @return
 	 * @throws JsonProcessingException
 	 */
-	@RequestMapping(value = { "/refreshState" }, method = { RequestMethod.PUT })
+	@PutMapping(value = { "/refreshState" })
 	@ResponseBody
 	public Result<?> refreshState() throws JsonProcessingException {
 		Result<?> r = null;
@@ -222,7 +230,7 @@ public class ContractController {
 	 * @return
 	 * @throws JsonProcessingException
 	 */
-	@RequestMapping(value = { "{id}/sign" }, method = { RequestMethod.PUT })
+	@PutMapping(value = { "{id}/sign" })
 	@ResponseBody
 	public Result<?> signContract(@PathVariable("id") Integer contractId) throws JsonProcessingException {
 		Result<?> r = null;
@@ -242,7 +250,7 @@ public class ContractController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping({ "{id}/download" })
+	@GetMapping({ "{id}/download" })
 	public void downloadContract(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String idStr = request.getParameter("id");
 		Contract contract = (Contract)this.contractService.find(Integer.valueOf(idStr)).getData();
