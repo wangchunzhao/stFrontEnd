@@ -241,7 +241,7 @@ public class OrderController extends BaseController {
 	}
 	
 	/**
-	 * 订单变更
+	 * 订单复制
 	 * 
 	 * @param order
 	 * @param request
@@ -259,6 +259,24 @@ public class OrderController extends BaseController {
 		} catch (Exception e) {
 			logger.error("订单变更失败", e);
 			result = Result.error("订单变更失败");
+		}
+		
+		return result;
+	}
+
+	@ApiOperation(value = "报价下单", notes = "报价下单")
+	@PostMapping(value = "order/{orderInfoId}/transfer")
+	@ResponseBody
+	public Result transfer(@PathVariable("orderInfoId") Integer orderInfoId) {
+		String identity = this.getUserIdentity();
+		
+		Result result;
+		
+		try {
+			result = orderService.transferOrder(identity, orderInfoId);
+		} catch (Exception e) {
+			logger.error("报价下单失败", e);
+			result = Result.error("报价下单失败");
 		}
 		
 		return result;

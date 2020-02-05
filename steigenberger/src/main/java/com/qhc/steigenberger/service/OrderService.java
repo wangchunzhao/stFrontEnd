@@ -176,6 +176,13 @@ public class OrderService {
 		return result;
 	}
 
+	public Result transferOrder(String user, Integer orderInfoId) {
+		String url = "order/" + orderInfoId + "/transfer/" + user;
+		Result result = fryeService.postForm(url, (Object) new HashMap(), Result.class);
+
+		return result;
+	}
+
 	public Result sendToSap(String user, Integer orderInfoId) {
 		String url = "order/" + orderInfoId + "/sap/" + user;
 		Result result = (Result) fryeService.postForm(url, "", Result.class);
