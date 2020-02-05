@@ -75,10 +75,12 @@ $(function () {
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 	grossProfitTable.init();	
 	if(installationTerms){
-		var installationTerm = installationTerms[$("#customerClazzCode").val()];
-		$.each(installationTerm, function (key, value) {
-			$("#installType").val(key);
-			$("#installTypeName").val(value);
+		$.each(installationTerms, function (key, value) {
+			if(orderType=="ZH0D"&&key=="02"){
+				$("#installType").val(key);
+				$("#installTypeName").val(value);
+				
+			}
 			
 		});
 	}
@@ -785,6 +787,21 @@ function addSubsidiary(){
 	$('#amount').val(1);
 	$('#discount').val($("#standardDiscount").val());
 	$('#materialsModalType').val('new');
+	if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
+		$("#itemRequirementPlan").val("001");
+	}
+	var b2cRemark="";
+	if($("#isTerm1").val()=="1"){
+		b2cRemark+="是否甲供；";	
+	}
+	if($("#isTerm2").val()=="1"){
+		b2cRemark+="远程监控；"
+	}
+	
+	if($("#isTerm3").val()=="1"){
+		b2cRemark+="地下室；"
+	}
+	$("#b2cRemark").val(b2cRemark);
 }
 
 //打开规格查询框
@@ -2113,16 +2130,12 @@ function removeAddress(index){
 	}	
 }
 
-//获取需求计划
-function changeRequirement(obj){	
-	$("#itemRequirementPlan").html('');
-	var requireMent1='<option value="004">物料需求计划</option>'+'<option value="001">B2C</option>'+'<option value="002">消化</option>'+'<option value="003">调发</option>';
-	var itemCategory = $(obj).val();
-	if(itemCategory!=''){
-		$("#itemRequirementPlan").append(requireMent1);
-		$("#itemRequirementPlan").val("Z004").change();
+function setItemRequirementPlan(obj){
+	var b2cValue = $(obj).val();
+	if(b2cValue!=''){
+		$("#itemRequirementPlan").val("001");
 	}else{
-		$("#itemRequirementPlan").html('');
+		$("#itemRequirementPlan").val("004");
 	}
 }
 
