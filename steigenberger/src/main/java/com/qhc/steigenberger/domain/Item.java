@@ -32,7 +32,7 @@ public class Item {
 	private double actualAmount;//产品实卖金额
 	private double optionalActualPrice;//可选项实卖价
 	private double optionalActualAmount;//可选项实卖金额
-	private double optionalTransationPrice;//可选项转移价
+	private double optionalTransactionPrice;//可选项转移价
 	private double b2cEstimatedPrice;//B2C预估价
 	private double b2cEstimatedAmount;// B2C预估金额
 	private double b2cEstimatedCost;//B2C预估成本
@@ -219,11 +219,11 @@ public class Item {
 	public void setOptionalActualAmount(double optionalActualAmount) {
 		this.optionalActualAmount = optionalActualAmount;
 	}
-	public double getOptionalTransationPrice() {
-		return optionalTransationPrice;
+	public double getOptionalTransactionPrice() {
+		return optionalTransactionPrice;
 	}
-	public void setOptionalTransationPrice(double optionalTransationPrice) {
-		this.optionalTransationPrice = optionalTransationPrice;
+	public void setOptionalTransactionPrice(double optionalTransactionPrice) {
+		this.optionalTransactionPrice = optionalTransactionPrice;
 	}
 	public double getB2cEstimatedPrice() {
 		return b2cEstimatedPrice;
@@ -475,8 +475,8 @@ public class Item {
 				+ standardPrice + ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount
 				+ ", transationPrice=" + transationPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice="
 				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrice
-				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransationPrice="
-				+ optionalTransationPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
+				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransactionPrice="
+				+ optionalTransactionPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
 				+ b2cEstimatedAmount + ", b2cEstimatedCost=" + b2cEstimatedCost + ", actualPriceSum=" + actualPriceSum
 				+ ", actualAmountSum=" + actualAmountSum + ", transactionPriceSum=" + transactionPriceSum
 				+ ", discount=" + discount + ", itemCategory=" + itemCategory + ", itemRequirementPlan="
