@@ -54,7 +54,6 @@ public class Item {
 	private Date shippDate; //要求发货时间  自己填
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date onStoreDate;//入库时间
-	private Integer purchaseCycle; // 采购周期
 	
 	private Integer deliveryAddressSeq; // 发货地址序号
 	private Integer deliveryAddressId; // 发货地址ID
@@ -69,7 +68,6 @@ public class Item {
 	private String b2cComments;//B2C备注
 	private String specialComments;//特殊备注
 	private String colorComments; // color 备注
-	
 	
 	// TODO 经销商不涉及
 	private String configComments;//配置表备注(配置表页面)
@@ -311,12 +309,6 @@ public class Item {
 	public void setOnStoreDate(Date onStoreDate) {
 		this.onStoreDate = onStoreDate;
 	}
-	public Integer getPurchaseCycle() {
-		return purchaseCycle;
-	}
-	public void setPurchaseCycle(Integer purchaseCycle) {
-		this.purchaseCycle = purchaseCycle;
-	}
 	public Integer getDeliveryAddressSeq() {
 		return deliveryAddressSeq;
 	}
@@ -489,8 +481,8 @@ public class Item {
 				+ ", actualAmountSum=" + actualAmountSum + ", transactionPriceSum=" + transactionPriceSum
 				+ ", discount=" + discount + ", itemCategory=" + itemCategory + ", itemRequirementPlan="
 				+ itemRequirementPlan + ", period=" + period + ", deliveryDate=" + deliveryDate + ", produceDate="
-				+ produceDate + ", shippDate=" + shippDate + ", onStoreDate=" + onStoreDate + ", purchaseCycle="
-				+ purchaseCycle + ", deliveryAddressSeq=" + deliveryAddressSeq + ", deliveryAddressId="
+				+ produceDate + ", shippDate=" + shippDate + ", onStoreDate=" + onStoreDate + ", deliveryAddressSeq=" 
+				+ deliveryAddressSeq + ", deliveryAddressId="
 				+ deliveryAddressId + ", provinceCode=" + provinceCode + ", provinceName=" + provinceName
 				+ ", cityCode=" + cityCode + ", cityName=" + cityName + ", districtCode=" + districtCode
 				+ ", districtName=" + districtName + ", address=" + address + ", b2cComments=" + b2cComments

@@ -188,6 +188,8 @@ public class Order {
 	private Double refrigeratoryFee = null;
 	/* 工程维保费 */
 	private Double maintenanceFee = null;
+	/* 追加运费 */
+	private Double additionalFreight = null;
 	
 	/**
 	 * 购销明细 Purchase and sale subsidiar
@@ -933,6 +935,14 @@ public class Order {
 		this.maintenanceFee = maintenanceFee;
 	}
 
+	public Double getAdditionalFreight() {
+		return additionalFreight;
+	}
+
+	public void setAdditionalFreight(Double additionalFreight) {
+		this.additionalFreight = additionalFreight;
+	}
+
 	public Date getEarliestDeliveryDate() {
 		return earliestDeliveryDate;
 	}
@@ -1091,7 +1101,7 @@ public class Order {
 				+ isSpecial + ", paymentType=" + paymentType + ", payments=" + payments + ", isTerm1=" + isTerm1
 				+ ", isTerm2=" + isTerm2 + ", isTerm3=" + isTerm3 + ", installFee=" + installFee + ", materialFee="
 				+ materialFee + ", electricalFee=" + electricalFee + ", refrigeratoryFee=" + refrigeratoryFee
-				+ ", maintenanceFee=" + maintenanceFee + ", earliestDeliveryDate=" + earliestDeliveryDate
+				+ ", maintenanceFee=" + maintenanceFee + ", additionalFreight=" + additionalFreight + ", earliestDeliveryDate=" + earliestDeliveryDate
 				+ ", earliestProductDate=" + earliestProductDate + ", items=" + items + ", isB2c=" + isB2c
 				+ ", isBulkCargo=" + isBulkCargo + ", isUrgentDelivery=" + isUrgentDelivery + ", unpredictable="
 				+ unpredictable + ", grossProfitMargin=" + grossProfitMargin + ", comments=" + comments
