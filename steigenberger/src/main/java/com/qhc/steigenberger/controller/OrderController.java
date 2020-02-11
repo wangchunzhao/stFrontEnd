@@ -1,9 +1,14 @@
 package com.qhc.steigenberger.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +37,7 @@ import com.qhc.steigenberger.domain.BomQueryModel;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialBom;
+import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.OrderOption;
 import com.qhc.steigenberger.domain.OrderQuery;
@@ -43,6 +49,7 @@ import com.qhc.steigenberger.service.ContractService;
 import com.qhc.steigenberger.service.OrderService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
+import com.qhc.steigenberger.util.JxlsUtils;
 import com.qhc.steigenberger.util.PageHelper;
 
 import io.swagger.annotations.ApiOperation;
@@ -595,24 +602,59 @@ public class OrderController extends BaseController {
 
 	}
 
-//	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-//	@GetMapping(value = "{sequenceNumber}/{version}/wtwgrossprofit")
-//	@ResponseBody
-//	public List<MaterialGroups> calcWtwGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
-//		return orderService.calcWtwGrossProfit(sequenceNumber, version);
-//	}
-//
-//	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-//	@GetMapping(value = "{sequenceNumber}/{version}/grossprofit")
-//	@ResponseBody
-//	public List<MaterialGroups> calcGrossProfit(@PathVariable String sequenceNumber, @PathVariable String version) throws Exception {
-//		return orderService.calcGrossProfit(sequenceNumber, version);
-//	}
+	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+	@PostMapping(value = "grossprofit/export/{sequenceNumber},{versionNum},{createTime},{salesCode}")
+	@ResponseBody
+	/**
+	 * 
+	 * @param sequenceNumber 订单需求号
+	 * @param versionNum 订单版本序号
+	 * @param createTime 订单创建时间，格式yyyy.MM.dd
+	 * @param salesCode 客户经理identity
+	 * @param grossProfitMargin 订单毛利率
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	public void grossProfit(@PathVariable("sequenceNumber") String sequenceNumber,
+			@PathVariable("versionNum") String versionNum, @PathVariable("createTime") String createTime,
+			@PathVariable("salesCode") String salesCode, @RequestBody List<MaterialGroups> grossProfitMargin,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		InputStream pis = null;
+		try {
+			versionNum = "00" + versionNum;
+			versionNum = versionNum.substring(versionNum.length() - 2);
+			String fileName = sequenceNumber + "_" +versionNum + "_" + createTime + "_" + salesCode;
+			fileName = "毛利表(" + fileName + ").xlsx";
+			String excleFileName = new String(fileName.getBytes("GB2312"), "ISO8859-1");
+
+			response.setContentType("application/x-download;charset=GB2312");
+			response.setHeader("Content-disposition", "attachment;filename=\"" + excleFileName + "\"");
+
+			Map<String, Object> data = new HashMap<>();
+			data.put("sequenceNumber", sequenceNumber);
+			data.put("versionNum", versionNum);
+			data.put("salesCode", salesCode);
+			data.put("createTime", createTime);
+			data.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			data.put("margins", grossProfitMargin);
+			JxlsUtils.exportExcel("grossprofitmargin.xlsx", response.getOutputStream(), data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pis != null) {
+					pis.close();
+				}
+			} catch (IOException e) {
+			}
+		}
+	}
 
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
 	@ResponseBody
-	public Object calcGrossProfit(@RequestBody Order order) throws Exception {
+	public Object exportGrossProfit(@RequestBody Order order) throws Exception {
 		return orderService.calcGrossProfit(order);
 	}
 	

@@ -3,51 +3,42 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-
 /**
  * @author lizuoshan
  *
  */
-public class SpecialDelivery implements Serializable{
-	
-    
+public class SpecialDelivery implements Serializable {
+
 	public Integer applyId;
-    
-	public String applyer;//申请人
-    
-    public String approver;//通过人
-    
-    public Date applyTime;//申请时间
-    
-    public Date approvalTime;//通过时间
-	
+
+	public String applyer;// 申请人
+
+	public String approver;// 通过人
+
+	public Date applyTime;// 申请时间
+
+	public Date approvalTime;// 通过时间
+
 	private String receiveMailTime;
-	
+
 	private int applyStatus;
-	
+
 	private String contractTime;
-	
+
 	private String payAdvancePaymentTime;
-	
+
 	private String remark;
-	
+
 	private String enclosurePath;
-	
+
 	private String enclosureName;
-    
+
 	public String kOrderVersionId;
-	
+
 	public String startTime;
-	
+
 	public String endTime;
 
-	
-	
-	
-	
-	
-	
-	
 	public Integer getApplyId() {
 		return applyId;
 	}
@@ -167,11 +158,5 @@ public class SpecialDelivery implements Serializable{
 	public void setkOrderVersionId(String kOrderVersionId) {
 		this.kOrderVersionId = kOrderVersionId;
 	}
-	
-	
-	
-	
-	
-
 
 }
