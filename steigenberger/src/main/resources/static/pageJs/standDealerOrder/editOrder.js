@@ -677,9 +677,9 @@ function addSubsidiary(){
 			$("#materialTypeName").val(row.description);
 			$("#materialCode").val(row.code);
 			if(row.isPurchased=='0'){
-				$('#isPurchased').val('生产');
+				$('#isPurchased').val('自制');
 			}else{
-				$('#isPurchased').val('采购');
+				$('#isPurchased').val('外购');
 			}
 			$('#unitName').val(row.unitName);
 		})
@@ -871,9 +871,9 @@ function fillEditMaterailValue(data){
 	$("#acturalPriceTotal").val(data.acturalPriceTotal);
 	$("#acturalPriceAmountTotal").val(data.acturalPriceAmountTotal);
 	if(data.purchased){
-		$("#isPurchased").val("采购");
+		$("#isPurchased").val("外购");
 	}else{
-		$("#isPurchased").val("生产");
+		$("#isPurchased").val("自制");
 	}
 	if(data.purchased){
 		$("#producePeriod").val(data.period);

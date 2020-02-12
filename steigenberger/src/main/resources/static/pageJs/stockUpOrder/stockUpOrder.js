@@ -509,9 +509,9 @@ function addSubsidiary(){
 		$("#materialTypeName").val(row.description);
 		$("#materialCode").val(row.code);
 		if(row.isPurchased=='0'){
-			$('#isPurchased').val('生产');
+			$('#isPurchased').val('自制');
 		}else{
-			$('#isPurchased').val('采购');
+			$('#isPurchased').val('外购');
 		}
 		$('#unitName').val(row.unitName);
 	})

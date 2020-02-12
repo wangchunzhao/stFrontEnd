@@ -502,9 +502,9 @@ function addSubsidiary(){
 			$("#materialTypeName").val(row.description);
 			$("#materialCode").val(row.code);
 			if(row.isPurchased=='0'){
-				$('#isPurchased').val('生产');
+				$('#isPurchased').val('自制');
 			}else{
-				$('#isPurchased').val('采购');
+				$('#isPurchased').val('外购');
 			}
 			$('#unitName').val(row.unitName);
 		})
@@ -575,7 +575,7 @@ function fillMaterailValue(data){
 	$("#acturalPriceAmount").val(toDecimal2(amount*(acturalPrice)));
 	$("#acturalPriceTotal").val(toDecimal2(parseFloat($("#acturalPrice").val())+parseFloat($("#acturalPricaOfOptional").val())));
 	$("#acturalPriceAmountTotal").val(toDecimal2(($("#acturalPriceTotal").val())*amount));
-	if($('#isPurchased').val()=='生产'){
+	if($('#isPurchased').val()=='自制'){
 		$("#producePeriod").val(data.period);
 	}else{
 		$("#purchasePeriod").val(data.period);

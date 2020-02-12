@@ -63,9 +63,9 @@ var materialsColumn = [{
 	    width:80,
 	    formatter: function(value, row, index) {
 	    	if(value){
-	    		return "采购";
+	    		return "自制";
 	    	}else{
-	    		return "生产";
+	    		return "外购";
 	    	}
 	    }
 	},{

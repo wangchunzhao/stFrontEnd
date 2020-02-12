@@ -815,9 +815,9 @@ function searchMaterilType(){
 function fillMaterailValue(data){
 	$("#materialCode").val(data.code);
 	if(data.purchased){
-		$('#isPurchased').val('采购');
+		$('#isPurchased').val('外购');
 	}else{
-		$('#isPurchased').val('生产');
+		$('#isPurchased').val('自制');
 	}
 	$("#materialTypeName").val(data.description);	
 	$("#materialGroupName").val(data.groupName);
@@ -928,9 +928,9 @@ function fillEditMaterailValue(data){
 	}
 	$("#purchasedCode").val(data.isPurchased);
 	if(data.isPurchased){
-		$("#isPurchased").val("采购");
+		$("#isPurchased").val("外购");
 	}else{
-		$("#isPurchased").val("生产");
+		$("#isPurchased").val("自制");
 	}
 	$("#shippDate").val(data.shippDate)
 	$("#rowNumber").val(data.rowNum);
