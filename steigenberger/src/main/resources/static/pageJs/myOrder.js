@@ -350,7 +350,7 @@ $('#resetBtn').click(function() {
 	$("#contracterCode").val("");
 	$("#officeCode").val("");
 	$("#orderType").val("");
-	
+	$("#reservation1").val("");
 	$("#status").val("");
 
 })

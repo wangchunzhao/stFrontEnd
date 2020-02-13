@@ -1,3 +1,14 @@
+$(document).ready(function() {
+        $('#reservation').daterangepicker(
+        		{
+        			autoUpdateInput:true,
+            		startDate: moment().subtract('days', 6),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+            		endDate: moment()
+                }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+          });
+});
+
 $(function () {
     //1.初始化Table
     var oTable = new TableInit();
@@ -32,9 +43,10 @@ var TableInit = function () {
 			    	pageNo: (params.offset / params.limit),  //当前页码
 			    	
 			    	sequenceNumber:$('#sequenceNumber').val(),
-			    	contracterCode:$('#contracterCode').val(),
+			    	contracterName:$('#contracterName').val(),//签约单位
 			    	salesName:$('#salesName').val(),
 			    	orderType:$('#orderType').val(),
+			    	createTime:$('#reservation').val(),
 			    	officeCode:$('#officeCode').val()
 			    };
 			    return temp;
@@ -136,6 +148,7 @@ $('#resetBtn').click(function() {
 	$("#salesCode").val("");
 	$("#officeCode").val("");
 	$("#orderType").val("");
+	$("#reservation").val("");
 })
  
 //删除、编辑操作

@@ -42,7 +42,16 @@
 <!--pie-chart --><!-- index page sales reviews visitors pie chart -->
 <script src="../js/pie-chart.js" type="text/javascript"></script>
 <link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
-
+<!--日期控件 -->
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css"rel="stylesheet">
+<!--20191026
+<link href="http://www.jq22.com/jquery/font-awesome.4.6.0.css" rel="stylesheet">   -->
+<link rel="stylesheet" type="text/css" media="all" href="../bootstrap-date/daterangepicker/daterangepicker-bs3.css"/>
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/jquery.min.js"></script>	
+<script src="../js/jquery-1.11.1.min.js"></script>	
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/moment.js"></script>
+<script type="text/javascript" src="../bootstrap-date/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="../js/layer.js"> </script>
 <!--table控件 -->
 <link href="../bootstrap-table-master/dist/bootstrap-table.css" rel="stylesheet" media="screen">
 <script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
@@ -92,7 +101,7 @@ var ctxPath  = [[@{/}]];
 									<input type="text" class="form-control" id="sequenceNumber">
 								</div>
 								<div class="col-md-3 col-xs-3">
-									<input type="text" class="form-control" id="contracterCode">
+									<input type="text" class="form-control" id="contracterName">
 								</div>
 								<div class="col-md-3 col-xs-3">
 									<input type="text" class="form-control" id="salesName">
@@ -107,16 +116,22 @@ var ctxPath  = [[@{/}]];
 								</div>
 							</div>
 							<div class="row" style="margin-top: 2px;">
-								<div class="col-md-12 col-xs-12">
+								<div class="col-md-3 col-xs-3">
 									区域 area
 								</div>
-								
+								<div class="col-md-9 col-xs-9">
+			                       	 创建日期  submit time
+			                    </div>
 								<div class="col-md-3 col-xs-3">
 									<select class="form-control" id="officeCode">
                             			<option value="">请选择</option>
                         			</select>
 								</div>
-								<div class="col-md-9 col-xs-9">
+								
+			                    <div class="col-md-3 col-xs-3">
+								   <input type="text"  name="reservation1" id="reservation" class="form-control"  /> 
+			                    </div>
+								<div class="col-md-6 col-xs-6">
 									<button type="button" class="btn pull-right btn-primary" id="resetBtn" style="margin-left: 10px;">重置 reset</button>
 									<button type="button" class="btn pull-right btn-warning" id="search_btn">查询 select</button>
 								</div>
