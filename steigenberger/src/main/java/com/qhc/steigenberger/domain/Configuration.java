@@ -11,6 +11,7 @@ public class Configuration {
 	private String code;
 	private String name;
 	private boolean isDefault;
+	
 	public boolean isDefault() {
 		return isDefault;
 	}
@@ -30,5 +31,4 @@ public class Configuration {
 		this.name = name;
 	}
 	
-
 }

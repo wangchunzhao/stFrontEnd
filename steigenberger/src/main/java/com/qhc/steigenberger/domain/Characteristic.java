@@ -30,6 +30,9 @@ public class Characteristic {
 	/* 可配置 */
 	private boolean configurable = false;
 
+	/* 颜色特征 */
+	private boolean color = false;
+
 	public Integer getId() {
 		return id;
 	}
@@ -94,10 +97,18 @@ public class Characteristic {
 		this.configurable = configurable;
 	}
 
+	public boolean isColor() {
+		return color;
+	}
+
+	public void setColor(boolean color) {
+		this.color = color;
+	}
+
 	@Override
 	public String toString() {
 		return "Characteristic [id=" + id + ", itemId=" + itemId + ", keyCode=" + keyCode + ", keyName=" + keyName
 				+ ", valueCode=" + valueCode + ", valueName=" + valueName + ", optional=" + optional + ", configurable="
-				+ configurable + "]";
+				+ configurable + ", color=" + color + "]";
 	}
 }
