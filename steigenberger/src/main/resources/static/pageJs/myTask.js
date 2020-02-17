@@ -40,7 +40,7 @@ var TableInit = function () {
 			queryParams : function (params) {
 			    var temp = {
 			    	pageSize: params.limit, // 每页显示数量
-			    	pageNo: (params.offset / params.limit),  //当前页码
+			    	pageNo: (params.offset / params.limit)+1,  //当前页码
 			    	
 			    	sequenceNumber:$('#sequenceNumber').val(),
 			    	contracterName:$('#contracterName').val(),//签约单位

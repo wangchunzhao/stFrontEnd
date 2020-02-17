@@ -57,7 +57,7 @@ var TableInit = function () {
 			    var temp = {
 			    	pageSize: params.limit, // 每页显示数量
 //			        offset : params.offset, // SQL语句起始索引
-			    	pageNo: (params.offset / params.limit),  //当前页码
+			    	pageNo: (params.offset / params.limit)+1,  //当前页码
 			    	
 			    	sequenceNumber:$('#sequenceNumber').val(),//需求流水号
 			    	contractNumber:$('#contractNumber').val(),//合同号
