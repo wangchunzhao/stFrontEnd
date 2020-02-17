@@ -887,9 +887,9 @@ function fillEditMaterailValue(data,index){
 	}
 	$("#purchasedCode").val(data.isPurchased);
 	if(data.isPurchased){
-		$("#isPurchased").val("自制");
-	}else{
 		$("#isPurchased").val("外购");
+	}else{
+		$("#isPurchased").val("自制");
 	}
 	$("#shippDate").val(data.shippDate)
 	$("#rowNumber").val(data.rowNum);
