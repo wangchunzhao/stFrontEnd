@@ -6,4 +6,7 @@ document.write('<link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstr
 document.write('<link href="../css/custom.css" rel="stylesheet">');
 document.write('<link href="../css/bootstrap-datepicker.css" rel="stylesheet">');
 document.write('<link href="../css/fileinput.min.css" rel="stylesheet">');
+document.write('<link href="../css/bootstrap-select.min.css" rel="stylesheet">');
+
+
 

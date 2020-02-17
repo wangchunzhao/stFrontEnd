@@ -53,7 +53,7 @@
 		                    <input type="hidden" id="customerCode" th:field="*{customerCode}">
 		                    <input type="hidden" id="customerIndustryCode" th:field="*{customerIndustryCode}">
 		                    <span class="input-group-btn">
-		                        <button id="showCustomer" class="btn btn-default" type="button" onclick="openSearchCustomer()">
+		                        <button id="showCustomer" class="btn btn-primary" type="button" onclick="openSearchCustomer()">
 		                        	<span class="glyphicon glyphicon-search"></span>
 		                        </button>
 		                    </span>
@@ -366,7 +366,7 @@
 							<div class="input-group">
 								<input type="text" class="form-control" id="bodyDiscount" aria-describedby="emailHelp" name="bodyDiscount">
 								<span class="input-group-btn">
-			                        <button id="" class="btn btn-default btn-flat" type="button" title="应用" onclick="applyBodyDiscount()">
+			                        <button id="" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyBodyDiscount()">
 			                        	<span class="glyphicon glyphicon-ok"></span>
 			                        </button>
 			                    </span>
@@ -377,7 +377,7 @@
 							<div class="input-group">
 								<input type="text" class="form-control" id="mainDiscount" aria-describedby="emailHelp" name="mainDiscount">
 								<span class="input-group-btn">
-			                        <button id="" class="btn btn-default btn-flat" type="button" title="应用" onclick="applyMainDiscount()">
+			                        <button id="" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyMainDiscount()">
 			                        	<span class="glyphicon glyphicon-ok"></span>
 			                        </button>
 			                    </span>
@@ -631,7 +631,7 @@
 									还没制作合同 We haven't made the contract yet
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">关闭 close</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">关闭 close</button>
 									<button type="button" class="btn btn-primary">保存 save</button>
 								</div>
 							</div>
@@ -714,7 +714,7 @@
 										</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal" id="grossProfitCloseBt">关闭</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal" id="grossProfitCloseBt">关闭</button>
 									<button type="button" class="btn btn-primary" id="grossProfitExportBt">导出</button>
 								</div>
 							</div>
@@ -746,6 +746,28 @@
 			</div>
 		</div>
 	</div>
+	
+	<!--是否特批发货 -->
+	<div th:fragment="specialShipment">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#specialShipment" aria-expanded="true" class="">特批发货  Urgent Delivery</a>
+				</h4>
+			</div>
+			<div id="specialShipment" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+				<div class="panel-body" style="height: auto;" mc-ace="~">
+					<div class="row">
+						<div class="col-md-3">
+							<input type="checkbox" id="specialShipmentValue"/>是否特批发货
+							<input type="hidden" th:field="*{isUrgentDelivery}" id="isUrgentDelivery"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 	<!--信息查看 For ViewInfoForStockUp  -->
 	<div th:fragment="ViewInfoForStockUp">
@@ -793,7 +815,7 @@
 									还没制作合同 We haven't made the contract yet
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">关闭 close</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">关闭 close</button>
 									<button type="button" class="btn btn-primary">保存 save</button>
 								</div>
 							</div>
@@ -876,7 +898,7 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal" id="grossProfitCloseBt">关闭</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal" id="grossProfitCloseBt">关闭</button>
 									<button type="button" class="btn btn-primary" id="grossProfitExportBt">导出</button>
 								</div>
 							</div>

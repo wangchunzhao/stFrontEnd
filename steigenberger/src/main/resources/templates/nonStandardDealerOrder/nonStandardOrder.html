@@ -34,7 +34,8 @@
 				<div th:replace="orderCommons/orderCommons::contractBasicInfo(2)">	</div>
 				<div th:replace="orderCommons/orderCommons::contractDetailInfo(2)">	</div>		
 				<div th:replace="orderCommons/orderCommons::paymentType(2)">	</div>	
-				<div th:replace="orderCommons/orderCommons::purchaseAndSubsidisry(2)">	</div>	
+				<div th:replace="orderCommons/orderCommons::purchaseAndSubsidisry(2)">	</div>
+				<div th:replace="orderCommons/orderCommons::specialShipment">	</div>	
 				<div th:replace="orderCommons/orderCommons::viewInfo">	</div>	
 			</div>
 			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()">保存 save</button>
@@ -63,8 +64,8 @@
 	var status = [[${orderDetail.status}]]
 	var shippingTypesMap = [[${order_option.shippingTypes}]]
 	var attachments = [[${orderDetail.attachments}]]
-	debugger
 	var orderOperationType = [[${orderOperationType}]]
+	var orderType = [[${orderDetail.orderType}]]
 
 	/* var version = getVersion();
 	$("#version").append("<option value='" + version + "'>" + version + "</option>");	

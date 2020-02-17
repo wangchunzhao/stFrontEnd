@@ -22,6 +22,9 @@ document.write('<script src="../js/fileinput.min.js"> </script>');
 document.write('<script src="../js/zh.js"> </script>');
 document.write('<script type="text/javascript" src="../js/template-web.js"></script>')
 document.write('<script type="text/javascript" src="../pageJs/mathUtil.js"></script>')
+document.write('<script type="text/javascript" src="../js/bootstrap-select.min.js"></script>')
+
+
 
 
 

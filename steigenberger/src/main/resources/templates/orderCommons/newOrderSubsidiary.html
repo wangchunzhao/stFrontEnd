@@ -17,7 +17,7 @@
 					<input type="hidden" id="materialClazzCode">
 					<input type="hidden" id="isConfigurable">
 					<input type="hidden" id="standardPrice">
-					<input type="hidden" id="allIndex">
+					<input type="hidden" id="index">
 					<input type="hidden" id="identification">
 					<input type="hidden" id="rowNumber">
 					<div class="panel-group">
@@ -28,7 +28,7 @@
 							    <div class="input-group">
 				                    <input type="text" class="form-control" disabled id="materialTypeName">
 				                    <span class="input-group-btn">
-				                        <button id="showCustomer" class="btn btn-default" type="button" onclick="searchSpecification()">
+				                        <button id="showCustomer" class="btn btn-primary" type="button" onclick="searchSpecification()">
 				                        	<span class="glyphicon glyphicon-search"></span>
 				                        </button>
 				                    </span>
@@ -39,7 +39,7 @@
 								<div class="input-group">
 							      <input type="text" class="form-control" id="materialCode" disabled>
 							      <span class="input-group-btn">
-				                        <button class="btn btn-default" type="button" onclick="searchSpecification()">
+				                        <button class="btn btn-primary" type="button" onclick="searchSpecification()">
 				                        	<span class="glyphicon glyphicon-search"></span>
 				                        </button>
 				                    </span>
@@ -178,7 +178,7 @@
 								    <div class="input-group">
 					                    <input type="text" class="form-control" disabled id="materialAddress" name="materialAddress">
 					                    <span class="input-group-btn">
-					                        <button id="showAddress" class="btn btn-default" type="button" onclick="addMaterialAddress()" th:attr="disabled=${orderType==5}">
+					                        <button id="showAddress" class="btn btn-primary" type="button" onclick="addMaterialAddress()" th:attr="disabled=${orderType==5}">
 					                        	<span class="glyphicon glyphicon-search"></span>
 					                        </button>
 					                    </span>
@@ -212,7 +212,7 @@
 							    </div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
 								<button type="button" class="btn btn-primary" onclick="confirmMaterials()" id="confirmMaterial">确定</button>
 							</div>
 						</div>
@@ -237,7 +237,7 @@
 									<div class="col-md-6">
 								      <input type="text" class="form-control" id="materialsName">
 								    </div>
-								    <button type="button" class="btn btn-default" onclick="searchMaterilType()">
+								    <button type="button" class="btn btn-primary" onclick="searchMaterilType()">
 								    	<span class="glyphicon glyphicon-search">查询</span>
 								    </button>
 								</div>

@@ -4,9 +4,16 @@ var materialsColumn = [{
 	    width:200,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-			actions.push('<a class="btn" style="font-size:11px" id="materialsEdit" onclick="editMaterials(\'' +row.identification+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
-			actions.push('<a class="btn" style="font-size:11px" onclick="copyMaterials(\'' + row.identification + '\')"><i class="fa fa-copy"></i>复制</a>');	
-			return actions.join('');
+	    	if(row.all=='all'){
+	    		actions.push('<a class="btn" style="font-size:11px" id="materialsEdit" onclick="editMaterials(\'' +row.identification+','+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
+				actions.push('<a class="btn" style="font-size:11px" onclick="copyMaterials(\'' + row.identification + '\')"><i class="fa fa-copy"></i>复制</a>');
+				actions.push('<a class="btn" style="font-size:11px" onclick="insertMaterials(\'' + row.identification +','+index+ '\')"><i class="fa fa-edit"></i>插入</a>');	
+				return actions.join('');
+	    	}else{
+	    		return '';
+	    	}
+			
+			
 	    }
 	},{
 		title:'行号',
@@ -19,7 +26,7 @@ var materialsColumn = [{
 	    formatter: function(value, row, index) {
 	    	var actions = [];
 	    	if(row.isConfigurable){
-	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+'\')"><i class="fa fa-edit"></i></a> ');
+	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+index+'\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
 	    }
@@ -37,9 +44,11 @@ var materialsColumn = [{
 	    visible:false
 	},{
 
-		title:'',
-	    field: 'allIndex',
-	    visible:false
+		title:'all',
+	    field: 'all',
+	    width:80
+	    //0所有tab 1其他tab
+	    //visible:false
     },{
 		title:'',
 	    field: 'clazzCode',
@@ -174,13 +183,13 @@ var materialsColumn = [{
 	    field: 'itemRequirementPlan',
 	    width:150,
 	    formatter: function(value, row, index) {
-	    	if(value=="Z004"){
+	    	if(value=="004"){
 	    		return "物料需求计划";
-	    	}else if(value=="Z001"){
+	    	}else if(value=="001"){
 	    		return "B2C";
-	    	}else if(value=="Z002"){
+	    	}else if(value=="002"){
 	    		return "消化";
-	    	}else if(value=="Z003"){
+	    	}else if(value=="003"){
 	    		return "调发";
 	    	}else{
 	    		return '';

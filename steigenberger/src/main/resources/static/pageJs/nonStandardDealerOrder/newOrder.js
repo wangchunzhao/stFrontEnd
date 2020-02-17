@@ -52,10 +52,12 @@ $(function () {
 	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 	grossProfitTable.init();	
 	if(installationTerms){
-		var installationTerm = installationTerms[$("#customerClazzCode").val()];
-		$.each(installationTerm, function (key, value) {
-			$("#installType").val(key);
-			$("#installTypeName").val(value);
+		$.each(installationTerms, function (key, value) {
+			if(orderType=="ZH0D"&&key=="02"){
+				$("#installType").val(key);
+				$("#installTypeName").val(value);
+				
+			}
 			
 		});
 	}
@@ -132,6 +134,7 @@ function defaultCollapse(){
 	$('#researchTableContent').collapse('hide');
 	$('#paymentMethod').collapse('hide');
 	$('#purchaseDetail').collapse('hide');
+	$('#specialShipment').collapse('hide');
 	$('#infoCheck').collapse('show');
 	$('#attachmentInfo').collapse('hide');
 	
@@ -464,7 +467,8 @@ function getCity(obj,cityMaps){
 		$.each(cityMap, function (key, value) {
 			$("#citySelect").append("<option value='" + key + "'>" + value + "</option>");
 		});
-	} 		
+	} 	
+	$('#citySelect').selectpicker('refresh');
 }
 
 function getDistrict(obj,districts){
@@ -483,6 +487,7 @@ function getDistrict(obj,districts){
 			}
 			
 		});
+		$('#selectDistrict').selectpicker('refresh');
 	} 		
 }
 
@@ -1375,7 +1380,7 @@ function compareDate(date){
 	}
 	var earlyDate = date[0];
 	$.each(date,function(index,item){
-		if(moment(item).isBefore(earlyDate)){
+		if(moment(item).isAfter(earlyDate)){
 			earlyDate = item;
 		}
 	})
