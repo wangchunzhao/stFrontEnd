@@ -64,7 +64,7 @@ public class ReportFormsInfoController{
 	@RequestMapping("/biddingDetail")
 	public ModelAndView biddingDetail() {
 		ModelAndView mv = new ModelAndView();
-		//投标客户    TODO
+		// TODO 投标客户    
 		
 		List<SalesOffice> areaList = sapSalesOfficeService.getList();
 		mv.addObject("areaList", areaList);

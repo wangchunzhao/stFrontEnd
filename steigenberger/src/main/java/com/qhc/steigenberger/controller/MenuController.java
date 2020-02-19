@@ -84,7 +84,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/biddingDetail")
 	public ModelAndView biddingDetail() {
 		ModelAndView mv = new ModelAndView();
-		//投标客户    TODO
+		// TODO 投标客户    
 		
 //		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
 //		mv.addObject("areaList", areaList);
@@ -95,7 +95,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/orderSummary")
 	public ModelAndView orderSummary() {
 		ModelAndView mv = new ModelAndView();
-		//销售订单汇总    TODO
+		// TODO 销售订单汇总    
 		
 //		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
 //		mv.addObject("areaList", areaList);
