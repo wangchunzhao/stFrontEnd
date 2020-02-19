@@ -46,7 +46,7 @@ var materialsColumn = [{
 
 		title:'all',
 	    field: 'all',
-	    width:80
+	    visible:false
 	    //0所有tab 1其他tab
 	    //visible:false
     },{

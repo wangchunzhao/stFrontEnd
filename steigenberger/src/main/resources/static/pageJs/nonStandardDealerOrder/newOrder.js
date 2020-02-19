@@ -766,12 +766,12 @@ function addSubsidiary(){
 		return
 	}
 	if($("#stOrderType").val()=="2"&&$("#bodyDiscount").val()==""){
-        layer.msg('请先录入柜体申请折扣！', function(){
+        layer.msg('折扣未录入！', function(){
         });
     }
     
     if($("#stOrderType").val()=="2"&&$("#mainDiscount").val()==""){
-        layer.msg('请先录入机组申请折扣！', function(){
+        layer.msg('折扣未录入！', function(){
         });
     }
     openMaterialAddModal();

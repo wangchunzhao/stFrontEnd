@@ -1986,6 +1986,7 @@ function saveOrder(type){
 				 config['keyCode'] = storedConfigs[j].code;
 				 config['valueCode'] = storedConfigs[j].configValueCode;
 				 config['configurable'] = items[i].isConfigurable;
+				 config['color'] = storedConfigs[j].color;
 				 configs.push(config);
 			 }
 			 items[i]['configs'] = configs; 
@@ -2034,7 +2035,7 @@ function saveOrder(type){
 			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
 			    	}else{
 			    		layer.alert('保存成功', {icon: 6});
-			    		window.location.href = ctxPath+'menu/orderManageList';
+			    		/*window.location.href = ctxPath+'menu/orderManageList';*/
 			    	} 	
 			    },
 			    error: function(){
@@ -2094,6 +2095,7 @@ function goBpm(){
 				 config['keyCode'] = storedConfigs[j].code;
 				 config['valueCode'] = storedConfigs[j].configValueCode;
 				 config['configurable'] = items[i].isConfigurable;
+				 config['color'] = storedConfigs[j].color;
 				 configs.push(config);
 			 }
 			 items[i]['configs'] = configs; 
@@ -2500,6 +2502,11 @@ var configTableColumns = [
 	title:'',
 	visible:false,
 	field:'configValueCode'
+},
+{
+	title:'',
+	visible:false,
+	field:'color'
 },
 {
 	title:'配置值',
