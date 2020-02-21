@@ -1492,7 +1492,6 @@ function openConfig(configContent){
 	var rowNum = identification.split('|')[1];
 	var index = configContentSplit[1];
 	var tableData = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
-	debugger
 	$("#materialConfigClazzCode").val(tableData.clazzCode);
 	$("#materialConfigCode").val(tableData.materialCode);
 	$("#configIdentification").val(identification);
@@ -1991,14 +1990,23 @@ function saveOrder(type){
 			 }
 			 items[i]['configs'] = configs; 
 			 if(!items[i].isConfigurable){
-				if(items[i].itemCategory=='ZHD1'){
-					items[i].itemCategory='ZHD2';
-				}else if(items[i].itemCategory=='ZHD3'){
-					items[i].itemCategory='ZHD4';
-				}else{
-					items[i].itemCategory='ZHR2';
-				}			
-			 }
+					if(items[i].itemCategory=='ZHD1'){
+						items[i].itemCategory='ZHD1';
+					}else if(items[i].itemCategory=='ZHD3'){
+						items[i].itemCategory='ZHD3';
+					}else{
+						items[i].itemCategory='ZHR3';
+					}
+					
+				 }else{
+					 if(items[i].itemCategory=='ZHD1'){
+							items[i].itemCategory='ZHD2';
+						}else if(items[i].itemCategory=='ZHD3'){
+							items[i].itemCategory='ZHD4';
+						}else{
+							items[i].itemCategory='ZHR4';
+						} 
+				 }
 			 items[i]['attachments'] = jsonObject.attachments;
 			 items[i]['configComments'] = jsonObject.remark
 		 } else{
@@ -2326,11 +2334,6 @@ var grossProfitColumns=[
 ]
 
 var fileListColumns=[
-	{
-		 field: 'type',
-		 title: '',
-		 visible:false
-	},
 	{
 		 field: 'index',
 		 title: '',
