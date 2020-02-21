@@ -49,6 +49,7 @@ public class Material implements Serializable{
 	//need by bayern
 	private Date optTime;
 	private double materialSize;
+	private String materialType;
 	
 	
 	public String getCode() {
@@ -158,5 +159,11 @@ public class Material implements Serializable{
 	}
 	public void setMaterialSize(double materialSize) {
 		this.materialSize = materialSize;
+	}
+	public String getMaterialType() {
+		return materialType;
+	}
+	public void setMaterialType(String materialType) {
+		this.materialType = materialType;
 	}
 }

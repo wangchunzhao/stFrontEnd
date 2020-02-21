@@ -87,6 +87,9 @@ public class Item {
 	
 	private String comments;
 	private String clazzCode;//物料分类代码
+
+	/* 行状态 */
+	private String itemStatus = null;
 	
 	private List<ItemAttachment> attachments; // 调研表附件
 	
@@ -468,6 +471,12 @@ public class Item {
 	public void setClazzCode(String clazzCode) {
 		this.clazzCode = clazzCode;
 	}
+	public String getItemStatus() {
+		return itemStatus;
+	}
+	public void setItemStatus(String itemStatus) {
+		this.itemStatus = itemStatus;
+	}
 	public List<ItemAttachment> getAttachments() {
 		return attachments;
 	}
@@ -483,23 +492,23 @@ public class Item {
 				+ ", unitCode=" + unitCode + ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice="
 				+ standardPrice + ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount
 				+ ", transationPrice=" + transationPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice="
-				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrica=" + optionalActualPrice
+				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrice=" + optionalActualPrice
 				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransactionPrice="
 				+ optionalTransactionPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
 				+ b2cEstimatedAmount + ", b2cEstimatedCost=" + b2cEstimatedCost + ", actualPriceSum=" + actualPriceSum
 				+ ", actualAmountSum=" + actualAmountSum + ", transactionPriceSum=" + transactionPriceSum
 				+ ", discount=" + discount + ", itemCategory=" + itemCategory + ", itemRequirementPlan="
 				+ itemRequirementPlan + ", period=" + period + ", deliveryDate=" + deliveryDate + ", produceDate="
-				+ produceDate + ", shippDate=" + shippDate + ", onStoreDate=" + onStoreDate + ", deliveryAddressSeq=" 
-				+ deliveryAddressSeq + ", deliveryAddressId="
-				+ deliveryAddressId + ", provinceCode=" + provinceCode + ", provinceName=" + provinceName
-				+ ", cityCode=" + cityCode + ", cityName=" + cityName + ", districtCode=" + districtCode
-				+ ", districtName=" + districtName + ", address=" + address + ", b2cComments=" + b2cComments
-				+ ", specialComments=" + specialComments + ", colorComments=" + colorComments + ", configComments="
-				+ configComments + ", mosaicImage=" + mosaicImage + ", attachedImage=" + attachedImage + ", configs="
-				+ configs + ", isVirtual=" + isVirtual + ", volumeCube=" + volumeCube + ", feight=" + feight
-				+ ", requestBrand=" + requestBrand + ", requestPackage=" + requestPackage + ", requestNameplate="
-				+ requestNameplate + ", requestCircult=" + requestCircult + ", comments=" + comments + ", clazzCode="
-				+ clazzCode + "]";
+				+ produceDate + ", shippDate=" + shippDate + ", onStoreDate=" + onStoreDate + ", deliveryAddressSeq="
+				+ deliveryAddressSeq + ", deliveryAddressId=" + deliveryAddressId + ", provinceCode=" + provinceCode
+				+ ", provinceName=" + provinceName + ", cityCode=" + cityCode + ", cityName=" + cityName
+				+ ", districtCode=" + districtCode + ", districtName=" + districtName + ", address=" + address
+				+ ", b2cComments=" + b2cComments + ", specialComments=" + specialComments + ", colorComments="
+				+ colorComments + ", colorOptions=" + colorOptions + ", configComments=" + configComments
+				+ ", mosaicImage=" + mosaicImage + ", attachedImage=" + attachedImage + ", configs=" + configs
+				+ ", isVirtual=" + isVirtual + ", volumeCube=" + volumeCube + ", feight=" + feight + ", requestBrand="
+				+ requestBrand + ", requestPackage=" + requestPackage + ", requestNameplate=" + requestNameplate
+				+ ", requestCircult=" + requestCircult + ", comments=" + comments + ", clazzCode=" + clazzCode
+				+ ", itemStatus=" + itemStatus + ", attachments=" + attachments + "]";
 	}
 }
