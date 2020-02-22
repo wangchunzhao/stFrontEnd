@@ -88,7 +88,6 @@ public class SpecialController extends BaseController {
 			pageHelper = specialDeliveryVoInfoService.getListForSpecial(sdv.getPage() - 1, sdv.getLimit(), sdv);
 
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return pageHelper;
 	}

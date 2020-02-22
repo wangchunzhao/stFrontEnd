@@ -26,7 +26,6 @@ public class SpecialDeliveryService {
 	}
 
 	public SpecialDelivery findInfoById(String applyId) {
-		// TODO Auto-generated method stub
 		return fryeService.getInfo(URL_SD_ORDER+"/"+applyId,SpecialDelivery.class);
 	}
 

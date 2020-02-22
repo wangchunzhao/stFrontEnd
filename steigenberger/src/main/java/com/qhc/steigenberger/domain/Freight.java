@@ -179,7 +179,6 @@ public class Freight extends Page  implements Serializable{
 
 	public Freight() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }

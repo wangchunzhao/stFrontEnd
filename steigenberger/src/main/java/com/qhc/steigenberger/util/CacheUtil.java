@@ -116,7 +116,6 @@ public class CacheUtil {
 				try {
 					Thread.sleep(60 * 1000L);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
