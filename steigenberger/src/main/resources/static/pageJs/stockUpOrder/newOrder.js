@@ -1946,7 +1946,7 @@ function saveOrder(type){
 				configs.push(config);
 			}
 			items[i]['configs'] = configs;
-			if(!items[i].isConfigurable){
+			if(items[i].isConfigurable){
 				if(items[i].itemCategory=='ZHD1'){
 					items[i].itemCategory='ZHD2';
 				}else if(items[i].itemCategory=='ZHD3'){

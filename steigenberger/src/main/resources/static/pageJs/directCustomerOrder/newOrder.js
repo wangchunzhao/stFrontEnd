@@ -1992,7 +1992,7 @@ function saveOrder(type){
 			}
 			items[i]['configs'] = configs;
 			 items[i]['configs'] = configs; 
-			 if(!items[i].isConfigurable){
+			 if(items[i].isConfigurable){
 					if(items[i].itemCategory=='ZHD1'){
 						items[i].itemCategory='ZHT1';
 					}else if(items[i].itemCategory=='ZHD3'){
