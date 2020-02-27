@@ -249,7 +249,7 @@ function getDefaultConfigs(materialCode,clazzCode){
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
 	var quantity = data.quantity;
-	var transcationPrice = toDecimal2(data.transcationPrice);
+	var transcationPrice = toDecimal2(data.transactionPrice);
 	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
 	var optionalActualAmount = toDecimal2(quantity*(data.optionalActualPrice));
 	var optionalTransationPrice = toDecimal2(data.optionalTransationPrice);
@@ -730,6 +730,7 @@ function addSubsidiary(){
 		return
 	}
 	$('#subsidiaryModal').modal('show');
+	$("#itemCategory").html('');
 	$("#subsidiaryForm")[0].reset();
 	$('#amount').val(1);
 	$('#discount').val($("#standardDiscount").val());
@@ -784,6 +785,13 @@ function searchMaterilType(){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
+	$("#itemCategory").html('');
+	var configure = data.configurable+'';
+	if(configure=='true'){
+		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option>");	
+	}else{
+		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
+	}
 	$("#materialTypeName").val(data.description);
 	$("#materialCode").val(data.code);
 	if(data.code=='BG1GD1000000-X'||data.code=='BG1R8R00000-X'||data.code=='BG1R8L00000-X'){
@@ -866,6 +874,13 @@ function editMaterials(editContent){
 	var materialsType = identificationSplit[0];
 	var rowNumber = identificationSplit[1];
 	var tableData =$('#materialsTable').bootstrapTable('getData')[index];	
+	$("#itemCategory").html('');
+	var configable = tableData.isConfigurable+'';
+	if(configable=='true'){
+		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option>");	
+	}else{
+		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
+	}
 	fillEditMaterailValue(tableData,index);
 }
 
@@ -1133,7 +1148,7 @@ function confirmRowData(rowNumber){
 			standardPrice:$("#standardPrice").val(),
 			actualPrice:$("#acturalPrice").val(),
 			actualAmount:$("#acturalPriceAmount").val(),
-			transcationPrice:$("#transcationPrice").val(),
+			transactionPrice:$("#transcationPrice").val(),
 			optionalActualPrice:$("#acturalPricaOfOptional").val(),
 			optionalActualAmount:$("#acturalPricaOfOptionalAmount").val(),
 			optionalTransationPrice:$("#transcationPriceOfOptional").val(),
@@ -1388,7 +1403,7 @@ function openConfig(configContent){
 	$("#configIdentification").val(identification);
 	$("#configIndex").val(index);
 	$("#viewCode").val(tableData.materialCode);
-	$("#viewTransationPrice").val(tableData.transcationPrice);
+	$("#viewTransationPrice").val(tableData.transactionPrice);
 	$("#viewActualPrice").val(tableData.actualPrice);
 	var url =ctxPath+"order/material/configurations";
 	var configTable = new TableInit('configTable','','',configTableColumns);
@@ -1541,7 +1556,7 @@ function calPrice(tableData){
 	//可选项实卖金额
 	var optionalActualAmount = toDecimal2(quantity*optionalActualPrice);
 	//转移价
-	var transcationPrice = tableData.transcationPrice;
+	var transcationPrice = tableData.transactionPrice;
 	//可选项转移价
 	var optionalTransationPrice = tableData.optionalTransationPrice;
 	//实卖价合计
@@ -1885,6 +1900,7 @@ function saveOrder(type){
 	 var attachments = $("#fileList").bootstrapTable('getData');
 	 orderData.attachments = attachments
 	 var items = $("#materialsTable").bootstrapTable('getData');
+	 debugger
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].identification];
@@ -1906,24 +1922,6 @@ function saveOrder(type){
 			 items[i]['configComments'] = jsonObject.remark
 		 } else{
 			 items[i]['configs'] = null;
-		 }
-		 if(items[i].isConfigurable=='true'){
-				if(items[i].itemCategory=='ZHD1'){
-					items[i].itemCategory='ZHD1';
-				}else if(items[i].itemCategory=='ZHD3'){
-					items[i].itemCategory='ZHD3';
-				}else{
-					items[i].itemCategory='ZHR3';
-				}
-				
-		 }else{
-			 if(items[i].itemCategory=='ZHD1'){
-					items[i].itemCategory='ZHD2';
-				}else if(items[i].itemCategory=='ZHD3'){
-					items[i].itemCategory='ZHD4';
-				}else{
-					items[i].itemCategory='ZHR4';
-				} 
 		 }
 	 }
 	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
@@ -2020,15 +2018,6 @@ function goBpm(){
 				 configs.push(config);
 			 }
 			 items[i]['configs'] = configs; 
-			 if(!items[i].isConfigurable){
-				if(items[i].itemCategory=='ZHD1'){
-					items[i].itemCategory='ZHD2';
-				}else if(items[i].itemCategory=='ZHD3'){
-					items[i].itemCategory='ZHD4';
-				}else{
-					items[i].itemCategory='ZHR2';
-				}		
-			 }
 			 items[i]['configComments'] = jsonObject.remark
 		 } else{
 			 items[i]['configs'] = null;

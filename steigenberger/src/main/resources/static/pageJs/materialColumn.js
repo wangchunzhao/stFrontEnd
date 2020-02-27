@@ -26,7 +26,8 @@ var materialsColumn = [{
 		width:120,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-	    	if(row.isConfigurable){
+	    	var configurable = row.isConfigurable+'';
+	    	if(configurable=='true'){
 	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+index+'\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
@@ -168,15 +169,29 @@ var materialsColumn = [{
 	    field: 'itemCategory',
 	    width:150,
 	    formatter: function(value, row, index) {
-	    	if(value=="ZHD1"){
-	    		return "标准";
-	    	}else if(value=="ZHD3"){
-	    		return "免费";
-	    	}else if(value=="ZHR1"){
-	    		return "退货";
-	    	}else{ 
-	    		return '';
+	    	var config = row.isConfigurable+'';
+	    	if(config=='true'){
+	    		if(value=="ZHD1"){
+		    		return "标准";
+		    	}else if(value=="ZHD3"){
+		    		return "免费";
+		    	}else if(value=="ZHR3"){
+		    		return "退货";
+		    	}else{ 
+		    		return '';
+		    	}
+	    	}else{
+	    		if(value=="ZHD2"){
+		    		return "标准";
+		    	}else if(value=="ZHD4"){
+		    		return "免费";
+		    	}else if(value=="ZHR4"){
+		    		return "退货";
+		    	}else{ 
+		    		return '';
+		    	}
 	    	}
+	    	
 	    }
 
 	},{
