@@ -1900,29 +1900,29 @@ function saveOrder(type){
 			}
 			items[i]['configs'] = configs;
 			 items[i]['configs'] = configs; 
-			 if(items[i].isConfigurable){
-					if(items[i].itemCategory=='ZHD1'){
-						items[i].itemCategory='ZHT1';
-					}else if(items[i].itemCategory=='ZHD3'){
-						items[i].itemCategory='ZHT3';
-					}else{
-						items[i].itemCategory='ZHR1';
-					}
-					
-				 }else{
-					 if(items[i].itemCategory=='ZHD1'){
-							items[i].itemCategory='ZHT2';
-						}else if(items[i].itemCategory=='ZHD3'){
-							items[i].itemCategory='ZHT6';
-						}else{
-							items[i].itemCategory='ZHR2';
-						} 
-				 }
 			items[i]['attachments'] = jsonObject.attachments;
 			items[i]['configComments'] = jsonObject.remark
 		} else{
 			items[i]['configs'] = null;
 		}
+		if(items[i].isConfigurable=='true'){
+			if(items[i].itemCategory=='ZHD1'){
+				items[i].itemCategory='ZHT1';
+			}else if(items[i].itemCategory=='ZHD3'){
+				items[i].itemCategory='ZHT3';
+			}else{
+				items[i].itemCategory='ZHR1';
+			}
+			
+		 }else{
+			 if(items[i].itemCategory=='ZHD1'){
+					items[i].itemCategory='ZHT2';
+				}else if(items[i].itemCategory=='ZHD3'){
+					items[i].itemCategory='ZHT6';
+				}else{
+					items[i].itemCategory='ZHR2';
+				} 
+		 }
 	}
 	orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
 	if(type){

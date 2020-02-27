@@ -1873,7 +1873,12 @@ function saveOrder(type){
 				 configs.push(config);
 			 }
 			 items[i]['configs'] = configs; 
-			 if(items[i].isConfigurable){
+			 items[i]['attachments'] = jsonObject.attachments;
+			 items[i]['configComments'] = jsonObject.remark
+		 } else{
+			 items[i]['configs'] = null;
+		 }
+		 if(items[i].isConfigurable=='true'){
 				if(items[i].itemCategory=='ZHD1'){
 					items[i].itemCategory='ZHD1';
 				}else if(items[i].itemCategory=='ZHD3'){
@@ -1891,11 +1896,6 @@ function saveOrder(type){
 						items[i].itemCategory='ZHR4';
 					} 
 			 }
-			 items[i]['attachments'] = jsonObject.attachments;
-			 items[i]['configComments'] = jsonObject.remark
-		 } else{
-			 items[i]['configs'] = null;
-		 }	 	 
 	 }
 	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
 	 if(type){
