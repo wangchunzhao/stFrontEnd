@@ -104,7 +104,7 @@ var materialsColumn = [{
 	    width:150
 	},{
 		title:'产品转移价',
-	    field: 'transcationPrice',
+	    field: 'transactionPrice',
 	    width:150
 	},{
 		title:'可选项实卖价',

@@ -291,7 +291,7 @@ function fillItemToTableRow(data){
 			unitName:data.unitName,
 			actualPrice:actualPrice,
 			actualAmount:actualAmount,
-			transcationPrice:transcationPrice,
+			transactionPrice:transcationPrice,
 			optionalActualPrice:optionalActualPrice,
 			optionalActualAmount:optionalActualAmount,
 			optionalTransationPrice:optionalTransationPrice,
@@ -899,7 +899,7 @@ function fillEditMaterailValue(data,index){
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
-	$("#transcationPrice").val(data.transcationPrice);
+	$("#transcationPrice").val(data.transactionPrice);
 	$("#acturalPricaOfOptional").val(data.optionalActualPrice);
 	$("#acturalPricaOfOptionalAmount").val(data.optionalActualAmount);
 	$("#transcationPriceOfOptional").val(data.optionalTransationPrice);
