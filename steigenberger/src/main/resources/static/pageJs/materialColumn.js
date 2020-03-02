@@ -4,17 +4,11 @@ var materialsColumn = [{
 	    width:200,
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-	    	if(row.all=='all'){
-	    		actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" id="materialsEdit" onclick="editMaterials(\'' +row.identification+','+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
-				actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="copyMaterials(\'' + row.identification + '\')"><i class="fa fa-copy"></i>复制</a>');
-				actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="insertMaterials(\'' + row.identification +','+index+ '\')"><i class="fa fa-edit"></i>插入</a>');
-				actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="removeMaterials(\'' + row.identification +','+index+ '\')"><i class="fa fa-edit"></i>删除</a>');
-				return actions.join('');
-	    	}else{
-	    		return '';
-	    	}
-			
-			
+    		actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" id="materialsEdit" onclick="editMaterials(\'' +row.rowNum+'|'+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
+			actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="copyMaterials(\'' + row.rowNum + '\')"><i class="fa fa-copy"></i>复制</a>');
+			actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="insertMaterials(\'' +index+ '\')"><i class="fa fa-edit"></i>插入</a>');
+			actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="removeMaterials(\'' + row.rowNum + '\')"><i class="fa fa-edit"></i>删除</a>');
+			return actions.join('');		
 	    }
 	},{
 		title:'行号',
@@ -28,7 +22,7 @@ var materialsColumn = [{
 	    	var actions = [];
 	    	var configurable = row.isConfigurable+'';
 	    	if(configurable=='true'){
-	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.identification+','+index+'\')"><i class="fa fa-edit"></i></a> ');
+	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.rowNum+'|'+index+'\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
 	    }
@@ -73,6 +67,9 @@ var materialsColumn = [{
 	    field: 'isPurchased',
 	    width:80,
 	    formatter: function(value, row, index) {
+	    	if(value==undefined){
+	    		return "";
+	    	}
 	    	if(value){
 	    		return "外购";
 	    	}else{
