@@ -13,7 +13,7 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
 //			url : "/steigenberger/myOrder/myOrderManageList",//请求路径
-			url : "/steigenberger/freight/List",//请求路径
+			url : ctxPath+"freight/List",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -108,7 +108,7 @@ var TableInit = function () {
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
-		url : '/steigenberger/freight/List'
+		url : ctxPath+"freight/List"
 	});
 })
 
@@ -118,7 +118,7 @@ $('#resetBtn').click(function() {
 })
 
 //上传
-initUpload("excelFile",  "/steigenberger/freight/upload");
+initUpload("excelFile",  ctxPath+"freight/upload");
     function initUpload(ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
         control.fileinput({
@@ -154,7 +154,7 @@ initUpload("excelFile",  "/steigenberger/freight/upload");
             alert(data.files[index].name + "上传成功!");
             //上传成功后刷新
             $('#mytab').bootstrapTable('refresh', {
-        		url : '/steigenberger/freight/List'
+        		url : ctxPath+"freight/List"
         	});
         //关闭
             $(".close").click();
