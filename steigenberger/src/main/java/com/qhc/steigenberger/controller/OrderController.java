@@ -602,9 +602,6 @@ public class OrderController extends BaseController {
 
 	}
 
-	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@PostMapping(value = "grossprofit/export/{sequenceNumber},{versionNum},{createTime},{salesCode}")
-	@ResponseBody
 	/**
 	 * 
 	 * @param sequenceNumber 订单需求号
@@ -616,7 +613,10 @@ public class OrderController extends BaseController {
 	 * @param response
 	 * @throws Exception
 	 */
-	public void grossProfit(@PathVariable("sequenceNumber") String sequenceNumber,
+	@ApiOperation(value = "计算毛利", notes = "计算毛利")
+	@PostMapping(value = "grossprofit/export/{sequenceNumber},{versionNum},{createTime},{salesCode}")
+	@ResponseBody
+	public void exportGrossProfit(@PathVariable("sequenceNumber") String sequenceNumber,
 			@PathVariable("versionNum") String versionNum, @PathVariable("createTime") String createTime,
 			@PathVariable("salesCode") String salesCode, @RequestBody List<MaterialGroups> grossProfitMargin,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -654,7 +654,7 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit")
 	@ResponseBody
-	public Object exportGrossProfit(@RequestBody Order order) throws Exception {
+	public Object calculateGrossProfit(@RequestBody Order order) throws Exception {
 		return orderService.calcGrossProfit(order);
 	}
 	
