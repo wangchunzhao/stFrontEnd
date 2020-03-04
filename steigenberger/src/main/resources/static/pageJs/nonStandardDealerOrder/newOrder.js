@@ -1268,30 +1268,6 @@ function initOrderFormValidator(){
                    }
                }
            },
-           contactor1Id: {
-           	validators: {
-       	    	regexp: {
-       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-       	            message: '请填写正确的身份证号'
-       	        }
-       	    }
-           },
-           contactor2Id: {
-           	validators: {
-       	    	regexp: {
-       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-       	            message: '请填写正确的身份证号'
-       	        }
-       	    }
-           },
-           contactor3Id: {
-           	validators: {
-       	    	regexp: {
-       	    		regexp: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
-       	            message: '请填写正确的身份证号'
-       	        }
-       	    }
-           },
            contactor1Tel: {
            	validators: {
        	    	regexp: {
