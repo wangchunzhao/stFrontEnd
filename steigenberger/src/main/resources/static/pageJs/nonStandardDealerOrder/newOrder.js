@@ -1375,6 +1375,7 @@ function openConfig(configContent){
 			insertDefaultConfigs()
 		}
 		$("#configRemark").val(jsonObject.remark);
+		$("#mosaicImage").val(jsonObject.mosaicImage);
 		if(jsonObject.attachments.length>0){
 			$("#itemFileList").bootstrapTable("removeAll");
 			var jsonObject = JSON.parse(configData);
@@ -1392,6 +1393,8 @@ function openConfig(configContent){
 		insertDefaultConfigs()
 		$('.selectpicker').selectpicker('refresh');
 		$("#itemFileList").bootstrapTable("removeAll");
+		$("#configRemark").val('');
+		$("#mosaicImage").val('');
 		/*$("#configTable").bootstrapTable('refresh',{
 			url:url,
 			query:{'clazzCode':$("#materialConfigClazzCode").val(),
@@ -1477,11 +1480,13 @@ function saveMaterialConfig(){
 	updateTableRowPrice(configIndex,tableData);
 	var configData = new Object();
 	var remark = $("#configRemark").val();
+	var mosaicImageRemark = $("#mosaicImage").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
 	var attachs = $("#itemFileList").bootstrapTable('getData');
 	configData.configTableData = configTableData;
 	configData.remark = remark
 	configData.attachments = attachs
+	configData.mosaicImage = mosaicImageRemark;
 	localStorage.setItem(rowNum, JSON.stringify(configData));
 	$("#materialconfigModal").modal('hide');
 }
@@ -1722,9 +1727,12 @@ function updateAddressInProd(updateIndex){
 function addAddress(){
 	$("#addressModal").modal('show');
 	$("#addressModalType").val('new');
-	$("#selectProvince").val('');
-	$("#citySelect").val('');
-	$("#selectDistrict").val('');
+	$("#selectProvince").selectpicker('val',$("#selectProvince").find('option:first').val());
+	$("#selectProvince").find("option").attr("selected", false); 
+	$("#citySelect").selectpicker('val',$("#citySelect").find('option:first').val());
+	$("#citySelect").find("option").attr("selected", false); 
+	$("#selectDistrict").selectpicker('val',$("#selectDistrict").find('option:first').val());
+	$("#selectDistrict").find("option").attr("selected", false); 
 	$("#shippingAddress").val('');
 }
 

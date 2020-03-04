@@ -94,10 +94,8 @@ $(function () {
 		$.each(installationTerms, function (key, value) {
 			if(orderType=="ZH0D"&&key=="02"){
 				$("#installType").val(key);
-				$("#installTypeName").val(value);
-				
+				$("#installTypeName").val(value);			
 			}
-			
 		});
 	}
 	initSubsidiartFormValidator();
@@ -1398,6 +1396,7 @@ function openConfig(configContent){
 			insertDefaultConfigs()
 		}
 		$("#configRemark").val(jsonObject.remark);
+		$("#mosaicImage").val(jsonObject.mosaicImage);
 		if(jsonObject.attachments.length>0){
 			$("#itemFileList").bootstrapTable("removeAll");
 			var jsonObject = JSON.parse(configData);
@@ -1415,6 +1414,8 @@ function openConfig(configContent){
 		insertDefaultConfigs()
 		$('.selectpicker').selectpicker('refresh');
 		$("#itemFileList").bootstrapTable("removeAll");
+		$("#configRemark").val('');
+		$("#mosaicImage").val('');
 		/*$("#configTable").bootstrapTable('refresh',{
 			url:url,
 			query:{'clazzCode':$("#materialConfigClazzCode").val(),
@@ -1501,11 +1502,13 @@ function saveMaterialConfig(){
 	updateTableRowPrice(configIndex,tableData);
 	var configData = new Object();
 	var remark = $("#configRemark").val();
+	var mosaicImageRemark = $("#mosaicImage").val();
 	var configTableData = $("#configTable").bootstrapTable('getData');
 	var attachs = $("#itemFileList").bootstrapTable('getData');
 	configData.configTableData = configTableData;
 	configData.remark = remark
 	configData.attachments = attachs
+	configData.mosaicImage = mosaicImageRemark;
 	localStorage.setItem(rowNum, JSON.stringify(configData));
 	$("#materialconfigModal").modal('hide');
 }
@@ -1723,9 +1726,12 @@ function updateAddressInProd(updateIndex){
 function addAddress(){
 	$("#addressModal").modal('show');
 	$("#addressModalType").val('new');
-	$("#selectProvince").val('');
-	$("#citySelect").val('');
-	$("#selectDistrict").val('');
+	$("#selectProvince").selectpicker('val',$("#selectProvince").find('option:first').val());
+	$("#selectProvince").find("option").attr("selected", false); 
+	$("#citySelect").selectpicker('val',$("#citySelect").find('option:first').val());
+	$("#citySelect").find("option").attr("selected", false); 
+	$("#selectDistrict").selectpicker('val',$("#selectDistrict").find('option:first').val());
+	$("#selectDistrict").find("option").attr("selected", false); 
 	$("#shippingAddress").val('');
 }
 
@@ -2152,6 +2158,38 @@ function viewGrossProfit(){
 	});  
 }
 
+
+function exportGross(){
+	var grossData = $("#grossProfitTable").bootstrapTable("getData");
+	var sequenceNumber = $("#sequenceNumber").val();
+	var versionNum = $("#version").val();
+	var createTime = formatDate(new Date()) ;
+	var salesCode = $("#salesCode").val();
+	$.ajax({
+		url: ctxPath+"order/grossprofit/export/"+sequenceNumber+','+versionNum+','+createTime+','+salesCode,
+		contentType: "application/json;charset=UTF-8",
+		data: JSON.stringify(grossData),
+		type: "POST",
+		success: function(data) {
+			
+		},
+		error: function(){
+			layer.alert('导出失败', {icon: 5});
+		}
+	});
+	
+}
+
+//日期格式化
+function formatDate(inputTime) {
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    return y + '.' + m + '.' + d;
+}
 
 //查看合同
 function viewContract(){
