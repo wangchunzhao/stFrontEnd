@@ -2082,10 +2082,17 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
-	if($("#orderModelType").val()=='edit'){
-		editViewGrossProfit();
+	if(orderOperationType!=1){
+		$("#grossProfitExportBt").show();
+	}else{
+		$("#grossProfitExportBt").hide();
+	}
+	//查看订单显示毛利率
+	if(orderOperationType==2){
+		viewOrderGrossProfit();
 		return;
 	}
+	
 	if(!$("#saleType").val()){
 		layer.alert('请选择销售类型', {icon: 5});
 		return
@@ -2115,11 +2122,11 @@ function viewGrossProfit(){
 	 orderData.orderAddress = $("#addressTable").bootstrapTable('getData');
 	$("#grossProfit").modal("show");
 	$("#grossSeqNum").val($("#sequenceNumber").val());
-	$("#grossVersion").val(version);
+	$("#grossVersion").val($("#version").val());
 	$("#grossContractRMBValue").val($("#contractAmount").val());
 	$("#grossPerson").val($("#salesName").val());
 	$("#grossDate").val($("#inputDate").val());
-	$("#grossClazz").val($("#customerClazz").val());
+	$("#grossClazz").val($("#customerClazzName").val());
 	$.ajax({
 	    url: ctxPath+"order/grossprofit",
 	    contentType: "application/json;charset=UTF-8",
@@ -2134,6 +2141,20 @@ function viewGrossProfit(){
 	});  
 }
 
+//查看订单时显示毛利率
+function viewOrderGrossProfit(){
+	debugger
+	$("#grossProfit").modal("show");
+	$("#grossSeqNum").val($("#sequenceNumber").val());
+	$("#grossVersion").val($("#version").val());
+	$("#grossContractRMBValue").val($("#contractAmount").val());
+	$("#grossPerson").val($("#salesName").val());
+	$("#grossDate").val($("#inputDate").val());
+	$("#grossClazz").val($("#customerClazzName").val());
+	var tableStringData = grossProfitMargin;
+	var tableData =JSON.parse(tableStringData)
+	$("#grossProfitTable").bootstrapTable('load', tableData);	
+}
 
 function exportGross(){
 	var grossData = $("#grossProfitTable").bootstrapTable("getData");
