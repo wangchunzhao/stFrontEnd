@@ -620,7 +620,6 @@ public class OrderController extends BaseController {
 			@PathVariable("versionNum") String versionNum, @PathVariable("createTime") String createTime,
 			@PathVariable("salesCode") String salesCode, @RequestBody List<MaterialGroups> grossProfitMargin,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		InputStream pis = null;
 		try {
 			versionNum = "00" + versionNum;
 			versionNum = versionNum.substring(versionNum.length() - 2);
@@ -639,15 +638,10 @@ public class OrderController extends BaseController {
 			data.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			data.put("margins", grossProfitMargin);
 			JxlsUtils.exportExcel("grossprofitmargin.xlsx", response.getOutputStream(), data);
+			response.getOutputStream().flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (pis != null) {
-					pis.close();
-				}
-			} catch (IOException e) {
-			}
 		}
 	}
 
