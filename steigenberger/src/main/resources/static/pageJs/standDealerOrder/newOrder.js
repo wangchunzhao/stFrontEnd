@@ -727,6 +727,10 @@ function addSubsidiary(){
 		layer.alert('请先选择客户', {icon: 5});
 		return
 	}
+	if($('#addressTable').bootstrapTable('getData').length==0){
+		layer.alert('请先添加订单地址', {icon: 5});
+		return
+	}
 	$('#subsidiaryModal').modal('show');
 	$("#itemCategory").html('');
 	$("#subsidiaryForm")[0].reset();
@@ -737,6 +741,21 @@ function addSubsidiary(){
 //打开购销明细初始化
 
 function initSubsidiary(){
+	var addressTableData = $('#addressTable').bootstrapTable('getData')
+	var row = addressTableData[0];
+	$('#materialProvinceCode').val(row.provinceCode);
+	$('#materialProvinceName').val(row.provinceName);
+	$('#materialCityCode').val(row.cityCode);
+	$('#deliveryAddressSeq').val(row.seq);
+	$('#materialCityName').val(row.cityName);
+	$('#materialAreaCode').val(row.districtCode);
+	$('#materialAreaName').val(row.districtName);
+	$('#materialModalAddress').val(row.address)
+	if(row.pca==''){
+		$("#materialAddress").val(row.address).change();
+	}else{
+		$("#materialAddress").val(row.pca+"/"+row.address).change();
+	}
 	$('#amount').val(1);
 	$('#discount').val($("#standardDiscount").val());
 	if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
@@ -1700,6 +1719,10 @@ function updateAddressInProd(updateIndex){
 }
 
 function addAddress(){
+	if($('#addressTable').bootstrapTable('getData').length>0){
+		layer.alert('只能添加一条地址！', {icon: 5});
+		return;
+	}
 	$("#addressModal").modal('show');
 	$("#addressModalType").val('new');
 	$("#selectProvince").selectpicker('val',$("#selectProvince").find('option:first').val());
@@ -2143,7 +2166,6 @@ function viewGrossProfit(){
 
 //查看订单时显示毛利率
 function viewOrderGrossProfit(){
-	debugger
 	$("#grossProfit").modal("show");
 	$("#grossSeqNum").val($("#sequenceNumber").val());
 	$("#grossVersion").val($("#version").val());
@@ -2162,7 +2184,8 @@ function exportGross(){
 	var versionNum = $("#version").val();
 	var createTime = formatDate(new Date()) ;
 	var salesCode = $("#salesCode").val();
-	$.ajax({
+	
+	/*$.ajax({
 		url: ctxPath+"order/grossprofit/export/"+sequenceNumber+','+versionNum+','+createTime+','+salesCode,
 		contentType: "application/json;charset=UTF-8",
 		data: JSON.stringify(grossData),
@@ -2173,7 +2196,32 @@ function exportGross(){
 		error: function(){
 			layer.alert('导出失败', {icon: 5});
 		}
-	});
+	});*/
+		var myForm = document.createElement("form");
+	    myForm.method = "post";
+	    myForm.action = ctxPath+"order/grossprofit/export";
+	    document.body.appendChild(myForm);
+	    var seq = document.createElement("input");
+	    seq.setAttribute("name", "sequenceNumber");
+	    seq.setAttribute("value", sequenceNumber);
+	    var seq1 = document.createElement("input");
+	    seq1.setAttribute("name", "versionNum");
+	    seq1.setAttribute("value", versionNum);
+	    var seq2 = document.createElement("input");
+	    seq2.setAttribute("name", "createTime");
+	    seq2.setAttribute("value", createTime);
+	    var seq3 = document.createElement("input");
+	    seq3.setAttribute("name", "salesCode");
+	    seq3.setAttribute("value", salesCode);
+	    var seq4 = document.createElement("input");
+	    seq4.setAttribute("name", "grossProfitMargin");
+	    seq4.setAttribute("value", JSON.stringify(grossData));
+	    myForm.appendChild(seq);
+	    myForm.appendChild(seq1);
+	    myForm.appendChild(seq3);
+	    myForm.appendChild(seq4);
+	    myForm.submit();
+	    document.body.removeChild(myForm);  
 	
 }
 
