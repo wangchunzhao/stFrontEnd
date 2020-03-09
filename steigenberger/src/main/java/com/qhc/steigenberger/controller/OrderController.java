@@ -125,7 +125,7 @@ public class OrderController extends BaseController {
 	}
 	
 	/**
-	 * 保存订单
+	 * 提交订单
 	 * 
 	 * @param order
 	 * @param request
@@ -148,7 +148,30 @@ public class OrderController extends BaseController {
 	}
 	
 	/**
-	 * 保存订单
+	 * 驳回订单
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("{orderInfoId}/reject")
+	@ResponseBody
+	public Result rejectOrder(@PathVariable("orderInfoId") Integer orderInfoId) {
+		String identity = getUserIdentity();	
+		Result result;
+		
+		try {
+			result = orderService.rejectOrder(identity, orderInfoId);
+		} catch (Exception e) {
+			logger.error("驳回订单失败", e);
+			result = Result.error("驳回订单失败");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 订单提交BPM审批
 	 * 
 	 * @param order
 	 * @param request

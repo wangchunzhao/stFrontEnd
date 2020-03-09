@@ -147,6 +147,13 @@ public class OrderService {
 		return result;
 	}
 
+	public Result rejectOrder(String user, Integer orderInfoId) {
+		String url = "order/" + orderInfoId + "/reject/" + user;
+		Result result = fryeService.postForm(url, "", Result.class);
+
+		return result;
+	}
+
 	/**
 	 * 
 	 * @param form : order
