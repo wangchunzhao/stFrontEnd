@@ -46,7 +46,6 @@ $(function () {
 	//订单文件列表初始化
 	var fileListTable = new TableInit('fileList','','',fileListColumns)
 	fileListTable.init();
-	
 	//订单文件上传成功处理方法
 	$("#f_upload").on("fileuploaded", function(event, data, previewId, index) {
 		var attachment = data.response.data;
@@ -183,11 +182,10 @@ function fillItems(){
 		for(var i=0;i<items.length;i++){
 			var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
 			var materialType = items[i].stMaterialGroupCode;	
-			var identification = materialType+"|"+items[i].rowNum;
 			var rowData = fillItemToTableRow(items[i]);
+			rowData['materialType'] = materialType;
 			var configAttachments = items[i].attachments
-			rowData["all"] = "all";
-			rowData["identification"] = identification;
+			var identification = rowData.rowNum;
 			//添加调研表
 			if(rowData.isConfigurable&&items[i].configs!=null){
 				fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode,configAttachments);
@@ -285,6 +283,7 @@ function fillItemToTableRow(data){
 			isPurchased:data.isPurchased,
 			materialGroupCode:data.materialGroupCode,
 			materialGroupName:data.materialGroupName,
+			itemStatus:data.itemStatus,
 			quantity:data.quantity,
 			unitName:data.unitName,
 			actualPrice:actualPrice,
@@ -321,7 +320,8 @@ function fillItemToTableRow(data){
 	        districtCode:data.districtCode,
 	        districtName:data.districtName,
 	        address:data.address,
-	        deliveryAddressSeq: data.deliveryAddressSeq
+	        deliveryAddressSeq: data.deliveryAddressSeq,
+	        volumeCube:data.volumeCube
 	}
 	return row;
 }
@@ -451,8 +451,14 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 	var saleType = $(obj).val();
 	getCurrency(saleType,exchangeRate);
 	getIncoterm(saleType);
-	if(taxRate){
-		$("#taxRate").val(taxRate[saleType]);
+	$("#taxRate").html('');
+	if(taxRate&&saleType==20){
+		var rate = taxRate[10];
+		$("#taxRate").append("<option value='0'>0</option>");
+		$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
+	}else{
+		var rate = taxRate[10];
+		$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
 	}
 	if(saleType=="20"){
 		$("#freightDiv").show();
@@ -831,7 +837,7 @@ function fillMaterailValue(data){
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = data.stGroupCode;
-	$("#materialsType").val(materialsType);
+	$("#materialType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
@@ -862,6 +868,7 @@ function fillMaterailValue(data){
 	$("#produceDate").val(data.produceDate);
 	$("#onStoreDate").val(data.onStoreDate);*/
 	$("#standardPrice").val(toDecimal2(data.standardPrice));
+	$('#volumeCube').val(data.materialSize)
 	
 	
 }
@@ -888,6 +895,9 @@ function getB2CAmount(obj){
 //编辑购销明细
 function editMaterials(editContent){
 	$('#subsidiaryModal').modal('show');
+	if(status=='01'){
+		$("#B2CCostOfEstimated").attr("disabled",false);
+	}
 	$('#materialsModalType').val('edit');
 	var index = editContent.split('|')[1];
 	var rowNumber = editContent.split('|')[0]
@@ -911,6 +921,7 @@ function fillEditMaterailValue(data,index){
 	}else{
 		$("#isPurchased").val("自制");
 	}
+	$('#volumeCube').val(data.volumeCube)
 	$("#shippDate").val(data.shippDate)
 	$("#rowNumber").val(data.rowNum);
 	$("#materialTypeName").val(data.materialName);
@@ -924,7 +935,7 @@ function fillEditMaterailValue(data,index){
 	$("#materialGroupName").val(data.materialGroupName);
 	$("#groupCode").val(data.materialGroupCode);
 	$("#isConfigurable").val(data.isConfigurable);
-	$("#materialsType").val(materialsType);
+	$("#materialType").val(data.materialType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
@@ -963,6 +974,17 @@ function removeMaterials(rowNum){
         values: rowNum
     });
 	getAllCountFiled();
+}
+
+function cacelMaterials(rowNumIndex){
+	var index = rowNumIndex.split('|')[1];
+	var rowNum = rowNumIndex.split('|')[0];
+	var data = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
+	data.itemStatus ='Z2'
+	$("#materialsTable").bootstrapTable('updateRow', {
+	    index: index,
+	    row: data
+	});
 }
 
 //点击确认购销明细
@@ -1138,6 +1160,7 @@ function confirmRowData(rowNumber){
 			isPurchased:$("#purchasedCode").val(),
 			materialGroupName:$("#materialGroupName").val(),
 			materialGroupCode:$("#groupCode").val(),
+			materialType: $("#materialType").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
 			unitCode:$("#unitCode").val(),
@@ -1176,7 +1199,8 @@ function confirmRowData(rowNumber){
 			cityName:$("#materialCityName").val(),
 			districtCode:$("#materialAreaCode").val(),
 			districtName:$("#materialAreaName").val(),
-			address: $('#materialModalAddress').val()		
+			address: $('#materialModalAddress').val(),
+			volumeCube: $("#volumeCube").val()
 	}
 	return row;
 }
@@ -1787,10 +1811,12 @@ function deleteAddressInProd(delIndex){
 }
 function setItemRequirementPlan(obj){
 	var b2cValue = $(obj).val();
+	var itemPlan = $("#itemRequirementPlan").val();
+	if(itemPlan=='002'||itemPlan=='003'){
+		return;
+	}
 	if(b2cValue!=''){
 		$("#itemRequirementPlan").val("001");
-	}else{
-		$("#itemRequirementPlan").val("004");
 	}
 }
 

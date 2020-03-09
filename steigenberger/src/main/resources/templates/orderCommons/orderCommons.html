@@ -183,8 +183,8 @@
 					    </div>
 					    <span class="col-md-1 control-label">税率</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxRate" th:if="${orderType!=5}" readonly th:field="*{taxRate}" >
-							<input type="text" class="form-control" aria-describedby="emailHelp"  id="taxRate" th:if="${orderType==5}" readonly disabled th:field="*{taxRate}" >
+							<select class="form-control"  id="taxRate"  th:field="*{taxRate}">
+							</select>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">

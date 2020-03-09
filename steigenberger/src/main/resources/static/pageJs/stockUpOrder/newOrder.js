@@ -1736,13 +1736,14 @@ function deleteAddressInProd(delIndex){
 }
 function setItemRequirementPlan(obj){
 	var b2cValue = $(obj).val();
+	var itemPlan = $("#itemRequirementPlan").val();
+	if(itemPlan=='002'||itemPlan=='003'){
+		return;
+	}
 	if(b2cValue!=''){
 		$("#itemRequirementPlan").val("001");
-	}else{
-		$("#itemRequirementPlan").val("004");
 	}
 }
-
 //删除已上传文件
 function removeFile(index){
 	$('#fileList').bootstrapTable('remove', {

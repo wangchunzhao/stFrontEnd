@@ -908,7 +908,7 @@ function fillEditMaterailValue(data,index){
 	$("#materialGroupName").val(data.materialGroupName);
 	$("#groupCode").val(data.materialGroupCode);
 	$("#isConfigurable").val(data.isConfigurable);
-	$("#materialsType").val(materialsType);
+	$("#materialType").val(data.materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
 	$("#materialClazzCode").val(data.clazzCode);
@@ -1122,6 +1122,7 @@ function confirmRowData(rowNumber){
 			isPurchased:$("#purchasedCode").val(),
 			materialGroupName:$("#materialGroupName").val(),
 			materialGroupCode:$("#groupCode").val(),
+			materialType:$("#materialType").val(),
 			quantity:$("#amount").val(),
 			unitName:$("#unitName").val(),
 			unitCode:$("#unitCode").val(),
@@ -1776,10 +1777,12 @@ function deleteAddressInProd(delIndex){
 
 function setItemRequirementPlan(obj){
 	var b2cValue = $(obj).val();
+	var itemPlan = $("#itemRequirementPlan").val();
+	if(itemPlan=='002'||itemPlan=='003'){
+		return;
+	}
 	if(b2cValue!=''){
 		$("#itemRequirementPlan").val("001");
-	}else{
-		$("#itemRequirementPlan").val("004");
 	}
 }
 

@@ -66,7 +66,17 @@
 	var orderOperationType = [[${orderOperationType}]]
 	var orderType = [[${orderDetail.orderType}]]
 	var grossProfitMargin = [[${orderDetail.grossProfitMargin}]]
-	debugger
+	var initTaxRate = [[order_option.taxRate]]
+	if(orderOperationType!=1){
+		if(initTaxRate&&saleType==20){
+			var rate = initTaxRate[10];
+			$("#taxRate").append("<option value='0'>0</option>");
+			$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
+		}else{
+			var rate = initTaxRate[10];
+			$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
+		}
+	}
 
 	/* var version = getVersion();
 	$("#version").append("<option value='" + version + "'>" + version + "</option>");	

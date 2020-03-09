@@ -234,7 +234,7 @@ function tosap(orderInfoId) {
             dataType: "json",
             success: function (data) {
             	if(data == null || data.status != 'ok'){
-		    		layer.alert("订单下推失败：：" + (result != null ? result.msg : ""));
+		    		layer.alert("订单下推失败：" + (data != null ? data.msg : ""));
 		    	}else{
 		    		layer.alert('订单下推成功', {icon: 6});
 		    		$('#mytab').bootstrapTable('refresh');
@@ -264,7 +264,7 @@ function upgradeOrder(orderInfoId){
             dataType: "json",
             success: function (data) {
             	if(data == null || data.status != 'ok'){
-		    		layer.alert("订单变更失败：：" + (result != null ? result.msg : ""));
+		    		layer.alert("订单变更失败：：" + (data != null ? data.msg : ""));
 		    	}else{
 		    		layer.alert('订单变更成功', {icon: 6});
 		    		$('#mytab').bootstrapTable('refresh');
@@ -284,7 +284,7 @@ function copyOrder(orderInfoId){
             dataType: "json",
             success: function (data) {
             	if(data == null || data.status != 'ok'){
-		    		layer.alert("订单复制失败：：" + (result != null ? result.msg : ""));
+		    		layer.alert("订单复制失败：：" + (data != null ? data.msg : ""));
 		    	}else{
 		    		layer.alert('订单复制成功', {icon: 6});
 		    		$('#mytab').bootstrapTable('refresh');
@@ -305,8 +305,8 @@ function tenderOffer(orderInfoId){
 	        dataType: "json",
 	        async: false,
 	        success: function (data) {
-	        	if(result == null || result.status != 'ok'){
-		    		layer.alert("确认中标失败:" + (result != null ? result.msg : ""));
+	        	if(data == null || data.status != 'ok'){
+		    		layer.alert("确认中标失败:" + (data != null ? data.msg : ""));
 		    	}else{
 		    		layer.alert('确认中标成功！', {icon: 6});
 		    		$('#mytab').bootstrapTable('refresh');
@@ -326,8 +326,8 @@ function createOrder(orderInfoId){
 	        dataType: "json",
 	        async: false,
 	        success: function (data) {
-	        	if(result == null || result.status != 'ok'){
-		    		layer.alert("确认下单失败:" + (result != null ? result.msg : ""));
+	        	if(data == null || data.status != 'ok'){
+		    		layer.alert("确认下单失败:" + (data != null ? data.msg : ""));
 		    	}else{
 		    		layer.alert('确认下单成功！', {icon: 6});
 		    		$('#mytab').bootstrapTable('refresh');

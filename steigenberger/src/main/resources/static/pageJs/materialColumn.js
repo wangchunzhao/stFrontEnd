@@ -7,7 +7,11 @@ var materialsColumn = [{
     		actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" id="materialsEdit" onclick="editMaterials(\'' +row.rowNum+'|'+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
 			actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="copyMaterials(\'' + row.rowNum + '\')"><i class="fa fa-copy"></i>复制</a>');
 			actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="insertMaterials(\'' +index+ '\')"><i class="fa fa-edit"></i>插入</a>');
-			actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="removeMaterials(\'' + row.rowNum + '\')"><i class="fa fa-edit"></i>删除</a>');
+			if(row.itemStatus=='10'){
+				actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="cacelMaterials(\'' + row.rowNum + '|'+index+ '\')"><i class="fa fa-edit"></i>取消</a>');
+			}else{
+				actions.push('<a class="btn" style="font-size:11px;width:20px;margin-right:15px;" onclick="removeMaterials(\'' + row.rowNum + '\')"><i class="fa fa-edit"></i>删除</a>');
+			}
 			return actions.join('');		
 	    }
 	},{
@@ -35,6 +39,21 @@ var materialsColumn = [{
 	    field: 'materialCode',
 	    width:150
 	},{
+		title:'状态',
+	    field: 'itemStatus',
+	    width:150,
+	    formatter: function(value, row, index) {
+	    	if(value=='10'){
+	    		return '已下推SAP'
+	    	}else if(value=='Z2'){
+	    		return '取消'
+	    	}else if(value=='Z7'){
+	    		return '订单关闭'
+	    	}else{
+	    		return '草稿'
+	    	}
+	    }
+	},{
 		title:'标识',
 	    field: 'identification',
 	    visible:false
@@ -48,6 +67,16 @@ var materialsColumn = [{
     },{
 		title:'',
 	    field: 'clazzCode',
+	    visible:false
+	},
+	{
+		title:'',
+	    field: 'materialType',
+	    visible:false
+	},
+	{
+		title:'',
+	    field: 'volumeCube',
 	    visible:false
 	},
 	{
