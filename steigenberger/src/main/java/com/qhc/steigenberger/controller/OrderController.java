@@ -637,13 +637,14 @@ public class OrderController extends BaseController {
 	 * @throws Exception
 	 */
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
-	@PostMapping(value = "grossprofit/export/{sequenceNumber},{versionNum},{createTime},{salesCode}")
+	@PostMapping(value = "grossprofit/export")
 	@ResponseBody
-	public void exportGrossProfit(@PathVariable("sequenceNumber") String sequenceNumber,
-			@PathVariable("versionNum") String versionNum, @PathVariable("createTime") String createTime,
-			@PathVariable("salesCode") String salesCode, @RequestBody List<MaterialGroups> grossProfitMargin,
+	public void exportGrossProfit(@RequestParam("sequenceNumber") String sequenceNumber,
+			@RequestParam("versionNum") String versionNum, @RequestParam("createTime") String createTime,
+			@RequestParam("salesCode") String salesCode, @RequestParam String grossProfitMargin,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
+			List<MaterialGroups> grossProfitMarginList;;
 			versionNum = "00" + versionNum;
 			versionNum = versionNum.substring(versionNum.length() - 2);
 			String fileName = sequenceNumber + "_" +versionNum + "_" + createTime + "_" + salesCode;
@@ -768,21 +769,21 @@ public class OrderController extends BaseController {
     @PostMapping(value = "material/configuration")
 	@ResponseBody
     public Result findBOMWithPrice(@RequestBody BomQueryModel model)  throws Exception{
-		/*
-		 * Map<String, String> pars = new HashMap<>(); List<String> configCodes =
-		 * model.getConfigCode(); List<String> configValueCodes =
-		 * model.getConfigValueCode(); for(int i=0;i<configCodes.size();i++){
-		 * pars.put(configCodes.get(i), configValueCodes.get(i)); } pars.put("bom_code",
-		 * model.getBomCode()); return orderService.findBomPrice(pars);
-		 */ 
+		 Map<String, String> pars = new HashMap<>(); 
+		 List<String> configCodes = model.getConfigCode(); 
+		 List<String> configValueCodes = model.getConfigValueCode(); 
+		 for(int i=0;i<configCodes.size();i++){
+			 pars.put(configCodes.get(i), configValueCodes.get(i)); 
+		 } 
+		 pars.put("bom_code",model.getBomCode());
+		 return orderService.findBomPrice(pars);
+		  
     	//测试数据
-    	MaterialBom bom = new MaterialBom();
-    	bom.setPrice(1200.00);
-    	bom.setTransferPrice(1300.00);
-    	Result result = new Result();
-    	result.setStatus("ok");
-    	result.setData(bom);
-    	return result;
+		/*
+		 * MaterialBom bom = new MaterialBom(); bom.setPrice(1200.00);
+		 * bom.setTransferPrice(1300.00); Result result = new Result();
+		 * result.setStatus("ok"); result.setData(bom); return result;
+		 */
     }
 	
     @ApiOperation(value = "查询客户最后一条订单的地址列表")
