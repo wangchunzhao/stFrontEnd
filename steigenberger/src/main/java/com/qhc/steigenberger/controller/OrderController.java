@@ -240,7 +240,7 @@ public class OrderController extends BaseController {
 			result = orderService.sendToSap(identity, orderInfoId);
 		} catch (Exception e) {
 			logger.error("订单推送到sap", e);
-			result = Result.error("订单推送到sap失败");
+			result = Result.error(e.getMessage());
 		}
 		
 		return result;
