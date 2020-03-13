@@ -1572,8 +1572,10 @@ function calPrice(tableData){
 function copyMaterials(rowNum){
 	var configsData = localStorage[rowNum];
 	var data = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
-	var rowData =JSON.parse(JSON.stringify(data));;
-	var newRowNum = parseInt(rowNum)+10; 
+	var rowData =JSON.parse(JSON.stringify(data));
+	var currentTableData= $('#materialsTable').bootstrapTable('getData')
+	var lastRowData = $('#materialsTable').bootstrapTable('getData')[currentTableData.length-1]
+	var newRowNum = parseInt(lastRowData.rowNum)+10; 
 	rowData["rowNum"] = newRowNum;
 	$("#materialsTable").bootstrapTable('append',rowData);
 	if(configsData){
@@ -1817,6 +1819,8 @@ function setItemRequirementPlan(obj){
 	}
 	if(b2cValue!=''){
 		$("#itemRequirementPlan").val("001");
+	}else{
+		$("#itemRequirementPlan").val("004");
 	}
 }
 
@@ -2284,7 +2288,25 @@ function viewContract(){
         }
     });
 }
-
+//驳回
+function reject(){
+	var orderInfoId = $("#orderInfoId").val();
+	var url = ctxPath+"order/"+parseInt(orderInfoId)+"/reject";
+    $.ajax({
+        type: "post",
+        url: url,
+        data: null,
+        dataType: "json",
+        success: function (result) {
+        	if(result == null || result.status != 'ok'){
+	    		layer.alert("驳回订单失败" + (result != null ? result.msg : ""));
+	    	}else{
+	    		layer.alert('驳回订单成功', {icon: 6});
+	    		window.location.href = ctxPath+'menu/orderManageList';
+	    	} 	
+        }
+    });
+}
 //显示合同编辑对话框
 function showEditModal(contract) {	
 	var html = template('contract-edit-tpl', contract);

@@ -425,8 +425,14 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 	var saleType = $(obj).val();
 	getCurrency(saleType,exchangeRate);
 	getIncoterm(saleType);
-	if(taxRate){
-		$("#taxRate").val(taxRate[saleType]);
+	$("#taxRate").html('');
+	if(taxRate&&saleType==20){
+		var rate = taxRate[10];
+		$("#taxRate").append("<option value='0'>0</option>");
+		$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
+	}else{
+		var rate = taxRate[10];
+		$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
 	}
 	if(saleType=="20"){
 		$("#freightDiv").show();

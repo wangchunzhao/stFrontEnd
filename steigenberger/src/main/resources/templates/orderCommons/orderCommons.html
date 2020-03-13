@@ -528,10 +528,8 @@
 						</ul>
 						<!-- Tab panes -->
 						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane" id="all" style="height: auto;">
-								<div class="table-responsive">
-									<table class="table" id="materialsTable" style="table-layout:fixed;word-break:break-all;"></table>
-								</div>
+							<div class="table-responsive">
+								<table class="table text-nowrap" id="materialsTable"></table>
 							</div>
 						</div>
 	
@@ -906,6 +904,7 @@
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='1'||(orderOperationType=='3'&&(orderDetail.status=='00'||orderDetail.status=='02'))}" id="submitButton">提交 submit</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="goBpm()" th:if="${orderOperationType=='3'&&orderDetail.status=='03'}" id="bpmSubmitButton">提交 BPM</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='3'&&orderDetail.status=='01'}" id="b2cSubmitButton">提交B2c</button>
+		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="reject()" th:if="${orderOperationType=='3'&&orderDetail.status=='01'}" id="b2cRejectButton">驳回</button>
 		<button type="button" class="btn pull-right btn-warning" id="backButton" onclick="history.go(-1)">返回 back</button>
 	</div>
 </body>
