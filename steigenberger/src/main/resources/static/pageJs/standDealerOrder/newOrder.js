@@ -11,10 +11,6 @@ $(function () {
 	});
 	 $('#selectProvince').selectpicker({
      });
-	 
-	 /*$('#configsId0').selectpicker({
-		 width: 120,liveSearch: true
-     });*/
 
 	
 	//进页面前清空缓存
@@ -208,6 +204,7 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 			if(item.keyCode==defaultItem.code){
 				var config = defaultItem;
 				config["configValueCode"] = item.valueCode
+				config["defaultConfig"] = item.valueCode
 				editConfigs.push(config)
 				
 			}
@@ -1453,11 +1450,13 @@ function insertDefaultConfigs(){
 		$.each(item.configs,function(index,value){
 			if(value.default){
 				config['configValueCode'] = value.code
+				config["defaultConfig"] = value.code
 			}
 		})
 		//没有默认的取第一个
 		if(!config.configValueCode){
 			config['configValueCode'] = item.configs[0].code;
+			config["defaultConfig"] = item.configs[0].code
 		}
 		insertConfigs.push(config);
 	})
@@ -1911,7 +1910,7 @@ function saveOrder(type){
 	 debugger
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
-		 var configData = localStorage[items[i].identification];
+		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
@@ -2129,6 +2128,14 @@ function setConfigValueCode(obj,index){
 	    field:'configValueCode',
 	    value:configValueCode
 	});
+	 $('.selectpicker').selectpicker({
+     });
+	 var configData = $("#configTable").bootstrapTable("getData");
+	 $.each(configData,function(index,value){
+			if(value.configValueCode!=value.defaultConfig){
+				$('#configTable>tbody tr:eq('+index+')').addClass('configtr')
+			}
+	})
 	if(configValueCode=='2'){
 		layer.alert('请填写行项目的颜色备注');
 	}
@@ -2492,7 +2499,7 @@ var configTableColumns = [
 {
 	title :'选项',
 	field :'optional',
-	width:'15%',
+	width:'10%',
 	formatter: function(value, row, index) {
     	if(!value){
     		return '必选项'
@@ -2504,7 +2511,7 @@ var configTableColumns = [
 {
 	title:'配置',
 	field:'name',
-	width:'35%'
+	width:'30%'
 },
 {
 	title:'',
@@ -2512,7 +2519,12 @@ var configTableColumns = [
 	field:'code'
 },
 {
-	title:'',
+	title:'defaultConfig',
+	visible:false,
+	field:'defaultConfig'
+},
+{
+	title:'configValueCode',
 	visible:false,
 	field:'configValueCode'
 },
@@ -2524,11 +2536,11 @@ var configTableColumns = [
 {
 	title:'配置值',
 	field:'configs',
-	width:'50%',
+	width:'60%',
 	formatter: function(value, row, index) {
 		if(row.color){
 			var id="configsId"+index;
-	    	var start = '<select class="form-control" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
+	    	var start = '<select class="form-control selectpicker" data-live-search="true" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
 	    	var end = '</select>';
 	    	var configIdValue;
 	    	if(row.configValueCode){
@@ -2617,7 +2629,15 @@ var paymentColumns = [
 }];
 
 //Customer basic infomation js end
-
+function rowStyle(row, index){
+	debugger
+	if(row.name=="柜内颜色"){
+		 var style = {};            
+		    style={css:{'color':'#ed5565'}};               
+		    return style;
+	}
+	
+}
 var TableInit = function (id,url,params,tableColumns) {
 	var oTableInit = new Object();
 	var tableId = '#'+id;
