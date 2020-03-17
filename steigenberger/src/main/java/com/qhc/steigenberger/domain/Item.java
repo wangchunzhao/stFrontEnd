@@ -30,6 +30,10 @@ public class Item {
 	private double yearPurchasePrice;//年采价，大客户有，客户信息
 	private double actualPrice;//产品实卖价
 	private double actualAmount;//产品实卖金额
+	/* 可选项标准价差 */
+	private Double optionalStandardPrice = null;
+	/* 可选项零售价差 */
+	private Double optionalRetailPrice = null;
 	private double optionalActualPrice;//可选项实卖价
 	private double optionalActualAmount;//可选项实卖金额
 	private double optionalTransactionPrice;//可选项转移价
@@ -212,6 +216,18 @@ public class Item {
 	}
 	public void setActualAmount(double actualAmount) {
 		this.actualAmount = actualAmount;
+	}
+	public Double getOptionalStandardPrice() {
+		return optionalStandardPrice;
+	}
+	public void setOptionalStandardPrice(Double optionalStandardPrice) {
+		this.optionalStandardPrice = optionalStandardPrice;
+	}
+	public Double getOptionalRetailPrice() {
+		return optionalRetailPrice;
+	}
+	public void setOptionalRetailPrice(Double optionalRetailPrice) {
+		this.optionalRetailPrice = optionalRetailPrice;
 	}
 	public double getOptionalActualPrice() {
 		return optionalActualPrice;
@@ -491,9 +507,10 @@ public class Item {
 				+ ", stMaterialGroupCode=" + stMaterialGroupCode + ", stMaterialGroupName=" + stMaterialGroupName
 				+ ", unitCode=" + unitCode + ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice="
 				+ standardPrice + ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount
-				+ ", transactionPrice=" + transactionPrice + ", yearPurchasePrice=" + yearPurchasePrice + ", actualPrice="
-				+ actualPrice + ", actualAmount=" + actualAmount + ", optionalActualPrice=" + optionalActualPrice
-				+ ", optionalActualAmount=" + optionalActualAmount + ", optionalTransactionPrice="
+				+ ", transactionPrice=" + transactionPrice + ", yearPurchasePrice=" + yearPurchasePrice
+				+ ", actualPrice=" + actualPrice + ", actualAmount=" + actualAmount + ", optionalStandardPrice="
+				+ optionalStandardPrice + ", optionalRetailPrice=" + optionalRetailPrice + ", optionalActualPrice="
+				+ optionalActualPrice + ", optionalActualAmount=" + optionalActualAmount + ", optionalTransactionPrice="
 				+ optionalTransactionPrice + ", b2cEstimatedPrice=" + b2cEstimatedPrice + ", b2cEstimatedAmount="
 				+ b2cEstimatedAmount + ", b2cEstimatedCost=" + b2cEstimatedCost + ", actualPriceSum=" + actualPriceSum
 				+ ", actualAmountSum=" + actualAmountSum + ", transactionPriceSum=" + transactionPriceSum
