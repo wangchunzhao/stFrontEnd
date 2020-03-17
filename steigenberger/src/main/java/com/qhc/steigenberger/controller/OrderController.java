@@ -36,7 +36,6 @@ import com.qhc.steigenberger.domain.Attachment;
 import com.qhc.steigenberger.domain.BomQueryModel;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
-import com.qhc.steigenberger.domain.MaterialBom;
 import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.Order;
 import com.qhc.steigenberger.domain.OrderOption;
