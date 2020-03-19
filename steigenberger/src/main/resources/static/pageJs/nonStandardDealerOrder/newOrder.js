@@ -710,6 +710,14 @@ function addSubsidiary(){
         layer.msg('折扣未录入！', function(){
         });
     }
+	if($("#saleType").val()==""){
+		layer.alert('请先选择销售类型', {icon: 5});
+		return
+	}
+	
+	if($("#saleType").val()=='20'){
+		$('#acturalPrice').attr("disabled",false);
+	}
     
     if($("#stOrderType").val()=="2"&&$("#mainDiscount").val()==""){
         layer.msg('折扣未录入！', function(){

@@ -128,8 +128,18 @@ var materialsColumn = [{
 	    field: 'optionalActualAmount'
 	},{
 		title:'可选项转移价',
-	    field: 'optionalTransationPrice'
-
+	    field: 'optionalTransationPrice',
+	    visible:false
+	},
+	{
+		title:'可选项标准价差',
+	    field: 'optionalStandardPrice',
+	    visible:false
+	},
+	{
+		title:'可选项零售价差',
+	    field: 'optionalRetailPrice',
+	    visible:false
 	},{
 		title:'B2C预估价',
 	    field: 'b2cEstimatedPrice'

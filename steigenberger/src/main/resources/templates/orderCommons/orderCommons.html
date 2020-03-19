@@ -168,7 +168,7 @@
 					    </div>
 					    <span class="col-md-1 control-label" th:if="${orderType!=4}" >合同号</span>
 						<div class="col-md-2" th:if="${orderType!=4}">
-							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}">
+							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}" oninput="contractToUpperCase(this)" maxlength="10">
 					    </div>
 						<span class="col-md-1 control-label" th:if="${orderType==4}">核算号</span>
 						<div class="col-md-2" th:if="${orderType==4}">
@@ -431,14 +431,29 @@
 			</div>
 			<div id="paymentMethod" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
 				<div class="panel-body" style="height: auto;">
-						 <!-- <div class="row">
+						 <div class="row">
+						 	<span class="col-md-2 control-label">结算方式</span>
+							<div class="col-md-10">
+								<textarea class="form-control" rows="2" id="paymentType" th:field="*{paymentType}"></textarea>
+					   		 </div>
+						 </div>
+				</div>
+			</div>
+			<!-- <div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#paymentMethod" aria-expanded="false">结算方式 Method of payment</a>
+				</h4>
+			</div>
+			<div id="paymentMethod" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
+				<div class="panel-body" style="height: auto;">
+						 <div class="row">
 						 	<span class="col-md-2 control-label">结算方式</span>
 							<div class="col-md-10">
 								<select class="form-control" name="paymentType"> th:field="*{confirmTypeCode}"
 									<option th:each="payment : ${order_option.paymentType}" th:value="${payment.key}" th:text="${payment.value}"></option>
 								</select>
 					   		 </div>
-						 </div> -->
+						 </div>
 					<div class="row" style="margin-bottom: 15px;">
 						<div class="col-xs-12 col-md-12">
 							结算方式 Method of payment
@@ -451,7 +466,7 @@
 					  <table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;" id="paymentTable" data-pagination="false" ></table>
 						</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	
@@ -904,7 +919,7 @@
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='1'||(orderOperationType=='3'&&(orderDetail.status=='00'||orderDetail.status=='02'))}" id="submitButton">提交 submit</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="goBpm()" th:if="${orderOperationType=='3'&&orderDetail.status=='03'}" id="bpmSubmitButton">提交 BPM</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='3'&&orderDetail.status=='01'}" id="b2cSubmitButton">提交B2c</button>
-		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="reject()" th:if="${orderOperationType=='3'&&orderDetail.status=='01'}" id="b2cRejectButton">驳回</button>
+		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="reject()" th:if="${orderOperationType=='3'&&(orderDetail.status=='01'||orderDetail.status=='03')}" id="b2cRejectButton">驳回</button>
 		<button type="button" class="btn pull-right btn-warning" id="backButton" onclick="history.go(-1)">返回 back</button>
 	</div>
 </body>
