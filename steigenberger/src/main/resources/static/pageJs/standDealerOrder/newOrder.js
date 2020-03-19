@@ -197,8 +197,9 @@ function fillItems(){
 }
 
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode,configAttachments){
+	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 	var editConfigs = [];
-	$.each(configs,function(defaultIndex,defaultItem){
+	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
 		$.each(configs,function(index,item){
 			if(item.keyCode==defaultItem.code){
 				var config = defaultItem;
@@ -231,6 +232,7 @@ function getDefaultConfigs(materialCode,clazzCode){
 
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
+	debugger
 	var quantity = data.quantity;
 	var transcationPrice = toDecimal2(data.transactionPrice);
 	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
@@ -265,20 +267,25 @@ function fillItemToTableRow(data){
 			rowNum:data.rowNum,
 			materialName:data.materialName,
 			materialCode:data.materialCode,
-			clazzCode:data.clazzCode,
-			isConfigurable:data.isConfigurable,
-			isPurchased:data.isPurchased,
-			materialGroupCode:data.materialGroupCode,
-			materialGroupName:data.materialGroupName,
 			itemStatus:data.itemStatus,
+			clazzCode:data.clazzCode,
+			volumeCube:data.volumeCube,
+			standardPrice:data.standardPrice,
+			materialGroupCode:data.materialGroupCode,
+			isConfigurable:data.isConfigurable,
+			isPurchased:data.isPurchased,	
+			materialGroupName:data.materialGroupName,
 			quantity:data.quantity,
 			unitName:data.unitName,
+			unitCode:data.unitName,
 			actualPrice:actualPrice,
 			actualAmount:actualAmount,
 			transactionPrice:transcationPrice,
 			optionalActualPrice:optionalActualPrice,
 			optionalActualAmount:optionalActualAmount,
-			optionalTransationPrice:optionalTransationPrice,
+			optionalTransationPrice:data.optionalTransationPrice,
+			optionalStandardPrice:data.optionalStandardPrice,
+			optionalRetailPrice:data.optionalRetailPrice,
 			b2cEstimatedPrice:b2cEstimatedPrice,
 			b2cEstimatedAmount:b2cEstimatedAmount,
 			b2cEstimatedCost:b2cEstimatedCost,
