@@ -197,9 +197,8 @@ function fillItems(){
 }
 
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode,configAttachments){
-	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 	var editConfigs = [];
-	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
+	$.each(configs,function(defaultIndex,defaultItem){
 		$.each(configs,function(index,item){
 			if(item.keyCode==defaultItem.code){
 				var config = defaultItem;
@@ -210,15 +209,6 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 			}
 		})
 	})
-	/*materialDefaultConfigs.forEach((defaultItem,defaultIndex)=>{
-		configs.forEach((item,index)=>{
-			if(item.code==defaultItem.code){
-				var config = defaultItem;
-				config["configCodeValue"] = item.configCodeValue
-				editConfigs.push(config)
-			}
-		})
-	})*/
 	var configData = new Object();
 	configData.configTableData = editConfigs;
 	configData.remark = configRemark
@@ -734,6 +724,14 @@ function addSubsidiary(){
 		layer.alert('请先添加订单地址', {icon: 5});
 		return
 	}
+	if($("#saleType").val()==""){
+		layer.alert('请先选择销售类型', {icon: 5});
+		return
+	}
+	
+	if($("#saleType").val()=='20'){
+		$('#acturalPrice').attr("disabled",false);
+	}
 	$('#subsidiaryModal').modal('show');
 	$("#itemCategory").html('');
 	$("#subsidiaryForm")[0].reset();
@@ -961,6 +959,13 @@ function fillEditMaterailValue(data,index){
 	$("#standardPrice").val(toDecimal2(data.standardPrice));
 	$("#discount").val(data.discount);
 	$("#materialAddress").val(data.materialAddress);
+	$('#materialProvinceCode').val(data.provinceCode);
+	$('#materialProvinceName').val(data.provinceName);
+	$('#materialCityCode').val(data.cityCode);
+	$('#materialCityName').val(data.cityName);
+	$('#materialAreaCode').val(data.districtCode);
+	$('#materialAreaName').val(data.districtName);
+	$('#materialModalAddress').val(data.address);	
 	$("#deliveryAddressSeq").val(data.deliveryAddressSeq);
 }
 
@@ -1382,6 +1387,7 @@ function initOrderFormValidator(){
 
 //打开调研表
 function openConfig(configContent){
+	debugger
 	$("#materialconfigModal").modal('show');
 	var rowNum = configContent.split('|')[0];
 	var index = configContent.split('|')[1];
@@ -1413,7 +1419,7 @@ function openConfig(configContent){
 		}
 		$("#configRemark").val(jsonObject.remark);
 		$("#mosaicImage").val(jsonObject.mosaicImage);
-		if(jsonObject.attachments.length>0){
+		if(jsonObject.attachments){
 			$("#itemFileList").bootstrapTable("removeAll");
 			var jsonObject = JSON.parse(configData);
 			for(var i=0;i<jsonObject.attachments.length;i++){
@@ -1425,10 +1431,10 @@ function openConfig(configContent){
 		}else{
 			$("#itemFileList").bootstrapTable("removeAll");
 		}
-		$('.selectpicker').selectpicker('refresh');
+		$('.selectpicker').selectpicker({});
 	}else{
-		insertDefaultConfigs()
-		$('.selectpicker').selectpicker('refresh');
+		insertDefaultConfigs();
+		$('.selectpicker').selectpicker({});
 		$("#itemFileList").bootstrapTable("removeAll");
 		$("#configRemark").val('');
 		$("#mosaicImage").val('');
@@ -1512,9 +1518,11 @@ function saveMaterialConfig(){
 	//获取调研表配置价格
 	viewConfigPrice("cal");
 	var optionalTransationPrice = $("#viewOptionalTransationPrice").val();
-	var optionalActualPrice = $("#viewOptionalActualPrice").val();
-	tableData.optionalTransationPrice = toDecimal2(optionalTransationPrice);
-	tableData.optionalActualPrice = toDecimal2(optionalActualPrice);
+	var optionalRetailPrice = $("#viewOptionalRetailPrice").val();
+	var optionalStandardPrice = $("#viewOptionalStandardPrice").val();
+	tableData.optionalTransationPrice = toDecimal2(optionalTransationPrice); 
+	tableData.optionalRetailPrice = toDecimal2(optionalRetailPrice);
+	tableData.optionalStandardPrice = toDecimal2(optionalStandardPrice);
 	tableData = calPrice(tableData);
 	//更新表格价格数据
 	updateTableRowPrice(configIndex,tableData);
@@ -1533,12 +1541,12 @@ function saveMaterialConfig(){
 
 //更新行项目价格信息
 function updateTableRowPrice(index,tableData){
-	$("#materialsTable").bootstrapTable('updateRow',{index: index, row: tableData})
-	//setTableToDifTab();
+	$("#materialsTable").bootstrapTable('updateRow',{index: index, row: tableData}) 
 }
 
 //计算可选项价格和总价格
 function calPrice(tableData){
+	debugger
 	//数量
 	var quantity = tableData.quantity;
 	//产品实卖价
@@ -1897,17 +1905,11 @@ function saveOrder(type){
 	 
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
-	 /*var payments=new Array();
-	 payments.push(payment);
-	 orderData.payments = payments;
-	 orderData['currentVersion'] = version;
-	 orderData['orderType'] = 'ZH0D';*/
 	 var payments=new Array();
 	 orderData.payments= payments;
 	 var attachments = $("#fileList").bootstrapTable('getData');
 	 orderData.attachments = attachments
 	 var items = $("#materialsTable").bootstrapTable('getData');
-	 debugger
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].rowNum];
@@ -2104,12 +2106,14 @@ function viewConfigPrice( type){
 		    		$("#viewError").attr("style","display:block;");
 		    	}else{
 		    		$("#moreConfig").attr("style","display:block;");
-			    	$("#viewOptionalTransationPrice").val(res.data.transferPrice);
-			    	$("#viewOptionalActualPrice").val(res.data.price);
+			    	$("#viewOptionalTransactionPrice").val(res.data.transferPrice);
+			    	$("#viewOptionalStandardPrice").val(res.data.standardPrice);
+			    	$("#viewOptionalRetailPrice").val(res.data.retailPrice);
 		    	}	    
 	    	}else{
 	    		$("#viewOptionalTransationPrice").val(res.data.transferPrice);
-		    	$("#viewOptionalActualPrice").val(res.data.price);
+		    	$("#viewOptionalStandardPrice").val(res.data.standardPrice);
+		    	$("#viewOptionalRetailPrice").val(res.data.retailPrice);
 	    	}
 	    		
 	    },
@@ -2136,7 +2140,9 @@ function setConfigValueCode(obj,index){
 				$('#configTable>tbody tr:eq('+index+')').addClass('configtr')
 			}
 	})
-	if(configValueCode=='2'){
+	debugger
+	var rowData = configData[index];
+	if(rowData.color&&configValueCode=='2'){
 		layer.alert('请填写行项目的颜色备注');
 	}
 }
@@ -2163,7 +2169,11 @@ function viewGrossProfit(){
 		 return
 	 }
 	var version = $("#version").val();
+	 $('#transferType').attr("disabled",false);
+	 $("#currency").attr("disabled",false);
 	 var orderData = $("#orderForm").serializeObject();
+	 $('#transferType').attr("disabled",true);
+	 $("#currency").attr("disabled",true);
 	 orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';
 	 var items = $("#materialsTable").bootstrapTable('getData');
@@ -2326,7 +2336,14 @@ function showEditModal(contract) {
 	}
 	$("#contractDialog").modal('show');
 }
-
+//合同号自动转大写
+function contractToUpperCase(obj){
+	obj.value = obj.value.toUpperCase()
+	var maxChars =10;//最多字符数
+    if (obj.value.length > maxChars){
+        obj.value = obj.value.substring(0,maxChars);
+    }
+}
 var grossProfitColumns=[
 	{
 		 field: 'name',

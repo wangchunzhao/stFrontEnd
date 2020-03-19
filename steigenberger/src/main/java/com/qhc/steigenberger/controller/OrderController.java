@@ -638,12 +638,13 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "计算毛利", notes = "计算毛利")
 	@PostMapping(value = "grossprofit/export")
 	@ResponseBody
-	public void exportGrossProfit(@RequestParam("sequenceNumber") String sequenceNumber,
-			@RequestParam("versionNum") String versionNum, @RequestParam("createTime") String createTime,
-			@RequestParam("salesCode") String salesCode, @RequestParam String grossProfitMargin,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void exportGrossProfit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
-			List<MaterialGroups> grossProfitMarginList;;
+			String sequenceNumber = request.getParameter("sequenceNumber");
+			String versionNum = request.getParameter("versionNum");
+			String createTime = request.getParameter("createTime");
+			String salesCode = request.getParameter("salesCode");
+			String grossProfitMargin = request.getParameter("grossProfitMargin");
 			versionNum = "00" + versionNum;
 			versionNum = versionNum.substring(versionNum.length() - 2);
 			String fileName = sequenceNumber + "_" +versionNum + "_" + createTime + "_" + salesCode;
