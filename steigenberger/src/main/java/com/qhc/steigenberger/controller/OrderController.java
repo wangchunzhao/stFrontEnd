@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.Attachment;
 import com.qhc.steigenberger.domain.BomQueryModel;
@@ -659,7 +661,8 @@ public class OrderController extends BaseController {
 			data.put("salesCode", salesCode);
 			data.put("createTime", createTime);
 			data.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-			data.put("margins", grossProfitMargin);
+			List<MaterialGroups> margins = new ObjectMapper().readValue(grossProfitMargin, new TypeReference<List<MaterialGroups>>() {});
+			data.put("margins", margins);
 			JxlsUtils.exportExcel("grossprofitmargin.xlsx", response.getOutputStream(), data);
 			response.getOutputStream().flush();
 		} catch (Exception e) {
