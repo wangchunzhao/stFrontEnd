@@ -10,6 +10,8 @@ public class MaterialGroups {
     
 	private String materialGroupOrderCode;
 	
+	private Integer isenable;
+	
 	private BigDecimal amount;//金额
 	
 	private BigDecimal excludingTaxAmount;//不含税金额
@@ -48,6 +50,14 @@ public class MaterialGroups {
 
 	public void setMaterialGroupOrderCode(String materialGroupOrderCode) {
 		this.materialGroupOrderCode = materialGroupOrderCode;
+	}
+
+	public Integer getIsenable() {
+		return isenable;
+	}
+
+	public void setIsenable(Integer isenable) {
+		this.isenable = isenable;
 	}
 
 	public BigDecimal getAmount() {
