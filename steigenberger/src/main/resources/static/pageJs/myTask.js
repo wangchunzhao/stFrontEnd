@@ -43,6 +43,7 @@ var TableInit = function () {
 			    	pageNo: (params.offset / params.limit)+1,  //当前页码
 			    	
 			    	sequenceNumber:$('#sequenceNumber').val(),
+			    	contractNumber:$('#contractNumber').val(),//合同号
 			    	contracterName:$('#contracterName').val(),//签约单位
 			    	salesName:$('#salesName').val(),
 			    	orderType:$('#orderType').val(),
@@ -54,6 +55,10 @@ var TableInit = function () {
 			columns : [ {
 				title : '流水号',
 				field : 'sequenceNumber',
+				sortable : true
+			}, {
+				title : '合同号',
+				field : 'contractNumber',
 				sortable : true
 			}, {
 				title : '签约单位',
@@ -144,6 +149,7 @@ $('#search_btn').click(function() {
 //重置按钮事件
 $('#resetBtn').click(function() {
 	$("#sequenceNumber").val("");
+	$("#contractNumber").val("");
 	$("#contracterCode").val("");
 	$("#salesCode").val("");
 	$("#officeCode").val("");
