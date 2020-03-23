@@ -491,7 +491,7 @@ public class ContractService {
 	}
 
 	/**
-	 * 定时任务，定时更新电子签约合同状态
+	 * 定时更新电子签约合同状态
 	 * 
 	 */
 	@Scheduled(cron = "0 30 1 * * ?")

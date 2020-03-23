@@ -1,13 +1,13 @@
 package com.qhc.steigenberger.config;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 @Configuration
+@EnableScheduling // 开启定时器注解
 public class SpringMvcConfig extends WebMvcConfigurationSupport {
 	/**
 	 * 解决 swagger静态资源无法访问的问题
