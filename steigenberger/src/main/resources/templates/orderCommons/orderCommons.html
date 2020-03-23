@@ -188,9 +188,9 @@
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">原币合同金额</span>
+						<span class="col-md-1 control-label">合同金额（凭证货币）</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" onblur="getAmount(this)" th:field="*{contractValue}">
+							<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" readonly th:field="*{contractValue}">
 					    </div>
 					    <input type="hidden" id="contractValue" th:value="*{contractValue}">
 					    <span class="col-md-1 control-label">币种</span>
@@ -200,7 +200,7 @@
 							</select>
 					    </div>
 					    <input type="hidden" id="currencyName"  th:value="*{currency}">
-					    <span class="col-md-1 control-label">合同金额</span>
+					    <span class="col-md-1 control-label">原币合同金额（CNY）</span>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:if="${orderType!=4}" th:field="*{contractRmbValue}">
 							<input type="text" class="form-control" id="contractAmount" aria-describedby="emailHelp" th:if="${orderType==4}" th:field="*{contractRmbValue}">
@@ -208,7 +208,7 @@
 					    <input type="hidden" id="contractRmbValue" th:value="*{contractRmbValue}">
 					    <span class="col-md-1 control-label">购销明细金额合计</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType!=5}" readonly>
+							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType!=5}" readonly name="itemsAmount">
 							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType==5}" readonly disabled>
 					    </div>	
 					</div>

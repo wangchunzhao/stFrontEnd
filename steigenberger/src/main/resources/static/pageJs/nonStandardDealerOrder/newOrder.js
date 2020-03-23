@@ -714,16 +714,42 @@ function addSubsidiary(){
 		layer.alert('请先选择销售类型', {icon: 5});
 		return
 	}
-	
-	if($("#saleType").val()=='20'){
-		$('#acturalPrice').attr("disabled",false);
-	}
-    
+
     if($("#stOrderType").val()=="2"&&$("#mainDiscount").val()==""){
         layer.msg('折扣未录入！', function(){
         });
     }
-    if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
+    
+    if($("#saleType").val()=='20'){
+		$('#acturalPrice').attr("disabled",false);
+	}
+    
+    initSubsidiary();
+}
+	
+
+function initSubsidiary(){
+	$('#subsidiaryModal').modal('show');
+	$("#subsidiaryForm")[0].reset();
+	$('#amount').val(1);
+	$('#discount').val(100);
+	$('#materialsModalType').val('new');
+	var addressTableData = $('#addressTable').bootstrapTable('getData')
+	var row = addressTableData[0];
+	$('#materialProvinceCode').val(row.provinceCode);
+	$('#materialProvinceName').val(row.provinceName);
+	$('#materialCityCode').val(row.cityCode);
+	$('#deliveryAddressSeq').val(row.seq);
+	$('#materialCityName').val(row.cityName);
+	$('#materialAreaCode').val(row.districtCode);
+	$('#materialAreaName').val(row.districtName);
+	$('#materialModalAddress').val(row.address)
+	if(row.pca==''){
+		$("#materialAddress").val(row.address).change();
+	}else{
+		$("#materialAddress").val(row.pca+"/"+row.address).change();
+	}
+	if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
 		$("#itemRequirementPlan").val("001");
 	}
 	var b2cRemark="";
@@ -738,17 +764,7 @@ function addSubsidiary(){
 		b2cRemark+="地下室；"
 	}
 	$("#b2cRemark").val(b2cRemark);
-    openMaterialAddModal();
 }
-
-function openMaterialAddModal(){
-	$('#subsidiaryModal').modal('show');
-	$("#subsidiaryForm")[0].reset();
-	$('#amount').val(1);
-	$('#discount').val(100);
-	$('#materialsModalType').val('new');
-}
-
 //打开规格查询框
 function searchSpecification(){
 	$('#specificationModal').modal('show');
@@ -782,6 +798,13 @@ function searchMaterilType(){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
+	$("#itemCategory").html('');
+	var configure = data.configurable+'';
+	if(configure=='true'){
+		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option>");	
+	}else{
+		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
+	}
 	$("#materialCode").val(data.code);
 	if(data.code=='BG1GD1000000-X'||data.code=='BG1R8R00000-X'||data.code=='BG1R8L00000-X'){
 		$('#acturalPrice').attr("disabled",false);
@@ -1571,28 +1594,6 @@ function insertMaterials(index){
 		initSubsidiary();
 		//setTableToDifTab();
 	}
-}
-
-
-//打开购销明细初始化
-function initSubsidiary(){
-	$('#amount').val(1);
-	$('#discount').val($("#standardDiscount").val());
-	if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
-		$("#itemRequirementPlan").val("001");
-	}
-	var b2cRemark="";
-	if($("#isTerm1").val()=="1"){
-		b2cRemark+="甲供；";	
-	}
-	if($("#isTerm2").val()=="1"){
-		b2cRemark+="远程监控；"
-	}
-	
-	if($("#isTerm3").val()=="1"){
-		b2cRemark+="地下室；"
-	}
-	$("#b2cRemark").val(b2cRemark);
 }
 
 
