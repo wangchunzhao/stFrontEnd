@@ -2573,7 +2573,7 @@ var configTableColumns = [
 {
 	title :'选项',
 	field :'optional',
-	width:'10%',
+	width:'8%',
 	formatter: function(value, row, index) {
     	if(!value){
     		return '必选项'
@@ -2585,7 +2585,7 @@ var configTableColumns = [
 {
 	title:'配置',
 	field:'name',
-	width:'30%'
+	width:'20%'
 },
 {
 	title:'',
@@ -2610,7 +2610,7 @@ var configTableColumns = [
 {
 	title:'配置值',
 	field:'configs',
-	width:'60%',
+	width:'72%',
 	formatter: function(value, row, index) {
 		if(row.color){
 			var id="configsId"+index;

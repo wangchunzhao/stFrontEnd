@@ -215,12 +215,29 @@ function editStockUpOrder(seqNumb,ordType,version){
 	})
 }
 
-function editOrder(seqNumb,ordType,version){
+/*function editOrder(seqNumb,ordType,version){
 	jumpAjax("post", ctxPath+"order/editOrder", {
 		"sequenceNumber" : seqNumb,
 		"orderType" : ordType,
 		"version" : version
 	})
+}*/
+
+function editOrder(orderInfoId){
+	var myForm = document.createElement("form");       
+	    myForm.method = "get";  
+	    myForm.action = ctxPath+"order/toOrderPage";        
+		var seq = document.createElement("input");       
+		seq.setAttribute("name", "orderInfoId");  
+		seq.setAttribute("value", orderInfoId);  
+		myForm.appendChild(seq);
+		var seq1 = document.createElement("input");       
+		seq1.setAttribute("name", "orderOperationType");  
+		seq1.setAttribute("value", "3");  
+		myForm.appendChild(seq1);
+		document.body.appendChild(myForm);     
+		myForm.submit();   
+		document.body.removeChild(myForm); 	
 }
 
 function tosap(orderInfoId) {
@@ -286,8 +303,7 @@ function copyOrder(orderInfoId){
             	if(data == null || data.status != 'ok'){
 		    		layer.alert("订单复制失败：：" + (data != null ? data.msg : ""));
 		    	}else{
-		    		layer.alert('订单复制成功', {icon: 6});
-		    		$('#mytab').bootstrapTable('refresh');
+		    		editOrder(data.data.id)
 		    	} 	
             }
         });
