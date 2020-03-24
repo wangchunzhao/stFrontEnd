@@ -519,12 +519,12 @@ public class OrderController extends BaseController {
 		query.setLast(true);
 		Result result = orderService.findOrders(query);
 		PageHelper<Order> order = (PageHelper<Order>)result.getData();
-		if(!"".equals(query.getOfficeCode())) {
-			List<Order> list = order.getRows();
-			for(int i = 0; i < list.size(); i++) {
-				((Map)list.get(i)).put("buttonControl", "0");
-			}
-		}
+//		if(!"".equals(query.getOfficeCode())) {
+//			List<Order> list = order.getRows();
+//			for(int i = 0; i < list.size(); i++) {
+//				((Map)list.get(i)).put("buttonControl", "0");
+//			}
+//		}
 		List<Order> list = order.getRows();
 		for(int i = 0; i < list.size(); i++) {
 			list.get(i).setButtonControl(String.valueOf(toSap));
