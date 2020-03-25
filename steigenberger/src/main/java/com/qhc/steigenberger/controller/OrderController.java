@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.Constants;
 import com.qhc.steigenberger.domain.Attachment;
 import com.qhc.steigenberger.domain.BomQueryModel;
+import com.qhc.steigenberger.domain.Item;
 import com.qhc.steigenberger.domain.JsonResult;
 import com.qhc.steigenberger.domain.Material;
 import com.qhc.steigenberger.domain.MaterialGroups;
@@ -296,7 +298,7 @@ public class OrderController extends BaseController {
 	}
 
 	@ApiOperation(value = "报价下单", notes = "报价下单")
-	@PostMapping(value = "order/{orderInfoId}/transfer")
+	@PostMapping(value = "{orderInfoId}/transfer")
 	@ResponseBody
 	public Result transfer(@PathVariable("orderInfoId") Integer orderInfoId) {
 		String identity = this.getUserIdentity();
@@ -311,6 +313,59 @@ public class OrderController extends BaseController {
 		}
 		
 		return result;
+	}
+	@ApiOperation(value = "导出订单购销明细及调研表", notes = "导出订单购销明细及调研表")
+	@PostMapping(value = "{orderInfoId}/export")
+	@ResponseBody
+	public void exportOrderDetail(@PathVariable("orderInfoId") Integer orderInfoId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String[] chars = new String[] { "\\[", "\\]", "\\?", "\\/", "\\\\", "\\*", ":" };
+		try {
+			Result result = orderService.findOrderDetail(orderInfoId);
+			if (result.getStatus().equals("ok")) {
+				Order order = (Order)result.getData();
+				String sequenceNumber = order.getSequenceNumber();
+				String versionNum = "00" + String.valueOf(order.getVersionNum());
+				versionNum = versionNum.substring(versionNum.length() - 2);
+				String fileName = sequenceNumber + "_" +versionNum;
+				fileName = "订单购销明细及调研表(" + fileName + ").xlsx";
+				String excleFileName = new String(fileName.getBytes("GB2312"), "ISO8859-1");
+				List<String>itemMaterialNames = new ArrayList<>();
+				if (order.getItems() == null) {
+					order.setItems(new ArrayList<>());
+				}
+				int count = 0;
+				for (Item item : order.getItems()) {
+					if (item.getConfigs() == null) {
+						item.setConfigs(new ArrayList<>());
+					}
+					String mname = item.getMaterialName();
+					for (String c : chars) {
+						mname = mname.replaceAll(c, "_");
+					}
+					if (itemMaterialNames.contains(mname)) {
+						mname += "_" +count;
+					}
+					if (mname.length() > 31) {
+						mname = mname.substring(0, 31);
+					}
+					itemMaterialNames.add(mname);
+					count++;
+				}
+
+				response.setContentType("application/x-download;charset=GB2312");
+				response.setHeader("Content-disposition", "attachment;filename=\"" + excleFileName + "\"");
+
+				Map<String, Object> data = new HashMap<>();
+				data.put("order", order);
+				data.put("itemMaterialNames", itemMaterialNames);
+				data.put("now", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+				JxlsUtils.exportExcel("orderitemsandcharacterics.xlsx", response.getOutputStream(), data);
+				response.getOutputStream().flush();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		}
 	}
 	
 	/**

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jxls.common.Context;
 import org.jxls.expression.JexlExpressionEvaluator;
@@ -88,12 +89,25 @@ public class JxlsUtils {
    */
   public static void exportExcel(InputStream is, OutputStream os, Object model) throws IOException {
     JxlsHelper jxlsHelper = JxlsHelper.getInstance();
+//    jxlsHelper.getExpressionEvaluatorFactory().createExpressionEvaluator("utils").
     Context context = initJxlsContext(model);
 
     // 必须要这个，否则表格函数统计会错乱
     jxlsHelper.setUseFastFormulaProcessor(false);
 
     Transformer transformer = jxlsHelper.createTransformer(is, os);
+    // 获得配置
+		JexlExpressionEvaluator evaluator = (JexlExpressionEvaluator) transformer.getTransformationConfig()
+				.getExpressionEvaluator();
+		// 函数强制，自定义功能
+		Map<String, Object> functionMap = new HashMap<String, Object>();
+		// 添加自定义功能
+		functionMap.put("utils", new JxlsFunctions()); // 添加自定义功能
+		// 2.6.0 以前
+		//  evaluator.getJexlEngine().setFunctions(functionMap);
+		// 2.6.0
+		evaluator.setJexlEngine(new JexlBuilder().namespaces(functionMap).create());
+  
     jxlsHelper.processTemplate(context, transformer);
 
     // 循环生成多个Sheet的时候删除模板页（其他方法不会删除），但对其他的方式有问题，特别是multi sheet的情况
@@ -183,14 +197,16 @@ public class JxlsUtils {
     // evaluator.getJexlEngine().setSilent(true);
 
     // 获得配置
-    JexlExpressionEvaluator evaluator = new JexlExpressionEvaluator();
+//    JexlExpressionEvaluator evaluator = new JexlExpressionEvaluator();
 //    evaluator = (JexlExpressionEvaluator) transformer.getTransformationConfig().getExpressionEvaluator();
     // 函数强制，自定义功能
 //    Map<String, Object> funcs = new HashMap<String, Object>();
     // 添加自定义功能
 //    funcs.put("dutils", new DateHelper()); // 添加自定义功能
 //    funcs.put("cutils", new CommonHelper()); // 添加自定义功能
+    //  2.6.0 以前
 //    evaluator.getJexlEngine().setFunctions(funcs);
+
     return context;
   }
 
