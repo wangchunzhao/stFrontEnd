@@ -1402,7 +1402,7 @@ function initOrderFormValidator(){
    	        }
    	    }
        },
-   	contractValue: {
+   	/*contractValue: {
            validators: {
                notEmpty: {
                     message: '金额不能为空'
@@ -1418,7 +1418,7 @@ function initOrderFormValidator(){
            }
        },
 		itemsAmount: {
-		}
+		}*/
        }
    });
 }
