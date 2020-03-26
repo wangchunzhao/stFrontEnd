@@ -8,6 +8,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author wang@dxc.com
  *
@@ -50,6 +52,7 @@ public class Material implements Serializable{
 	
 	//need by bayern
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date optTime;
 	private double materialSize;
 	private String materialType;
