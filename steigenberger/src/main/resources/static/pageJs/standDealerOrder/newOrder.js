@@ -1796,7 +1796,6 @@ function addAddress(){
 	$("#shippingAddress").val('');
 }
 
-
 function editAddress(index){
 	var row = $('#addressTable').bootstrapTable('getData')[index];
 	$("#addressIndex").val(index);
@@ -1804,10 +1803,9 @@ function editAddress(index){
 	$("#addressModal").modal('show');
 	$("#selectProvince").val(row.provinceCode).change();
 	$("#citySelect").val(row.cityCode).change();
-	$("#selectDistrict").val(row.districtCode);
+	$("#selectDistrict").val(row.districtCode).change();
 	$("#shippingAddress").val(row.address);
 }
-
 function removeAddress(index){
 	var delIndex = parseInt(index)+1;
 	layer.confirm("确认是否删除，删除后行项目关联地址也会清空，请重新修改行项目地址信息！", {btn: ['确定', '取消'], title: "提示"}, function () {
