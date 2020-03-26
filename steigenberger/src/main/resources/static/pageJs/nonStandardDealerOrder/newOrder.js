@@ -1776,7 +1776,7 @@ function editAddress(index){
 	$("#addressModal").modal('show');
 	$("#selectProvince").val(row.provinceCode).change();
 	$("#citySelect").val(row.cityCode).change();
-	$("#selectDistrict").val(row.districtCode);
+	$("#selectDistrict").val(row.districtCode).change();
 	$("#shippingAddress").val(row.address);
 }
 
@@ -1903,6 +1903,7 @@ function saveOrder(type){
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
+		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
@@ -1915,7 +1916,6 @@ function saveOrder(type){
 				 config['color'] = storedConfigs[j].color;
 				 configs.push(config);
 			 }
-			 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
 			 items[i]['configs'] = configs; 
 			 items[i]['attachments'] = jsonObject.attachments;
 			 items[i]['configComments'] = jsonObject.remark
