@@ -198,7 +198,6 @@ function fillItems(){
 
 function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode,configAttachments){
 	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
-	debugger
 	var editConfigs = [];
 	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
 		$.each(configs,function(index,item){
@@ -219,7 +218,6 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 			}
 		})
 	})
-	debugger
 	var configData = new Object();
 	configData.configTableData = editConfigs;
 	configData.remark = configRemark
@@ -827,13 +825,12 @@ function searchMaterilType(){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	debugger
 	$("#itemCategory").html('');
 	var configure = data.configurable+'';
 	if(configure=='true'){
-		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option>");	
+		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option><option value='ZHR3'>替换</option>");	
 	}else{
-		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
+		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option><option value='ZHR3'>替换</option>");
 	}
 	$("#materialTypeName").val(data.description);
 	$("#materialCode").val(data.code);
@@ -841,6 +838,9 @@ function fillMaterailValue(data){
 		$('#acturalPrice').attr("disabled",false);
 	}else{
 		$('#acturalPrice').attr("disabled",true);
+		if($("#saleType").val()=='20'){
+			$('#acturalPrice').attr("disabled",false);
+		}
 	}
 	if(data.purchased){
 		$('#isPurchased').val('外购');
@@ -1402,7 +1402,7 @@ function initOrderFormValidator(){
    	        }
    	    }
        },
-   	contractValue: {
+   	/*contractValue: {
            validators: {
                notEmpty: {
                     message: '金额不能为空'
@@ -1418,7 +1418,7 @@ function initOrderFormValidator(){
            }
        },
 		itemsAmount: {
-		}
+		}*/
        }
    });
 }
@@ -1426,7 +1426,6 @@ function initOrderFormValidator(){
 
 //打开调研表
 function openConfig(configContent){
-	debugger
 	$("#materialconfigModal").modal('show');
 	var rowNum = configContent.split('|')[0];
 	var index = configContent.split('|')[1];
@@ -1473,7 +1472,6 @@ function openConfig(configContent){
 		$('.selectpicker').selectpicker({});
 	}else{
 		insertDefaultConfigs();
-		$('.selectpicker').selectpicker({});
 		$("#itemFileList").bootstrapTable("removeAll");
 		$("#configRemark").val('');
 		$("#mosaicImage").val('');
@@ -1495,7 +1493,6 @@ function openConfig(configContent){
 function insertDefaultConfigs(){
 	$("#configTable").bootstrapTable("removeAll");
 	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
-	debugger
 	var insertConfigs = new Array();
 	$.each(defaultConfigs,function(index,item){
 		var config = item;
@@ -1518,6 +1515,7 @@ function insertDefaultConfigs(){
 			row:insertConfigs[i]
 		});
 	}
+	$('.selectpicker').selectpicker({});
 }
 //调研表初始化查询参数
 function queryConfigParams(params) {
@@ -1528,27 +1526,7 @@ function queryConfigParams(params) {
 
 //还原标准配置
 function resetStandardConfiguration(){
-	$("#configTable").bootstrapTable("removeAll");
-	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
-	var insertConfigs = new Array();
-	$.each(defaultConfigs,function(index,item){
-		var config = item;
-		$.each(item.configs,function(index,value){
-			if(value.default){
-				config['configValueCode'] = value.code
-			}
-		})
-		if(!config.configValueCode){
-			config['configValueCode'] = item.configs[0].code;
-		}
-		insertConfigs.push(config);
-	})
-	for(var i=0;i<insertConfigs.length;i++){
-		$("#configTable").bootstrapTable('insertRow',{
-			index:i,
-			row:insertConfigs[i]
-		});
-	}
+	insertDefaultConfigs()
 }
 
 //关闭调研表
@@ -1875,6 +1853,7 @@ function setItemRequirementPlan(obj){
 	if(itemPlan=='002'||itemPlan=='003'){
 		return;
 	}
+	debugger
 	if(b2cValue!=''){
 		$("#itemRequirementPlan").val("001");
 	}else{
@@ -2284,6 +2263,10 @@ function viewOrderGrossProfit(){
 
 function exportGross(){
 	var grossData = $("#grossProfitTable").bootstrapTable("getData");
+	$.each(grossData,function(index,item){
+		item.grossProfitMargin = item.grossProfitMargin.replace("%","")
+		item.grossProfitMargin = toDecimal2(parseFloat(item.grossProfitMargin)/100);
+	})
 	var sequenceNumber = $("#sequenceNumber").val();
 	var versionNum = $("#version").val();
 	var createTime = formatDate(new Date()) ;
