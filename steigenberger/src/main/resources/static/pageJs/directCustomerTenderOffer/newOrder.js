@@ -1427,6 +1427,7 @@ function insertDefaultConfigs(){
 			row:insertConfigs[i]
 		});
 	}
+	$('.selectpicker').selectpicker({});
 }
 //调研表初始化查询参数
 function queryConfigParams(params) {
@@ -1437,27 +1438,7 @@ function queryConfigParams(params) {
 
 //还原标准配置
 function resetStandardConfiguration(){
-	$("#configTable").bootstrapTable("removeAll");
-	var defaultConfigs = getDefaultConfigs($("#materialConfigCode").val(),$("#materialConfigClazzCode").val());
-	var insertConfigs = new Array();
-	$.each(defaultConfigs,function(index,item){
-		var config = item;
-		$.each(item.configs,function(index,value){
-			if(value.default){
-				config['configValueCode'] = value.code
-			}
-		})
-		if(!config.configValueCode){
-			config['configValueCode'] = item.configs[0].code;
-		}
-		insertConfigs.push(config);
-	})
-	for(var i=0;i<insertConfigs.length;i++){
-		$("#configTable").bootstrapTable('insertRow',{
-			index:i,
-			row:insertConfigs[i]
-		});
-	}
+	insertDefaultConfigs();
 }
 
 //关闭调研表
@@ -2416,19 +2397,19 @@ var configTableColumns = [
 	{
 		title :'选项',
 		field :'optional',
-		width:'15%',
+		width:'8%',
 		formatter: function(value, row, index) {
-			if(!value){
-				return '必选项'
-			}else{
-				return '可选项'
-			}
-		}
-	},
+	    	if(!value){
+	    		return '必选项'
+	    	}else{
+	    		return '可选项'
+	    	}
+	    }
+	}, 
 	{
 		title:'配置',
 		field:'name',
-		width:'35%'
+		width:'20%'
 	},
 	{
 		title:'',
@@ -2436,7 +2417,12 @@ var configTableColumns = [
 		field:'code'
 	},
 	{
-		title:'',
+		title:'defaultConfig',
+		visible:false,
+		field:'defaultConfig'
+	},
+	{
+		title:'configValueCode',
 		visible:false,
 		field:'configValueCode'
 	},
@@ -2448,39 +2434,41 @@ var configTableColumns = [
 	{
 		title:'配置值',
 		field:'configs',
-		width:'50%',
+		width:'72%',
 		formatter: function(value, row, index) {
-			var id="configsId"+index;
-			var start = '<select class="form-control" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
-			var end = '</select>';
-			var configIdValue;
-			if(row.configValueCode){
-				$.each(value,function(index,item){
-					if(item.code==row.configValueCode){
-						start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';
-					}else{
-						start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
-					}
-				})
-			}/*else{
-    		$.each(value,function(index,item){
-        		if(item.default){
-        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';
-        			configIdValue = item.code;
-        		}else{
-        			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
-        		}
-        	})
-        	$("#"+id).val(configIdValue).change();
-    		$("#configTable").bootstrapTable('updateCell', {
-        	    index: index,
-        	    field:'configValueCode',
-        	    value:configIdValue
-        	});
-    	}
-    	*/
-			return start+end;
-		}
+			if(row.color){
+				var id="configsId"+index;
+		    	var start = '<select class="form-control selectpicker" data-live-search="true" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
+		    	var end = '</select>';
+		    	var configIdValue;
+		    	if(row.configValueCode){
+		    		$.each(value,function(index,item){
+		        		if(item.code==row.configValueCode){
+		        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';	
+		        		}else{
+		        			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+		        		}	
+		        	})
+		    	}
+				return start+end;
+			}else{
+				var id="configsId"+index;
+		    	var start = '<select class="form-control" id=\'' + id + '\' name="configValueCode" onchange="setConfigValueCode(this,\'' + index + '\')">';
+		    	var end = '</select>';
+		    	var configIdValue;
+		    	if(row.configValueCode){
+		    		$.each(value,function(index,item){
+		        		if(item.code==row.configValueCode){
+		        			start+='<option value=\'' + item.code + '\' selected = "selected">' + item.name + '</option>';	
+		        		}else{
+		        			start+='<option value=\'' + item.code + '\'>' + item.name + '</option>'
+		        		}	
+		        	})
+		    	}
+				return start+end;
+			}
+			
+	    }
 	}
 ]
 
