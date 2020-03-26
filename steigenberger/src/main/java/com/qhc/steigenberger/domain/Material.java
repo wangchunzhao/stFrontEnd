@@ -6,6 +6,8 @@ package com.qhc.steigenberger.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * @author wang@dxc.com
  *
@@ -47,6 +49,7 @@ public class Material implements Serializable{
 	private String clazzName;//物料分类
 	
 	//need by bayern
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date optTime;
 	private double materialSize;
 	private String materialType;
