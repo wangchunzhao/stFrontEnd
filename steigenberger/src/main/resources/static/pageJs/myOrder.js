@@ -65,6 +65,7 @@ var TableInit = function () {
 			    	officeCode:$('#officeCode').val(),
 			    	orderType:$('#orderType').val(),
 			    	b2c:$('#b2c').val(),
+			    	salesName:$('#salesName').val(),
 			    	createTime:$('#reservation').val(),
 			    	submitTime:$('#reservation1').val(),
 			    	specialDiscount:$('#specialDiscount').val(),
@@ -94,8 +95,8 @@ var TableInit = function () {
 				field : 'orderType',
 				formatter : formatOrderType
 			},{
-				title : '折扣',
-				field : 'approvedDiscount',
+				title : '客户经理',
+				field : 'salesName',
 				sortable : true
 			},{
 				title : '是否特批折扣',
@@ -365,6 +366,7 @@ $('#resetBtn').click(function() {
 	$("#contractNumber").val("");
 	$("#contracterCode").val("");
 	$("#officeCode").val("");
+	$("#salesName").val();
 	$("#orderType").val("");
 	$("#reservation1").val("");
 	$("#status").val("");
