@@ -109,10 +109,9 @@ $(function () {
 	if(status==null||status==""||status=="undefined"){
 		getUserDetail();
 	}else{
-		fillItems();
-		//修改查看订单时,辉县地址数据
-		fillOrderAddress();
 		initDropDownList();
+		fillOrderAddress();
+		fillItems();	
 		fillAttachments();
 	}
 	if(orderOperationType=="2"){

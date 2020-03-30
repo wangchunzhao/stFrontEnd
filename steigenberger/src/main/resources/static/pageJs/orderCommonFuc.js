@@ -931,13 +931,14 @@ function getB2CCostAmount(obj){
 	//B2C成本
 	var b2cCost = $(obj).val();
 	//转移价
-	var transcationPrice = $("#transcationPrice").val();
+	var transcationPrice = $("#transcationPrice").val()?$("#transcationPrice").val():0.00;
 	//数量
 	var amount = $("#amount").val();
 	//可选项转移价
-	var transcationPriceOfOptional = $("#transcationPriceOfOptional").val(toDecimal2(0.00));
+	var transcationPriceOfOptional = $("#transcationPriceOfOptional").val()?$("#transcationPriceOfOptional").val():0.00;
 	
 	var transactionPriceSum = toDecimal2(parseFloat(transcationPrice)*parseFloat(amount)+parseFloat(transcationPriceOfOptional)+parseFloat(b2cCost));
+	$("#transcationPriceTotal").val(transactionPriceSum);
 }
 
 //编辑购销明细
@@ -969,6 +970,7 @@ function editMaterials(editContent){
 
 //编辑购销明细时页面值回显
 function fillEditMaterailValue(data,index){	
+	debugger
 	$("#index").val(index);
 	$("#purchasedCode").val(data.isPurchased);
 	if(data.isPurchased){
@@ -1003,8 +1005,8 @@ function fillEditMaterailValue(data,index){
 	$("#transcationPriceTotal").val(data.transactionPriceSum);
 	$("#retailPrice").val(data.retailPrice);
 	$("#retailPriceAmount").val(data.retailAmount);
-	$("#originalActuralPrice").val(data.originalActualPrice);
-	$("#acturalPrice").val(data.acturalPrice);
+	$("#originalActualPrice").val(data.originalActualPrice);
+	$("#actualPriceCny").val(data.actualPrice);
 	$("#originalActuralPriceOfOptional").val(data.originalActuralPriceOfOptional);
 	$("#acturalPriceOfOptionalCny").val(data.acturalPriceOfOptional);
 	$("#acturalPriceAmount").val(data.actualAmount);
@@ -1571,6 +1573,7 @@ function updateTableRowPrice(index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
+	debugger
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
 	//数量
