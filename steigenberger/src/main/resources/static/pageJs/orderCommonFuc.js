@@ -908,15 +908,23 @@ function getB2CAmount(obj){
 	//B2C预估计凭证货币
 	var b2cPrice = toDecimal2(parseFloat(b2cPriceCny)/parseFloat(exchangeRate))
 	var amount = $("#amount").val();
-	//B2C预估金额
-	$("#B2CPriceEstimatedAmount").val(toDecimal2(amount*(parseFloat(b2cPriceCny))));
+	//B2C预估金额人民币
+	var b2cPriceEstimatedAmountCny = parseFloat(b2cPriceCny)*parseFloat(amount);
+	$("#B2CPriceEstimatedAmount").val(b2cPriceEstimatedAmountCny);
+	//B2C预估金额凭证货币
+	var originalB2cPriceEstimatedAmount = toDecimal2(parseFloat(amount)*(parseFloat(b2cPrice)));
+	
 	//计算实卖价合计
 	//产品实卖价
 	var acturalPrice = parseFloat($("#originalActualPrice").val());
 	//可选项实卖价
 	var  acturalPriceOfOptional =  parseFloat($("#originalActuralPriceOfOptional").val());
 	var acturalPriceTotal = acturalPrice+acturalPriceOfOptional+parseFloat(b2cPrice);
-	$("#acturalPriceTotal").val(acturalPriceTotal)
+	debugger
+	//实卖金额合计
+	var acturalPriceAmountTotal = parseFloat(acturalPriceTotal)*parseFloat(amount);
+	$("#acturalPriceAmountTotal").val(acturalPriceAmountTotal);
+	$("#acturalPriceTotal").val(acturalPriceTotal);
 }
 //B2C预估成本变化
 function getB2CCostAmount(obj){
@@ -1563,7 +1571,6 @@ function updateTableRowPrice(index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
-	debugger
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
 	//数量
@@ -1584,11 +1591,14 @@ function calPrice(tableData){
 	//B2C预估价
 	var b2cEstimatedPrice = tableData.b2cEstimatedPrice;
 	//B2C预估价凭证货币
-	var originalB2cEstimatedPrice = toDecimal2(parseFloat(tableData.b2cEstimatedPrice)/parseFloat(exchangeRate))
+	var originalB2cEstimatedPrice = toDecimal2(parseFloat(tableData.b2cEstimatedPrice)/parseFloat(exchangeRate));
+	//B2C预估金额
+	var b2cEstimatedAmountCny = parseFloat(b2cEstimatedPrice)*quantity;
+	var originalB2cEstimatedAmount = toDecimal2(parseFloat(b2cEstimatedAmountCny)/parseFloat(exchangeRate));
 	//可选项实卖金额
 	var optionalActualAmount = toDecimal2(quantity*originalOptionalActualPrice);
 	//实卖价合计
-	var actualPriceSum = toDecimal2(parseFloat(originalOptionalActualPrice)+parseFloat(originalActualPrice)+parseFloat(originalB2cEstimatedPrice));
+	var actualPriceSum = toDecimal2(parseFloat(originalOptionalActualPrice)+parseFloat(originalActualPrice)+parseFloat(originalB2cEstimatedAmount));
 	//实卖金额合计
 	var actualAmountSum = toDecimal2(quantity*actualPriceSum);
 	//B2C预估成本
