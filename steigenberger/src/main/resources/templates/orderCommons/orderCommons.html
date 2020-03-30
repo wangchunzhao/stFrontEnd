@@ -391,7 +391,7 @@
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
 						<span class="col-md-1 control-label">是否为长期折扣</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:filed="*{isLongterm}" onchange="isLongtermChange(this)">								
+					      <select class="form-control" th:filed="*{isLongterm}" id='isLongterm' onchange="isLongtermChange(this)">								
 								<option value="0" class="">否</option>
 								<option value="1" class="">是</option>
 							</select>

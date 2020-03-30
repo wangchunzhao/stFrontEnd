@@ -644,8 +644,11 @@ function addSubsidiary(){
     }
     
 	if($("#saleType").val()=='20'){
-		$('#acturalPrice').attr("disabled",false);
+		$('#originalActualPrice').attr("disabled",false);
 	}
+	debugger
+	var type = $("#stOrderType").val();
+	var long = $("#isLongterm").val();
 	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
@@ -670,13 +673,18 @@ function initSubsidiary(){
 	$('#materialAreaCode').val(row.districtCode);
 	$('#materialAreaName').val(row.districtName);
 	$('#materialModalAddress').val(row.address)
+	if($("#stOrderType").val()=="2"){
+		$('#discount').val(100);
+	}else{
+		$('#discount').val($("#standardDiscount").val());
+	}
 	if(row.pca==''){
 		$("#materialAddress").val(row.address).change();
 	}else{
 		$("#materialAddress").val(row.pca+"/"+row.address).change();
 	}
 	$('#amount').val(1);
-	$('#discount').val($("#standardDiscount").val());
+	
 	if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
 		$("#itemRequirementPlan").val("001");
 	}
@@ -753,6 +761,14 @@ function fillMaterailValue(data){
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = data.stGroupCode;
+	if($("#stOrderType").val()=="2"&&materialsType=='T101'){
+		var discount = $("#bodyDiscount").val();
+		$("#discount").val(discount);
+	}
+	if($("#stOrderType").val()=="2"&&materialsType=='T102'){
+		var discount = $("#mainDiscount").val();
+		$("#discount").val(discount);
+	}
 	$("#materialType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
@@ -829,6 +845,7 @@ function amountChange(){
 }
 //实卖价编辑
 function originalActualPriceChange(){
+	debugger
 	//数量
 	var amount = parseFloat($("#amount").val());
 	//产品实卖价凭证货币
@@ -852,6 +869,7 @@ function originalActualPriceChange(){
 	//计算折扣
 	if($("#stOrderType").val()=="2"){
 		var discount =toDecimal2( (parseFloat(actualPriceCny)/parseFloat(retailPrice))*100);
+		$("#discount").val(discount);
 	}
 }
 
@@ -919,6 +937,13 @@ function editMaterials(editContent){
 	$('#subsidiaryModal').modal('show');
 	if(status=='01'){
 		$("#B2CCostOfEstimated").attr("disabled",false);
+	}
+	if($("#saleType").val()=='20'){
+		$('#originalActualPrice').attr("disabled",false);
+	}
+	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
+		$("#discount").attr("disabled",false);
+		$("#originalActualPrice").attr("disabled",false);
 	}
 	$('#materialsModalType').val('edit');
 	var index = editContent.split('|')[1];
