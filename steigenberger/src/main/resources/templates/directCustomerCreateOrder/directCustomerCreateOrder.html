@@ -25,7 +25,7 @@
 		<input type="hidden"  id="status" th:field="*{status}">
 		<input type="hidden" id="stOrderType" th:field="*{stOrderType}">
 		<input type="hidden" id="orderType" th:field="*{orderType}">
-		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{id}" id="orderInfoId">
 		<input type="hidden" th:field="*{orderId}">
 		<input type="hidden" th:field="*{version}">
 		<input type="hidden" th:field="*{isActive}">
@@ -56,6 +56,7 @@
 <script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
 <script th:inline="javascript" th:src="@{/pageJs/materialColumn.js}"></script>
 <script th:inline="javascript" th:src="@{/pageJs/main.js}"></script>
+<script th:inline="javascript" th:src="@{/pageJs/orderCommonFuc.js}"></script>
 <script th:inline="javascript" th:src="@{/pageJs/directCustomerOrder/newOrder.js}"></script>
 <script th:inline="javascript" type="text/javascript">
 	var ctxPath  = [[@{/}]];

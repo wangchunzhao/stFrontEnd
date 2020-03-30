@@ -106,7 +106,7 @@
 					    </div>
 						<span class="col-md-1 control-label" th:if="${orderType==4 || orderType==5}">是否年采客户</span>
 						<div class="col-md-2" th:if="${orderType==4 || orderType==5}">
-							<select class="form-control" readonly disabled th:field="*{isYearpurchase}">
+							<select class="form-control"  disabled th:field="*{isYearpurchase}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
@@ -366,7 +366,7 @@
 							<div class="input-group">
 								<input type="text" class="form-control" id="bodyDiscount" aria-describedby="emailHelp" name="bodyDiscount">
 								<span class="input-group-btn">
-			                        <button id="" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyBodyDiscount()">
+			                        <button id="bodyDiscountButton" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyBodyDiscount()">
 			                        	<span class="glyphicon glyphicon-ok"></span>
 			                        </button>
 			                    </span>
@@ -377,7 +377,7 @@
 							<div class="input-group">
 								<input type="text" class="form-control" id="mainDiscount" aria-describedby="emailHelp" name="mainDiscount">
 								<span class="input-group-btn">
-			                        <button id="" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyMainDiscount()">
+			                        <button id="mainDiscountButton" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyMainDiscount()">
 			                        	<span class="glyphicon glyphicon-ok"></span>
 			                        </button>
 			                    </span>
@@ -391,9 +391,9 @@
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
 						<span class="col-md-1 control-label">是否为长期折扣</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:filed="*{isLongterm}">
-								<option value="1" class="">是</option>
+					      <select class="form-control" th:filed="*{isLongterm}" onchange="isLongtermChange(this)">								
 								<option value="0" class="">否</option>
+								<option value="1" class="">是</option>
 							</select>
 					    </div>
 					</div>
@@ -738,6 +738,10 @@
 						<div class="col-md-3">
 							<input type="checkbox" id="specialShipmentValue"/>是否特批发货
 							<input type="hidden" th:field="*{isUrgentDelivery}" id="isUrgentDelivery"/>
+						</div>
+						<div class="col-md-3">
+							<input type="checkbox" id="isSpecialOrderValue"/>是否特批下单
+							<input type="hidden" th:field="*{isSpecialOrder}" id="isSpecialOrder"/>
 						</div>
 					</div>
 				</div>

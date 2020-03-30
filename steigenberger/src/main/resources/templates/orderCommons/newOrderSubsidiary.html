@@ -3,7 +3,7 @@
 <body>
 <div  class="container" th:fragment="subsidiary(orderType)">
     	<div class="modal fade" id="subsidiaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="width:1200px">
+		<div class="modal-dialog" style="width:1400px">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="">×</span></button>
@@ -74,11 +74,12 @@
 							      <input type="text" class="form-control" id="unitName" disabled>
 							    </div>
 							    <input type="hidden" id="unitCode">
-							    <span class="col-md-1">产品实卖价</span>
+							    <span class="col-md-1">产品实卖价（凭证货币）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="acturalPrice" disabled>
+							      <input type="text" class="form-control" id="originalActualPrice" disabled oninput="originalActualPriceChange()">
+							      <input type="hidden"  id="actualPriceCny" >
 							    </div>
-							    <span class="col-md-1">产品实卖金额</span>
+							    <span class="col-md-1">产品实卖金额（凭证货币）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="acturalPriceAmount" disabled>
 							    </div>
@@ -88,11 +89,12 @@
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="transcationPrice" disabled>
 							    </div>
-							    <span class="col-md-1">可选项实卖价</span>
+							    <span class="col-md-1">可选项实卖价（凭证货币）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="acturalPriceOfOptional" disabled>
+							      <input type="text" class="form-control" id="originalActuralPriceOfOptional" disabled>
+							      <input type="hidden" id="acturalPriceOfOptionalCny" disabled>
 							    </div>
-							    <span class="col-md-1">可选项实卖金额</span>
+							    <span class="col-md-1">可选项实卖金额（凭证货币）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="acturalPriceOfOptionalAmount" disabled>
 							    </div>
@@ -102,25 +104,25 @@
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-							    <span class="col-md-1">B2C预估价</span>
+							    <span class="col-md-1">B2C预估价（CNY）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="B2CPriceEstimated" oninput="getB2CAmount(this)">
 							    </div>
-							    <span class="col-md-1">B2C预估金额</span>
+							    <span class="col-md-1">B2C预估金额（CNY）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="B2CPriceEstimatedAmount" disabled>
 							    </div>
-							    <span class="col-md-1">B2C预估成本</span>
+							    <span class="col-md-1">B2C预估成本（CNY）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="B2CCostOfEstimated">
+							      <input type="text" class="form-control" id="B2CCostOfEstimated" oninput="getB2CCostAmount(this)" th:attr="disabled=${orderDetail.status!='01'}">
 							    </div>
-							    <span class="col-md-1">实卖价合计</span>
+							    <span class="col-md-1">实卖价合计（凭证货币）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="acturalPriceTotal" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-							    <span class="col-md-1">实卖金额合计</span>
+							    <span class="col-md-1">实卖金额合计（凭证货币）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="acturalPriceAmountTotal" disabled>
 							    </div>
@@ -128,11 +130,11 @@
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="transcationPriceTotal" disabled>
 							    </div>
-							    <span class="col-md-1">市场零售价</span>
+							    <span class="col-md-1">市场零售价（CNY）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="retailPrice" disabled>
 							    </div>
-							    <span class="col-md-1">市场零售金额</span>
+							    <span class="col-md-1">市场零售金额（CNY）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="retailPriceAmount" disabled>
 							    </div>
@@ -140,7 +142,8 @@
 							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">折扣率</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="discount" th:attr="disabled=${orderDetail.stOrderType!='2'}">
+							      <input type="text" class="form-control" id="discount" disabled oninput="discountChange(this)">
+							       <input type="hidden" id="discountValue">
 							    </div>
 							    <span class="col-md-1">行项目类别</span>
 								<div class="col-md-2">
@@ -154,6 +157,7 @@
 							      	<option value="001">B2C</option>
 							      	<option value="002">消化</option>
 							      	<option value="003">调发</option>
+							      	<option value="005">替换</option>
 								  </select>
 							    </div>
 							    <span class="col-md-1">生产周期</span>

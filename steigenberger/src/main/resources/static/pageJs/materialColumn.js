@@ -112,8 +112,12 @@ var materialsColumn = [{
 	    field: 'unitCode',
 	    visible:false
 	},{
-		title:'产品实卖价',
+		title:'产品实卖价cny',
+		visible:false,
 	    field: 'actualPrice'
+	},{
+		title:'产品实卖价',
+	    field: 'originalActualPrice'
 	},{
 		title:'产品实卖金额',
 	    field: 'actualAmount'
@@ -121,8 +125,12 @@ var materialsColumn = [{
 		title:'产品转移价',
 	    field: 'transactionPrice'
 	},{
-		title:'可选项实卖价',
+		title:'可选项实卖价cny',
+		visible:false,
 	    field: 'optionalActualPrice'
+	},{
+		title:'可选项实卖价',
+	    field: 'originalOptionalActualPrice'
 	},{
 		title:'可选项实卖金额',
 	    field: 'optionalActualAmount'
@@ -188,7 +196,7 @@ var materialsColumn = [{
 		    	}else if(value=="ZHR3"){
 		    		return "退货";
 		    	}else{ 
-		    		return '替换';
+		    		return '';
 		    	}
 	    	}else{
 	    		if(value=="ZHD2"){
@@ -198,7 +206,7 @@ var materialsColumn = [{
 		    	}else if(value=="ZHR4"){
 		    		return "退货";
 		    	}else{ 
-		    		return '替换';
+		    		return '';
 		    	}
 	    	}
 	    	
@@ -217,7 +225,7 @@ var materialsColumn = [{
 	    	}else if(value=="003"){
 	    		return "调发";
 	    	}else{
-	    		return '';
+	    		return '替换';
 	    	}
 	    }
 	},{
