@@ -617,6 +617,7 @@ public class OrderController extends BaseController {
 			//本人保存的
 			List list2 = new ArrayList();
 			list2.add(orderStatus00);
+			list2.add(orderStatus10);
 			query.setDominStatusList(list2);
 			query.setDominSalesCode(user.getUserIdentity());
 		}else if(operationId.contains(ENGINEER_Order)) {
