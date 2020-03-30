@@ -138,7 +138,8 @@ function fillItemToTableRow(data){
 	var b2cEstimatedAmount = toDecimal2((data.b2cEstimatedPrice)*quantity);
 	var b2cEstimatedCost = toDecimal2(data.b2cEstimatedCost);
 	var retailPrice = toDecimal2(data.retailPrice);
-	var actualPrice = toDecimal2(data*actualPrice);
+	var retailAmount = toDecimal2(retailPrice*parseFloat(quantity));
+	var actualPrice = toDecimal2(data.actualPrice);
 	var pcaAddress;
 	if(data.provinceName){
 		pcaAddress = data.provinceName;
@@ -168,19 +169,14 @@ function fillItemToTableRow(data){
 			unitName:data.unitName,
 			unitCode:data.unitName,
 			actualPrice:actualPrice,
-			actualAmount:actualAmount,
 			transactionPrice:transcationPrice,
 			optionalActualPrice:optionalActualPrice,
-			optionalActualAmount:optionalActualAmount,
 			optionalTransationPrice:data.optionalTransationPrice,
 			optionalStandardPrice:data.optionalStandardPrice,
 			optionalRetailPrice:data.optionalRetailPrice,
 			b2cEstimatedPrice:b2cEstimatedPrice,
 			b2cEstimatedAmount:b2cEstimatedAmount,
 			b2cEstimatedCost:b2cEstimatedCost,
-			actualPriceSum:actualPriceSum,
-			actualAmountSum:actualAmountSum,
-			transactionPriceSum:transactionPriceSum,
 			retailPrice:retailPrice,
 			retailAmount:retailAmount,
 			discount:data.discount,
@@ -250,6 +246,8 @@ function fillAttachments(){
 
 function initDropDownList(){
 	$('#saleType').trigger("change");
+	$('#currency').val($("#currencyName").val());
+	$('#currency').trigger("change");
 	$('#officeSelect').val($('#officeCode').val());
 	$('#officeSelect').trigger("change");
 	$('#selectGroup').val($('#groupCode').val());
@@ -1540,6 +1538,7 @@ function updateTableRowPrice(index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
+	debugger
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
 	//数量
@@ -2342,8 +2341,9 @@ function reject(){
         	if(result == null || result.status != 'ok'){
 	    		layer.alert("驳回订单失败" + (result != null ? result.msg : ""));
 	    	}else{
-	    		layer.alert('驳回订单成功', {icon: 6});
-	    		window.location.href = ctxPath+'menu/orderManageList';
+	    		layer.confirm("驳回订单成功！", {btn: ['确定'], title: "提示"}, function () {
+	    			window.location.href = ctxPath+'menu/orderManageList';
+	    	    });  		
 	    	} 	
         }
     });
