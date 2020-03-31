@@ -125,7 +125,7 @@ var materialsColumn = [{
 		title:'产品转移价',
 	    field: 'transactionPrice'
 	},{
-		title:'可选项实卖价cny',
+		title:'可选项实卖价CNY',
 		visible:false,
 	    field: 'optionalActualPrice'
 	},{
@@ -137,7 +137,6 @@ var materialsColumn = [{
 	},{
 		title:'可选项转移价',
 	    field: 'optionalTransationPrice',
-	    visible:false
 	},
 	{
 		title:'可选项标准价差',
