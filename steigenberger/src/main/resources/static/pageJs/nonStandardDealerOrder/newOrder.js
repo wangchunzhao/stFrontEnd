@@ -30,7 +30,7 @@ $(function () {
 			 $("#isSpecialOrder").val(0);
 		 }
 	})
-	
+	setSpecialChecked();
 	//初始化付款方式页面
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
@@ -107,8 +107,10 @@ $(function () {
 	$('#shippDate').datepicker();
 	defaultCollapse();
 	if(status==null||status==""||status=="undefined"){
+		$('#shippDate').datepicker({ startDate: new Date() });
 		getUserDetail();
 	}else{
+		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		initDropDownList();
 		fillOrderAddress();
 		fillItems();	

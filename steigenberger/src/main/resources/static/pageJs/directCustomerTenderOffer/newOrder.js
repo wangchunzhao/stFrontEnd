@@ -30,7 +30,7 @@ $(function () {
 			 $("#isSpecialOrder").val(0);
 		 }
 	})
-	
+	setSpecialChecked();
 	//初始化付款方式页面
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
@@ -107,8 +107,10 @@ $(function () {
 	$('#paymentTime').datepicker();
 	defaultCollapse();
 	if(status==null||status==""||status=="undefined"){
+		$('#shippDate').datepicker({ startDate: new Date() });
 		getUserDetail();
 	}else{
+		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		//修改查看订单时,辉县地址数据
 		fillOrderAddress();
 		initDropDownList();

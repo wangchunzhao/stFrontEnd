@@ -68,6 +68,7 @@
 					    <span class="col-md-1 control-label">店名</span>
 						<div class="col-md-2">
 						      	<input type="text" class="form-control" id="shopName" th:field="*{shopName}">
+						      	<input type="hidden" id="createTime" th:field="*{createTime}">
 					    </div>
 						<span class="col-md-1 control-label">项目报备编号</span>
 						<div class="col-md-2">
@@ -736,11 +737,11 @@
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
 						<div class="col-md-3">
-							<input type="checkbox" id="specialShipmentValue"/>是否特批发货
-							<input type="hidden" th:field="*{isUrgentDelivery}" id="isUrgentDelivery"/>
+							<input type="checkbox" id="specialShipmentValue" style="zoom:150%;" />是否特批发货
+							<input type="hidden" th:field="*{isUrgentDelivery}" id="isUrgentDelivery" />
 						</div>
 						<div class="col-md-3">
-							<input type="checkbox" id="isSpecialOrderValue"/>是否特批下单
+							<input type="checkbox" id="isSpecialOrderValue" style="zoom:150%;"/>是否特批下单
 							<input type="hidden" th:field="*{isSpecialOrder}" id="isSpecialOrder"/>
 						</div>
 					</div>

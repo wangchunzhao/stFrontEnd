@@ -1,3 +1,13 @@
+//设置特批是否选中
+function setSpecialChecked(){
+	if($("#isUrgentDelivery").val()=='1'){
+		$('#specialShipmentValue').prop('checked',true);
+	}
+	if($("#isSpecialOrder").val()=='1'){
+		$('#isSpecialOrderValue').prop('checked',true);
+	}
+}
+
 //查看订单页面不能修改
 function disableAll(){ 
 	  var form=document.forms[0];
@@ -842,10 +852,17 @@ function amountChange(){
 	$("#B2CPriceEstimatedAmount").val(toDecimal2(amount*(parseFloat($("#B2CPriceEstimated").val()))));
 	$("#retailPriceAmount").val(toDecimal2(parseFloat($("#retailPrice").val())*amount));
 	$("#acturalPriceAmountTotal").val(toDecimal2(parseFloat($("#acturalPriceTotal").val())*amount));
+	//产品转移价
+	var transcationPrice = $("#transcationPrice").val();
+	var optionalTransationPrice = $("#transcationPriceOfOptional").val();
+	var b2cEstimatedCost  = $("#B2CCostOfEstimated").val()?$("#B2CCostOfEstimated").val():parseFloat(0.00);
+	debugger
+	//转移价合计
+	var transactionPriceSum = toDecimal2((parseFloat(transcationPrice)*amount)+parseFloat(optionalTransationPrice)+parseFloat(b2cEstimatedCost));
+	$("#transcationPriceTotal").val(transactionPriceSum);
 }
 //实卖价编辑
 function originalActualPriceChange(){
-	debugger
 	//数量
 	var amount = parseFloat($("#amount").val());
 	//产品实卖价凭证货币
@@ -1937,6 +1954,7 @@ function saveOrder(type){
 		}
 		
 	}
+	 $('#loadingModal').modal('show');
 	$('#transferType').attr("disabled",false);
 	$("#currency").attr("disabled",false);
 	 /*var version = $("#version").val();
@@ -1991,6 +2009,7 @@ function saveOrder(type){
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(result) { 
+			    	$('#loadingModal').modal('hide');
 			    	if(result == null || result.status != 'ok'){
 			    		layer.alert("提交订单失败:" + (result != null ? result.msg : ""));
 			    	}else{
@@ -2009,11 +2028,14 @@ function saveOrder(type){
 			    data: JSON.stringify(orderData),
 			    type: "POST",
 			    success: function(data) { 
+			    	$('#loadingModal').modal('hide');
 			    	if(data == null || data.status != 'ok'){
 			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
+			    		 
 			    	}else{
-			    		layer.alert('保存成功', {icon: 6});
-			    		/*window.location.href = ctxPath+'menu/orderManageList';*/
+			    		 layer.confirm("保存订单成功！", {btn: ['确定'], title: "提示"}, function () {
+				    			window.location.href = ctxPath+'menu/orderManageList';
+				    	 });
 			    	} 	
 			    },
 			    error: function(){
@@ -2038,6 +2060,7 @@ function goBpm(){
 		expandAll()
 		return
 	}
+	$('#loadingModal').modal('show');
 	$('#transferType').attr("disabled",false);
 	$("#currency").attr("disabled",false);
 	 /*var version = $("#version").val();
@@ -2090,11 +2113,13 @@ function goBpm(){
 		    data: JSON.stringify(orderData),
 		    type: "POST",
 		    success: function(result) { 
+		    	$('#loadingModal').modal('hide');
 		    	if(result == null || result.status != 'ok'){
 		    		layer.alert("提交BPM失败：" + (result != null ? result.msg : ""));
 		    	}else{
-		    		layer.alert('提交BPM成功', {icon: 6});
-		    		window.location.href = ctxPath+'menu/orderManageList';
+		    		layer.confirm("提交BPM成功！", {btn: ['确定'], title: "提示"}, function () {
+		    			window.location.href = ctxPath+'menu/orderManageList';
+		    		});
 		    	} 	
 		    },
 		    error: function(){

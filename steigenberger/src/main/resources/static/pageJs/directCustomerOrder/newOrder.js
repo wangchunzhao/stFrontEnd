@@ -30,7 +30,7 @@ $(function () {
 			 $("#isSpecialOrder").val(0);
 		 }
 	})
-	
+	setSpecialChecked();
 	//初始化付款方式页面
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
@@ -103,12 +103,13 @@ $(function () {
 	initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
-	$('#shippDate').datepicker();
 	$('#paymentTime').datepicker();
 	defaultCollapse();
 	if(status==null||status==""||status=="undefined"){
+		$('#shippDate').datepicker({ startDate: new Date() });
 		getUserDetail();
 	}else{
+		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		fillOrderAddress();
 		initDropDownList();
 		fillItems();

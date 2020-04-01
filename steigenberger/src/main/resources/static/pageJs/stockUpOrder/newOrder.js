@@ -88,13 +88,14 @@ $(function () {
 	$('#shippDate').datepicker();
 	defaultCollapse();
 	if(status==null||status==""||status=="undefined"){
+		$('#shippDate').datepicker({ startDate: new Date() });
 		getUserDetail();
 	}else{
+		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		//修改查看订单时,辉县地址数据
 		fillOrderAddress();
 		initDropDownList();
-		fillItems();
-		
+		fillItems();	
 		fillAttachments();
 	}
 	if(orderOperationType=="2"){
