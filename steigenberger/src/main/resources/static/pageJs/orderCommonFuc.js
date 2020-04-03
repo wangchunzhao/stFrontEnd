@@ -789,7 +789,7 @@ function fillMaterailValue(data){
 	//市场零售价
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	//转移价
-	$("#transcationPrice").val(toDecimal2(data.transcationPrice));
+	$("#transactionPrice").val(toDecimal2(data.transcationPrice));
 	initMaterialPrice();
 	$('#volumeCube').val(data.materialSize)	
 }
@@ -822,7 +822,7 @@ function initMaterialPrice(){
 	$("#actualAmount").val(actualPriceAmount);
 	
 	//产品转移单价
-	var transcationPrice = $("#transcationPrice").val(); 
+	var transcationPrice = $("#transactionPrice").val(); 
 	
 	//产品转移金额
 	var transactionPriceAmount = toDecimal2(amount*(parseFloat(transcationPrice)));
@@ -893,7 +893,7 @@ function amountChange(){
 	$("#actualAmount").val(actualAmount);
 	
 	//产品转移金额
-	var transactionPriceAmount = toDecimal2(amount*(parseFloat($("#transcationPrice").val())));
+	var transactionPriceAmount = toDecimal2(amount*(parseFloat($("#transactionPrice").val())));
 	$("#transactionPriceAmount").val(transactionPriceAmount);
 	
 	//可选项实卖金额
@@ -1058,7 +1058,7 @@ function getB2CCostAmount(obj){
 	var b2cCost = $(obj).val()?$(obj).val():parseFloat(0.00);
 	
 	//产品转移单价
-	var transcationPrice = $("#transcationPrice").val()?$("#transcationPrice").val():parseFloat(0.00);	
+	var transcationPrice = $("#transactionPrice").val()?$("#transactionPrice").val():parseFloat(0.00);	
 	
 	//可选项转移单价
 	var optionalTransationPrice = $("#optionalTransationPrice").val()?$("#optionalTransationPrice").val():parseFloat(0.00);
@@ -1355,7 +1355,7 @@ function confirmRowData(rowNumber){
 			originalActualPrice:$("#originalActualPrice").val(),
 			actualAmount:$("#actualAmount").val(),
 			
-			transactionPrice:$("#transcationPrice").val(),
+			transactionPrice:$("#transactionPrice").val(),
 			transactionPriceAmount:$("#transactionPriceAmount").val(),
 			
 			originalOptionalActualPrice:$("#originalOptionalActualPrice").val(),
@@ -1728,13 +1728,14 @@ function closeMaterialConfig(){
 
 //保存调研表
 function saveMaterialConfig(){
+	debugger
 	var rowNum = $('#rowNum').val();
 	var configIndex = $("#configIndex").val();
 	var tableData = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
 	//获取调研表配置价格
 	viewConfigPrice("cal");
 	var discount = tableData.discount;
-	var optionalTransationPrice = $("#viewOptionalTransationPrice").val();
+	var optionalTransationPrice = $("#viewOptionalTransactionPrice").val();
 	var optionalRetailPrice = $("#viewOptionalRetailPrice").val();
 	var optionalStandardPrice = $("#viewOptionalStandardPrice").val();
 	//可选项转移价
@@ -1768,6 +1769,7 @@ function updateTableRowPrice(index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
+	debugger
 	
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
@@ -2383,7 +2385,7 @@ function viewConfigPrice( type){
 			    	$("#viewOptionalRetailPrice").val(res.data.retailPrice);
 		    	}	    
 	    	}else{
-	    		$("#viewOptionalTransationPrice").val(res.data.transferPrice);
+	    		$("#viewOptionalTransactionPrice").val(res.data.transferPrice);
 		    	$("#viewOptionalStandardPrice").val(res.data.standardPrice);
 		    	$("#viewOptionalRetailPrice").val(res.data.retailPrice);
 	    	}
