@@ -39,7 +39,7 @@ public class Item {
 	private double optionalTransactionPrice;//可选项转移价
 	private double b2cEstimatedPrice;//B2C预估价
 	private double b2cEstimatedAmount;// B2C预估金额
-	private double b2cEstimatedCost;//B2C预估成本
+	private double b2cEstimatedCost;//B2C预估成本单价
 	private double actualPriceSum;// 实卖价合计
 	private double actualAmountSum;// 实卖金额合计
 	private double transactionPriceSum;// 转移价合计
