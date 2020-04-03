@@ -626,6 +626,8 @@ function getPaymentAreaContent(){
 
 //打开购销明细初始化
 function addSubsidiary(){
+	var orderType = $("#stOrderType").val();
+	var long = $("#isLongterm").val();
 	var customerName = $("#customerName").val();
 	if(customerName==""){
 		layer.alert('请先选择客户', {icon: 5});
@@ -643,22 +645,20 @@ function addSubsidiary(){
 		layer.alert('请先选择币种', {icon: 5});
 		return
 	}
-	if($("#stOrderType").val()=="2"&&$("#bodyDiscount").val()==""){
+	if(orderType=="2"&&long=='0'&&$("#bodyDiscount").val()==""){
         layer.msg('折扣未录入！', function(){
         });
     }
 
-    if($("#stOrderType").val()=="2"&&$("#mainDiscount").val()==""){
+    if($("#stOrderType").val()=="2"&&long=='0'&&$("#mainDiscount").val()==""){
         layer.msg('折扣未录入！', function(){
         });
     }
     
 	if($("#saleType").val()=='20'){
 		$('#originalActualPrice').attr("disabled",false);
+		$('#B2CPriceEstimated').attr("disabled",true);
 	}
-	debugger
-	var type = $("#stOrderType").val();
-	var long = $("#isLongterm").val();
 	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
@@ -863,6 +863,7 @@ function amountChange(){
 }
 //实卖价编辑
 function originalActualPriceChange(){
+	debugger
 	//数量
 	var amount = parseFloat($("#amount").val());
 	//产品实卖价凭证货币
@@ -872,13 +873,13 @@ function originalActualPriceChange(){
 	var actualPriceCny = parseFloat(originalActualPrice)*parseFloat(exchangeRate);
 	$("#actualPriceCny").val(actualPriceCny);
 	//可选项实卖价
-	var  acturalPriceOfOptional =  parseFloat($("#originalActuralPriceOfOptional").val());
+	var  acturalPriceOfOptional = $("#originalActuralPriceOfOptional").val()?parseFloat($("#originalActuralPriceOfOptional").val()):parseFloat(0.00);
 	//B2C预估价
 	var b2cPriceCny = $("#B2CPriceEstimated").val();
 	//B2C预估计凭证货币
 	var b2cPrice = toDecimal2(parseFloat(b2cPriceCny)/parseFloat(exchangeRate))
 	var acturalPriceAmount = parseFloat(originalActualPrice)*amount;
-	var acturalPriceTotal = toDecimal2(originalActualPrice+acturalPriceOfOptional+parseFloat(b2cPrice));
+	var acturalPriceTotal = toDecimal2(parseFloat(originalActualPrice)+parseFloat(acturalPriceOfOptional)+parseFloat(b2cPrice));
 	$("#acturalPriceTotal").val(acturalPriceTotal)
 	$("#acturalPriceAmountTotal").val(toDecimal2(acturalPriceTotal*amount));
 	//市场零售价
@@ -963,9 +964,10 @@ function editMaterials(editContent){
 	$('#subsidiaryModal').modal('show');
 	if(status=='01'){
 		$("#B2CCostOfEstimated").attr("disabled",false);
-	}
+	}	
 	if($("#saleType").val()=='20'){
 		$('#originalActualPrice').attr("disabled",false);
+		$('#B2CPriceEstimated').attr("disabled",true);
 	}
 	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
 		$("#discount").attr("disabled",false);
@@ -1347,8 +1349,23 @@ function initSubsidiartFormValidator(){
 function initOrderFormValidator(){
    $('#orderForm').bootstrapValidator({
        message: 'This value is not valid',
+       
        fields: {
-    	   salesTel: {
+    	shopName:{
+    		validators:{
+    			notEmpty: {
+                    message: '请输入店名'
+               }
+    		}
+    	},
+    	recordCode:{
+    		validators:{
+    			notEmpty: {
+                    message: '请填写项目报备编号'
+               }
+    		}
+    	},
+    	salesTel: {
        	    validators: {
        	    	regexp: {
        	    		regexp: /^1[3456789]\d{9}$/,
@@ -1363,45 +1380,65 @@ function initOrderFormValidator(){
                    }
        	    }
        	},
-       	recordCode: {
-               validators: {
-                   notEmpty: {
-                        message: '请填写项目编号'
-                   }
+       customerName: {
+           validators: {
+        	   trigger:"change",
+               notEmpty: {
+                    message: '请选择签约单位'
                }
-           },
-           customerName: {
-               validators: {
-            	   trigger:"change",
-                   notEmpty: {
-                        message: '请选择签约单位'
-                   }
+           }
+       },
+       officeCode: {
+           validators: {
+               notEmpty: {
+                    message: '请选择大区'
                }
-           },
-           officeCode: {
-               validators: {
-                   notEmpty: {
-                        message: '请选择大区'
-                   }
+           }
+       },
+       groupCode: {
+           validators: {
+               notEmpty: {
+                    message: '请选择中心'
                }
-           },
-           groupCode: {
-               validators: {
-                   notEmpty: {
-                        message: '请选择中心'
-                   }
+           }
+       },
+       contactor1Id:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写授权人1及身份证号'
                }
-           },
-           contactor1Tel: {
-           	validators: {
-       	    	regexp: {
-       	    		regexp: /^1[3456789]\d{9}$/,
-       	            message: '请填写正确的手机号'
-       	        }
-       	    }
-           },
+           }  
+       },
+       contactor2Id:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写授权人2及身份证号'
+               }
+           }  
+       },
+       contactor3Id:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写授权人3及身份证号'
+               }
+           }  
+       },
+       contactor1Tel: {
+       	validators: {
+       		notEmpty: {
+	             message: '请填写手机号'
+	        },
+   	    	regexp: {
+   	    		regexp: /^1[3456789]\d{9}$/,
+   	            message: '请填写正确的手机号'
+   	        }
+   	    }
+       },
        contactor2Tel: {
        	validators: {
+	       	 notEmpty: {
+	             message: '请填写手机号'
+	        },
    	    	regexp: {
    	    		regexp: /^1[3456789]\d{9}$/,
    	            message: '请填写正确的手机号'
@@ -1410,6 +1447,9 @@ function initOrderFormValidator(){
        },
        contactor3Tel: {
        	validators: {
+       		notEmpty: {
+	             message: '请填写手机号'
+	        },
    	    	regexp: {
    	    		regexp: /^1[3456789]\d{9}$/,
    	            message: '请填写正确的手机号'
@@ -1945,8 +1985,17 @@ function saveOrder(type){
 			 layer.alert('请添加购销明细', {icon: 5});
 			 return
 		 }
+		 if($("#saleType").val()=='20'){
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Tel',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Tel',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Tel',false,'notEmpty');
+		 }
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
+		
 		if(!bootstrapValidator.isValid()){ 
 			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
 			expandAll()
@@ -1981,7 +2030,9 @@ function saveOrder(type){
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
-		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
+		 if($("#stOrderType").val()=='2'){
+			 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 
+		 } 
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
@@ -2013,8 +2064,9 @@ function saveOrder(type){
 			    	if(result == null || result.status != 'ok'){
 			    		layer.alert("提交订单失败:" + (result != null ? result.msg : ""));
 			    	}else{
-			    		layer.alert('提交订单成功', {icon: 6});
-			    		window.location.href = ctxPath+'menu/orderManageList';
+			    		layer.confirm("提交订单成功！", {btn: ['确定'], title: "提示"}, function () {
+			    			window.location.href = ctxPath+'menu/orderManageList';
+			    	 });
 			    	} 	
 			    },
 			    error: function(){

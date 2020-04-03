@@ -126,6 +126,10 @@
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="acturalPriceAmountTotal" disabled>
 							    </div>
+							    <span class="col-md-1">可选项转移价合计</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="transcationPriceOfOptionalTotal" disabled>
+							    </div>
 							    <span class="col-md-1">转移价合计</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="transcationPriceTotal" disabled>
@@ -134,12 +138,12 @@
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="retailPrice" disabled>
 							    </div>
-							    <span class="col-md-1">市场零售金额（CNY）</span>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+								<span class="col-md-1">市场零售金额（CNY）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="retailPriceAmount" disabled>
 							    </div>
-							</div>
-							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">折扣率</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="discount" disabled oninput="discountChange(this)">
@@ -160,12 +164,12 @@
 							      	<option value="005">替换</option>
 								  </select>
 							    </div>
-							    <span class="col-md-1">生产周期</span>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+								<span class="col-md-1">生产周期</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="producePeriod" disabled>
 							    </div>
-							</div>
-							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">工厂最早交货时间</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="deliveryDate" disabled>
@@ -181,7 +185,9 @@
 	               						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                					</div>
 							    </div>
-							    <span class="col-md-1">地址</span>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							 <span class="col-md-1">地址</span>
 								<div class="col-md-2">
 								    <div class="input-group">
 					                    <input type="text" class="form-control" disabled id="materialAddress" name="materialAddress">
@@ -192,8 +198,6 @@
 					                    </span> -->
 					                </div>
 							    </div>
-							</div>
-							<div class="row" style="margin-top: 20px;">
 							    <span class="col-md-1">入库时间</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="onStoreDate" disabled>

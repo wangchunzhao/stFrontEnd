@@ -308,7 +308,7 @@
 							<input type="text" class="form-control" id="standardDiscount" readonly th:if="${orderType!=4}" th:value="${order_option.standardDiscount}">
 					    </div>
 					    <div id="freightDiv" style="display:none;">
-						    <span class="col-md-1 control-label">外销运费</span>
+						    <span class="col-md-1 control-label">外销运费（凭证货币）</span>
 							<div class="col-md-2">
 								<input type="text" class="form-control" aria-describedby="emailHelp" id="freight" th:field="*{freight}"><!-- th:field="*{freight}" -->
 						    </div>

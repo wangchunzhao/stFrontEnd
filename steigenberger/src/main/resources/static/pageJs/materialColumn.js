@@ -167,6 +167,10 @@ var materialsColumn = [{
 	    field: 'actualAmountSum'
 
 	},{
+		title:'可选项转移价合计',
+	    field: 'optionalTransationPriceSum'
+
+	},{
 		title:'转移价合计',
 	    field: 'transactionPriceSum'
 
