@@ -92,10 +92,10 @@ var materialsColumn = [{
 	    	if(value==undefined){
 	    		return "";
 	    	}
-	    	if(value){
-	    		return "外购";
-	    	}else{
+	    	if(value||value=='true'){
 	    		return "自制";
+	    	}else{
+	    		return "外购";
 	    	}
 	    }
 	},{
@@ -116,27 +116,33 @@ var materialsColumn = [{
 		visible:false,
 	    field: 'actualPrice'
 	},{
-		title:'产品实卖价',
+		title:'产品实卖单价（凭证货币）',
 	    field: 'originalActualPrice'
 	},{
-		title:'产品实卖金额',
+		title:'产品实卖金额（凭证货币）',
 	    field: 'actualAmount'
 	},{
-		title:'产品转移价',
+		title:'产品转移单价',
 	    field: 'transactionPrice'
+	},{
+		title:'产品转移金额',
+	    field: 'transactionPriceAmount'
 	},{
 		title:'可选项实卖价CNY',
 		visible:false,
 	    field: 'optionalActualPrice'
 	},{
-		title:'可选项实卖价',
+		title:'可选项实卖单价（凭证货币）',
 	    field: 'originalOptionalActualPrice'
 	},{
-		title:'可选项实卖金额',
+		title:'可选项实卖金额（凭证货币）',
 	    field: 'optionalActualAmount'
 	},{
-		title:'可选项转移价',
+		title:'可选项转移单价',
 	    field: 'optionalTransationPrice',
+	},{
+		title:'可选项转移金额',
+	    field: 'optionalTransationPriceAmount',
 	},
 	{
 		title:'可选项标准价差',
@@ -148,38 +154,41 @@ var materialsColumn = [{
 	    field: 'optionalRetailPrice',
 	    visible:false
 	},{
-		title:'B2C预估价',
+		title:'B2C预估单价（CNY）',
 	    field: 'b2cEstimatedPrice'
 
 	},{
-		title:'B2C预估金额',
+		title:'B2C预估金额（CNY）',
 	    field: 'b2cEstimatedAmount'
 
 	},{
-		title:'B2C预估成本',
+		title:'B2C预估成本单价',
 	    field: 'b2cEstimatedCost'
 	},{
-		title:'实卖价合计',
+		title:'B2C预估成本金额',
+	    field: 'b2cEstimatedCostAmount'
+	},{
+		title:'实卖单价小计（凭证货币）',
 	    field: 'actualPriceSum'
 
 	},{
-		title:'实卖金额合计',
+		title:'实卖金额合计（凭证货币）',
 	    field: 'actualAmountSum'
 
 	},{
-		title:'可选项转移价合计',
-	    field: 'optionalTransationPriceSum'
-
-	},{
-		title:'转移价合计',
+		title:'转移单价小计',
 	    field: 'transactionPriceSum'
 
 	},{
-		title:'市场零售价',
+		title:'转移金额合计',
+	    field: 'transactionAmountSum'
+
+	},{
+		title:'市场零售价（CNY）',
 	    field: 'retailPrice'
 
 	},{
-		title:'市场零售金额',
+		title:'市场零售金额（CNY）',
 	    field: 'retailAmount'
 
 	},{

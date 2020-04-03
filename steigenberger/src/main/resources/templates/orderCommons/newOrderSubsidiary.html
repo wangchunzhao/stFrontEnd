@@ -74,77 +74,91 @@
 							      <input type="text" class="form-control" id="unitName" disabled>
 							    </div>
 							    <input type="hidden" id="unitCode">
-							    <span class="col-md-1">产品实卖价（凭证货币）</span>
+							    <span class="col-md-1">产品实卖单价（凭证货币）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="originalActualPrice" disabled oninput="originalActualPriceChange()">
-							      <input type="hidden"  id="actualPriceCny" >
+							      <input type="hidden"  id="actualPrice" >
 							    </div>
 							    <span class="col-md-1">产品实卖金额（凭证货币）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="acturalPriceAmount" disabled>
+							      <input type="text" class="form-control" id="actualAmount" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-							    <span class="col-md-1">产品转移价</span>
+							    <span class="col-md-1">产品转移单价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="transcationPrice" disabled>
+							      <input type="text" class="form-control" id="transactionPrice" disabled>
 							    </div>
-							    <span class="col-md-1">可选项实卖价（凭证货币）</span>
+							    <span class="col-md-1">产品转移金额</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="originalActuralPriceOfOptional" disabled>
-							      <input type="hidden" id="acturalPriceOfOptionalCny" disabled>
+							      <input type="text" class="form-control" id="transactionPriceAmount" disabled>
+							    </div>
+							    <span class="col-md-1">可选项实卖单价（凭证货币）</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="originalOptionalActualPrice" disabled>
+							      <input type="hidden" id="optionalActualPrice" disabled>
 							    </div>
 							    <span class="col-md-1">可选项实卖金额（凭证货币）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="acturalPriceOfOptionalAmount" disabled>
-							    </div>
-							    <span class="col-md-1">可选项转移价</span>
-								<div class="col-md-2">
-							      <input type="text" class="form-control" id="transcationPriceOfOptional" disabled>
+							      <input type="text" class="form-control" id="optionalActualAmount" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-							    <span class="col-md-1">B2C预估价（CNY）</span>
+								<span class="col-md-1">可选项转移单价</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="B2CPriceEstimated" oninput="getB2CAmount(this)">
+							      <input type="text" class="form-control" id="optionalTransationPrice" disabled>
+							    </div>
+							    <span class="col-md-1">可选项转移金额</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="optionalTransationPriceAmount" disabled>
+							    </div>
+							    <span class="col-md-1">B2C预估单价（CNY）</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="b2cEstimatedPrice" oninput="getB2CAmount(this)">
 							    </div>
 							    <span class="col-md-1">B2C预估金额（CNY）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="B2CPriceEstimatedAmount" disabled>
-							    </div>
-							    <span class="col-md-1">B2C预估成本（CNY）</span>
-								<div class="col-md-2">
-							      <input type="text" class="form-control" id="B2CCostOfEstimated" oninput="getB2CCostAmount(this)" th:attr="disabled=${orderDetail.status!='01'}">
-							    </div>
-							    <span class="col-md-1">实卖价合计（凭证货币）</span>
-								<div class="col-md-2">
-							      <input type="text" class="form-control" id="acturalPriceTotal" disabled>
+							      <input type="text" class="form-control" id="b2cEstimatedAmount" disabled>
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
+								<span class="col-md-1">B2C预估成本单价（CNY）</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="b2cEstimatedCost" oninput="getB2CCostAmount(this)" th:attr="disabled=${orderDetail.status!='01'}">
+							    </div>
+							    <span class="col-md-1">B2C预估成本金额（CNY）</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="b2cEstimatedCostAmount" disabled>
+							    </div>
+							    <span class="col-md-1">实卖单价小计（凭证货币）</span>
+								<div class="col-md-2">
+							      <input type="text" class="form-control" id="actualPriceSum" disabled>
+							    </div>
 							    <span class="col-md-1">实卖金额合计（凭证货币）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="acturalPriceAmountTotal" disabled>
+							      <input type="text" class="form-control" id="actualAmountSum" disabled>
 							    </div>
-							    <span class="col-md-1">可选项转移价合计</span>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							 	<span class="col-md-1">转移单价小计</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="transcationPriceOfOptionalTotal" disabled>
+							      <input type="text" class="form-control" id="transactionPriceSum" disabled>
 							    </div>
-							    <span class="col-md-1">转移价合计</span>
+							    <span class="col-md-1">转移金额合计</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="transcationPriceTotal" disabled>
+							      <input type="text" class="form-control" id="transactionAmountSum" disabled>
 							    </div>
 							    <span class="col-md-1">市场零售价（CNY）</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="retailPrice" disabled>
 							    </div>
-							</div>
-							<div class="row" style="margin-top: 20px;">
 								<span class="col-md-1">市场零售金额（CNY）</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="retailPriceAmount" disabled>
+							      <input type="text" class="form-control" id="retailAmount" disabled>
 							    </div>
-							    <span class="col-md-1">折扣率</span>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+								<span class="col-md-1">折扣率</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="discount" disabled oninput="discountChange(this)">
 							       <input type="hidden" id="discountValue">
@@ -164,29 +178,27 @@
 							      	<option value="005">替换</option>
 								  </select>
 							    </div>
-							</div>
-							<div class="row" style="margin-top: 20px;">
 								<span class="col-md-1">生产周期</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="producePeriod" disabled>
 							    </div>
-							    <span class="col-md-1">工厂最早交货时间</span>
-								<div class="col-md-2">
-							      <input type="text" class="form-control" id="deliveryDate" disabled>
-							    </div>
-							    <span class="col-md-1">生产开始时间</span>
-								<div class="col-md-2">
-							      <input type="text" class="form-control" id="produceDate" disabled>
-							    </div>
-							    <span class="col-md-1">要求发货时间</span>
-								<div class="col-md-2">
-								<div class="input-group">
-										<input id="shippDate" class="form-control" type="text" data-date-format="yyyy-mm-dd">
-	               						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-               					</div>
-							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
+							<span class="col-md-1">工厂最早交货时间</span>
+							<div class="col-md-2">
+						      <input type="text" class="form-control" id="deliveryDate" disabled>
+						    </div>
+						    <span class="col-md-1">生产开始时间</span>
+							<div class="col-md-2">
+						      <input type="text" class="form-control" id="produceDate" disabled>
+						    </div>
+						    <span class="col-md-1">要求发货时间</span>
+							<div class="col-md-2">
+							<div class="input-group">
+									<input id="shippDate" class="form-control" type="text" data-date-format="yyyy-mm-dd">
+               						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+              					</div>
+						    </div>
 							 <span class="col-md-1">地址</span>
 								<div class="col-md-2">
 								    <div class="input-group">
@@ -198,7 +210,9 @@
 					                    </span> -->
 					                </div>
 							    </div>
-							    <span class="col-md-1">入库时间</span>
+							</div>
+							<div class="row" style="margin-top: 20px;">
+							<span class="col-md-1">入库时间</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="onStoreDate" disabled>
 							    </div>
