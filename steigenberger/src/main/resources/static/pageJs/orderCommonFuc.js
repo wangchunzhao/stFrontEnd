@@ -1798,7 +1798,7 @@ function calPrice(tableData){
 	var optionalActualAmount = toDecimal2(quantity*originalOptionalActualPrice);
 	
 	//实卖价单价小计
-	var actualPriceSum = toDecimal2(parseFloat(originalOptionalActualPrice)+parseFloat(originalActualPrice)+parseFloat(originalB2cEstimatedAmount));
+	var actualPriceSum = toDecimal2(parseFloat(originalOptionalActualPrice)+parseFloat(originalActualPrice)+parseFloat(originalB2cEstimatedPrice));
 	//实卖金额合计
 	var actualAmountSum = toDecimal2(quantity*parseFloat(actualPriceSum));
 	
