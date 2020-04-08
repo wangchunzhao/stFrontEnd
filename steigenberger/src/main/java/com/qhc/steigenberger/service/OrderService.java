@@ -303,4 +303,15 @@ public class OrderService {
 		return result;
 	}
 
+	/**
+	 * 查询订单在SAP的实时状态
+	 * @param contractNumber 合同号
+	 * @return
+	 */
+	public Result getOrderSapStatus(String contractNumber) {
+		String url = "order/" + contractNumber + "/sapstatus";
+		Result result =  fryeService.getInfo(url, Result.class);
+		return result;
+	}
+
 }

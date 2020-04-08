@@ -167,7 +167,7 @@ public class OrderController extends BaseController {
 			result = orderService.submitOrder(identity, order);
 		} catch (Exception e) {
 			logger.error("提交订单失败", e);
-			result = Result.error("提交订单失败");
+			result = Result.error(e.getMessage());
 		}
 		
 		return result;
@@ -190,7 +190,7 @@ public class OrderController extends BaseController {
 			result = orderService.rejectOrder(identity, orderInfoId);
 		} catch (Exception e) {
 			logger.error("驳回订单失败", e);
-			result = Result.error("驳回订单失败");
+			result = Result.error(e.getMessage());
 		}
 		
 		return result;
@@ -213,7 +213,7 @@ public class OrderController extends BaseController {
 			result = orderService.submitbpmOrder(identity, order);
 		} catch (Exception e) {
 			logger.error("提交BPM失败", e);
-			result = Result.error("提交BPM失败");
+			result = Result.error(e.getMessage());
 		}
 		
 		return result;
@@ -240,7 +240,7 @@ public class OrderController extends BaseController {
 			result = orderService.findOrderDetail(orderInfoId);
 		} catch (Exception e) {
 			logger.error("查询订单详情", e);
-			result = Result.error("查询订单详情");
+			result = Result.error(e.getMessage());
 		}
 		
 		return result;
@@ -894,5 +894,29 @@ public class OrderController extends BaseController {
 		
 		return result;
     }
+    
+	/**
+	 * 查询订单在SAP的实时状态
+	 * 
+	 * @param contractNumber 合同编号
+	 * @return
+	 * @throws Exception
+	 */
+	@ApiOperation(value = "查询订单在SAP的实时状态", notes = "查询订单在SAP的实时状态")
+	@GetMapping(value = "{contractNumber}/sapstatus")
+	@ResponseBody
+	public Result getOrderSapStatus(@PathVariable("contractNumber") String contractNumber)
+			throws Exception {
+		Result result;
+		
+		try {
+			result = orderService.getOrderSapStatus(contractNumber);
+		} catch (Exception e) {
+			logger.error("订单在SAP的实时状态", e);
+			result = Result.error(e.getMessage());
+		}
+		
+		return result;
+	}
 
 }
