@@ -121,7 +121,30 @@ public class OrderController extends BaseController {
 			result = orderService.saveOrder(identity, order);
 		} catch (Exception e) {
 			logger.error("保存订单失败", e);
-			result = Result.error("保存订单失败");
+			result = Result.error(e.getMessage());
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 保存订单
+	 * 
+	 * @param order
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("{orderInfoId}/delete")
+	@ResponseBody
+	public Result deleteOrder(@PathVariable("orderInfoId") Integer orderInfoId) {
+		String identity = getUserIdentity();
+		Result result;
+		
+		try {
+			result = orderService.deleteOrder(identity, orderInfoId);
+		} catch (Exception e) {
+			logger.error("删除订单失败", e);
+			result = Result.error(e.getMessage());
 		}
 		
 		return result;

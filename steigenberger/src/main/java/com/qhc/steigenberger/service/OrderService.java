@@ -137,6 +137,19 @@ public class OrderService {
 	}
 
 	/**
+	 * 删除订单
+	 * @param user
+	 * @param orderInfoId
+	 * @return
+	 */
+	public Result deleteOrder(String user, Integer orderInfoId) {
+		String url = "order/" + orderInfoId + "/delete/" + user;
+		Result result = fryeService.postForm(url, (Object) new HashMap(), Result.class);
+
+		return result;
+	}
+
+	/**
 	 * 
 	 * @param form : order
 	 */
