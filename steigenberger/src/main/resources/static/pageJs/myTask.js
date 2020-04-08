@@ -164,6 +164,9 @@ function operation(value, row, index) {
 	var currentVersion = row.currentVersion;
 	var orderInfoId = row.id;
 	var viewHtm = "<a type='button' class='btn btn-primary' id='approveOrder' onclick='approveOrder(\""+orderInfoId+"\")'>审批</button>";
+	if(row.status=='00'){
+		viewHtm+="<a type='button' class='btn btn-primary' id='deleteOrder' onclick='deleteOrder(\""+orderInfoId+"\")'>删除</button>";
+	}
 	return viewHtm;
 }
 
@@ -183,6 +186,28 @@ function approveOrder(orderInfoId){
 		myForm.submit();   
 		document.body.removeChild(myForm); 	
 }
+
+function deleteOrder(orderInfoId) {
+	
+	layer.confirm("确定要删除订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+        var url = ctxPath+"order/"+orderInfoId+"/delete";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: null,
+            dataType: "json",
+            success: function (data) {
+            	if(data == null || data.status != 'ok'){
+		    		layer.alert("订单删除失败：" + (data != null ? data.msg : ""));
+		    	}else{
+		    		layer.alert('订单删除成功', {icon: 6});
+		    		$('#mytab').bootstrapTable('refresh');
+		    	} 	
+            }
+        });
+    });
+}
+
 
 function InitSapSalesOffice(){
 	$.post(ctxPath+'permission/sapSalesOfficelist',null,function(ret){

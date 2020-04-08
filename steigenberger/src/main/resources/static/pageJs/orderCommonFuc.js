@@ -452,11 +452,12 @@ function getCurrency(saleType,exchangeRates){
 		});
 	}else{
 		var currency = exchangeRates[saleType];
-		$("#currency").append("<option value=''>--选择币种--</option>");
 		$.each(currency, function (index,item) {
 			$("#currency").append("<option selected value=" + item.code + ">" + item.name + "</option>");
 			$("#exchangeRate").val(item.rate);
 		});
+		getExchangeRate("#currency",exchangeRates);
+		
 	}
 	
 }
@@ -654,7 +655,8 @@ function addSubsidiary(){
         layer.msg('折扣未录入！', function(){
         });
     }
-    
+    $('#b2cEstimatedPrice').attr("disabled",false);
+    $('#originalActualPrice').attr("disabled",true);
 	if($("#saleType").val()=='20'){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#b2cEstimatedPrice').attr("disabled",true);
@@ -720,6 +722,9 @@ function searchSpecification(){
 	$("#materialTypeTable").bootstrapTable('refresh', opt);
 	$("#materialTypeTable").on('click-row.bs.table',function($element,row,field){
 		$('#specificationModal').modal('hide');
+		$('#amount').attr("disabled",false);
+		$('#originalActualPrice').attr("disabled",true);
+		$('#transactionPrice').attr("disabled",true);
 		fillMaterailValue(row);
 	})
 }
@@ -753,14 +758,32 @@ function fillMaterailValue(data){
 	}
 	$("#materialTypeName").val(data.description);
 	$("#materialCode").val(data.code);
-	if(data.code=='BG1GD1000000-X'||data.code=='BG1R8R00000-X'||data.code=='BG1R8L00000-X'){
-		$('#originalActualPrice').attr("disabled",false);
-	}else{
-		$('#originalActualPrice').attr("disabled",true);
-		if($("#saleType").val()=='20'){
-			$('#originalActualPrice').attr("disabled",false);
-		}
+	//不可预估费特殊处理
+	if(data.code=='BG1R8L00000-X'){
+		$('#transactionPrice').attr("disabled",false);
+		$('#amount').attr("disabled",true);
 	}
+	//冷库特殊处理BG1R8R00000-X
+	if(data.code=='BG1R8R00000-X'){
+		$('#transactionPrice').attr("disabled",false);
+		$('#originalActualPrice').attr("disabled",false);
+		$('#amount').attr("disabled",true);
+	}
+	//其他项目收费特殊处理 BG1GD1000000-X
+	if(data.code=='BG1GD1000000-X'){
+		$('#originalActualPrice').attr("disabled",false);
+		$('#amount').attr("disabled",true);
+	}
+	if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
+		$('#amount').attr("disabled",false);
+		$('#originalActualPrice').attr("disabled",true);
+		$('#transactionPrice').attr("disabled",true);
+	}
+	if($("#saleType").val()=='20'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+		$('#originalActualPrice').attr("disabled",false);
+		$('#b2cEstimatedPrice').attr("disabled",true);
+	}
+
 	if(data.purchased||data.purchased=='true'){
 		$('#isPurchased').val('自制');
 		$('#purchasedCode').val(data.purchased)
@@ -772,14 +795,20 @@ function fillMaterailValue(data){
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = data.stGroupCode;
-	if($("#stOrderType").val()=="2"&&materialsType=='T101'){
-		var discount = $("#bodyDiscount").val();
-		$("#discount").val(discount);
+	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
+		$("#discount").attr("disabled",false);
+		$("#originalActualPrice").attr("disabled",false);
+	}else{
+		if($("#stOrderType").val()=="2"&&materialsType=='T101'){
+			var discount = $("#bodyDiscount").val();
+			$("#discount").val(discount);
+		}
+		if($("#stOrderType").val()=="2"&&materialsType=='T102'){
+			var discount = $("#mainDiscount").val();
+			$("#discount").val(discount);
+		}
 	}
-	if($("#stOrderType").val()=="2"&&materialsType=='T102'){
-		var discount = $("#mainDiscount").val();
-		$("#discount").val(discount);
-	}
+	
 	$("#materialType").val(materialsType);
 	$("#unitName").val(data.unitName);
 	$("#unitCode").val(data.unitCode);
@@ -927,7 +956,6 @@ function amountChange(){
 
 //实卖价编辑
 function originalActualPriceChange(){
-	debugger
 	//数量
 	var amount = parseFloat($("#amount").val());
 	
@@ -967,7 +995,7 @@ function originalActualPriceChange(){
 	
 	//计算折扣
 	if($("#stOrderType").val()=="2"){
-		var discount =toDecimal2( (parseFloat(actualPriceCny)/parseFloat(retailPrice))*100);
+		var discount =toDecimal2( (parseFloat(actualPrice)/parseFloat(retailPrice))*100);
 		$("#discount").val(discount);
 	}
 }
@@ -1074,13 +1102,12 @@ function getB2CCostAmount(obj){
 //编辑购销明细
 function editMaterials(editContent){
 	$('#subsidiaryModal').modal('show');
+	$('#amount').attr("disabled",false);
+	$('#originalActualPrice').attr("disabled",true);
+	$('#transactionPrice').attr("disabled",true);
 	if(status=='01'){
 		$("#b2cEstimatedCost").attr("disabled",false);
 	}	
-	if($("#saleType").val()=='20'){
-		$('#originalActualPrice').attr("disabled",false);
-		$('#b2cEstimatedPrice').attr("disabled",true);
-	}
 	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
@@ -1097,6 +1124,32 @@ function editMaterials(editContent){
 		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
 	}
 	fillEditMaterailValue(tableData,index);
+	var materialType = $("#materialType").val();
+	//不可预估费特殊处理
+	if(materialType=='BG1R8L00000-X'){
+		$('#transactionPrice').attr("disabled",false);
+		$('#amount').attr("disabled",true);
+	}
+	//冷库特殊处理BG1R8R00000-X
+	if(materialType=='BG1R8R00000-X'){
+		$('#transactionPrice').attr("disabled",false);
+		$('#originalActualPrice').attr("disabled",false);
+		$('#amount').attr("disabled",true);
+	}
+	//其他项目收费特殊处理 BG1GD1000000-X
+	if(materialType=='BG1GD1000000-X'){
+		$('#originalActualPrice').attr("disabled",false);
+		$('#amount').attr("disabled",true);
+	}
+	if(materialType!='BG1R8R00000-X'&&materialType!='BG1R8L00000-X'&&materialType!='BG1GD1000000-X'){
+		$('#amount').attr("disabled",false);
+		$('#originalActualPrice').attr("disabled",true);
+		$('#transactionPrice').attr("disabled",true);
+	}
+	if($("#saleType").val()=='20'&&(materialType!='BG1R8R00000-X'&&materialType!='BG1R8L00000-X'&&materialType!='BG1GD1000000-X')){
+		$('#originalActualPrice').attr("disabled",false);
+		$('#b2cEstimatedPrice').attr("disabled",true);
+	}
 }
 
 //编辑购销明细时页面值回显
@@ -1260,15 +1313,18 @@ function getAllCountFiled(){
 	//购销明细金额
 	var itemsAmount = [];
 	$.each(tableData,function(index,item){
-		if(item.deliveryDate){
-			deliveryTime.push(moment(item.deliveryDate));
-		}
-		if(item.shippDate){
-			requiredDeliveryTime.push(moment(item.shippDate));
-		}
-		if(item.actualAmountSum){
-			itemsAmount.push(item.actualAmountSum);
-		}
+		//需排除取消状态的行项目
+		if(item.itemStatus!='10'){
+			if(item.deliveryDate){
+				deliveryTime.push(moment(item.deliveryDate));
+			}
+			if(item.shippDate){
+				requiredDeliveryTime.push(moment(item.shippDate));
+			}
+			if(item.actualAmountSum){
+				itemsAmount.push(item.actualAmountSum);
+			}
+		}	
 	})
 	var totalAmount = toDecimal2(calculationAmount(itemsAmount));
 	$("#itemsAmount").val(totalAmount);	
@@ -1769,7 +1825,6 @@ function updateTableRowPrice(index,tableData){
 
 //计算可选项价格和总价格
 function calPrice(tableData){
-	debugger
 	
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
