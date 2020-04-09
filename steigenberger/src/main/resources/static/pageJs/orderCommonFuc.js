@@ -749,12 +749,22 @@ function searchMaterilType(){
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
-	$("#itemCategory").html('');
+	$("#itemCategoryContent").html('');
 	var configure = data.configurable+'';
-	if(configure=='true'){
-		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option>");	
+	if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
 	}else{
-		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
+		if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
+		}else{
+			if(data.code=='BG1R8L00000-X'){
+				$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
+			}else{
+				$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
+			}
+			$("#itemCategory").attr("disabled",true);
+		}
+		
 	}
 	$("#materialTypeName").val(data.description);
 	$("#materialCode").val(data.code);
@@ -1128,15 +1138,25 @@ function editMaterials(editContent){
 	var index = editContent.split('|')[1];
 	var rowNumber = editContent.split('|')[0]
 	var tableData =$('#materialsTable').bootstrapTable('getData')[index];	
-	$("#itemCategory").html('');
+	$("#itemCategoryContent").html('');
 	var configable = tableData.isConfigurable+'';
-	if(configable=='true'){
-		$("#itemCategory").append("<option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option>");	
-	}else{
-		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
-	}
 	fillEditMaterailValue(tableData,index);
 	var materialCode = $("#materialCode").val();
+	if(configable=='true'&&(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X')){
+		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
+	}else{
+		if(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X'){
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
+		}else{
+			if(materialCode=='BG1R8L00000-X'){
+				$("#itemCategoryContent").append("<input type='text' class='form-control'  id='itemCategory'  name='itemCategory' value='ZH97'>")				
+			}else{
+				$("#itemCategoryContent").append("<input type='text' class='form-control'  id='itemCategory'  name='itemCategory' value='ZH98'>")
+			}
+			$("#itemCategory").attr("disabled",true);
+		}
+		
+	}
 	//不可预估费特殊处理
 	if(materialCode=='BG1R8L00000-X'){
 		$('#originalTransationPrice').attr("disabled",false);

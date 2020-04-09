@@ -216,7 +216,7 @@ var materialsColumn = [{
 		    	}else if(value=="ZHR3"){
 		    		return "退货";
 		    	}else{ 
-		    		return '';
+		    		return value;
 		    	}
 	    	}else{
 	    		if(value=="ZHD2"){
@@ -226,7 +226,7 @@ var materialsColumn = [{
 		    	}else if(value=="ZHR4"){
 		    		return "退货";
 		    	}else{ 
-		    		return '';
+		    		return value;
 		    	}
 	    	}
 	    	
