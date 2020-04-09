@@ -724,7 +724,7 @@ function searchSpecification(){
 		$('#specificationModal').modal('hide');
 		$('#amount').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",true);
-		$('#transactionPrice').attr("disabled",true);
+		$('#originalTransationPrice').attr("disabled",true);
 		fillMaterailValue(row);
 	})
 }
@@ -760,12 +760,12 @@ function fillMaterailValue(data){
 	$("#materialCode").val(data.code);
 	//不可预估费特殊处理
 	if(data.code=='BG1R8L00000-X'){
-		$('#transactionPrice').attr("disabled",false);
+		$('#originalTransationPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
 	//冷库特殊处理BG1R8R00000-X
 	if(data.code=='BG1R8R00000-X'){
-		$('#transactionPrice').attr("disabled",false);
+		$('#originalTransationPrice').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
@@ -777,7 +777,7 @@ function fillMaterailValue(data){
 	if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
 		$('#amount').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",true);
-		$('#transactionPrice').attr("disabled",true);
+		$('#originalTransationPrice').attr("disabled",true);
 	}
 	if($("#saleType").val()=='20'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
 		$('#originalActualPrice').attr("disabled",false);
@@ -850,11 +850,14 @@ function initMaterialPrice(){
 	var actualPriceAmount = toDecimal2(amount*(parseFloat(originalActualPrice)));
 	$("#actualAmount").val(actualPriceAmount);
 	
-	//产品转移单价
+	//产品转移单价人民币
 	var transcationPrice = $("#transactionPrice").val(); 
+	//产品转移单价凭证货币
+	var originalTransationPrice = toDecimal2(parseFloat(transcationPrice)/parseFloat(exchangeRate));
+	$("#originalTransationPrice").val(originalTransationPrice);
 	
 	//产品转移金额
-	var transactionPriceAmount = toDecimal2(amount*(parseFloat(transcationPrice)));
+	var transactionPriceAmount = toDecimal2(amount*(parseFloat(originalTransationPrice)));
 	$("#transactionPriceAmount").val(transactionPriceAmount);
 	
     //可选项实卖单价	
@@ -866,12 +869,16 @@ function initMaterialPrice(){
 	$("#optionalActualAmount").val(toDecimal2(amount*parseFloat(originalOptionalActualPrice)));
 	var optionalActualAmount = $("#acturalPriceOfOptionalAmount").val();
 	
-	//可选项转移单价
+	//可选项转移单价人民币
 	$("#optionalTransationPrice").val(toDecimal2(0.00));
 	var optionalTransationPrice = $("#optionalTransationPrice").val();
 	
+	//可选项转移单价凭证货币
+	$("#originalOptionalTransationPrice").val(toDecimal2(0.00));
+	var originalOptionalTransationPrice = $("#originalOptionalTransationPrice").val();
+	
 	//可选项转移金额
-	var optionalTransationPriceAmount = toDecimal2(amount*parseFloat(optionalTransationPrice));
+	var optionalTransationPriceAmount = toDecimal2(amount*parseFloat(originalOptionalTransationPrice));
 	$("#optionalTransationPriceAmount").val(optionalTransationPriceAmount);
 	
 	//b2c预估单价  初始化为空
@@ -882,16 +889,18 @@ function initMaterialPrice(){
 	var b2cEstimatedAmount = toDecimal2(amount*parseFloat(b2cEstimatedPrice));
 	$("#b2cEstimatedAmount").val(b2cEstimatedAmount);
 	
-	//B2C预估成本单价  初始化为空
+	//B2C预估成本单价人民币  初始化为空
 	$("#b2cEstimatedCost").val(toDecimal2(0.00));
 	var b2cEstimatedCost = $("#b2cEstimatedCost").val();
+	//B2c预估成本单价凭证货币
+	var originalB2cEstimatedCost = toDecimal2(0.00);
 	
 	//B2C预估成本金额
 	var b2cEstimatedCostAmount = toDecimal2(amount*parseFloat(b2cEstimatedCost));
 	$("#b2cEstimatedCostAmount").val(b2cEstimatedCostAmount);
 	
 	//实卖单价合计 
-	var actualPriceSum = toDecimal2(parseFloat(originalActualPrice)+parseFloat(optionalTransationPrice)+parseFloat(b2cEstimatedPrice));
+	var actualPriceSum = toDecimal2(parseFloat(originalActualPrice)+parseFloat(originalOptionalTransationPrice)+parseFloat(b2cEstimatedPrice));
 	$("#actualPriceSum").val(actualPriceSum);
 	
 	//实卖金额合计
@@ -899,7 +908,7 @@ function initMaterialPrice(){
 	$("#actualAmountSum").val(actualAmountSum);
 	
 	//转移单价合计
-	var transactionPriceSum = toDecimal2(parseFloat(transcationPrice)+parseFloat(optionalTransationPrice)+parseFloat(b2cEstimatedCost));
+	var transactionPriceSum = toDecimal2(parseFloat(originalTransationPrice)+parseFloat(optionalTransationPrice)+parseFloat(originalB2cEstimatedCost));
 	$("#transactionPriceSum").val(transactionPriceSum);
 	
 	//转移金额合计
@@ -912,7 +921,6 @@ function initMaterialPrice(){
 
 //数量变化
 function amountChange(){
-	debugger
 	var amount = $("#amount").val();
 	if(amount==''){
 		return;
@@ -922,7 +930,7 @@ function amountChange(){
 	$("#actualAmount").val(actualAmount);
 	
 	//产品转移金额
-	var transactionPriceAmount = toDecimal2(amount*(parseFloat($("#transactionPrice").val())));
+	var transactionPriceAmount = toDecimal2(amount*(parseFloat($("#originalTransactionPrice").val())));
 	$("#transactionPriceAmount").val(transactionPriceAmount);
 	
 	//可选项实卖金额
@@ -931,7 +939,7 @@ function amountChange(){
 	
 
 	//可选项转移金额
-	var optionalTransationPriceAmount = toDecimal2(amount*parseFloat($("#optionalTransationPrice").val()));
+	var optionalTransationPriceAmount = toDecimal2(amount*parseFloat($("#originalOptionalTransationPrice").val()));
 	$("#optionalTransationPriceAmount").val(optionalTransationPriceAmount);
 	
 	//B2C预估金额  初始化为空
@@ -1081,18 +1089,22 @@ function getB2CAmount(obj){
 function getB2CCostAmount(obj){
 	//数量
 	var amount = $("#amount").val();
+	//汇率
+	var exchangeRate = $("#exchangeRate").val()?parseFloat($("#exchangeRate").val()):parseFloat(1.00);
 	
 	//B2C成本
 	var b2cCost = $(obj).val()?$(obj).val():parseFloat(0.00);
+	//B2C成本凭证货币
+	var originalB2cCost = toDecimal2(parseFloat(b2cCost)/parseFloat(exchangeRate))
 	
-	//产品转移单价
-	var transcationPrice = $("#transactionPrice").val()?$("#transactionPrice").val():parseFloat(0.00);	
+	//产品转移单价凭证货币
+	var originalTransationPrice = $("#originalTransationPrice").val()?$("#originalTransationPrice").val():parseFloat(0.00);	
 	
-	//可选项转移单价
-	var optionalTransationPrice = $("#optionalTransationPrice").val()?$("#optionalTransationPrice").val():parseFloat(0.00);
+	//可选项转移单价凭证货币
+	var originalOptionalTransationPrice = $("#originalOptionalTransationPrice").val()?$("#originalOptionalTransationPrice").val():parseFloat(0.00);
 	
 	//转移单价小计
-	var transactionPriceSum = toDecimal2(parseFloat(b2cCost)+parseFloat(transcationPrice)+parseFloat(optionalTransationPrice));
+	var transactionPriceSum = toDecimal2(parseFloat(originalTransationPrice)+parseFloat(originalOptionalTransationPrice)+parseFloat(originalB2cCost));
 	$("#transactionPriceSum").val(transactionPriceSum);
 	//转移金额合计
 	var transactionAmountSum = toDecimal2(parseFloat(amount)*parseFloat(transactionPriceSum));
@@ -1104,7 +1116,7 @@ function editMaterials(editContent){
 	$('#subsidiaryModal').modal('show');
 	$('#amount').attr("disabled",false);
 	$('#originalActualPrice').attr("disabled",true);
-	$('#transactionPrice').attr("disabled",true);
+	$('#originalTransationPrice').attr("disabled",true);
 	if(status=='01'){
 		$("#b2cEstimatedCost").attr("disabled",false);
 	}	
@@ -1124,29 +1136,29 @@ function editMaterials(editContent){
 		$("#itemCategory").append("<option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option>");
 	}
 	fillEditMaterailValue(tableData,index);
-	var materialType = $("#materialType").val();
+	var materialCode = $("#materialCode").val();
 	//不可预估费特殊处理
-	if(materialType=='BG1R8L00000-X'){
-		$('#transactionPrice').attr("disabled",false);
+	if(materialCode=='BG1R8L00000-X'){
+		$('#originalTransationPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
 	//冷库特殊处理BG1R8R00000-X
-	if(materialType=='BG1R8R00000-X'){
-		$('#transactionPrice').attr("disabled",false);
+	if(materialCode=='BG1R8R00000-X'){
+		$('#originalTransationPrice').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
 	//其他项目收费特殊处理 BG1GD1000000-X
-	if(materialType=='BG1GD1000000-X'){
+	if(materialCode=='BG1GD1000000-X'){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
-	if(materialType!='BG1R8R00000-X'&&materialType!='BG1R8L00000-X'&&materialType!='BG1GD1000000-X'){
+	if(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X'){
 		$('#amount').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",true);
-		$('#transactionPrice').attr("disabled",true);
+		$('#originalTransationPrice').attr("disabled",true);
 	}
-	if($("#saleType").val()=='20'&&(materialType!='BG1R8R00000-X'&&materialType!='BG1R8L00000-X'&&materialType!='BG1GD1000000-X')){
+	if($("#saleType").val()=='20'&&(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X')){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#b2cEstimatedPrice').attr("disabled",true);
 	}
@@ -1183,7 +1195,8 @@ function fillEditMaterailValue(data,index){
 	$("#actualPrice").val(data.actualPrice);
 	$("#actualAmount").val(data.actualAmount);
 	
-	$("#transactionPrice").val(data.transactionPrice);
+	$("#transactionPrice").val(data.transactionPrice);  
+	$("#originalTransationPrice").val(data.originalTransationPrice);
 	$("#transactionPriceAmount").val(data.transactionPriceAmount);
 	
 	$("#originalOptionalActualPrice").val(data.originalOptionalActualPrice);
@@ -1191,6 +1204,7 @@ function fillEditMaterailValue(data,index){
 	$("#optionalActualAmount").val(data.optionalActualAmount);
 	
 	$("#optionalTransationPrice").val(data.optionalTransationPrice);
+	$("#originalOptionalTransationPrice").val(data.originalOptionalTransationPrice);
 	$("#optionalTransationPriceAmount").val(data.optionalTransationPriceAmount);
 	
 	$("#b2cEstimatedPrice").val(data.b2cEstimatedPrice);
@@ -1412,13 +1426,16 @@ function confirmRowData(rowNumber){
 			actualAmount:$("#actualAmount").val(),
 			
 			transactionPrice:$("#transactionPrice").val(),
+			originalTransationPrice:$("#originalTransationPrice").val(),
 			transactionPriceAmount:$("#transactionPriceAmount").val(),
 			
 			originalOptionalActualPrice:$("#originalOptionalActualPrice").val(),
 			optionalActualPrice:$("#optionalActualPrice").val(),
+			
 			optionalActualAmount:$("#optionalActualAmount").val(),
 			
 			optionalTransationPrice:$("#optionalTransationPrice").val(),
+			originalOptionalTransationPrice:$("#originalOptionalTransationPrice").val(),
 			optionalTransationPriceAmount:$("#optionalTransationPriceAmount").val(),
 			
 			b2cEstimatedPrice:$("#b2cEstimatedPrice").val(),
@@ -1835,15 +1852,22 @@ function calPrice(tableData){
 	var actualPriceCny = tableData.actualPrice;
 	//产品实卖价凭证货币
 	var originalActualPrice = toDecimal2(parseFloat(tableData.actualPrice)/parseFloat(exchangeRate));
-	var actualAmount = toDecimal2(originalActualPrice*quantity);
+	var actualAmount = toDecimal2(parseFloat(originalActualPrice)*quantity);
+	
 	//可选项实卖价人民币
 	var optionalActualPriceCny = tableData.optionalActualPrice;
 	//可选项实卖价凭证货币
 	var originalOptionalActualPrice = toDecimal2(parseFloat(optionalActualPriceCny)/parseFloat(exchangeRate));
-	//转移价
+	//产品转移单价价人民币
 	var transcationPrice = tableData.transactionPrice;
-	//可选项转移价
+	//产品转移单价价凭证货币
+	var originalTransationPrice = toDecimal2(parseFloat(transcationPrice)/parseFloat(exchangeRate));
+	var transactionPriceAmount = toDecimal2(parseFloat(originalTransationPrice)*quantity);
+	//可选项转移单价人民币
 	var optionalTransationPrice = tableData.optionalTransationPrice;
+	//可选项转移单价凭证货币
+	var originalOptionalTransationPrice = toDecimal2(parseFloat(optionalTransationPrice)/parseFloat(exchangeRate));
+	var optionalTransationPriceAmount = toDecimal2(parseFloat(originalOptionalTransationPrice)*quantity);
 	//B2C预估价
 	var b2cEstimatedPrice = tableData.b2cEstimatedPrice;
 	//B2C预估价凭证货币
@@ -1859,20 +1883,23 @@ function calPrice(tableData){
 	//实卖金额合计
 	var actualAmountSum = toDecimal2(quantity*parseFloat(actualPriceSum));
 	
-	//B2C预估成本
+	//B2C预估成本人民币
 	var b2cEstimatedCost = tableData.b2cEstimatedCost;
+	//B2C预估成本凭证货币
+	var originalB2cEstimatedCost = toDecimal2(parseFloat(b2cEstimatedCost)/parseFloat(exchangeRate));
 	//转移价单价小计
-	var transactionPriceSum = toDecimal2(parseFloat(transcationPrice)+parseFloat(optionalTransationPrice)+parseFloat(b2cEstimatedCost));	
+	var transactionPriceSum = toDecimal2(parseFloat(originalTransationPrice)+parseFloat(originalOptionalTransationPrice)+parseFloat(originalB2cEstimatedCost));	
 	var transactionAmountSum = toDecimal2(quantity*parseFloat(transactionPriceSum))
 	
 	tableData.optionalActualAmount = optionalActualAmount;
-	
+	tableData.originalTransationPrice = originalTransationPrice;
+	tableData.originalOptionalTransationPrice = originalOptionalTransationPrice;
 	tableData.actualPriceSum = actualPriceSum;
-	
+	tableData.transactionPriceAmount = transactionPriceAmount;
 	tableData.actualAmountSum = actualAmountSum;
-	
+	tableData.optionalTransationPriceAmount = optionalTransationPriceAmount;
 	tableData.optionalActualPrice = originalOptionalActualPrice;
-	
+	tableData.transactionPriceSum = transactionPriceSum;
 	tableData.originalOptionalActualPrice = originalOptionalActualPrice;
 	
 	tableData.originalActualPrice = originalActualPrice;
@@ -2501,7 +2528,6 @@ function viewGrossProfit(){
 	 $("#currency").attr("disabled",false);
 	 var orderData = $("#orderForm").serializeObject();
 	 $('#transferType').attr("disabled",true);
-	 $("#currency").attr("disabled",true);
 	 orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';
 	 var items = $("#materialsTable").bootstrapTable('getData');

@@ -85,11 +85,12 @@
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-							    <span class="col-md-1">产品转移单价</span>
+							    <span class="col-md-1">产品转移单价(凭证货币)</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="transactionPrice" disabled>
+								  <input type="hidden" id="transactionPrice">
+							      <input type="text" class="form-control" id="originalTransationPrice" disabled>
 							    </div>
-							    <span class="col-md-1">产品转移金额</span>
+							    <span class="col-md-1">产品转移金额(凭证货币)</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="transactionPriceAmount" disabled>
 							    </div>
@@ -104,11 +105,12 @@
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-								<span class="col-md-1">可选项转移单价</span>
+								<span class="col-md-1">可选项转移单价(凭证货币)</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="optionalTransationPrice" disabled>
+							      <input type="hidden" id="optionalTransationPrice">
+							      <input type="text" class="form-control" id="originalOptionalTransationPrice" disabled>
 							    </div>
-							    <span class="col-md-1">可选项转移金额</span>
+							    <span class="col-md-1">可选项转移金额(凭证货币)</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="optionalTransationPriceAmount" disabled>
 							    </div>
@@ -140,11 +142,11 @@
 							    </div>
 							</div>
 							<div class="row" style="margin-top: 20px;">
-							 	<span class="col-md-1">转移单价小计</span>
+							 	<span class="col-md-1">转移单价小计(凭证货币)</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="transactionPriceSum" disabled>
 							    </div>
-							    <span class="col-md-1">转移金额合计</span>
+							    <span class="col-md-1">转移金额合计(凭证货币)</span>
 								<div class="col-md-2">
 							      <input type="text" class="form-control" id="transactionAmountSum" disabled>
 							    </div>

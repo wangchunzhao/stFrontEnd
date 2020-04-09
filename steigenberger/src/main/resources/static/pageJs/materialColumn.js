@@ -122,10 +122,14 @@ var materialsColumn = [{
 		title:'产品实卖金额（凭证货币）',
 	    field: 'actualAmount'
 	},{
-		title:'产品转移单价',
+		title:'产品转移单价（凭证货币）',
+		visible:false,
 	    field: 'transactionPrice'
 	},{
-		title:'产品转移金额',
+		title:'产品转移单价（凭证货币）',
+	    field: 'originalTransationPrice'
+	},{
+		title:'产品转移金额（凭证货币）',
 	    field: 'transactionPriceAmount'
 	},{
 		title:'可选项实卖价CNY',
@@ -138,10 +142,14 @@ var materialsColumn = [{
 		title:'可选项实卖金额（凭证货币）',
 	    field: 'optionalActualAmount'
 	},{
-		title:'可选项转移单价',
+		title:'可选项转移单价（人民币）',
 	    field: 'optionalTransationPrice',
+	    visible:false
 	},{
-		title:'可选项转移金额',
+		title:'可选项转移单价（凭证货币）',
+	    field: 'originalOptionalTransationPrice',
+	},{
+		title:'可选项转移金额（凭证货币）',
 	    field: 'optionalTransationPriceAmount',
 	},
 	{

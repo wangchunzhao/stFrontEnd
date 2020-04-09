@@ -41,10 +41,8 @@
 				<div th:replace="orderCommons/orderCommons::specialShipment">	</div>
 				<div th:replace="orderCommons/orderCommons::viewInfoForDirectCustomer">	</div>
 				<div th:replace="orderCommons/orderCommons::viewAttachmentInformation">	</div>
+				<div th:replace="orderCommons/orderCommons::footerButton">	</div>	
 			</div>
-			<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()">保存 save</button>
-			<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')">提交 submit</button>
-			<button type="button" class="btn pull-right btn-warning">返回 back</button>
 		</div>
 	</form>
 	<div id="footer" class="container" th:replace="foot::foot"></div>
