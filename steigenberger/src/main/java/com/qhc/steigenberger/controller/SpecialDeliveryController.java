@@ -2,8 +2,8 @@ package com.qhc.steigenberger.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("specialdelivery")
 public class SpecialDeliveryController extends BaseController {
+	static private Logger logger = LoggerFactory.getLogger(SpecialDeliveryController.class);
 
 	@Autowired
 	SpecialDeliveryService specialDeliveryService;
@@ -94,12 +95,27 @@ public class SpecialDeliveryController extends BaseController {
 
 	@PostMapping("")
 	@ResponseBody
-	public Result save(@RequestBody SpecialDelivery specialDelivery, HttpServletRequest request) {
+	public Result save(@RequestBody SpecialDelivery specialDelivery) {
 		Result result = null;
 		try {
-			result = specialDeliveryService.saveSpecialDelivery(specialDelivery);
+			String username = super.getUserIdentity();
+			result = specialDeliveryService.saveSpecialDelivery(username, specialDelivery);
 		} catch (Throwable e) {
 			e.printStackTrace();
+			result = Result.error(e.getMessage());
+		}
+		return result;
+	}
+
+	@PostMapping("submit")
+	@ResponseBody
+	public Result submit(@RequestBody SpecialDelivery specialDelivery) {
+		Result result = null;
+		try {
+			String username = super.getUserIdentity();
+			result = specialDeliveryService.submit(username, specialDelivery);
+		} catch (Throwable e) {
+			logger.error("提交失败", e);
 			result = Result.error(e.getMessage());
 		}
 		return result;

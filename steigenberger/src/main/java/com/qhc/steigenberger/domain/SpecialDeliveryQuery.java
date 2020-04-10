@@ -1,7 +1,5 @@
 package com.qhc.steigenberger.domain;
 
-import java.util.Date;
-
 /**
  * @author lizuoshan
  *

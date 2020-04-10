@@ -13,8 +13,8 @@ public class SpecialDeliveryService {
 	@Autowired
 	FryeService fryeService;
 
-	public Result saveSpecialDelivery(SpecialDelivery specialDelivery) {
-		return fryeService.postInfo(specialDelivery, "specialdelivery", Result.class);
+	public Result saveSpecialDelivery(String username, SpecialDelivery specialDelivery) {
+		return fryeService.postInfo(specialDelivery, "specialdelivery/" + username, Result.class);
 	}
 
 	public Result findSpecialDeliveryById(Integer applyId) {
@@ -33,6 +33,10 @@ public class SpecialDeliveryService {
 				+ "&startTime=" + startTime + "&endTime=" + endTime + "&orderTypeCode=" + orderTypeCode
 				+ "&ownerDomainId=" + ownerDomainId + "&officeCode=" + officeCode;
 		return fryeService.getInfo(url, Result.class);
+	}
+
+	public Result submit(String username, SpecialDelivery specialDelivery) {
+		return fryeService.postInfo(specialDelivery, "specialdelivery/submit/" + username, Result.class);
 	}
 
 }
