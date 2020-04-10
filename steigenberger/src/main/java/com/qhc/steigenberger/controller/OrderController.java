@@ -382,7 +382,7 @@ public class OrderController extends BaseController {
 				data.put("order", order);
 				data.put("itemMaterialNames", itemMaterialNames);
 				data.put("now", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-				JxlsUtils.exportExcel("orderitemsandcharacterics.xlsx", response.getOutputStream(), data);
+				JxlsUtils.exportExcel("/orderitemsandcharacterics.xlsx", response.getOutputStream(), data);
 				response.getOutputStream().flush();
 			}
 		} catch (Exception e) {
@@ -743,7 +743,7 @@ public class OrderController extends BaseController {
 			data.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			List<MaterialGroups> margins = new ObjectMapper().readValue(grossProfitMargin, new TypeReference<List<MaterialGroups>>() {});
 			data.put("margins", margins);
-			JxlsUtils.exportExcel("grossprofitmargin.xlsx", response.getOutputStream(), data);
+			JxlsUtils.exportExcel("/grossprofitmargin.xlsx", response.getOutputStream(), data);
 			response.getOutputStream().flush();
 		} catch (Exception e) {
 			e.printStackTrace();

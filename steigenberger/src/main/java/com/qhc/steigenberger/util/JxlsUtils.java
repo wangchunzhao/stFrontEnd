@@ -49,15 +49,10 @@ public class JxlsUtils {
 	 */
 	public static void exportExcel(String templatePath, OutputStream os, Object bean) {
 		logger.debug("Export to excel, tempalte: {}, bean: {}", templatePath, bean);
-		File template = getTemplate(templatePath);
-		if (template != null) {
-			try (FileInputStream in = new FileInputStream(template)) {
-				exportExcel(in, os, bean);
-			} catch (Exception e) {
-				throw new RuntimeException("Excel 模板未找到。", e);
-			}
-		} else {
-			throw new RuntimeException("Excel 模板未找到。");
+		try (InputStream in = getTemplateStream(templatePath)) {
+			exportExcel(in, os, bean);
+		} catch (Exception e) {
+			throw new RuntimeException("Excel 模板未找到。", e);
 		}
 	}
 
@@ -209,22 +204,27 @@ public class JxlsUtils {
 	}
 
 	// 获取jxls模版文件
-	public static File getTemplate(String path) {
-		// File template = new File(path);
-		// if (template.exists()) {
-		// return template;
-		// }
-		// return null;
-		URL url = "".getClass().getResource(path);
-		if (url == null) {
-			url = ClassLoader.getSystemResource(path);
-		}
+//	public static File getTemplate(String path) {
+//		URL url = JxlsUtils.class.getResource(path);
+//		if (url == null) {
+//			url = ClassLoader.getSystemResource(path);
+//		}
+//		logger.info("Template url : {}", url);
+//		try {
+//			return url == null ? null : new File(url.toURI());
+//		} catch (URISyntaxException e) {
+//			return null;
+//		}
+//	}
 
-		try {
-			return url == null ? null : new File(url.toURI());
-		} catch (URISyntaxException e) {
-			return null;
+	// 获取jxls模版文件
+	public static InputStream getTemplateStream(String name) {
+		InputStream templateStream = JxlsUtils.class.getResourceAsStream(name);
+		if (templateStream == null) {
+			templateStream = ClassLoader.getSystemResourceAsStream(name);
 		}
+		logger.info("Template url : {}", templateStream);
+		return templateStream;
 	}
 
 	/**

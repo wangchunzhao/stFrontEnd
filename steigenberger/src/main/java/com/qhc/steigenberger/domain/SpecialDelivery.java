@@ -7,44 +7,80 @@ import java.util.Date;
  * @author lizuoshan
  *
  */
-public class SpecialDelivery implements Serializable {
+public class SpecialDelivery {
+	
+	/* Id */
+	private Integer id = null;
 
-	public Integer applyId;
+	/* OrderInfoId */
+	private Integer orderInfoId = null;
 
-	public String applyer;// 申请人
+	/* Applyer */
+	private String applyer = null;
 
-	public String approver;// 通过人
+	/* Approver */
+	private String approver = null;
 
-	public Date applyTime;// 申请时间
+	/* ApplyTime */
+	private Date applyTime = null;
 
-	public Date approvalTime;// 通过时间
+	/* ApprovalTime */
+	private Date approvalTime = null;
 
-	private String receiveMailTime;
+	/* 0: 新建
+            1：同意
+            2：驳回 */
+	private Integer applyStatus = null;
 
-	private int applyStatus;
+	/* ReceiveMailTime */
+	private String receiveMailTime = null;
 
-	private String contractTime;
+	/* ContractTime */
+	private String contractTime = null;
 
-	private String payAdvancePaymentTime;
+	/* PayAdvancePaymentTime */
+	private String payAdvancePaymentTime = null;
 
-	private String remark;
+	/* Remark */
+	private String remark = null;
 
-	private String enclosurePath;
+	/* EnclosurePath */
+	private String enclosurePath = null;
 
-	private String enclosureName;
+	/* EnclosureName */
+	private String enclosureName = null;
 
-	public String kOrderVersionId;
+	/* 订单信息 */
+	private String sequenceNumber;
 
-	public String startTime;
+	private String orderType;
 
-	public String endTime;
+	private String stOrderType;
 
-	public Integer getApplyId() {
-		return applyId;
+	private Date createTime;
+
+	/**
+	 * order status
+	 */
+	private String status;
+	
+	private String salesCode;//客户经理 Customer manager
+//	private String salesName;//客户经理 Customer manager
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setApplyId(Integer applyId) {
-		this.applyId = applyId;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getOrderInfoId() {
+		return orderInfoId;
+	}
+
+	public void setOrderInfoId(Integer orderInfoId) {
+		this.orderInfoId = orderInfoId;
 	}
 
 	public String getApplyer() {
@@ -79,20 +115,20 @@ public class SpecialDelivery implements Serializable {
 		this.approvalTime = approvalTime;
 	}
 
+	public Integer getApplyStatus() {
+		return applyStatus;
+	}
+
+	public void setApplyStatus(Integer applyStatus) {
+		this.applyStatus = applyStatus;
+	}
+
 	public String getReceiveMailTime() {
 		return receiveMailTime;
 	}
 
 	public void setReceiveMailTime(String receiveMailTime) {
 		this.receiveMailTime = receiveMailTime;
-	}
-
-	public int getApplyStatus() {
-		return applyStatus;
-	}
-
-	public void setApplyStatus(int applyStatus) {
-		this.applyStatus = applyStatus;
 	}
 
 	public String getContractTime() {
@@ -135,28 +171,52 @@ public class SpecialDelivery implements Serializable {
 		this.enclosureName = enclosureName;
 	}
 
-	public String getStartTime() {
-		return startTime;
+	public String getSequenceNumber() {
+		return sequenceNumber;
 	}
 
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+	public void setSequenceNumber(String sequenceNumber) {
+		this.sequenceNumber = sequenceNumber;
 	}
 
-	public String getEndTime() {
-		return endTime;
+	public String getOrderType() {
+		return orderType;
 	}
 
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 
-	public String getkOrderVersionId() {
-		return kOrderVersionId;
+	public String getStOrderType() {
+		return stOrderType;
 	}
 
-	public void setkOrderVersionId(String kOrderVersionId) {
-		this.kOrderVersionId = kOrderVersionId;
+	public void setStOrderType(String stOrderType) {
+		this.stOrderType = stOrderType;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getSalesCode() {
+		return salesCode;
+	}
+
+	public void setSalesCode(String salesCode) {
+		this.salesCode = salesCode;
 	}
 
 }

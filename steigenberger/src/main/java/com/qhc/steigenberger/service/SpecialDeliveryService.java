@@ -1,33 +1,38 @@
 package com.qhc.steigenberger.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.SpecialDelivery;
+import com.qhc.steigenberger.domain.SpecialDeliveryQuery;
 
 @Service
 public class SpecialDeliveryService {
-	
+
 	@Autowired
 	FryeService fryeService;
-	
-	private final static String URL_SD = "specialDelivery";
-	private final static String URL_SD_ORDER = "specialApply";
-	
-	
 
-	public SpecialDelivery saveSpecialDelivery(SpecialDelivery specialDelivery) {
-		return fryeService.postInfo(specialDelivery, URL_SD, SpecialDelivery.class);
-	}
-	
-	public List<SpecialDelivery> findListInfoByOrderId(Integer orderId) {
-		return fryeService.getListInfo(URL_SD+"/"+orderId,SpecialDelivery.class);
+	public Result saveSpecialDelivery(SpecialDelivery specialDelivery) {
+		return fryeService.postInfo(specialDelivery, "specialdelivery", Result.class);
 	}
 
-	public SpecialDelivery findInfoById(String applyId) {
-		return fryeService.getInfo(URL_SD_ORDER+"/"+applyId,SpecialDelivery.class);
+	public Result findSpecialDeliveryById(Integer applyId) {
+		return fryeService.getInfo("specialdelivery/" + applyId, Result.class);
 	}
 
+	public Result findSpecialDelivery(int pageNum, int pageSize, SpecialDeliveryQuery sdv) {
+		String sequenceNumber = sdv.getSequenceNumber() == null ? "" : sdv.getSequenceNumber();
+		String startTime = sdv.getStartTime() == null ? "" : sdv.getStartTime();
+		String endTime = sdv.getEndTime() == null ? "" : sdv.getEndTime();
+		String orderTypeCode = sdv.getOrderTypeCode() == null ? "" : sdv.getOrderTypeCode();
+		String ownerDomainId = sdv.getOwnerDomainId() == null ? "" : sdv.getOwnerDomainId();
+		String officeCode = sdv.getOfficeCode() == null ? "" : sdv.getOfficeCode();
+
+		String url = "specialdelivery?pageNo=" + pageNum + "&pageSize" + pageSize + "&sequenceNumber=" + sequenceNumber
+				+ "&startTime=" + startTime + "&endTime=" + endTime + "&orderTypeCode=" + orderTypeCode
+				+ "&ownerDomainId=" + ownerDomainId + "&officeCode=" + officeCode;
+		return fryeService.getInfo(url, Result.class);
+	}
 
 }

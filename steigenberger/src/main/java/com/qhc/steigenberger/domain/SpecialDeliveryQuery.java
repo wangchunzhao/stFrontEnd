@@ -1,54 +1,66 @@
 package com.qhc.steigenberger.domain;
 
-import java.io.Serializable;
 import java.util.Date;
-
-import com.qhc.steigenberger.util.Page;
 
 /**
  * @author lizuoshan
  *
  */
-public class SpecialDeliveryVoInfo extends Page implements Serializable{
- 
+public class SpecialDeliveryQuery {
+	
+	int pageNo = 0;
+	
+	int pageSize = 10;
+
 	public String id;
-	
+
 	public String sequenceNumber;
-	
+
+	public String orderInfoId;
+
 	public String orderTypeCode;
-	
-	public Date createTime;
-	
+
+	public String createTime;
+
 	public String ownerDomainId;
-	
-	private String	ownerName;
-	
-	private String	salesTel;
-	
-	private String	contractorCode;
-	
-	private String	contractorName;
-	
-	private String	contractorClassCode;
-	
-	private String	contractorClassName;
-	
-	private String	officeCode;
-	
-	
+
+	private String ownerName;
+
+	private String salesTel;
+
+	private String contractorCode;
+
+	private String contractorName;
+
+	private String contractorClassCode;
+
+	private String contractorClassName;
+
+	private String officeCode;
+
 	public Integer kOrderVersionId;
-	
+
 	public Double distcount;
 
 	public String startTime;
-	
+
 	public String endTime;
-	
-	
-	
-	
-	
-	
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 
 	public String getId() {
 		return id;
@@ -66,6 +78,14 @@ public class SpecialDeliveryVoInfo extends Page implements Serializable{
 		this.sequenceNumber = sequenceNumber;
 	}
 
+	public String getOrderInfoId() {
+		return orderInfoId;
+	}
+
+	public void setOrderInfoId(String orderInfoId) {
+		this.orderInfoId = orderInfoId;
+	}
+
 	public String getOrderTypeCode() {
 		return orderTypeCode;
 	}
@@ -74,11 +94,11 @@ public class SpecialDeliveryVoInfo extends Page implements Serializable{
 		this.orderTypeCode = orderTypeCode;
 	}
 
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 
@@ -177,15 +197,5 @@ public class SpecialDeliveryVoInfo extends Page implements Serializable{
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	
-	
-	
-	
-
-	
-	
-	
-	
-
 
 }
