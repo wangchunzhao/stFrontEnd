@@ -190,39 +190,3 @@ function applyDiscountForRow(discount,materialsRowData,tableId){
 	calMergeDiscount();
 }
 
-//计算合并折扣
-function calMergeDiscount(){
-	//折后零售金额集合
-	var discountRetailAmountsArray = new Array();
-	//实际零售金额集合
-	var retailAmountsArray = new Array();
-	var materialsTable = $('#materialsTable').bootstrapTable('getData');
-	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
-	if(countMaterialsTable==0){
-		return;
-	}
-	for(var i=0;i<countMaterialsTable;i++){
-		var materialRowData = materialsTable[i];
-		var materialType = materialRowData.materialType;
-		if(materialType=="T101"||materialType=="T102"){
-			var discount = materialRowData.discount;
-			var retailAmount = materialRowData.retailAmount;
-			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(1);
-			discountRetailAmountsArray.push(discountRetailAmount);
-			retailAmountsArray.push(retailAmount);
-		}
-	}
-	var discountRetailAmounts =parseFloat(0).toFixed(1);
-	$.each(discountRetailAmountsArray,function(index,value){
-		discountRetailAmounts=accAdd(discountRetailAmounts,parseFloat(value));
-	});
-	var retailAmounts = parseFloat(0).toFixed(1);
-	$.each(retailAmountsArray,function(index,value){
-		retailAmounts=accAdd(retailAmounts,parseFloat(value));
-	});
-	var mergerDiscount = (accMul(accDiv(discountRetailAmounts,retailAmounts),100)).toFixed(1);
-	$("#orderDiscount").val(mergerDiscount);
-	$("#approveDiscount").val(mergerDiscount);
-	
-	
-}

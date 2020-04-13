@@ -21,7 +21,7 @@
 	<div class="sticky-header header-section " th:replace="head::head">	</div>
 	<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>
 	<form method="post" role="form" id="orderForm" th:object="${orderDetail}">
-		<input type="hidden"  id="customerClazzCode" th:field="*{customerClazz}">
+		<input type="hidden"  id="customerClazzCode" th:value="*{customerClazz}">
 		<input type="hidden"  id="status" th:field="*{status}">
 		<input type="hidden" id="stOrderType" th:field="*{stOrderType}">
 		<input type="hidden" id="orderType" th:field="*{orderType}">

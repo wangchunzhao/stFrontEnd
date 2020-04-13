@@ -183,6 +183,7 @@ function operation(value, row, index) {
 	var actions = [];
 	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</a>");
 	actions.push("<a type='button' class='btn btn-primary' id='copyOrder' onclick='copyOrder(\""+orderInfoId+"\")'>复制</a>");
+	actions.push("<a type='button' class='btn btn-primary' id='exportOrderItem' title='导出购销明细及调研表' onclick='exportOrderItem(\""+orderInfoId+"\")'>导出</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
 	if(stOrderType!="3"&&currentVersionStatus=="05"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+"\")'>下推订单</a>");
@@ -353,6 +354,18 @@ function createOrder(orderInfoId){
 	    });
     });
 }
+
+
+function exportOrderItem(orderInfoId){
+		var myForm = document.createElement("form");
+	    myForm.method = "post";
+	    myForm.action = ctxPath+"order/"+orderInfoId+"/export";
+	    document.body.appendChild(myForm);
+	    myForm.submit();
+	    document.body.removeChild(myForm);  
+}
+
+
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {

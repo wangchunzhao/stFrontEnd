@@ -688,7 +688,12 @@ function initSubsidiary(){
 	if($("#stOrderType").val()=="2"){
 		$('#discount').val(100);
 	}else{
-		$('#discount').val($("#standardDiscount").val());
+		if($("#stOrderType").val()=="1"){
+			$('#discount').val($("#standardDiscount").val());
+		}else{
+			$('#discount').val(1);
+		}
+		
 	}
 	if(row.pca==''){
 		$("#materialAddress").val(row.address).change();
@@ -766,7 +771,7 @@ function fillMaterailValue(data){
 		}
 		
 	}
-	$("#materialTypeName").val(data.description);
+	$("#materialTypeName").val(data.description).change();
 	$("#materialCode").val(data.code);
 	//不可预估费特殊处理
 	if(data.code=='BG1R8L00000-X'){
@@ -818,6 +823,10 @@ function fillMaterailValue(data){
 			$("#discount").val(discount);
 		}
 	}
+	//虚拟物料折扣100%
+	if($("#stOrderType").val()=="2"&&(data.code=='BG1GD1000000-X'||data.code=='BG1GD1000000-X'||data.code=='BG1R8R00000-X')){
+		$("#discount").val(100);
+	}
 	
 	$("#materialType").val(materialsType);
 	$("#unitName").val(data.unitName);
@@ -840,7 +849,7 @@ function initMaterialPrice(){
 	//折扣率
 	var discountValue = $("#discount").val();
 	if($("#stOrderType").val()=="2"){
-		discountValue = (discount/100).toFixed(2);
+		discountValue = (discountValue/100).toFixed(2);
 	}
 	
 	//数量
@@ -892,8 +901,8 @@ function initMaterialPrice(){
 	$("#optionalTransationPriceAmount").val(optionalTransationPriceAmount);
 	
 	//b2c预估单价  初始化为空
-	$("#b2cEstimatedPrice").val(toDecimal2(0.00));
-	var b2cEstimatedPrice = $("#b2cEstimatedPrice").val();
+	$("#b2cEstimatedPrice").val();
+	var b2cEstimatedPrice = $("#b2cEstimatedPrice").val()?$("#b2cEstimatedPrice").val():toDecimal2(0.00);
 	
 	//B2C预估金额  初始化为空
 	var b2cEstimatedAmount = toDecimal2(amount*parseFloat(b2cEstimatedPrice));
@@ -1320,6 +1329,10 @@ function confirmMaterials(){
 	$('#subsidiaryModal').modal('hide');
 	//计算最早发货时间，最早出货时间，购销明细合计
 	getAllCountFiled();
+	//非标准折扣计算合并折扣
+	if($("#stOrderType").val()=="2"){
+		calMergeDiscount();
+	}
 }
 
 function showTab(materialType){
@@ -1339,6 +1352,7 @@ function showTab(materialType){
 }
 
 function getAllCountFiled(){
+	debugger
 	var tableData = $('#materialsTable').bootstrapTable('getData');
 	//工厂最早交货时间
 	var deliveryTime=[];
@@ -1423,6 +1437,43 @@ function compareDate(date){
 		}
 	})
 	return earlyDate;
+}
+
+//计算合并折扣
+function calMergeDiscount(){
+	//折后零售金额集合
+	var discountRetailAmountsArray = new Array();
+	//实际零售金额集合
+	var retailAmountsArray = new Array();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	if(countMaterialsTable==0){
+		return;
+	}
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialRowData = materialsTable[i];
+		var materialType = materialRowData.materialType;
+		if(materialType=="T101"||materialType=="T102"){
+			var discount = materialRowData.discount;
+			var retailAmount = materialRowData.retailAmount;
+			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(1);
+			discountRetailAmountsArray.push(discountRetailAmount);
+			retailAmountsArray.push(retailAmount);
+		}
+	}
+	var discountRetailAmounts =parseFloat(0).toFixed(1);
+	$.each(discountRetailAmountsArray,function(index,value){
+		discountRetailAmounts=accAdd(discountRetailAmounts,parseFloat(value));
+	});
+	var retailAmounts = parseFloat(0).toFixed(1);
+	$.each(retailAmountsArray,function(index,value){
+		retailAmounts=accAdd(retailAmounts,parseFloat(value));
+	});
+	var mergerDiscount = (accMul(accDiv(discountRetailAmounts,retailAmounts),100)).toFixed(1);
+	$("#orderDiscount").val(mergerDiscount);
+	$("#approveDiscount").val(mergerDiscount);
+	
+	
 }
 
 //购销明细行数据
@@ -1536,44 +1587,48 @@ function addMaterialAddress(){
 //确认购销明细校验
 function initSubsidiartFormValidator(){
 	 $('#subsidiaryForm').bootstrapValidator({
-	　　　　　　　　message: 'This value is not valid',
-	        		excluded:[':hidden', ':not(:visible)'],
-		            fields: {
-		            	amount: {
-		            		validators: {
-		            			notEmpty: {
-		            	            message: '数量不能为空'
-		            	        },
-		            	        regexp: {
-		            	            regexp: /^[1-9]\d{0,4}$/,
-		            	            message: '只能输入小于十万的正整数'
-		            	        }
-		            	    }
-		                },
-		               itemRequirementPlan: {
-		            	   trigger:"change",
-	                    validators: {
-	                        notEmpty: {
-	                            message: '请选择需求计划'
-	                        }
-	                    }
-		               },
-		               itemCategory: {
-		                    validators: {
-		                        notEmpty: {
-		                            message: '请选择行项目类别'
-		                        }
-		                    }
-			           },
-			           materialAddress: {
-			        	   trigger:"change",
-		                    validators: {
-		                        notEmpty: {
-		                            message: '请添加地址'
-		                        }
-		                    }
-			           }
-	            }
+	　　　　　　message: 'This value is not valid',
+	      	excluded: [':hidden', ':not(:visible)'],
+            fields: {
+            	amount: {
+            		validators: {
+            			notEmpty: {
+            	            message: '数量不能为空'
+            	        },
+            	        regexp: {
+            	            regexp: /^[1-9]\d{0,4}$/,
+            	            message: '只能输入小于十万的正整数'
+            	        }
+            	    }
+                 },
+                 materialTypeName: {
+                	 trigger:"change",
+                	 validators: {
+	                	 notEmpty: {
+	            	         message: '请选择物料'
+	            	     } 
+                	 }
+                 },
+                 b2cEstimatedPrice: {
+            		validators: {
+            			callback: {
+                            message: 'B2C预估单价不能为空！',
+                            callback:function(value, validator,$field){
+                            	if($("#saleType").val()=='20'){
+                            		return true
+                            	}else{
+                            		if($("#itemRequirementPlan").val()=='001'&&value==''){
+                            			return false;
+                            		}else{
+                            			return true;
+                            		}
+                            	}
+                            }
+            			}
+            	    }
+	             }
+             
+	          }
 	        });
 }
 //订单提交校验
@@ -2268,7 +2323,6 @@ function saveOrder(type){
 	 }
 	 
 	 var orderData = $("#orderForm").serializeObject();
-	 debugger
 	 $('#transferType').attr("disabled",true);
 	 var payments=new Array();
 	 orderData.payments= payments;
@@ -2331,6 +2385,7 @@ function saveOrder(type){
 			    success: function(data) { 
 			    	$('#loadingModal').modal('hide');
 			    	if(data == null || data.status != 'ok'){
+			    		debugger
 			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
 			    		 
 			    	}else{
