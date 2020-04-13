@@ -163,6 +163,10 @@ function fillItemToTableRow(data){
 			pcaAddress+=data.address
 		}
 	}
+	var discount = data.discount;
+	if($("#stOrderType").val()=='2'){
+		var discount = toDecimal2(parseFloat(data.discount)*100);
+	}
 	var row = {
 			rowNum:data.rowNum,
 			materialName:data.materialName,
@@ -189,7 +193,7 @@ function fillItemToTableRow(data){
 			b2cEstimatedCost:b2cEstimatedCost,
 			retailPrice:retailPrice,
 			retailAmount:retailAmount,
-			discount:data.discount,
+			discount:discount,
 			itemCategory:data.itemCategory,
 			itemRequirementPlan:data.itemRequirementPlan,
 			producePeriod:data.period,
@@ -1635,7 +1639,6 @@ function initSubsidiartFormValidator(){
 function initOrderFormValidator(){
    $('#orderForm').bootstrapValidator({
        message: 'This value is not valid',
-       
        fields: {
     	shopName:{
     		validators:{
@@ -2385,7 +2388,6 @@ function saveOrder(type){
 			    success: function(data) { 
 			    	$('#loadingModal').modal('hide');
 			    	if(data == null || data.status != 'ok'){
-			    		debugger
 			    		layer.alert("保存订单失败！" + (data != null ? data.msg : ""));
 			    		 
 			    	}else{
@@ -2408,6 +2410,14 @@ function goBpm(){
 	 if(items.length==0){
 		 layer.alert('请添加购销明细', {icon: 5});
 		 return
+	 }
+	 if($("#saleType").val()=='20'){
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Tel',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Tel',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Tel',false,'notEmpty');
 	 }
 	var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
