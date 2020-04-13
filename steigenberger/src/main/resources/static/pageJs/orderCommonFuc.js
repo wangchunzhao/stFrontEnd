@@ -631,6 +631,7 @@ function getPaymentAreaContent(){
 
 //打开购销明细初始化
 function addSubsidiary(){
+	$("#subsidiaryForm").data("bootstrapValidator").resetForm();
 	var orderType = $("#stOrderType").val();
 	var long = $("#isLongterm").val();
 	var customerName = $("#customerName").val();
@@ -1033,6 +1034,8 @@ function originalActualPriceChange(){
 
 //折扣率比变化
 function discountChange(){
+	//数量
+	var amount = $("#amount").val()?parseFloat($("#amount").val()):parseFloat(1.00);
 	var discount = $("#discount").val();
 	var discountValue = toDecimal2((parseFloat(discount)/100));
 	//汇率
@@ -1043,10 +1046,10 @@ function discountChange(){
 	
 	//产品实卖价人民币
 	var actualPrice = parseFloat(retailPrice)*parseFloat(discountValue);
-	$("#actualPrice").val(actualPriceCny);
+	$("#actualPrice").val(actualPrice);
 	
 	//产品实卖价凭证货币
-	var originalActualPrice =toDecimal2( parseFloat(actualPriceCny)/parseFloat(exchangeRate));
+	var originalActualPrice =toDecimal2( parseFloat(actualPrice)/parseFloat(exchangeRate));
 	$("#originalActualPrice").val(originalActualPrice);
 	
 	//可选项实卖价凭证货币
@@ -1072,7 +1075,6 @@ function discountChange(){
 
 //B2C预估价变化
 function getB2CAmount(obj){
-	debugger
 	//汇率
 	var exchangeRate = $("#exchangeRate").val()?parseFloat($("#exchangeRate").val()):parseFloat(1.00);
 	//数量
@@ -1134,10 +1136,42 @@ function getB2CCostAmount(obj){
 	$("#transactionAmountSum").val(transactionAmountSum);
 }
 
+function getTransactionPrice(obj){
+	//产品转移单价
+	var originalTransationPrice = $(obj).val()?parseFloat($(obj).val()):parseFloat(0.00);
+	//汇率
+	var exchangeRate = $("#exchangeRate").val()?parseFloat($("#exchangeRate").val()):parseFloat(1.00);
+	var transactionPrice = toDecimal2(originalTransationPrice*exchangeRate);
+	$("#transactionPrice").val(transactionPrice);
+	//数量
+	var amount = $("#amount").val();
+	
+	//产品转移金额
+	var transactionPriceAmount = toDecimal2(amount*(originalTransationPrice));
+	$("#transactionPriceAmount").val(transactionPriceAmount);
+	
+	//可选项转移单价凭证货币
+	var originalOptionalTransationPrice = $("#originalOptionalTransationPrice").val()?$("#originalOptionalTransationPrice").val():parseFloat(0.00);
+	
+	//B2C成本
+	var b2cCost = $("#b2cEstimatedCost").val()?$("#b2cEstimatedCost").val():parseFloat(0.00);
+	//B2C成本凭证货币
+	var originalB2cCost = toDecimal2(parseFloat(b2cCost)/parseFloat(exchangeRate))
+	
+	//转移单价小计
+	var transactionPriceSum = toDecimal2(parseFloat(originalTransationPrice)+parseFloat(originalOptionalTransationPrice)+parseFloat(originalB2cCost));
+	$("#transactionPriceSum").val(transactionPriceSum);
+	//转移金额合计
+	var transactionAmountSum = toDecimal2(parseFloat(amount)*parseFloat(transactionPriceSum));
+	$("#transactionAmountSum").val(transactionAmountSum);
+	
+}
+
 //编辑购销明细
 function editMaterials(editContent){
 	$('#subsidiaryModal').modal('show');
 	$('#amount').attr("disabled",false);
+	$("#b2cEstimatedPrice").attr("disabled",false);
 	$('#originalActualPrice').attr("disabled",true);
 	$('#originalTransationPrice').attr("disabled",true);
 	if(status=='01'){
@@ -1635,6 +1669,23 @@ function initSubsidiartFormValidator(){
 	          }
 	        });
 }
+
+function restMaterialValidator(){
+	$('#subsidiaryModal').on('hidden.bs.modal', function() {
+	    $("#subsidiaryForm").data('bootstrapValidator').destroy();
+	    $('#subsidiaryForm').data('bootstrapValidator',null);
+	    initSubsidiartFormValidator();//要重新绑定验证
+
+	});
+}
+
+//需求计划改变重置B2C预估价校验
+function onItemRequirementPlanChange(val){
+	$("#subsidiaryForm").bootstrapValidator('updateStatus', "b2cEstimatedPrice", 'NOT_VALIDATED')
+    .bootstrapValidator('validateField', "b2cEstimatedPrice");
+}
+
+
 //订单提交校验
 function initOrderFormValidator(){
    $('#orderForm').bootstrapValidator({
