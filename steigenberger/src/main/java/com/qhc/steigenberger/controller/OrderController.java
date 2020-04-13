@@ -204,6 +204,7 @@ public class OrderController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("submitbpm")
+    @ResponseBody
 	public Result submitOrderToBpm(@RequestBody Order order) {
 		String identity = this.getUserIdentity();
 		
