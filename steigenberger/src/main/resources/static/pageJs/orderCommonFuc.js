@@ -2323,7 +2323,6 @@ function saveOrder(type){
 	 }
 	 
 	 var orderData = $("#orderForm").serializeObject();
-	 debugger
 	 $('#transferType').attr("disabled",true);
 	 var payments=new Array();
 	 orderData.payments= payments;
