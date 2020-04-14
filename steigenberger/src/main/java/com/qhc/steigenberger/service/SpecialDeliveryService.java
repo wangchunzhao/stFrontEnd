@@ -1,5 +1,6 @@
 package com.qhc.steigenberger.service;
 
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +22,28 @@ public class SpecialDeliveryService {
 		return fryeService.getInfo("specialdelivery/" + applyId, Result.class);
 	}
 
-	public Result findSpecialDelivery(int pageNum, int pageSize, SpecialDeliveryQuery sdv) {
-		String sequenceNumber = sdv.getSequenceNumber() == null ? "" : sdv.getSequenceNumber();
-		String startTime = sdv.getStartTime() == null ? "" : sdv.getStartTime();
-		String endTime = sdv.getEndTime() == null ? "" : sdv.getEndTime();
-		String orderTypeCode = sdv.getOrderTypeCode() == null ? "" : sdv.getOrderTypeCode();
-		String ownerDomainId = sdv.getOwnerDomainId() == null ? "" : sdv.getOwnerDomainId();
-		String officeCode = sdv.getOfficeCode() == null ? "" : sdv.getOfficeCode();
+	public Result findSpecialDelivery(int pageNum, int pageSize, Map sdv) {
+		String sequenceNumber = trimToEmpty(sdv.get("sequenceNumber"));
+		String startTime = trimToEmpty(sdv.get("startTime"));
+		String endTime = trimToEmpty(sdv.get("endTime"));
+		String orderTypeCode = trimToEmpty(sdv.get("orderTypeCode"));
+		String ownerDomainId = trimToEmpty(sdv.get("ownerDomainId"));
+		String officeCode = trimToEmpty(sdv.get("officeCode"));
+        String list = trimToEmpty(sdv.get("list"));
+        String orderInfoId = trimToEmpty(sdv.get("orderInfoId"));
 
-		String url = "specialdelivery?pageNo=" + pageNum + "&pageSize" + pageSize + "&sequenceNumber=" + sequenceNumber
-				+ "&startTime=" + startTime + "&endTime=" + endTime + "&orderTypeCode=" + orderTypeCode
+		String url = "specialdelivery?pageNo=" + pageNum + "&pageSize" + pageSize + "&list=" + list + "&orderInfoId=" + orderInfoId + "&sequenceNumber=" + sequenceNumber
+				+ "&orderStartCreateTime=" + startTime + "&orderEndCreateTime=" + endTime + "&orderTypeCode=" + orderTypeCode
 				+ "&ownerDomainId=" + ownerDomainId + "&officeCode=" + officeCode;
 		return fryeService.getInfo(url, Result.class);
 	}
+	
+  private String trimToEmpty(Object str) {
+    if (str == null) {
+      return "";
+    }
+    return str.toString().trim();
+  }
 
 	public Result submit(String username, SpecialDelivery specialDelivery) {
 		return fryeService.postInfo(specialDelivery, "specialdelivery/submit/" + username, Result.class);
