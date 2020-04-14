@@ -88,11 +88,11 @@
 							    <span class="col-md-1">产品转移单价(凭证货币)</span>
 								<div class="col-md-2">
 								  <input type="hidden" id="transactionPrice">
-							      <input type="text" class="form-control" id="originalTransationPrice" disabled>
+							      <input type="text" class="form-control" id="originalTransationPrice" disabled oninput="getTransactionPrice(this)">
 							    </div>
 							    <span class="col-md-1">产品转移金额(凭证货币)</span>
 								<div class="col-md-2">
-							      <input type="text" class="form-control" id="transactionPriceAmount" disabled>
+							      <input type="text" class="form-control" id="transactionPriceAmount" disabled >
 							    </div>
 							    <span class="col-md-1">可选项实卖单价（凭证货币）</span>
 								<div class="col-md-2">
@@ -171,7 +171,7 @@
 							    </div>
 							    <span class="col-md-1">需求计划</span>
 								<div class="col-md-2">
-							      <select class="form-control" name="itemRequirementPlan" id="itemRequirementPlan">
+							      <select class="form-control" name="itemRequirementPlan" id="itemRequirementPlan" onchange="onItemRequirementPlanChange(this)">
 							      	<option value="004">物料需求计划</option>
 							      	<option value="001">B2C</option>
 							      	<option value="002">消化</option>

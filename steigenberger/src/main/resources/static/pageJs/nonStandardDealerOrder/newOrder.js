@@ -10,6 +10,8 @@ $(function () {
 		$("body").removeClass("modal-open");
 	});
 	
+	//物料弹出框关闭时重置校验规则
+	restMaterialValidator();
 	//进页面前清空缓存
 	localStorage.clear()
 	
@@ -169,19 +171,40 @@ function applyMainDiscount(){
 }
 
 function applyDiscountForRow(discount,materialsRowData,tableId){
+	var materialType=materialsRowData.materialType;
+	if(materialType=='BG1GD1000000-X'||materialType=='BG1GD1000000-X'||materialType=='BG1R8R00000-X'){
+		return;
+	}
+	//汇率
+	var exchangeRate = $("#exchangeRate").val();
 	var discountValue = (discount/100).toFixed(2);
-	var quantity = materialsRowData.quantity;
-	var retailPrice = materialsRowData.retailPrice
-	var optionalActualPrice = materialsRowData.optionalActualPrice;
-	var actualPrice = toDecimal2(retailPrice*discountValue);
-	var actualAmount = toDecimal2(quantity*actualPrice);
-	var actualPriceSum = toDecimal2(parseFloat(actualPrice)+parseFloat(optionalActualPrice));
-	var actualAmountSum = toDecimal2(actualPriceSum*quantity);
+	var quantity = parseFloat(materialsRowData.quantity);
+	var optionalActualPrice  = parseFloat(materialsRowData.optionalActualPrice);
+	var retailPrice = parseFloat(materialsRowData.retailPrice);
+	//实卖价人民币
+	var actualPrice = toDecimal2(parseFloat(retailPrice)*parseFloat(discountValue));
+	//实卖价凭证货币
+	var originalActualPrice = toDecimal2(parseFloat(actualPrice)/parseFloat(exchangeRate));
+	//产品实卖金额
+	var actualAmount = toDecimal2(parseFloat(quantity)*parseFloat(originalActualPrice));
+	
+	//B2C预估成本单价人民币  
+	var b2cEstimatedCost = parseFloat(materialsRowData.b2cEstimatedCost);
+	
+	//B2c预估成本单价凭证货币
+	var originalB2cEstimatedCost =toDecimal2(b2cEstimatedCost/parseFloat(exchangeRate));
+	
+	//可选项实卖价凭证货币
+	var optionalActualPrice = parseFloat(materialsRowData.optionalActualPrice);
+	
+	var actualPriceSum = toDecimal2(parseFloat(originalActualPrice)+parseFloat(optionalActualPrice)+parseFloat(originalB2cEstimatedCost));
+	var actualAmountSum = toDecimal2(parseFloat(actualPriceSum)*parseFloat(quantity));
 	$(tableId).bootstrapTable('updateByUniqueId', {
 	    id:materialsRowData.rowNum,
 	    row: {
 	    	discount:discount,
 	    	actualPrice:actualPrice,
+	    	originalActualPrice:originalActualPrice,
 	    	actualAmount:actualAmount,
 	    	actualPriceSum:actualPriceSum,
 	    	actualAmountSum:actualAmountSum	    	

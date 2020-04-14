@@ -9,7 +9,9 @@ $(function () {
 	$('#subsidiaryModal').on('hidden.bs.modal', function () {
 		$("body").removeClass("modal-open");
 	});
-
+	
+	//物料弹出框关闭时重置校验规则
+	restMaterialValidator();
 	//进页面前清空缓存
 	localStorage.clear()
 	
