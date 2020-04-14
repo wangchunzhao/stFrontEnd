@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -343,6 +344,27 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public void exportOrderDetail(@PathVariable("orderInfoId") Integer orderInfoId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String[] chars = new String[] { "\\[", "\\]", "\\?", "\\/", "\\\\", "\\*", ":" };
+		HashMap<String, String> categoryMap = new HashMap<String, String>() {
+		  {
+		    put("ZHD1","标准");
+		    put("ZHD3","免费");
+		    put("ZHR3","退货");
+            put("ZHD2","标准");
+            put("ZHD4","免费");
+            put("ZHR4","退货");
+            put("ZH97","ZH97");
+            put("ZH98","ZH98");
+		  }
+		};
+		HashMap<String, String> requirementPlanMap = new HashMap<String, String>() {
+		  {
+		    put("004","物料需求计划");
+		    put("001","B2C");
+		    put("002","消化");
+		    put("003","调发");
+		    put("005","替换");
+		  }
+		};
 		try {
 			Result result = orderService.findOrderDetail(orderInfoId);
 			if (result.getStatus().equals("ok")) {
@@ -359,6 +381,16 @@ public class OrderController extends BaseController {
 				}
 				int count = 0;
 				for (Item item : order.getItems()) {
+                  // 行项目类别转中文
+				  String category = categoryMap.get(item.getItemCategory());
+				  if (category != null) {
+				    item.setItemCategory(category);
+				  }
+				  // 需求计划转中文
+				  String requirementPlan = requirementPlanMap.get( item.getItemRequirementPlan());
+				  if (requirementPlan != null) {
+				    item.setItemRequirementPlan(requirementPlan);
+				  }
 					if (item.getConfigs() == null) {
 						item.setConfigs(new ArrayList<>());
 					}
