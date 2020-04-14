@@ -15,7 +15,8 @@ $(function () {
 
 	//进页面前清空缓存
 	localStorage.clear()
-
+	
+	produceSeqNum();
 	//初始化付款方式页面
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();

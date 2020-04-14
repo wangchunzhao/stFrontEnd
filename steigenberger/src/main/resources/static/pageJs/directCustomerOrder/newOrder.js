@@ -14,7 +14,7 @@ $(function () {
 	restMaterialValidator();
 	//进页面前清空缓存
 	localStorage.clear()
-	
+	produceSeqNum();
 	//监控是否特批发货
 	$('#specialShipmentValue').change(function () {
 		if($('#specialShipmentValue').prop('checked')){

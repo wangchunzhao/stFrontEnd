@@ -492,19 +492,19 @@
 							立柜柜体是否在地下室
 						</div>
 						<div class="col-xs-12 col-md-4">
-							<select class="form-control" th:field="*{isTerm1}">
+							<select class="form-control" th:field="*{isTerm1}" onchange="onTerm1Change(this)">
 								<option value="1">是</option>
 								<option value="0">否</option>
 							</select>
 						</div>
 						<div class="col-xs-12 col-md-4">
-							<select class="form-control" th:field="*{isTerm2}">
+							<select class="form-control" th:field="*{isTerm2}" onchange="onTerm2Change(this)">
 								<option value="1">是</option>
 								<option value="0">否</option>
 							</select>
 						</div>
 						<div class="col-xs-12 col-md-4">
-							<select class="form-control" th:field="*{isTerm3}">
+							<select class="form-control" th:field="*{isTerm3}" onchange="onTerm3Change(this)">
 								<option value="1">是</option>
 								<option value="0">否</option>
 							</select>

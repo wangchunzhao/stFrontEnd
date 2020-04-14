@@ -81,7 +81,7 @@ function fillItems(){
 			var identification = rowData.rowNum;
 			//添加调研表
 			if(rowData.isConfigurable&&items[i].configs!=null){
-				fillConfigsForMaterial(identification,items[i].configs,rowData.comments,rowData.materialCode,rowData.clazzCode,configAttachments);
+				fillConfigsForMaterial(identification,items[i].configs,items[i].configComments,items[i].mosaicImage,rowData.materialCode,rowData.clazzCode,configAttachments);
 			}	
 			$("#materialsTable").bootstrapTable('insertRow', {
 				index: countMaterialsTable,
@@ -96,7 +96,7 @@ function fillItems(){
 	}
 }
 
-function fillConfigsForMaterial(identification,configs,configRemark,materialCode,clazzCode,configAttachments){
+function fillConfigsForMaterial(identification,configs,configRemark,mosaicImage,materialCode,clazzCode,configAttachments){
 	var materialDefaultConfigs = getDefaultConfigs(materialCode,clazzCode);
 	var editConfigs = [];
 	$.each(materialDefaultConfigs,function(defaultIndex,defaultItem){
@@ -120,7 +120,8 @@ function fillConfigsForMaterial(identification,configs,configRemark,materialCode
 	})
 	var configData = new Object();
 	configData.configTableData = editConfigs;
-	configData.remark = configRemark
+	configData.remark = configRemark;
+	configData.mosaicImage = mosaicImage;
 	configData.attachments = configAttachments;
 	localStorage.setItem(identification, JSON.stringify(configData));
 }
@@ -707,21 +708,18 @@ function initSubsidiary(){
 	}
 	$('#amount').val(1);
 	
-	if($("#isTerm1").val()=="1"||$("#isTerm2").val()=="1"||$("#isTerm3").val()=="1"){
-		$("#itemRequirementPlan").val("001");
-	}
-	var b2cRemark="";
+	var specialRemark="";
 	if($("#isTerm1").val()=="1"){
-		b2cRemark+="甲供；";	
+		specialRemark+="甲供；";	
 	}
 	if($("#isTerm2").val()=="1"){
-		b2cRemark+="远程监控；"
+		specialRemark+="远程监控；"
 	}
 	
 	if($("#isTerm3").val()=="1"){
-		b2cRemark+="地下室；"
+		specialRemark+="地下室；"
 	}
-	$("#b2cRemark").val(b2cRemark);
+	$("#specialRemark").val(specialRemark);
 }
 //打开规格查询框
 function searchSpecification(){
@@ -1220,11 +1218,7 @@ function editMaterials(editContent){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
-	if(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X'){
-		$('#amount').attr("disabled",false);
-		$('#originalActualPrice').attr("disabled",true);
-		$('#originalTransationPrice').attr("disabled",true);
-	}
+	
 	if($("#saleType").val()=='20'&&(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X')){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#b2cEstimatedPrice').attr("disabled",true);
@@ -1390,7 +1384,6 @@ function showTab(materialType){
 }
 
 function getAllCountFiled(){
-	debugger
 	var tableData = $('#materialsTable').bootstrapTable('getData');
 	//工厂最早交货时间
 	var deliveryTime=[];
@@ -2404,7 +2397,8 @@ function saveOrder(type){
 			 }
 			 items[i]['configs'] = configs; 
 			 items[i]['attachments'] = jsonObject.attachments;
-			 items[i]['configComments'] = jsonObject.remark
+			 items[i]['configComments'] = jsonObject.remark;
+			 items[i]['mosaicImage'] = jsonObject.mosaicImage;
 		 } else{
 			 items[i]['configs'] = null;
 		 }
@@ -2846,6 +2840,90 @@ function contractToUpperCase(obj){
         obj.value = obj.value.substring(0,maxChars);
     }
 }
+
+function updateRowSpecialComments(materialsRowData){
+	$("#materialsTable").bootstrapTable('updateByUniqueId', {
+	    id:materialsRowData.rowNum,
+	    row: {
+	    	specialComments:materialsRowData.specialComments	
+	    }
+	});
+}
+
+//是否甲供切换
+function onTerm1Change(val){
+	var termValue = $(val).val();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialsRowData = materialsTable[i];
+		var specialComments = materialsRowData.specialComments;
+		if(termValue=='1'&&specialComments.indexOf("甲供") == -1){
+			materialsRowData.specialComments = specialComments+";甲供"
+			updateRowSpecialComments(materialsRowData)
+		}else if(termValue=='0'&&specialComments.indexOf("甲供") !==0){
+			materialsRowData.specialComments = specialComments.replace(/甲供/, "")
+			updateRowSpecialComments(materialsRowData)
+		}
+	}
+}
+//是否远程监控
+function onTerm2Change(val){
+	var termValue = $(val).val();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialsRowData = materialsTable[i];
+		var specialComments = materialsRowData.specialComments;
+		if(termValue=='1'&&specialComments.indexOf("远程监控") ==  -1){
+			materialsRowData.specialComments = specialComments+";远程监控"
+			updateRowSpecialComments(materialsRowData)
+		}else if(termValue=='0'&&specialComments.indexOf("远程监控")!==0){
+			materialsRowData.specialComments = specialComments.replace(/远程监控/, "")
+			updateRowSpecialComments(materialsRowData)
+		}
+	}
+}
+//否在地下室
+function onTerm3Change(val){
+	var termValue = $(val).val();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	for(var i=0;i<countMaterialsTable;i++){
+		var materialsRowData = materialsTable[i];
+		var specialComments = materialsRowData.specialComments;
+		if(termValue=='1'&&specialComments.indexOf("地下室") == -1){
+			materialsRowData.specialComments = specialComments+";地下室"
+			updateRowSpecialComments(materialsRowData)
+		}else if(termValue=='0'&&specialComments.indexOf("地下室") !==0){
+			materialsRowData.specialComments = specialComments.replace(/地下室/, "")
+			updateRowSpecialComments(materialsRowData)
+		}
+	}
+}
+
+//生成序列号
+function produceSeqNum(){
+	if($("#orderInfoId").val()==""){
+		var seqNum = "QHC"+getNowTimeStr();
+		$("#sequenceNumber").val(seqNum);
+	}
+}
+
+function getNowTimeStr() {
+	debugger
+	var nowDate = new Date();
+	var year = nowDate.getFullYear();
+	var month = nowDate.getMonth() + 1;
+	var date = nowDate.getDate();
+	var hour = nowDate.getHours() < 10 ? "0" + nowDate.getHours() : nowDate.getHours();
+	var minute = nowDate.getMinutes() < 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();
+	var second = nowDate.getSeconds() < 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();
+	var milliSeconds = nowDate.getMilliseconds();
+	var currentTime = year+''+month + date + hour +  minute +  second +milliSeconds;
+	return currentTime;
+}
+
 var grossProfitColumns=[
 	{
 		 field: 'name',
