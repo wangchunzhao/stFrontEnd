@@ -381,6 +381,23 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#contactor1Tel').val('');
 		$('#contactor2Tel').val('');
 		$('#contactor3Tel').val('');
+		var addressData = $("#addressTable").bootstrapTable("getData");
+		var shippingAddress = addressData.address
+		$("#addressTable").bootstrapTable('updateRow', {
+		    index: 0,
+		    row: {
+		    	seq:1,
+		    	pca: null,
+		    	provinceCode:null,
+		    	provinceName:null,
+		    	cityCode:null,
+		    	cityName:null,
+				districtCode:null,
+				districtName:null,
+		    	address:shippingAddress
+		    }
+		});
+		updateAddressInProd(0);
 	}else{
 		$('#freightDiv').hide();
 		$('#citySelect').attr("disabled",false);
@@ -701,7 +718,7 @@ function initSubsidiary(){
 		}
 		
 	}
-	if(row.pca==''){
+	if(row.pca==''||row.pca==null||row.pca==undefined){
 		$("#materialAddress").val(row.address).change();
 	}else{
 		$("#materialAddress").val(row.pca+"/"+row.address).change();
@@ -2189,13 +2206,13 @@ function updateAddressInProd(updateIndex){
 			item.cityName = addressContent.cityName;
 			item.districtCode = addressContent.districtCode;
 			item.districtName = addressContent.districtName;
-			var pca;
-			if(item.provinceName){
+			var pca='';
+			if(item.provinceCode){
 				pca = item.provinceName;
-				if(item.cityName){
+				if(item.cityCode){
 					pca+="/"+item.cityName
 				}
-				if(item.districtName){
+				if(item.districtCode){
 					pca+="/"+item.districtName
 				}
 			}
