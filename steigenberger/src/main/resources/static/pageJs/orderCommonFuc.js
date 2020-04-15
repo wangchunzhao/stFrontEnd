@@ -2516,7 +2516,9 @@ function goBpm(){
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].identification];
 		 items[i].isVirtual = 0;
-		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
+		 if($("#stOrderType").val()=='2'){
+			 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
+		 }
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
