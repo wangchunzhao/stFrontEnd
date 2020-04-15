@@ -360,12 +360,12 @@
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
 						<span class="col-md-1 control-label">批准折扣</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="approveDiscount" aria-describedby="emailHelp" name="approveDiscount" disabled>
+							<input type="text" class="form-control" id="approveDiscount" aria-describedby="emailHelp" name="approveDiscount" readonly>
 					    </div>
 					    <span class="col-md-1 control-label">柜体申请折扣</span>
 						<div class="col-md-2">
 							<div class="input-group">
-								<input type="text" class="form-control" id="bodyDiscount" aria-describedby="emailHelp" name="bodyDiscount">
+								<input type="text" class="form-control" id="bodyDiscount" aria-describedby="emailHelp" th:field="*{bodyDiscount}">
 								<span class="input-group-btn">
 			                        <button id="bodyDiscountButton" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyBodyDiscount()">
 			                        	<span class="glyphicon glyphicon-ok"></span>
@@ -376,7 +376,7 @@
 					    <span class="col-md-1 control-label">机组申请折扣</span>
 						<div class="col-md-2">
 							<div class="input-group">
-								<input type="text" class="form-control" id="mainDiscount" aria-describedby="emailHelp" name="mainDiscount">
+								<input type="text" class="form-control" id="mainDiscount" aria-describedby="emailHelp" th:field="*{mainDiscount}">
 								<span class="input-group-btn">
 			                        <button id="mainDiscountButton" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyMainDiscount()">
 			                        	<span class="glyphicon glyphicon-ok"></span>
