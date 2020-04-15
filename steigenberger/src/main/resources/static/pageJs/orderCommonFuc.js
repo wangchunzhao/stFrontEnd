@@ -28,7 +28,7 @@ function enableButton(){
 	  $("#closeBt").attr('disabled',false);
 	  $("#approve").attr('disabled',false);
 	  $("#version").attr('disabled',false);
-	  $("#materialsEdit").attr('disabled',true);
+	  $(".viewDisable").attr('disabled',true);
 	  $("#editAddressBt").attr('disabled',true);
 	  $("#removeAddressBt").attr('disabled',true);
 	  $("#copyMaterial").attr('disabled',true);  
@@ -727,14 +727,14 @@ function initSubsidiary(){
 	
 	var specialRemark="";
 	if($("#isTerm1").val()=="1"){
-		specialRemark+="甲供；";	
+		specialRemark+=" 甲供";	
 	}
 	if($("#isTerm2").val()=="1"){
-		specialRemark+="远程监控；"
+		specialRemark+=" 远程监控"
 	}
 	
 	if($("#isTerm3").val()=="1"){
-		specialRemark+="地下室；"
+		specialRemark+="  地下室"
 	}
 	$("#specialRemark").val(specialRemark);
 }
@@ -834,11 +834,11 @@ function fillMaterailValue(data){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
 	}else{
-		if($("#stOrderType").val()=="2"&&materialsType=='T101'){
+		if($("#stOrderType").val()=="2"&&(materialsType=='T101'||materialsType=='T105')){
 			var discount = $("#bodyDiscount").val();
 			$("#discount").val(discount);
 		}
-		if($("#stOrderType").val()=="2"&&materialsType=='T102'){
+		if($("#stOrderType").val()=="2"&&(materialsType=='T102'||materialsType=='T103')){
 			var discount = $("#mainDiscount").val();
 			$("#discount").val(discount);
 		}
@@ -1341,6 +1341,7 @@ function cacelMaterials(rowNumIndex){
 	    index: index,
 	    row: data
 	});
+	getAllCountFiled();
 }
 
 //点击确认购销明细
@@ -1410,7 +1411,7 @@ function getAllCountFiled(){
 	var itemsAmount = [];
 	$.each(tableData,function(index,item){
 		//需排除取消状态的行项目
-		if(item.itemStatus!='10'){
+		if(item.itemStatus!='Z2'){
 			if(item.deliveryDate){
 				deliveryTime.push(moment(item.deliveryDate));
 			}
@@ -1501,7 +1502,7 @@ function calMergeDiscount(){
 	for(var i=0;i<countMaterialsTable;i++){
 		var materialRowData = materialsTable[i];
 		var materialType = materialRowData.materialType;
-		if(materialType=="T101"||materialType=="T102"){
+		if(materialType=="T101"||materialType=="T102"||materialType=="T103"||materialType=="T105"){
 			var discount = materialRowData.discount;
 			var retailAmount = materialRowData.retailAmount;
 			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(1);
@@ -2298,9 +2299,9 @@ function setItemRequirementPlan(obj){
 		return;
 	}
 	if(b2cValue!=''){
-		$("#itemRequirementPlan").val("001");
+		$("#itemRequirementPlan").val("001").change();
 	}else{
-		$("#itemRequirementPlan").val("004");
+		$("#itemRequirementPlan").val("004").change();
 	}
 }
 
@@ -2876,7 +2877,7 @@ function onTerm1Change(val){
 		var materialsRowData = materialsTable[i];
 		var specialComments = materialsRowData.specialComments;
 		if(termValue=='1'&&specialComments.indexOf("甲供") == -1){
-			materialsRowData.specialComments = specialComments+";甲供"
+			materialsRowData.specialComments = specialComments+" 甲供"
 			updateRowSpecialComments(materialsRowData)
 		}else if(termValue=='0'&&specialComments.indexOf("甲供") !==0){
 			materialsRowData.specialComments = specialComments.replace(/甲供/, "")
@@ -2893,7 +2894,7 @@ function onTerm2Change(val){
 		var materialsRowData = materialsTable[i];
 		var specialComments = materialsRowData.specialComments;
 		if(termValue=='1'&&specialComments.indexOf("远程监控") ==  -1){
-			materialsRowData.specialComments = specialComments+";远程监控"
+			materialsRowData.specialComments = specialComments+" 远程监控"
 			updateRowSpecialComments(materialsRowData)
 		}else if(termValue=='0'&&specialComments.indexOf("远程监控")!==0){
 			materialsRowData.specialComments = specialComments.replace(/远程监控/, "")
@@ -2910,7 +2911,7 @@ function onTerm3Change(val){
 		var materialsRowData = materialsTable[i];
 		var specialComments = materialsRowData.specialComments;
 		if(termValue=='1'&&specialComments.indexOf("地下室") == -1){
-			materialsRowData.specialComments = specialComments+";地下室"
+			materialsRowData.specialComments = specialComments+" 地下室"
 			updateRowSpecialComments(materialsRowData)
 		}else if(termValue=='0'&&specialComments.indexOf("地下室") !==0){
 			materialsRowData.specialComments = specialComments.replace(/地下室/, "")

@@ -1,15 +1,15 @@
 var materialsColumn = [{
-		title: '<input type="button"  value="+" class="btn btn-primary" onclick="addSubsidiary()" id="materialAdd"/>',
+		title: '<input type="button"  value="+" class="btn btn-primary viewDisable" onclick="addSubsidiary()" id="materialAdd"/>',
 	    align: 'center',
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-    		actions.push('<a class="btn"  id="materialsEdit" onclick="editMaterials(\'' +row.rowNum+'|'+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
-			actions.push('<a class="btn"  onclick="copyMaterials(\'' + row.rowNum + '\')"><i class="fa fa-copy"></i>复制</a>');
-			actions.push('<a class="btn"  onclick="insertMaterials(\'' +index+ '\')"><i class="fa fa-edit"></i>插入</a>');
+    		actions.push('<a class="btn viewDisable"  id="materialsEdit" onclick="editMaterials(\'' +row.rowNum+'|'+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
+			actions.push('<a class="btn viewDisable"  onclick="copyMaterials(\'' + row.rowNum + '\')"><i class="fa fa-copy"></i>复制</a>');
+			actions.push('<a class="btn viewDisable"  onclick="insertMaterials(\'' +index+ '\')"><i class="fa fa-edit"></i>插入</a>');
 			if(row.itemStatus=='10'){
-				actions.push('<a class="btn"  onclick="cacelMaterials(\'' + row.rowNum + '|'+index+ '\')"><i class="fa fa-edit"></i>取消</a>');
+				actions.push('<a class="btn viewDisable"  onclick="cacelMaterials(\'' + row.rowNum + '|'+index+ '\')"><i class="fa fa-edit"></i>取消</a>');
 			}else{
-				actions.push('<a class="btn"  onclick="removeMaterials(\'' + row.rowNum + '\')"><i class="fa fa-edit"></i>删除</a>');
+				actions.push('<a class="btn viewDisable"  onclick="removeMaterials(\'' + row.rowNum + '\')"><i class="fa fa-edit"></i>删除</a>');
 			}
 			return actions.join('');		
 	    }
