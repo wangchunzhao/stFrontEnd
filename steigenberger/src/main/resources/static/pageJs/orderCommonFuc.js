@@ -2365,9 +2365,6 @@ function saveOrder(type){
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
-			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Tel',false,'notEmpty');
-			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Tel',false,'notEmpty');
-			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Tel',false,'notEmpty');
 		 }
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
@@ -2486,9 +2483,6 @@ function goBpm(){
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
-		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Tel',false,'notEmpty');
-		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Tel',false,'notEmpty');
-		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Tel',false,'notEmpty');
 	 }
 	var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
