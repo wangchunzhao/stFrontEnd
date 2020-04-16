@@ -141,6 +141,7 @@ function getDefaultConfigs(materialCode,clazzCode){
 
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
+	debugger
 	var quantity = data.quantity;
 	var transcationPrice = toDecimal2(data.transactionPrice);
 	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
@@ -859,6 +860,11 @@ function fillMaterailValue(data){
 	//市场零售价
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	$("#yearPurchasePrice").val(toDecimal2(data.annualPrice))
+	var yearPurchasePrice = $("#yearPurchasePrice").val();
+	debugger
+	if(($("#stOrderType").val()=='3'||$("#stOrderType").val()=='4')&&yearPurchasePrice&&yearPurchasePrice!='0.00'){
+		$("#retailPrice").val(toDecimal2(yearPurchasePrice));
+	}
 	//转移价
 	$("#transactionPrice").val(toDecimal2(data.transcationPrice));
 	initMaterialPrice();
@@ -902,17 +908,13 @@ function initMaterialPrice(){
 	if($("#stOrderType").val()=="2"){
 		discountValue = (discountValue/100).toFixed(2);
 	}
-	//年采价
-	var yearPurchasePrice =  $("#yearPurchasePrice").val();
 	
 	//数量
 	var amount = $("#amount").val();
 	
 	//零售单价
 	var retailPrice = $("#retailPrice").val();
-	if(($("#stOrderType").val()=='3'||$("#stOrderType").val()=='4')&&yearPurchasePrice){
-		retailPrice = yearPurchasePrice;
-	}
+	
 	//产品实卖单价人民币
 	var actualPrice = toDecimal2(parseFloat(retailPrice)*discountValue);
 	$("#actualPrice").val(toDecimal2(actualPrice));
@@ -1288,6 +1290,7 @@ function fillEditMaterailValue(data,index){
 		$("#isPurchased").val("外购");
 	}
 	$('#volumeCube').val(data.volumeCube)
+	$("#itemStatus").val(data.status);
 	$("#shippDate").val(data.shippDate)
 	$("#rowNumber").val(data.rowNum);
 	$("#materialTypeName").val(data.materialName);
@@ -1580,6 +1583,7 @@ function confirmRowData(rowNumber){
 			actualPrice:$("#actualPrice").val(),
 			originalActualPrice:$("#originalActualPrice").val(),
 			actualAmount:$("#actualAmount").val(),
+			itemStatus:$("#itemStatus").val()?$("#itemStatus").val():'00',
 			
 			transactionPrice:$("#transactionPrice").val(),
 			originalTransationPrice:$("#originalTransationPrice").val(),
