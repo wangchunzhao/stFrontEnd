@@ -27,7 +27,7 @@ public class Item {
 	private double retailPrice;//市场零售价，客户信息
 	private double retailAmount;// 市场零售金额
 	private double transactionPrice;//转移价，客户信息
-	private double yearPurchasePrice;//年采价，大客户有，客户信息
+//	private double yearPurchasePrice;//年采价，大客户有，客户信息
 	private double actualPrice;//产品实卖价
 	private double actualAmount;//产品实卖金额
 	/* 可选项标准价差 */
@@ -199,12 +199,12 @@ public class Item {
 	public void setTransactionPrice(double transactionPrice) {
 		this.transactionPrice = transactionPrice;
 	}
-	public double getYearPurchasePrice() {
-		return yearPurchasePrice;
-	}
-	public void setYearPurchasePrice(double yearPurchasePrice) {
-		this.yearPurchasePrice = yearPurchasePrice;
-	}
+//	public double getYearPurchasePrice() {
+//		return yearPurchasePrice;
+//	}
+//	public void setYearPurchasePrice(double yearPurchasePrice) {
+//		this.yearPurchasePrice = yearPurchasePrice;
+//	}
 	public double getActualPrice() {
 		return actualPrice;
 	}
@@ -507,7 +507,7 @@ public class Item {
 				+ ", stMaterialGroupCode=" + stMaterialGroupCode + ", stMaterialGroupName=" + stMaterialGroupName
 				+ ", unitCode=" + unitCode + ", unitName=" + unitName + ", quantity=" + quantity + ", standardPrice="
 				+ standardPrice + ", retailPrice=" + retailPrice + ", retailAmount=" + retailAmount
-				+ ", transactionPrice=" + transactionPrice + ", yearPurchasePrice=" + yearPurchasePrice
+				+ ", transactionPrice=" + transactionPrice
 				+ ", actualPrice=" + actualPrice + ", actualAmount=" + actualAmount + ", optionalStandardPrice="
 				+ optionalStandardPrice + ", optionalRetailPrice=" + optionalRetailPrice + ", optionalActualPrice="
 				+ optionalActualPrice + ", optionalActualAmount=" + optionalActualAmount + ", optionalTransactionPrice="
