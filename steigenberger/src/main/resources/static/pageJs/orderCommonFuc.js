@@ -1243,10 +1243,10 @@ function editMaterials(editContent){
 	fillEditMaterailValue(tableData,index);
 	var materialCode = $("#materialCode").val();
 	if(configable=='true'&&(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X')){
-		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
+		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
 	}else{
 		if(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X'){
-			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
 		}else{
 			if(materialCode=='BG1R8L00000-X'){
 				$("#itemCategoryContent").append("<input type='text' class='form-control'  id='itemCategory'  name='itemCategory' value='ZH97'>")				
