@@ -186,7 +186,7 @@ function operation(value, row, index) {
 	actions.push("<a type='button' class='btn btn-primary' id='exportOrderItem' title='导出购销明细及调研表' onclick='exportOrderItem(\""+orderInfoId+"\")'>导出</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
 	if(stOrderType!="3"&&currentVersionStatus=="05"&&buttonControl=="true"){
-		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+"\")'>下推订单</a>");
+		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+"\")'>下推SAP</a>");
 		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
@@ -225,7 +225,7 @@ function editStockUpOrder(seqNumb,ordType,version){
 	})
 }*/
 
-function editOrder(orderInfoId){
+function editOrder(orderInfoId,orderOperationType){
 	var myForm = document.createElement("form");       
 	    myForm.method = "get";  
 	    myForm.action = ctxPath+"order/toOrderPage";        
@@ -235,7 +235,7 @@ function editOrder(orderInfoId){
 		myForm.appendChild(seq);
 		var seq1 = document.createElement("input");       
 		seq1.setAttribute("name", "orderOperationType");  
-		seq1.setAttribute("value", "3");  
+		seq1.setAttribute("value", orderOperationType);  
 		myForm.appendChild(seq1);
 		document.body.appendChild(myForm);     
 		myForm.submit();   
@@ -244,7 +244,7 @@ function editOrder(orderInfoId){
 
 function tosap(orderInfoId) {
 	
-	layer.confirm("确定要下推订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
         var url = ctxPath+"order/"+orderInfoId+"/sap";
         $.ajax({
             type: "post",
@@ -253,9 +253,9 @@ function tosap(orderInfoId) {
             dataType: "json",
             success: function (data) {
             	if(data == null || data.status != 'ok'){
-		    		layer.alert("订单下推失败：" + (data != null ? data.msg : ""));
+		    		layer.alert("订单下推SAP失败：" + (data != null ? data.msg : ""));
 		    	}else{
-		    		layer.alert('订单下推成功', {icon: 6});
+		    		layer.alert('订单下推SAP成功', {icon: 6});
 		    		$('#mytab').bootstrapTable('refresh');
 		    	} 	
             }
@@ -285,8 +285,7 @@ function upgradeOrder(orderInfoId){
             	if(data == null || data.status != 'ok'){
 		    		layer.alert("订单变更失败：：" + (data != null ? data.msg : ""));
 		    	}else{
-		    		layer.alert('订单变更成功', {icon: 6});
-		    		$('#mytab').bootstrapTable('refresh');
+		    		editOrder(data.data.id,4)
 		    	} 	
             }
         });
@@ -305,7 +304,7 @@ function copyOrder(orderInfoId){
             	if(data == null || data.status != 'ok'){
 		    		layer.alert("订单复制失败：：" + (data != null ? data.msg : ""));
 		    	}else{
-		    		editOrder(data.data.id)
+		    		editOrder(data.data.id,3)
 		    	} 	
             }
         });

@@ -1842,6 +1842,8 @@ function openConfig(configContent){
 	var rowNum = configContent.split('|')[0];
 	var index = configContent.split('|')[1];
 	var tableData = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
+	$("#configMaterialCode").val(tableData.materialCode);
+	$("#configMaterialTypeName").val(tableData.materialName);
 	$("#materialConfigClazzCode").val(tableData.clazzCode);
 	$("#materialConfigCode").val(tableData.materialCode);
 	$("#configIndex").val(index);
@@ -2655,7 +2657,6 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
-	debugger
 	if(orderOperationType!=1){
 		$("#grossProfitExportBt").show();
 	}else{
@@ -2712,7 +2713,15 @@ function viewGrossProfit(){
 	    success: function(data) { 
 	    	var tableData = data.data
 	    	$.each(tableData,function(index,item){
-	    		item.grossProfitMargin = (item.grossProfitMargin*100)+"%";
+	    		item.grossProfitMargin = toDecimal2(item.grossProfitMargin*100)+"%";
+	    		item.amount = toDecimal2(item.amount);
+	    		item.excludingTaxAmount = toDecimal2(item.excludingTaxAmount);
+	    		item.wtwCost = toDecimal2(item.wtwCost);
+	    		item.cost = toDecimal2(item.cost);
+	    		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
+	    		item.grossProfit = toDecimal2(item.grossProfit);
+	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin);
+	    		
 	    	})
 	    	$("#grossProfitTable").bootstrapTable('load', tableData);
 	    },

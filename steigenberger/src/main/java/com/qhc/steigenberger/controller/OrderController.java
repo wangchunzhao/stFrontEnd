@@ -796,7 +796,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public ModelAndView viewOrder(Integer orderInfoId,String orderOperationType, ModelAndView view) {
 		ModelAndView mv = new ModelAndView();
-		//操作订单的类型:1.新增, 2.查看,3修改 前台传入
+		//操作订单的类型:1.新增, 2.查看,3修改 4.订单变更前台传入
 		mv.addObject("orderOperationType", orderOperationType);
 		OrderOption oo = null;
 		Result optionResult = orderService.getOrderOption();
