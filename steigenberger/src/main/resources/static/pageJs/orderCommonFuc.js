@@ -858,7 +858,7 @@ function fillMaterailValue(data){
 	$("#standardPrice").val(toDecimal2(data.standardPrice));
 	//市场零售价
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
-	$("#yearPurchasePrice").val(toDecimal2(data.yearPurchasePrice))
+	$("#yearPurchasePrice").val(toDecimal2(data.annualPrice))
 	//转移价
 	$("#transactionPrice").val(toDecimal2(data.transcationPrice));
 	initMaterialPrice();
@@ -2657,6 +2657,7 @@ function setConfigValueCode(obj,index){
 }
 //查看毛利率信息
 function viewGrossProfit(){
+	debugger
 	if(orderOperationType!=1){
 		$("#grossProfitExportBt").show();
 	}else{
