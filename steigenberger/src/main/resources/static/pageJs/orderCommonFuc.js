@@ -341,6 +341,7 @@ function getDistrict(obj,districts){
 }
 
 function salesTypeChange(obj,offices,taxRate,exchangeRate){
+	$('#transferType').attr("disabled",false);
 	var saleType = $(obj).val();
 	getCurrency(saleType,exchangeRate);
 	getIncoterm(saleType);
@@ -381,6 +382,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#contactor1Tel').val('');
 		$('#contactor2Tel').val('');
 		$('#contactor3Tel').val('');
+		$("#transferType").val('01');
 		var addressData = $("#addressTable").bootstrapTable("getData");
 		var shippingAddress = addressData.address
 		$("#addressTable").bootstrapTable('updateRow', {
@@ -777,7 +779,7 @@ function fillMaterailValue(data){
 	$("#itemCategoryContent").html('');
 	var configure = data.configurable+'';
 	if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
-		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
+		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
 	}else{
 		if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
@@ -856,12 +858,41 @@ function fillMaterailValue(data){
 	$("#standardPrice").val(toDecimal2(data.standardPrice));
 	//市场零售价
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
+	$("#yearPurchasePrice").val(toDecimal2(data.yearPurchasePrice))
 	//转移价
 	$("#transactionPrice").val(toDecimal2(data.transcationPrice));
 	initMaterialPrice();
 	$('#volumeCube').val(data.materialSize)	
 }
+//行项目类别变化
+function itemCategoryChange(obj){
+	var category = $(obj).val();
+	if(category=='ZHD4'||category=='ZHD3'){
+		$("#originalActualPrice").val(0.00);
+		$("#originalActualPrice").trigger("oninput");
+	}else{
+		//零售价
+		var retailPrice = $("#retailPrice").val();
+		//汇率
+		var exchangeRate = $("#exchangeRate").val();
+		
+		//折扣率
+		var discountValue = $("#discount").val();
+		if($("#stOrderType").val()=="2"){
+			discountValue = (discountValue/100).toFixed(2);
+		}
 
+		//产品实卖单价人民币
+		var actualPrice = toDecimal2(parseFloat(retailPrice)*discountValue);
+		$("#actualPrice").val(toDecimal2(actualPrice));
+		
+		//产品实卖单价凭证货币
+		var originalActualPrice = toDecimal2(actualPrice/parseFloat(exchangeRate));
+		$("#originalActualPrice").val(toDecimal2(originalActualPrice));
+		$("#originalActualPrice").trigger("oninput");
+
+	}
+}
 function initMaterialPrice(){
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
@@ -871,12 +902,17 @@ function initMaterialPrice(){
 	if($("#stOrderType").val()=="2"){
 		discountValue = (discountValue/100).toFixed(2);
 	}
+	//年采价
+	var yearPurchasePrice =  $("#yearPurchasePrice").val();
 	
 	//数量
 	var amount = $("#amount").val();
 	
 	//零售单价
 	var retailPrice = $("#retailPrice").val();
+	if(($("#stOrderType").val()=='3'||$("#stOrderType").val()=='4')&&yearPurchasePrice){
+		retailPrice = yearPurchasePrice;
+	}
 	//产品实卖单价人民币
 	var actualPrice = toDecimal2(parseFloat(retailPrice)*discountValue);
 	$("#actualPrice").val(toDecimal2(actualPrice));
@@ -1773,40 +1809,7 @@ function initOrderFormValidator(){
                     message: '请填写授权人3及身份证号'
                }
            }  
-       },
-       contactor1Tel: {
-       	validators: {
-       		notEmpty: {
-	             message: '请填写手机号'
-	        },
-   	    	regexp: {
-   	    		regexp: /^1[3456789]\d{9}$/,
-   	            message: '请填写正确的手机号'
-   	        }
-   	    }
-       },
-       contactor2Tel: {
-       	validators: {
-	       	 notEmpty: {
-	             message: '请填写手机号'
-	        },
-   	    	regexp: {
-   	    		regexp: /^1[3456789]\d{9}$/,
-   	            message: '请填写正确的手机号'
-   	        }
-   	    }
-       },
-       contactor3Tel: {
-       	validators: {
-       		notEmpty: {
-	             message: '请填写手机号'
-	        },
-   	    	regexp: {
-   	    		regexp: /^1[3456789]\d{9}$/,
-   	            message: '请填写正确的手机号'
-   	        }
-   	    }
-       },
+       }
    	/*contractValue: {
            validators: {
                notEmpty: {
@@ -2190,8 +2193,9 @@ function confirmAddress(){
 		    	address:shippingAddress
 		    }
 		});
-		updateAddressInProd(rowIndex);
+		
 	}
+	updateAddressInProd(0);
 	$("#addressModal").modal('hide');
 }
 
@@ -2200,7 +2204,7 @@ function updateAddressInProd(updateIndex){
 	var tableData = $('#materialsTable').bootstrapTable('getData');
 	var addressContent = $("#addressTable").bootstrapTable('getData')[updateIndex];
 	$.each(tableData,function(index,item){
-		if(item.deliveryAddressSeq==seq){
+		if(item.deliveryAddressSeq==seq||item.deliveryAddressSeq==null){
 			item.provinceCode = addressContent.provinceCode;
 			item.provinceName = addressContent.provinceName;
 			item.cityCode = addressContent.cityCode;
