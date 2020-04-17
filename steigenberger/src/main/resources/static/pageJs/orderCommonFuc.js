@@ -91,6 +91,7 @@ function fillItems(){
 	}
 	getAllCountFiled();
 	//setTableToDifTab();
+	debugger
 	if($("#stOrderType").val()=="2"){
 		calMergeDiscount();
 	}
@@ -1079,7 +1080,7 @@ function originalActualPriceChange(){
 	var retailPrice = $("#retailPrice").val();
 	
 	//计算折扣
-	if($("#stOrderType").val()=="2"){
+	if($("#stOrderType").val()=="2"&&retailPrice!='0.00'){
 		var discount =toDecimal2( (parseFloat(actualPrice)/parseFloat(retailPrice))*100);
 		$("#discount").val(discount);
 	}
@@ -1419,6 +1420,7 @@ function confirmMaterials(){
 	//计算最早发货时间，最早出货时间，购销明细合计
 	getAllCountFiled();
 	//非标准折扣计算合并折扣
+	debugger
 	if($("#stOrderType").val()=="2"){
 		calMergeDiscount();
 	}
@@ -1529,6 +1531,7 @@ function compareDate(date){
 
 //计算合并折扣
 function calMergeDiscount(){
+	debugger
 	//折后零售金额集合
 	var discountRetailAmountsArray = new Array();
 	//实际零售金额集合
@@ -1541,7 +1544,8 @@ function calMergeDiscount(){
 	for(var i=0;i<countMaterialsTable;i++){
 		var materialRowData = materialsTable[i];
 		var materialType = materialRowData.materialType;
-		if(materialType=="T101"||materialType=="T102"||materialType=="T103"||materialType=="T105"){
+		var materialCode = materialRowData.materialCode;
+		if((materialType=="T101"||materialType=="T102"||materialType=="T103"||materialType=="T105")&&(materialCode!='BG1R8L00000-X'&&materialCode!='BG1R8R00000-X'&&materialCode!='BG1GD1000000-X')){
 			var discount = materialRowData.discount;
 			var retailAmount = materialRowData.retailAmount;
 			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(1);
@@ -1550,6 +1554,7 @@ function calMergeDiscount(){
 		}
 	}
 	var discountRetailAmounts =parseFloat(0).toFixed(1);
+	if(discountRetailAmountsArray.length==0){return;}
 	$.each(discountRetailAmountsArray,function(index,value){
 		discountRetailAmounts=accAdd(discountRetailAmounts,parseFloat(value));
 	});
