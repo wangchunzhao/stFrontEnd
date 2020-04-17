@@ -660,7 +660,7 @@ function addSubsidiary(){
 		layer.alert('请先选择客户', {icon: 5});
 		return
 	}
-	if($('#addressTable').bootstrapTable('getData').length==0){
+	if(orderType!='5'&&$('#addressTable').bootstrapTable('getData').length==0){
 		layer.alert('请先添加订单地址', {icon: 5});
 		return
 	}
@@ -2368,6 +2368,9 @@ function saveOrder(type){
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
 		 }
+		 if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"||$("#stOrderType").val()=="5"){
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('recordCode',false,'notEmpty');
+		 }
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
 		
@@ -2485,6 +2488,9 @@ function goBpm(){
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
+	 }
+	 if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"||$("#stOrderType").val()=="5"){
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('recordCode',false,'notEmpty');
 	 }
 	var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
