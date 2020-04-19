@@ -91,7 +91,6 @@ function fillItems(){
 	}
 	getAllCountFiled();
 	//setTableToDifTab();
-	debugger
 	if($("#stOrderType").val()=="2"){
 		calMergeDiscount();
 	}
@@ -142,7 +141,6 @@ function getDefaultConfigs(materialCode,clazzCode){
 
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
-	debugger
 	var quantity = data.quantity;
 	var transcationPrice = toDecimal2(data.transactionPrice);
 	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
@@ -167,9 +165,7 @@ function fillItemToTableRow(data){
 		}
 	}
 	var discount = data.discount;
-	if($("#stOrderType").val()=='2'){
-		var discount = toDecimal2(parseFloat(data.discount)*100);
-	}
+	var discount = toDecimal2(parseFloat(data.discount)*100);
 	var row = {
 			rowNum:data.rowNum,
 			materialName:data.materialName,
@@ -673,12 +669,12 @@ function addSubsidiary(){
 		layer.alert('请先选择币种', {icon: 5});
 		return
 	}
-	if(orderType=="2"&&long=='0'&&$("#bodyDiscount").val()==""){
+	if(orderType=="2"&&long=='0'&&($("#bodyDiscount").val()==""||$("#bodyDiscount").val()=="0.0")){
         layer.msg('折扣未录入！', function(){
         });
     }
 
-    if($("#stOrderType").val()=="2"&&long=='0'&&$("#mainDiscount").val()==""){
+    if($("#stOrderType").val()=="2"&&long=='0'&&($("#mainDiscount").val()==""||$("#mainDiscount").val()=="0.0")){
         layer.msg('折扣未录入！', function(){
         });
     }
@@ -690,6 +686,11 @@ function addSubsidiary(){
 	}
 	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
 		$("#discount").attr("disabled",false);
+		$("#originalActualPrice").attr("disabled",false);
+	}
+	if($("#stOrderType").val()=="3"|$("#stOrderType").val()=="4"){
+		$("#discount").attr("disabled",true);
+		$("#discount").val(100);
 		$("#originalActualPrice").attr("disabled",false);
 	}
 	$('#subsidiaryModal').modal('show');
@@ -712,16 +713,8 @@ function initSubsidiary(){
 	$('#materialAreaCode').val(row.districtCode);
 	$('#materialAreaName').val(row.districtName);
 	$('#materialModalAddress').val(row.address)
-	if($("#stOrderType").val()=="2"){
-		$('#discount').val(100);
-	}else{
-		if($("#stOrderType").val()=="1"){
-			$('#discount').val($("#standardDiscount").val());
-		}else{
-			$('#discount').val(1);
-		}
-		
-	}
+	var  standardDiscount = $("#standardDiscount").val();
+    $('#discount').val(standardDiscount?toDecimal2(standardDiscount):toDecimal2(100));
 	if(row.pca==''||row.pca==null||row.pca==undefined){
 		$("#materialAddress").val(row.address).change();
 	}else{
@@ -862,7 +855,6 @@ function fillMaterailValue(data){
 	$("#retailPrice").val(toDecimal2(data.retailPrice));
 	$("#yearPurchasePrice").val(toDecimal2(data.annualPrice))
 	var yearPurchasePrice = $("#yearPurchasePrice").val();
-	debugger
 	if(($("#stOrderType").val()=='3'||$("#stOrderType").val()=='4')&&yearPurchasePrice&&yearPurchasePrice!='0.00'){
 		$("#retailPrice").val(toDecimal2(yearPurchasePrice));
 	}
@@ -885,9 +877,7 @@ function itemCategoryChange(obj){
 		
 		//折扣率
 		var discountValue = $("#discount").val();
-		if($("#stOrderType").val()=="2"){
-			discountValue = (discountValue/100).toFixed(2);
-		}
+		discountValue = (discountValue/100).toFixed(2);
 
 		//产品实卖单价人民币
 		var actualPrice = toDecimal2(parseFloat(retailPrice)*discountValue);
@@ -906,9 +896,7 @@ function initMaterialPrice(){
 	
 	//折扣率
 	var discountValue = $("#discount").val();
-	if($("#stOrderType").val()=="2"){
-		discountValue = (discountValue/100).toFixed(2);
-	}
+	discountValue = (discountValue/100).toFixed(2);
 	
 	//数量
 	var amount = $("#amount").val();
@@ -1279,6 +1267,22 @@ function editMaterials(editContent){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#b2cEstimatedPrice').attr("disabled",true);
 	}
+	
+	if($("#stOrderType").val()=="3"|$("#stOrderType").val()=="4"){
+		$("#discount").attr("disabled",true);
+		$("#discount").val(100);
+		$("#originalActualPrice").attr("disabled",false);
+	}
+	
+	//查看订单是禁用所有控件
+	if(orderOperationType=="2"){
+		 var form=$("#subsidiaryForm")[0];
+		  for(var i=0;i<form.length;i++){
+		    var element=form.elements[i];
+		    element.disabled=true;
+		  }
+		  $("#configClose").attr("disabled",false);
+	}
 }
 
 //编辑购销明细时页面值回显
@@ -1531,7 +1535,6 @@ function compareDate(date){
 
 //计算合并折扣
 function calMergeDiscount(){
-	debugger
 	//折后零售金额集合
 	var discountRetailAmountsArray = new Array();
 	//实际零售金额集合
@@ -1690,7 +1693,7 @@ function initSubsidiartFormValidator(){
             	            message: '数量不能为空'
             	        },
             	        regexp: {
-            	            regexp: /^[1-9]\d{0,4}$/,
+                            regexp: /^[1-9]\d{0,4}$/,
             	            message: '只能输入小于十万的正整数'
             	        }
             	    }
@@ -1818,24 +1821,56 @@ function initOrderFormValidator(){
                     message: '请填写授权人3及身份证号'
                }
            }  
-       }
-   	/*contractValue: {
-           validators: {
-               notEmpty: {
-                    message: '金额不能为空'
-               },
-               regexp: {
-                   regexp: /^\d+(\.\d{0,2})?$/,
-                   message: '请输入合法的金额，金额限制两位小数'
-               },
-               identical: {
-					field: 'itemsAmount',
-					message: '合同明细金额和购销明细金额不一致，请验证后再提交！'
-				}
-           }
        },
-		itemsAmount: {
-		}*/
+       contactor1Tel:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写授权人1电话'
+               }
+           }  
+       },
+       contactor2Tel:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写授权人2电话'
+               }
+           }  
+       },
+       contactor3Tel:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写授权人3电话'
+               }
+           }  
+       },
+       bodyDiscount: {
+   		validators: {
+   			callback: {
+                   message: '折扣需大于等于1小等于100',
+                   callback:function(value, validator,$field){
+                   	if(!parseFloat(value)||parseFloat(value)<1||parseFloat(value)>100){
+                   		return false;
+                   	}else{
+                   		return true;
+                   	}
+                   }
+   			}
+   	    }
+        },
+        mainDiscount: {
+       		validators: {
+       			callback: {
+                       message: '折扣需大于等于1小等于100',
+                       callback:function(value, validator,$field){
+                       	if(!parseFloat(value)||parseFloat(value)<1||parseFloat(value)>100){
+                       		return false;
+                       	}else{
+                       		return true;
+                       	}
+                       }
+       			}
+       	    }
+            }
        }
    });
 }
@@ -1955,13 +1990,12 @@ function closeMaterialConfig(){
 
 //保存调研表
 function saveMaterialConfig(){
-	debugger
 	var rowNum = $('#rowNum').val();
 	var configIndex = $("#configIndex").val();
 	var tableData = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
 	//获取调研表配置价格
 	viewConfigPrice("cal");
-	var discount = tableData.discount;
+	var discount = parseFloat(tableData.discount)/100;
 	var optionalTransationPrice = $("#viewOptionalTransactionPrice").val();
 	var optionalRetailPrice = $("#viewOptionalRetailPrice").val();
 	var optionalStandardPrice = $("#viewOptionalStandardPrice").val();
@@ -2088,12 +2122,36 @@ function insertMaterials(index){
 	var currentRowNum = currentRowData.rowNum;
 	var nextIndex = parseInt(index)+1;
 	var nextRowData = $('#materialsTable').bootstrapTable('getData')[nextIndex];
+	
+	var discount = $("#standardDiscount").val()?toDecimal2($("#standardDiscount").val()):toDecimal2(100);
+	var addressTableData = $('#addressTable').bootstrapTable('getData')
+	var row = addressTableData[0];
+	$('#materialProvinceCode').val(row.provinceCode);
+	$('#materialProvinceName').val(row.provinceName);
+	$('#materialCityCode').val(row.cityCode);
+	$('#deliveryAddressSeq').val(row.seq);
+	$('#materialCityName').val(row.cityName);
+	$('#materialAreaCode').val(row.districtCode);
+	$('#materialAreaName').val(row.districtName);
+	$('#materialModalAddress').val(row.address)
+	if(row.pca==''||row.pca==null||row.pca==undefined){
+		$("#materialAddress").val(row.address).change();
+	}else{
+		$("#materialAddress").val(row.pca+"/"+row.address).change();
+	}
 	if(nextRowData==undefined){
 		var rowData ={};
 		var newRowNum = parseInt(currentRowNum)+10; 
 		rowData["rowNum"] = newRowNum;
 		rowData["quantity"] = 1;
-		rowData["discount"] = 
+		rowData["discount"] = discount;
+		rowData["materialAddress"] = $("#materialAddress").val();
+		rowData["provinceCode"] =$('#materialProvinceCode').val(); 
+		rowData["provinceName"] =$('#materialProvinceName').val(); 
+		rowData["cityCode"] =$('#materialCityCode').val(); 
+		rowData["cityName"] =$('#materialCityName').val(); 
+		rowData["districtCode"] =$('#materialAreaCode').val(); 
+		rowData["districtName"] =$('#materialAreaName').val(); 
 		$("#materialsTable").bootstrapTable('append',rowData);
 		$('#subsidiaryModal').modal('show');
 		$("#subsidiaryForm")[0].reset();
@@ -2118,6 +2176,16 @@ function insertMaterials(index){
 		}
 		var rowData ={};
 		rowData["rowNum"] = insertRowNum;
+		rowData["quantity"] = 1;
+		rowData["discount"] = discount;
+		rowData["materialAddress"] = $("#materialAddress").val();
+		rowData["provinceCode"] =$('#materialProvinceCode').val(); 
+		rowData["provinceName"] =$('#materialProvinceName').val(); 
+		rowData["cityCode"] =$('#materialCityCode').val(); 
+		rowData["cityName"] =$('#materialCityName').val(); 
+		rowData["districtCode"] =$('#materialAreaCode').val(); 
+		rowData["districtName"] =$('#materialAreaName').val(); 
+		rowData["deliveryAddressSeq"] =$('#deliveryAddressSeq').val();
 		$("#materialsTable").bootstrapTable('insertRow',{index:nextIndex,row:rowData});
 		$('#subsidiaryModal').modal('show');
 		$("#subsidiaryForm")[0].reset();
@@ -2413,9 +2481,7 @@ function saveOrder(type){
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
-		 if($("#stOrderType").val()=='2'){
-			 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 
-		 } 
+		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
@@ -2531,9 +2597,7 @@ function goBpm(){
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].identification];
 		 items[i].isVirtual = 0;
-		 if($("#stOrderType").val()=='2'){
-			 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
-		 }
+		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
@@ -2754,7 +2818,14 @@ function viewOrderGrossProfit(){
 	var tableStringData = grossProfitMargin;
 	var tableData =JSON.parse(tableStringData)
 	$.each(tableData,function(index,item){
-		item.grossProfitMargin = (item.grossProfitMargin*100)+"%";
+		item.grossProfitMargin = toDecimal2(item.grossProfitMargin*100)+"%";
+		item.amount = toDecimal2(item.amount);
+		item.excludingTaxAmount = toDecimal2(item.excludingTaxAmount);
+		item.wtwCost = toDecimal2(item.wtwCost);
+		item.cost = toDecimal2(item.cost);
+		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
+		item.grossProfit = toDecimal2(item.grossProfit);
+		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin);
 	})
 	$("#grossProfitTable").bootstrapTable('load', tableData);	
 }
@@ -2954,7 +3025,6 @@ function produceSeqNum(){
 }
 
 function getNowTimeStr() {
-	debugger
 	var nowDate = new Date();
 	var year = nowDate.getFullYear();
 	var month = nowDate.getMonth() + 1;

@@ -72,7 +72,9 @@
 	var orderOperationType = [[${orderOperationType}]]
 	var orderType = [[${orderDetail.orderType}]]
 	var grossProfitMargin = [[${orderDetail.grossProfitMargin}]]
-	var initTaxRate = [[order_option.taxRate]]
+	var initTaxRate = [[${order_option.taxRate}]]
+	var standardDiscount = [[${order_option.standardDiscount}]]
+	$("#standardDiscount").val(parseFloat(standardDiscount)*100)
 	if(orderOperationType!=1){
 		if(initTaxRate&&saleType==20){
 			var rate = initTaxRate[10];

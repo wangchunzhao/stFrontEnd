@@ -107,7 +107,7 @@
 					    </div>
 						<span class="col-md-1 control-label" th:if="${orderType==4 || orderType==5}">是否年采客户</span>
 						<div class="col-md-2" th:if="${orderType==4 || orderType==5}">
-							<select class="form-control"  disabled th:field="*{isYearpurchase}">
+							<select class="form-control"  th:field="*{isYearpurchase}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
@@ -303,9 +303,9 @@
 							</select>
 							<input type="hidden" id="transferTypeName" th:field="*{transferTypeName}">
 					    </div>
-					    <span class="col-md-1 control-label" th:if="${orderType!=4}">标准折扣</span>
+					    <span class="col-md-1 control-label" th:if="${orderType==1}">标准折扣</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="standardDiscount" readonly th:if="${orderType!=4}" th:value="${order_option.standardDiscount}">
+							<input type="text" class="form-control" id="standardDiscount" readonly th:if="${orderType==1}">
 					    </div>
 					    <div id="freightDiv" style="display:none;">
 						    <span class="col-md-1 control-label">外销运费（凭证货币）</span>
@@ -343,19 +343,6 @@
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 					    </div>
-					</div>
-					<div class="row" style="margin-top: 15px;" th:if="${orderType==4}">
-						<span class="col-md-1 control-label">是否全部为散件</span>
-						<div class="col-md-2">
-							<select class="form-control" th:field="*{isBulkCargo}">
-								<option value="1" class="">是</option>
-								<option value="0" class="">否</option>
-							</select>
-						</div>
-						<span class="col-md-1 control-label">不可预估项</span>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="unpredictable" th:field="*{unpredictable}">
-						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
 						<span class="col-md-1 control-label">批准折扣</span>
@@ -575,7 +562,7 @@
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
 						<div class="col-md-3">
-							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()" >
 								查看毛利表 Gross profit table
 							</button>
 						</div>
