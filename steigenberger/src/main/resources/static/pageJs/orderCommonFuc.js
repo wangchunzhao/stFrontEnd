@@ -698,23 +698,28 @@ function addSubsidiary(){
 
 
 function initSubsidiary(){
-	var addressTableData = $('#addressTable').bootstrapTable('getData')
-	var row = addressTableData[0];
-	$('#materialProvinceCode').val(row.provinceCode);
-	$('#materialProvinceName').val(row.provinceName);
-	$('#materialCityCode').val(row.cityCode);
-	$('#deliveryAddressSeq').val(row.seq);
-	$('#materialCityName').val(row.cityName);
-	$('#materialAreaCode').val(row.districtCode);
-	$('#materialAreaName').val(row.districtName);
-	$('#materialModalAddress').val(row.address)
-	var  standardDiscount = $("#standardDiscount").val();
-    $('#discount').val(standardDiscount?toDecimal2(standardDiscount):toDecimal2(100));
-	if(row.pca==''||row.pca==null||row.pca==undefined){
-		$("#materialAddress").val(row.address).change();
-	}else{
-		$("#materialAddress").val(row.pca+"/"+row.address).change();
+	if($("#stOrderType").val()!="5"){
+		var addressTableData = $('#addressTable').bootstrapTable('getData')
+		var row = addressTableData[0];
+		$('#materialProvinceCode').val(row.provinceCode);
+		$('#materialProvinceName').val(row.provinceName);
+		$('#materialCityCode').val(row.cityCode);
+		$('#deliveryAddressSeq').val(row.seq);
+		$('#materialCityName').val(row.cityName);
+		$('#materialAreaCode').val(row.districtCode);
+		$('#materialAreaName').val(row.districtName);
+		$('#materialModalAddress').val(row.address)
+		if(row.pca==''||row.pca==null||row.pca==undefined){
+			$("#materialAddress").val(row.address).change();
+		}else{
+			$("#materialAddress").val(row.pca+"/"+row.address).change();
+		}
 	}
+	
+	var  standardDiscount = $("#standardDiscount").val();
+	
+    $('#discount').val(standardDiscount?toDecimal2(standardDiscount):toDecimal2(100));
+	
 	$('#amount').val(1);
 	
 	var specialRemark="";
@@ -763,26 +768,48 @@ function queryMaterialTypeParams(params) {
 function searchMaterilType(){
 	$('#materialTypeTable').bootstrapTable('refresh');
 }
+//行项目类别对应关系
+function getItemCategory(configure,data){
+	if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"){
+		if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHT1'>标准</option><option value='ZHT3'>免费</option><option value='ZHR1'>退货</option></select>");	
+		}else{
+			if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
+				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHT2'>标准</option><option value='ZHT6'>免费</option><option value='ZHR2'>退货</option></select>");
+			}else{
+				if(data.code=='BG1GD1000000-X'){
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
+				}else{
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
+				}
+				$("#itemCategory").attr("disabled",true);
+			}
+			
+		}
+	}else{
+		if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
+		}else{
+			if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
+				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
+			}else{
+				if(data.code=='BG1GD1000000-X'){
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
+				}else{
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
+				}
+				$("#itemCategory").attr("disabled",true);
+			}
+			
+		}
+	}
+}
 
 //将查出来的物料信息填充到各个field中
 function fillMaterailValue(data){
 	$("#itemCategoryContent").html('');
 	var configure = data.configurable+'';
-	if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
-		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
-	}else{
-		if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
-			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
-		}else{
-			if(data.code=='BG1GD1000000-X'){
-				$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
-			}else{
-				$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
-			}
-			$("#itemCategory").attr("disabled",true);
-		}
-		
-	}
+	getItemCategory(configure,data);
 	$("#materialTypeName").val(data.description).change();
 	$("#materialCode").val(data.code);
 	//不可预估费特殊处理
@@ -867,7 +894,7 @@ function fillMaterailValue(data){
 //行项目类别变化
 function itemCategoryChange(obj){
 	var category = $(obj).val();
-	if(category=='ZHD4'||category=='ZHD3'){
+	if(category=='ZHD4'||category=='ZHD3'||category=='ZHT3'||category=='ZHT6'){
 		$("#originalActualPrice").val(0.00);
 		$("#originalActualPrice").trigger("oninput");
 	}else{
@@ -1232,22 +1259,7 @@ function editMaterials(editContent){
 	var configable = tableData.isConfigurable+'';
 	fillEditMaterailValue(tableData,index);
 	var materialCode = $("#materialCode").val();
-	if(configable=='true'&&(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X')){
-		$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
-	}else{
-		if(materialCode!='BG1R8R00000-X'&&materialCode!='BG1R8L00000-X'&&materialCode!='BG1GD1000000-X'){
-			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
-		}else{
-			if(materialCode=='BG1R8L00000-X'){
-				$("#itemCategoryContent").append("<input type='text' class='form-control'  id='itemCategory'  name='itemCategory' value='ZH97'>")				
-			}else{
-				$("#itemCategoryContent").append("<input type='text' class='form-control'  id='itemCategory'  name='itemCategory' value='ZH98'>")
-			}
-			$("#itemCategory").attr("disabled",true);
-		}
-		
-	}
-	debugger
+	getItemCategory(configable,tableData);
 	$("#itemCategory").val(tableData.itemCategory);
 	//不可预估费特殊处理
 	if(materialCode=='BG1R8L00000-X'){
@@ -2508,7 +2520,10 @@ function saveOrder(type){
 			 items[i]['configs'] = null;
 		 }
 	 }
-	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
+	 if($("#stOrderType").val()!="5"){
+		 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
+	 }
+	
 	 if(type){
 		 $.ajax({
 			    url: ctxPath+"order/submit",
@@ -2604,15 +2619,15 @@ function goBpm(){
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
-		 var configData = localStorage[items[i].identification];
+		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
-		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100)
+		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
-			 var config = new Object();
 			 var configs = new Array();
 			 for(var j=0;j<storedConfigs.length;j++){
+				 var config = new Object();
 				 config['keyCode'] = storedConfigs[j].code;
 				 config['valueCode'] = storedConfigs[j].configValueCode;
 				 config['configurable'] = items[i].isConfigurable;
@@ -2620,12 +2635,16 @@ function goBpm(){
 				 configs.push(config);
 			 }
 			 items[i]['configs'] = configs; 
-			 items[i]['configComments'] = jsonObject.remark
+			 items[i]['attachments'] = jsonObject.attachments;
+			 items[i]['configComments'] = jsonObject.remark;
+			 items[i]['mosaicImage'] = jsonObject.mosaicImage;
 		 } else{
 			 items[i]['configs'] = null;
-		 }	 	 
+		 }
 	 }
-	 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
+	 if($("#stOrderType").val()!="5"){
+		 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
+	 }
 	 $.ajax({
 		    url: ctxPath+"order/submitbpm",
 		    contentType: "application/json;charset=UTF-8",

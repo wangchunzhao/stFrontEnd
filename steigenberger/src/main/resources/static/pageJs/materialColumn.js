@@ -212,21 +212,21 @@ var materialsColumn = [{
 	    formatter: function(value, row, index) {
 	    	var config = row.isConfigurable+'';
 	    	if(config=='true'){
-	    		if(value=="ZHD1"){
+	    		if(value=="ZHD1"||value=="ZHT1"){
 		    		return "标准";
-		    	}else if(value=="ZHD3"){
+		    	}else if(value=="ZHD3"||value=="ZHT3"){
 		    		return "免费";
-		    	}else if(value=="ZHR3"){
+		    	}else if(value=="ZHR3"||value=="ZHR1"){
 		    		return "退货";
 		    	}else{ 
 		    		return value;
 		    	}
 	    	}else{
-	    		if(value=="ZHD2"){
+	    		if(value=="ZHD2"||value=="ZHT2"){
 		    		return "标准";
-		    	}else if(value=="ZHD4"){
+		    	}else if(value=="ZHD4"||value=="ZHT6"){
 		    		return "免费";
-		    	}else if(value=="ZHR4"){
+		    	}else if(value=="ZHR4"||value=="ZHR2"){
 		    		return "退货";
 		    	}else{ 
 		    		return value;
