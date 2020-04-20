@@ -115,10 +115,7 @@ $(function () {
 		fillOrderAddress();
 		initDropDownList();
 		fillItems();
-		//修改查看订单时,辉县地址数据
-		
 		fillAttachments();
-		fillOrderSettlementMethod();
 	}
 	if(orderOperationType=="2"){
 		disableAll();

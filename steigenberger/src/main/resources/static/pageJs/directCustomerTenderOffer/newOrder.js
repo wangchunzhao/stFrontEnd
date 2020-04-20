@@ -113,12 +113,10 @@ $(function () {
 		getUserDetail();
 	}else{
 		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
-		//修改查看订单时,辉县地址数据
 		fillOrderAddress();
 		initDropDownList();
-		fillItems();	
+		fillItems();
 		fillAttachments();
-		fillOrderSettlementMethod();
 	}
 	if(orderOperationType=="2"){
 		disableAll();

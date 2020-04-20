@@ -2462,12 +2462,12 @@ function saveOrder(type){
 		 if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"||$("#stOrderType").val()=="5"){
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('recordCode',false,'notEmpty');
 		 }
+		 expandAll();
 		var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 		bootstrapValidator.validate();
 		
 		if(!bootstrapValidator.isValid()){ 
 			layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
-			expandAll()
 			return
 		}
 		
@@ -2587,11 +2587,12 @@ function goBpm(){
 	 if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"||$("#stOrderType").val()=="5"){
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('recordCode',false,'notEmpty');
 	 }
+	 expandAll();
 	var bootstrapValidator = $("#orderForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
 	if(!bootstrapValidator.isValid()){ 
 		layer.alert('订单信息录入有误，请检查后提交', {icon: 5});
-		expandAll()
+		
 		return
 	}
 	$('#loadingModal').modal('show');
