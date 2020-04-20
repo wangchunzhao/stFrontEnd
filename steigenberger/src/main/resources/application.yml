@@ -1,6 +1,7 @@
 server:
   port: 8880
   session:
+    timeout: 7200
     tracking-modes: cookie
     cookie:
       http-only: true

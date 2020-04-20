@@ -214,6 +214,9 @@ public class Order {
 	private String grossProfitMargin; // 订单毛利率
 	
 	private String comments;//备注
+    
+    /*是否已下发sap*/
+    private boolean hasSendSap = false;
 	
 	/**
 	 * 附件信息 Attachment information
@@ -1025,7 +1028,15 @@ public class Order {
 		this.comments = comments;
 	}
 
-	public List<Attachment> getAttachments() {
+	public boolean isHasSendSap() {
+    return hasSendSap;
+  }
+
+  public void setHasSendSap(boolean hasSendSap) {
+    this.hasSendSap = hasSendSap;
+  }
+
+  public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
