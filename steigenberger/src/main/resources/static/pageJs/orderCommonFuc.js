@@ -688,11 +688,6 @@ function addSubsidiary(){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
 	}
-	if($("#stOrderType").val()=="3"|$("#stOrderType").val()=="4"){
-		$("#discount").attr("disabled",true);
-		$("#discount").val(100);
-		$("#originalActualPrice").attr("disabled",false);
-	}
 	$('#subsidiaryModal').modal('show');
 	$("#itemCategory").html('');
 	$("#subsidiaryForm")[0].reset();
@@ -2448,6 +2443,9 @@ function saveOrder(type){
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Tel',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Tel',false,'notEmpty');
+			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Tel',false,'notEmpty');
 		 }
 		 if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"||$("#stOrderType").val()=="5"){
 			 $('#orderForm').data('bootstrapValidator').enableFieldValidators('recordCode',false,'notEmpty');
@@ -2567,6 +2565,9 @@ function goBpm(){
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Id',false,'notEmpty');
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Id',false,'notEmpty');
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Id',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor1Tel',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor2Tel',false,'notEmpty');
+		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('contactor3Tel',false,'notEmpty');
 	 }
 	 if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"||$("#stOrderType").val()=="5"){
 		 $('#orderForm').data('bootstrapValidator').enableFieldValidators('recordCode',false,'notEmpty');
