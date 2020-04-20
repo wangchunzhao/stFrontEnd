@@ -844,6 +844,12 @@ function fillMaterailValue(data){
 	if($("#stOrderType").val()=="2"&&(data.code=='BG1GD1000000-X'||data.code=='BG1GD1000000-X'||data.code=='BG1R8R00000-X')){
 		$("#discount").val(100);
 	}
+	if(($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4")&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+		$("#discount").attr("disabled",true);
+		$("#discount").val(100);
+		$("#originalActualPrice").attr("disabled",false);
+	}
+	
 	
 	$("#materialType").val(materialsType);
 	$("#unitName").val(data.unitName);
@@ -1246,6 +1252,8 @@ function editMaterials(editContent){
 		}
 		
 	}
+	debugger
+	$("#itemCategory").val(tableData.itemCategory);
 	//不可预估费特殊处理
 	if(materialCode=='BG1R8L00000-X'){
 		$('#originalTransationPrice').attr("disabled",false);
