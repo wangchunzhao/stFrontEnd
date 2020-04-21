@@ -30,7 +30,7 @@
 		<input type="hidden" th:field="*{version}">
 		<input type="hidden" th:field="*{isActive}">
 		<div id="page-wrapper">
-			<div th:replace="orderCommons/orderCommons::path(mainPath=新建需求,subPath=直签客户投标报价)">	</div>
+			<div th:replace="orderCommons/orderCommons::path(mainPath=新建需求,subPath=直签客户下单)">	</div>
 			<div th:replace="orderCommons/orderCommons::expandButton">	</div>
 			<div id="accordion1" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 10px; margin-left: 20px; margin-right: 20px;">
 				<div th:replace="orderCommons/orderCommons::customerBasicInfo(4)">	</div>	

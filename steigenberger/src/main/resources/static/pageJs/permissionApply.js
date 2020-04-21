@@ -68,8 +68,8 @@ function add(){
 	var tel = document.getElementById('telnum').value;
 //	alert(tel);
 	if(!reg.test(obj.value)){
-		alert("邮箱格式不正确!");
-		return false;
+//		alert("邮箱格式不正确!");
+//		return false;
 	}else if(roleName=="" ||tel==undefined|| userid==undefined){
 		alert("表单信息填写不完整!");
 		return false;
