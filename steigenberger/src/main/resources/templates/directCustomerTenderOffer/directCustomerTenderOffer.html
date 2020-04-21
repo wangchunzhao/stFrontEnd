@@ -33,12 +33,12 @@
 			<div th:replace="orderCommons/orderCommons::path(mainPath=新建需求,subPath=直签客户投标报价)">	</div>
 			<div th:replace="orderCommons/orderCommons::expandButton">	</div>
 			<div id="accordion1" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 10px; margin-left: 20px; margin-right: 20px;">
-				<div th:replace="orderCommons/orderCommons::customerBasicInfo(4)">	</div>	
-				<div th:replace="orderCommons/orderCommons::contractBasicInfo(4)">	</div>
-				<div th:replace="orderCommons/orderCommons::contractDetailInfo(4)">	</div>		
-				<div th:replace="orderCommons/orderCommons::paymentType(4)">	</div>	
-				<div th:replace="orderCommons/orderCommons::purchaseAndSubsidisry(4)">	</div>	
-				<div th:replace="orderCommons/orderCommons::specialShipment">	</div>
+				<div th:replace="orderCommons/orderCommons::customerBasicInfo(3)">	</div>	
+				<div th:replace="orderCommons/orderCommons::contractBasicInfo(3)">	</div>
+				<div th:replace="orderCommons/orderCommons::contractDetailInfo(3)">	</div>		
+				<div th:replace="orderCommons/orderCommons::paymentType(3)">	</div>	
+				<div th:replace="orderCommons/orderCommons::purchaseAndSubsidisry(3)">	</div>	
+				<!-- <div th:replace="orderCommons/orderCommons::specialShipment">	</div> -->
 				<div th:replace="orderCommons/orderCommons::viewInfoForDirectCustomer">	</div>
 				<div th:replace="orderCommons/orderCommons::viewAttachmentInformation">	</div>
 				<div th:replace="orderCommons/orderCommons::footerButton">	</div>	
@@ -49,7 +49,7 @@
 	<div th:replace="orderCommons/orderModalCommons::searchCustomerModal"></div>
 	<div th:replace="orderCommons/orderModalCommons::paymentTypeModal"></div>
 	<div th:replace="orderCommons/orderModalCommons::addressModal"></div>
-	<div th:replace="orderCommons/newOrderSubsidiary::subsidiary(4)"></div>
+	<div th:replace="orderCommons/newOrderSubsidiary::subsidiary(3)"></div>
 	<div th:replace="orderCommons/materialconfig::materialconfig"></div>
 	<div th:replace="orderCommons/orderModalCommons::loadModal"></div>	 	
 <script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>

@@ -15,7 +15,7 @@ $(function () {
 	//进页面前清空缓存
 	localStorage.clear()
 	produceSeqNum();
-	//监控是否特批发货
+	/*//监控是否特批发货
 	$('#specialShipmentValue').change(function () {
 		if($('#specialShipmentValue').prop('checked')){
 			 $("#isUrgentDelivery").val(1);
@@ -31,8 +31,8 @@ $(function () {
 		 }else{
 			 $("#isSpecialOrder").val(0);
 		 }
-	})
-	setSpecialChecked();
+	})*/
+	/*setSpecialChecked();*/
 	//初始化付款方式页面
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();

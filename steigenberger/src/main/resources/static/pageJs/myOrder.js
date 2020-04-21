@@ -180,13 +180,14 @@ function operation(value, row, index) {
 	var buttonControl = row.buttonControl;
 	var stOrderType = row.stOrderType;
 	var quoteStatus = row.quoteStatus;
+	var contractNumber = row.contractNumber;
 	var actions = [];
 	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</a>");
 	actions.push("<a type='button' class='btn btn-primary' id='copyOrder' onclick='copyOrder(\""+orderInfoId+"\")'>复制</a>");
 	actions.push("<a type='button' class='btn btn-primary' id='exportOrderItem' title='导出购销明细及调研表' onclick='exportOrderItem(\""+orderInfoId+"\")'>导出</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
-	if(stOrderType!="3"&&currentVersionStatus=="05"&&buttonControl=="true"){
-		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+"\")'>下推SAP</a>");
+	if(stOrderType!="3"&&currentVersionStatus=="05"){
+		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+'|'+stOrderType+'|'+contractNumber+"\")'>下推SAP</a>");
 		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
@@ -242,35 +243,59 @@ function editOrder(orderInfoId,orderOperationType){
 		document.body.removeChild(myForm); 	
 }
 
-function tosap(orderInfoId) {
+function tosap(content) {
+	var orderInfoId = content.split('|')[0];
+	var stOrderType = content.split('|')[1];
+	var contractNumber = content.split('|')[2];
 	
-	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
-        var url = ctxPath+"order/"+orderInfoId+"/sap";
-        $.ajax({
-            type: "post",
-            url: url,
-            data: null,
-            dataType: "json",
-            success: function (data) {
-            	if(data == null || data.status != 'ok'){
-		    		layer.alert("订单下推SAP失败：" + (data != null ? data.msg : ""));
-		    	}else{
-		    		layer.alert('订单下推SAP成功', {icon: 6});
-		    		$('#mytab').bootstrapTable('refresh');
-		    	} 	
-            }
-        });
-    });
-	/*$.post(ctxPath+'order/sap',{sequenceNumber:seqNumb,orderType:ordType,currentVersion:version},function(data, textStatus, jqXHR){	
-		if(textStatus=="success"){
-			alert('下推订单成功！')
-			$('#mytab').bootstrapTable('refresh', {
-				url : ctxPath+'order/query'
-			});
+	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function (index) {
+		if(stOrderType==2){
+			$("#modalContractDialog").modal('show');
+			$("#modalContractNumber").val(contractNumber);
+			$("#modalOrderInfoId").val(orderInfoId);
+			layer.close(index)
+			
 		}else{
-			alert('下推订单失败！')
-		}
-	},'text');*/
+			var url = ctxPath+"order/"+orderInfoId+"/sap";
+	        $.ajax({
+	            type: "post",
+	            url: url,
+	            data: null,
+	            dataType: "json",
+	            success: function (data) {
+	            	if(data == null || data.status != 'ok'){
+			    		layer.alert("订单下推SAP失败：" + (data != null ? data.msg : ""));
+			    	}else{
+			    		layer.alert('订单下推SAP成功', {icon: 6});
+			    		$('#mytab').bootstrapTable('refresh');
+			    	} 	
+	            }
+	        });
+		}	
+	   });
+		
+        
+}
+
+function nonStandardToSap(){
+	var contractNumber = $("#modalContractNumber").val();
+	var orderInfoId = $("#modalOrderInfoId").val();
+	var url = ctxPath+"order/"+orderInfoId+"/sap/"+contractNumber;
+    $.ajax({
+        type: "post",
+        url: url,
+        data: null,
+        dataType: "json",
+        success: function (data) {
+        	if(data == null || data.status != 'ok'){
+	    		layer.alert("订单下推SAP失败：" + (data != null ? data.msg : ""));
+	    	}else{
+	    		layer.alert('订单下推SAP成功', {icon: 6});
+	    		$('#mytab').bootstrapTable('refresh');
+	    	} 	
+        }
+    });
+	
 }
 
 function upgradeOrder(orderInfoId){

@@ -167,12 +167,12 @@
 						<div class="col-md-2">
 					      <input type="text" class="form-control" id="sequenceNumber" aria-describedby="emailHelp" th:field="*{sequenceNumber}" readonly>
 					    </div>
-					    <span class="col-md-1 control-label" th:if="${orderType!=4}" >合同号</span>
-						<div class="col-md-2" th:if="${orderType!=4}">
+					    <span class="col-md-1 control-label" th:if="${orderType!=3}" >合同号</span>
+						<div class="col-md-2" th:if="${orderType!=3}">
 							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}" oninput="contractToUpperCase(this)" maxlength="10">
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType==4}">核算号</span>
-						<div class="col-md-2" th:if="${orderType==4}">
+						<span class="col-md-1 control-label" th:if="${orderType==3}">核算号</span>
+						<div class="col-md-2" th:if="${orderType==3}">
 							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" readonly>
 						</div>
 					    <span class="col-md-1 control-label">销售类型</span>

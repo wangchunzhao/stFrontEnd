@@ -266,6 +266,7 @@ function initDropDownList(){
 	$('#selectGroup').val($('#groupCode').val());
 	$("#orignalContractAmount").val($("#contractValue").val());
 	$("#contractAmount").val($("#contractRmbValue").val());
+	$("#incoterm").val($("#incotermItem").val());
 	
 }
 
@@ -2497,6 +2498,7 @@ function saveOrder(type){
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
+		 debugger
 		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
 		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 

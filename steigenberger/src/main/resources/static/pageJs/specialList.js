@@ -22,7 +22,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
-			url : ctxPath+"special/listData",//请求路径
+			url : ctxPath+"specialdelivery",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -50,12 +50,12 @@ var TableInit = function () {
 			},
 			columns : [ {
 				title : '订单id',
-				field : 'kOrderId',
+				field : 'id',
 				sortable : true,
 				visible: false
 			},{
 				title : '订单版本id',
-				field : 'kOrderVersionId',
+				field : 'orderInfoId',
 				sortable : true,
 				visible: false
 			},{
