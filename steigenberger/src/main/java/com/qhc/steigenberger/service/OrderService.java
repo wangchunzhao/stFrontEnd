@@ -210,6 +210,13 @@ public class OrderService {
 		return result;
 	}
 
+    public Result updateContractNumber(Integer orderInfoId, String contractNumber) {
+        String url = "order/" + orderInfoId + "/contractnumber/" + contractNumber;
+        Result result = (Result) fryeService.postForm(url, "", Result.class);
+
+        return result;
+    }
+
 	public Result getCharactersByClazzCode(String clazzCode, String materialCode) {
 		String url = "material/configurations/" + clazzCode + ',' + materialCode;
 		Result result =  fryeService.getInfo(url, Result.class);

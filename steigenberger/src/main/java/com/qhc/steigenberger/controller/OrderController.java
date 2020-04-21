@@ -257,7 +257,7 @@ public class OrderController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "将订单推送到sap", notes = "将订单推送到sap")
+	@ApiOperation(value = "推送订单到SAP", notes = "推送订单到SAP")
 	@PostMapping(value = "{orderInfoId}/sap")
 	@ResponseBody
 	public Result toSap(@PathVariable("orderInfoId") Integer orderInfoId) throws Exception {
@@ -273,6 +273,34 @@ public class OrderController extends BaseController {
 		
 		return result;
 	}
+
+    /**
+     * 经销商非标折扣订单下推SAP
+     * 
+     * @param orderInfoId
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation(value = "经销商非标折扣订单下推SAP", notes = "经销商非标折扣订单下推SAP")
+    @PostMapping(value = "{orderInfoId}/sap/{contractNumber}")
+    @ResponseBody
+    public Result toSap2(@PathVariable("orderInfoId") Integer orderInfoId, @PathVariable(name="contractNumber", required = false) String contractNumber) throws Exception {
+        String identity = getUserIdentity();
+        Result result;
+        
+        try {
+          result = orderService.updateContractNumber(orderInfoId, contractNumber);
+          if (!result.getStatus().equals("ok")) {
+            return result;
+          }
+            result = orderService.sendToSap(identity, orderInfoId);
+        } catch (Exception e) {
+            logger.error("订单推送到sap", e);
+            result = Result.error(e.getMessage());
+        }
+        
+        return result;
+    }
 	
 	/**
 	 * 订单变更
