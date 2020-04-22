@@ -52,7 +52,10 @@ public class SpecialDelivery {
 
 	/* 订单信息 */
 	private String sequenceNumber;
+    private String contractNumber;
+    private String customerClazz;
 
+	// 订单类型，性质分类，ZH0D  经销商订单/  ZH0M    备货订单/ZH0T   大客户订单，固定
 	private String orderType;
 
 	private String stOrderType;
@@ -66,6 +69,10 @@ public class SpecialDelivery {
 	
 	private String salesCode;//客户经理 Customer manager
 //	private String salesName;//客户经理 Customer manager
+    private String customerCode;//签约单位 Contract unit
+    private String customerName;//签约单位 Contract Name
+    
+    private double discount;//合并折扣
 
 	public Integer getId() {
 		return id;
@@ -179,7 +186,23 @@ public class SpecialDelivery {
 		this.sequenceNumber = sequenceNumber;
 	}
 
-	public String getOrderType() {
+	public String getContractNumber() {
+    return contractNumber;
+  }
+
+  public String getCustomerClazz() {
+    return customerClazz;
+  }
+
+  public void setContractNumber(String contractNumber) {
+    this.contractNumber = contractNumber;
+  }
+
+  public void setCustomerClazz(String customerClazz) {
+    this.customerClazz = customerClazz;
+  }
+
+  public String getOrderType() {
 		return orderType;
 	}
 
@@ -218,5 +241,29 @@ public class SpecialDelivery {
 	public void setSalesCode(String salesCode) {
 		this.salesCode = salesCode;
 	}
+
+  public String getCustomerCode() {
+    return customerCode;
+  }
+
+  public String getCustomerName() {
+    return customerName;
+  }
+
+  public double getDiscount() {
+    return discount;
+  }
+
+  public void setCustomerCode(String customerCode) {
+    this.customerCode = customerCode;
+  }
+
+  public void setCustomerName(String customerName) {
+    this.customerName = customerName;
+  }
+
+  public void setDiscount(double discount) {
+    this.discount = discount;
+  }
 
 }
