@@ -72,8 +72,8 @@
 					    </div>
 						<span class="col-md-1 control-label">项目报备编号</span>
 						<div class="col-md-2">
-					      <input type="text" class="form-control" id="recordCode" th:if="${orderType!=4 && orderType!=5}" th:field="*{recordCode}">
-							<input type="text" class="form-control" readonly id="recordCode" th:if="${orderType==4 || orderType==5}" th:field="*{recordCode}">
+					      <input type="text" class="form-control" id="recordCode" th:if="${orderType!=3&&orderType!=4 && orderType!=5}" th:field="*{recordCode}">
+							<input type="text" class="form-control" readonly id="recordCode" th:if="${orderType==4 || orderType==5||orderType==3}" th:field="*{recordCode}">
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
@@ -167,14 +167,10 @@
 						<div class="col-md-2">
 					      <input type="text" class="form-control" id="sequenceNumber" aria-describedby="emailHelp" th:field="*{sequenceNumber}" readonly>
 					    </div>
-					    <span class="col-md-1 control-label" th:if="${orderType!=3}" >合同号</span>
-						<div class="col-md-2" th:if="${orderType!=3}">
+					    <span class="col-md-1 control-label">合同号</span>
+						<div class="col-md-2">
 							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}" oninput="contractToUpperCase(this)" maxlength="10">
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType==3}">核算号</span>
-						<div class="col-md-2" th:if="${orderType==3}">
-							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" readonly>
-						</div>
 					    <span class="col-md-1 control-label">销售类型</span>
 						<div class="col-md-2">
 							<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" th:field="*{saleType}" id="saleType">
@@ -819,8 +815,48 @@
 			</div>
 		</div>
 	</div>
-	
-
+	<!--费用项 -->
+	<div th:fragment="cost">
+	<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#expenseItem" aria-expanded="true" class="">费用项</a>
+						</h4>
+					</div>
+					<div id="expenseItem" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+						<div class="panel-body" style="height: auto;">
+							<div class="row">
+								<div class="col-md-3"></div>
+								<div class="col-md-3">安装费</div>
+								<div class="col-md-3">材料费</div>
+							</div>
+							<div class="row">	
+								<div class="col-md-3" style="text-align:center">工程人员填写项</div>	
+								<div class="col-md-3"><input type="text" class="form-control" th:field="*{installFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>
+								<div class="col-md-3"><input type="text" class="form-control" th:field="*{materialFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
+							</div>
+							<div class="row">
+								<div class="col-md-3"></div>
+								<div class="col-md-3">电器费</div>
+								<div class="col-md-3">冷库费</div>
+							</div>
+							<div class="row">	
+								<div class="col-md-3"></div>
+								<div class="col-md-3"><input type="text" class="form-control" th:field="*{electricalFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>
+								<div class="col-md-3"><input type="text" class="form-control" th:field="*{refrigeratoryFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
+							</div>
+							<div class="row">
+								<div class="col-md-3"></div>
+								<div class="col-md-3">维保费</div>
+							</div>
+							<div class="row">	
+								<div class="col-md-3" style="text-align:center">海尔开利自己维保</div>	
+								<div class="col-md-3"><input type="text" class="form-control" th:field="*{maintenanceFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
+							</div>
+						</div>
+					</div>
+	</div>
+	</div>
 	<!--信息查看 For ViewInfoForStockUp  -->
 	<div th:fragment="ViewInfoForStockUp">
 		<div class="panel panel-default">
