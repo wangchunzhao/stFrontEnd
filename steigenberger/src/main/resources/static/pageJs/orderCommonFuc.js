@@ -165,7 +165,6 @@ function fillItemToTableRow(data){
 		}
 	}
 	var discount = data.discount;
-	var discount = toDecimal2(parseFloat(data.discount)*100);
 	var row = {
 			rowNum:data.rowNum,
 			materialName:data.materialName,
@@ -771,14 +770,15 @@ function searchMaterilType(){
 }
 //行项目类别对应关系
 function getItemCategory(configure,data){
+	var code = data.code||data.materialCode;
 	if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"){
-		if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+		if(configure=='true'&&(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X')){
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHT1'>标准</option><option value='ZHT3'>免费</option><option value='ZHR1'>退货</option></select>");	
 		}else{
-			if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
+			if(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X'){
 				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHT2'>标准</option><option value='ZHT6'>免费</option><option value='ZHR2'>退货</option></select>");
 			}else{
-				if(data.code=='BG1GD1000000-X'){
+				if(code=='BG1GD1000000-X'){
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
 				}else{
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
@@ -788,13 +788,13 @@ function getItemCategory(configure,data){
 			
 		}
 	}else{
-		if(configure=='true'&&(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X')){
+		if(configure=='true'&&(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X')){
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
 		}else{
-			if(data.code!='BG1R8R00000-X'&&data.code!='BG1R8L00000-X'&&data.code!='BG1GD1000000-X'){
+			if(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X'){
 				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
 			}else{
-				if(data.code=='BG1GD1000000-X'){
+				if(code=='BG1GD1000000-X'){
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
 				}else{
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
@@ -1859,12 +1859,19 @@ function initOrderFormValidator(){
                }
            }  
        },
+       paymentType:{
+    	   validators: {
+               notEmpty: {
+                    message: '请填写结算方式'
+               }
+           }  
+       },
        bodyDiscount: {
    		validators: {
    			callback: {
-                   message: '折扣需大于等于1小等于100',
+                   message: '折扣录入有误',
                    callback:function(value, validator,$field){
-                   	if(!parseFloat(value)||parseFloat(value)<1||parseFloat(value)>100){
+                   	if(value==''||(parseFloat(value)<1&&parseFloat(value)!=0)||parseFloat(value)>100){
                    		return false;
                    	}else{
                    		return true;
@@ -1876,9 +1883,9 @@ function initOrderFormValidator(){
         mainDiscount: {
        		validators: {
        			callback: {
-                       message: '折扣需大于等于1小等于100',
+                       message: '折扣录入有误',
                        callback:function(value, validator,$field){
-                       	if(!parseFloat(value)||parseFloat(value)<1||parseFloat(value)>100){
+                       	if(value==''||(parseFloat(value)<1&&parseFloat(value)!=0)||parseFloat(value)>100){
                        		return false;
                        	}else{
                        		return true;
@@ -2188,7 +2195,7 @@ function insertMaterials(index){
 		if(gap==2||gap==4||gap==6||gap==8||gap==10){
 			insertRowNum = parseInt(currentRowNum)+parseInt(gap)/2;
 		}else{
-			insertRowNum = currentRowNum+Math.floor(parseInt(gap)/2)+1;
+			insertRowNum = parseInt(currentRowNum)+Math.floor(parseInt(gap)/2)+1;
 		}
 		var rowData ={};
 		rowData["rowNum"] = insertRowNum;
@@ -2498,10 +2505,8 @@ function saveOrder(type){
 	 var items = $("#materialsTable").bootstrapTable('getData');
 	 orderData.items = items;
 	 for(var i=0;i<items.length;i++){
-		 debugger
 		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
-		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;
@@ -2624,7 +2629,6 @@ function goBpm(){
 	 for(var i=0;i<items.length;i++){
 		 var configData = localStorage[items[i].rowNum];
 		 items[i].isVirtual = 0;
-		 items[i].discount = toDecimal2(parseFloat(items[i].discount)/100) 
 		 if(configData){
 			 var jsonObject = JSON.parse(configData);
 			 var storedConfigs = jsonObject.configTableData;

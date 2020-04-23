@@ -145,8 +145,8 @@ function isLongtermChange(obj){
 //柜体申请折扣应用
 function applyBodyDiscount(){
 	var discount = $("#bodyDiscount").val();
-	if(!parseFloat(discount)||parseFloat(discount)<1||parseFloat(discount)>100){
-		layer.alert("无法应用，折扣需大等于1小于等于100！");
+	if(discount==''||(parseFloat(discount)<1&&parseFloat(discount)!=0)||parseFloat(discount)>100){
+		layer.alert("无法应用，折扣录入错误！");
 		return;
 	}
 	
@@ -164,9 +164,10 @@ function applyBodyDiscount(){
 
 //机组申请折扣应用
 function applyMainDiscount(){
+	debugger
 	var discount = $("#mainDiscount").val();
-	if(!parseFloat(discount)||parseFloat(discount)<1||parseFloat(discount)>100){
-		layer.alert("无法应用，折扣需大等于1小于等于100！");
+	if(discount==''||(parseFloat(discount)<1&&parseFloat(discount)!=0)||parseFloat(discount)>100){
+		layer.alert("无法应用，折扣录入错误！");
 		return;
 	}
 	
