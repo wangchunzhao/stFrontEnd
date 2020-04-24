@@ -282,13 +282,16 @@ public class OrderController extends BaseController {
      * @throws Exception
      */
     @ApiOperation(value = "经销商非标折扣订单下推SAP", notes = "经销商非标折扣订单下推SAP")
-    @PostMapping(value = "{orderInfoId}/sap/{contractNumber}")
+    @PostMapping(value = "{orderInfoId}/sap2/{contractNumber}")
     @ResponseBody
     public Result toSap2(@PathVariable("orderInfoId") Integer orderInfoId, @PathVariable(name="contractNumber", required = false) String contractNumber) throws Exception {
         String identity = getUserIdentity();
         Result result;
         
         try {
+          if (contractNumber == null || contractNumber.trim().length() == 0) {
+            throw new RuntimeException("合同号不能为空");
+          }
           result = orderService.updateContractNumber(orderInfoId, contractNumber);
           if (!result.getStatus().equals("ok")) {
             return result;
