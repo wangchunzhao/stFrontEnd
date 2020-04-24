@@ -287,7 +287,7 @@ function tosap(content) {
 function nonStandardToSap(){
 	var contractNumber = $("#modalContractNumber").val();
 	var orderInfoId = $("#modalOrderInfoId").val();
-	var url = ctxPath+"order/"+orderInfoId+"/sap/"+contractNumber;
+	var url = ctxPath+"order/"+orderInfoId+"/sap2/"+contractNumber;
     $.ajax({
         type: "post",
         url: url,
