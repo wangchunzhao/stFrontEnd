@@ -63,7 +63,7 @@ var TableInit = function () {
 			    	contractNumber:$('#contractNumber').val(),//合同号
 			    	contracterName:$('#contracterName').val(),//签约单位
 			    	officeCode:$('#officeCode').val(),
-			    	orderType:$('#orderType').val(),
+			    	stOrderType:$('#orderType').val(),
 			    	b2c:$('#b2c').val(),
 			    	salesName:$('#salesName').val(),
 			    	createTime:$('#reservation').val(),
@@ -92,7 +92,7 @@ var TableInit = function () {
 				sortable : true
 			},{
 				title : '订单类型',
-				field : 'orderType',
+				field : 'stOrderType',
 				formatter : formatOrderType
 			},{
 				title : '客户经理',
@@ -137,12 +137,16 @@ function formatTrue(value, row, index) {
 	//或者 return row.sex == 1 ? "男" : "女";
 }
 function formatOrderType(value, row, index){
-	if(value=="ZH0D"){
-		return "经销商订单";
-	}else if(value=="ZH0M"){
-		return "备货订单";
-	}else if(value=="ZH0T"){
-		return "大客户订单";
+	if(value=="1"){
+		return "经销商标准折扣订单";
+	}else if(value=="2"){
+		return "经销商非标准折扣订单";
+	}else if(value=="3"){
+		return "直签客户投标报价";
+	}else if(value=="4"){
+		return "直签客户下定单";
+	}else if(value=="5"){
+		return "备货";
 	}
 }
 function formatStatus(value, row, index) {
@@ -193,10 +197,10 @@ function operation(value, row, index) {
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
-	if(stOrderType=="3"&&status=="05"&&quoteStatus=="00"&&buttonControl=="true"){
+	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="00"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='tenderOffer' onclick='tenderOffer(\""+orderInfoId+"\")'>中标</a>");
 	}
-	if(stOrderType=="3"&&status=="05"&&quoteStatus=="01"&&buttonControl=="true"){
+	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="01"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='createOrder' onclick='createOrder(\""+orderInfoId+"\")'>下单</a>");
 	}
 
@@ -247,6 +251,9 @@ function tosap(content) {
 	var orderInfoId = content.split('|')[0];
 	var stOrderType = content.split('|')[1];
 	var contractNumber = content.split('|')[2];
+	if(contractNumber=='null'){
+		contractNumber='';
+	}
 	
 	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function (index) {
 		if(stOrderType==2){

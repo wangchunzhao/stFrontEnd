@@ -21,7 +21,7 @@ $(function () {
 	var paymentTable = new TableInit('paymentTable','','',paymentColumns);
 	paymentTable.init();
 
-	var addressTable = new TableInit('addressTable','','',addressColumns)
+	var addressTable = new TableInit('addressTable','','',stockUpAddressColumns)
 	addressTable.init();
 	//初始化客户查询Table
 	var customerTable = new TableInit('customerTable','',queryUnitParams,customerTableColumn);
@@ -93,6 +93,7 @@ $(function () {
 	defaultCollapse();
 	if(status==null||status==""||status=="undefined"){
 		$('#shippDate').datepicker({ startDate: new Date() });
+		insertStockUpAddress();
 		getUserDetail();
 	}else{
 		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
@@ -106,3 +107,56 @@ $(function () {
 		disableAll();
 	}
 });
+
+function insertStockUpAddress(){
+	$("#addressTable").bootstrapTable('insertRow', {
+	    index: 0,
+	    row: {
+	    	seq:1,
+	    	pca:"山东青岛黄岛区",
+	    	provinceCode:'20',
+	    	provinceName:'山东',
+	    	cityCode:'20.11',
+	    	cityName:'青岛',
+	    	districtCode:'20.11.13',
+	    	districtName:'黄岛区',
+	    	address:'山东青岛黄岛区'
+	    }
+	});
+}
+var stockUpAddressColumns = [{
+	title:'行号',
+    field: 'seq',
+    width:'5%'
+},{
+	title : '省市区',
+	field : 'pca',
+	width:'35%'
+}, 
+{
+	field:'provinceCode',
+	visible:false
+},
+{
+	field:'provinceName',
+	visible:false
+},
+{
+	field:'cityCode',
+	visible:false
+},
+{
+	field:'cityName',
+	visible:false
+},{
+	field:'districtCode',
+	visible:false
+},
+{
+	field:'districtName',
+	visible:false
+},{
+	title : '到货地址',
+	field : 'address',
+	width:'45%'
+}]

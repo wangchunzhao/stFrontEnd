@@ -46,7 +46,7 @@ var TableInit = function () {
 			    	contractNumber:$('#contractNumber').val(),//合同号
 			    	contracterName:$('#contracterName').val(),//签约单位
 			    	salesName:$('#salesName').val(),
-			    	orderType:$('#orderType').val(),
+			    	stOrderType:$('#orderType').val(),
 			    	createTime:$('#reservation').val(),
 			    	officeCode:$('#officeCode').val()
 			    };
@@ -66,7 +66,7 @@ var TableInit = function () {
 				sortable : true
 			},{
 				title : '订单类型',
-				field : 'orderType',
+				field : 'stOrderType',
 				formatter : formatOrderType
 			},{
 				title : '折扣',
@@ -106,12 +106,16 @@ function formatTrue(value, row, index) {
 	return value == 48 ? "是" : "否";
 }
 function formatOrderType(value, row, index){
-	if(value=="ZH0D"){
-		return "经销商订单";
-	}else if(value=="ZH0M"){
-		return "备货订单";
-	}else if(value=="ZH0T"){
-		return "大客户订单";
+	if(value=="1"){
+		return "经销商标准折扣订单";
+	}else if(value=="2"){
+		return "经销商非标准折扣订单";
+	}else if(value=="3"){
+		return "直签客户投标报价";
+	}else if(value=="4"){
+		return "直签客户下定单";
+	}else if(value=="5"){
+		return "备货";
 	}
 }
 

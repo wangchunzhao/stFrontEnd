@@ -698,7 +698,6 @@ function addSubsidiary(){
 
 
 function initSubsidiary(){
-	if($("#stOrderType").val()!="5"){
 		var addressTableData = $('#addressTable').bootstrapTable('getData')
 		var row = addressTableData[0];
 		$('#materialProvinceCode').val(row.provinceCode);
@@ -714,7 +713,6 @@ function initSubsidiary(){
 		}else{
 			$("#materialAddress").val(row.pca+"/"+row.address).change();
 		}
-	}
 	
 	var  standardDiscount = $("#standardDiscount").val();
 	
@@ -890,6 +888,12 @@ function fillMaterailValue(data){
 	//转移价
 	$("#transactionPrice").val(toDecimal2(data.transcationPrice));
 	initMaterialPrice();
+	if($("#stOrderType").val()=='5'){
+		$("#actualPrice").val(toDecimal2(0));
+		$("#originalActualPrice").val(toDecimal2(0));
+		$("#originalActualPrice").trigger("oninput");
+		$("#b2cEstimatedPrice").attr("disabled",true);
+	}
 	$('#volumeCube').val(data.materialSize)	
 }
 //行项目类别变化
@@ -1288,6 +1292,10 @@ function editMaterials(editContent){
 		$("#discount").attr("disabled",true);
 		$("#discount").val(100);
 		$("#originalActualPrice").attr("disabled",false);
+	}
+	
+	if($("#stOrderType").val()=='5'){
+		$("#b2cEstimatedPrice").attr("disabled",true);
 	}
 	
 	//查看订单是禁用所有控件
@@ -2527,10 +2535,7 @@ function saveOrder(type){
 			 items[i]['configs'] = null;
 		 }
 	 }
-	 if($("#stOrderType").val()!="5"){
 		 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
-	 }
-	
 	 if(type){
 		 $.ajax({
 			    url: ctxPath+"order/submit",
@@ -2649,9 +2654,7 @@ function goBpm(){
 			 items[i]['configs'] = null;
 		 }
 	 }
-	 if($("#stOrderType").val()!="5"){
 		 orderData.deliveryAddress = $("#addressTable").bootstrapTable('getData');
-	 }
 	 $.ajax({
 		    url: ctxPath+"order/submitbpm",
 		    contentType: "application/json;charset=UTF-8",

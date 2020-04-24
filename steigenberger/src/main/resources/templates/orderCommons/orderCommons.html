@@ -386,6 +386,38 @@
 		</div>
 	</div>
 	
+	<!-- 合同详细信息 -->
+	<div th:fragment="contractDetailInfoForStockUp">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#contractDetailInfo" aria-expanded="true" class="">合同详细信息 Contract details</a>
+				</h4>
+			</div>
+			<div id="contractDetailInfo" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
+				<div class="panel-body" style="height: auto;">
+					<div class="row">
+					  <div class="col-md-1">
+					  	<span class="control-label"><strong>地址信息</strong></span>
+					  </div>
+					  <div class="col-md-11">
+					  	<table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;" id="addressTable" data-pagination="false" ></table>
+					  </div>
+						</div>  
+					<div class="row" style="margin-top: 15px;">
+						<span class="col-md-1 control-label">运输方式</span>
+						<div class="col-md-2">
+							<select class="form-control" id="transferType" th:field="*{transferType}">
+								<option value="02">自提</option>
+							</select>
+							<input type="hidden" id="transferTypeName" th:field="*{transferTypeName}">
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!--结算方式  -->
 	<div th:fragment="paymentType(orderType)">
 		<div class="panel panel-default" th:if="${orderType!=3&&orderType!=4}">
@@ -846,11 +878,11 @@
 								<div class="col-md-3"><input type="text" class="form-control" th:field="*{refrigeratoryFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
 							</div>
 							<div class="row">
-								<div class="col-md-3"></div>
+							<div class="col-md-3"></div>
 								<div class="col-md-3">维保费</div>
 							</div>
-							<div class="row">	
-								<div class="col-md-3" style="text-align:center">海尔开利自己维保</div>	
+							<div class="row">
+							<div class="col-md-3"></div>		
 								<div class="col-md-3"><input type="text" class="form-control" th:field="*{maintenanceFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
 							</div>
 						</div>
@@ -869,7 +901,7 @@
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
 						<div class="col-md-3">
-							<button type="button" class="btn btn-primary btn-sm" disabled id="showGrossProfitBt" onclick="viewGrossProfit()">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
 								查看毛利表 Gross profit table
 							</button>
 						</div>
