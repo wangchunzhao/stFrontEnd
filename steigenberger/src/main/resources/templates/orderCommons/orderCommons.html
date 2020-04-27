@@ -589,17 +589,22 @@
 			<div id="infoCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()" >
-								查看毛利表 Gross profit table
+								查看毛利表
 							</button>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2"  id="wtwGrossProfit" style="display:none;">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
+								查看WTW毛利表 
+							</button>
+						</div>
+						<div class="col-md-2">
 							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}" data-target="#magicalcoderMyModal-magical-coder-auto-id-1565064088178">
-								查看合同 Look at the contract
+								查看合同
 							</button>
 						</div>
-						<div class="col-md-3" style="text-align: left;">
+						<div class="col-md-6" style="text-align: left;">
 							客户确认资料 Customer data
 						</div>
 						<div class="col-md-3">
@@ -732,6 +737,11 @@
 						<div class="col-md-3">
 							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
 								查看毛利表 Gross profit table
+							</button>
+						</div>
+						<div class="col-md-3"  id="wtwGrossProfit" style="display:none;">
+							<button type="button" class="btn btn-primary btn-sm" id="showWtwGrossProfitBt" onclick="viewGrossProfit()">
+								查看WTW毛利表 
 							</button>
 						</div>
 					</div>
@@ -870,20 +880,12 @@
 							<div class="row">
 								<div class="col-md-3"></div>
 								<div class="col-md-3">电器费</div>
-								<div class="col-md-3">冷库费</div>
+								<div class="col-md-3">维保费</div>
 							</div>
 							<div class="row">	
 								<div class="col-md-3"></div>
 								<div class="col-md-3"><input type="text" class="form-control" th:field="*{electricalFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>
-								<div class="col-md-3"><input type="text" class="form-control" th:field="*{refrigeratoryFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
-							</div>
-							<div class="row">
-							<div class="col-md-3"></div>
-								<div class="col-md-3">维保费</div>
-							</div>
-							<div class="row">
-							<div class="col-md-3"></div>		
-								<div class="col-md-3"><input type="text" class="form-control" th:field="*{maintenanceFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>			
+								<div class="col-md-3"><input type="text" class="form-control" th:field="*{maintenanceFee}" th:attr="readonly=${orderDetail.status!='02'||orderOperationType=='2'}"></div>						
 							</div>
 						</div>
 					</div>
@@ -900,14 +902,19 @@
 			<div id="infoCheck" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
 				<div class="panel-body" style="height: auto;" mc-ace="~">
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
-								查看毛利表 Gross profit table
+								查看毛利表 
 							</button>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2" style="display:none;" id="wtwGrossProfit">
+							<button type="button" class="btn btn-primary btn-sm" id="showGrossProfitBt" onclick="viewGrossProfit()">
+								查看WTW毛利表 
+							</button>
+						</div>
+						<div class="col-md-2">
 							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="disabled=${orderDetail.status!='05'}" onclick="viewContract()">
-								查看合同 Look at the contract
+								查看合同 
 							</button>
 						</div>
 						<div class="col-md-3" style="text-align: left;">

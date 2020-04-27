@@ -113,8 +113,8 @@ $(function () {
 	$('#first').tab('show');
 	
 	defaultCollapse();
+	getUserDetail();
 	if(status==null||status==""||status=="undefined"){
-		getUserDetail();
 		$('#shippDate').datepicker({ startDate: new Date() });
 	}else{
 		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });

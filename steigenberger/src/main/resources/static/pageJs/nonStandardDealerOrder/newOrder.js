@@ -109,9 +109,9 @@ $(function () {
 	$('#first').tab('show');
 	$('#shippDate').datepicker();
 	defaultCollapse();
+	getUserDetail();
 	if(status==null||status==""||status=="undefined"){
-		$('#shippDate').datepicker({ startDate: new Date() });
-		getUserDetail();
+		$('#shippDate').datepicker({ startDate: new Date() });		
 	}else{
 		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		initDropDownList();

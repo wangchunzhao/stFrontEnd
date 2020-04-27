@@ -46,9 +46,17 @@ function getUserDetail(){
 	    data: {},
 	    type: "get",
 	    success: function(data) {
-	    	$("#salesName").val(data.name);
-	    	$("#salesTel").val(data.tel);
-	    	$("#salesCode").val(data.userIdentity);
+	    	if(status==null||status==""||status=="undefined"){
+	    		$("#salesName").val(data.name);
+		    	$("#salesTel").val(data.tel);
+		    	$("#salesCode").val(data.userIdentity);
+	    	}
+	    	$.each(data.roles,function(index,role){
+	    		if(role.id==7){
+	    			$("#wtwGrossProfit").attr("style","display:block;");
+	    		}
+	    	});
+	    	
 	    }
 	});
 }
@@ -642,7 +650,7 @@ function getPaymentAreaContent(){
 			+item.paymentTime+";"+"预算回款金额:"+item.budgetReturnAmount+";"+"预算回款金额(原币)"+item.originalBudgetReturnAmount
 			+";"+"所占比例:"+item.proportion+";"+"备注:"+item.remark+";";
 		});
-		$("#paymentArea").text(paymentAreaContent);
+		$("#paymentArea").text(paymentAreaContent);  
 	}
 	
 }
@@ -777,7 +785,7 @@ function getItemCategory(configure,data){
 				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHT2'>标准</option><option value='ZHT6'>免费</option><option value='ZHR2'>退货</option></select>");
 			}else{
 				if(code=='BG1GD1000000-X'){
-					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH99'>")
 				}else{
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
 				}
@@ -793,7 +801,7 @@ function getItemCategory(configure,data){
 				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
 			}else{
 				if(code=='BG1GD1000000-X'){
-					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH99'>")
 				}else{
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
 				}
@@ -1448,7 +1456,6 @@ function confirmMaterials(){
 	//计算最早发货时间，最早出货时间，购销明细合计
 	getAllCountFiled();
 	//非标准折扣计算合并折扣
-	debugger
 	if($("#stOrderType").val()=="2"){
 		calMergeDiscount();
 	}
@@ -1480,7 +1487,7 @@ function getAllCountFiled(){
 	var itemsAmount = [];
 	$.each(tableData,function(index,item){
 		//需排除取消状态的行项目
-		if(item.itemStatus!='Z2'){
+		if(item.itemStatus!='Z2'&&item.itemCategory!='ZHR1'&&item.itemCategory!='ZHR2'&&item.itemCategory!='ZHR3'&&item.itemCategory!='ZHR4'){
 			if(item.deliveryDate){
 				deliveryTime.push(moment(item.deliveryDate));
 			}
@@ -1490,7 +1497,10 @@ function getAllCountFiled(){
 			if(item.actualAmountSum){
 				itemsAmount.push(item.actualAmountSum);
 			}
-		}	
+		}
+		if(item.itemCategory=='ZHR1'||item.itemCategory=='ZHR2'||item.itemCategory=='ZHR3'||item.itemCategory=='ZHR4'){
+			$('#materialsTable>tbody tr:eq('+index+')').addClass('configtrRed');
+		}
 	})
 	var totalAmount = toDecimal2(calculationAmount(itemsAmount));
 	$("#itemsAmount").val(totalAmount);	

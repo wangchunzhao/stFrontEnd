@@ -99,10 +99,6 @@ var TableInit = function () {
 				field : 'salesName',
 				sortable : true
 			},{
-				title : '是否特批折扣',
-				field : 'approvedDiscount',
-				formatter : formatTrue
-			},{
 				title : '区域',
 				field : 'officeName',
 				sortable : true
@@ -346,7 +342,7 @@ function copyOrder(orderInfoId){
 //确认中标
 function tenderOffer(orderInfoId){
     layer.confirm("确认中标吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
-	    var url = ctxPath+"order/"+orderInfoId+"quote/00";
+	    var url = ctxPath+"order/"+orderInfoId+"/quote/00";
 	    $.ajax({
 	        type: "post",
 	        url: url,
@@ -367,7 +363,7 @@ function tenderOffer(orderInfoId){
 //确认下单
 function createOrder(orderInfoId){
 	layer.confirm("确认中标吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
-	    var url = ctxPath+"order/"+orderInfoId+"quote/01";
+	    var url = ctxPath+"order/"+orderInfoId+"/quote/01";
 	    $.ajax({
 	        type: "post",
 	        url: url,
