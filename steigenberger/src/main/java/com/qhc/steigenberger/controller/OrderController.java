@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
@@ -105,6 +106,40 @@ public class OrderController extends BaseController {
 	@Autowired
 	ContractService contractService;
 
+    String[] chars = new String[] { "\\[", "\\]", "\\?", "\\/", "\\\\", "\\*", ":" };
+    HashMap<String, String> categoryMap = new HashMap<String, String>() {
+      {
+        // ZH0D/ZH01 可配置
+        put("ZHD1","标准");
+        put("ZHD3","免费");
+        put("ZHR3","退货");
+        // ZH0D/ZH02 不可配置
+        put("ZHD2","标准");
+        put("ZHD4","免费");
+        put("ZHR4","退货");
+        // ZH0T/ZH01 可配置
+        put("ZHT1","标准");
+        put("ZHT3","免费");
+        put("ZHR1","退货");
+        // ZH0D/ZH02 可配置
+        put("ZHT2","标准");
+        put("ZHT6","免费");
+        put("ZHR2","退货");
+        // 不可预估费，其他项目收付费
+        put("ZH97","ZH97");
+        put("ZH98","ZH98");
+      }
+    };
+    HashMap<String, String> requirementPlanMap = new HashMap<String, String>() {
+      {
+        put("004","物料需求计划");
+        put("001","B2C");
+        put("002","消化");
+        put("003","调发");
+        put("005","替换");
+      }
+    };
+    
 	/**
 	 * 保存订单
 	 * 
@@ -370,101 +405,74 @@ public class OrderController extends BaseController {
 		
 		return result;
 	}
+	
 	@ApiOperation(value = "导出订单购销明细及调研表", notes = "导出订单购销明细及调研表")
 	@PostMapping(value = "{orderInfoId}/export")
 	@ResponseBody
 	public void exportOrderDetail(@PathVariable("orderInfoId") Integer orderInfoId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String[] chars = new String[] { "\\[", "\\]", "\\?", "\\/", "\\\\", "\\*", ":" };
-		HashMap<String, String> categoryMap = new HashMap<String, String>() {
-		  {
-		    // ZH0D/ZH01 可配置
-		    put("ZHD1","标准");
-		    put("ZHD3","免费");
-		    put("ZHR3","退货");
-            // ZH0D/ZH02 不可配置
-            put("ZHD2","标准");
-            put("ZHD4","免费");
-            put("ZHR4","退货");
-            // ZH0T/ZH01 可配置
-            put("ZHT1","标准");
-            put("ZHT3","免费");
-            put("ZHR1","退货");
-            // ZH0D/ZH02 可配置
-            put("ZHT2","标准");
-            put("ZHT6","免费");
-            put("ZHR2","退货");
-            // 不可预估费，其他项目收付费
-            put("ZH97","ZH97");
-            put("ZH98","ZH98");
-		  }
-		};
-		HashMap<String, String> requirementPlanMap = new HashMap<String, String>() {
-		  {
-		    put("004","物料需求计划");
-		    put("001","B2C");
-		    put("002","消化");
-		    put("003","调发");
-		    put("005","替换");
-		  }
-		};
 		try {
 			Result result = orderService.findOrderDetail(orderInfoId);
 			if (result.getStatus().equals("ok")) {
-				Order order = (Order)result.getData();
-				String sequenceNumber = order.getSequenceNumber();
-				String versionNum = "00" + String.valueOf(order.getVersionNum());
-				versionNum = versionNum.substring(versionNum.length() - 2);
-				String fileName = sequenceNumber + "_" +versionNum;
-				fileName = "订单购销明细及调研表(" + fileName + ").xlsx";
-				String excleFileName = new String(fileName.getBytes("GB2312"), "ISO8859-1");
-				List<String>itemMaterialNames = new ArrayList<>();
-				if (order.getItems() == null) {
-					order.setItems(new ArrayList<>());
-				}
-				int count = 0;
-				for (Item item : order.getItems()) {
-                  // 行项目类别转中文
-				  String category = categoryMap.get(item.getItemCategory());
-				  if (category != null) {
-				    item.setItemCategory(category);
-				  }
-				  // 需求计划转中文
-				  String requirementPlan = requirementPlanMap.get( item.getItemRequirementPlan());
-				  if (requirementPlan != null) {
-				    item.setItemRequirementPlan(requirementPlan);
-				  }
-					if (item.getConfigs() == null) {
-						item.setConfigs(new ArrayList<>());
-					}
-					String mname = item.getMaterialName();
-					for (String c : chars) {
-						mname = mname.replaceAll(c, "_");
-					}
-					if (itemMaterialNames.contains(mname)) {
-						mname += "_" +count;
-					}
-					if (mname.length() > 31) {
-						mname = mname.substring(0, 31);
-					}
-					itemMaterialNames.add(mname);
-					count++;
-				}
-
-				response.setContentType("application/x-download;charset=GB2312");
-				response.setHeader("Content-disposition", "attachment;filename=\"" + excleFileName + "\"");
-
-				Map<String, Object> data = new HashMap<>();
-				data.put("order", order);
-				data.put("itemMaterialNames", itemMaterialNames);
-				data.put("now", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-				JxlsUtils.exportExcel("/orderitemsandcharacterics.xlsx", response.getOutputStream(), data);
-				response.getOutputStream().flush();
+			    Order order = (Order)result.getData();
+				exportOrderDetail(response, order);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 		}
 	}
+
+  private void exportOrderDetail(HttpServletResponse response, Order order)
+      throws UnsupportedEncodingException, IOException {
+    String sequenceNumber = order.getSequenceNumber();
+    String versionNum = "00" + String.valueOf(order.getVersionNum());
+    versionNum = versionNum.substring(versionNum.length() - 2);
+    String fileName = sequenceNumber + "_" +versionNum;
+    fileName = "订单购销明细及调研表(" + fileName + ").xlsx";
+    String excleFileName = new String(fileName.getBytes("GB2312"), "ISO8859-1");
+    List<String>itemMaterialNames = new ArrayList<>();
+    if (order.getItems() == null) {
+    	order.setItems(new ArrayList<>());
+    }
+    int count = 0;
+    for (Item item : order.getItems()) {
+              // 行项目类别转中文
+      String category = categoryMap.get(item.getItemCategory());
+      if (category != null) {
+        item.setItemCategory(category);
+      }
+      // 需求计划转中文
+      String requirementPlan = requirementPlanMap.get( item.getItemRequirementPlan());
+      if (requirementPlan != null) {
+        item.setItemRequirementPlan(requirementPlan);
+      }
+    	if (item.getConfigs() == null) {
+    		item.setConfigs(new ArrayList<>());
+    	}
+    	String mname = item.getMaterialName();
+    	for (String c : chars) {
+    		mname = mname.replaceAll(c, "_");
+    	}
+    	if (itemMaterialNames.contains(mname)) {
+    		mname += "_" +count;
+    	}
+    	if (mname.length() > 31) {
+    		mname = mname.substring(0, 31);
+    	}
+    	itemMaterialNames.add(mname);
+    	count++;
+    }
+
+    response.setContentType("application/x-download;charset=GB2312");
+    response.setHeader("Content-disposition", "attachment;filename=\"" + excleFileName + "\"");
+
+    Map<String, Object> data = new HashMap<>();
+    data.put("order", order);
+    data.put("itemMaterialNames", itemMaterialNames);
+    data.put("now", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+    JxlsUtils.exportExcel("/orderitemsandcharacterics.xlsx", response.getOutputStream(), data);
+    response.getOutputStream().flush();
+  }
 	
 	/**
 	 * 修改订单报价状态
@@ -800,6 +808,7 @@ public class OrderController extends BaseController {
 			String versionNum = request.getParameter("versionNum");
 			String createTime = request.getParameter("createTime");
 			String salesCode = request.getParameter("salesCode");
+            String wtw = request.getParameter("wtw");
 			String grossProfitMargin = request.getParameter("grossProfitMargin");
 			versionNum = "00" + versionNum;
 			versionNum = versionNum.substring(versionNum.length() - 2);
@@ -818,7 +827,11 @@ public class OrderController extends BaseController {
 			data.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			List<MaterialGroups> margins = new ObjectMapper().readValue(grossProfitMargin, new TypeReference<List<MaterialGroups>>() {});
 			data.put("margins", margins);
-			JxlsUtils.exportExcel("/grossprofitmargin.xlsx", response.getOutputStream(), data);
+			if (wtw != null && wtw.trim().length() > 0) {
+			  JxlsUtils.exportExcel("/grossprofitmarginwtw.xlsx", response.getOutputStream(), data);
+			} else {
+			  JxlsUtils.exportExcel("/grossprofitmargin.xlsx", response.getOutputStream(), data);
+			}
 			response.getOutputStream().flush();
 		} catch (Exception e) {
 			e.printStackTrace();
