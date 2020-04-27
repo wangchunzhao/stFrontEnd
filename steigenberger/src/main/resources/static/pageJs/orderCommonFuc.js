@@ -24,6 +24,7 @@ function enableButton(){
 	  $("#grossProfitCloseBt").attr('disabled',false);
 	  $("#grossProfitExportBt").attr('disabled',false);
 	  $("#showGrossProfitBt").attr('disabled',false);
+	  $("#showWtwGrossProfitBt").attr('disabled',false);
 	  $("#expandBt").attr('disabled',false);
 	  $("#closeBt").attr('disabled',false);
 	  $("#approve").attr('disabled',false);
@@ -801,7 +802,7 @@ function getItemCategory(configure,data){
 				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
 			}else{
 				if(code=='BG1GD1000000-X'){
-					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH99'>")
+					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
 				}else{
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
 				}
@@ -1500,6 +1501,7 @@ function getAllCountFiled(){
 		}
 		if(item.itemCategory=='ZHR1'||item.itemCategory=='ZHR2'||item.itemCategory=='ZHR3'||item.itemCategory=='ZHR4'){
 			$('#materialsTable>tbody tr:eq('+index+')').addClass('configtrRed');
+			itemsAmount.push(-item.actualAmountSum);
 		}
 	})
 	var totalAmount = toDecimal2(calculationAmount(itemsAmount));

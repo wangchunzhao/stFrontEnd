@@ -155,7 +155,7 @@ function applyBodyDiscount(){
 	for(var i=0;i<countMaterialsTable;i++){
 		var materialsRowData = materialsTable[i];
 		var materialType = materialsRowData.materialType
-		if(materialType=='T101'){		
+		if(materialType=='T101'||materialType=='T105'){		
 			applyDiscountForRow(discount,materialsRowData,"#materialsTable");
 		}
 	}
@@ -164,7 +164,6 @@ function applyBodyDiscount(){
 
 //机组申请折扣应用
 function applyMainDiscount(){
-	debugger
 	var discount = $("#mainDiscount").val();
 	if(discount==''||(parseFloat(discount)<1&&parseFloat(discount)!=0)||parseFloat(discount)>100){
 		layer.alert("无法应用，折扣录入错误！");
@@ -177,7 +176,7 @@ function applyMainDiscount(){
 	for(var i=0;i<countMaterialsTable;i++){
 		var materialsRowData = materialsTable[i];
 		var materialType = materialsRowData.materialType;
-		if(materialType=='T102'){		
+		if(materialType=='T102'materialType=='103'){		
 			applyDiscountForRow(i,discount,materialsRowData,"#materialsTable");
 		}
 	}

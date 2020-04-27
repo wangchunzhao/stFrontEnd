@@ -193,10 +193,10 @@ function operation(value, row, index) {
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
-	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="00"&&buttonControl=="true"){
+	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus==''&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='tenderOffer' onclick='tenderOffer(\""+orderInfoId+"\")'>中标</a>");
 	}
-	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="01"&&buttonControl=="true"){
+	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="00"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='createOrder' onclick='createOrder(\""+orderInfoId+"\")'>下单</a>");
 	}
 
@@ -252,13 +252,14 @@ function tosap(content) {
 	}
 	
 	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function (index) {
-		if(stOrderType==2){
+		if(stOrderType==2||stOrderType==4){
 			$("#modalContractDialog").modal('show');
 			$("#modalContractNumber").val(contractNumber);
 			$("#modalOrderInfoId").val(orderInfoId);
 			layer.close(index)
 			
 		}else{
+			$('#loadingModal').modal('show');
 			var url = ctxPath+"order/"+orderInfoId+"/sap";
 	        $.ajax({
 	            type: "post",
@@ -266,6 +267,7 @@ function tosap(content) {
 	            data: null,
 	            dataType: "json",
 	            success: function (data) {
+	            	$('#loadingModal').modal('hide');
 	            	if(data == null || data.status != 'ok'){
 			    		layer.alert("订单下推SAP失败：" + (data != null ? data.msg : ""));
 			    	}else{
@@ -281,6 +283,7 @@ function tosap(content) {
 }
 
 function nonStandardToSap(){
+	$('#loadingModal').modal('show');
 	var contractNumber = $("#modalContractNumber").val();
 	var orderInfoId = $("#modalOrderInfoId").val();
 	var url = ctxPath+"order/"+orderInfoId+"/sap2/"+contractNumber;
@@ -290,6 +293,7 @@ function nonStandardToSap(){
         data: null,
         dataType: "json",
         success: function (data) {
+        	$('#loadingModal').modal('hide');
         	if(data == null || data.status != 'ok'){
 	    		layer.alert("订单下推SAP失败：" + (data != null ? data.msg : ""));
 	    	}else{

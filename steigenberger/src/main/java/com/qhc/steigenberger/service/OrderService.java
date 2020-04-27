@@ -305,8 +305,8 @@ public class OrderService {
 	 * @return
 	 */
 	public Result updateQuoteStatus(String identity, Integer orderInfoId, String quoteStatus) {
-		String url = "order/quote/" + identity + ',' + orderInfoId + ',' + quoteStatus;
-		Result result =  fryeService.getInfo(url, Result.class);
+		String url = "order/quote/" + identity + '/' + orderInfoId + '/' + quoteStatus;
+		Result result =  fryeService.postForm(url,"", Result.class);
 		return result;
 	}
 
