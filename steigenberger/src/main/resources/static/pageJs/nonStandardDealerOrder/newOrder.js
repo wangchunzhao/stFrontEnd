@@ -176,7 +176,7 @@ function applyMainDiscount(){
 	for(var i=0;i<countMaterialsTable;i++){
 		var materialsRowData = materialsTable[i];
 		var materialType = materialsRowData.materialType;
-		if(materialType=='T102'materialType=='103'){		
+		if(materialType=='T102'||materialType=='103'){		
 			applyDiscountForRow(i,discount,materialsRowData,"#materialsTable");
 		}
 	}
