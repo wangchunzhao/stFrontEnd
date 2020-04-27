@@ -90,9 +90,8 @@ $(function () {
 	
 	
 	
-	//初始化毛利率table
-	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
-	grossProfitTable.init();	
+	
+	
 	if(installationTerms){
 		$.each(installationTerms, function (key, value) {
 			if(orderType=="ZH0D"&&key=="02"){
