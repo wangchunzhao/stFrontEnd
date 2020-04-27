@@ -76,8 +76,7 @@ public class Item {
 	/* 最终颜色可选项数据格式：喷粉部位:颜色选项,   P01:1,P06:1,P07:1 */
 	private String colorOptions = null;
 	
-	// TODO 经销商不涉及
-	private String configComments;//配置表备注(配置表页面)
+	private String configComments;//配置表备注/调研表备注(配置表页面)
 	private String mosaicImage;//拼接图备注(配置表页面)
 	private String attachedImage;//拼接图附件(配置表页面)
 	private List<Characteristic> configs;//配置表数据(配置表页面)
