@@ -90,9 +90,8 @@ $(function () {
 	
 	
 	
-	//初始化毛利率table
-	var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
-	grossProfitTable.init();	
+	
+	
 	if(installationTerms){
 		$.each(installationTerms, function (key, value) {
 			if(orderType=="ZH0D"&&key=="02"){
@@ -176,7 +175,7 @@ function applyMainDiscount(){
 	for(var i=0;i<countMaterialsTable;i++){
 		var materialsRowData = materialsTable[i];
 		var materialType = materialsRowData.materialType;
-		if(materialType=='T102'materialType=='103'){		
+		if(materialType=='T102'||materialType=='103'){		
 			applyDiscountForRow(i,discount,materialsRowData,"#materialsTable");
 		}
 	}

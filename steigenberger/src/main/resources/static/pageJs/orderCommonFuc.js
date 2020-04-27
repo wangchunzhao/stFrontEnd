@@ -2781,7 +2781,15 @@ function setConfigValueCode(obj,index){
 	}
 }
 //查看毛利率信息
-function viewGrossProfit(){
+function viewGrossProfit(type){
+	$('#grossProfitTable').bootstrapTable('destroy'); 
+	 if(type=='wtw'){		
+		var wtwGrossProfitTable = new TableInit("grossProfitTable",'','',wtwGrossProfitColumns);
+		wtwGrossProfitTable.init();
+	 }else{
+		 var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
+		 grossProfitTable.init();
+	 }
 	if(orderOperationType!=1){
 		$("#grossProfitExportBt").show();
 	}else{
@@ -2802,6 +2810,7 @@ function viewGrossProfit(){
 		 layer.alert('请添加行项目', {icon: 5});
 		 return
 	 }
+	 
 	var version = $("#version").val();
 	 $('#transferType').attr("disabled",false);
 	 $("#currency").attr("disabled",false);
@@ -3107,6 +3116,41 @@ var grossProfitColumns=[
 	{
 		 field: 'grossProfitMargin',
 		 title: '毛利率'
+	}
+]
+
+var wtwGrossProfitColumns=[
+	{
+		 field: 'name',
+		 title: '产品名称'
+	},{
+		 field: 'amount',
+		 title: '金额'
+	},{
+		 field: 'excludingTaxAmount',
+		 title: '不含税金额'
+	},{
+		 field: 'cost',
+		 title: '成本'
+	},{
+		 field: 'grossProfit',
+		 title: '毛利'
+	},
+	{
+		 field: 'grossProfitMargin',
+		 title: '毛利率'
+	},
+	{
+		 field: 'wtwCost',
+		 title: 'wtw成本'
+	},
+	{
+		 field: 'wtwGrossProfit',
+		 title: 'wtw毛利'
+	},
+	{
+		 field: 'wtwGrossProfitMargin',
+		 title: 'wtw毛利率'
 	}
 ]
 
