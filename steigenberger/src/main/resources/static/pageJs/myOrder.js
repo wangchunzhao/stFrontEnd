@@ -193,10 +193,10 @@ function operation(value, row, index) {
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
 	}
-	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus==''&&buttonControl=="true"){
+	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=='00'&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='tenderOffer' onclick='tenderOffer(\""+orderInfoId+"\")'>中标</a>");
 	}
-	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="00"&&buttonControl=="true"){
+	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="01"&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='createOrder' onclick='createOrder(\""+orderInfoId+"\")'>下单</a>");
 	}
 
@@ -336,7 +336,7 @@ function copyOrder(orderInfoId){
             	if(data == null || data.status != 'ok'){
 		    		layer.alert("订单复制失败：：" + (data != null ? data.msg : ""));
 		    	}else{
-		    		editOrder(data.data.id,3)
+		    		editOrder(data.data.id,3);
 		    	} 	
             }
         });
@@ -345,8 +345,8 @@ function copyOrder(orderInfoId){
 
 //确认中标
 function tenderOffer(orderInfoId){
-    layer.confirm("确认中标吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
-	    var url = ctxPath+"order/"+orderInfoId+"/quote/00";
+    layer.confirm("确认中标吗?", {btn: ['是', '否'], title: "提示"}, function () {
+    	var url = ctxPath+"order/"+orderInfoId+"/quote/01";
 	    $.ajax({
 	        type: "post",
 	        url: url,
@@ -357,17 +357,19 @@ function tenderOffer(orderInfoId){
 	        	if(data == null || data.status != 'ok'){
 		    		layer.alert("确认中标失败:" + (data != null ? data.msg : ""));
 		    	}else{
-		    		layer.alert('确认中标成功！', {icon: 6});
-		    		$('#mytab').bootstrapTable('refresh');
+		    		createOrder(orderInfoId);
+		    		
 		    	} 	
 	        }
-	    });
+	    });   	
+	    
     });
+    $('#mytab').bootstrapTable('refresh');
 }
 //确认下单
 function createOrder(orderInfoId){
-	layer.confirm("确认中标吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
-	    var url = ctxPath+"order/"+orderInfoId+"/quote/01";
+	layer.confirm("确认下单吗?", {btn: ['是', '否'], title: "提示"}, function () {
+	    var url = ctxPath+"order/"+orderInfoId+"/transfer";
 	    $.ajax({
 	        type: "post",
 	        url: url,
@@ -378,8 +380,7 @@ function createOrder(orderInfoId){
 	        	if(data == null || data.status != 'ok'){
 		    		layer.alert("确认下单失败:" + (data != null ? data.msg : ""));
 		    	}else{
-		    		layer.alert('确认下单成功！', {icon: 6});
-		    		$('#mytab').bootstrapTable('refresh');
+		    		editOrder(data.data.id,3);
 		    	} 	
 	        }
 	    });

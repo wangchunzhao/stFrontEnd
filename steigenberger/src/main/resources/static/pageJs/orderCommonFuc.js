@@ -2867,7 +2867,7 @@ function viewGrossProfit(type){
 	    		item.cost = toDecimal2(item.cost);
 	    		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
 	    		item.grossProfit = toDecimal2(item.grossProfit);
-	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin);
+	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin)+"%";
 	    		
 	    	})
 	    	$("#grossProfitTable").bootstrapTable('load', tableData);
@@ -2897,7 +2897,7 @@ function viewOrderGrossProfit(){
 		item.cost = toDecimal2(item.cost);
 		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
 		item.grossProfit = toDecimal2(item.grossProfit);
-		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin);
+		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin)+"%";
 	})
 	$("#grossProfitTable").bootstrapTable('load', tableData);	
 }
@@ -2907,6 +2907,8 @@ function exportGross(type){
 	$.each(grossData,function(index,item){
 		item.grossProfitMargin = item.grossProfitMargin.replace("%","")
 		item.grossProfitMargin = toDecimal2(parseFloat(item.grossProfitMargin)/100);
+		item.wtwGrossProfitMargin = item.wtwGrossProfitMargin.replace("%","");
+		item.wtwGrossProfitMargin = toDecimal2(parseFloat(item.wtwGrossProfitMargin)/100);
 	})
 	var sequenceNumber = $("#sequenceNumber").val();
 	var versionNum = $("#version").val();
