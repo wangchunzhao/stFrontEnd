@@ -183,8 +183,8 @@ function applyMainDiscount(){
 }
 
 function applyDiscountForRow(discount,materialsRowData,tableId){
-	var materialType=materialsRowData.materialType;
-	if(materialType=='BG1GD1000000-X'||materialType=='BG1GD1000000-X'||materialType=='BG1R8R00000-X'){
+	var materialCode=materialsRowData.materialCode;
+	if(materialCode=='BG1GD1000000-X'||materialCode=='BG1GD1000000-X'||materialCode=='BG1R8R00000-X'){
 		return;
 	}
 	//汇率

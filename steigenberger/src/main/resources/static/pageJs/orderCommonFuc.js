@@ -23,6 +23,7 @@ function enableButton(){
 	  $("#backButton").attr('disabled',false);
 	  $("#grossProfitCloseBt").attr('disabled',false);
 	  $("#grossProfitExportBt").attr('disabled',false);
+	  $("#wtwGrossProfitExportBt").attr('disabled',false);
 	  $("#showGrossProfitBt").attr('disabled',false);
 	  $("#showWtwGrossProfitBt").attr('disabled',false);
 	  $("#expandBt").attr('disabled',false);
@@ -2790,7 +2791,19 @@ function viewGrossProfit(type){
 		 var grossProfitTable = new TableInit("grossProfitTable",'','',grossProfitColumns);
 		 grossProfitTable.init();
 	 }
-	if(orderOperationType!=1){
+	if(type=='wtw'){
+		$("#grossProfitExportBt").hide();
+		$("#wtwGrossProfitExportBt").show();
+	}else{
+		$("#grossProfitExportBt").show();
+		$("#wtwGrossProfitExportBt").hide();
+	}
+	if(type=='wtw'&&orderOperationType!=1){		
+		$("#wtwGrossProfitExportBt").show();
+	}else{
+		$("#wtwGrossProfitExportBt").hide();
+	}
+	if(type=='normal'&&orderOperationType!=1){
 		$("#grossProfitExportBt").show();
 	}else{
 		$("#grossProfitExportBt").hide();
@@ -2854,7 +2867,7 @@ function viewGrossProfit(type){
 	    		item.cost = toDecimal2(item.cost);
 	    		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
 	    		item.grossProfit = toDecimal2(item.grossProfit);
-	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin);
+	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin)+"%";
 	    		
 	    	})
 	    	$("#grossProfitTable").bootstrapTable('load', tableData);
@@ -2884,16 +2897,18 @@ function viewOrderGrossProfit(){
 		item.cost = toDecimal2(item.cost);
 		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
 		item.grossProfit = toDecimal2(item.grossProfit);
-		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin);
+		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin)+"%";
 	})
 	$("#grossProfitTable").bootstrapTable('load', tableData);	
 }
 
-function exportGross(){
+function exportGross(type){
 	var grossData = $("#grossProfitTable").bootstrapTable("getData");
 	$.each(grossData,function(index,item){
 		item.grossProfitMargin = item.grossProfitMargin.replace("%","")
 		item.grossProfitMargin = toDecimal2(parseFloat(item.grossProfitMargin)/100);
+		item.wtwGrossProfitMargin = item.wtwGrossProfitMargin.replace("%","");
+		item.wtwGrossProfitMargin = toDecimal2(parseFloat(item.wtwGrossProfitMargin)/100);
 	})
 	var sequenceNumber = $("#sequenceNumber").val();
 	var versionNum = $("#version").val();
@@ -2931,6 +2946,13 @@ function exportGross(){
 	    var seq4 = document.createElement("input");
 	    seq4.setAttribute("name", "grossProfitMargin");
 	    seq4.setAttribute("value", JSON.stringify(grossData));
+	    if(type=='wtw'){
+	    	var seq5 = document.createElement("input");
+		    seq5.setAttribute("name", "wtw");
+		    seq5.setAttribute("value", true);
+		    myForm.appendChild(seq5);
+	    }
+	    
 	    myForm.appendChild(seq);
 	    myForm.appendChild(seq1);
 	    myForm.appendChild(seq3);
