@@ -125,9 +125,10 @@ public class OrderController extends BaseController {
         put("ZHT2","标准");
         put("ZHT6","免费");
         put("ZHR2","退货");
-        // 不可预估费，其他项目收付费
-        put("ZH97","ZH97");
-        put("ZH98","ZH98");
+        // 不可预估费，其他项目收费
+        put("ZH97","ZH97"); // 经销商订单其他项目收费行项目类别
+        put("ZH98","ZH98"); // 其他虚拟物料行项目类别
+        put("ZH99","ZH99"); // 直签订单其他项目收费行项目类别
       }
     };
     HashMap<String, String> requirementPlanMap = new HashMap<String, String>() {
