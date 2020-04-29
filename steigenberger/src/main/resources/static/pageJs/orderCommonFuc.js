@@ -828,7 +828,6 @@ function fillMaterailValue(data){
 	}
 	//冷库特殊处理BG1R8R00000-X
 	if(data.code=='BG1R8R00000-X'){
-		$('#originalTransationPrice').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}
@@ -1283,7 +1282,6 @@ function editMaterials(editContent){
 	}
 	//冷库特殊处理BG1R8R00000-X
 	if(materialCode=='BG1R8R00000-X'){
-		$('#originalTransationPrice').attr("disabled",false);
 		$('#originalActualPrice').attr("disabled",false);
 		$('#amount').attr("disabled",true);
 	}

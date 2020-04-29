@@ -176,13 +176,14 @@ function applyMainDiscount(){
 		var materialsRowData = materialsTable[i];
 		var materialType = materialsRowData.materialType;
 		if(materialType=='T102'||materialType=='103'){		
-			applyDiscountForRow(i,discount,materialsRowData,"#materialsTable");
+			applyDiscountForRow(discount,materialsRowData,"#materialsTable");
 		}
 	}
 	layer.alert("应用成功！");
 }
 
 function applyDiscountForRow(discount,materialsRowData,tableId){
+	debugger
 	var materialCode=materialsRowData.materialCode;
 	if(materialCode=='BG1GD1000000-X'||materialCode=='BG1GD1000000-X'||materialCode=='BG1R8R00000-X'){
 		return;
