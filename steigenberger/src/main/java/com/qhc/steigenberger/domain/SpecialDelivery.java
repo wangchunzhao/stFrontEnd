@@ -15,33 +15,34 @@ public class SpecialDelivery {
 	/* OrderInfoId */
 	private Integer orderInfoId = null;
 
-	/* Applyer */
+	/* 申请者 */
 	private String applyer = null;
 
-	/* Approver */
+	/* 审批人 */
 	private String approver = null;
 
-	/* ApplyTime */
+	/* 申请时间 */
 	private Date applyTime = null;
 
-	/* ApprovalTime */
+	/* 审批时间 */
 	private Date approvalTime = null;
 
-	/* 0: 新建
-            1：同意
-            2：驳回 */
+	/* 申请单状态 
+	 * 0: 新建
+	 * 1：同意
+	 * 2：驳回 */
 	private Integer applyStatus = null;
 
-	/* ReceiveMailTime */
+	/* 收到电子订单或其他订单确认文件的时间 */
 	private String receiveMailTime = null;
 
-	/* ContractTime */
+	/* 合同中要求的完工日期 */
 	private String contractTime = null;
 
-	/* PayAdvancePaymentTime */
+	/* 预计合同原件、预付款到达时间 */
 	private String payAdvancePaymentTime = null;
 
-	/* Remark */
+	/* 备注 */
 	private String remark = null;
 
 	/* EnclosurePath */

@@ -75,6 +75,9 @@ public class Order {
 	 */
 	private String quoteStatus; // 报价单状态
 
+    /* 关联的报价单ID，报价单下单后的订单需要关联原有报价单 */
+    private Integer quoteOrderId = null;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date submitTime; // submit time
@@ -356,7 +359,15 @@ public class Order {
 		this.quoteStatus = quoteStatus;
 	}
 
-	public Date getSubmitTime() {
+	public Integer getQuoteOrderId() {
+    return quoteOrderId;
+  }
+
+  public void setQuoteOrderId(Integer quoteOrderId) {
+    this.quoteOrderId = quoteOrderId;
+  }
+
+  public Date getSubmitTime() {
 		return submitTime;
 	}
 
@@ -1089,46 +1100,52 @@ public class Order {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", orderId=" + orderId + ", createTime=" + createTime + ", creater=" + creater
-				+ ", createrName=" + createrName + ", updateTime=" + updateTime + ", updater=" + updater
-				+ ", updaterName=" + updaterName + ", version=" + version + ", versionNum=" + versionNum + ", isActive="
-				+ isActive + ", status=" + status + ", versions=" + versions + ", userOfficeCode=" + userOfficeCode
-				+ ", stOrderType=" + stOrderType + ", quoteStatus=" + quoteStatus + ", submitTime=" + submitTime
-				+ ", submitBpmTime=" + submitBpmTime + ", orderType=" + orderType + ", customerCode=" + customerCode
-				+ ", customerName=" + customerName + ", customerClazz=" + customerClazz + ", customerClazzName="
-				+ customerClazzName + ", terminalType=" + terminalType + ", terminalTypeName=" + terminalTypeName
-				+ ", shopName=" + shopName + ", recordCode=" + recordCode + ", salesCode=" + salesCode + ", salesName="
-				+ salesName + ", salesTel=" + salesTel + ", isConvenientStore=" + isConvenientStore + ", isNew=" + isNew
-				+ ", isReformed=" + isReformed + ", isYearpurchase=" + isYearpurchase + ", customerIndustryCode="
-				+ customerIndustryCode + ", customerIndustryCodeName=" + customerIndustryCodeName
-				+ ", customerIndustry=" + customerIndustry + ", customerIndustryName=" + customerIndustryName
-				+ ", sequenceNumber=" + sequenceNumber + ", contractNumber=" + contractNumber + ", saleType=" + saleType
-				+ ", taxRate=" + taxRate + ", incoterm=" + incoterm + ", incotermName=" + incotermName
-				+ ", incotermContect=" + incotermContect + ", contractValue=" + contractValue + ", contractRmbValue="
-				+ contractRmbValue + ", currency=" + currency + ", currencyName=" + currencyName + ", currencyExchange="
-				+ currencyExchange + ", itemsAmount=" + itemsAmount + ", contractManager=" + contractManager
-				+ ", contractCreateTime=" + contractCreateTime + ", officeCode=" + officeCode + ", officeName="
-				+ officeName + ", groupCode=" + groupCode + ", groupName=" + groupName + ", warranty=" + warranty
-				+ ", installType=" + installType + ", installTypeName=" + installTypeName + ", receiveType="
-				+ receiveType + ", receiveTypeName=" + receiveTypeName + ", transferType=" + transferType
-				+ ", transferTypeName=" + transferTypeName + ", freight=" + freight + ", contactor1Id=" + contactor1Id
-				+ ", contactor1Tel=" + contactor1Tel + ", contactor2Id=" + contactor2Id + ", contactor2Tel="
-				+ contactor2Tel + ", contactor3Id=" + contactor3Id + ", contactor3Tel=" + contactor3Tel
-				+ ", deliveryAddress=" + deliveryAddress + ", bodyDiscount=" + bodyDiscount + ", approvedBodyDiscount="
-				+ approvedBodyDiscount + ", mainDiscount=" + mainDiscount + ", approvedMainDiscount="
-				+ approvedMainDiscount + ", discount=" + discount + ", isLongterm=" + isLongterm + ", isSpecial="
-				+ isSpecial + ", isSpecialOrder=" + isSpecialOrder + ", paymentType=" + paymentType + ", payments="
-				+ payments + ", isTerm1=" + isTerm1 + ", isTerm2=" + isTerm2 + ", isTerm3=" + isTerm3 + ", installFee="
-				+ installFee + ", materialFee=" + materialFee + ", electricalFee=" + electricalFee
-				+ ", refrigeratoryFee=" + refrigeratoryFee + ", maintenanceFee=" + maintenanceFee
-				+ ", additionalFreight=" + additionalFreight + ", earliestDeliveryDate=" + earliestDeliveryDate
-				+ ", earliestProductDate=" + earliestProductDate + ", items=" + items + ", isB2c=" + isB2c
-				+ ", isBulkCargo=" + isBulkCargo + ", isUrgentDelivery=" + isUrgentDelivery + ", unpredictable="
-				+ unpredictable + ", grossProfitMargin=" + grossProfitMargin + ", comments=" + comments
-				+ ", attachments=" + attachments + ", buttonControl=" + buttonControl + "]";
-	}
+  @Override
+  public String toString() {
+    return "Order [id=" + id + ", orderId=" + orderId + ", createTime=" + createTime + ", creater="
+        + creater + ", createrName=" + createrName + ", updateTime=" + updateTime + ", updater="
+        + updater + ", updaterName=" + updaterName + ", version=" + version + ", versionNum="
+        + versionNum + ", isActive=" + isActive + ", status=" + status + ", versions=" + versions
+        + ", userOfficeCode=" + userOfficeCode + ", stOrderType=" + stOrderType + ", quoteStatus="
+        + quoteStatus + ", quoteOrderId=" + quoteOrderId + ", submitTime=" + submitTime
+        + ", submitBpmTime=" + submitBpmTime + ", orderType=" + orderType + ", customerCode="
+        + customerCode + ", customerName=" + customerName + ", customerClazz=" + customerClazz
+        + ", customerClazzName=" + customerClazzName + ", terminalType=" + terminalType
+        + ", terminalTypeName=" + terminalTypeName + ", shopName=" + shopName + ", recordCode="
+        + recordCode + ", salesCode=" + salesCode + ", salesName=" + salesName + ", salesTel="
+        + salesTel + ", isConvenientStore=" + isConvenientStore + ", isNew=" + isNew
+        + ", isReformed=" + isReformed + ", isYearpurchase=" + isYearpurchase
+        + ", customerIndustryCode=" + customerIndustryCode + ", customerIndustryCodeName="
+        + customerIndustryCodeName + ", customerIndustry=" + customerIndustry
+        + ", customerIndustryName=" + customerIndustryName + ", sequenceNumber=" + sequenceNumber
+        + ", contractNumber=" + contractNumber + ", saleType=" + saleType + ", taxRate=" + taxRate
+        + ", incoterm=" + incoterm + ", incotermName=" + incotermName + ", incotermContect="
+        + incotermContect + ", contractValue=" + contractValue + ", contractRmbValue="
+        + contractRmbValue + ", currency=" + currency + ", currencyName=" + currencyName
+        + ", currencyExchange=" + currencyExchange + ", itemsAmount=" + itemsAmount
+        + ", contractManager=" + contractManager + ", contractCreateTime=" + contractCreateTime
+        + ", officeCode=" + officeCode + ", officeName=" + officeName + ", groupCode=" + groupCode
+        + ", groupName=" + groupName + ", warranty=" + warranty + ", installType=" + installType
+        + ", installTypeName=" + installTypeName + ", receiveType=" + receiveType
+        + ", receiveTypeName=" + receiveTypeName + ", transferType=" + transferType
+        + ", transferTypeName=" + transferTypeName + ", freight=" + freight + ", contactor1Id="
+        + contactor1Id + ", contactor1Tel=" + contactor1Tel + ", contactor2Id=" + contactor2Id
+        + ", contactor2Tel=" + contactor2Tel + ", contactor3Id=" + contactor3Id + ", contactor3Tel="
+        + contactor3Tel + ", deliveryAddress=" + deliveryAddress + ", bodyDiscount=" + bodyDiscount
+        + ", approvedBodyDiscount=" + approvedBodyDiscount + ", mainDiscount=" + mainDiscount
+        + ", approvedMainDiscount=" + approvedMainDiscount + ", discount=" + discount
+        + ", isLongterm=" + isLongterm + ", isSpecial=" + isSpecial + ", isSpecialOrder="
+        + isSpecialOrder + ", paymentType=" + paymentType + ", payments=" + payments + ", isTerm1="
+        + isTerm1 + ", isTerm2=" + isTerm2 + ", isTerm3=" + isTerm3 + ", installFee=" + installFee
+        + ", materialFee=" + materialFee + ", electricalFee=" + electricalFee
+        + ", refrigeratoryFee=" + refrigeratoryFee + ", maintenanceFee=" + maintenanceFee
+        + ", additionalFreight=" + additionalFreight + ", earliestDeliveryDate="
+        + earliestDeliveryDate + ", earliestProductDate=" + earliestProductDate + ", items=" + items
+        + ", isB2c=" + isB2c + ", isBulkCargo=" + isBulkCargo + ", isUrgentDelivery="
+        + isUrgentDelivery + ", unpredictable=" + unpredictable + ", grossProfitMargin="
+        + grossProfitMargin + ", comments=" + comments + ", hasSendSap=" + hasSendSap
+        + ", attachments=" + attachments + ", buttonControl=" + buttonControl + "]";
+  }
 
 	
 }
