@@ -24,22 +24,22 @@ public class Parameter implements Serializable{
 	public String operater;
 	public String optTime;
 	
-	public String preValue;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date preEnableDate;
+//	public String preValue;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	public Date preEnableDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date afterEnableDate;
 	public String afterValue;
 	
 	
-	public Date getPreEnableDate() {
-		return preEnableDate;
-	}
-	public void setPreEnableDate(Date preEnableDate) {
-		this.preEnableDate = preEnableDate;
-	}
+//	public Date getPreEnableDate() {
+//		return preEnableDate;
+//	}
+//	public void setPreEnableDate(Date preEnableDate) {
+//		this.preEnableDate = preEnableDate;
+//	}
 	public Date getAfterEnableDate() {
 		return afterEnableDate;
 	}
@@ -58,12 +58,12 @@ public class Parameter implements Serializable{
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getPreValue() {
-		return preValue;
-	}
-	public void setPreValue(String preValue) {
-		this.preValue = preValue;
-	}
+//	public String getPreValue() {
+//		return preValue;
+//	}
+//	public void setPreValue(String preValue) {
+//		this.preValue = preValue;
+//	}
 	public String getAfterValue() {
 		return afterValue;
 	}
