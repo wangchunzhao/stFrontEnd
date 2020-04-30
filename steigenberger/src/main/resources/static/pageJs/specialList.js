@@ -23,6 +23,9 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
 			url : ctxPath+"specialdelivery",//请求路径
+			responseHandler: function (res) {
+				return res.data
+			},
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -48,32 +51,18 @@ var TableInit = function () {
 			    };
 			    return temp;
 			},
-			columns : [ {
-				title : '订单id',
-				field : 'id',
-				sortable : true,
-				visible: false
-			},{
-				title : '订单版本id',
-				field : 'orderInfoId',
-				sortable : true,
-				visible: false
-			},{
-				title : '合同号 Contract Code',
+			columns : [{
+				title : '序列号 SequenceNumber',
 				field : 'sequenceNumber',
 				sortable : true
 			},{
 				title : '签约单位 Contract Unit',
-				field : 'contractorName',
-				sortable : true
-			},{
-				title : '性质分类 Classification',
-				field : 'contractorClassName',
+				field : 'customerName',
 				sortable : true
 			},{
 				title : '折扣 Discount',
-				field : 'distcount',
-				formatter : formatTrue,
+				field : 'discount',
+				// formatter : formatTrue,
 				sortable : true
 			},{
 				title : '创建日期 Creation Time',
@@ -82,52 +71,51 @@ var TableInit = function () {
 				formatter:function (value, row, index) {
 					return changeDateFormatter(value);
 				}
-			},{
-				title : '订单状态 Order Status',
-				field : 'orderTypeCode',
-				sortable : true
-			},{
-				title: '申请号 applyId',
-	            field: 'applyId',
-	            align: 'center',
-	            width : 160,
-	            formatter: function (value, row, index) {// selNumber'+ row.kOrderId + '
-	            	var option;
-	            	//下拉框
-	            	$.ajax({
-	            		url: '/steigenberger/special/queryApplyListByOrderId',
-	                    type: "get",
-	                    data : {kOrderVersionId:row.kOrderVersionId},
-	                    dataType: "json",
-	                    async : false,
-	                    success:function(data){
-	                    	var result = data.data;
-	                    	var headOption = "<option value ='0' selected>请选择</option>";
-	                    	if(result == '' ){
-	                    		headOption = headOption + "<option value ='-1'>填写申请</option>";
-	                    	}else{
-	                    		var key = row.kOrderId;
-	                    		applyListMap[key] = result;
-	                    		console.log(applyListMap);
-	                    		$.each(data.data,function(i,obj){
-	                    			headOption = headOption + "<option value='"+obj.applyId+"'>"+obj.applyId+"</option>";
-	                    		});
-	                    		headOption = headOption + "<option value='-2'>填写申请</option>";
-	                    	}
-	                    	var thisorderId = row.kOrderId;
-	                        option = '<select class="form-control" id="'+thisorderId+'" name="'+row.kOrderVersionId+'" style="height:33px;"  onchange="changeStatus(this.id,this.value,this.name)">'+
-	                        headOption + '</select>';
-	                        
-	                      //  console.log(option);
-	                    }
-	                })
-	                return option;
-	            }
-	         },{
-				title : '申请单状态 Apply Status',
-				field : 'applyStatus',
-				formatter : statusfun,
-			},  {
+			},
+				// {
+				// title: '申请号 applyId',
+	         //    field: 'customerClazz',
+	         //    align: 'center',
+	         //    width : 160,
+	         //    formatter: function (value, row, index) {// selNumber'+ row.kOrderId + '
+	         //    	var option;
+	         //    	//下拉框
+	         //    	$.ajax({
+	         //    		url: '/steigenberger/special/queryApplyListByOrderId',
+	         //            type: "get",
+	         //            data : {kOrderVersionId:row.kOrderVersionId},
+	         //            dataType: "json",
+	         //            async : false,
+	         //            success:function(data){
+	         //            	var result = data.data;
+	         //            	var headOption = "<option value ='0' selected>请选择</option>";
+	         //            	if(result == '' ){
+	         //            		headOption = headOption + "<option value ='-1'>填写申请</option>";
+	         //            	}else{
+	         //            		var key = row.kOrderId;
+	         //            		applyListMap[key] = result;
+	         //            		console.log(applyListMap);
+	         //            		$.each(data.data,function(i,obj){
+	         //            			headOption = headOption + "<option value='"+obj.applyId+"'>"+obj.applyId+"</option>";
+	         //            		});
+	         //            		headOption = headOption + "<option value='-2'>填写申请</option>";
+	         //            	}
+	         //            	var thisorderId = row.kOrderId;
+	         //                option = '<select class="form-control" id="'+thisorderId+'" name="'+row.kOrderVersionId+'" style="height:33px;"  onchange="changeStatus(this.id,this.value,this.name)">'+
+	         //                headOption + '</select>';
+	         //
+	         //              //  console.log(option);
+	         //            }
+	         //        })
+	         //        return option;
+	         //    }
+	         // }
+	        //  ,{
+			// 	title : '申请单状态 Apply Status',
+			// 	field : 'applyStatus',
+			// 	formatter : statusfun,
+			// },
+				{
 				title : '操作 operation',
 				field : 'opt',
 				formatter : operation,//对资源进行操作
@@ -186,10 +174,17 @@ function formatTrue(value, row, index) {
 
 //操作
 function operation(value, row, index) {
-	var apply_opt_id="opt_"+row.kOrderId;
-	var show_opt_id="show_"+row.kOrderId;
-	var htm = '<button id="'+apply_opt_id+'" onclick="toAdd()" style="display:none;">特批申请</button> <button id="'+show_opt_id+'" style="display:none;" onclick="toShow()">查看申请</button>';
+	var htm = ''
+	if (row.id === undefined) {
+		htm += '<button onclick="handleApplyAndUpdateClick(' + index + ')">特批申请</button>'
+	} else if (row.applyStatus !== 1 || row.status === 1) {
+		htm += '<button onclick="handleApplyAndUpdateClick(' + index + ')">修改</button>'
+		htm += '<button onclick="handleSubmitClick(' + index + ')">提交</button>'
+	}
 	return htm;
+	// var apply_opt_id="opt_"+row.kOrderId;
+	// var show_opt_id="show_"+row.kOrderId;
+	// var htm = '<button id="'+apply_opt_id+'" onclick="toAdd()" style="display:none;">特批申请</button> <button id="'+show_opt_id+'" style="display:none;" onclick="toShow()">查看申请</button>';
 }
 function statusfun(value, row, index){
 	var status_id="status_"+row.kOrderId;
@@ -206,11 +201,47 @@ function toShow(){
 //	console.log(applyId);
 	window.location.href=ctxPath+"special/toShow?applyId="+applyId;
 }
+
+function handleApplyAndUpdateClick(index) {
+	let row = $('#mytab').bootstrapTable('getData')[index];
+	let id = row.id
+	if (id) {
+		alert('修改')
+		// $.ajax({
+		// 	url: ctxPath + "contract/" + id,
+		// 	// data: '',
+		// 	type: "GET",
+		// 	contentType: "application/json;charset=UTF-8",
+		// 	// dataType: "json",
+		// 	success: function(data) {
+		// 		checkLogout(data);
+		// 		if(data == null || data.status != 'ok'){
+		// 			layer.alert("查询合同信息失败！" + (data != null ? data.msg : ""));
+		// 		}else{
+		// 			// console.log(data.data)
+		// 			contract = data.data;
+		// 			contract.isedit = true;
+		// 			// setEditInfo(row, contract);
+		// 			showEditModal(contract);
+		// 		}
+		// 	}
+		// });
+	} else {
+		window.location.href = ctxPath + "menu/specialApply?sequenceNumber="
+			+ row['sequenceNumber'] + "&customerCode="
+			+ row['customerCode'] + "&orderInfoId="
+			+ row['orderInfoId'];
+	}
+}
+
+function handleSubmitClick(id) {
+	alert(id)
+}
  
 //查询按钮事件
 $('#search_btn').click(function() {
 	$('#mytab').bootstrapTable('refresh', {
-		url : ctxPath+'special/listData'
+		url : ctxPath+'specialdelivery'
 	});
 })
 

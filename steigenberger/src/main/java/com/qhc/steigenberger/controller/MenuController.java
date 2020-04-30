@@ -55,6 +55,11 @@ public class MenuController extends BaseController {
 	public String index() {
 		return "special/specialList";
 	}
+
+	@RequestMapping("/specialApply")
+	public String specialApply() {
+		return "special/specialApply";
+	}
 	
 	@RequestMapping("/todo")
   	public String todo() {
