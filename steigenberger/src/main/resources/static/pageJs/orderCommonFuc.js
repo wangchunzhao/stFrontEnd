@@ -2733,6 +2733,7 @@ function viewConfigPrice( type){
 	    contentType: "application/json;charset=UTF-8",
 	    data: JSON.stringify(formData),
 	    type: "POST",
+	    async: false,
 	    dataType: "json",
 	    success: function(res) { 
 	    	if(type=="view"){
@@ -2865,7 +2866,7 @@ function viewGrossProfit(type){
 	    		item.cost = toDecimal2(item.cost);
 	    		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
 	    		item.grossProfit = toDecimal2(item.grossProfit);
-	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin)+"%";
+	    		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin*100)+"%";
 	    		
 	    	})
 	    	$("#grossProfitTable").bootstrapTable('load', tableData);
@@ -2895,7 +2896,7 @@ function viewOrderGrossProfit(){
 		item.cost = toDecimal2(item.cost);
 		item.wtwGrossProfit = toDecimal2(item.wtwGrossProfit);
 		item.grossProfit = toDecimal2(item.grossProfit);
-		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin)+"%";
+		item.wtwGrossProfitMargin = toDecimal2(item.wtwGrossProfitMargin*100)+"%";
 	})
 	$("#grossProfitTable").bootstrapTable('load', tableData);	
 }
@@ -3454,7 +3455,6 @@ var paymentColumns = [
 
 //Customer basic infomation js end
 function rowStyle(row, index){
-	debugger
 	if(row.name=="柜内颜色"){
 		 var style = {};            
 		    style={css:{'color':'#ed5565'}};               
