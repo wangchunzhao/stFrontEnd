@@ -2,6 +2,7 @@ package com.qhc.steigenberger.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author lizuoshan
@@ -62,6 +63,11 @@ public class SpecialDelivery {
 	private String stOrderType;
 
 	private Date createTime;
+    
+    /**
+     * 附件信息 Attachment information
+     */
+    private List<SpecialAttachment> attachments;
 
 	/**
 	 * order status
@@ -227,7 +233,15 @@ public class SpecialDelivery {
 		this.createTime = createTime;
 	}
 
-	public String getStatus() {
+	public List<SpecialAttachment> getAttachments() {
+    return attachments;
+  }
+
+  public void setAttachments(List<SpecialAttachment> attachments) {
+    this.attachments = attachments;
+  }
+
+  public String getStatus() {
 		return status;
 	}
 
