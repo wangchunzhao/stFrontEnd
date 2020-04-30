@@ -301,7 +301,7 @@
 					    </div>
 					    <span class="col-md-1 control-label" th:if="${orderType==1}">标准折扣</span>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="standardDiscount" readonly th:if="${orderType==1}">
+							<input type="text" class="form-control" id="standardDiscount" name="discount" readonly th:if="${orderType==1}" th:value="${discount}">
 					    </div>
 					    <div id="freightDiv" style="display:none;">
 						    <span class="col-md-1 control-label">外销运费（凭证货币）</span>
