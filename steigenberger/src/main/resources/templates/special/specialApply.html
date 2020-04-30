@@ -62,54 +62,51 @@
 <script src="../bootstrap-fileinput-master/js/locales/zh.js"></script>
 
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 	var ctxPath  = [[@{/}]];
+
+    var uploadList = []
 	$(function(){
 		$("#btn_submit").on("click",function(e){
 			e.preventDefault();
-			  var ordersId=$("#ordersId").val();  		  
-			  var receiveMailTime=$(".form #receiveMailTime").val(); 
-			  var contractTime=$(".form #contractTime").val(); 
+			  var receiveMailTime=$(".form #receiveMailTime").val();
+			  var contractTime=$(".form #contractTime").val();
 			  var payAdvancePaymentTime=$(".form #payAdvancePaymentTime").val();
 			  var remark=$(".form #remark").val();
-			  var enclosurename=$(".form #myupload").val();
-			  var kOrderVersionId=$(".form #kOrderVersionId").val();
 			  var data={
-					  ordersId:ordersId,
-					  receiveMailTime:receiveMailTime,
-					  contractTime:contractTime,
-					  payAdvancePaymentTime:payAdvancePaymentTime,
-					  kOrderVersionId:kOrderVersionId,
-					  remark:remark
+                  orderInfoId: [[${param.orderInfoId}]][0],
+                  applyStatus: 0,
+                  receiveMailTime: receiveMailTime,
+                  contractTime: contractTime,
+                  payAdvancePaymentTime: payAdvancePaymentTime,
+                  remark: remark,
+                  attachments: uploadList
 				}
-			$.ajax({  
+			$.ajax({
 				type:"post",
-						url: ctxPath+'special/saveApply',
-		      		   contentType:'application/json;charset=utf-8',
-		      		   async:false,
-		      		   data:JSON.stringify(data),
-		      		 	success: function(data){
-		       		     if(data.status>200){
-	 	       		    	toastr.warning(data.msg);  
-		 	       		    	setTimeout(function(){
-		 	       		    	window.location.reload();
-		 	       		     },2000);
-	 	       		       }
-	 	       		    else{
-	 	       		    	toastr.success(data.msg);
-	 	       		       	setTimeout(function(){
-	 	       		       	window.location.href = ctxPath+"special/index";
-	 	       		        },2000);
-	 	       		      } 				 
-		      		}});
+                url: ctxPath+'specialdelivery',
+                contentType:'application/json;charset=utf-8',
+                async:false,
+                data:JSON.stringify(data),
+                success: function(data){
+                if(data.status>200){
+                    toastr.warning(data.msg);
+                    setTimeout(function(){
+                        window.location.reload();
+                    },2000);
+                }
+                else{
+                    toastr.success("操作成功！");
+                    setTimeout(function(){
+                        window.location.href = ctxPath + "menu/specialApplication";
+                    },2000);
+                }
+				}});
 			});
-		
-		 $(".form #btn_back").on("click",function(e){
-			 window.location.href = ctxPath+"special/index";
+		 $("#btn_back").on("click",function(e){
+             window.location.href = ctxPath + "menu/specialApplication";
 		 });
 	})
-	
-	
  </script>
 </head> 
 <body class="cbp-spmenu-push">
@@ -140,10 +137,10 @@
                     </div>
                     
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" readonly id="ordersId" th:value="${order?.sequenceNumber}">
+                        <input type="text" class="form-control" readonly id="ordersId" th:value="${param.sequenceNumber}">
                     </div>
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" readonly id="contractNo" >
+                        <input type="text" class="form-control" readonly id="contractNo" th:value="${param.customerCode}">
                     </div>
                     
                     <button type="button" class="btn btn-primary" id="btn_queryOrder" style="margin-top: 10px; margin-right: 20px;">查看订单详情</button>
@@ -196,7 +193,7 @@
 	                        附件上传 Attachment upload
 	                    </div>
                      <div class="col-xs-6 col-md-6">
-							<input id="myupload" name="myupload" type="file" class="file" data-show-preview="false" multiple accept=".doc,.docx,.txt" style="margin-top: 10px;">
+							<input id="file_data" name="file_data" type="file" class="file" data-show-preview="false" multiple accept=".doc,.docx,.txt" style="margin-top: 10px;">
 	                    </div>
                 </div>
                 <div class="row">
@@ -217,22 +214,22 @@
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
-		
+
 	showLeftPush.onclick = function() {
 		classie.toggle( this, 'active' );
 		classie.toggle( body, 'cbp-spmenu-push-toright' );
 		classie.toggle( menuLeft, 'cbp-spmenu-open' );
 		disableOther( 'showLeftPush' );
 	};
-	
+
 
 	function disableOther( button ) {
 		if( button !== 'showLeftPush' ) {
 			classie.toggle( showLeftPush, 'disabled' );
 		}
 	}
-	
-	initUpload("myupload",  ctxPath+"special/upload");
+
+	initUpload("file_data",  ctxPath+"order/upload");
     function initUpload(ctrlName, uploadUrl) {
         var control = $('#' + ctrlName);
         control.fileinput({
@@ -263,23 +260,24 @@
             }
         });
     }
-    $("#myupload").on("fileuploaded", function (event, data, previewId, index) {
+    $("#file_data").on("fileuploaded", function (event, data, previewId, index) {
         console.log(data);
-        if(data.response.status == 200)
+        if(data.response.status === 'ok')
         {
-       //     alert(data.files[index].name + "上传成功!");
 	    	toastr.success(data.files[index].name + "上传成功!");
-        //关闭
+            uploadList.push({
+                fileName: data.response.data.fileName,
+                file_url: data.response.data.fileUrl
+            })
             $(".close").click();
         }
         else{
-        	toastr.warning(data.files[index].name + "上传失败!" + data.response.message);  
-     //      alert(data.files[index].name + "上传失败!" + data.response.message);
-        //重置
-        $("#myupload").fileinput("clear");
-        $("#myupload").fileinput("reset");
-        $('#myupload').fileinput('refresh');
-        $('#myupload').fileinput('enable');
+        	toastr.warning(data.files[index].name + "上传失败!" + data.response.message);
+            //重置
+            $("#file_data").fileinput("clear");
+            $("#file_data").fileinput("reset");
+            $('#file_data').fileinput('refresh');
+            $('#file_data').fileinput('enable');
         }
     });
 </script>	
