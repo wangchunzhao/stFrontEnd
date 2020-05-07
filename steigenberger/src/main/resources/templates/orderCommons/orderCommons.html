@@ -369,15 +369,22 @@
 					    </div>
 						    <span class="col-md-1 control-label">合并折扣</span>
 							<div class="col-md-2">
-								<input type="text" class="form-control" id="orderDiscount" aria-describedby="emailHelp" readonly>
+								<input type="text" class="form-control" id="orderDiscount" aria-describedby="emailHelp" readonly name="discount">
 						    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
-						<span class="col-md-1 control-label">是否为长期折扣</span>
+						<span class="col-md-1 control-label">长期折扣</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:filed="*{isLongterm}" id='isLongterm' onchange="isLongtermChange(this)">								
+					      <select class="form-control"  th:field="*{isLongterm}" onchange="isLongtermChange()">								
 								<option value="0" class="">否</option>
 								<option value="1" class="">是</option>
+							</select>
+					    </div>
+					    <span class="col-md-1 control-label">非统一折扣</span>
+						<div class="col-md-2">
+					      <select class="form-control" th:field="*{isSpecial}" onchange="isLongtermChange()">								
+								<option value="0">否</option>
+								<option value="1">是</option>
 							</select>
 					    </div>
 					</div>
@@ -1083,8 +1090,8 @@
 	
 	<!-- 底部Button  -->
 	<div th:fragment="footerButton" style="margin-top: 10px">
-		<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()" th:if="${orderOperationType=='1'||orderOperationType=='3'}" id="saveButton">保存 save</button>
-		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='1'||(orderOperationType=='3'&&(orderDetail.status=='00'||orderDetail.status=='02'||orderDetail.status=='10'))}" id="submitButton">提交 submit</button>
+		<button type="button" class="btn pull-right btn-success" style="margin-left: 25px; margin-right: 25px;" onclick="saveOrder()" th:if="${orderOperationType=='1'||orderOperationType=='3'||orderOperationType=='4'}" id="saveButton">保存 save</button>
+		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='1'||((orderOperationType=='3'||orderOperationType=='4')&&(orderDetail.status=='00'||orderDetail.status=='02'||orderDetail.status=='10'))}" id="submitButton">提交 submit</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="goBpm()" th:if="${orderOperationType=='3'&&orderDetail.status=='03'}" id="bpmSubmitButton">提交 BPM</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='3'&&orderDetail.status=='01'}" id="b2cSubmitButton">提交B2c</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="reject()" th:if="${orderOperationType=='3'&&(orderDetail.status=='01'||orderDetail.status=='03')}" id="b2cRejectButton">驳回</button>

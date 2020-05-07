@@ -81,6 +81,10 @@ var TableInit = function () {
 				field : 'salesName',
 				sortable : true
 			},{
+				title : '原币合同金额',
+				field : 'contractValue',
+				sortable : true
+			},{
 				title : '创建日期',
 				field : 'createTime',
 				sortable : true

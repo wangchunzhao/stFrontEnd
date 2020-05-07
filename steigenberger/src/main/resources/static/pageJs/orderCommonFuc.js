@@ -662,6 +662,7 @@ function addSubsidiary(){
 	$("#subsidiaryForm").data("bootstrapValidator").resetForm();
 	var orderType = $("#stOrderType").val();
 	var long = $("#isLongterm").val();
+	var special = $("#isSpecial").val();
 	var customerName = $("#customerName").val();
 	if(customerName==""){
 		layer.alert('请先选择客户', {icon: 5});
@@ -694,7 +695,7 @@ function addSubsidiary(){
 		$('#originalActualPrice').attr("disabled",false);
 		$('#b2cEstimatedPrice').attr("disabled",true);
 	}
-	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
+	if($("#stOrderType").val()=="2"&&(long=='1'||special=='1')){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
 	}
@@ -857,7 +858,7 @@ function fillMaterailValue(data){
 	$("#groupCode").val(data.groupCode);
 	$("#isConfigurable").val(data.configurable);
 	var materialsType = data.stGroupCode;
-	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
+	if($("#stOrderType").val()=="2"&&($("#isLongterm").val()=='1'||$("#isSpecial").val()=='1')){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
 	}else{
@@ -1261,7 +1262,7 @@ function editMaterials(editContent){
 	if(status=='01'){
 		$("#b2cEstimatedCost").attr("disabled",false);
 	}	
-	if($("#stOrderType").val()=="2"&&$("#isLongterm").val()=='1'){
+	if($("#stOrderType").val()=="2"&&($("#isLongterm").val()=='1'||$("#isSpecial").val()=='1')){
 		$("#discount").attr("disabled",false);
 		$("#originalActualPrice").attr("disabled",false);
 	}

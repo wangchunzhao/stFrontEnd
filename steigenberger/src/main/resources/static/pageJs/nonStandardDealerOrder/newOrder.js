@@ -124,9 +124,10 @@ $(function () {
 });
 
 //是否长期折扣变化
-function isLongtermChange(obj){
-	var isLongTerm = $(obj).val();
-	if(isLongTerm=='1'){
+function isLongtermChange(){
+	var isLongTerm = $("#isLongterm").val();
+	var isSpecial = $("#isSpecial").val();
+	if(isLongTerm=='1'||isSpecial=='1'){
 		$("#mainDiscount").val('');
 		$("#bodyDiscount").val('');
 		 $("#mainDiscount").attr('disabled',true);
