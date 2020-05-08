@@ -702,12 +702,12 @@ function addSubsidiary(){
 		layer.alert('请先选择币种', {icon: 5});
 		return
 	}
-	if(orderType=="2"&&long=='0'&&($("#bodyDiscount").val()==""||$("#bodyDiscount").val()=="0.0")){
+	if(orderType=="2"&&long=='0'&&special=='0'&&($("#bodyDiscount").val()==""||$("#bodyDiscount").val()=="0.0")){
         layer.msg('折扣未录入！', function(){
         });
     }
 
-    if($("#stOrderType").val()=="2"&&long=='0'&&($("#mainDiscount").val()==""||$("#mainDiscount").val()=="0.0")){
+    if($("#stOrderType").val()=="2"&&long=='0'&&special=='0'&&($("#mainDiscount").val()==""||$("#mainDiscount").val()=="0.0")){
         layer.msg('折扣未录入！', function(){
         });
     }
