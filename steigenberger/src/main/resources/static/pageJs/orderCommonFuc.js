@@ -809,7 +809,7 @@ function getItemCategory(configure,data){
 			if(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X'){
 				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHT2'>标准</option><option value='ZHT6'>免费</option><option value='ZHR2'>退货</option></select>");
 			}else{
-				if(code=='BG1GD1000000-X'){
+				if(code=='BG1GD1000000-X'||code=='BG1R8R00000-X'){
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH99'>")
 				}else{
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH98'>")
