@@ -121,6 +121,8 @@ $(function () {
 	if(orderOperationType=="2"){
 		disableAll();
 	}
+	sapOrderCheck();
+	getSapItemStatus();
 });
 
 //是否长期折扣变化

@@ -77,6 +77,7 @@
 	var initTaxRate = [[${order_option.taxRate}]]
 	var standardDiscount = [[${order_option.standardDiscount}]]
 	$("#standardDiscount").val(parseFloat(standardDiscount)*100)
+	var sapItemStatus = [];
 	if(orderOperationType!=1){
 		if(initTaxRate&&saleType==20){
 			var rate = initTaxRate[10];

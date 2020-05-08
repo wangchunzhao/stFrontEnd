@@ -49,6 +49,7 @@
 						<span class="col-md-1 control-label">签约单位</span>
 					    <div class="col-md-2">
 					    <div class="input-group">
+					    	<input type="hidden" th:field="*{hasSendSap}">
 		                    <input type="text" class="form-control" disabled id="customerName" th:field="*{customerName}">
 		                    <input type="hidden" id="customerCode" th:field="*{customerCode}">
 		                    <input type="hidden" id="customerIndustryCode" th:field="*{customerIndustryCode}">

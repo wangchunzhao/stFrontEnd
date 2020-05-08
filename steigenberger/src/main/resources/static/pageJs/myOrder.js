@@ -192,10 +192,10 @@ function operation(value, row, index) {
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
 	if(stOrderType!="3"&&currentVersionStatus=="05"){
 		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+'|'+stOrderType+'|'+contractNumber+"\")'>下推SAP</a>");
-		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
+		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+'|'+contractNumber+'|'+currentVersionStatus+"\")'>订单变更</a>");
 	}
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
-		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");
+		actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+'|'+contractNumber+'|'+currentVersionStatus+"\")'>订单变更</a>");
 	}
 	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=='00'&&buttonControl=="true"){
 		actions.push("<a type='button' class='btn btn-primary' id='tenderOffer' onclick='tenderOffer(\""+orderInfoId+"\")'>中标</a>");
@@ -309,23 +309,60 @@ function nonStandardToSap(){
 	
 }
 
-function upgradeOrder(orderInfoId){
-	layer.confirm("确定要变更订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
-        var url = ctxPath+"order/"+parseInt(orderInfoId)+"/upgrade";
-        $.ajax({
-            type: "post",
-            url: url,
-            data: null,
-            dataType: "json",
-            success: function (data) {
-            	if(data == null || data.status != 'ok'){
-		    		layer.alert("订单变更失败：：" + (data != null ? data.msg : ""));
-		    	}else{
-		    		editOrder(data.data.id,4)
-		    	} 	
-            }
-        });
-    });
+function upgradeOrder(content){
+	var orderInfoId = content.split('|')[0];
+	var contractNumber = content.split('|')[1];
+	var currentVersionStatus = content.split('|')[2];
+	if(currentVersionStatus=='05'){
+		layer.confirm("确定要变更订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+	        var url = ctxPath+"order/"+parseInt(orderInfoId)+"/upgrade";
+	        $.ajax({
+	            type: "post",
+	            url: url,
+	            data: null,
+	            dataType: "json",
+	            success: function (data) {
+	            	if(data == null || data.status != 'ok'){
+			    		layer.alert("订单变更失败：：" + (data != null ? data.msg : ""));
+			    	}else{
+			    		editOrder(data.data.id,4)
+			    	} 	
+	            }
+	        });
+	    });
+	}else{
+		$.ajax({
+	        type: "get",
+	        url: ctxPath+"order/"+contractNumber+"/sapstatus",
+	        data: null,
+	        dataType: "json",
+	        success: function (data) {
+	        	var releaseStatus = data.data.releaseStatus
+	        	if(releaseStatus!='Z1'){
+	        		layer.alert('财务已审批，不能变更', {icon: 5});
+	        	}else{
+	        		layer.confirm("确定要变更订单吗?", {btn: ['确定', '取消'], title: "提示"}, function () {
+	        	        var url = ctxPath+"order/"+parseInt(orderInfoId)+"/upgrade";
+	        	        $.ajax({
+	        	            type: "post",
+	        	            url: url,
+	        	            data: null,
+	        	            dataType: "json",
+	        	            success: function (data) {
+	        	            	if(data == null || data.status != 'ok'){
+	        			    		layer.alert("订单变更失败：：" + (data != null ? data.msg : ""));
+	        			    	}else{
+	        			    		editOrder(data.data.id,4)
+	        			    	} 	
+	        	            }
+	        	        });
+	        	    });
+	        	}
+	        }
+	    });
+	}
+	
+	
 }
 
 function copyOrder(orderInfoId){

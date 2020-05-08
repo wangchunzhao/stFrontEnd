@@ -30,6 +30,7 @@
 					<input type="hidden"  id="materialModalAddress">
 					<input type="hidden"  id="deliveryAddressSeq">
 					<input type="hidden" id="yearPurchasePrice">
+					<input type="hidden" id="sapItemDeliveryAmount">
 					<div class="panel-group">
 						<div class="panel-body">
 							<div class="row">
@@ -242,7 +243,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary" data-dismiss="modal" id="configClose">关闭</button>
-								<button type="button" class="btn btn-primary" onclick="confirmMaterials()" id="confirmMaterial" th:if="${orderOperationType=='1'||orderOperationType=='3'}">确定</button>
+								<button type="button" class="btn btn-primary" onclick="confirmMaterials()" id="confirmMaterial" th:if="${orderOperationType=='1'||orderOperationType=='3'||orderOperationType=='4'}">确定</button>
 							</div>
 						</div>
 					</div>

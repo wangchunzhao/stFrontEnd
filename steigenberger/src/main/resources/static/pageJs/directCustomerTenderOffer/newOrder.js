@@ -121,4 +121,6 @@ $(function () {
 	if(orderOperationType=="2"){
 		disableAll();
 	}
+	sapOrderCheck();
+	getSapItemStatus();
 });

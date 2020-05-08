@@ -17,6 +17,28 @@ function disableAll(){
 	  }
 	  enableButton();
 }
+function sapOrderCheck(){
+	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'){
+		$("#contractNumber").attr('readonly',true);
+		$("#saleType").attr('disabled',true);
+		$("#showCustomer").attr('disabled',true);
+		$("#currency").attr('disabled',true);
+	}
+}
+function getSapItemStatus(){
+	var contractNumber = $("#contractNumber").val();
+	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'){
+		$.ajax({
+	        type: "get",
+	        url: ctxPath+"order/"+contractNumber+"/sapstatus",
+	        data: null,
+	        dataType: "json",
+	        success: function (data) {
+	        	sapItemStatus = data.data.items;
+	        }
+		});
+	}
+}
 //设置按钮可用
 function enableButton(){
 	  $(".close").attr('disabled',false);
@@ -1254,6 +1276,19 @@ function getTransactionPrice(obj){
 
 //编辑购销明细
 function editMaterials(editContent){
+	var index = editContent.split('|')[1];
+	var rowNumber = editContent.split('|')[0]
+	var tableData =$('#materialsTable').bootstrapTable('getData')[index];	
+	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
+		$.each(sapItemStatus,function(index,itemObject){
+			if(itemObject.rowNum==rowNumber){
+				var rejectCode = itemObject.rejectedCode;
+				var plannedOrder = itemObject.plannedOrder;
+				var productionOrder = itemObject.productionOrder;
+				layer.alert('拒绝原因:'+rejectCode+" ;计划订单:"+plannedOrder+" ;生产工单:"+productionOrder);
+			}
+		});
+	}
 	$('#subsidiaryModal').modal('show');
 	$('#amount').attr("disabled",false);
 	$("#b2cEstimatedPrice").attr("disabled",false);
@@ -1267,9 +1302,6 @@ function editMaterials(editContent){
 		$("#originalActualPrice").attr("disabled",false);
 	}
 	$('#materialsModalType').val('edit');
-	var index = editContent.split('|')[1];
-	var rowNumber = editContent.split('|')[0]
-	var tableData =$('#materialsTable').bootstrapTable('getData')[index];	
 	$("#itemCategoryContent").html('');
 	var configable = tableData.isConfigurable+'';
 	fillEditMaterailValue(tableData,index);
@@ -1315,6 +1347,21 @@ function editMaterials(editContent){
 		    element.disabled=true;
 		  }
 		  $("#configClose").attr("disabled",false);
+	}
+	var itemAmount = $("#amount").val();
+	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
+		$.each(sapItemStatus,function(index,itemObject){
+			if(itemObject.rowNum==rowNumber&&itemObject.issuedQuantity==itemAmount){
+				 var form=$("#subsidiaryForm")[0];
+				  for(var i=0;i<form.length;i++){
+				    var element=form.elements[i];
+				    element.disabled=true;
+				  }
+				  $("#configClose").attr("disabled",false);
+			}else{
+				$("#sapItemDeliveryAmount").val(itemObject.issuedQuantity);
+			}
+		});
 	}
 }
 
@@ -1427,6 +1474,14 @@ function confirmMaterials(){
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
     	return
+    }
+    //修改数量
+    var itemAmount = $("#amount").val();
+    //实际交货数量
+    var IssuedQuantity = $("#sapItemDeliveryAmount").val();
+    if(IssuedQuantity&&parseInt(itemAmount)<parseInt(IssuedQuantity)){
+    	layer.alert('变更后数量不能小于已交货数量', {icon: 5});
+		return;
     }
 	var identification = $("#identification").val();
 	var materialTypeName = $("#materialTypeName").val();
