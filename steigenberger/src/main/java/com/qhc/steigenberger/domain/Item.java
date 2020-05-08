@@ -15,7 +15,7 @@ public class Item {
 	private String materialCode;//物料编码,专用号
 	private String materialName;//物料名称,规格型号
 	private Boolean isConfigurable;//是否为可配置物料，物料信息带出
-	private Boolean isPurchased;//物料属性  1:采购  0:生产物料类型，物料信息带出
+	private Boolean isPurchased;//物料属性  1是自制生产 0是外部采购, 物料类型，物料信息带出
 	private String materialGroupCode;//SAP物料分组，物料信息带出
 	private String materialGroupName;//SAP物料分组名称
 	private String stMaterialGroupCode;//销售工具物料分组，物料信息带出
@@ -83,10 +83,10 @@ public class Item {
 	private int isVirtual;//工程虚拟物料
 	private double volumeCube;//工程虚拟物料
 	private double feight;//运费
-	private String requestBrand;
-	private String requestPackage;
-	private String requestNameplate;
-	private String requestCircult;
+    private String requestBrand; // 商标要求
+    private String requestPackage; // 木包装要求
+    private String requestNameplate; // 铭牌要求
+    private String requestCircult; // 电路图要求
 	
 	private String comments;
 	private String clazzCode;//物料分类代码
