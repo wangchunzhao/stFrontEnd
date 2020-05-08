@@ -1,4 +1,9 @@
 $(function () {	
+	$(document).keyup(function(event){
+	    if(event.keyCode ==13){
+	    	window.event.returnValue = false;
+	    }
+	});
 	//modal 无法滚动问题
 	$('#specificationModal').on('hidden.bs.modal', function () {
 		$("body").addClass("modal-open");

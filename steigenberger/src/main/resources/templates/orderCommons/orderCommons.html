@@ -304,6 +304,10 @@
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="standardDiscount" name="discount" readonly th:if="${orderType==1}" th:value="${discount}">
 					    </div>
+					    <span class="col-md-1 control-label" th:if="${orderType==3||orderType==4}">追加运费</span>
+						<div class="col-md-2">
+							<input type="text" class="form-control" th:field="*{additionalFreight}">
+					    </div>
 					    <div id="freightDiv" style="display:none;">
 						    <span class="col-md-1 control-label">外销运费（凭证货币）</span>
 							<div class="col-md-2">
@@ -1095,7 +1099,7 @@
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='1'||((orderOperationType=='3'||orderOperationType=='4')&&(orderDetail.status=='00'||orderDetail.status=='02'||orderDetail.status=='10'))}" id="submitButton">提交 submit</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="goBpm()" th:if="${orderOperationType=='3'&&orderDetail.status=='03'}" id="bpmSubmitButton">提交 BPM</button>
 		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="saveOrder('submit')" th:if="${orderOperationType=='3'&&orderDetail.status=='01'}" id="b2cSubmitButton">提交B2c</button>
-		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="reject()" th:if="${orderOperationType=='3'&&(orderDetail.status=='01'||orderDetail.status=='03')}" id="b2cRejectButton">驳回</button>
+		<button type="button" class="btn btn-primary pull-right" style="margin-left: 30px;" onclick="reject()" th:if="${orderOperationType=='3'&&(orderDetail.status=='01'||orderDetail.status=='03'||orderDetail.status=='02')}" id="b2cRejectButton">驳回</button>
 		<button type="button" class="btn pull-right btn-warning" id="backButton" onclick="history.go(-1)">返回 back</button>
 	</div>
 </body>

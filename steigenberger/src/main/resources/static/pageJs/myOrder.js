@@ -201,7 +201,8 @@ function operation(value, row, index) {
 		actions.push("<a type='button' class='btn btn-primary' id='tenderOffer' onclick='tenderOffer(\""+orderInfoId+"\")'>中标</a>");
 	}
 	if(stOrderType=="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")&&quoteStatus=="01"&&buttonControl=="true"){
-		actions.push("<a type='button' class='btn btn-primary' id='createOrder' onclick='createOrder(\""+orderInfoId+"\")'>下单</a>");
+		actions.push("<a type='button' class='btn btn-primary'  onclick='tenderOfferBack(\""+orderInfoId+"\")'>撤回中标</a>");
+		actions.push("<a type='button' class='btn btn-primary'  onclick='createOrder(\""+orderInfoId+"\")'>下单</a>");
 	}
 
 	return actions.join('');
@@ -406,6 +407,29 @@ function tenderOffer(orderInfoId){
 	    
     });
     $('#mytab').bootstrapTable('refresh');
+}
+function tenderOfferBack(orderInfoId){
+	layer.confirm("确认撤回中标吗?", {btn: ['是', '否'], title: "提示"}, function () {
+    	var url = ctxPath+"order/"+orderInfoId+"/quote/00";
+	    $.ajax({
+	        type: "post",
+	        url: url,
+	        data: null,
+	        dataType: "json",
+	        async: false,
+	        success: function (data) {
+	        	if(data == null || data.status != 'ok'){
+		    		layer.alert("撤回中标失败:" + (data != null ? data.msg : ""));
+		    	}else{
+		    		layer.alert("撤回中标成功:" + (data != null ? data.msg : ""));
+		    		$('#mytab').bootstrapTable('refresh');
+		    		
+		    	} 	
+	        }
+	    });   	
+	    
+    });
+    
 }
 //确认下单
 function createOrder(orderInfoId){
