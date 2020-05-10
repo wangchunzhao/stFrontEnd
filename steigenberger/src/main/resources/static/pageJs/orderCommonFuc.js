@@ -298,6 +298,9 @@ function initDropDownList(){
 	$("#orignalContractAmount").val($("#contractValue").val());
 	$("#contractAmount").val($("#contractRmbValue").val());
 	$("#incoterm").val($("#incotermItem").val());
+	$("#transferType").val($("#transferTypeCode").val());
+	$('#transferType').trigger("change");
+	
 	
 }
 
@@ -2152,7 +2155,7 @@ function calPrice(tableData){
 	//可选项转移单价人民币
 	var optionalTransationPrice = tableData.optionalTransationPrice;
 	//可选项转移单价凭证货币
-	var originalOptionalTransationPrice = toDecimal2(parseFloat(optionalTransationPrice)/parseFloat(exchangeRate));
+	var originalOptionalTransationPrice = toDecimal2(parseFloat(optionalTransationPrice)/parseFloat(exchangeRate));  
 	var optionalTransationPriceAmount = toDecimal2(parseFloat(originalOptionalTransationPrice)*quantity);
 	//B2C预估价
 	var b2cEstimatedPrice = tableData.b2cEstimatedPrice;
@@ -2524,6 +2527,16 @@ function expandAll(){
 	$('#purchaseDetail').collapse('show');
 	$('#infoCheck').collapse('show');
 	$('#attachmentInfo').collapse('show');
+}
+
+function transferTypeChange(){
+	var transferType = $("#transferType").val();
+	if(($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4")&&transferType=='02'){
+		$("#additionalFreight").attr('disabled',true);
+		$("#additionalFreight").val('');
+	}else if(($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4")&&transferType=='01'){
+		$("#additionalFreight").attr('disabled',false);
+	}
 }
 
 //保存提交订单
