@@ -288,17 +288,18 @@
 					<div class="row" style="margin-top: 15px;">
 						<span class="col-md-1 control-label">收货方式</span>
 						<div class="col-md-2">
-							<select class="form-control" id="receiveType" th:field="*{receiveType}">
+							<select class="form-control" id="receiveType" th:field="*{receiveType}" >
 								<option th:each="receiveTerm : ${order_option.receiveTerms}" th:value="${receiveTerm.key}" th:text="${receiveTerm.value}"></option>
 							</select>
 					    </div>
 					    <input type="hidden" id="receiveTypeName" th:field="*{receiveTypeName}">
 						<span class="col-md-1 control-label">运输方式</span>
 						<div class="col-md-2">
-							<select class="form-control" id="transferType" th:field="*{transferType}">
+							<select class="form-control" id="transferType" th:field="*{transferType}" onchange="transferTypeChange()">
 								<option th:each="shippingType : ${order_option.shippingTypes}" th:value="${shippingType.key}" th:text="${shippingType.value}"></option>
 							</select>
 							<input type="hidden" id="transferTypeName" th:field="*{transferTypeName}">
+							<input type="hidden" id="transferTypeCode" th:value="*{transferType}">
 					    </div>
 					    <span class="col-md-1 control-label" th:if="${orderType==1}">标准折扣</span>
 						<div class="col-md-2">

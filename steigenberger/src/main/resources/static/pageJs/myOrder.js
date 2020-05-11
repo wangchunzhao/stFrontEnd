@@ -215,6 +215,15 @@ function viewOrder(orderInfoId){
 	})
 }
 
+//合同号自动转大写
+function contractToUpperCase(obj){
+	obj.value = obj.value.toUpperCase()
+	var maxChars =10;//最多字符数
+    if (obj.value.length > maxChars){
+        obj.value = obj.value.substring(0,maxChars);
+    }
+}
+
 function editStockUpOrder(seqNumb,ordType,version){
 	jumpAjax("post",ctxPath+"order/editStockUpOrder", {
 		"sequenceNumber" : seqNumb,

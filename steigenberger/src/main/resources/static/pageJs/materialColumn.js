@@ -89,16 +89,19 @@ var materialsColumn = [{
 	    field: 'isConfigurable',
 	    visible:false
 	},{
-		title:'物料属性',
-	    field: 'isPurchased',
+		title:'需求计划',
+	    field: 'itemRequirementPlan',
 	    formatter: function(value, row, index) {
-	    	if(value==undefined){
-	    		return "";
-	    	}
-	    	if(value||value=='true'){
-	    		return "自制";
+	    	if(value=="004"){
+	    		return "物料需求计划";
+	    	}else if(value=="001"){
+	    		return "B2C";
+	    	}else if(value=="002"){
+	    		return "消化";
+	    	}else if(value=="003"){
+	    		return "调发";
 	    	}else{
-	    		return "外购";
+	    		return '替换';
 	    	}
 	    }
 	},{
@@ -236,19 +239,16 @@ var materialsColumn = [{
 	    }
 
 	},{
-		title:'需求计划',
-	    field: 'itemRequirementPlan',
+		title:'物料属性',
+	    field: 'isPurchased',
 	    formatter: function(value, row, index) {
-	    	if(value=="004"){
-	    		return "物料需求计划";
-	    	}else if(value=="001"){
-	    		return "B2C";
-	    	}else if(value=="002"){
-	    		return "消化";
-	    	}else if(value=="003"){
-	    		return "调发";
+	    	if(value==undefined){
+	    		return "";
+	    	}
+	    	if(value||value=='true'){
+	    		return "自制";
 	    	}else{
-	    		return '替换';
+	    		return "外购";
 	    	}
 	    }
 	},{
