@@ -149,7 +149,7 @@ var materialsColumn = [{
 	    field: 'optionalActualAmount'
 	},{
 		title:'可选项转移单价（人民币）',
-	    field: 'optionalTransationPrice',
+	    field: 'optionalTransactionPrice',
 	    visible:false
 	},{
 		title:'可选项转移单价（凭证货币）',

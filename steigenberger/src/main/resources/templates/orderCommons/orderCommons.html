@@ -306,7 +306,7 @@
 							<input type="text" class="form-control" id="standardDiscount" name="discount" readonly th:if="${orderType==1}" th:value="${discount}">
 					    </div>
 					    <span class="col-md-1 control-label" th:if="${orderType==3||orderType==4}">追加运费</span>
-						<div class="col-md-2">
+						<div class="col-md-2" th:if="${orderType==3||orderType==4}">
 							<input type="text" class="form-control" th:field="*{additionalFreight}">
 					    </div>
 					    <div id="freightDiv" style="display:none;">

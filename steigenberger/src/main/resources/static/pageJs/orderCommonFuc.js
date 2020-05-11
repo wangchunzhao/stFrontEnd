@@ -173,10 +173,11 @@ function getDefaultConfigs(materialCode,clazzCode){
 
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
+	debugger
 	var quantity = data.quantity;
-	var transcationPrice = toDecimal2(data.transactionPrice);
+	var transactionPrice = toDecimal2(data.transactionPrice);
 	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
-	var optionalTransationPrice = toDecimal2(data.optionalTransationPrice);
+	var optionalTransationPrice = toDecimal2(data.optionalTransactionPrice);
 	var b2cEstimatedPrice = toDecimal2(data.b2cEstimatedPrice);
 	var b2cEstimatedAmount = toDecimal2((data.b2cEstimatedPrice)*quantity);
 	var b2cEstimatedCost = toDecimal2(data.b2cEstimatedCost);
@@ -213,9 +214,9 @@ function fillItemToTableRow(data){
 			unitName:data.unitName,
 			unitCode:data.unitName,
 			actualPrice:actualPrice,
-			transactionPrice:transcationPrice,
+			transactionPrice:transactionPrice,
 			optionalActualPrice:optionalActualPrice,
-			optionalTransationPrice:data.optionalTransationPrice,
+			optionalTransactionPrice:data.optionalTransactionPrice,
 			optionalStandardPrice:data.optionalStandardPrice,
 			optionalRetailPrice:data.optionalRetailPrice,
 			b2cEstimatedPrice:b2cEstimatedPrice,
@@ -1408,7 +1409,7 @@ function fillEditMaterailValue(data,index){
 	$("#optionalActualPrice").val(data.optionalActualPrice);
 	$("#optionalActualAmount").val(data.optionalActualAmount);
 	
-	$("#optionalTransationPrice").val(data.optionalTransationPrice);
+	$("#optionalTransationPrice").val(data.optionalTransactionPrice);
 	$("#originalOptionalTransationPrice").val(data.originalOptionalTransationPrice);
 	$("#optionalTransationPriceAmount").val(data.optionalTransationPriceAmount);
 	
@@ -1696,7 +1697,7 @@ function confirmRowData(rowNumber){
 			
 			optionalActualAmount:$("#optionalActualAmount").val(),
 			
-			optionalTransationPrice:$("#optionalTransationPrice").val(),
+			optionalTransactionPrice:$("#optionalTransationPrice").val(),
 			originalOptionalTransationPrice:$("#originalOptionalTransationPrice").val(),
 			optionalTransationPriceAmount:$("#optionalTransationPriceAmount").val(),
 			
@@ -2101,7 +2102,7 @@ function saveMaterialConfig(){
 	var optionalRetailPrice = $("#viewOptionalRetailPrice").val();
 	var optionalStandardPrice = $("#viewOptionalStandardPrice").val();
 	//可选项转移价
-	tableData.optionalTransationPrice = toDecimal2(optionalTransationPrice); 
+	tableData.optionalTransactionPrice = toDecimal2(optionalTransationPrice); 
 	//可选项零售价
 	tableData.optionalRetailPrice = toDecimal2(optionalRetailPrice);
 	//可选项标准价
@@ -2153,7 +2154,7 @@ function calPrice(tableData){
 	var originalTransationPrice = toDecimal2(parseFloat(transcationPrice)/parseFloat(exchangeRate));
 	var transactionPriceAmount = toDecimal2(parseFloat(originalTransationPrice)*quantity);
 	//可选项转移单价人民币
-	var optionalTransationPrice = tableData.optionalTransationPrice;
+	var optionalTransationPrice = tableData.optionalTransactionPrice;
 	//可选项转移单价凭证货币
 	var originalOptionalTransationPrice = toDecimal2(parseFloat(optionalTransationPrice)/parseFloat(exchangeRate));  
 	var optionalTransationPriceAmount = toDecimal2(parseFloat(originalOptionalTransationPrice)*quantity);
@@ -2896,7 +2897,9 @@ function viewGrossProfit(type){
 	 $('#transferType').attr("disabled",false);
 	 $("#currency").attr("disabled",false);
 	 var orderData = $("#orderForm").serializeObject();
-	 $('#transferType').attr("disabled",true);
+	 if($("#saleType").val()=='20'){
+		 $('#transferType').attr("disabled",true);
+	 }
 	 orderData['currentVersion'] = version;
 	 orderData['orderType'] = 'ZH0D';
 	 var items = $("#materialsTable").bootstrapTable('getData');
