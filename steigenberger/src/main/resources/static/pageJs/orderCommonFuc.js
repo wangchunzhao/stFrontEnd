@@ -1646,21 +1646,21 @@ function calMergeDiscount(){
 		if((materialType=="T101"||materialType=="T102"||materialType=="T103"||materialType=="T105")&&(materialCode!='BG1R8L00000-X'&&materialCode!='BG1R8R00000-X'&&materialCode!='BG1GD1000000-X')){
 			var discount = materialRowData.discount;
 			var retailAmount = materialRowData.retailAmount;
-			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(1);
+			var discountRetailAmount = (accDiv(accMul(retailAmount,discount),100)).toFixed(2);
 			discountRetailAmountsArray.push(discountRetailAmount);
 			retailAmountsArray.push(retailAmount);
 		}
 	}
-	var discountRetailAmounts =parseFloat(0).toFixed(1);
+	var discountRetailAmounts =parseFloat(0).toFixed(2);
 	if(discountRetailAmountsArray.length==0){return;}
 	$.each(discountRetailAmountsArray,function(index,value){
 		discountRetailAmounts=accAdd(discountRetailAmounts,parseFloat(value));
 	});
-	var retailAmounts = parseFloat(0).toFixed(1);
+	var retailAmounts = parseFloat(0).toFixed(2);
 	$.each(retailAmountsArray,function(index,value){
 		retailAmounts=accAdd(retailAmounts,parseFloat(value));
 	});
-	var mergerDiscount = (accMul(accDiv(discountRetailAmounts,retailAmounts),100)).toFixed(1);
+	var mergerDiscount = (accMul(accDiv(discountRetailAmounts,retailAmounts),100)).toFixed(2);
 	$("#orderDiscount").val(mergerDiscount);
 	$("#approveDiscount").val(mergerDiscount);
 	

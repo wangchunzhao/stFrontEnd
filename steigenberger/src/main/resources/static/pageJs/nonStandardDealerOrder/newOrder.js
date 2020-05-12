@@ -227,5 +227,6 @@ function applyDiscountForRow(discount,materialsRowData,tableId){
 	    }
 	});
 	calMergeDiscount();
+	getAllCountFiled();
 }
 
