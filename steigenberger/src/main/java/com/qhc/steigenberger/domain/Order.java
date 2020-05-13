@@ -143,7 +143,7 @@ public class Order {
 	private String officeName;//大区 name
 	private String groupCode;//中心 center
 	private String groupName;//中心name
-	private int warranty;//保修年限，大客户可以修改
+	private double warranty;//保修年限，直签投标报价和直签下单中的保修年限，默认为1，可以编辑：常见的保修年限有1/1.5/2/2.5/3    
 	private String installType;//安装方式 installation
 	private String installTypeName;//安装方式名称
 	private String receiveType;//收货方式 Receiving way
@@ -695,11 +695,11 @@ public class Order {
 		this.groupName = groupName;
 	}
 
-	public int getWarranty() {
+	public double getWarranty() {
 		return warranty;
 	}
 
-	public void setWarranty(int warranty) {
+	public void setWarranty(double warranty) {
 		this.warranty = warranty;
 	}
 
