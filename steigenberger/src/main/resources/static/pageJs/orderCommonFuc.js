@@ -3269,7 +3269,7 @@ var fileListColumns=[
 		 width:'75%',
 		 formatter: function(value, row, index) {
 		    	var actions = [];
-				actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+row.fileUrl + '\')">'+value+'</a>');
+				actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+index + '\')">'+value+'</a>');
 				return actions.join('');
 		}
 	},{
@@ -3282,7 +3282,48 @@ var fileListColumns=[
 	    width:'25%',
 	    formatter: function(value, row, index) {
 	    	var actions = [];
-			actions.push('<a class="btn" onclick="removeFile(\'' + row.type+','+index + '\')"><i class="fa fa-remove"></i>删除</a>');
+			actions.push('<a class="btn" onclick="removeFile(\'' + row.type+','+row.fileUrl + '\')"><i class="fa fa-remove"></i>删除</a>');
+			return actions.join('');
+		}
+	}
+]
+
+var fileListColumnsByXujiamao=[
+	{
+		field: 'index',
+		title: '',
+		visible:false
+	},
+	{
+		field: 'id',
+		title: '',
+		visible:false
+	},
+	{
+		field: 'orderInfoId',
+		title: '',
+		visible:false
+	},
+	{
+		field: 'fileName',
+		title: '已上传文件名称',
+		width:'75%',
+		formatter: function(value, row, index) {
+			var actions = [];
+			actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+row.fileUrl + '\')">'+value+'</a>');
+			return actions.join('');
+		}
+	},{
+		field: 'fileUrl',
+		title: '文件路径',
+		visible:false
+	},{
+		title: '操作',
+		align: 'center',
+		width:'25%',
+		formatter: function(value, row, index) {
+			var actions = [];
+			actions.push('<a class="btn" onclick="removeFile(\'' + row.type+','+row.fileUrl + '\')"><i class="fa fa-remove"></i>删除</a>');
 			return actions.join('');
 		}
 	}

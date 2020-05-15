@@ -1,74 +1,174 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
-<!-- Bootstrap Core CSS -->
-<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}"/>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-<!-- Custom CSS -->
-<link href="./css/style.css" rel='stylesheet' type='text/css' th:href="@{/css/style.css}"/>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <script src="../assets/drag/bootstrap-3.3.7/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- font-awesome icons CSS -->
-<link href="./css/font-awesome.css" rel="stylesheet" th:href="@{/css/font-awesome.css}"> 
-<!-- //font-awesome icons CSS-->
+    <!-- Custom CSS -->
+    <link href="../css/style.css" rel='stylesheet' type='text/css' />
 
-<!-- js-->
-<script src="./js/modernizr.custom.js" th:src="@{/js/modernizr.custom.js}"></script>
+    <!-- font-awesome icons CSS -->
+    <link href="../css/font-awesome.css" rel="stylesheet">
+    <!-- //font-awesome icons CSS-->
 
-<!--webfonts-->
-<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
-<!--//webfonts--> 
+    <!-- side nav css file -->
+    <link href='../css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+    <!-- //side nav css file -->
 
-<!-- chart -->
-<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
-<!-- //chart -->
+    <!-- js-->
 
-<!-- Metis Menu -->
-<script src="./js/metisMenu.min.js" th:src="@{/js/metisMenu.min.js}"></script>
-<script src="./js/custom.js" th:src="@{/js/custom.js}"></script>
-<link href="./css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}">
-<!--//Metis Menu -->
+    <script src="../js/modernizr.custom.js"></script>
 
+    <!--webfonts-->
+    <!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> -->
+    <!--//webfonts-->
 
-<!-- side nav css file -->
-<link href='./css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css' th:href="@{/css/SidebarNav.min.css}"/>
-<!-- //side nav css file -->
-<script src="./js/SidebarNav.min.js" th:src="@{/js/SidebarNav.min.js}"></script>
+    <!-- chart -->
+    <script src="../js/Chart.js"></script>
+    <!-- //chart -->
 
+    <!-- Metis Menu -->
+    <script src="../js/metisMenu.min.js"></script>
+    <script src="../js/custom.js"></script>
+    <link href="../css/custom.css" rel="stylesheet">
+    <!--//Metis Menu -->
 
-<script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
-<script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
-<link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
-<link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
-<script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+    <!--pie-chart --><!-- 12345678 -->
+    <script src="../js/pie-chart.js" type="text/javascript"></script>
+    <link href="../assets/drag/bootstrap-3.3.7/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-<!-- -date -->
-<script type="text/javascript" src="../bootstrap-date/build/js/moment-with-locales.min.js" th:src="@{/bootstrap-date/build/js/moment-with-locales.min.js}"></script>
-<!-- <link rel="stylesheet" href="../bootstrap-date/build/css/bootstrap.min.css"/> -->
-<link rel="stylesheet" href="../bootstrap-date/build/css/bootstrap-datetimepicker.min.css" th:href="@{/bootstrap-date/build/css/bootstrap-datetimepicker.min.css}"/>
-<script type="text/javascript" src="../bootstrap-date/build/js/bootstrap-datetimepicker.min.js" th:src="@{/bootstrap-date/build/js/bootstrap-datetimepicker.min.js}"></script>
+    <!--table控件 -->
+    <link href="../bootstrap-table-master/dist/bootstrap-table.css" rel="stylesheet" media="screen">
+    <script src="../bootstrap-table-master/dist/bootstrap-table.js" type="text/javascript"></script>
+    <script src="../bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 
+    <script src="./js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script src="./js/Chart.js" th:src="@{/js/modernizr.custom.js}"></script>
+    <link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
+    <link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
+    <script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
 
-<script type="text/javascript">
+    <!--导入excel控件 -->
+    <link rel="stylesheet" href="../bootstrap-fileinput-master/css/fileinput.min.css"/>
+
+    <script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
+    <script src="./pageJs/orderCommonFuc.js" th:src="@{/pageJs/orderCommonFuc.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
 	var ctxPath  = [[@{/}]];
 	$(function(){
-		 $(".form #btn_back").on("click",function(e){
-			 window.location.href = ctxPath+"special/index";
-		 });
+        //文件列表初始化
+        var fileListTableEdit = new TableInit('fileList','','',fileListColumnsByXujiamao)
+        fileListTableEdit.init();
+
+        //订单文件上传成功处理方法
+        $("#file_data").on("fileuploaded", function(event, data, previewId, index) {
+            var attachment = data.response.data;
+            console.log(attachment)
+            $("#fileList").bootstrapTable('insertRow', {
+                index: attachment.fileUrl,
+                row: {
+                    type:'fileList',
+                    index:attachment.fileUrl,
+                    fileName:attachment.fileName,
+                    fileUrl:attachment.fileUrl
+                }
+            });
+            //清空文件选择框
+            $(".file-caption-name").val('');
+        });
+
+        let row = [[${param.row}]]
+        row = decodeURIComponent(row)
+        let jsonRow = JSON.parse(row)
+        console.log(jsonRow)
+
+        // 回显上传表格
+        jsonRow.attachments.forEach(function (item, index) {
+            $("#fileList").bootstrapTable('insertRow', {
+                index: item.fileUrl,
+                row: {
+                    type:'fileList',
+                    index:item.fileUrl,
+                    fileName:item.fileName,
+                    fileUrl:item.fileUrl
+                }
+            });
+        })
+
+        // 回显表单
+        $("#ordersId").val(jsonRow.sequenceNumber)
+        $("#contractNo").val(jsonRow.customerCode)
+        $("#receiveMailTime").val(jsonRow.receiveMailTime)
+        $("#contractTime").val(jsonRow.contractTime)
+        $("#payAdvancePaymentTime").val(jsonRow.payAdvancePaymentTime)
+        $("#remark").val(jsonRow.remark)
+        // 提交
+        $("#btn_submit").on("click",function(e){
+            e.preventDefault();
+            var receiveMailTime=$(".form #receiveMailTime").val();
+            var contractTime=$(".form #contractTime").val();
+            var payAdvancePaymentTime=$(".form #payAdvancePaymentTime").val();
+            var remark=$(".form #remark").val();
+            var data={
+                orderInfoId: jsonRow.orderInfoId,
+                applyStatus: 0,
+                receiveMailTime: receiveMailTime,
+                contractTime: contractTime,
+                payAdvancePaymentTime: payAdvancePaymentTime,
+                remark: remark,
+                attachments: $("#fileList").bootstrapTable('getData')
+            }
+            console.log(data)
+            $.ajax({
+                type:"post",
+                url: ctxPath+'specialdelivery',
+                contentType:'application/json;charset=utf-8',
+                async:false,
+                data:JSON.stringify(data),
+                success: function(data){
+                    if(data.status>200){
+                        toastr.warning(data.msg);
+                        setTimeout(function(){
+                            window.location.reload();
+                        },2000);
+                    }
+                    else{
+                        toastr.success("操作成功！");
+                        setTimeout(function(){
+                            window.location.href = ctxPath + "menu/specialApplication";
+                        },2000);
+                    }
+                }});
+        });
+        // 返回
+        $("#btn_back").on("click",function(e){
+            window.location.href = ctxPath + "menu/specialApplication";
+        });
 	})
  </script>
-<script src="../pageJs/main.js" type="text/javascript" ></script>	
-</head> 
+<script src="../pageJs/main.js" type="text/javascript" ></script>
+</head>
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
-<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
-	
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>
+
 <!-- main content start-->
 <div id="page-wrapper">
 	<div id="accordion-magical-coder-auto-id-1564457277922" class="panel-group" role="tablist" aria-multiselectable="true" style="margin-top: 20px; margin-left: 25px; margin-right: 25px;">
 		<div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
-                <a role="button"  href="#collapseOne-magical-coder-auto-id-1565240804186" aria-expanded="true" >������Ϣ Basic information</a>
+                <a role="button"  href="#collapseOne-magical-coder-auto-id-1565240804186" aria-expanded="true" >基本信息 Basic information</a>
             </h4>
         </div>
         <div id="collapseOne-magical-coder-auto-id-1565240804186" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
@@ -76,17 +176,17 @@
 
                 <div class="row">
                     <div class="col-xs-6">
-                        ������ˮ�� code
+                        需求流水号 code
                     </div>
                     <div class="col-xs-6">
-                        ��ͬ�� contract code
+                        合同号 contract code
                     </div>
-                    
+
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" readonly th:value="${order?.sequenceNumber}">
+                        <input type="text" class="form-control" readonly id="ordersId">
                     </div>
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" readonly >
+                        <input type="text" class="form-control" readonly id="contractNo">
                     </div>
                 </div>
             </div>
@@ -95,7 +195,7 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">
-                <a class="" role="button" data-toggle="collapse"  href="#collapseTwo-magical-coder-auto-id-1565240802789" aria-expanded="true">������Ϣ Special information</a>
+                <a class="" role="button" data-toggle="collapse"  href="#collapseTwo-magical-coder-auto-id-1565240802789" aria-expanded="true">特批信息 Special information</a>
             </h4>
         </div>
         <div id="collapseTwo-magical-coder-auto-id-1565240802789" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
@@ -103,50 +203,59 @@
 				<form class="layui-form form" enctype="multipart/form-data" method="post" >
                 <div class="row">
                     <div class="col-xs-6">
-                        �յ����Ӷ�������������ȷ���ļ���ʱ�� Order confirmation time
+                        收到电子定单或其他定单确认文件的时间 Order confirmation time
                     </div>
                     <div class="col-xs-6">
-                        ��Ч�ڣ���ͬ��Ҫ����깤���ڣ�End Time
+                        有效期（合同中要求的完工日期）End Time
                     </div>
                     <div class="col-xs-6">
-	                    <textarea readonly class="form-control" rows="3" name="receiveMailTime" id="receiveMailTime" th:text="${apply?.receiveMailTime}"></textarea>
+	                    <textarea class="form-control" rows="3" name="receiveMailTime" id="receiveMailTime"></textarea>
                     </div>
                     <div class="col-xs-6">
-                    	<textarea readonly class="form-control" rows="3" name="contractTime" id="contractTime" th:text="${apply?.contractTime}"></textarea>
+                    	<textarea class="form-control" rows="3" name="contractTime" id="contractTime"></textarea>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 3px;">
                     <div class="col-xs-6">
-                        Ԥ�ƺ�ͬԭ����Ԥ�����ʱ�� Arrival time of advance payment
+                        预计合同原件、预付款到达时间 Arrival time of advance payment
                     </div>
                     <div class="col-xs-6">
-                        ��ע Remark
+                        备注 Remark
                     </div>
                     <div class="col-xs-6" style="margin-top: 0px;">
-                    	<textarea readonly class="form-control" rows="3" name="payAdvancePaymentTime" id="payAdvancePaymentTime" th:text="${apply?.payAdvancePaymentTime}"></textarea>
+                    	<textarea class="form-control" rows="3" name="payAdvancePaymentTime" id="payAdvancePaymentTime"></textarea>
                     </div>
                     <div class="col-xs-6">
-                        <textarea readonly class="form-control" rows="3" name="remark" id="remark" th:text="${apply?.remark}"></textarea>
+                        <textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 2px;">
-                    <div class="col-xs-6 col-md-12">
-                        ���� Attachment file
+                    <div class="row" style="margin-top: 2px;">
+                        <div class="col-xs-6 col-md-12">
+                            附件上传 Attachment upload
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <input id="file_data" name="file_data" type="file" class="file" data-show-preview="false" accept=".doc,.docx,.txt" style="margin-top: 10px;">
+                        </div>
                     </div>
-                     <div class="col-xs-6 col-md-12">
-	                       <span th:text="${apply?.enclosureName}"></span>
-	                    </div>
-                </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table id="fileList" data-pagination="false"  class="table table-hover"></table>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+
                 <div class="row">
                     <div class="col-xs-6"></div>
                     <div class="col-xs-6">
-	                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 15px;" id="btn_back">���� back</button>
-	                    </div>
+                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 15px;" id="btn_back">返回 back</button>
+                        <button type="button" class="submit btn btn-primary pull-right btn_submit" id="btn_submit">提交 submit</button>
+                    </div>
                 </div>
                 </form>
             </div>
         </div>
-    </div>	           
+    </div>
 	</div>
 </div>
 <script src="../js/classie.js"></script>
@@ -154,21 +263,68 @@
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
-		
+
 	showLeftPush.onclick = function() {
 		classie.toggle( this, 'active' );
 		classie.toggle( body, 'cbp-spmenu-push-toright' );
 		classie.toggle( menuLeft, 'cbp-spmenu-open' );
 		disableOther( 'showLeftPush' );
 	};
-	
 
 	function disableOther( button ) {
 		if( button !== 'showLeftPush' ) {
 			classie.toggle( showLeftPush, 'disabled' );
 		}
 	}
-</script>	
+
+    initUpload("file_data",  ctxPath+"order/upload");
+    function initUpload(ctrlName, uploadUrl) {
+        var control = $('#' + ctrlName);
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            uploadAsync: true, //默认异步上传
+            showCaption: true,//是否显示标题
+            showUpload: true, //是否显示上传按钮
+            browseClass: "btn btn-primary", //按钮样式
+            allowedFileExtensions: ["doc", "docx","txt"], //接收的文件后缀
+            maxFileCount: 10,//最大上传文件数限制
+            previewFileIcon: '<i class="glyphicon glyphicon-file"></i>',
+            showPreview: true, //是否显示预览
+            previewFileIconSettings: {
+                'doc': '<i ass="fa fa-file-word-o text-primary"></i>',
+                'txt': '<i ass="fa fa-file-word-o text-primary"></i>',
+                'docx': '<i ass="fa fa-file-word-o text-primary"></i>',
+                'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
+                'xls': '<i class="fa fa-file-excel-o text-success"></i>',
+                'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
+                'pdf': '<i class="fa fa-file-archive-o text-muted"></i>',
+                'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+            },
+            uploadExtraData: function () {
+                var extraValue = "test";
+                return {"excelType": extraValue};
+            }
+        });
+    }
+    $("#file_data").on("fileuploaded", function (event, data, previewId, index) {
+        console.log(data);
+        if(data.response.status === 'ok')
+        {
+            toastr.success(data.files[index].name + "上传成功!");
+            $(".close").click();
+        }
+        else{
+            toastr.warning(data.files[index].name + "上传失败!" + data.response.message);
+            //重置
+            $("#file_data").fileinput("clear");
+            $("#file_data").fileinput("reset");
+            $('#file_data').fileinput('refresh');
+            $('#file_data').fileinput('enable');
+        }
+    });
+</script>
 <!--scrolling js-->
 <script src="../js/jquery.nicescroll.js"></script>
 <script src="../js/scripts.js"></script>
@@ -176,7 +332,7 @@
 <script src='../js/SidebarNav.min.js' type='text/javascript'></script>
 <script>
      $('.sidebar-menu').SidebarNav()
-   </script>	
+   </script>
 <script src="../js/SimpleChart.js"></script>
 <script src="../js/bootstrap.js"> </script>
 </body>

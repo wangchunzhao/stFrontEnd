@@ -56,17 +56,37 @@
 <link href="./assets/bootstrap.css" rel="stylesheet" th:href="@{/assets/bootstrap.css}">
 <link  href="./assets/vendor/toastr/toastr.min.css" rel="stylesheet" th:href="@{/assets/vendor/toastr/toastr.min.css}"/>
 <script src="./assets/vendor/toastr/toastr.min.js" th:src="@{/assets/vendor/toastr/toastr.min.js}"></script>
+
 <!--导入excel控件 -->
 <link rel="stylesheet" href="../bootstrap-fileinput-master/css/fileinput.min.css"/>
-<script src="../bootstrap-fileinput-master/js/fileinput.min.js"></script>
-<script src="../bootstrap-fileinput-master/js/locales/zh.js"></script>
 
+<script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
+<script src="./pageJs/orderCommonFuc.js" th:src="@{/pageJs/orderCommonFuc.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
 	var ctxPath  = [[@{/}]];
-
-    var uploadList = []
 	$(function(){
+        //文件列表初始化
+        var fileListTable = new TableInit('fileList','','',fileListColumnsByXujiamao)
+        fileListTable.init();
+
+        //订单文件上传成功处理方法
+        $("#file_data").on("fileuploaded", function(event, data, previewId, index) {
+            var attachment = data.response.data;
+            console.log(attachment)
+            $("#fileList").bootstrapTable('insertRow', {
+                index: attachment.fileUrl,
+                row: {
+                    type:'fileList',
+                    index:attachment.fileUrl,
+                    fileName:attachment.fileName,
+                    fileUrl:attachment.fileUrl
+                }
+            });
+            //清空文件选择框
+            $(".file-caption-name").val('');
+        });
+
 		$("#btn_submit").on("click",function(e){
 			e.preventDefault();
 			  var receiveMailTime=$(".form #receiveMailTime").val();
@@ -80,7 +100,7 @@
                   contractTime: contractTime,
                   payAdvancePaymentTime: payAdvancePaymentTime,
                   remark: remark,
-                  attachments: uploadList
+                  attachments: $("#fileList").bootstrapTable('getData')
 				}
 			$.ajax({
 				type:"post",
@@ -189,21 +209,28 @@
                 </form> 
                 
                 <div class="row" style="margin-top: 2px;">
-	                    <div class="col-xs-6 col-md-12">
-	                        附件上传 Attachment upload
-	                    </div>
-                     <div class="col-xs-6 col-md-6">
-							<input id="file_data" name="file_data" type="file" class="file" data-show-preview="false" multiple accept=".doc,.docx,.txt" style="margin-top: 10px;">
-	                    </div>
+                    <div class="col-xs-6 col-md-12">
+                        附件上传 Attachment upload
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <input id="file_data" name="file_data" type="file" class="file" data-show-preview="false" accept=".doc,.docx,.txt" style="margin-top: 10px;">
+                    </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <table id="fileList" data-pagination="false"  class="table table-hover"></table>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+
                 <div class="row">
                     <div class="col-xs-6"></div>
                     <div class="col-xs-6">
-	                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 15px;" id="btn_back">返回 back</button>
-							<button type="button" class="submit btn btn-primary pull-right btn_submit" id="btn_submit">提交 submit</button>
-	                    </div>
+                        <button type="button" class="btn pull-right btn-warning" style="margin-left: 15px;" id="btn_back">返回 back</button>
+                        <button type="button" class="submit btn btn-primary pull-right btn_submit" id="btn_submit">提交 submit</button>
+                    </div>
                 </div>
-                
             </div>
         </div>
 	</div>
@@ -265,10 +292,6 @@
         if(data.response.status === 'ok')
         {
 	    	toastr.success(data.files[index].name + "上传成功!");
-            uploadList.push({
-                fileName: data.response.data.fileName,
-                file_url: data.response.data.fileUrl
-            })
             $(".close").click();
         }
         else{

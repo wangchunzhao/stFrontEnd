@@ -206,27 +206,10 @@ function handleApplyAndUpdateClick(index) {
 	let row = $('#mytab').bootstrapTable('getData')[index];
 	let id = row.id
 	if (id) {
-		alert('修改')
-		// $.ajax({
-		// 	url: ctxPath + "contract/" + id,
-		// 	// data: '',
-		// 	type: "GET",
-		// 	contentType: "application/json;charset=UTF-8",
-		// 	// dataType: "json",
-		// 	success: function(data) {
-		// 		checkLogout(data);
-		// 		if(data == null || data.status != 'ok'){
-		// 			layer.alert("查询合同信息失败！" + (data != null ? data.msg : ""));
-		// 		}else{
-		// 			// console.log(data.data)
-		// 			contract = data.data;
-		// 			contract.isedit = true;
-		// 			// setEditInfo(row, contract);
-		// 			showEditModal(contract);
-		// 		}
-		// 	}
-		// });
+		//修改
+		window.location.href = ctxPath + "menu/showApply?row=" + encodeURIComponent(JSON.stringify(row));
 	} else {
+		//申请
 		window.location.href = ctxPath + "menu/specialApply?sequenceNumber="
 			+ row['sequenceNumber'] + "&customerCode="
 			+ row['customerCode'] + "&orderInfoId="
