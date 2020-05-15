@@ -179,7 +179,7 @@ function operation(value, row, index) {
 		htm += '<button onclick="handleApplyAndUpdateClick(' + index + ')">特批申请</button>'
 	} else if (row.applyStatus !== 1 || row.status === 1) {
 		htm += '<button onclick="handleApplyAndUpdateClick(' + index + ')">修改</button>'
-		htm += '<button onclick="handleSubmitClick(' + index + ')">提交</button>'
+		// htm += '<button onclick="handleSubmitClick(' + index + ')">提交</button>'
 	}
 	return htm;
 	// var apply_opt_id="opt_"+row.kOrderId;
