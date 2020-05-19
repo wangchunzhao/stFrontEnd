@@ -938,6 +938,8 @@ function itemCategoryChange(obj){
 	if(category=='ZHD4'||category=='ZHD3'||category=='ZHT3'||category=='ZHT6'){
 		$("#originalActualPrice").val(0.00);
 		$("#originalActualPrice").trigger("oninput");
+		$("#b2cEstimatedPrice").val(0.00);
+		$("#b2cEstimatedPrice").trigger("oninput");
 	}else{
 		//零售价
 		var retailPrice = $("#retailPrice").val();
