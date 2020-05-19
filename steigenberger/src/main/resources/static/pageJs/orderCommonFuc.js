@@ -318,7 +318,10 @@ function openSearchCustomer(){
 		$("#customerCode").val(row.code);
 		$("#customerName").val(row.name).change();
 		$("#customerClazzName").val(row.clazzName);
-		$("#customerIndustryCode").val(row.industryCode);
+		$("#customerIndustry").val(row.industryCode);
+		$("#customerIndustryName").val(row.industryName);
+		$("#customerIndustryCode").val(row.industryCodeCode);
+		$("#customerIndustryCodeName").val(row.industryCodeName);
 	})
 }
 
@@ -811,7 +814,7 @@ function getItemCategory(configure,data){
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHT1'>标准</option><option value='ZHT3'>免费</option><option value='ZHR1'>退货</option></select>");	
 		}else{
 			if(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X'){
-				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHT2'>标准</option><option value='ZHT6'>免费</option><option value='ZHR2'>退货</option></select>");
+				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHT2'>标准</option><option value='ZHT6'>免费</option><option value='ZHR2'>退货</option></select>");
 			}else{
 				if(code=='BG1GD1000000-X'||code=='BG1R8R00000-X'){
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH99'>")
@@ -827,7 +830,7 @@ function getItemCategory(configure,data){
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
 		}else{
 			if(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X'){
-				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
+				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
 			}else{
 				if(code=='BG1GD1000000-X'){
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")

@@ -89,17 +89,13 @@
 					    </div>
 				    	<span class="col-md-1  control-label">是否改造店</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:if="${orderType!=5}" th:field="*{isReformed}">
-								<option value="1" class="">是</option>
-								<option value="0" class="">否</option>
-							</select>
-							<select class="form-control" readonly disabled th:if="${orderType==5}" th:field="*{isReformed}">
+					      <select class="form-control" th:field="*{isReformed}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType!=4 && orderType!=5}">终端客户性质</span>
-						<div class="col-md-2" th:if="${orderType!=4 && orderType!=5}">
+						<span class="col-md-1 control-label" th:if="${orderType!=4 && orderType!=5&&orderType!=3}">终端客户性质</span>
+						<div class="col-md-2" th:if="${orderType!=4 && orderType!=5&&orderType!=3}">
 					      <select class="form-control" id="industryCode"  th:field="*{terminalType}">
 								<option value="0001">MNC（国际连锁）</option>
 								<option value="0002">Local top 100-国内连锁百强</option>
@@ -113,37 +109,29 @@
 								<option value="0" class="">否</option>
 							</select>
 						</div>
-					    <input type="hidden" id="customerIndustryName" th:field="*{customerIndustryName}">
 					</div>
 					<div class="row" style="margin-top: 15px;">
 						<span class="col-md-1 control-label">是否便利店</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:if="${orderType!=5}" th:field="*{isConvenientStore}">
-								<option value="1" class="">是</option>
-								<option value="0" class="">否</option>
-							</select>
-							<select class="form-control" readonly disabled th:if="${orderType==5}" th:field="*{isConvenientStore}">
+					      <select class="form-control" th:field="*{isConvenientStore}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
 					    <span class="col-md-1 control-label">是否新客户</span>
 						<div class="col-md-2">
-					      <select class="form-control" th:if="${orderType!=5}" th:field="*{isNew}">
-								<option value="1" class="">是</option>
-								<option value="0" class="">否</option>
-							</select>
-							<select class="form-control" readonly disabled th:if="${orderType==5}" th:field="*{isNew}">
+					      <select class="form-control" th:field="*{isNew}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType==4}">隶属关系</span>
-						<div class="col-md-2" th:if="${orderType==4}">
+						<span class="col-md-1 control-label" th:if="${orderType==4||orderType==3}">隶属关系</span>
+						<div class="col-md-2" th:if="${orderType==4||orderType==3}">
 							<input type="text" class="form-control" id="customerIndustryName" readonly th:field="*{customerIndustryName}">
+							<input type="hidden" th:field="*{customerIndustry}">
 						</div>
-						<span class="col-md-1 control-label" th:if="${orderType==4}">客户分类</span>
-						<div class="col-md-2" th:if="${orderType==4}">
+						<span class="col-md-1 control-label" th:if="${orderType==4||orderType==3}">客户分类</span>
+						<div class="col-md-2" th:if="${orderType==4||orderType==3}">
 							<input type="text" class="form-control" id="customerIndustryCodeName" readonly th:field="*{customerIndustryCodeName}">
 						</div>
 					</div>
