@@ -20,10 +20,6 @@ public class SpecialDeliveryQuery {
 
 	public String createTime;
 
-	public String ownerDomainId;
-
-	private String ownerName;
-
 	private String salesTel;
 
 	private String contractorCode;
@@ -34,8 +30,6 @@ public class SpecialDeliveryQuery {
 
 	private String contractorClassName;
 
-	private String officeCode;
-
 	public Integer kOrderVersionId;
 
 	public Double distcount;
@@ -43,6 +37,26 @@ public class SpecialDeliveryQuery {
 	public String startTime;
 
 	public String endTime;
+
+    /**
+     * 合同号
+     */
+    public String contractNumber;
+
+    /**
+     * 签约单位
+     */
+    public String customerName;
+
+    /**
+     * 客户经理
+     */
+    public String salesName;
+    
+    /**
+     * 区域
+     */
+    private String officeCode;
 
 	public int getPageNo() {
 		return pageNo;
@@ -98,22 +112,6 @@ public class SpecialDeliveryQuery {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
-	}
-
-	public String getOwnerDomainId() {
-		return ownerDomainId;
-	}
-
-	public void setOwnerDomainId(String ownerDomainId) {
-		this.ownerDomainId = ownerDomainId;
-	}
-
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
 	}
 
 	public String getSalesTel() {

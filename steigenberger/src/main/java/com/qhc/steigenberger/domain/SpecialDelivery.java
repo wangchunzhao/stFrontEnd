@@ -30,8 +30,9 @@ public class SpecialDelivery {
 
 	/* 申请单状态 
 	 * 0: 新建
-	 * 1：同意
-	 * 2：驳回 */
+	 * 1：提交bpm
+	 * 2：同意
+	 * 3：驳回 */
 	private Integer applyStatus = null;
 
 	/* 收到电子订单或其他订单确认文件的时间 */
@@ -53,6 +54,7 @@ public class SpecialDelivery {
 	private String enclosureName = null;
 
 	/* 订单信息 */
+	private String orderStatus;
 	private String sequenceNumber;
     private String contractNumber;
     private String customerClazz;
@@ -185,7 +187,15 @@ public class SpecialDelivery {
 		this.enclosureName = enclosureName;
 	}
 
-	public String getSequenceNumber() {
+	public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getSequenceNumber() {
 		return sequenceNumber;
 	}
 
