@@ -30,8 +30,6 @@ public class SpecialDeliveryQuery {
 
 	private String contractorClassName;
 
-	public Integer kOrderVersionId;
-
 	public Double distcount;
 
 	public String startTime;
@@ -165,14 +163,6 @@ public class SpecialDeliveryQuery {
 
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
-	}
-
-	public Integer getkOrderVersionId() {
-		return kOrderVersionId;
-	}
-
-	public void setkOrderVersionId(Integer kOrderVersionId) {
-		this.kOrderVersionId = kOrderVersionId;
 	}
 
 	public Double getDistcount() {
