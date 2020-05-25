@@ -51,6 +51,11 @@ public class SpecialDeliveryQuery {
     /**
      * 客户经理
      */
+    public String salesCode;
+
+    /**
+     * 客户经理
+     */
     public String salesName;
     
     /**
@@ -193,5 +198,37 @@ public class SpecialDeliveryQuery {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getSalesCode() {
+        return salesCode;
+    }
+
+    public String getSalesName() {
+        return salesName;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setSalesCode(String salesCode) {
+        this.salesCode = salesCode;
+    }
+
+    public void setSalesName(String salesName) {
+        this.salesName = salesName;
+    }
 
 }

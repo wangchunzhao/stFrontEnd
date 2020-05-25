@@ -61,7 +61,7 @@ public class SpecialDeliveryController extends BaseController {
         query.setOfficeCode(user.getOfficeCode());
         break;
       } else {
-        query.setOwnerDomainId(user.id + "");
+        query.setSalesCode(user.getUserIdentity());
       }
     }
 
