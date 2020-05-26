@@ -110,7 +110,8 @@ $(function () {
 	defaultCollapse();
 	getUserDetail();
 	if(status==null||status==""||status=="undefined"){
-		$('#shippDate').datepicker({ startDate: new Date() });		
+		$('#shippDate').datepicker({ startDate: new Date() });	
+		$('#warranty').val(1);
 	}else{
 		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		initDropDownList();

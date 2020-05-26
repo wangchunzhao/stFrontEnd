@@ -1070,7 +1070,7 @@ function amountChange(){
 	$("#actualAmount").val(actualAmount);
 	
 	//产品转移金额
-	var transactionPriceAmount = toDecimal2(amount*(parseFloat($("#originalTransactionPrice").val())));
+	var transactionPriceAmount = toDecimal2(amount*(parseFloat($("#originalTransationPrice").val())));
 	$("#transactionPriceAmount").val(transactionPriceAmount);
 	
 	//可选项实卖金额
@@ -1235,6 +1235,8 @@ function getB2CCostAmount(obj){
 	
 	//B2C成本
 	var b2cCost = $(obj).val()?$(obj).val():parseFloat(0.00);
+	var b2cEstimatedCostAmount =toDecimal2( amount*parseFloat(b2cCost));
+	$("#b2cEstimatedCostAmount").val(b2cEstimatedCostAmount);
 	//B2C成本凭证货币
 	var originalB2cCost = toDecimal2(parseFloat(b2cCost)/parseFloat(exchangeRate))
 	
@@ -2182,6 +2184,7 @@ function calPrice(tableData){
 	var b2cEstimatedCost = tableData.b2cEstimatedCost;
 	//B2C预估成本凭证货币
 	var originalB2cEstimatedCost = toDecimal2(parseFloat(b2cEstimatedCost)/parseFloat(exchangeRate));
+	var b2cEstimatedCostAmount = toDecimal2(quantity*parseFloat(b2cEstimatedCost))
 	//转移价单价小计
 	var transactionPriceSum = toDecimal2(parseFloat(originalTransationPrice)+parseFloat(originalOptionalTransationPrice)+parseFloat(originalB2cEstimatedCost));	
 	var transactionAmountSum = toDecimal2(quantity*parseFloat(transactionPriceSum))
@@ -2196,6 +2199,8 @@ function calPrice(tableData){
 	tableData.optionalActualPrice = originalOptionalActualPrice;
 	tableData.transactionPriceSum = transactionPriceSum;
 	tableData.originalOptionalActualPrice = originalOptionalActualPrice;
+	tableData.b2cEstimatedCostAmount = b2cEstimatedCostAmount;
+	tableData.b2cEstimatedAmountCny = b2cEstimatedAmountCny;
 	
 	tableData.originalActualPrice = originalActualPrice;
 	

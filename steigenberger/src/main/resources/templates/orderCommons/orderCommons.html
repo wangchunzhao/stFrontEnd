@@ -256,8 +256,11 @@
 					    </div>
 					    <input type="hidden" id="groupCode" th:value="*{groupCode}">
 					    <span class="col-md-1 control-label">保修年限(年)</span>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="warrenty" value="1" aria-describedby="emailHelp" name="warranty">
+						<div class="col-md-2" th:if="${orderType==1||orderType==2||orderType==5}">
+							<input type="text" class="form-control" id="warrenty" value="1" readonly name="warranty">
+					    </div>
+					    <div class="col-md-2" th:if="${orderType==3||orderType==4}">
+							<input type="text" class="form-control" id="warrenty" aria-describedby="emailHelp"  th:field="*{warranty}">
 					    </div>
 					    <span class="col-md-1 control-label">安装方式</span>
 						<div class="col-md-2">

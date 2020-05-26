@@ -111,6 +111,7 @@ $(function () {
 	getUserDetail();
 	if(status==null||status==""||status=="undefined"){
 		$('#shippDate').datepicker({ startDate: new Date() });
+		$('#warrenty').val(1);
 	}else{
 		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
 		fillOrderAddress();

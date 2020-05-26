@@ -14,6 +14,7 @@ $(function () {
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();
+    InitSapSalesOffice();
     
 });
 
@@ -47,7 +48,11 @@ var TableInit = function () {
 		
 			        sequenceNumber:$('#sequenceNumber').val(),
 			        createTime1:$('#createTime1').val(),
-			        orderTypeCode:$('#orderTypeCode').val()
+			        orderTypeCode:$('#orderTypeCode').val(),
+			        contractNumber:$('#contractNumber').val(),
+			        customerName:$("#customerName").val(),
+			        salesName:$("#salesName").val(),
+			        officeCode:$("#officeCode").val()
 			    };
 			    return temp;
 			},
@@ -124,6 +129,23 @@ var TableInit = function () {
 			};
 		return oTableInit;
 };
+
+function InitSapSalesOffice(){
+	$.post(ctxPath+'permission/sapSalesOfficelist',null,function(ret){
+		if(ret.status==200){
+			for(var i in ret.data){
+				var item = ret.data[i];
+				$('#officeCode').append(BuildAreaOption(item.name,item.code));
+			}
+		}else{
+			alert('角色列表请求错误！')
+		}
+	},'json');
+}
+
+function BuildAreaOption(name,code){
+	return "<option value='"+code+"'>"+name+"</option>";
+}
 
 function changeDateFormatter(cellval){
 	var date = new Date();
