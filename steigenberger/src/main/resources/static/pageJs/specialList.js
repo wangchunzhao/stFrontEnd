@@ -70,6 +70,13 @@ var TableInit = function () {
 				// formatter : formatTrue,
 				sortable : true
 			},{
+				title : '订单状态 Status',
+				field : 'status',
+				sortable : true,
+				formatter:function (value, row, index) {
+					return changeStatusFormatter(value);
+				}
+			},{
 				title : '创建日期 Creation Time',
 				field : 'createTime',
 				sortable : true,
@@ -150,6 +157,20 @@ function BuildAreaOption(name,code){
 function changeDateFormatter(cellval){
 	var date = new Date();
 	return  date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+}
+
+function changeStatusFormatter(val){
+	switch (val) {
+		case '05':
+			return '支持经理提交到BPM，待BPM审批';
+		case '06':
+			return '订单变更BPM审批通过';
+		case '09':
+			return '已下推SAP';
+		default:
+			return '不支持该状态'
+	}
+	return val;
 }
 
 function changeStatus(rowid,value,name){
