@@ -25,7 +25,7 @@ var TableInit = function () {
 			method : 'get',
 			url : ctxPath+"specialdelivery",//请求路径
 			responseHandler: function (res) {
-				return res.data
+				return res.data.rows !== undefined ? res.data : {total: res.data.total, rows: []}
 			},
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
@@ -45,14 +45,14 @@ var TableInit = function () {
 			        pageSize : params.limit, // 每页显示数量
 			        offset : params.offset, // SQL语句起始索引
 			        pageNo: (params.offset / params.limit) + 1,   //当前页码
-		
-			        sequenceNumber:$('#sequenceNumber').val(),
-			        createTime1:$('#createTime1').val(),
-			        orderTypeCode:$('#orderTypeCode').val(),
-			        contractNumber:$('#contractNumber').val(),
-			        customerName:$("#customerName").val(),
-			        salesName:$("#salesName").val(),
-			        officeCode:$("#officeCode").val()
+
+					sequenceNumber:$('#sequenceNumber').val(),
+					createTime:$('#createTime1').val(),
+					orderStatus:$('#orderTypeCode').val(),
+					contractNumber:$('#contractNumber').val(),
+					customerName:$("#customerName").val(),
+					salesName:$("#salesName").val(),
+					officeCode:$("#officeCode").val()
 			    };
 			    return temp;
 			},
@@ -278,7 +278,11 @@ $('#search_btn').click(function() {
 $('#reset_btn').click(function() {
 	$("#sequenceNumber").val("");
 	$("#createTime1").val("");
-	$("#orderTypeCode").val("-1");
+	$("#orderTypeCode").val("");
+	$("#contractNumber").val("");
+	$("#customerName").val("");
+	$("#salesName").val("");
+	$("#officeCode").val("");
 })
 
 
