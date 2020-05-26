@@ -49,21 +49,21 @@ public class SpecialDeliveryController extends BaseController {
       query.setStartTime(startTime);
       query.setEndTime(endTime);
     }
-    User user = getAccount();
-    List<Operations> userOperationInfoList = super.getPermissions();
-
-    for (int i = 0; i < userOperationInfoList.size(); i++) {
-      String operationName = userOperationInfoList.get(i).getName();
-      // String operationName = "全部";
-      if (operationName.equals(allorder)) {
-        break;
-      } else if (operationName.equals(benqu)) {
-        query.setOfficeCode(user.getOfficeCode());
-        break;
-      } else {
-        query.setSalesCode(user.getUserIdentity());
-      }
-    }
+//    User user = getAccount();
+//    List<Operations> userOperationInfoList = super.getPermissions();
+//
+//    for (int i = 0; i < userOperationInfoList.size(); i++) {
+//      String operationName = userOperationInfoList.get(i).getName();
+//      // String operationName = "全部";
+//      if (operationName.equals(allorder)) {
+//        break;
+//      } else if (operationName.equals(benqu)) {
+//        query.setOfficeCode(user.getOfficeCode());
+//        break;
+//      } else {
+//        query.setSalesCode(user.getUserIdentity());
+//      }
+//    }
 
     Result result = null;
     try {
@@ -71,8 +71,7 @@ public class SpecialDeliveryController extends BaseController {
       try {
         Map params = new ObjectMapper().convertValue(query, Map.class);
         params.put("list", "list");
-        result = specialDeliveryService.findSpecialDelivery(query.getPageNo(), query.getPageSize(),
-            params);
+        result = specialDeliveryService.findSpecialDelivery(params);
       } catch (Throwable e) {
         e.printStackTrace();
       }
@@ -91,8 +90,10 @@ public class SpecialDeliveryController extends BaseController {
     // 查询当前页实体对象
     try {
       Map<String, Object> params = new HashMap<String, Object>();
+      params.put("pageNo", 1);
+      params.put("pageSize", 1000);
       params.put("orderInfoId", orderInfoId);
-      result = specialDeliveryService.findSpecialDelivery(0, 1000, params);
+      result = specialDeliveryService.findSpecialDelivery(params);
       Map data = (Map) result.getData();
       if (result.getStatus().equals("ok")) {
         Object rows = data.get("rows");
