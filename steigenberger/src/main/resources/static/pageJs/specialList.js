@@ -42,9 +42,9 @@ var TableInit = function () {
 			showRefresh : false,//刷新按钮
 			queryParams : function (params) {
 			    var temp = {
-			        limit : params.limit, // 每页显示数量
+			        pageSize : params.limit, // 每页显示数量
 			        offset : params.offset, // SQL语句起始索引
-			        page: (params.offset / params.limit) + 1,   //当前页码
+			        pageNo: (params.offset / params.limit) + 1,   //当前页码
 		
 			        sequenceNumber:$('#sequenceNumber').val(),
 			        createTime1:$('#createTime1').val(),
@@ -197,11 +197,12 @@ function formatTrue(value, row, index) {
 //操作
 function operation(value, row, index) {
 	var htm = ''
-	if (row.id === undefined) {
-		htm += '<button onclick="handleApplyAndUpdateClick(' + index + ')">特批申请</button>'
-	} else if (row.applyStatus !== 1 || row.status === 1) {
-		htm += '<button onclick="handleApplyAndUpdateClick(' + index + ')">修改</button>'
-		// htm += '<button onclick="handleSubmitClick(' + index + ')">提交</button>'
+	if (row.applyStatus === 1) {
+		htm += '<button onclick="handleApplyAndUpdateAndDetailClick(' + index + ',1)">查看</button>'
+	} else if (row.applyStatus === 0 || row.status === 3) {
+		htm += '<button onclick="handleApplyAndUpdateAndDetailClick(' + index + ',2)">修改</button>'
+	} else if (row.applyStatus === 2 || row.applyStatus === undefined) {
+		htm += '<button onclick="handleApplyAndUpdateAndDetailClick(' + index + ',3)">特批申请</button>'
 	}
 	return htm;
 	// var apply_opt_id="opt_"+row.kOrderId;
@@ -224,14 +225,16 @@ function toShow(){
 	window.location.href=ctxPath+"special/toShow?applyId="+applyId;
 }
 
-function handleApplyAndUpdateClick(index) {
+function handleApplyAndUpdateAndDetailClick(index, flag) {
 	let row = $('#mytab').bootstrapTable('getData')[index];
 	let id = row.id
-	if (id) {
-		//修改
+	if (flag === 1) {
+		// 查看
+	} else if (flag === 2) {
+		// 修改
 		window.location.href = ctxPath + "menu/showApply?row=" + encodeURIComponent(JSON.stringify(row));
-	} else {
-		//申请
+	} else if (flag === 3) {
+		// 特批申请
 		window.location.href = ctxPath + "menu/specialApply?sequenceNumber="
 			+ row['sequenceNumber'] + "&customerCode="
 			+ row['customerCode'] + "&orderInfoId="
