@@ -203,34 +203,34 @@
         <div id="collapseTwo-magical-coder-auto-id-1565240802789" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;">
 				<form class="layui-form form" enctype="multipart/form-data" method="post" >
-                <div class="row">
-                    <div class="col-xs-6">
-                        收到电子定单或其他定单确认文件的时间 Order confirmation time
+                    <div class="row">
+                        <div class="col-xs-6">
+                            收到电子定单或其他定单确认文件的时间 Order confirmation time
+                        </div>
+                        <div class="col-xs-6">
+                            有效期（合同中要求的完工日期）End Time
+                        </div>
+                        <div class="col-xs-6">
+                            <textarea class="form-control" rows="3" name="receiveMailTime" id="receiveMailTime"></textarea>
+                        </div>
+                        <div class="col-xs-6">
+                            <textarea class="form-control" rows="3" name="contractTime" id="contractTime"></textarea>
+                        </div>
                     </div>
-                    <div class="col-xs-6">
-                        有效期（合同中要求的完工日期）End Time
+                    <div class="row" style="margin-top: 3px;">
+                        <div class="col-xs-6">
+                            预计合同原件、预付款到达时间 Arrival time of advance payment
+                        </div>
+                        <div class="col-xs-6">
+                            备注 Remark
+                        </div>
+                        <div class="col-xs-6" style="margin-top: 0px;">
+                            <textarea class="form-control" rows="3" name="payAdvancePaymentTime" id="payAdvancePaymentTime"></textarea>
+                        </div>
+                        <div class="col-xs-6">
+                            <textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
+                        </div>
                     </div>
-                    <div class="col-xs-6">
-	                    <textarea class="form-control" rows="3" name="receiveMailTime" id="receiveMailTime"></textarea>
-                    </div>
-                    <div class="col-xs-6">
-                    	<textarea class="form-control" rows="3" name="contractTime" id="contractTime"></textarea>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 3px;">
-                    <div class="col-xs-6">
-                        预计合同原件、预付款到达时间 Arrival time of advance payment
-                    </div>
-                    <div class="col-xs-6">
-                        备注 Remark
-                    </div>
-                    <div class="col-xs-6" style="margin-top: 0px;">
-                    	<textarea class="form-control" rows="3" name="payAdvancePaymentTime" id="payAdvancePaymentTime"></textarea>
-                    </div>
-                    <div class="col-xs-6">
-                        <textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
-                    </div>
-                </div>
                     <div class="row" style="margin-top: 2px;">
                         <div class="col-xs-6 col-md-12">
                             附件上传 Attachment upload
@@ -239,14 +239,12 @@
                             <input id="file_data" name="file_data" type="file" class="file" data-show-preview="false" accept=".doc,.docx,.txt" style="margin-top: 10px;">
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <table id="fileList" data-pagination="false"  class="table table-hover"></table>
                         </div>
                         <div class="col-md-6"></div>
                     </div>
-
                 <div class="row">
                     <div class="col-xs-6"></div>
                     <div class="col-xs-6">

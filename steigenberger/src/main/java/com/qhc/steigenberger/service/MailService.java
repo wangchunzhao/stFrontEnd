@@ -1,16 +1,11 @@
 package com.qhc.steigenberger.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -30,17 +25,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.context.IContext;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-
 import com.qhc.steigenberger.domain.Mail;
 
 @Component
@@ -347,29 +335,14 @@ public class MailService {
 	 * @return
 	 */
 	public static String render(String templateName, String mode, Map<String, Object> variables) {
-//		TemplateEngine templateEngine = new TemplateEngine();
-//		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-//		templateResolver.setTemplateMode(mode);
-////		templateResolver.setPrefix("templates/");
-//		templateResolver.setPrefix("");
-//		templateResolver.setSuffix(".html");
-//		templateResolver.setCacheable(false);
-//		templateResolver.setCharacterEncoding("UTF-8");
-//		templateEngine.setTemplateResolver((ITemplateResolver) templateResolver);
-//		Context context = new Context();
-//		context.setVariables(variables);
-//		StringWriter stringWriter = new StringWriter();
-//		templateEngine.process(templateName, (IContext) context, stringWriter);
-//		return stringWriter.toString();
-		
-		try (InputStream in = "".getClass().getResourceAsStream(templateName)) {
+		try (InputStream in = MailService.class.getResourceAsStream(templateName)) {
 			byte[] data = new byte[5192];
 			int size = 0;
 			StringBuilder content = new StringBuilder(1024);
 			while ((size = in.read(data)) > 0) {
 				content.append(new String(data, "UTF-8"));
 			}
-			String h = content.toString();
+			String h = content.toString().trim();
 			for (Map.Entry<String, Object> e : variables.entrySet()) {
 				String k = "\\$\\{" + e.getKey() + "\\}";
 				String v = e.getValue() == null ? "" : e.getValue().toString();
