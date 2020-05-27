@@ -173,7 +173,6 @@ function getDefaultConfigs(materialCode,clazzCode){
 
 //修改查看订单时物料表格初始化
 function fillItemToTableRow(data){
-	debugger
 	var quantity = data.quantity;
 	var transactionPrice = toDecimal2(data.transactionPrice);
 	var optionalActualPrice = toDecimal2(data.optionalActualPrice);
@@ -931,7 +930,7 @@ function fillMaterailValue(data){
 		$("#actualPrice").val(toDecimal2(0));
 		$("#originalActualPrice").val(toDecimal2(0));
 		$("#originalActualPrice").trigger("oninput");
-		$("#b2cEstimatedPrice").attr("disabled",true);
+		//$("#b2cEstimatedPrice").attr("disabled",true);
 	}
 	$('#volumeCube').val(data.materialSize)	
 }
@@ -1347,7 +1346,7 @@ function editMaterials(editContent){
 	}
 	
 	if($("#stOrderType").val()=='5'){
-		$("#b2cEstimatedPrice").attr("disabled",true);
+		//$("#b2cEstimatedPrice").attr("disabled",true);
 	}
 	
 	//查看订单是禁用所有控件

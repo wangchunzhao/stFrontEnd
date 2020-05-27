@@ -59,7 +59,9 @@
 
 <!--导入excel控件 -->
 <link rel="stylesheet" href="../bootstrap-fileinput-master/css/fileinput.min.css"/>
-
+<style type="text/css">
+       .help-block {color:red;}
+</style>
 <script th:inline="javascript" th:src="@{/pageJs/commonJs.js}"></script>
 <script src="./pageJs/orderCommonFuc.js" th:src="@{/pageJs/orderCommonFuc.js}"></script>
 
@@ -69,7 +71,7 @@
         //文件列表初始化
         var fileListTable = new TableInit('fileList','','',fileListColumnsByXujiamao)
         fileListTable.init();
-
+        initSpecialFormValidator();
         //订单文件上传成功处理方法
         $("#file_data").on("fileuploaded", function(event, data, previewId, index) {
             var attachment = data.response.data;
@@ -88,6 +90,11 @@
         });
 
 		$("#btn_submit").on("click",function(e){
+			var bootstrapValidator = $("#specialForm").data('bootstrapValidator');
+		    bootstrapValidator.validate();
+		    if(!bootstrapValidator.isValid()){
+		    	return
+		    }
 			e.preventDefault();
 			  var receiveMailTime=$(".form #receiveMailTime").val();
 			  var contractTime=$(".form #contractTime").val();
@@ -127,6 +134,36 @@
              window.location.href = ctxPath + "menu/specialApplication";
 		 });
 	})
+	//确认购销明细校验
+function initSpecialFormValidator(){
+	 $('#specialForm').bootstrapValidator({
+	　　　　　　message: 'This value is not valid',
+	      	excluded: [':hidden', ':not(:visible)'],
+            fields: {
+            	receiveMailTime: {
+            		validators: {
+            			notEmpty: {
+            	            message: '数量不能为空'
+            	        }
+            	    }
+                 },
+                 contractTime: {
+                	 validators: {
+	                	 notEmpty: {
+	            	         message: '请选择物料'
+	            	     } 
+                	 }
+                 },
+                 payAdvancePaymentTime: {
+            		validators: {
+            			notEmpty: {
+	            	         message: '请选择物料'
+	            	     } 
+            	    }
+	             }   
+	          }
+	        });
+}
  </script>
 </head> 
 <body class="cbp-spmenu-push">
@@ -176,7 +213,7 @@
         </div>
         <div id="collapseTwo-magical-coder-auto-id-1565240802789" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;">
-				<form class="layui-form form">
+				<form class="layui-form form" id="specialForm">
 					<input type="hidden" id="kOrderVersionId" th:value="${kOrderVersionId}" />
 	                <div class="row">
 	                    <div class="col-xs-6">
