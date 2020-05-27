@@ -3339,6 +3339,38 @@ var fileListColumnsByXujiamao=[
 	}
 ]
 
+var fileListColumnsWithoutOperationByXujiamao=[
+	{
+		field: 'index',
+		title: '',
+		visible:false
+	},
+	{
+		field: 'id',
+		title: '',
+		visible:false
+	},
+	{
+		field: 'orderInfoId',
+		title: '',
+		visible:false
+	},
+	{
+		field: 'fileName',
+		title: '已上传文件名称',
+		width:'75%',
+		formatter: function(value, row, index) {
+			var actions = [];
+			actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+row.fileUrl + '\')">'+value+'</a>');
+			return actions.join('');
+		}
+	},{
+		field: 'fileUrl',
+		title: '文件路径',
+		visible:false
+	}
+]
+
 //规格型号查询column
 var materialTypeColumn = [ {
 	title : '专用号',

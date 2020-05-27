@@ -162,15 +162,14 @@ function changeDateFormatter(cellval){
 function changeStatusFormatter(val){
 	switch (val) {
 		case '05':
-			return '支持经理提交到BPM，待BPM审批';
+			return 'BPM审批通过';
 		case '06':
-			return '订单变更BPM审批通过';
+			return 'BPM审批通过';
 		case '09':
 			return '已下推SAP';
 		default:
 			return '不支持该状态'
 	}
-	return val;
 }
 
 function changeStatus(rowid,value,name){
@@ -251,6 +250,7 @@ function handleApplyAndUpdateAndDetailClick(index, flag) {
 	let id = row.id
 	if (flag === 1) {
 		// 查看
+		window.location.href = ctxPath + "menu/specialDetail?row=" + encodeURIComponent(JSON.stringify(row));
 	} else if (flag === 2) {
 		// 修改
 		window.location.href = ctxPath + "menu/showApply?row=" + encodeURIComponent(JSON.stringify(row));

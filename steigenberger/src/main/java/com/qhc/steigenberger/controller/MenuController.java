@@ -61,6 +61,11 @@ public class MenuController extends BaseController {
 		return "special/specialApply";
 	}
 
+	@RequestMapping("/specialDetail")
+	public String specialDetail() {
+		return "special/specialDetail";
+	}
+
 	@RequestMapping("/showApply")
 	public String showApply() {
 		return "special/showApply";
