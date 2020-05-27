@@ -250,7 +250,7 @@ public class MailService {
 			if (ccAddr != null) {
 				msg.setRecipients(Message.RecipientType.CC, ccAddr);
 			}
-			msg.setSubject(cleanHTMLTag(subject), "UTF-8");
+			msg.setSubject(subject, "UTF-8");
 			msg.setSentDate(new Date());
 			Multipart multipart = createMultipart(body, head, attachments);
 			if (multipart == null) {
