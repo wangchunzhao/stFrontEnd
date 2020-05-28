@@ -930,7 +930,7 @@ function fillMaterailValue(data){
 		$("#actualPrice").val(toDecimal2(0));
 		$("#originalActualPrice").val(toDecimal2(0));
 		$("#originalActualPrice").trigger("oninput");
-		//$("#b2cEstimatedPrice").attr("disabled",true);
+		$("#b2cEstimatedPrice").attr("disabled",true);
 	}
 	$('#volumeCube').val(data.materialSize)	
 }
@@ -1346,7 +1346,7 @@ function editMaterials(editContent){
 	}
 	
 	if($("#stOrderType").val()=='5'){
-		//$("#b2cEstimatedPrice").attr("disabled",true);
+		$("#b2cEstimatedPrice").attr("disabled",true);
 	}
 	
 	//查看订单是禁用所有控件
@@ -1385,7 +1385,7 @@ function fillEditMaterailValue(data,index){
 		$("#isPurchased").val("外购");
 	}
 	$('#volumeCube').val(data.volumeCube)
-	$("#itemStatus").val(data.status);
+	$("#itemStatus").val(data.itemStatus);
 	$("#shippDate").val(data.shippDate)
 	$("#rowNumber").val(data.rowNum);
 	$("#materialTypeName").val(data.materialName);
@@ -1480,6 +1480,9 @@ function cacelMaterials(rowNumIndex){
 
 //点击确认购销明细
 function confirmMaterials(){
+	if($("#stOrderType").val()=='5'){
+		$('#subsidiaryForm').data('bootstrapValidator').enableFieldValidators('b2cEstimatedPrice',false)
+	}
 	var bootstrapValidator = $("#subsidiaryForm").data('bootstrapValidator');
     bootstrapValidator.validate();
     if(!bootstrapValidator.isValid()){
@@ -1841,8 +1844,11 @@ function restMaterialValidator(){
 
 //需求计划改变重置B2C预估价校验
 function onItemRequirementPlanChange(val){
-	$("#subsidiaryForm").bootstrapValidator('updateStatus', "b2cEstimatedPrice", 'NOT_VALIDATED')
-    .bootstrapValidator('validateField', "b2cEstimatedPrice");
+	if($("#stOrderType").val()!='5'){
+		$("#subsidiaryForm").bootstrapValidator('updateStatus', "b2cEstimatedPrice", 'NOT_VALIDATED')
+	    .bootstrapValidator('validateField', "b2cEstimatedPrice");
+	}
+	
 }
 
 
