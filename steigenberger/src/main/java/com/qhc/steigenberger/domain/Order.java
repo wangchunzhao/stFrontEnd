@@ -121,6 +121,7 @@ public class Order {
 	private String sequenceNumber;//流水号 code
 	private String contractNumber;//合同号 contract no
 	private String saleType;//销售类型 Sales type，10	内销/20	出口/30	冷库
+    private String taxCode;//税率 Code
 	private double taxRate;//税率 Rate
 	private String incoterm;//国际贸易条件code
 	private String incotermName;//国际贸易条件名称
@@ -567,7 +568,15 @@ public class Order {
 		this.saleType = saleType;
 	}
 
-	public double getTaxRate() {
+	public String getTaxCode() {
+        return taxCode;
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
+    public double getTaxRate() {
 		return taxRate;
 	}
 
