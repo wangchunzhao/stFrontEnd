@@ -65,9 +65,28 @@ var TableInit = function () {
 				field : 'customerName',
 				sortable : true
 			},{
+				title : '合同号 Contract Num',
+				field : 'contractNumber',
+				sortable : true
+			},{
+				title : '客户经理 Sales Name',
+				field : 'salesName',
+				sortable : true
+			},{
+				title : '区域 Office Code',
+				field : 'officeCode',
+				sortable : true
+			},{
 				title : '折扣 Discount',
 				field : 'discount',
 				// formatter : formatTrue,
+				sortable : true
+			},{
+				title : '申请状态 Apply Status',
+				field : 'applyStatus',
+				formatter : function (value, row, index) {
+					return changeApplyStatusFormatter(value);
+				},
 				sortable : true
 			},{
 				title : '订单状态 Status',
@@ -167,6 +186,19 @@ function changeStatusFormatter(val){
 			return 'BPM审批通过';
 		case '09':
 			return '已下推SAP';
+		default:
+			return '不支持该状态'
+	}
+}
+
+function changeApplyStatusFormatter(val) {
+	switch (val) {
+		case 0:
+			return '新建';
+		case 1:
+			return '同意';
+		case 2:
+			return '驳回';
 		default:
 			return '不支持该状态'
 	}
