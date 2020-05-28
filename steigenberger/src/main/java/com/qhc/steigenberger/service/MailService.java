@@ -340,7 +340,7 @@ public class MailService {
 			int size = 0;
 			StringBuilder content = new StringBuilder(1024);
 			while ((size = in.read(data)) > 0) {
-				content.append(new String(data, "UTF-8"));
+				content.append(new String(data, 0, size, "UTF-8"));
 			}
 			String h = content.toString().trim();
 			for (Map.Entry<String, Object> e : variables.entrySet()) {
