@@ -27,7 +27,7 @@ public class OrderOption {
 	private Map<String,Map<String,String>> offices;//Map<saleType key(code),Map<office code,office name>>
 	private Map<String,Map<String,String>> groups;//Map<office code,Map<group code,group name>>
 	//
-	private Map<String,Double> taxRate;//Map<saleType key(code),Map<taxRate name,rate>>
+	private Map<String, List<Map<String, Object>>> taxRate;//Map<saleType key(code),Map<taxRate name,rate>>
 	//
 	private Map<String,List<Currency>> exchangeRate;
 	//
@@ -141,11 +141,11 @@ public class OrderOption {
 	}
 
 	
-	public Map<String, Double> getTaxRate() {
+	public Map<String, List<Map<String, Object>>> getTaxRate() {
 		return taxRate;
 	}
 
-	public void setTaxRate(Map<String, Double> taxRate) {
+	public void setTaxRate(Map<String, List<Map<String, Object>>> taxRate) {
 		this.taxRate = taxRate;
 	}
 
