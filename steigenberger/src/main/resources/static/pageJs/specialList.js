@@ -73,15 +73,17 @@ var TableInit = function () {
 				field : 'salesName',
 				sortable : true
 			},{
-				title : '区域 Office Code',
-				field : 'officeCode',
+				title : '区域 Office Name',
+				field : 'officeName',
 				sortable : true
-			},{
-				title : '折扣 Discount',
-				field : 'discount',
-				// formatter : formatTrue,
-				sortable : true
-			},{
+			},
+			// 	{
+			// 	title : '折扣 Discount',
+			// 	field : 'discount',
+			// 	// formatter : formatTrue,
+			// 	sortable : true
+			// },
+				{
 				title : '申请状态 Apply Status',
 				field : 'applyStatus',
 				formatter : function (value, row, index) {
@@ -187,7 +189,7 @@ function changeStatusFormatter(val){
 		case '09':
 			return '已下推SAP';
 		default:
-			return '不支持该状态'
+			return val;
 	}
 }
 
@@ -200,7 +202,7 @@ function changeApplyStatusFormatter(val) {
 		case 2:
 			return '驳回';
 		default:
-			return '不支持该状态'
+			return '';
 	}
 }
 
