@@ -290,6 +290,7 @@ function fillAttachments(){
 
 function initDropDownList(){
 	$('#saleType').trigger("change");
+	$('#taxCode').val($("#taxCodeValue").val());
 	$('#currency').val($("#currencyName").val());
 	$('#currency').trigger("change");
 	$('#officeSelect').val($('#officeCode').val());
@@ -381,14 +382,23 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 	var saleType = $(obj).val();
 	getCurrency(saleType,exchangeRate);
 	getIncoterm(saleType);
-	$("#taxRate").html('');
-	if(taxRate&&saleType==20){
+	$("#taxCode").html('');
+	if(saleType==20){
+		var rate = taxRate[20];
+		$.each(rate,function(index,item){
+			$("#taxCode").append("<option value='"+item.code+"'>"+item.tax+"</option>");
+		});
+		
+	}else if(10){
 		var rate = taxRate[10];
-		$("#taxRate").append("<option value='0'>0</option>");
-		$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
+		$.each(rate,function(index,item){
+			$("#taxCode").append("<option value='"+item.code+"'>"+item.tax+"</option>");
+		});
 	}else{
 		var rate = taxRate[10];
-		$("#taxRate").append("<option value='"+rate+"'>"+rate+"</option>");
+		$.each(rate,function(index,item){
+			$("#taxCode").append("<option value='"+item.code+"'>"+item.tax+"</option>");
+		});
 	}
 	if(saleType=="20"){
 		$("#exchangeRate").val("");
@@ -2799,6 +2809,7 @@ function getSelectName() {
 	}
 	
 	$("#receiveTypeName").val($("#receiveType").find("option:selected").text());
+	$("#taxRate").val($("#taxCode").find("option:selected").text());
 }
 
 

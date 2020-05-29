@@ -169,9 +169,11 @@
 					    </div>
 					    <span class="col-md-1 control-label">税率</span>
 						<div class="col-md-2">
-							<select class="form-control"  id="taxRate"  th:field="*{taxRate}">
+							<select class="form-control"  id="taxCode"  th:field="*{taxCode}">
 							</select>
 						</div>
+						<input type="hidden" th:field="*{taxRate}">
+						<input type="hidden" id="taxCodeValue" th:value="*{taxCode}">
 					</div>
 					<div class="row" style="margin-top: 15px;">
 						<span class="col-md-1 control-label">合同金额（凭证货币）</span>
