@@ -18,7 +18,7 @@ function disableAll(){
 	  enableButton();
 }
 function sapOrderCheck(){
-	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'){
+	if($("#hasSendSap").val()=='true'){
 		$("#contractNumber").attr('readonly',true);
 		$("#saleType").attr('disabled',true);
 		$("#showCustomer").attr('disabled',true);
@@ -27,7 +27,7 @@ function sapOrderCheck(){
 }
 function getSapItemStatus(){
 	var contractNumber = $("#contractNumber").val();
-	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'){
+	if($("#hasSendSap").val()=='true'){
 		$.ajax({
 	        type: "get",
 	        url: ctxPath+"order/"+contractNumber+"/sapstatus",
@@ -1299,7 +1299,7 @@ function editMaterials(editContent){
 	var index = editContent.split('|')[1];
 	var rowNumber = editContent.split('|')[0]
 	var tableData =$('#materialsTable').bootstrapTable('getData')[index];	
-	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
+	if($("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
 		$.each(sapItemStatus,function(index,itemObject){
 			if(itemObject.rowNum==rowNumber){
 				var rejectCode = itemObject.rejectedCode;
@@ -1369,17 +1369,18 @@ function editMaterials(editContent){
 		  $("#configClose").attr("disabled",false);
 	}
 	var itemAmount = $("#amount").val();
-	if(orderOperationType=='4'&&$("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
+	if($("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
 		$.each(sapItemStatus,function(index,itemObject){
 			if(itemObject.rowNum==rowNumber&&itemObject.issuedQuantity==itemAmount){
 				 var form=$("#subsidiaryForm")[0];
 				  for(var i=0;i<form.length;i++){
 				    var element=form.elements[i];
 				    element.disabled=true;
-				  }
+				  }		  
 				  $("#configClose").attr("disabled",false);
 			}else{
 				$("#sapItemDeliveryAmount").val(itemObject.issuedQuantity);
+				  $("#itemCategory").attr("disabled",true);
 			}
 		});
 	}
@@ -1481,6 +1482,18 @@ function cacelMaterials(rowNumIndex){
 	var rowNum = rowNumIndex.split('|')[0];
 	var data = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
 	data.itemStatus ='Z2'
+	$("#materialsTable").bootstrapTable('updateRow', {
+	    index: index,
+	    row: data
+	});
+	getAllCountFiled();
+}
+
+function recoveryMaterials(rowNumIndex){
+	var index = rowNumIndex.split('|')[1];
+	var rowNum = rowNumIndex.split('|')[0];
+	var data = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
+	data.itemStatus ='10'
 	$("#materialsTable").bootstrapTable('updateRow', {
 	    index: index,
 	    row: data
@@ -2231,6 +2244,7 @@ function copyMaterials(rowNum){
 	var configsData = localStorage[rowNum];
 	var data = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
 	var rowData =JSON.parse(JSON.stringify(data));
+	rowData.itemStatus = '00';
 	var currentTableData= $('#materialsTable').bootstrapTable('getData')
 	var lastRowData = $('#materialsTable').bootstrapTable('getData')[currentTableData.length-1]
 	var newRowNum = parseInt(lastRowData.rowNum)+10; 
@@ -2922,6 +2936,7 @@ function viewGrossProfit(type){
 	var version = $("#version").val();
 	 $('#transferType').attr("disabled",false);
 	 $("#currency").attr("disabled",false);
+	 getSelectName(); 
 	 var orderData = $("#orderForm").serializeObject();
 	 if($("#saleType").val()=='20'){
 		 $('#transferType').attr("disabled",true);

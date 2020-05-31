@@ -5,8 +5,11 @@ var materialsColumn = [{
 	    	var actions = [];
 	    	if(row.itemStatus!='Z2'){
 	    		actions.push('<a class="btn"  id="materialsEdit" onclick="editMaterials(\'' +row.rowNum+'|'+index+ '\')"><i class="fa fa-edit"></i>编辑</a> ');
+	    		actions.push('<a class="btn viewDisable"  onclick="copyMaterials(\'' + row.rowNum + '\')"><i class="fa fa-copy"></i>复制</a>');
 	    	}
-	    	actions.push('<a class="btn viewDisable"  onclick="copyMaterials(\'' + row.rowNum + '\')"><i class="fa fa-copy"></i>复制</a>');
+	    	if(row.itemStatus=='Z2'){
+	    		actions.push('<a class="btn viewDisable"  onclick="recoveryMaterials(\'' +row.rowNum+'|'+index+ '\')"><i class="fa fa-edit"></i>恢复</a>');
+	    	}
 	    	actions.push('<a class="btn viewDisable"  onclick="insertMaterials(\'' +index+ '\')"><i class="fa fa-edit"></i>插入</a>');
 			if(row.itemStatus=='10'){
 				actions.push('<a class="btn viewDisable"  onclick="cacelMaterials(\'' + row.rowNum + '|'+index+ '\')"><i class="fa fa-edit"></i>取消</a>');
