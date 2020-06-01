@@ -81,7 +81,7 @@
 
                 <div class="row" style="margin-top: 2px;">
                 	<div class="col-md-3">
-						 需求号 Sequence Number
+						需求流水号 Demand Serial Number
 					</div>
 					<div class="col-md-3">
 						 需求创建日期 Creation time
@@ -104,6 +104,7 @@
 							<option value="">请选择</option>
                             <option value="05">订单审批通过</option>
                             <option value="06">订单更改审批通过</option>
+							<option value="09">已下推sap</option>
                         </select>
 					</div>
 					<div class="col-md-3">
@@ -120,6 +121,9 @@
 					<div class="col-md-3">
 						 区域
 					</div>
+					 <div class="col-md-3">
+						 申请状态
+					 </div>
 				</div>
 				<div class="row">
 					<div class="col-md-3">
@@ -133,20 +137,26 @@
                             <option value="">请选择</option>
                         </select>
 					</div>
+					<div class="col-md-3">
+						<select class="form-control" id="applyStatus">
+							<option value="">请选择</option>
+							<option value="0">新建</option>
+							<option value="1">同意</option>
+							<option value="2">驳回</option>
+						</select>
+					</div>
 				</div>
                 </div>
                  <div class="row" style="margin-top: 2px;">
                 	 <div class="col-xs-12 col-md-3">
-						<div class="btn-group">
+						<div class="btn-group" style="margin-left: 15px;">
 							<button type="button" class="btn btn-primary " id="search_btn">select</button>
 	                        <button type="button" class="btn btn-primary " id="reset_btn" style="margin-left: 10px;">reset</button>
 	                    </div>
 					</div>
                 </div>
-               
             </div>
         </div>
-    </div>
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <h4 class="panel-title">

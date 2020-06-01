@@ -52,12 +52,13 @@ var TableInit = function () {
 					contractNumber:$('#contractNumber').val(),
 					customerName:$("#customerName").val(),
 					salesName:$("#salesName").val(),
-					officeCode:$("#officeCode").val()
+					officeCode:$("#officeCode").val(),
+					applyStatus:$("#applyStatus").val()
 			    };
 			    return temp;
 			},
 			columns : [{
-				title : '序列号 SequenceNumber',
+				title : '流水号 SerialNumber',
 				field : 'sequenceNumber',
 				sortable : true
 			},{
@@ -317,6 +318,7 @@ $('#reset_btn').click(function() {
 	$("#customerName").val("");
 	$("#salesName").val("");
 	$("#officeCode").val("");
+	$("#applyStatus").val("");
 })
 
 
