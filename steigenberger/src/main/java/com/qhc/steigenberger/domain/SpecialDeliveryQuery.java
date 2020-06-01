@@ -50,6 +50,8 @@ public class SpecialDeliveryQuery {
      * 区域
      */
     private String officeCode;
+    
+    private Integer applyStatus;
 
     public int getPageNo() {
         return pageNo;
@@ -169,6 +171,14 @@ public class SpecialDeliveryQuery {
 
     public void setSalesName(String salesName) {
         this.salesName = salesName;
+    }
+
+    public Integer getApplyStatus() {
+        return applyStatus;
+    }
+
+    public void setApplyStatus(Integer applyStatus) {
+        this.applyStatus = applyStatus;
     }
 
 }
