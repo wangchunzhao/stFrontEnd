@@ -12,7 +12,7 @@
             <div th:if="${(datas.totalPages le 10) and (datas.totalPages gt 0)}" th:remove="tag">  
                 <div th:each="pg : ${#numbers.sequence(0, datas.totalPages - 1)}" th:remove="tag">  
                         <span th:if="${pg eq datas.getPageNumber()-1}" th:remove="tag">
-                            <li class="active"><span class="current_page line_height" th:text="${pg+1}">${pageNumber}</span></li>  
+                            <li class="active"><span class="current_page line_height" th:text="${pg+1}">${pageNumber}</span></li>
                         </span>  
                     <span th:unless="${pg eq datas.getPageNumber()-1}" th:remove="tag">
                             <li><a href="#" th:href="@{${currentPath}(page=${pg+1})}" th:text="${pg+1}"></a></li>
@@ -20,11 +20,11 @@
                 </div>  
             </div>  
             <div th:if="${datas.totalPages gt 10}" th:remove="tag">  
-                <li th:if="${datas.pageNumber-2 ge 0}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}-2)}" th:text="${datas.pageNumber-1}"></a></li>  
-                <li th:if="${datas.pageNumber-1 ge 0}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}-1)}" th:text="${datas.pageNumber}"></a></li>  
-                <li class="active"><span class="current_page line_height" th:text="${datas.pageNumber+1}"></span></li>  
-                <li th:if="${datas.pageNumber+1 lt datas.totalPages}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}+1)}" th:text="${datas.pageNumber+2}"></a></li>  
-                <li th:if="${datas.pageNumber+2 lt datas.totalPages}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}+2)}" th:text="${datas.pageNumber+3}"></a></li>  
+                <li th:if="${datas.pageNumber-3 ge 0}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}-2)}" th:text="${datas.pageNumber-2}"></a></li>
+                <li th:if="${datas.pageNumber-2 ge 0}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}-1)}" th:text="${datas.pageNumber-1}"></a></li>
+                <li class="active"><span class="current_page line_height" th:text="${datas.pageNumber}"></span></li>
+                <li th:if="${datas.pageNumber+0 lt datas.totalPages}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}+1)}" th:text="${datas.pageNumber+1}"></a></li>
+                <li th:if="${datas.pageNumber+1 lt datas.totalPages}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber}+2)}" th:text="${datas.pageNumber+2}"></a></li>
             </div>  
   
             <li th:if="${datas.hasNext()}"><a href="#" th:href="@{${currentPath}(page=${datas.pageNumber+1})}">下一页</a></li>  
