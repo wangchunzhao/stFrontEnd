@@ -33,7 +33,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping("/index")
 	public String index(@RequestParam(defaultValue = "0", name = "page") Integer page,
-			@RequestParam(defaultValue = "5", name = "pageSize") Integer pageSize,
+			@RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize,
 			User entity, 
 			Model model,
 			HttpServletRequest request) {
