@@ -88,48 +88,6 @@
             //清空文件选择框
             $(".file-caption-name").val('');
         });
-
-		$("#btn_submit").on("click",function(e){
-			var bootstrapValidator = $("#specialForm").data('bootstrapValidator');
-		    bootstrapValidator.validate();
-		    if(!bootstrapValidator.isValid()){
-		    	return
-		    }
-			e.preventDefault();
-			  var receiveMailTime=$(".form #receiveMailTime").val();
-			  var contractTime=$(".form #contractTime").val();
-			  var payAdvancePaymentTime=$(".form #payAdvancePaymentTime").val();
-			  var remark=$(".form #remark").val();
-			  var data={
-                  orderInfoId: [[${param.orderInfoId}]][0],
-                  applyStatus: 0,
-                  receiveMailTime: receiveMailTime,
-                  contractTime: contractTime,
-                  payAdvancePaymentTime: payAdvancePaymentTime,
-                  remark: remark,
-                  attachments: $("#fileList").bootstrapTable('getData')
-				}
-			$.ajax({
-				type:"post",
-                url: ctxPath+'specialdelivery',
-                contentType:'application/json;charset=utf-8',
-                async:false,
-                data:JSON.stringify(data),
-                success: function(data){
-                if(data.status>200){
-                    toastr.warning(data.msg);
-                    setTimeout(function(){
-                        window.location.reload();
-                    },2000);
-                }
-                else{
-                    toastr.success("操作成功！");
-                    setTimeout(function(){
-                        window.location.href = ctxPath + "menu/specialApplication";
-                    },2000);
-                }
-				}});
-			});
 		 $("#btn_back").on("click",function(e){
              window.location.href = ctxPath + "menu/specialApplication";
 		 });
@@ -157,7 +115,7 @@ function initSpecialFormValidator(){
                  payAdvancePaymentTime: {
             		validators: {
             			notEmpty: {
-	            	         message: '请填写预付款到达时间 '
+	            	         message: '请填写预付款到达时间'
 	            	     } 
             	    }
 	             }   
@@ -165,10 +123,11 @@ function initSpecialFormValidator(){
 	        });
 }
  </script>
+<script src="../pageJs/main.js" type="text/javascript" ></script>
 </head> 
 <body class="cbp-spmenu-push">
 <div class="sticky-header header-section " th:replace="head::head">	</div>
-<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>	
+<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1" th:replace="menu::menu">	</div>
 	
 <!-- main content start-->
 <div id="page-wrapper">
@@ -265,7 +224,8 @@ function initSpecialFormValidator(){
                     <div class="col-xs-6"></div>
                     <div class="col-xs-6">
                         <button type="button" class="btn pull-right btn-warning" style="margin-left: 15px;" id="btn_back">返回 back</button>
-                        <button type="button" class="submit btn btn-primary pull-right btn_submit" id="btn_submit">提交 submit</button>
+                        <button type="button" class="submit btn btn-primary pull-right btn_submit" style="margin-left: 15px;" id="btn_submit" onclick="handleSaveAndSubmit(1)">提交 submit</button>
+                        <button type="button" class="btn pull-right btn-success" id="btn_save" onclick="handleSaveAndSubmit(2)">保存 save</button>
                     </div>
                 </div>
             </div>
@@ -340,7 +300,59 @@ function initSpecialFormValidator(){
             $('#file_data').fileinput('enable');
         }
     });
-</script>	
+</script>
+<script type="text/javascript" th:inline="javascript">
+    // 保存和提交
+    function handleSaveAndSubmit(buttonType) {
+        var bootstrapValidator = $("#specialForm").data('bootstrapValidator');
+        bootstrapValidator.validate();
+        if(!bootstrapValidator.isValid()){
+            return
+        }
+        var receiveMailTime=$(".form #receiveMailTime").val();
+        var contractTime=$(".form #contractTime").val();
+        var payAdvancePaymentTime=$(".form #payAdvancePaymentTime").val();
+        var remark=$(".form #remark").val();
+        var data={
+            orderInfoId: [[${param.orderInfoId}]][0],
+            receiveMailTime: receiveMailTime,
+            contractTime: contractTime,
+            payAdvancePaymentTime: payAdvancePaymentTime,
+            remark: remark,
+            attachments: $("#fileList").bootstrapTable('getData')
+        }
+        var postUrl = ''
+        if (buttonType == 1) {
+            // 提交
+            postUrl = 'specialdelivery/submit'
+            data.applyStatus = 1
+        } else {
+            // 保存
+            postUrl = 'specialdelivery'
+            data.applyStatus = 0
+        }
+        $.ajax({
+            type:"post",
+            url: ctxPath + postUrl,
+            contentType:'application/json;charset=utf-8',
+            async:false,
+            data:JSON.stringify(data),
+            success: function(data){
+                if(data.status == 'error'){
+                    toastr.warning(data.msg);
+                    // setTimeout(function(){
+                    //     window.location.reload();
+                    // },2000);
+                }
+                else{
+                    toastr.success("操作成功！");
+                    // setTimeout(function(){
+                    //     window.location.href = ctxPath + "menu/specialApplication";
+                    // },2000);
+                }
+            }});
+    }
+</script>
 <!--scrolling js-->
 <script src="../js/jquery.nicescroll.js"></script>
 <script src="../js/scripts.js"></script>

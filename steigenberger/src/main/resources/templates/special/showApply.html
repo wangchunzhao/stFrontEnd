@@ -94,20 +94,20 @@
         row = decodeURIComponent(row)
         jsonRow = JSON.parse(row)
         console.log(jsonRow)
-
-        // 回显上传表格
-        jsonRow.attachments.forEach(function (item, index) {
-            $("#fileList").bootstrapTable('insertRow', {
-                index: item.fileUrl,
-                row: {
-                    type:'fileList',
-                    index:item.fileUrl,
-                    fileName:item.fileName,
-                    fileUrl:item.fileUrl
-                }
+        if (jsonRow.attachments != undefined) {
+            // 回显上传表格
+            jsonRow.attachments.forEach(function (item, index) {
+                $("#fileList").bootstrapTable('insertRow', {
+                    index: item.fileUrl,
+                    row: {
+                        type:'fileList',
+                        index:item.fileUrl,
+                        fileName:item.fileName,
+                        fileUrl:item.fileUrl
+                    }
+                });
             });
-        })
-
+        }
         // 回显表单
         $("#ordersId").val(jsonRow.sequenceNumber)
         $("#contractNo").val(jsonRow.customerCode)
@@ -150,7 +150,7 @@
             async:false,
             data:JSON.stringify(data),
             success: function(data){
-                if(data.status>200){
+                if(data.status == 'error'){
                     toastr.warning(data.msg);
                     setTimeout(function(){
                         window.location.reload();
@@ -173,21 +173,21 @@
                     receiveMailTime: {
                         validators: {
                             notEmpty: {
-                                message: '数量不能为空'
+                                message: '请填写确认文件的时间'
                             }
                         }
                     },
                     contractTime: {
                         validators: {
                             notEmpty: {
-                                message: '请选择物料'
+                                message: '请填写完工日期'
                             }
                         }
                     },
                     payAdvancePaymentTime: {
                         validators: {
                             notEmpty: {
-                                message: '请选择物料'
+                                message: '请填写预付款到达时间'
                             }
                         }
                     }
