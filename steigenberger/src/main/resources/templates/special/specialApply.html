@@ -340,15 +340,15 @@ function initSpecialFormValidator(){
             success: function(data){
                 if(data.status == 'error'){
                     toastr.warning(data.msg);
-                    // setTimeout(function(){
-                    //     window.location.reload();
-                    // },2000);
+                    setTimeout(function(){
+                        window.location.reload();
+                    },2000);
                 }
                 else{
                     toastr.success("操作成功！");
-                    // setTimeout(function(){
-                    //     window.location.href = ctxPath + "menu/specialApplication";
-                    // },2000);
+                    setTimeout(function(){
+                        window.location.href = ctxPath + "menu/specialApplication";
+                    },2000);
                 }
             }});
     }
