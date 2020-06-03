@@ -93,18 +93,20 @@
         jsonRow = JSON.parse(row)
         console.log(jsonRow)
 
-        // 回显上传表格
-        jsonRow.attachments.forEach(function (item, index) {
-            $("#fileList").bootstrapTable('insertRow', {
-                index: item.fileUrl,
-                row: {
-                    type:'fileList',
-                    index:item.fileUrl,
-                    fileName:item.fileName,
-                    fileUrl:item.fileUrl
-                }
-            });
-        })
+        if (jsonRow.attachments != undefined) {
+            // 回显上传表格
+            jsonRow.attachments.forEach(function (item, index) {
+                $("#fileList").bootstrapTable('insertRow', {
+                    index: item.fileUrl,
+                    row: {
+                        type:'fileList',
+                        index:item.fileUrl,
+                        fileName:item.fileName,
+                        fileUrl:item.fileUrl
+                    }
+                });
+            })
+        }
 
         // 回显表单
         $("#ordersId").val(jsonRow.sequenceNumber)
@@ -236,6 +238,12 @@
                             <table id="fileList" data-pagination="false"  class="table table-hover"></table>
                         </div>
                         <div class="col-md-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn pull-right btn-warning" id="btn_back">返回 back</button>
+                        </div>
                     </div>
                 </form>
             </div>

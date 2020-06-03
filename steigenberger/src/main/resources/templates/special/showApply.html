@@ -143,9 +143,17 @@
             attachments: $("#fileList").bootstrapTable('getData')
         }
         console.log(data)
+        var postUrl = ''
+        if (status == 1) {
+            // 提交
+            postUrl = 'specialdelivery/submit'
+        } else {
+            // 保存
+            postUrl = 'specialdelivery'
+        }
         $.ajax({
             type:"post",
-            url: ctxPath+'specialdelivery',
+            url: ctxPath + postUrl,
             contentType:'application/json;charset=utf-8',
             async:false,
             data:JSON.stringify(data),
