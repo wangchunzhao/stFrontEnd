@@ -198,10 +198,12 @@ function changeStatusFormatter(val){
 function changeApplyStatusFormatter(val) {
 	switch (val) {
 		case 0:
-			return '新建';
+			return '草稿';
 		case 1:
-			return '同意';
+			return 'BPM审批';
 		case 2:
+			return '审批通过';
+		case 3:
 			return '驳回';
 		default:
 			return '';
