@@ -23,6 +23,7 @@ function sapOrderCheck(){
 		$("#saleType").attr('disabled',true);
 		$("#showCustomer").attr('disabled',true);
 		$("#currency").attr('disabled',true);
+		$("#contractAmount").attr('readonly',true);
 	}
 }
 function getSapItemStatus(){
@@ -2611,6 +2612,9 @@ function saveOrder(type){
 	 $('#loadingModal').modal('show');
 	$('#transferType').attr("disabled",false);
 	$("#currency").attr("disabled",false);
+	if($("#hasSendSap").val()=='true'){
+		$("#saleType").attr('disabled',false);
+	}
 	 /*var version = $("#version").val();
 	 var payment = new Object();
 	 payment['termCode'] = $("#paymentType").val();
@@ -2730,21 +2734,13 @@ function goBpm(){
 	$('#loadingModal').modal('show');
 	$('#transferType').attr("disabled",false);
 	$("#currency").attr("disabled",false);
-	 /*var version = $("#version").val();
-	 var payment = new Object();
-	 payment['termCode'] = $("#paymentType").val();
-	 payment['termName'] = $("#paymentType").find("option:selected").text();
-	 payment['percentage'] = "1";
-	 payment['payDate'] = $("#inputDate").val();*/
+	if($("#hasSendSap").val()=='true'){
+		$("#saleType").attr('disabled',false);
+	}
 	 //获取下拉框name
 	 getSelectName();
 	 var orderData = $("#orderForm").serializeObject(); 
 	 $('#transferType').attr("disabled",true);
-	 /*var payments=new Array();
-	 payments.push(payment);
-	 orderData.payments = payments;
-	 orderData['currentVersion'] = version;
-	 orderData['orderType'] = 'ZH0D';*/
 	 var payments=new Array();
 	 orderData.payments= payments;
 	 var attachments = $("#fileList").bootstrapTable('getData');
@@ -2936,6 +2932,9 @@ function viewGrossProfit(type){
 	var version = $("#version").val();
 	 $('#transferType').attr("disabled",false);
 	 $("#currency").attr("disabled",false);
+	 if($("#hasSendSap").val()=='true'){
+			$("#saleType").attr('disabled',false);
+	 }
 	 getSelectName(); 
 	 var orderData = $("#orderForm").serializeObject();
 	 if($("#saleType").val()=='20'){
