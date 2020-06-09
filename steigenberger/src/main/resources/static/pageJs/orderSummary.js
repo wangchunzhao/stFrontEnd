@@ -320,6 +320,6 @@ function formatTrue(value, row, index) {
 }
 
 function formatMargin(value, row, index) {
-	return value * 100 + "%";
-	//或者 return row.sex == 1 ? "男" : "女";
+	// return value * 100 + "%";
+	return value + "%";
 }
