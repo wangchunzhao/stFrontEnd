@@ -13,7 +13,7 @@ $(function () {
     //查询按钮事件
     $('#search_btn').click(function() {
     	$('#mytab').bootstrapTable('refresh', {
-    		url : ctxPath + 'report/biddingDetailList'
+    		url : ctxPath + 'report/bidding'
     	});
     });
 
@@ -54,7 +54,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
-			url : ctxPath+"report/biddingDetailList",//请求路径
+			url : ctxPath+"report/bidding",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -65,72 +65,121 @@ var TableInit = function () {
 			pageNumber : 1, //初始化加载第一页
 			pagination : true,//是否分页
 			sidePagination : 'server',//server:服务器端分页|client：前端分页
-			pageSize : 1,//单页记录数
+			pageSize : 20,//单页记录数
 			pageList : [ 10, 20, 30 ],//可选择单页记录数
 			showRefresh : false,//刷新按钮
 			queryParams : function (params) {
 			    var temp = {
 			        limit : params.limit, // 每页显示数量
 			        offset : params.offset, // SQL语句起始索引
-			        page: (params.offset / params.limit) + 1,   //当前页码
+			        pageNo: (params.offset / params.limit) + 1,   //当前页码
+			        pageSize: params.limit,                         //页面大小
 		
-			       // customer:$('#customer').val(),
-			        area:$('#area').val(),
-			        createTime1:$('#reservation').val()
+			        sequenceNumber : $("#sequenceNumber").val(),
+			        contractNumber : $("#contractNumber").val(),
+			        customerName   : $("#customerName").val(),
+			        salesName      : $("#salesName").val(),
+			        industry       : $("#industry").val(),
+			        industryCode   : $("#industryCode").val(),
+			        saleType       : $("#saleType").val(),
+			        contractAmount1: $("#contractAmount1").val(),
+			        contractAmount2: $("#contractAmount2").val(),
+			        createTime     : $("#createTime").val(),
+			        officeCode     : $("#officeCode").val(),
+			        winning        : $("#winning").val(),
+			        status         : $("#status").val()
 			    };
 			    return temp;
 			},
+			responseHandler: function (res) {
+				console.log("result : ");
+				console.log(res);
+				if (res.status != 'ok') {
+					layer.alert(res.msg);
+					return {};
+				}
+				return {
+					total: res.data.total,
+					rows: res.data.rows
+				}
+            },
+            exportDataType: "excel",
+            //exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
 			columns : [ {
-				title : '序号',
-				field : 'id',
+				title : '需求流水号',
+				field : 'sequenceNumber',
 				sortable : true
 			}, {
-				title : '流水号 Code',
-				field : 'contractNo',
+				title : '合同号',
+				field : 'contractNumber',
 				sortable : true
 			}, {
-				title : '分类 Type',
-				field : 'contractNo',
+				title : '签约单位',
+				field : 'customerName',
 				sortable : true
 			}, {
-				title : '客户Customer',
-				field : 'area',
+				title : '店名',
+				field : 'shopName',
 				sortable : true
 			}, {
-				title : '店名Name',
-				field : 'contractNo',
+				title : '客户经理名称',
+				field : 'salesName',
 				sortable : true
 			}, {
-				title : '开标时间Bid Open Time',
-				field : 'contractNo',
-				sortable : true
-			}, {
-				title : '供应商Supplier',
-				field : 'contractNo',
+				title : '是否改造店',
+				field : 'isReformed',
+				sortable : true,
+				formatter: formatTrue
+			},{
+				title : '是否新客户',
+				field : 'isNew',
+				sortable : true,
+				formatter: formatTrue
+			},{
+				title : '是否便利店',
+				field : 'isConvenientStore',
+				sortable : true,
+				formatter: formatTrue
+			},{
+				title : '隶属关系',
+				field : 'industryName',
 				sortable : true
 			},{
-				title : '金额Amount',
-				field : 'contractUnit',
+				title : '客户分类',
+				field : 'customerIndustryCodeName',
 				sortable : true
 			},{
-				title : '毛利Gross Margin',
-				field : 'contractUnit',
+				title : '销售类型',
+				field : 'saleTypeDesc',
 				sortable : true
 			},{
-				title : '新店/改造店/其他New Store/Renovation Store/Others',
-				field : 'contractUnit',
+				title : '原币合同金额',
+				field : 'contractRmbValue',
 				sortable : true
 			},{
-				title : '大区Area',
-				field : 'contractUnit',
+				title : '订单创建日期',
+				field : 'createTime',
 				sortable : true
 			},{
-				title : '是否中标Whether Or Not The Winning',
-				field : 'orderType',
+				title : '大区',
+				field : 'officeName',
 				sortable : true
 			},{
-				title : '备注Remark',
-				field : 'orderType',
+				title : '中心',
+				field : 'groupName',
+				sortable : true
+			},{
+				title : '销售毛利率',
+				field : 'margin',
+				sortable : true,
+				formatter: formatMargin
+			},{
+				title : '是否中标',
+				field : 'quoteStatusDesc',
+				sortable : true
+			},{
+				title : '订单状态',
+				field : 'statusDesc',
 				sortable : true
 			}]
 		})
@@ -140,5 +189,10 @@ var TableInit = function () {
 
 function formatTrue(value, row, index) {
 	return value == 1 ? "是" : "否";
+	//或者 return row.sex == 1 ? "男" : "女";
+}
+
+function formatMargin(value, row, index) {
+	return value * 100 + "%";
 	//或者 return row.sex == 1 ? "男" : "女";
 }

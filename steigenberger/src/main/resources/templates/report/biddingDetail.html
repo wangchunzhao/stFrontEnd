@@ -81,39 +81,122 @@ var ctxPath  = [[@{/}]];
         </div>
         <div id="collapseOne-magical-coder-auto-id-123" class="panel-collapse collapse in" role="tabpanel" aria-expanded="true">
             <div class="panel-body" style="height: auto;">
-
                 <div class="row">
-                    <div class="col-md-2 col-xs-2">
-                        	客户 customer
+                    <div class="col-md-3 col-xs-3">
+                        	需求流水号
                     </div>
-                    <div class="col-md-2 col-xs-2">
-                        	大区 area
+                    <div class="col-md-3 col-xs-3">
+                        	合同号
                     </div>
-                    <div class="col-md-8 col-xs-8">
-                        	创建日期 Creation time
+                    <div class="col-md-3 col-xs-3">
+                        	签约单位
                     </div>
-                    <div class="col-md-2 col-xs-2">
-                        <select class="form-control" id="customer">
-                        	<option value="-1">请选择</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                    <div class="col-md-3 col-xs-3">
+                        	客户经理名称
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <input type="text" name="sequenceNumber" id="sequenceNumber" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <input type="text" name="contractNumber" id="contractNumber" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <input type="text" name="customerName" id="customerName" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <input type="text" name="salesName" id="salesName" class="form-control"  /> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                        	隶属关系
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	客户分类
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	销售类型
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	原币合同金额
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="industry" name="industry">
+                        	<option value="">请选择</option>
+                       		<option  th:each="industry:${industryList}" th:value="${industry.key}"  th:text="${industry.value}"></option>
                         </select>
                     </div>
-                    <div class="col-md-2 col-xs-2">
-                        <select class="form-control" id="area" >
-                       		<option value="-1">请选择</option>
-                       		<option  th:each="area:${areaList}" th:value="${area.code}"  th:text="${area.name}"></option>
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="industryCode" name="industryCode">
+                        	<option value="">请选择</option>
+                       		<option  th:each="industryCode:${industryCodeList}" th:value="${industryCode.key}"  th:text="${industryCode.value}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="saleType" name="saleType">
+                        	<option value="">请选择</option>
+                       		<option  value="10">内销</option>
+                       		<option  value="20">出口</option>
+                       		<option  value="30">冷库</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <input type="text" name="contractAmount1" id="contractAmount1" class="form-control col-md-1 col-xs-1" style="width: 80px;"  />
+                        <span class="col-md-1 col-xs-1" style="padding-right: 25px;padding-left: 10px;padding-bottom: 3px;padding-top: 5px;">~&nbsp</span> 
+                        <input type="text" name="contractAmount2" id="contractAmount2" class="form-control col-md-1 col-xs-1" style="width: 80px;"  />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                        	订单创建日期
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	大区
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	是否中标
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	订单状态
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <input type="text" name="createTime" id="createTime" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="officeCode" >
+                       		<option value="">请选择</option>
+                       		<option  th:each="office:${officeList}" th:value="${office.key}"  th:text="${office.value}"></option>
 						</select>
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        <input type="text" readonly name="reservation" id="reservation" class="form-control"  /> 
+                        <select class="form-control" id="winning" >
+                       		<option value="">请选择</option>
+                       		<option  value="Y">是</option>
+                       		<option  value="N">否</option>
+						</select>
                     </div>
-                    
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="status">
+                            <!-- <option value="">请选择</option>
+                            <option value="00">草稿</option>
+                            <option value="01">待B2C审批</option>
+                            <option value="02">待工程人员审批</option>
+                            <option value="03">待支持经理审批</option>
+                            <option value="04">提交到BPM</option> -->
+                            <option value="05">BPM审批通过</option>
+                            <!-- <option value="06">订单变更BPM审批通过</option>
+                            <option value="09">已下推SAP</option>
+                            <option value="10">Selling Tool驳回</option>
+                            <option value="11">BPM驳回</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div>
                     <div class="col-xs-5 col-md-5 pull-right">
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="export_btn">导出export</button>
                         <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="reset_btn">重置reset</button>
                         <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="search_btn">查询select</button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="down_btn">下载 down</button>
+                        <!-- <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="export_btn">导出export</button>
+                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="down_btn">下载 down</button> -->
                     </div>
                 </div>
         </div>
@@ -141,6 +224,23 @@ var ctxPath  = [[@{/}]];
 	
 <script src="../js/classie.js"></script>
 <script>
+
+$(document).ready(function() {
+	var endDate = new Date();
+	var startDate = new Date();
+	startDate.setTime(endDate.getTime() - 1000*3600*24*7);
+	$("#createTime").val(dateFtt("yyyy-MM-dd", startDate)+" - "+dateFtt("yyyy-MM-dd", endDate));
+	$('#createTime').daterangepicker( {
+		autoUpdateInput:true,
+		startDate: moment().subtract('days', 7),  //这里配置的起止时间将会决定在ranges中默认选中哪个时间段
+		endDate: moment()
+	}, 
+	function(start, end, label) {
+		$('#createTime').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+		console.log(start.toISOString(), end.toISOString(), label);
+	});
+});
+
 	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 		showLeftPush = document.getElementById( 'showLeftPush' ),
 		body = document.body;
@@ -158,6 +258,26 @@ var ctxPath  = [[@{/}]];
 			classie.toggle( showLeftPush, 'disabled' );
 		}
 	}
+
+
+//时间格式化处理
+function dateFtt(fmt, date) { //author: meizz   
+    var o = {
+        "M+": date.getMonth() + 1, //月份   
+        "d+": date.getDate(), //日   
+        "h+": date.getHours(), //小时   
+        "m+": date.getMinutes(), //分   
+        "s+": date.getSeconds(), //秒   
+        "q+": Math.floor((date.getMonth() + 3) / 3), //季度   
+        "S": date.getMilliseconds() //毫秒   
+    };
+    if(/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for(var k in o)
+        if(new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 </script>	
 <!--scrolling js-->
 <script src="../js/jquery.nicescroll.js"></script>
