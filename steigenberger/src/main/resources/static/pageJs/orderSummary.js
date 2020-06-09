@@ -13,7 +13,7 @@ $(function () {
     //查询按钮事件
     $('#search_btn').click(function() {
     	$('#mytab').bootstrapTable('refresh', {
-    		url : ctxPath + 'report/bidding'
+    		url : ctxPath + 'report/ordersummary'
     	});
     });
 
@@ -54,7 +54,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
-			url : ctxPath+"report/bidding",//请求路径
+			url : ctxPath+"report/ordersummary",//请求路径
 			striped : true, //是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
@@ -86,8 +86,9 @@ var TableInit = function () {
 			        contractAmount2: $("#contractAmount2").val(),
 			        createTime     : $("#createTime").val(),
 			        officeCode     : $("#officeCode").val(),
-			        winning        : $("#winning").val(),
-			        status         : $("#status").val()
+			        status         : $("#status").val(),
+			        contractManager : $("#contractManager").val(),
+			        stOrderType        : $("#stOrderType").val()
 			    };
 			    return temp;
 			},
@@ -153,6 +154,10 @@ var TableInit = function () {
 				field : 'saleTypeDesc',
 				sortable : false
 			},{
+				title : '合同金额（凭证货币）',
+				field : 'contractValue',
+				sortable : false
+			},{
 				title : '原币合同金额',
 				field : 'contractRmbValue',
 				sortable : false
@@ -169,18 +174,140 @@ var TableInit = function () {
 				field : 'groupName',
 				sortable : false
 			},{
+				title : '订单状态',
+				field : 'statusDesc',
+				sortable : false
+			},{
+				title : '性质分类',
+				field : 'industryCodeName',
+				sortable : false
+			},{
+				title : '合同管理员',
+				field : 'contractManager',
+				sortable : false
+			},{
+				title : '订单类型',
+				field : 'stOrderTypeDesc',
+				sortable : false
+			},{
+				title : '是否年采客户',
+				field : 'isYearpurchase',
+				sortable : false,
+				formatter: formatTrue
+			},{
+				title : '项目报备编号',
+				field : 'recordCode',
+				sortable : false
+			},{
+				title : '税率',
+				field : 'taxRate',
+				sortable : false
+			},{
+				title : '币种',
+				field : 'currency',
+				sortable : false
+			},{
+				title : '汇率',
+				field : 'exchange',
+				sortable : false
+			},{
+				title : '国际贸易条件1',
+				field : 'incoterm',
+				sortable : false
+			},{
+				title : '国际贸易条件2',
+				field : 'incotermContect',
+				sortable : false
+			},{
+				title : '保修年限',
+				field : 'warranty',
+				sortable : false
+			},{
+				title : '安装方式',
+				field : 'installType',
+				sortable : false
+			},{
+				title : '省市区',
+				field : 'city',
+				sortable : false
+			},{
+				title : '到货地址',
+				field : 'address',
+				sortable : false
+			},{
+				title : '运输方式',
+				field : 'transferType',
+				sortable : false
+			},{
+				title : '追加运费',
+				field : 'additionalFreight',
+				sortable : false
+			},{
+				title : '外销运费',
+				field : 'freight',
+				sortable : false
+			},{
+				title : '授权人1及身份证号',
+				field : 'contactor1Id',
+				sortable : false
+			},{
+				title : '授权人1电话',
+				field : 'contactor1Tel',
+				sortable : false
+			},{
+				title : '授权人2及身份证号',
+				field : 'contactor2Id',
+				sortable : false
+			},{
+				title : '授权人2电话',
+				field : 'contactor2Tel',
+				sortable : false
+			},{
+				title : '授权人3及身份证号',
+				field : 'contactor3Id',
+				sortable : false
+			},{
+				title : '授权人3电话',
+				field : 'contactor3Tel',
+				sortable : false
+			},{
+				title : '结算方式',
+				field : 'paymentType',
+				sortable : false
+			},{
+				title : '要求发货时间',
+				field : 'earliestDeliveryDate',
+				sortable : false
+			},{
+				title : '柜体控制阀件是否甲供',
+				field : 'isTerm1',
+				sortable : false,
+				formatter: formatTrue
+			},{
+				title : '分体归是否远程监控',
+				field : 'isTerm2',
+				sortable : false,
+				formatter: formatTrue
+			},{
+				title : '立柜柜体是否在地下室',
+				field : 'isTerm3',
+				sortable : false,
+				formatter: formatTrue
+			},{
+				title : '是否特批发货',
+				field : 'isUrgentDelivery',
+				sortable : false,
+				formatter: formatTrue
+			},{
+				title : '是否特批下单',
+				field : 'isSpecialOrder',
+				sortable : false,
+				formatter: formatTrue
+			},{
 				title : '销售毛利率',
 				field : 'margin',
 				sortable : false,
 				formatter: formatMargin
-			},{
-				title : '是否中标',
-				field : 'quoteStatusDesc',
-				sortable : false
-			},{
-				title : '订单状态',
-				field : 'statusDesc',
-				sortable : false
 			}]
 		})
 			};

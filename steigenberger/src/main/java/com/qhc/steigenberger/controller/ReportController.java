@@ -21,12 +21,38 @@ public class ReportController extends BaseController {
 	@Autowired
 	ReportService reportService;
 
+	@GetMapping("/orderdetail")
+	@ResponseBody
+	public Result orderPurchaseSaleReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
+		Result result = null;
+		try {
+			result = reportService.findOrderPurchaseSale(params);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			result = Result.error(e.getMessage());
+		}
+		return result;
+	}
+
 	@GetMapping("/bidding")
 	@ResponseBody
 	public Result biddingReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
 		Result result = null;
 		try {
 			result = reportService.findBiddingReport(params);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			result = Result.error(e.getMessage());
+		}
+		return result;
+	}
+
+	@GetMapping("/ordersummary")
+	@ResponseBody
+	public Result orderSummaryReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
+		Result result = null;
+		try {
+			result = reportService.findOrderSummaryReport(params);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			result = Result.error(e.getMessage());

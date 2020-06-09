@@ -102,14 +102,33 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping("/purchaseAndSale")
   	public String purchaseAndSale() {
+		ModelAndView mv = new ModelAndView();
+		
+		setReportQueryConditionData(mv);
   		return "report/purchaseAndSale";
   	}
 	
-	//report 投标跟踪表
+	// report 投标跟踪表
 	@RequestMapping("/biddingDetail")
 	public ModelAndView biddingDetail() {
 		ModelAndView mv = new ModelAndView();
 		
+		setReportQueryConditionData(mv);
+		mv.setViewName("report/biddingDetail");
+		return mv;
+	}
+	
+	// report 销售订单汇总
+	@RequestMapping("/orderSummary")
+	public ModelAndView orderSummary() {
+		ModelAndView mv = new ModelAndView();
+
+		setReportQueryConditionData(mv);
+		mv.setViewName("report/orderSummary");
+		return mv;
+	}
+
+	private void setReportQueryConditionData(ModelAndView mv) {
 		// 大区
 		Map<String, String> officeList = constantService.getOffice();
 		mv.addObject("officeList", officeList);
@@ -123,18 +142,6 @@ public class MenuController extends BaseController {
 		Map<String, String> industryCodeList = constantService.getIndustryCodes();
 		mv.addObject("industryCodeList", industryCodeList);
 		mv.setViewName("report/biddingDetail");
-		return mv;
-	}
-	
-	@RequestMapping("/orderSummary")
-	public ModelAndView orderSummary() {
-		ModelAndView mv = new ModelAndView();
-		// TODO 销售订单汇总    
-		
-//		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
-//		mv.addObject("areaList", areaList);
-		mv.setViewName("report/orderSummary");
-		return mv;
 	}
 	
 	@RequestMapping("/userIndex")
