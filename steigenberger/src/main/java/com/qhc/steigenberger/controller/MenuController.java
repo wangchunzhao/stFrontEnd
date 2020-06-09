@@ -1,6 +1,7 @@
 package com.qhc.steigenberger.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,10 @@ import com.qhc.steigenberger.domain.Parameter;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.domain.Role;
 import com.qhc.steigenberger.domain.User;
+import com.qhc.steigenberger.service.ConstantService;
 import com.qhc.steigenberger.service.ParameterService;
 import com.qhc.steigenberger.service.RoleService;
+import com.qhc.steigenberger.service.SapSalesOfficeService;
 import com.qhc.steigenberger.service.UserOperationInfoService;
 import com.qhc.steigenberger.service.UserService;
 
@@ -46,6 +49,12 @@ public class MenuController extends BaseController {
 	
 	@Autowired
 	UserOperationInfoService userOperationInfoService;
+	
+	@Autowired 
+	SapSalesOfficeService sapSalesOfficeService;
+	
+	@Autowired 
+	ConstantService constantService;
 	
 	@PostConstruct
 	public void init() {
@@ -96,13 +105,23 @@ public class MenuController extends BaseController {
   		return "report/purchaseAndSale";
   	}
 	
+	//report 投标跟踪表
 	@RequestMapping("/biddingDetail")
 	public ModelAndView biddingDetail() {
 		ModelAndView mv = new ModelAndView();
-		// TODO 投标客户    
 		
-//		List<SapSalesOffice> areaList = sapSalesOfficeService.getList();
-//		mv.addObject("areaList", areaList);
+		// 大区
+		Map<String, String> officeList = constantService.getOffice();
+		mv.addObject("officeList", officeList);
+		// 销售类型
+		Map<String, String> saleTypeList = constantService.getSaleTypes();
+		mv.addObject("saleTypeList", saleTypeList);
+		// 隶属关系
+		Map<String, String> industryList = constantService.getIndustrys();
+		mv.addObject("industryList", industryList);
+		// 客户分类
+		Map<String, String> industryCodeList = constantService.getIndustryCodes();
+		mv.addObject("industryCodeList", industryCodeList);
 		mv.setViewName("report/biddingDetail");
 		return mv;
 	}

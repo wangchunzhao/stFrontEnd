@@ -2,28 +2,39 @@ package com.qhc.steigenberger.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qhc.steigenberger.domain.Order;
+import com.qhc.steigenberger.domain.Result;
+import com.qhc.steigenberger.service.ReportService;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("report")
 public class ReportController extends BaseController {
+	
+	@Autowired
+	ReportService reportService;
 
-	@PostMapping("/")
+	@GetMapping("/bidding")
 	@ResponseBody
-	public void reportData(Map<String, Object> params) throws Exception {
-
+	public Result biddingReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
+		Result result = null;
+		try {
+			result = reportService.findBiddingReport(params);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			result = Result.error(e.getMessage());
+		}
+		return result;
 	}
 
-	@PostMapping("/excel")
+	@GetMapping("/excel")
 	@ResponseBody
 	public void exportExcel(Map<String, Object> params) throws Exception {
 		String reportName = (String) params.get("reportname");
