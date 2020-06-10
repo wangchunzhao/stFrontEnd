@@ -136,7 +136,10 @@ public class ContractService {
 	 */
 	public Result save(Contract contract) {
 		Result result;
-		contract.setStatus("01");
+		// 设置状态为已制作
+		if (contract.getStatus() == null || contract.getStatus().trim().equals("")) {
+			contract.setStatus("01");
+		}
 		result = (Result) fryeService.postForm("/contract", contract, Result.class);
 		if (result.getStatus().equals("ok")) {
 			result = mapper.convertValue(result,

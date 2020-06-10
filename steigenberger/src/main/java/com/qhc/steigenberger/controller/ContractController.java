@@ -83,8 +83,6 @@ public class ContractController {
 			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
 			contract.setCreater(identityName);
 			contract.setCreateTime(new Date());
-			// 设置状态为已制作
-			contract.setStatus("01");
 			// 设置操作人
 			r = contractService.save(contract);
 		} catch (Exception e) {
