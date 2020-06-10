@@ -491,23 +491,6 @@ public class ContractService {
 	}
 
 	/**
-	 * 定时更新电子签约合同状态
-	 * 
-	 */
-	@Scheduled(cron = "0 30 1 * * ?")
-	public void refreshContractState() {
-		logger.info(System.currentTimeMillis() + ":定时任务--update contracts' state--开始执行");
-		try {
-			doRefreshContractState();
-		} catch (JsonMappingException e) {
-			logger.error("合同状态更新定时任务", e);
-		} catch (JsonProcessingException e) {
-			logger.error("合同状态更新定时任务", e);
-		}
-		logger.info(System.currentTimeMillis() + ":定时任务--update contracts' state--完成");
-	}
-
-	/**
 	 * 查询电子签约合同状态并更新本地合同状态及电子签约合同id
 	 * 
 	 * @return

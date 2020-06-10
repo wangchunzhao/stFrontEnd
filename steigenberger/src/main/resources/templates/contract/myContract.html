@@ -154,7 +154,7 @@ var ctxPath  = [[@{/}]];
 					<div class="row" style="margin-top: 3px;">
 						<div class="col-xs-6"></div>
 						<div class="col-xs-6">
-							 <button type="button" class="btn btn-primary pull-right">同步状态 sync</button>
+							 <button type="button" id="refreshstate" class="btn btn-primary pull-right">同步状态 sync</button>
 							 <button type="button" class="btn btn-warning pull-right">重置 reset</button>
 							 <button type="button" id="search" class="btn btn-success pull-right">查询 select</button>
 						</div>
@@ -239,6 +239,20 @@ var ctxPath  = [[@{/}]];
 	    </div>
 	</div>
 
+</div>
+
+<!-- 同步合同状态对话框 -->
+<div class="modal fade" id="contractDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width: 240px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> -->
+			</div>
+			<div id="contractDialogBody" class="modal-body">
+				同步合同状态......
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- 合同编辑对话框 -->
@@ -503,6 +517,26 @@ $.fn.serializeObject = function() {
 
 $('#search').on('click',function(e){
 	refresh();
+});
+
+$('#refreshstate').on('click',function(e){
+	$("#contractDialog").modal('show');
+	$.ajax({
+	    url: ctxPath + "contract/refreshState",
+	    // data: '',
+	    type: "PUT",
+	    contentType: "application/json;charset=UTF-8",
+	    // dataType: "json",
+	    success: function(data) {
+	    	$("#contractDialog").modal('hide');
+    		checkLogout(data);
+	    	if(data == null || data.status != 'ok'){
+	    		layer.alert("同步合同状态失败！" + (data != null ? data.msg : ""));
+	    	}else{
+	    		refresh();
+	    	}      
+	    }
+	});
 });
 
 function refresh() {
