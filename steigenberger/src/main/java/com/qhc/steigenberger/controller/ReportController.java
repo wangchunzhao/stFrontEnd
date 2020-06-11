@@ -1,6 +1,14 @@
 package com.qhc.steigenberger.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -11,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.Result;
 import com.qhc.steigenberger.service.ReportService;
+import com.qhc.steigenberger.util.JxlsUtils;
 
 @RestController
 @RequestMapping("report")
@@ -60,28 +72,41 @@ public class ReportController extends BaseController {
 		return result;
 	}
 
-	@GetMapping("/excel")
+	@GetMapping("/export")
 	@ResponseBody
-	public void exportExcel(Map<String, Object> params) throws Exception {
+	public void exportExcel(@RequestParam(required = false) Map<String, Object> params, HttpServletResponse response) throws Exception {
 		String reportName = (String) params.get("reportname");
+		Result result = null;
+		String file = null;
+		String fileName = null;
+		List orders = new ArrayList();
 		switch (reportName) {
-		case "bidding":
+			case "orderdetail" :
+				break;
+			case "bidding" :
+				break;
+			case "ordersummary" :
+				file = "/ordersummaryreport.xlsx";
+				fileName = "OrderSummary.xlsx";
+				result = this.orderSummaryReport(params);
+				if (result.getStatus().equalsIgnoreCase("ok")) {
+					orders = (List)((Map)result.getData()).get("rows");
+				}
+				break;
+			default :
+				break;
+		}
+		
+		if (file != null) {
+			String excleFileName = new String(fileName.getBytes("GB2312"), "ISO8859-1");
 
-			break;
-		case "saledetail":
-			break;
-		case "ordersummary":
-			String createTime = (String)params.get("createTime");
-			if (!StringUtils.isEmpty(createTime)) {
-				String[] times = createTime.split(" - ");
-				String start = times[0];
-				String end = times[1];
-				params.put("createStartTime", start);
-				params.put("createEndTime", end);
-			}
-			break;
-		default:
-			break;
+			response.setContentType("application/x-download;charset=GB2312");
+			response.setHeader("Content-disposition", "attachment;filename=\"" + excleFileName + "\"");
+
+			Map<String, Object> data = new HashMap<>();
+			data.put("orders", orders);
+			 JxlsUtils.exportExcel(file, response.getOutputStream(), data);
+			response.getOutputStream().flush();
 		}
 	}
 }
