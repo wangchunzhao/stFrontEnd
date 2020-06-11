@@ -108,7 +108,7 @@ var TableInit = function () {
 				}
 				return {
 					total: res.data.total,
-					rows: res.data.rows == undefined ? {} : res.data.rows
+					rows: res.data.rows == undefined ? [] : res.data.rows
 				}
             },
 			columns : [ {
