@@ -35,7 +35,6 @@ $(function () {
     $('#export_btn').click(function() {
 		var params = getQueryParams({limit: 1000, offset: 0});
 		var paramsUrl = toUrl(params);
-		alert(paramsUrl);
 		var url = ctxPath + "report/export?reportname=ordersummary&" + paramsUrl;
 		
 	    var a = document.createElement("a");// 创建a标签
@@ -112,8 +111,6 @@ var TableInit = function () {
 					rows: res.data.rows == undefined ? {} : res.data.rows
 				}
             },
-            exportDataType: "xlsx",
-            //exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
 			columns : [ {
 				title : '序号',
 				width : '5%',

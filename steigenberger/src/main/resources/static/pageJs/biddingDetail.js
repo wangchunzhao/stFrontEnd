@@ -1,8 +1,4 @@
 $(document).ready(function() {
-    $('#reservation').daterangepicker(null, function(start, end, label) {
-      console.log(start.toISOString(), end.toISOString(), label);
-    });
-        
 });
 //var ctxPath  = [[@{/}]];
 $(function () {
@@ -19,35 +15,58 @@ $(function () {
 
     //重置按钮事件
     $('#reset_btn').click(function() {
-    	$("#customer").val("");
-    	$("#reservation").val("");
-    	$("#area").val("-1");
+    	$("#sequenceNumber").val("");
+    	$("#contractNumber").val("");
+    	$("#customerName").val("");
+    	$("#salesName").val("");
+    	$("#industry").val("");
+    	$("#industryCode").val("");
+    	$("#saleType").val("");
+    	$("#contractAmount1").val("");
+    	$("#contractAmount2").val("");
+    	$("#createTime").val("");
+    	$("#officeCode").val("");
+    	$("#winning").val("");
+    	$("#status").val("");
     });
-    
-    
 
   //导出按钮事件
   $('#export_btn').click(function(e) {
-  	e.preventDefault();
-  	
-  	var customer = $("#customer").val();    
-  	var area = $("#area").val();    
-  	var reservation = $("#reservation").val();    
-  	
-  	window.location.href=ctxPath+"report/exportExcel?customer="+customer+"&area="+area+"&createTime1="+reservation;
-  	
-  });
-  
-  
-//下载按钮事件
-  $('#down_btn').click(function(e) {
-  	e.preventDefault();
-  	var customer = $("#customer").val();    
-  	window.location.href=ctxPath+"report/down";
-  	
-  });
-    
+		var params = getQueryParams({limit: 1000, offset: 0});
+		var paramsUrl = toUrl(params);
+		var url = ctxPath + "report/export?reportname=bidding&" + paramsUrl;
+		
+	    var a = document.createElement("a");// 创建a标签
+	    a.target = "_blank"; // 每次点击一次都打开新的窗口；
+	    // a.download = "a.pdf";// 设置下载文件的文件名
+	    a.href = url;// content为后台返回的下载地址
+	    a.click();// 设置点击事件 
+    });
 });
+
+function getQueryParams(params) {
+    var temp = {
+        limit : params.limit, // 每页显示数量
+        offset : params.offset, // SQL语句起始索引
+        pageNo: (params.offset / params.limit) + 1,   //当前页码
+        pageSize: params.limit,                         //页面大小
+
+        sequenceNumber : $("#sequenceNumber").val(),
+        contractNumber : $("#contractNumber").val(),
+        customerName   : $("#customerName").val(),
+        salesName      : $("#salesName").val(),
+        industry       : $("#industry").val(),
+        industryCode   : $("#industryCode").val(),
+        saleType       : $("#saleType").val(),
+        contractAmount1: $("#contractAmount1").val(),
+        contractAmount2: $("#contractAmount2").val(),
+        createTime     : $("#createTime").val(),
+        officeCode     : $("#officeCode").val(),
+        winning        : $("#winning").val(),
+        status         : $("#status").val()
+    };
+    return temp;
+}
 
 var TableInit = function () {
 	var oTableInit = new Object();
@@ -55,42 +74,28 @@ var TableInit = function () {
 		$('#mytab').bootstrapTable({
 			method : 'get',
 			url : ctxPath+"report/bidding",//请求路径
-			striped : true, //是否显示行间隔色
+			striped : true, // 是否显示行间隔色
 			toolbar: '#toolbar',
 			cache: false,
 			pagination: true,                   //是否显示分页（*）
 		    sortable: true,                     //是否启用排序
 		    clickToSelect: true,               //是否启用点击选中行
 		    sortOrder: "asc",                   //排序方式
-			pageNumber : 1, //初始化加载第一页
-			pagination : true,//是否分页
-			sidePagination : 'server',//server:服务器端分页|client：前端分页
-			pageSize : 20,//单页记录数
-			pageList : [ 10, 20, 30 ],//可选择单页记录数
-			showRefresh : false,//刷新按钮
-			queryParams : function (params) {
-			    var temp = {
-			        limit : params.limit, // 每页显示数量
-			        offset : params.offset, // SQL语句起始索引
-			        pageNo: (params.offset / params.limit) + 1,   //当前页码
-			        pageSize: params.limit,                         //页面大小
-		
-			        sequenceNumber : $("#sequenceNumber").val(),
-			        contractNumber : $("#contractNumber").val(),
-			        customerName   : $("#customerName").val(),
-			        salesName      : $("#salesName").val(),
-			        industry       : $("#industry").val(),
-			        industryCode   : $("#industryCode").val(),
-			        saleType       : $("#saleType").val(),
-			        contractAmount1: $("#contractAmount1").val(),
-			        contractAmount2: $("#contractAmount2").val(),
-			        createTime     : $("#createTime").val(),
-			        officeCode     : $("#officeCode").val(),
-			        winning        : $("#winning").val(),
-			        status         : $("#status").val()
-			    };
-			    return temp;
-			},
+			pageNumber : 1,  // 初始化加载第一页
+			pagination : true, // 是否分页
+			sidePagination : 'server', // server:服务器端分页|client：前端分页
+			pageSize : 20, // 单页记录数
+			pageList : [ 10, 20, 30 ], // 可选择单页记录数
+			showRefresh : false, // 刷新按钮
+            showExport: false, // 工具栏上显示导出按钮
+            exportDataType: 'all', // 导出范围，無效
+            exportTypes:['XLSX'],  // 导出文件类型 ‘json’, ‘xml’, ‘png’, ‘csv’, ‘txt’, ‘sql’, ‘doc’, ‘excel’, ‘xlsx’, ‘pdf’
+            exportOptions: {
+                fileName: function () {
+                   return 'BiddingReport'
+                }
+             }, 
+			queryParams : getQueryParams,
 			responseHandler: function (res) {
 				console.log("result : ");
 				console.log(res);
@@ -100,11 +105,9 @@ var TableInit = function () {
 				}
 				return {
 					total: res.data.total,
-					rows: res.data.rows
+					rows: res.data.rows == undefined ? {} : res.data.rows
 				}
             },
-            exportDataType: "excel",
-            //exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
 			columns : [ {
 				title : '需求流水号',
 				field : 'sequenceNumber',

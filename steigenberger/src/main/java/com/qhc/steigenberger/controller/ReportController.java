@@ -82,12 +82,24 @@ public class ReportController extends BaseController {
 		List orders = new ArrayList();
 		switch (reportName) {
 			case "orderdetail" :
+				file = "/orderdetailreport.xlsx";
+				fileName = "购销明细报表.xlsx";
+				result = this.orderPurchaseSaleReport(params);
+				if (result.getStatus().equalsIgnoreCase("ok")) {
+					orders = (List)((Map)result.getData()).get("rows");
+				}
 				break;
 			case "bidding" :
+				file = "/biddingreport.xlsx";
+				fileName = "投标跟踪表.xlsx";
+				result = this.biddingReport(params);
+				if (result.getStatus().equalsIgnoreCase("ok")) {
+					orders = (List)((Map)result.getData()).get("rows");
+				}
 				break;
 			case "ordersummary" :
 				file = "/ordersummaryreport.xlsx";
-				fileName = "OrderSummary.xlsx";
+				fileName = "销售订单汇总表.xlsx";
 				result = this.orderSummaryReport(params);
 				if (result.getStatus().equalsIgnoreCase("ok")) {
 					orders = (List)((Map)result.getData()).get("rows");
