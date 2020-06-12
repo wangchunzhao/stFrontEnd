@@ -107,39 +107,6 @@ public class OrderController extends BaseController {
 	ContractService contractService;
 
     String[] chars = new String[] { "\\[", "\\]", "\\?", "\\/", "\\\\", "\\*", ":" };
-    HashMap<String, String> categoryMap = new HashMap<String, String>() {
-      {
-        // ZH0D/ZH01 可配置
-        put("ZHD1","标准");
-        put("ZHD3","免费");
-        put("ZHR3","退货");
-        // ZH0D/ZH02 不可配置
-        put("ZHD2","标准");
-        put("ZHD4","免费");
-        put("ZHR4","退货");
-        // ZH0T/ZH01 可配置
-        put("ZHT1","标准");
-        put("ZHT3","免费");
-        put("ZHR1","退货");
-        // ZH0D/ZH02 可配置
-        put("ZHT2","标准");
-        put("ZHT6","免费");
-        put("ZHR2","退货");
-        // 不可预估费，其他项目收费
-        put("ZH97","ZH97"); // 经销商订单其他项目收费行项目类别
-        put("ZH98","ZH98"); // 其他虚拟物料行项目类别
-        put("ZH99","ZH99"); // 直签订单其他项目收费行项目类别
-      }
-    };
-    HashMap<String, String> requirementPlanMap = new HashMap<String, String>() {
-      {
-        put("004","物料需求计划");
-        put("001","B2C");
-        put("002","消化");
-        put("003","调发");
-        put("005","替换");
-      }
-    };
     
 	/**
 	 * 保存订单
@@ -438,12 +405,12 @@ public class OrderController extends BaseController {
     int count = 0;
     for (Item item : order.getItems()) {
               // 行项目类别转中文
-      String category = categoryMap.get(item.getItemCategory());
+      String category = Constants.itemCategoryMap.get(item.getItemCategory());
       if (category != null) {
         item.setItemCategory(category);
       }
       // 需求计划转中文
-      String requirementPlan = requirementPlanMap.get( item.getItemRequirementPlan());
+      String requirementPlan = Constants.itemRequirementPlanMap.get( item.getItemRequirementPlan());
       if (requirementPlan != null) {
         item.setItemRequirementPlan(requirementPlan);
       }

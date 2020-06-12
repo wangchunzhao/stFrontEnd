@@ -23,6 +23,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qhc.steigenberger.domain.MaterialGroups;
 import com.qhc.steigenberger.domain.Result;
+import com.qhc.steigenberger.domain.Role;
+import com.qhc.steigenberger.domain.User;
 import com.qhc.steigenberger.service.ReportService;
 import com.qhc.steigenberger.util.JxlsUtils;
 
@@ -33,11 +35,12 @@ public class ReportController extends BaseController {
 	@Autowired
 	ReportService reportService;
 
-	@GetMapping("/orderdetail")
+	@GetMapping("/orderitems")
 	@ResponseBody
 	public Result orderPurchaseSaleReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
 		Result result = null;
 		try {
+			setQueryScope(params);	
 			result = reportService.findOrderPurchaseSale(params);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -51,6 +54,7 @@ public class ReportController extends BaseController {
 	public Result biddingReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
 		Result result = null;
 		try {
+			setQueryScope(params);
 			result = reportService.findBiddingReport(params);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -64,6 +68,7 @@ public class ReportController extends BaseController {
 	public Result orderSummaryReport(@RequestParam(required = false) Map<String, Object> params) throws Exception {
 		Result result = null;
 		try {
+			setQueryScope(params);			
 			result = reportService.findOrderSummaryReport(params);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -81,8 +86,8 @@ public class ReportController extends BaseController {
 		String fileName = null;
 		List orders = new ArrayList();
 		switch (reportName) {
-			case "orderdetail" :
-				file = "/orderdetailreport.xlsx";
+			case "orderitems" :
+				file = "/orderitemsreport.xlsx";
 				fileName = "购销明细报表.xlsx";
 				result = this.orderPurchaseSaleReport(params);
 				if (result.getStatus().equalsIgnoreCase("ok")) {
@@ -119,6 +124,51 @@ public class ReportController extends BaseController {
 			data.put("orders", orders);
 			 JxlsUtils.exportExcel(file, response.getOutputStream(), data);
 			response.getOutputStream().flush();
+		}
+	}
+	
+	/**
+	 * 数据访问范围
+	 * 客户经理只能查看自己下的订单 0 <br>
+	 * 区域经理只能查看本区域订单 1 <br>
+	 * 支持经理/B2C审核/工程人员/领导组/管理员，可以查看全部订单 2<br>
+	 * 
+	 * @return 
+	 */
+	private void setQueryScope(Map<String, Object> params) {
+		// 6 区域经理
+		// 2 客户经理
+		User user = this.getAccount();
+		List<Role> roles = user.getRoles();
+		int scope = 0;
+		for (Role role : roles) {
+			int id = role.getId();
+			if (id == 2) {
+			} else if (id == 6) {
+				if (scope < 1) {
+					scope = 1;
+				}
+			} else {
+				if (scope < 2) {
+					scope = 2;
+				}
+			}
+		}
+		switch (scope) {
+			case 0 :
+				params.put("scope", 0);
+				params.put("userid", user.getUserIdentity());
+				break;
+			case 1 :
+				params.put("scope", 1);
+				params.put("region", user.getOfficeCode());
+				break;
+			case 2 :
+				params.put("scope", 2);
+				break;
+
+			default :
+				break;
 		}
 	}
 }
