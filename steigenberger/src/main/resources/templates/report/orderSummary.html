@@ -74,9 +74,12 @@
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="industryCode" name="industryCode">
-                        	<option value="">请选择</option>
-                       		<option  th:each="industryCode:${industryCodeList}" th:value="${industryCode.key}"  th:text="${industryCode.value}"></option>
-                        </select>
+						    <option value="">请选择</option>
+						    <option value="0004">Local others（本地其他）</option>
+						    <option value="0005">Cold room（冷库)</option>
+						    <option value="0002">Local top 100-国内连锁百强</option>
+    						<option value="0001">MNC（国际连锁）</option>
+						</select>
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="saleType" name="saleType">
