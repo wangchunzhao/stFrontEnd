@@ -2017,6 +2017,8 @@ function initOrderFormValidator(){
 //打开调研表
 function openConfig(configContent){
 	$("#materialconfigModal").modal('show');
+	$("#viewError").attr("style","display:none;");
+	$("#moreConfig").attr("style","display:none;");
 	var rowNum = configContent.split('|')[0];
 	var index = configContent.split('|')[1];
 	var tableData = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
