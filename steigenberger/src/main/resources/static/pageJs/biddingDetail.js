@@ -27,6 +27,7 @@ $(function () {
     	$("#createTime").val("");
     	$("#officeCode").val("");
     	$("#winning").val("");
+    	$("#makingorder").val("");
     	$("#status").val("");
     });
 
@@ -63,6 +64,7 @@ function getQueryParams(params) {
         createTime     : $("#createTime").val(),
         officeCode     : $("#officeCode").val(),
         winning        : $("#winning").val(),
+        makingorder : $("#makingorder").val(),
         status         : $("#status").val()
     };
     return temp;
@@ -179,6 +181,10 @@ var TableInit = function () {
 			},{
 				title : '是否中标',
 				field : 'quoteStatusDesc',
+				sortable : false
+			},{
+				title : '是否下单',
+				field : 'makingOrder',
 				sortable : false
 			},{
 				title : '订单状态',

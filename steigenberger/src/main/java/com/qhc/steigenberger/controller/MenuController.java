@@ -101,11 +101,12 @@ public class MenuController extends BaseController {
   	}
 	
 	@RequestMapping("/purchaseAndSale")
-  	public String purchaseAndSale() {
+  	public ModelAndView purchaseAndSale() {
 		ModelAndView mv = new ModelAndView();
 		
 		setReportQueryConditionData(mv);
-  		return "report/purchaseAndSale";
+		mv.setViewName("report/purchaseAndSale");
+  		return mv;
   	}
 	
 	// report 投标跟踪表
@@ -141,7 +142,6 @@ public class MenuController extends BaseController {
 		// 客户分类
 		Map<String, String> industryCodeList = constantService.getIndustryCodes();
 		mv.addObject("industryCodeList", industryCodeList);
-		mv.setViewName("report/biddingDetail");
 	}
 	
 	@RequestMapping("/userIndex")

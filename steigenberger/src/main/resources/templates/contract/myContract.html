@@ -93,7 +93,7 @@ var ctxPath  = [[@{/}]];
 						<div class="col-xs-6"></div>
 						<div class="col-xs-6">
 							 <button type="button" id="refreshstate" class="btn btn-primary pull-right">同步状态 sync</button>
-							 <button type="button" class="btn btn-warning pull-right">重置 reset</button>
+							 <button type="button" id="reset" class="btn btn-warning pull-right">重置 reset</button>
 							 <button type="button" id="search" class="btn btn-success pull-right">查询 select</button>
 						</div>
 					</div>
@@ -476,7 +476,18 @@ $.fn.serializeObject = function() {
         }  
     });  
     return o;  
-}	
+}
+
+//重置按钮事件
+$('#reset').click(function() {
+	$('#s_sequenceNumber').val("");
+	$('#s_contractNumber').val("");
+	$('#s_contractManager').val("");
+	$('#s_customerName').val("");
+	$('#s_createTime').val("");
+	$('#s_createTime').val("");
+	$('#s_status').val("");
+});
 
 $('#search').on('click',function(e){
 	refresh();

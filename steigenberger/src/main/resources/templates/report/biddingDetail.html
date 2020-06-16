@@ -106,7 +106,7 @@
                         	是否中标
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        	订单状态
+                        	是否下单
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <input type="text" name="createTime" id="createTime" class="form-control"  /> 
@@ -125,6 +125,21 @@
 						</select>
                     </div>
                     <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="makingorder" >
+                       		<option value="">请选择</option>
+                       		<option  value="Y">是</option>
+                       		<option  value="N">否</option>
+						</select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                        	订单状态
+                    </div>
+                    <div class="col-md-9 col-xs-9">
+                        	&nbsp;
+                    </div>
+                    <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="status">
                             <!-- <option value="">请选择</option>
                             <option value="00">草稿</option>
@@ -139,9 +154,7 @@
                             <option value="11">BPM驳回</option> -->
                         </select>
                     </div>
-                </div>
-                <div>
-                    <div class="col-xs-5 col-md-5 pull-right">
+                    <div class="col-xs-9 col-md-9 pull-right">
                         <!-- <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="down_btn">下载 down</button> -->
                         <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="export_btn">导出export</button>
                         <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="reset_btn">重置reset</button>
