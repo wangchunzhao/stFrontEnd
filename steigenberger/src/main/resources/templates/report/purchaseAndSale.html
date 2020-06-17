@@ -144,10 +144,10 @@
                         	专用号
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        	需求计划
+                        	规格型号
                     </div>
                     <div class="col-md-3 col-xs-3">
-                        	行项目类别
+                        	性质分类
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="stOrderType">
@@ -160,7 +160,31 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-xs-3">
+                    	<input type="text" name="materialCode" id="materialCode" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3 col-xs-3">
                     	<input type="text" name="materialName" id="materialName" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        <select class="form-control" id="customerClazz">
+                            <option value="">请选择</option>
+                            <option value="01">直销</option>
+                            <option value="02">经销商</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                        	需求计划
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	行项目类别
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	入库时间
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                        	要求发货时间
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="requirementPlan">
@@ -175,32 +199,12 @@
                     <div class="col-md-3 col-xs-3">
                         <select class="form-control" id="itemCategory">
                             <option value="">请选择</option>
-                            <option value="ZHD1">标准-ZHD1</option>
-							<option value="ZHD3">免费-ZHD3</option>
-							<option value="ZHR3">退货-ZHR3</option>
-							<option value="ZHD2">标准-ZHD2</option>
-							<option value="ZHD4">免费-ZHD4</option>
-							<option value="ZHR4">退货-ZHR4</option>
-							<option value="ZHT1">标准-ZHT1</option>
-							<option value="ZHT3">免费-ZHT3</option>
-							<option value="ZHR1">退货-ZHR1</option>
-							<option value="ZHT2">标准-ZHT2</option>
-							<option value="ZHT6">免费-ZHT6</option>
-							<option value="ZHR2">退货-ZHR2</option>
+                            <option value="1">标准</option>
+							<option value="2">免费</option>
+							<option value="3">退货</option>
 							<option value="ZH97">ZH97</option>
 							<option value="ZH98">ZH98</option>
                         </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 col-xs-3">
-                        	入库时间
-                    </div>
-                    <div class="col-md-3 col-xs-3">
-                        	要求发货时间
-                    </div>
-                    <div class="col-md-6 col-xs-6">
-                    &nbsp;
                     </div>
                     <div class="col-md-3 col-xs-3">
                         <input type="text" id="onStoreDate" class="form-control"  /> 
@@ -208,7 +212,12 @@
                     <div class="col-md-3 col-xs-3">
                         <input type="text" id="shippDate" class="form-control"  /> 
                     </div>
-                    <div class="col-md-6 col-xs-6  pull-right">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                    &nbsp;
+                    </div>
+                    <div class="col-md-12 col-xs-12  pull-right">
                         <!-- <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="down_btn">下载 down</button> -->
                         <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="export_btn">导出export</button>
                         <button type="button" class="btn btn-primary pull-right" style="margin-right: 15px;" id="reset_btn">重置reset</button>

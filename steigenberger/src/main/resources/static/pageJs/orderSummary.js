@@ -29,6 +29,7 @@ $(function () {
     	$("#status").val("");
     	$("#contractManager").val("");
     	$("#stOrderType").val("");
+    	$("#customerClazz").val("");
     });
     
  // 自定义按钮导出数据
@@ -66,7 +67,8 @@ function getQueryParams(params) {
         officeCode     : $("#officeCode").val(),
         status         : $("#status").val(),
         contractManager : $("#contractManager").val(),
-        stOrderType        : $("#stOrderType").val()
+        stOrderType        : $("#stOrderType").val(),
+        customerClazz        : $("#customerClazz").val()
     };
     return temp;
 }
@@ -193,7 +195,7 @@ var TableInit = function () {
 				sortable : false
 			},{
 				title : '性质分类',
-				field : 'industryCodeName',
+				field : 'customerClazzName',
 				sortable : false
 			},{
 				title : '合同管理员',

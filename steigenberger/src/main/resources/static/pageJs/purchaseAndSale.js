@@ -29,7 +29,9 @@ $(function () {
     	$("#status").val("");
     	$("#contractManager").val("");
     	$("#stOrderType").val("");
+    	$("#materialCode").val("");
     	$("#materialName").val("");
+    	$("#customerClazz").val("");
     	$("#requirementPlan").val("");
     	$("#itemCategory").val("");
     	$("#onStoreDate").val("");
@@ -72,7 +74,9 @@ function getQueryParams(params) {
         status         : $("#status").val(),
         contractManager : $("#contractManager").val(),
         stOrderType        : $("#stOrderType").val(),
+        materialCode        : $("#materialCode").val(),
         materialName        : $("#materialName").val(),
+        customerClazz        : $("#customerClazz").val(),
         requirementPlan        : $("#requirementPlan").val(),
         itemCategory        : $("#itemCategory").val(),
         onStoreDate        : $("#onStoreDate").val(),
@@ -203,7 +207,7 @@ var TableInit = function () {
 				sortable : false
 			},{
 				title : '性质分类',
-				field : 'industryCodeName',
+				field : 'customerClazzName',
 				sortable : false
 			},{
 				title : '合同管理员',
