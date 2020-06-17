@@ -71,7 +71,7 @@ var ctxPath  = [[@{/}]];
 	                        <input type="text" id="s_customerName" name="s_customerName" class="form-control" aria-describedby="emailHelp">
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
-	                        <input type="text" id="s_contractManager" name="s_contractManager" class="form-control" readonly>
+	                        <input type="text" id="s_contractManager" name="s_contractManager" class="form-control" >
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
 	                        <select class="form-control" id="s_status" name="s_status">
@@ -484,7 +484,7 @@ $('#reset').click(function() {
 	$('#s_contractNumber').val("");
 	$('#s_contractManager').val("");
 	$('#s_customerName').val("");
-	$('#s_createTime').val("");
+	$('#s_orderCreateTime').val("");
 	$('#s_createTime').val("");
 	$('#s_status').val("");
 });
@@ -620,7 +620,9 @@ var contractCols = [ {
     		}
 			actions.push('<a class="btn" onclick="view(\'' + index + '\')"><i class="fa fa-edit"></i>查看view</a> ');
     		/* actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>'); */
-			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/export" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
+			if (status == '06') {
+    			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/download" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
+			}
 			//actions.push('<a class="btn" onclick="exportContract(\'' + index + '\')"><i class="fa fa-edit"></i>导出export</a> ');
 			if (status == '01') {
 				actions.push('<a class="btn" onclick="send(\'' + index + '\')"><i class="fa fa-edit"></i>发送send</a> ');
@@ -660,7 +662,7 @@ $('#contractTable').bootstrapTable({
 			contractNumber: $('#s_contractNumber').val(),
 			contractManager: $('#s_contractManager').val(),
 			customerName: $('#s_customerName').val(),
-			createTime: $('#s_createTime').val(),
+			orderCreateTime: $('#s_orderCreateTime').val(),
 			createTime: $('#s_createTime').val(),
 			status: $('#s_status').val()
 		};

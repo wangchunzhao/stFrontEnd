@@ -133,6 +133,12 @@ public class ContractController {
 		return result;
 	}
 
+	/**
+	 * 预览pdf文档
+	 * @param contractId
+	 * @param request
+	 * @param response
+	 */
 	@GetMapping("/{id}/preview")
 	@ResponseBody
 	public void preview(@PathVariable("id") Integer contractId, HttpServletRequest request,
@@ -249,9 +255,8 @@ public class ContractController {
 	 * @throws Exception
 	 */
 	@GetMapping({ "{id}/download" })
-	public void downloadContract(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String idStr = request.getParameter("id");
-		Contract contract = (Contract)this.contractService.find(Integer.valueOf(idStr)).getData();
+	public void downloadContract(@PathVariable("id") Integer contractId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Contract contract = (Contract)this.contractService.find(contractId).getData(); 
 
 		String signContractId = contract.getSignContractid();
 		byte[] zipBytes = this.contractService.doDownloadFromSignSystem(signContractId);
