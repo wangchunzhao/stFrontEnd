@@ -76,13 +76,13 @@ var ctxPath  = [[@{/}]];
 	                    <div class="col-md-3 col-xs-3">
 	                        <select class="form-control" id="s_status" name="s_status">
 	                            <option value="">-- 请选择 --</option>
-	                            <option value="00">待制作</option>
-	                            <option value="01">已制作</option>
+	                            <option value="00">合同未制作</option>
+	                            <option value="01">合同已制作，待发送</option>
 	                            <!--  <option value="2">已发送</option> -->
-	                            <option value="03">已发送</option>
-	                            <option value="04">客户已上传</option>
-	                            <option value="05">客户已签署</option>
-	                            <option value="06">已签署</option>
+	                            <option value="03">合同已发送，待客户上传上上签</option>
+	                            <option value="04">合同已上传上上签，待客户发起签署</option>
+	                            <option value="05">客户已发起签署，待QHC确认</option>
+	                            <option value="06">双方已签署</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-md-3 col-xs-3">
@@ -577,19 +577,19 @@ var contractCols = [ {
 	width : '5%',
 	formatter: function(value, row, index) {
     	if(value == null){
-    		return '待制作'
+    		return '合同未制作'
     	}else if(value == '01' || value == '02'){
-    		return '已制作'
+    		return '合同已制作，待发送'
     	}else if(value == '03'){
-    		return '已发送'
+    		return '合同已发送，待客户上传上上签'
     	}else if(value == '04'){
-    		return '客户已上传'
+    		return '合同已上传上上签，待客户发起签署'
     	}else if(value == '05'){
-    		return '客户已签署'
+    		return '客户已发起签署，待QHC确认'
     	}else if(value == '06'){
-    		return '已签署'
+    		return '双方已签署'
     	}else{
-    		return '待制定'
+    		return '合同未制作'
     	}
     }
 }, {
