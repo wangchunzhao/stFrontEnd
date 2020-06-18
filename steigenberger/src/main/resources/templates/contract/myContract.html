@@ -116,26 +116,17 @@ var ctxPath  = [[@{/}]];
 								<tr class="">
 									<th class=""><div style="width: 100px;">序号 number</div></th>
 									<th class=""><div style="width: 100px;">流水号 Code</div></th>
-									<th class=""><div style="width: 160px;">合同号contract
-											code</div></th>
-									<th class=""><div style="width: 180px;">签约单位
-											Contract unit</div></th>
-									<th class=""><div style="width: 180px;">性质分类
-											Classification</div></th>
-									<th class=""><div style="width: 180px;">创建时间
-											Creation time</div></th>
-									<th class=""><div style="width: 180px;">合同制作时间
-											Contract date</div></th>
-									<th class=""><div style="width: 180px;">版本号 version
-											number</div></th>
-									<th class=""><div style="width: 180px;">合同状态
-											Contract status</div></th>
-									<th class=""><div style="width: 180px;">签约人
-											Customer manager</div></th>
-									<th class=""><div style="width: 250px;">合同发送时间
-											Contract delivery time</div></th>
-									<th class=""><div style="width: 180px;">操作
-											operation</div></th>
+									<th class=""><div style="width: 160px;">合同号contract code</div></th>
+									<th class=""><div style="width: 180px;">签约单位Contract unit</div></th>
+									<th class=""><div style="width: 180px;">合同状态Contract status</div></th>
+									<th class=""><div style="width: 180px;">操作operation</div></th>
+									<th class=""><div style="width: 180px;">创建时间Creation time</div></th>
+									<th class=""><div style="width: 180px;">合同制作时间Contract date</div></th>
+									<th class=""><div style="width: 180px;">版本号 version number</div></th>
+									
+									<th class=""><div style="width: 180px;">签约人Customer manager</div></th>
+									<th class=""><div style="width: 250px;">合同发送时间Contract delivery time</div></th>
+									
 								</tr>
 							</thead>
 							<tbody>
@@ -145,14 +136,14 @@ var ctxPath  = [[@{/}]];
 									<td class=""></td>
 									<td class=""></td>
 									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
 									<td class=""><a href="/" class="" mc-ace="~"
 										style="margin-right: 10px;">预览preview</a><a href="/" class="">导出export</a></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									
 								</tr>
 								<tr class="">
 									<td class=""></td>
@@ -160,14 +151,14 @@ var ctxPath  = [[@{/}]];
 									<td class=""></td>
 									<td class=""></td>
 									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
-									<td class=""></td>
 									<td class=""><a href="制作合同BPM.html" class=""
 										style="margin-right: 10px;">制作making</a></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									
 								</tr>
 							</tbody>
 						</table>
@@ -556,22 +547,6 @@ var contractCols = [ {
 	field : 'customerClazz',
 	visible : false
 }, {
-	field : 'customerClazzName',
-	title : '性质分类 Classification',
-	width : '5%'
-}, {
-	field : 'orderCreateTime',
-	title : '创建时间 Creation Time',
-	width : '5%'
-}, {
-	field : 'createTime',
-	title : '合同制作时间 Contract Date',
-	width : '5%'
-}, {
-	field : 'version',
-	title : '版本号 Version Number',
-	width : '5%'
-}, {
 	field : 'status',
 	title : '合同状态 Contract Status',
 	width : '5%',
@@ -592,16 +567,8 @@ var contractCols = [ {
     		return '合同未制作'
     	}
     }
-}, {
-	field : 'contractManager',
-	title : '签约人 Customer Manager',
-	width : '5%'
-}, {
-	field : 'sendTime',
-	title : '合同发送时间 Contract Delivery Time',
-	width : '5%'
 },{
-    title: '操作',
+	title: '操作',
     align: 'center',
     width:'25%',
     formatter: function(value, row, index) {
@@ -633,6 +600,26 @@ var contractCols = [ {
     	}
 		return actions.join('');
     }
+}, {
+	field : 'orderCreateTime',
+	title : '创建时间 Creation Time',
+	width : '5%'
+}, {
+	field : 'createTime',
+	title : '合同制作时间 Contract Date',
+	width : '5%'
+}, {
+	field : 'version',
+	title : '版本号 Version Number',
+	width : '5%'
+}, {
+	field : 'contractManager',
+	title : '签约人 Customer Manager',
+	width : '5%'
+}, {
+	field : 'sendTime',
+	title : '合同发送时间 Contract Delivery Time',
+	width : '5%'
 } ];
 
 // 初始化合同列表
