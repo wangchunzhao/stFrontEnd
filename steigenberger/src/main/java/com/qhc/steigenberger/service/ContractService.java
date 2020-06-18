@@ -438,15 +438,16 @@ public class ContractService {
 		return wordFile;
 	}
 
-	public Contract sendMailToCustomer(Integer contractId) {
+	public Contract sendMailToCustomer(String userid, Integer contractId) {
 		Contract contract = (Contract) this.find(contractId).getData();
-		return sendMailToCustomer(contract);
+		return sendMailToCustomer(userid, contract);
 	}
 
-	public Contract sendMailToCustomer(Contract contract) {
+	public Contract sendMailToCustomer(String userid, Contract contract) {
 		Integer contractId = contract.getId();
 		try {
 			File docFile = exportToPDF(contract);
+			String fileHashCode = bestsignService.generateShA1Code(docFile);
 
 			Map<String, Object> valMap = new HashMap<>();
 			// 签约单位
@@ -482,10 +483,9 @@ public class ContractService {
 				throw new RuntimeException("发送邮件失败！");
 			}
 
-			String fileHashCode = bestsignService.generateShA1Code(docFile);
 			// update contract file_hash_code
 //			contract.setFileHashCode(fileHashCode);
-			this.updateFileHashCode(contractId, fileHashCode);
+			this.updateFileHashCode(userid, contractId, fileHashCode);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -547,9 +547,9 @@ public class ContractService {
 	 * @throws JsonProcessingException
 	 * @throws JsonMappingException
 	 */
-	public boolean doSignContract(int contractId) throws JsonMappingException, JsonProcessingException {
-		Result r = (Result)fryeService.putForm("/contract/" + contractId + "/sign", "", Result.class);
-		return r.getStatus().equals("ok");
+	public Result doSignContract(String userid, int contractId) throws JsonMappingException, JsonProcessingException {
+		Result r = (Result)fryeService.putForm("/contract/" + contractId + "/sign/" + userid, "", Result.class);
+		return r;
 		
 //		Contract contract = (Contract) this.find(Integer.valueOf(contractId)).getData();
 //
@@ -594,10 +594,10 @@ public class ContractService {
 		return result;
 	}
 	
-	public Result updateFileHashCode(Integer contractId, String fileHashCode) {
+	public Result updateFileHashCode(String userid, Integer contractId, String fileHashCode) {
 		logger.info("updateFileHashCode({}, {})", contractId, fileHashCode);
 		Result result = null;
-		result = (Result) fryeService.putForm("/contract/" + contractId + "/hashcode/" + fileHashCode, "", Result.class);
+		result = (Result) fryeService.putForm("/contract/" + contractId + "/hashcode/" + fileHashCode + "/" + userid, "", Result.class);
 		if (!result.getStatus().equals("ok")) {
 			throw new RuntimeException(result.getMsg());
 		}

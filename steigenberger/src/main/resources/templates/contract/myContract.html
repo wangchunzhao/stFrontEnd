@@ -947,7 +947,7 @@ function sign(index) {
 	    success: function(data) {
     		checkLogout(data);
 	    	if(data == null || data.status != 'ok'){
-	    		layer.alert("签署合同给客户失败！" + (data != null ? data.msg : ""));
+	    		layer.alert("签署合同失败！" + (data != null ? data.msg : ""));
 	    	}else{
 	    		// console.log(data.data)
 	    		contract = data.data;

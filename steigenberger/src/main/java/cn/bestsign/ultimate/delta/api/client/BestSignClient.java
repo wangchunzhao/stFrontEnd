@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,11 +81,14 @@ public class BestSignClient {
     }
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+    //设置代理，用来访问外网
+    Proxy proxy = System.getProperty("http.proxyHost", "").length() == 0 ? Proxy.NO_PROXY : new Proxy(Proxy.Type.HTTP, new InetSocketAddress(System.getProperty("http.proxyHost", ""), Integer.valueOf(System.getProperty("http.proxyPort", "80"))));
 
     //shared perform best
     private final OkHttpClient okHttpClient = new OkHttpClient
             .Builder()
             .readTimeout(1, TimeUnit.MINUTES)
+            .proxy(proxy)
             .build();
 
     /**

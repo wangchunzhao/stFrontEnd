@@ -56,7 +56,7 @@ class ContractServiceTest {
 
 	@Test
 	void testUpdateFileHashCode() {
-		this.contractService.updateFileHashCode(1, "34423jdlfk89sdf");
+		this.contractService.updateFileHashCode("admin", 1, "34423jdlfk89sdf");
 	}
 
 	@Test

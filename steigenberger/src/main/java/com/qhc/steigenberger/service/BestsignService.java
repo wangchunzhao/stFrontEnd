@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -378,11 +380,17 @@ public class BestsignService {
 	}
 
 	private static String sha1(File file) throws IOException, NoSuchAlgorithmException {
-		MessageDigest messagedigest = MessageDigest.getInstance("SHA-1");
-		FileInputStream in = new FileInputStream(file);
-		FileChannel ch = in.getChannel();
-		MappedByteBuffer byteBuffer = ch.map(FileChannel.MapMode.READ_ONLY, 0L, file.length());
-		messagedigest.update(byteBuffer);
-		return HexUtils.byteArrayToHex(messagedigest.digest());
+		byte[] data = FileUtils.readFileToByteArray(file);
+		MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+		crypt.reset();
+		crypt.update(data);
+		return (new BigInteger(1, crypt.digest())).toString(16);
+		
+//		MessageDigest messagedigest = MessageDigest.getInstance("SHA-1");
+//		FileInputStream in = new FileInputStream(file);
+//		FileChannel ch = in.getChannel();
+//		MappedByteBuffer byteBuffer = ch.map(FileChannel.MapMode.READ_ONLY, 0L, file.length());
+//		messagedigest.update(byteBuffer);
+//		return HexUtils.byteArrayToHex(messagedigest.digest());
 	}
 }

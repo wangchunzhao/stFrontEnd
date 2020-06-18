@@ -1,5 +1,8 @@
 server:
   port: 8880
+http:
+   proxyHost: 10.217.10.40
+   proxyPort: 80
 
 #for email setting
 mail:
@@ -29,13 +32,11 @@ contract:
     
     # Bestsign config
     bestsign:
-        # for Test
+        contractDir: D:\\qhc\\contracts\\
         url: https://api.bestsign.info
-        accountname: yongzheng.wang@haiercarrier.com
+        accountname: chunzhao.wang@carrier.com
         entername: 青岛海尔开利冷冻设备有限公司
-        clientid: 1575947454016605528
-        secrete: jmx9U6HyaV1O54lxk1aLYgwhn4SCocwy
+        clientid: 1551431358012904950
+        secrete: FB9KFCnfk1w9n1lRATGWHdCmiOf3Yt6J
         sealname: 青岛海尔开利冷冻设备
-        privatekey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJFstcFiHwxvod0kQU1KLi+Sy7bE3yrfVPeTd3jdPw3qmCik21wLUfXXO6/dSQyTWV3sSoJGNoK6jlhqKbbDottDOVE1T5G6Wc2Nz3YyfGq76EO9C+do7y4WPxqq+1tOoLi5DO7pjMdN7kXS0fyDFJhbUGWroPsNV1IbsGTB1ipzAgMBAAECgYA9z8cxe1NXJdvW8yIOiAk5j1unQ+bXgjXLRZLyfJfggmZKYEgcx3L+240zIwt5nOfPVDAXT2C8EC+QxQ8V7/G4OxpZ7XeVEP0MaI0qRZn7/J5BEsEpd1UNOJVWL7Sd0fl4EzL5nLerKLxjv1sNnXZhExtykbM81DwwaBx+/vRfgQJBAN51ykGBQ0IJHIqz1mpL7G4yUtNQ5iuzj7ZRrndz7sdfVnOiqf2K/YvxgC7OV1lZggNAIEcO42vPID4PxkvqP8UCQQCnWZxZQD2g4RxNIQnrvAWFfhYa+A/dha+ZsP/unTV5XdFRhJ55J8yx4/RKxVPFQ7PiwY0s73o6OcdeK6fEHezXAkBgKDoMpnsUCCw2KBX+TGMeHtJ+VPGo4iy0egoXyBzmQOd1hFJGLdX6r6DgmoBXNsFj9kv9awoSh61AJkFofxChAkBJTH2ntfSIX7EGs17mCr+cXcKO43IHhAOK3LTsrZz7YLVK8Dx9Mop8rCyXB2EOuP20ZzRPp0Cw+hexzos34ieXAkEAsZIOtp0UZU9KIK7SSwHuH2fqHGI/axqYCjYt1CO0l1DIySsCilPjiD6gkziz3ClJrYvR8KZU7+ZZe0udNg7/3g==
-        # 上上签合同文件临时目录
-        contractDir: D:\\qhc\\bestsign\\contract\\
+        privatekey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCT8nJ2xwoZbU20g5bA2V9xDVmFbK6cEctLgqyTaiVhC3t+muEu4KodoiiCMhiJgeQYzNHjxv4FKFxD9F5iSxVBREqSHd9KUamM3+yhHcDA8zalb9O9D9MZp6oP/9MerMrjnZC7KswtHME5nhElBQQdLgG5dDlK3TI/U17iUPY5mhfzBAoGyEiXdVwVzxZemzL8uWMl0+FVOgkf35R0oIz0SoV1748Dmuse0kqUdJltI8rByrOaS0UNwEtVhS8jC4fm6Aoly3/pwViHhCUouU73flzbHVCi74pZ8pJCH7UecM2P7C0aIWY+9FBRVBf0W5peEfZHFY0dYbPUUne52OuVAgMBAAECggEAVtjAdpcah5iRP8DrEuPHUe7bOSZ2TWlopDfeJF7v+EqsQMKcI0+ArQqOqvbLTpTwF9rL7uDWJqLtnnppmVun63syJxngBJlxZR/hoSZ9Cwb6chz194q9idbRTrkG7n/STdElr6lM18KEbtUqDUgnhRWHr5zZMOgt4dyH22RZVbAHcXSF6byDtc4RRpvEDGAjpxJZRUbgHq7G/kgXqoZYh3qfT/YlWULUyK1GPZWGu958fgswbRezFBGPo146IwfEbPykoIJg2AiQqmTBVp881SEVuqVWcM12UAt4wnY4jNzsvAwZFFHe1nOzwRAUfF3KZocZR+jM+XPB86IylmA4IQKBgQDfPKByf2rVX0TWDmcLflRrtm7MXHtaVr21A0uxIjNgVlNevnKNFXQ2C2wZ2Gts4dWJSTNpVwLINre2jxbNKQRB14GWRoPyTl3EkDieTaTOWxd/rFr6cZhDml7v4s7wTBik/2S+Z+SJbpFM/BNlv2X5eqwkrfIUHQ/xcI/H9Uz+aQKBgQCpqQ+BQvSRVA87MjT+FCwv+RFFz+LV6vL6XtkRLE9osZ1g7Nwi4UYYfROkv2QkyFTVojI4cn0F0J8BRmU+MBNmy2s01067GaIBK8gmxw9XnGi1TFZbE3vC73MaNhCzVw/+m+cHNG5BwHxkMgurpjwgWATOWc72iLxQHk0fW4x2TQKBgQC9yYhK74K/NoiKR6JZhiR1kpruCS4h5p7QFqYySPZOz/V/FgDDa1rqW5mi+3iREAp/9gjMZNoLp2FWxp3G/DkPVQ1p2jdxOCjF5SsNgss7WPxIYhrS0uJ1jvdpkHUInFlTZYGb0y3bnXHQdnpzRV6H1EAnyu6FJRQZ2u2SPT0hCQKBgDIPyp1vrk67qQrkk7JtLWSyb6BT6TEJ9Mxf9FkW5A+WaUPSYFqCcnaDYap5NwmLe0zWYU86qR1wI5rytKkW8oKgf2/GIFshAyapTpPypNpLMrJcZhbVtu0cTrBrR55DkFqmkhMUK3yHWa0O/1aU5KT+k9x3r5QbYMWbS1J3Zwj5AoGBAMNsxUEMP/IrNRgfKIfy81YyViG/hSKiYiQoBbhGPt0XgoM8SgTH/N6g5YC1+++ZjiijLrMY9AwoQeESdLQtTrGz9KvibpcSnNGG6/y/fyhl8Ug5TGTCH3KlhogKkRBJ6I+NjxKbkiTupmr5yc4DsPPRFhtbH+iWqid89HujDtkI

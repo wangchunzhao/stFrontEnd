@@ -41,7 +41,7 @@ import com.qhc.steigenberger.service.UserService;
 
 @Controller
 @RequestMapping("contract")
-public class ContractController {
+public class ContractController extends BaseController {
 	
 	private static Logger logger = LoggerFactory.getLogger(ContractController.class);
 
@@ -94,18 +94,23 @@ public class ContractController {
 
 	@PostMapping("/send")
 	@ResponseBody
-	public Result saveAndSend(@RequestBody Contract contract, HttpServletRequest request) {
+	public Result saveAndSend(@RequestBody Contract contract) {
 		Result r = null;
 		try {
-			String identityName = request.getSession().getAttribute(Constants.IDENTITY).toString();
+			String identityName = this.getUserIdentity();
 			contract.setCreateTime(new Date());
 			// 设置状态为已制作
-			contract.setStatus("01");
+//			contract.setStatus("01");
+			String status = contract.getStatus();
+			// 重新编辑的要删除生成的文档
+			if (status != null && !status.equals("01")) {
+				contractService.deletePdf(contract);
+			}
 			// 设置操作人
 //		contract.seto
 			r = contractService.save(contract);
 			if (r.getStatus().equals("ok")) {
-				contractService.sendMailToCustomer((Contract)r.getData());
+				contractService.sendMailToCustomer(identityName, (Contract)r.getData());
 			}
 			r = Result.ok("");
 		} catch (Exception e) {
@@ -120,7 +125,8 @@ public class ContractController {
 	public Result send(@PathVariable("id") Integer contractId) {
 		Result<String> result = new Result<String>();
 		try {
-			Contract contract = this.contractService.sendMailToCustomer(Integer.valueOf(contractId));
+			String identityName = this.getUserIdentity();
+			Contract contract = this.contractService.sendMailToCustomer(identityName, Integer.valueOf(contractId));
 			if (contract != null) {
 				result = Result.ok("");
 			} else {
@@ -238,12 +244,8 @@ public class ContractController {
 	@ResponseBody
 	public Result<?> signContract(@PathVariable("id") Integer contractId) throws JsonProcessingException {
 		Result<?> r = null;
-		boolean flag = this.contractService.doSignContract(contractId);
-		if (flag) {
-			r = Result.ok("");
-		} else {
-			r = Result.error("");
-		}
+		String identityName = this.getUserIdentity();
+		r = this.contractService.doSignContract(identityName, contractId);
 		return r;
 	}
 
@@ -269,6 +271,10 @@ public class ContractController {
 		ZipInputStream zin = null;
 		InputStream pin = null;
 		try {
+			File p = new File(this.contractDir);
+			if (!p.exists()) {
+				p.mkdirs();
+			}
 			Files.write(Paths.get(path, new String[0]), zipBytes, new java.nio.file.OpenOption[0]);
 			zf = new ZipFile(path);
 			in = new BufferedInputStream(new FileInputStream(path));
