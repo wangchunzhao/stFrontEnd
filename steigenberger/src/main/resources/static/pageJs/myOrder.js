@@ -491,6 +491,7 @@ $('#resetBtn').click(function() {
 	$("#status").val("");
 	$("#b2c").val("");
 	$("#salesName").val("");
+	InitTime();
 
 })
 
