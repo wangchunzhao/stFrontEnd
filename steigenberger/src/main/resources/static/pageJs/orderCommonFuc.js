@@ -2026,6 +2026,8 @@ function openConfig(configContent){
 	$("#configMaterialTypeName").val(tableData.materialName);
 	$("#materialConfigClazzCode").val(tableData.clazzCode);
 	$("#materialConfigCode").val(tableData.materialCode);
+	$("#configContractNumber").val($("#contractNumber").val())
+	$("#configContractName").val()
 	$("#configIndex").val(index);
 	$("#viewCode").val(tableData.materialCode);
 	$("#viewTransationPrice").val(tableData.transactionPrice);

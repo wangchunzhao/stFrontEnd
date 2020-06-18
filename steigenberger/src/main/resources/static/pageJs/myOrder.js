@@ -489,6 +489,8 @@ $('#resetBtn').click(function() {
 	$("#orderType").val("");
 	$("#reservation1").val("");
 	$("#status").val("");
+	$("#b2c").val("");
+	$("#salesName").val("");
 
 })
 
