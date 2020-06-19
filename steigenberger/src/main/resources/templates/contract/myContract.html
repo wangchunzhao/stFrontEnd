@@ -907,9 +907,9 @@ function send(index) {
 	    success: function(data) {
     		checkLogout(data);
 	    	if(data == null || data.status != 'ok') {
-	    		layer.alert("发送合同失败！" + (data != null ? data.msg : ""));
+	    		layer.alert("合同发送失败！" + (data != null ? data.msg : ""));
 	    	}else{
-	    		layer.alert("发送合同成功！");
+	    		layer.alert("合同发送成功！");
 	    		refresh();
 	    	}      
 	    },
@@ -934,14 +934,15 @@ function sign(index) {
 	    success: function(data) {
     		checkLogout(data);
 	    	if(data == null || data.status != 'ok'){
-	    		layer.alert("签署合同失败！" + (data != null ? data.msg : ""));
+	    		layer.alert("合同签署失败！" + (data != null ? data.msg : ""));
 	    	}else{
-	    		// console.log(data.data)
-	    		contract = data.data;
-	    		// setEditInfo(row, contract);
-	    		showEditModal(contract);
+	    		layer.alert("合同签署成功！" );
+	    		refresh();
 	    	}      
-	    }
+	    },
+        error: function (res) {
+        	layer.alert("合同签署失败: "+jQuery.parseJSON(res.responseText).message);
+        }
 	});		
 }
 
