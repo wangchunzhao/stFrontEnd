@@ -56,22 +56,23 @@ public class Constants {
 	  
 	public final static Map<String, String> itemCategoryMap = new HashMap() {
 		  {
-			// ZH0D/ZH01 可配置
+			  // 经销商 ZH0D/ZH01 可配置
 			  put("ZHD1","标准");
 			  put("ZHD3","免费");
 			  put("ZHR3","退货");
-			  // ZH0D/ZH02 不可配置
+			  // 经销商 ZH0D/ZH02 不可配置
 			  put("ZHD2","标准");
 			  put("ZHD4","免费");
 			  put("ZHR4","退货");
-			  // ZH0T/ZH01 可配置
+			  // ZH0T （大客户）/ZH01 可配置
 			  put("ZHT1","标准");
 			  put("ZHT3","免费");
 			  put("ZHR1","退货");
-			  // ZH0D/ZH02 可配置
+			  // ZH0T （大客户）/ZH02 不可配置
 			  put("ZHT2","标准");
-			  put("ZHT6","免费");
+			  put("ZHT4","免费");
 			  put("ZHR2","退货");
+			  put("ZHT6","供应商直发");
 			  // 不可预估费，其他项目收付费
 			  put("ZH97","ZH97");
 			  put("ZH98","ZH98");
