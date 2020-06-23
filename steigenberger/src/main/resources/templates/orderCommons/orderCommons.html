@@ -46,8 +46,21 @@
 				<div class="panel-body" style="height: auto;">
 
 					<div class="row">
-						<span class="col-md-1 control-label">签约单位</span>
-					    <div class="col-md-2">
+					 <div class="col-md-3">
+						<span class="control-label">签约单位 Contract unit</span>
+					</div>
+					 <div class="col-md-3">
+						<span class="control-label">性质分类 Classification</span>
+					</div>
+					 <div class="col-md-3">
+						<span class="control-label">店名 Customer name</span>
+					</div>
+					 <div class="col-md-3">
+						<span class="control-label">项目报备编号  Report number</span>
+					</div>
+					</div>
+					<div class="row">
+					    <div class="col-md-3">
 					    <div class="input-group">
 					    	<input type="hidden" th:field="*{hasSendSap}">
 		                    <input type="text" class="form-control" disabled id="customerName" th:field="*{customerName}">
@@ -61,49 +74,54 @@
 		                </div>			                
 		                
 					    </div>
-					    <span class="col-md-1 control-label">性质分类</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 					      		<input type="text" class="form-control" id="customerClazzName" readonly th:field="*{customerClazzName}">
 								<input type="hidden" id="customerClazz" th:field="*{customerClazz}">
 					    </div>
-					    <span class="col-md-1 control-label">店名</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 						      	<input type="text" class="form-control" id="shopName" th:field="*{shopName}">
 						      	<input type="hidden" id="createTime" th:field="*{createTime}">
 					    </div>
-						<span class="col-md-1 control-label">项目报备编号</span>
-						<div class="col-md-2">
+						
+						<div class="col-md-3">
 					      <input type="text" class="form-control" id="recordCode" th:if="${orderType!=3&&orderType!=4 && orderType!=5}" th:field="*{recordCode}">
 							<input type="text" class="form-control" readonly id="recordCode" th:if="${orderType==4 || orderType==5||orderType==3}" th:field="*{recordCode}">
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">客户经理</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">客户经理 Customer manager</span>
+						 <span class="col-md-3 control-label">客户经理电话  Customer manager Tel</span>
+						 <span class="col-md-3  control-label">是否改造店 Renovation store</span>
+						 <span class="col-md-3 control-label" th:if="${orderType!=4 && orderType!=5&&orderType!=3}">终端客户性质 Customer nature</span>
+						 <span class="col-md-3 control-label" th:if="${orderType==4 || orderType==5}">是否年采客户</span>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
 					      <input type="text" class="form-control" id="salesName" readonly th:field="*{salesName}">
 					      <input type="hidden"  name="salesCode" id="salesCode" th:field="*{salesCode}">
 					    </div>
-					    <span class="col-md-1 control-label">客户经理电话</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 					      <input type="text" class="form-control" id="salesTel" th:field="*{salesTel}">
 					    </div>
-				    	<span class="col-md-1  control-label">是否改造店</span>
-						<div class="col-md-2">
+				    	
+						<div class="col-md-3">
 					      <select class="form-control" th:field="*{isReformed}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType!=4 && orderType!=5&&orderType!=3}">终端客户性质</span>
-						<div class="col-md-2" th:if="${orderType!=4 && orderType!=5&&orderType!=3}">
+						
+						<div class="col-md-3" th:if="${orderType!=4 && orderType!=5&&orderType!=3}">
 					      <select class="form-control" id="industryCode"  th:field="*{terminalType}">
 								<option value="0001">MNC（国际连锁）</option>
 								<option value="0002">Local top 100-国内连锁百强</option>
 								<option value="0004">Local others（本地其他）</option>
 						  </select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType==4 || orderType==5}">是否年采客户</span>
-						<div class="col-md-2" th:if="${orderType==4 || orderType==5}">
+						<div class="col-md-3" th:if="${orderType==4 || orderType==5}">
 							<select class="form-control"  th:field="*{isYearpurchase}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
@@ -111,27 +129,32 @@
 						</div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">是否便利店</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">是否便利店 Convenience store</span>
+						<span class="col-md-3 control-label">是否新客户 New customer</span>
+						<span class="col-md-3 control-label" th:if="${orderType==4||orderType==3}">隶属关系</span>
+						<span class="col-md-3 control-label" th:if="${orderType==4||orderType==3}">客户分类</span>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
 					      <select class="form-control" th:field="*{isConvenientStore}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-					    <span class="col-md-1 control-label">是否新客户</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 					      <select class="form-control" th:field="*{isNew}">
 								<option value="1" class="">是</option>
 								<option value="0" class="">否</option>
 							</select>
 					    </div>
-						<span class="col-md-1 control-label" th:if="${orderType==4||orderType==3}">隶属关系</span>
-						<div class="col-md-2" th:if="${orderType==4||orderType==3}">
+						
+						<div class="col-md-3" th:if="${orderType==4||orderType==3}">
 							<input type="text" class="form-control" id="customerIndustryName" readonly th:field="*{customerIndustryName}">
 							<input type="hidden" th:field="*{customerIndustry}">
 						</div>
-						<span class="col-md-1 control-label" th:if="${orderType==4||orderType==3}">客户分类</span>
-						<div class="col-md-2" th:if="${orderType==4||orderType==3}">
+						
+						<div class="col-md-3" th:if="${orderType==4||orderType==3}">
 							<input type="text" class="form-control" id="customerIndustryCodeName" readonly th:field="*{customerIndustryCodeName}">
 						</div>
 					</div>
@@ -152,23 +175,28 @@
 				<div class="panel-body" style="height: auto;">
 
 					<div class="row">
-						<span class="col-md-1 control-label">流水号</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">流水号 Code</span>
+						 <span class="col-md-3 control-label">合同号 Contract no</span>
+						 <span class="col-md-3 control-label">销售类型 Sales type</span>
+						  <span class="col-md-3 control-label">税率 Rate</span>
+				    </div>
+				    <div class="row">		
+						<div class="col-md-3">
 					      <input type="text" class="form-control" id="sequenceNumber" aria-describedby="emailHelp" th:field="*{sequenceNumber}" readonly>
 					    </div>
-					    <span class="col-md-1 control-label">合同号</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}" oninput="contractToUpperCase(this)" maxlength="10">
 					    </div>
-					    <span class="col-md-1 control-label">销售类型</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 							<select class="form-control" th:onchange="salesTypeChange(this,[[${order_option.offices}]],[[${order_option.taxRate}]],[[${order_option.exchangeRate}]])" th:field="*{saleType}" id="saleType">
 								<option value="">--请选择--</option>
 								<option th:each="type : ${order_option.saleTypes}" th:value="${type.key}" th:text="${type.value}"></option>	
 							</select>
 					    </div>
-					    <span class="col-md-1 control-label">税率</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 							<select class="form-control"  id="taxCode"  th:field="*{taxCode}">
 							</select>
 						</div>
@@ -176,36 +204,46 @@
 						<input type="hidden" id="taxCodeValue" th:value="*{taxCode}">
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">合同金额（凭证货币）</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">合同金额（凭证货币） Contract amount(document currency)</span>
+						<span class="col-md-3 control-label">币种 Currency</span>
+						 <span class="col-md-3 control-label">原币合同金额（CNY） Original contract amount</span>
+						  <span class="col-md-3 control-label">购销明细金额合计 Aggregate amount</span>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
 							<input type="text" class="form-control" id="orignalContractAmount"aria-describedby="emailHelp" readonly th:field="*{contractValue}">
 					    </div>
 					    <input type="hidden" id="contractValue" th:value="*{contractValue}">
-					    <span class="col-md-1 control-label">币种</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 							<select class="form-control"  id="currency" th:onchange="getExchangeRate(this,[[${order_option.exchangeRate}]])" disabled th:field="*{currency}">
 							    <option value="">--选择币种--</option>
 							</select>
 					    </div>
 					    <input type="hidden" id="currencyName"  th:value="*{currency}">
-					    <span class="col-md-1 control-label">原币合同金额（CNY）</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 							<input type="text" class="form-control" id="contractAmount" readonly aria-describedby="emailHelp" th:if="${orderType!=4}" th:field="*{contractRmbValue}">
 							<input type="text" class="form-control" id="contractAmount" aria-describedby="emailHelp" th:if="${orderType==4}" th:field="*{contractRmbValue}">
 						</div>
 					    <input type="hidden" id="contractRmbValue" th:value="*{contractRmbValue}">
-					    <span class="col-md-1 control-label">购销明细金额合计</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType!=5}" readonly name="itemsAmount">
 							<input type="text" class="form-control" id="itemsAmount" th:if="${orderType==5}" readonly disabled>
 					    </div>	
 					</div>
 					<div class="row" style="padding-top: 10px;">
-						<span class="col-md-1 control-label">汇率</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">汇率 Exchange rate</span>
+						<span class="col-md-3 control-label">国际贸易条件 International trade</span>
+						<span class="col-md-3 control-label">合同管理员 Contract administrator</span>
+						<span class="col-md-3 control-label">录入日期  Date of entry</span>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
 							<input type="text" class="form-control" id="exchangeRate" aria-describedby="emailHelp" readonly name="currencyExchange">
 					    </div>
-					    <span class="col-md-1 control-label">国际贸易条件</span>
+					    
 						<div class="col-xs-12 col-md-1" style="padding-right: 1px;">
 							<select class="form-control" id="incoterm" disabled th:field="*{incoterm}">
 							     <option value=""></option>
@@ -214,15 +252,15 @@
 							<input type="hidden" id="incotermItem"  th:value="*{incoterm}">
 						</div>
 						<input type="hidden" id="incotermName" th:field="*{incotermName}">
-						<div class="col-xs-12 col-md-1" style="padding-left: 1px;">
+						<div class="col-xs-12 col-md-2" style="padding-left: 1px;">
 							<input type="text" class="form-control"readonly id="incotermContect" th:field="*{incotermContect}">
 						</div>
-						<span class="col-md-1 control-label">合同管理员</span>
-						<div class="col-md-2">
+						
+						<div class="col-md-3">
 							<input type="text" class="form-control" aria-describedby="emailHelp" readonly th:field="*{contractManager}">
 					    </div>
-					    <span class="col-md-1 control-label">录入日期</span>
-					    <div class="col-md-2">
+					    
+					    <div class="col-md-3">
 							<input type="text" class="form-control" id="inputDate" aria-describedby="emailHelp" readonly th:field="*{contractCreateTime}">
 					    </div>
 					</div>
@@ -243,71 +281,90 @@
 				<div class="panel-body" style="height: auto;">
 	
 					<div class="row">
-					 	<span class="col-md-1 control-label">大区</span>
-						<div class="col-md-2">
+					 	<span class="col-md-3 control-label">大区 Area</span>
+					 	<span class="col-md-3 control-label">中心 Center</span>
+					 	 <span class="col-md-3 control-label">保修年限(年) Warranty period</span>
+					 	 <span class="col-md-3 control-label">安装方式  Installation</span>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
 							<select class="form-control" id="officeSelect" th:onchange="getGroups(this,[[${order_option.groups}]])" th:field="*{officeCode}">
 								<option value="">--选择大区--</option>
 							</select>
 					    </div>
 					    <input type="hidden" th:value="*{officeCode}" id="officeCode">
-					    <span class="col-md-1 control-label">中心</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 							<select class="form-control" id="selectGroup" th:field="*{groupCode}">
 								<option value="">--选择中心--</option>
 							</select>
 					    </div>
 					    <input type="hidden" id="groupCode" th:value="*{groupCode}">
-					    <span class="col-md-1 control-label">保修年限(年)</span>
-						<div class="col-md-2" th:if="${orderType==1||orderType==2||orderType==5}">
+					   
+						<div class="col-md-3" th:if="${orderType==1||orderType==2||orderType==5}">
 							<input type="text" class="form-control" id="warrenty" value="1" readonly name="warranty">
 					    </div>
-					    <div class="col-md-2" th:if="${orderType==3||orderType==4}">
+					    <div class="col-md-3" th:if="${orderType==3||orderType==4}">
 							<input type="text" class="form-control" id="warrenty" aria-describedby="emailHelp"  th:field="*{warranty}">
 					    </div>
-					    <span class="col-md-1 control-label">安装方式</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 							<input type="text" class="form-control" id="installTypeName" aria-describedby="emailHelp" readonly th:field="*{installTypeName}">
 							<input type="hidden" id="installType" th:field="*{installType}">
 					    </div>
 					</div>
 					<div class="row">
-					  <div class="col-md-1">
-					  	<span class="control-label"><strong>地址信息</strong></span>
+					  <div class="col-md-2">
+					  	<span class="control-label"><strong>地址信息 Address</strong></span>
 					  </div>
 					  <div class="col-md-11">
 					  	<table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;" id="addressTable" data-pagination="false" ></table>
 					  </div>
 						</div>  
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">收货方式</span>
-						<div class="col-md-2">
+						<div class="col-md-3">
+						<span class="control-label">收货方式 Receiving type</span>
+						</div>
+						<div class="col-md-3">
+						<span class="control-label">运输方式  Transportation type</span>
+						</div>
+						<div class="col-md-3" th:if="${orderType==1}">
+						 <span >标准折扣 Standard discount</span>
+						</div>
+						<div class="col-md-3" th:if="${orderType==3||orderType==4}">
+						 <span >追加运费 Additional freight </span>
+						</div>
+						 <div id="freightDiv1" style="display:none;" class="col-md-3">
+						  <span>外销运费（凭证货币）Export freight</span>
+						 </div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
 							<select class="form-control" id="receiveType" th:field="*{receiveType}" >
 								<option th:each="receiveTerm : ${order_option.receiveTerms}" th:value="${receiveTerm.key}" th:text="${receiveTerm.value}"></option>
 							</select>
 					    </div>
 					    <input type="hidden" id="receiveTypeName" th:field="*{receiveTypeName}">
-						<span class="col-md-1 control-label">运输方式</span>
-						<div class="col-md-2">
+						
+						<div class="col-md-3">
 							<select class="form-control" id="transferType" th:field="*{transferType}" onchange="transferTypeChange()">
 								<option th:each="shippingType : ${order_option.shippingTypes}" th:value="${shippingType.key}" th:text="${shippingType.value}"></option>
 							</select>
 							<input type="hidden" id="transferTypeName" th:field="*{transferTypeName}">
 							<input type="hidden" id="transferTypeCode" th:value="*{transferType}">
 					    </div>
-					    <span class="col-md-1 control-label" th:if="${orderType==1}">标准折扣</span>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="standardDiscount" name="discount" readonly th:if="${orderType==1}" th:value="${discount}">
+					   
+						<div class="col-md-3" th:if="${orderType==1}" th:value="${discount}">
+							<input type="text" class="form-control" id="standardDiscount" name="discount" readonly >
 					    </div>
-					    <span class="col-md-1 control-label" th:if="${orderType==3||orderType==4}">追加运费</span>
-						<div class="col-md-2" th:if="${orderType==3||orderType==4}">
+					    
+						<div class="col-md-3" th:if="${orderType==3||orderType==4}">
 							<input type="text" class="form-control" th:field="*{additionalFreight}">
 					    </div>
-					    <div id="freightDiv" style="display:none;">
-						    <span class="col-md-1 control-label">外销运费（凭证货币）</span>
-							<div class="col-md-2">
-								<input type="text" class="form-control" aria-describedby="emailHelp" id="freight" th:field="*{freight}"><!-- th:field="*{freight}" -->
-						    </div>
-					    </div>				
+						   
+						<div class="col-md-3" id="freightDiv" style="display:none;" >
+							<input type="text" class="form-control" aria-describedby="emailHelp" id="freight" th:field="*{freight}"><!-- th:field="*{freight}" -->
+					    </div>			
 					</div>
 					<div class="row" style="margin-top: 15px;">
 						<span class="col-md-1 control-label">授权人1及身份证号</span>

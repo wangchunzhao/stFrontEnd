@@ -405,6 +405,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$("#exchangeRate").val("");
 		$("#contractAmount").val("");
 		$("#freightDiv").show();
+		$("#freightDiv1").show();
 		$('#selectProvince').val('');
 		$('#citySelect').val('');
 		$('#selectDistrict').val('');
@@ -449,6 +450,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		updateAddressInProd(0);
 	}else{
 		$('#freightDiv').hide();
+		$('#freightDiv1').hide();
 		$('#citySelect').attr("disabled",false);
 		$('#selectDistrict').attr("disabled",false);
 		$('#selectProvince').attr("disabled",false);
@@ -2031,7 +2033,7 @@ function openConfig(configContent){
 	$("#materialConfigClazzCode").val(tableData.clazzCode);
 	$("#materialConfigCode").val(tableData.materialCode);
 	$("#configContractNumber").val($("#contractNumber").val())
-	$("#configContractName").val()
+	$("#configContractName").val($("#customerName").val())
 	$("#configIndex").val(index);
 	$("#viewCode").val(tableData.materialCode);
 	$("#viewTransationPrice").val(tableData.transactionPrice);
