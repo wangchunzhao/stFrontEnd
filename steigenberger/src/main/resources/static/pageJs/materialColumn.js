@@ -230,10 +230,12 @@ var materialsColumn = [{
 	    	}else{
 	    		if(value=="ZHD2"||value=="ZHT2"){
 		    		return "标准";
-		    	}else if(value=="ZHD4"||value=="ZHT6"){
+		    	}else if(value=="ZHD4"||value=="ZHT4"){
 		    		return "免费";
 		    	}else if(value=="ZHR4"||value=="ZHR2"){
 		    		return "退货";
+		    	}else if(value=="ZHT6"){
+		    		return "供应商直发";
 		    	}else{ 
 		    		return value;
 		    	}

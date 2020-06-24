@@ -332,7 +332,7 @@
 						 <span >标准折扣 Standard discount</span>
 						</div>
 						<div class="col-md-3" th:if="${orderType==3||orderType==4}">
-						 <span >追加运费 Additional freight </span>
+						 <span   >追加运费 Additional freight </span>
 						</div>
 						 <div id="freightDiv1" style="display:none;" class="col-md-3">
 						  <span>外销运费（凭证货币）Export freight</span>
@@ -367,42 +367,47 @@
 					    </div>			
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">授权人1及身份证号</span>
-						<div class="col-md-5">
+						<span class="col-md-6 control-label">授权人1及身份证号  Id number 1</span>
+						<span class="col-md-6 control-label">授权人1电话 Tel 1</span>
+						<div class="col-md-6">
 							<input type="text" class="form-control" id="contactor1Id" aria-describedby="emailHelp" th:field="*{contactor1Id}"><!-- th:field="*{contactor1Id}" -->
 					    </div>
-					    <span class="col-md-1 control-label">授权人1电话</span>
-						<div class="col-md-5">
+					    
+						<div class="col-md-6">
 							<input type="text" class="form-control" id="contactor1Tel" aria-describedby="emailHelp" th:field="*{contactor1Tel}"><!-- th:field="*{contactor1Tel}"  -->
 					    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">授权人2及身份证号</span>
-						<div class="col-md-5">
+						<span class="col-md-6 control-label">授权人2及身份证号 Id number 2</span>
+						<span class="col-md-6 control-label">授权人2电话 Tel 2</span>
+						<div class="col-md-6">
 							<input type="text" class="form-control" id="contactor2Id" aria-describedby="emailHelp" th:field="*{contactor2Id}">
 					    </div>
-					    <span class="col-md-1 control-label">授权人2电话</span>
-						<div class="col-md-5">
+					    
+						<div class="col-md-6">
 							<input type="text" class="form-control" id="contactor2Tel" aria-describedby="emailHelp" th:field="*{contactor2Tel}">
 					    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;">
-						<span class="col-md-1 control-label">授权人3及身份证号</span>
-						<div class="col-md-5">
+						<span class="col-md-6 control-label">授权人3及身份证号  Id number 3</span>
+						<span class="col-md-6 control-label">授权人3电话 Tel 3</span>
+						<div class="col-md-6">
 							<input type="text" class="form-control" id="contactor3Id" aria-describedby="emailHelp" th:field="*{contactor3Id}">
 					    </div>
-					    <span class="col-md-1 control-label">授权人3电话</span>
-						<div class="col-md-5">
+						<div class="col-md-6">
 							<input type="text" class="form-control" id="contactor3Tel" aria-describedby="emailHelp" th:field="*{contactor3Tel}">
 					    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
-						<span class="col-md-1 control-label">批准折扣</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">批准折扣 Standard discount</span>
+						<span class="col-md-3 control-label">柜体申请折扣  Cabinet apply discount</span>
+						 <span class="col-md-3 control-label">机组申请折扣  Crew apply discount</span>
+						 <span class="col-md-3 control-label">合并折扣 Merge discount</span>
+						<div class="col-md-3">
 							<input type="text" class="form-control" id="approveDiscount" aria-describedby="emailHelp" name="approveDiscount" readonly>
 					    </div>
-					    <span class="col-md-1 control-label">柜体申请折扣</span>
-						<div class="col-md-2">
+					    
+						<div class="col-md-3">
 							<div class="input-group">
 								<input type="text" class="form-control" id="bodyDiscount" aria-describedby="emailHelp" th:field="*{bodyDiscount}">
 								<span class="input-group-btn">
@@ -412,8 +417,8 @@
 			                    </span>
 			                </div>
 						</div>
-					    <span class="col-md-1 control-label">机组申请折扣</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 							<div class="input-group">
 								<input type="text" class="form-control" id="mainDiscount" aria-describedby="emailHelp" th:field="*{mainDiscount}">
 								<span class="input-group-btn">
@@ -423,21 +428,22 @@
 			                    </span>
 			                 </div>
 					    </div>
-						    <span class="col-md-1 control-label">合并折扣</span>
-							<div class="col-md-2">
+						    
+							<div class="col-md-3">
 								<input type="text" class="form-control" id="orderDiscount" aria-describedby="emailHelp" readonly name="discount">
 						    </div>
 					</div>
 					<div class="row" style="margin-top: 15px;" th:if="${orderType} eq 2">
-						<span class="col-md-1 control-label">长期折扣</span>
-						<div class="col-md-2">
+						<span class="col-md-3 control-label">长期折扣 Long term discount</span>
+						 <span class="col-md-3 control-label">非统一折扣  Non uniform discount</span>
+						<div class="col-md-3">
 					      <select class="form-control"  th:field="*{isLongterm}" onchange="isLongtermChange()">								
 								<option value="0" class="">否</option>
 								<option value="1" class="">是</option>
 							</select>
 					    </div>
-					    <span class="col-md-1 control-label">非统一折扣</span>
-						<div class="col-md-2">
+					   
+						<div class="col-md-3">
 					      <select class="form-control" th:field="*{isSpecial}" onchange="isLongtermChange()">								
 								<option value="0">否</option>
 								<option value="1">是</option>
@@ -492,7 +498,7 @@
 			<div id="paymentMethod" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
 				<div class="panel-body" style="height: auto;">
 						 <div class="row">
-						 	<span class="col-md-2 control-label">结算方式</span>
+						 	<span class="col-md-2 control-label">结算方式 Method of payment</span>
 							<div class="col-md-10">
 								<select class="form-control" id="paymentType" th:field="*{paymentType}">
 									<option th:each="payment : ${order_option.dealerPaymentTerms}" th:value="${payment.key}" th:text="${payment.value}"></option>
@@ -511,7 +517,7 @@
 			<div id="paymentMethod" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" >
 				<div class="panel-body" style="height: auto;">
 						 <div class="row">
-						 	<span class="col-md-2 control-label">结算方式</span>
+						 	<span class="col-md-2 control-label">结算方式 Method of payment</span>
 							<div class="col-md-10">
 								<textarea class="form-control" rows="2" id="paymentType" th:field="*{paymentType}"></textarea>
 					   		 </div>
