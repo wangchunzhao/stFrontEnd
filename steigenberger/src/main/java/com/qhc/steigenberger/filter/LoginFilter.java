@@ -54,7 +54,8 @@ public class LoginFilter implements Filter{
     		"/webjars/",
     		"/v2/",
     		"/swagger-resources",
-    		"/csrf"});
+    		"/csrf", 
+    		"/order/download"});
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
