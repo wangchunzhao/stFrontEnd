@@ -18,6 +18,7 @@ public class Item {
 	private Boolean isPurchased;//物料属性  1是自制生产 0是外部采购, 物料类型，物料信息带出
 	private String materialGroupCode;//SAP物料分组，物料信息带出
 	private String materialGroupName;//SAP物料分组名称
+	private String materialType;//SAP物料类型
 	private String stMaterialGroupCode;//销售工具物料分组，物料信息带出
 	private String stMaterialGroupName;//销售工具物料分组名称
 	private String unitCode;//计量单位code，物料信息带出
@@ -143,6 +144,12 @@ public class Item {
 	}
 	public void setMaterialGroupName(String materialGroupName) {
 		this.materialGroupName = materialGroupName;
+	}
+	public String getMaterialType() {
+		return materialType;
+	}
+	public void setMaterialType(String materialType) {
+		this.materialType = materialType;
 	}
 	public String getStMaterialGroupCode() {
 		return stMaterialGroupCode;
