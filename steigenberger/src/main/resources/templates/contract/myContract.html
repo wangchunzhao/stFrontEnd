@@ -586,6 +586,7 @@ var contractCols = [ {
 	    		actions.push('<a class="btn" onclick="edit(\'' + index + '\')"><i class="fa fa-edit"></i>重新编辑edit</a> ');
     		}
 			actions.push('<a class="btn" onclick="view(\'' + index + '\')"><i class="fa fa-edit"></i>查看view</a> ');
+    		actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/export" target="_black"><i class="fa fa-remove"></i>下载未签署合同download</a>');
     		/* actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/preview" target="_black"><i class="fa fa-remove"></i>预览preview</a>'); */
 			if (status == '06') {
     			actions.push('<a class="btn" href="' + ctxPath + 'contract/' + contractId + '/download" target="_blank"><i class="fa fa-edit"></i>导出export</a> ');
