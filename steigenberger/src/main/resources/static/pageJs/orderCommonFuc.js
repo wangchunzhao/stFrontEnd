@@ -3319,7 +3319,7 @@ var fileListColumns=[
 		 width:'75%',
 		 formatter: function(value, row, index) {
 		    	var actions = [];
-				actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+index + '\')">'+value+'</a>');
+				actions.push('<a href="javascript:void(0)" onclick="downloadFile(\'' + value+','+row.fileUrl + '\')">'+value+'</a>');
 				return actions.join('');
 		}
 	},{
