@@ -186,7 +186,7 @@
 					    </div>
 					   
 						<div class="col-md-3">
-							<input type="text" class="form-control" aria-describedby="emailHelp"  th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}" oninput="contractToUpperCase(this)" maxlength="10">
+							<input type="text" class="form-control" aria-describedby="emailHelp"  id="contractNumber" th:field="*{contractNumber}" th:attr="readonly=${orderDetail.status!='03'}" oninput="contractToUpperCase(this)" maxlength="10">
 					    </div>
 					    
 						<div class="col-md-3">
@@ -740,10 +740,10 @@
 												<input type="text" class="form-control" aria-describedby="emailHelp" id="grossSeqNum" disabled>
 											</div>
 											<div class="col-md-3 col-xs-3">
-											 	<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+											 	<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractNo" disabled>
 											 </div>
 											 <div class="col-md-3 col-xs-3">
-											 	<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+											 	<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractTitle" disabled>
 											 </div>
 											 <div class="col-md-3 col-xs-3">
 											 	<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractRMBValue" disabled>
@@ -853,10 +853,10 @@
 												<input type="text" class="form-control" aria-describedby="emailHelp" id="grossSeqNum" disabled>
 											</div>
 											<div class="col-md-3 col-xs-3">
-											 	<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+											 	<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractNo" disabled>
 											 </div>
 											 <div class="col-md-3 col-xs-3">
-											 	<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+											 	<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractTitle" disabled>
 											 </div>
 											 <div class="col-md-3 col-xs-3">
 											 	<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractRMBValue" disabled>
@@ -1063,10 +1063,10 @@
 															<input type="text" class="form-control" aria-describedby="emailHelp" id="grossSeqNum" disabled>
 														</div>
 														<div class="col-md-3 col-xs-3">
-															<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+															<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractNo" disabled>
 														</div>
 														<div class="col-md-3 col-xs-3">
-															<input type="text" class="form-control" aria-describedby="emailHelp" disabled>
+															<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractTitle" disabled>
 														</div>
 														<div class="col-md-3 col-xs-3">
 															<input type="text" class="form-control" aria-describedby="emailHelp" id="grossContractRMBValue" disabled>

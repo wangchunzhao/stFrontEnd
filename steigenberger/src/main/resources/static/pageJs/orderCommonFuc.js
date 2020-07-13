@@ -3020,6 +3020,8 @@ function viewGrossProfit(type){
 function viewOrderGrossProfit(){
 	$("#grossProfit").modal("show");
 	$("#grossSeqNum").val($("#sequenceNumber").val());
+	$("#grossContractNo").val($("#contractNumber").val());
+	$("#grossContractTitle").val($("#customerName").val());
 	$("#grossVersion").val($("#version").val());
 	$("#grossContractRMBValue").val($("#contractAmount").val());
 	$("#grossPerson").val($("#salesName").val());
