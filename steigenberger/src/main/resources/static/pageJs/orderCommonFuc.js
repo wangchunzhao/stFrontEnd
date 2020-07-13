@@ -784,6 +784,23 @@ function initSubsidiary(){
 		specialRemark+="  地下室"
 	}
 	$("#specialRemark").val(specialRemark);
+	var requiredDeliveryTime = $("#requiredDeliveryTime").val();
+	$('#shippDate').datepicker("setDate",requiredDeliveryTime)
+}
+
+function applyItemShippDate(){
+	var requiredDeliveryTime = $("#requiredDeliveryTime").val();
+	var materialsTable = $('#materialsTable').bootstrapTable('getData');
+	var countMaterialsTable = $('#materialsTable').bootstrapTable('getData').length;
+	for(var i=0;i<countMaterialsTable;i++){
+		$("#materialsTable").bootstrapTable('updateByUniqueId', {
+		    id:materialsTable[i].rowNum,
+		    row: {
+		    	shippDate:requiredDeliveryTime,
+		    }
+		});
+	}
+	layer.alert("应用成功！");
 }
 //打开规格查询框
 function searchSpecification(){
@@ -1581,7 +1598,7 @@ function getAllCountFiled(){
 	//工厂最早交货时间
 	var deliveryTime=[];
 	//要求发货时间
-	var  requiredDeliveryTime=[];
+	/*var  requiredDeliveryTime=[];*/
 	//购销明细金额
 	var itemsAmount = [];
 	$.each(tableData,function(index,item){
@@ -1590,9 +1607,9 @@ function getAllCountFiled(){
 			if(item.deliveryDate){
 				deliveryTime.push(moment(item.deliveryDate));
 			}
-			if(item.shippDate){
+			/*if(item.shippDate){
 				requiredDeliveryTime.push(moment(item.shippDate));
-			}
+			}*/
 			if(item.actualAmountSum){
 				itemsAmount.push(item.actualAmountSum);
 			}
@@ -1609,12 +1626,12 @@ function getAllCountFiled(){
 		var contractAmount =toDecimal2( totalAmount*parseFloat($("#exchangeRate").val()))
 		$("#contractAmount").val(contractAmount);
 	}
-	var earlyRequiredDeliveryTime = compareDate(requiredDeliveryTime);
+	/*var earlyRequiredDeliveryTime = compareDate(requiredDeliveryTime);
 	if(earlyRequiredDeliveryTime){
 		$("#requiredDeliveryTime").val(moment(earlyRequiredDeliveryTime).format('YYYY-MM-DD'));
 	}else{
 		$("#requiredDeliveryTime").val('');
-	}	
+	}	*/
 	var earlyDeliveryTime = compareDate(deliveryTime);
 	if(earlyDeliveryTime){
 		$("#deliveryTime").val(moment(earlyDeliveryTime).format('YYYY-MM-DD'));
@@ -3092,6 +3109,25 @@ function formatDate(inputTime) {
     var d = date.getDate();
     d = d < 10 ? ('0' + d) : d;
     return y + '.' + m + '.' + d;
+}
+
+//时间格式化处理
+function dateFtt(fmt, date) { //author: meizz   
+    var o = {
+        "M+": date.getMonth() + 1, //月份   
+        "d+": date.getDate(), //日   
+        "h+": date.getHours(), //小时   
+        "m+": date.getMinutes(), //分   
+        "s+": date.getSeconds(), //秒   
+        "q+": Math.floor((date.getMonth() + 3) / 3), //季度   
+        "S": date.getMilliseconds() //毫秒   
+    };
+    if(/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for(var k in o)
+        if(new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }
 
 //查看合同

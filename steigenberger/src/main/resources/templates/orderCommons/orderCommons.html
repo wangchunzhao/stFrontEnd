@@ -606,8 +606,15 @@
 						<div class="col-xs-3 col-md-3">
 							<input type="text" class="form-control" id="deliveryTime" aria-describedby="emailHelp" readonly th:field="*{earliestProductDate}">
 						</div>
-						<div class="col-xs-3 col-md-3">
-								<input id="requiredDeliveryTime" class="form-control" type="text" readonly th:field="*{earliestDeliveryDate}">
+						<div class="col-md-3">
+							<div class="input-group">
+								<input type="text" class="form-control" id="requiredDeliveryTime" aria-describedby="emailHelp" th:field="*{earliestDeliveryDate}" autocomplete="off">
+								<span class="input-group-btn">
+			                        <button id="bodyDiscountButton" class="btn btn-primary btn-flat" type="button" title="应用" onclick="applyItemShippDate()">
+			                        	<span class="glyphicon glyphicon-ok"></span>
+			                        </button>
+			                    </span>
+			                </div>
 						</div>
 						<div class="col-xs-3 col-md-3"></div>
 						<div class="col-xs-3 col-md-3">

@@ -110,10 +110,33 @@ $(function () {
 	defaultCollapse();
 	getUserDetail();
 	if(status==null||status==""||status=="undefined"){
-		$('#shippDate').datepicker({ startDate: new Date() });	
+		$('#shippDate').datepicker({ 
+			startDate: new Date(),
+			format: "yyyy-mm-dd",
+			language: 'zh-CN',
+		});
+		$('#requiredDeliveryTime').datepicker({
+			format: "yyyy-mm-dd",
+			language: 'zh-CN',
+			startDate: new Date() 
+		});	
+		var dateTime=new Date();
+		dateTime=dateTime.setDate(dateTime.getDate()+21);
+		dateTime=new Date(dateTime);
+		$('#requiredDeliveryTime').datepicker("setDate",dateFtt("yyyy-MM-dd",dateTime))
 		$('#warranty').val(1);
 	}else{
-		$('#shippDate').datepicker({ startDate: new Date($("#createTime").val()) });
+		$('#shippDate').datepicker({ 
+			startDate: new Date($("#createTime").val()) ,
+			format: "yyyy-mm-dd",
+			language: 'zh-CN',
+		
+		});
+		$('#requiredDeliveryTime').datepicker({
+			format: "yyyy-mm-dd",
+			language: 'zh-CN',
+			startDate: new Date() 
+		});	
 		initDropDownList();
 		fillOrderAddress();
 		fillItems();	
