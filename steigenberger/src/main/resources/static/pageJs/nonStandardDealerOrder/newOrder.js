@@ -106,7 +106,6 @@ $(function () {
     initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
-	$('#shippDate').datepicker();
 	defaultCollapse();
 	getUserDetail();
 	if(status==null||status==""||status=="undefined"){

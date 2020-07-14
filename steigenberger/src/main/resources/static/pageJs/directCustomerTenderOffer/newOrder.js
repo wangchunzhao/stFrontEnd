@@ -105,7 +105,6 @@ $(function () {
 	initOrderFormValidator();
 	initMarialsTables();
 	$('#first').tab('show');
-	$('#shippDate').datepicker();
 	$('#paymentTime').datepicker();
 	defaultCollapse();
 	getUserDetail();
