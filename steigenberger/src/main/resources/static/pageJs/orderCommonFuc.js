@@ -984,7 +984,7 @@ function itemCategoryChange(obj){
 		
 		//折扣率
 		var discountValue = $("#discount").val();
-		discountValue = (discountValue/100).toFixed(2);
+		discountValue = (discountValue/100).toFixed(4);
 
 		//产品实卖单价人民币
 		var actualPrice = toDecimal2(parseFloat(retailPrice)*discountValue);
@@ -1003,7 +1003,7 @@ function initMaterialPrice(){
 	
 	//折扣率
 	var discountValue = $("#discount").val();
-	discountValue = (discountValue/100).toFixed(2);
+	discountValue = (discountValue/100).toFixed(4);
 	
 	//数量
 	var amount = $("#amount").val();
@@ -1186,7 +1186,7 @@ function discountChange(){
 	//数量
 	var amount = $("#amount").val()?parseFloat($("#amount").val()):parseFloat(1.00);
 	var discount = $("#discount").val();
-	var discountValue = toDecimal2((parseFloat(discount)/100));
+	var discountValue = (discount/100).toFixed(4);
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
 	
@@ -2857,7 +2857,12 @@ function viewConfigPrice( type){
 	var configTableData = $("#configTable").bootstrapTable('getData');
 	var configCode = [];
 	for(var i=0;i<configTableData.length;i++){
-		configCode.push(configTableData[i].code);
+		if(configTableData[i].color){
+			//颜色选项不传
+		}else{
+			configCode.push(configTableData[i].code);
+		}
+		
 	}
 	formData.bomCode = bomCode;
 	formData.configCode = configCode;

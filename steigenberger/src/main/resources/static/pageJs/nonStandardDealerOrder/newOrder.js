@@ -216,7 +216,7 @@ function applyDiscountForRow(discount,materialsRowData,tableId){
 	}
 	//汇率
 	var exchangeRate = $("#exchangeRate").val();
-	var discountValue = (discount/100).toFixed(2);
+	var discountValue = (discount/100).toFixed(4);
 	var quantity = parseFloat(materialsRowData.quantity);
 	var optionalActualPrice  = parseFloat(materialsRowData.optionalActualPrice);
 	var retailPrice = parseFloat(materialsRowData.retailPrice);
