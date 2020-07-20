@@ -2321,15 +2321,31 @@ function insertMaterials(index){
 		rowData["cityName"] =$('#materialCityName').val(); 
 		rowData["districtCode"] =$('#materialAreaCode').val(); 
 		rowData["districtName"] =$('#materialAreaName').val(); 
+		var specialRemark="";
+		if($("#isTerm1").val()=="1"){
+			specialRemark+=" 甲供";	
+		}
+		if($("#isTerm2").val()=="1"){
+			specialRemark+=" 远程监控"
+		}
+		
+		if($("#isTerm3").val()=="1"){
+			specialRemark+="  地下室"
+		}
+		rowData["specialComments"] = specialRemark;
+		var requiredDeliveryTime = $("#requiredDeliveryTime").val();
+		rowData["shippDate"] = requiredDeliveryTime;
+		rowData["itemRequirementPlan"] = "004";
 		$("#materialsTable").bootstrapTable('append',rowData);
-		$('#subsidiaryModal').modal('show');
+		/*$('#subsidiaryModal').modal('show');
 		$("#subsidiaryForm")[0].reset();
 		$("#itemCategory").html('');
 		$('#materialsModalType').val('edit');
 		$('#index').val(nextIndex);
 		$('#rowNumber').val(newRowNum);
-		initSubsidiary();
+		initSubsidiary();*/
 		//setTableToDifTab();
+		editMaterials(newRowNum+"|"+nextIndex);
 	}else{
 		var newRowNum = nextRowData.rowNum;
 		if((parseInt(newRowNum)-parseInt(currentRowNum))==1){
@@ -2355,14 +2371,29 @@ function insertMaterials(index){
 		rowData["districtCode"] =$('#materialAreaCode').val(); 
 		rowData["districtName"] =$('#materialAreaName').val(); 
 		rowData["deliveryAddressSeq"] =$('#deliveryAddressSeq').val();
+		var specialRemark="";
+		if($("#isTerm1").val()=="1"){
+			specialRemark+=" 甲供";	
+		}
+		if($("#isTerm2").val()=="1"){
+			specialRemark+=" 远程监控"
+		}
+		
+		if($("#isTerm3").val()=="1"){
+			specialRemark+="  地下室"
+		}
+		rowData["specialComments"] = specialRemark;
+		var requiredDeliveryTime = $("#requiredDeliveryTime").val();
+		rowData["shippDate"] = requiredDeliveryTime;
+		rowData["itemRequirementPlan"] = "004";
 		$("#materialsTable").bootstrapTable('insertRow',{index:nextIndex,row:rowData});
 		$('#subsidiaryModal').modal('show');
-		$("#subsidiaryForm")[0].reset();
+		/*$("#subsidiaryForm")[0].reset();
 		$("#itemCategory").html('');
 		$('#materialsModalType').val('edit');
 		$('#index').val(nextIndex);
-		$('#rowNumber').val(insertRowNum);
-		initSubsidiary();
+		$('#rowNumber').val(insertRowNum);*/
+		editMaterials(insertRowNum+"|"+nextIndex);
 		//setTableToDifTab();
 	}
 }
@@ -2852,20 +2883,23 @@ function getSelectName() {
 
 //调研表查看物料
 function viewConfigPrice( type){
-	var bomCode = $("#materialConfigCode").val();
-	var formData = $("#materialConfigForm").serializeObject();
+	var formData = new Object();
+	var bomCode = $("#materialConfigCode").val();	
 	var configTableData = $("#configTable").bootstrapTable('getData');
-	var configCode = [];
+	var configCode = []; 
+	var configValueCodes = [];
 	for(var i=0;i<configTableData.length;i++){
 		if(configTableData[i].color){
 			//颜色选项不传
 		}else{
 			configCode.push(configTableData[i].code);
+			configValueCodes.push(configTableData[i].configValueCode);
 		}
 		
 	}
 	formData.bomCode = bomCode;
 	formData.configCode = configCode;
+	formData.configValueCode = configValueCodes;
 	$.ajax({
 	    url: ctxPath+"order/material/configuration",
 	    contentType: "application/json;charset=UTF-8",
