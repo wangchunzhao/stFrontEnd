@@ -164,6 +164,10 @@ function formatStatus(value, row, index) {
 		return "BPM审批通过";
 	}else if(value=="06"){
 		return "订单更改审批通过";
+	}else if(value=="07"){
+		return "新建下推SAP待确认";
+	}else if(value=="08"){
+		return "变更下推SAP待确认";
 	}else if(value=="09"){
 		return "已下推SAP";
 	}else if(value=="10"){
@@ -190,7 +194,7 @@ function operation(value, row, index) {
 	actions.push("<a type='button' class='btn btn-primary' id='copyOrder' onclick='copyOrder(\""+orderInfoId+"\")'>复制</a>");
 	actions.push("<a type='button' class='btn btn-primary' id='exportOrderItem' title='导出购销明细及调研表' onclick='exportOrderItem(\""+orderInfoId+"\")'>导出</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
-	if(stOrderType!="3"&&currentVersionStatus=="05"){
+	if(stOrderType!="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")){
 		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+'|'+stOrderType+'|'+contractNumber+"\")'>下推SAP</a>");
 		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+'|'+contractNumber+'|'+currentVersionStatus+"\")'>订单变更</a>");
 	}
