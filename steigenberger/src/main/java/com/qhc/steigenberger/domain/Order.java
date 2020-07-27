@@ -21,7 +21,8 @@ public class Order {
 	public final static String ORDER_STATUS_BPM = "04"; // 提交到BPM
 	public final static String ORDER_STATUS_APPROVED = "05"; // BPM审批通过
 	public final static String ORDER_STATUS_APPROVED_UPDATE = "06"; // 订单变更BPM审批通过
-    public final static String ORDER_STATUS_SAP_TEMP = "08"; // 下推SAP待确认
+    public final static String ORDER_STATUS_SAP_TEMP = "07"; // 新增下推SAP待确认
+    public final static String ORDER_STATUS_SAP_UPGRADE_TEMP = "08"; // 变更下推SAP待确认
 	public final static String ORDER_STATUS_SAP = "09"; // 已下推SAP
 	public final static String ORDER_STATUS_REJECT = "10"; // Selling Tool驳回
 	public final static String ORDER_STATUS_REJECT_BPM = "11"; // BPM驳回
