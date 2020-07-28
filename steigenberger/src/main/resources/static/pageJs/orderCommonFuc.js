@@ -2044,6 +2044,7 @@ function openConfig(configContent){
 	$("#moreConfig").attr("style","display:none;");
 	var rowNum = configContent.split('|')[0];
 	var index = configContent.split('|')[1];
+	var itemStatus = configContent.split('|')[2];
 	var tableData = $('#materialsTable').bootstrapTable('getRowByUniqueId', rowNum);
 	$("#configMaterialCode").val(tableData.materialCode);
 	$("#configMaterialTypeName").val(tableData.materialName);
@@ -2107,6 +2108,11 @@ function openConfig(configContent){
 				$('#configTable>tbody tr:eq('+index+')').addClass('configtr')
 			}
 	})
+	if(itemStatus!='00'){
+		$("#materialConfigButton").attr("style","display:none;");
+	}else{
+		$("#materialConfigButton").attr("style","display:block;");
+	}
 }
 
 function insertDefaultConfigs(){

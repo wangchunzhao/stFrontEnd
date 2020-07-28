@@ -29,7 +29,7 @@ var materialsColumn = [{
 	    	var actions = [];
 	    	var configurable = row.isConfigurable+'';
 	    	if(configurable=='true'){
-	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.rowNum+'|'+index+'\')"><i class="fa fa-edit"></i></a> ');
+	    		actions.push('<a class="btn" onclick="openConfig(\'' + row.rowNum+'|'+index+'|'+row.itemStatus+'\')"><i class="fa fa-edit"></i></a> ');
 	    	}			
 			return actions.join('');
 	    }

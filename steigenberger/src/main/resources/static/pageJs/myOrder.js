@@ -270,7 +270,7 @@ function tosap(content) {
 	}
 	
 	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function (index) {
-		if(stOrderType==2||stOrderType==4){
+		if(!hasSendSap&&(stOrderType==2||stOrderType==4)){
 			$("#modalContractDialog").modal('show');
 			$("#modalContractNumber").val(contractNumber);
 			$("#modalOrderInfoId").val(orderInfoId);
