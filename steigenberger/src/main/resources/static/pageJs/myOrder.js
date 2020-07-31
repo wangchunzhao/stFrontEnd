@@ -189,13 +189,14 @@ function operation(value, row, index) {
 	var stOrderType = row.stOrderType;
 	var quoteStatus = row.quoteStatus;
 	var contractNumber = row.contractNumber;
+	var hasSendSap = row.hasSendSap;
 	var actions = [];
 	actions.push("<a type='button' class='btn btn-primary' id='viewOrder' onclick='viewOrder(\""+orderInfoId+"\")'>查看</a>");
 	actions.push("<a type='button' class='btn btn-primary' id='copyOrder' onclick='copyOrder(\""+orderInfoId+"\")'>复制</a>");
 	actions.push("<a type='button' class='btn btn-primary' id='exportOrderItem' title='导出购销明细及调研表' onclick='exportOrderItem(\""+orderInfoId+"\")'>导出</a>");
 	/*actions.push("<a type='button' class='btn btn-primary' id='upgradeOrder' onclick='upgradeOrder(\""+orderInfoId+"\")'>订单变更</a>");*/
 	if(stOrderType!="3"&&(currentVersionStatus=="05"||currentVersionStatus=="06")){
-		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+'|'+stOrderType+'|'+contractNumber+"\")'>下推SAP</a>");
+		actions.push("<a type='button' class='btn btn-primary' id=tosap' onclick='tosap(\""+orderInfoId+'|'+stOrderType+'|'+contractNumber+'|'+hasSendSap+"\")'>下推SAP</a>");
 		actions.push("<a type='button' class='btn btn-primary' onclick='upgradeOrder(\""+orderInfoId+'|'+contractNumber+'|'+currentVersionStatus+"\")'>订单变更</a>");
 	}
 	if(currentVersionStatus=="09"&&buttonControl=="true"){
@@ -265,12 +266,13 @@ function tosap(content) {
 	var orderInfoId = content.split('|')[0];
 	var stOrderType = content.split('|')[1];
 	var contractNumber = content.split('|')[2];
+	var hasSendSap = content.split('|')[3];
 	if(contractNumber=='null'){
 		contractNumber='';
 	}
 	
 	layer.confirm("确定要下推SAP吗?", {btn: ['确定', '取消'], title: "提示"}, function (index) {
-		if(!hasSendSap&&(stOrderType==2||stOrderType==4)){
+		if(hasSendSap=="false"&&(stOrderType==2||stOrderType==4)){
 			$("#modalContractDialog").modal('show');
 			$("#modalContractNumber").val(contractNumber);
 			$("#modalOrderInfoId").val(orderInfoId);
