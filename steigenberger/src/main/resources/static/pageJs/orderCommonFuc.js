@@ -1395,7 +1395,7 @@ function editMaterials(editContent){
 	var itemAmount = $("#amount").val();
 	if($("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
 		$.each(sapItemStatus,function(index,itemObject){
-			if(itemObject.rowNum==rowNumber&&itemObject.issuedQuantity==itemAmount){
+			if(itemObject.rowNum==rowNumber&&itemObject.plannedIssueQuantity==itemAmount){
 				 var form=$("#subsidiaryForm")[0];
 				  for(var i=0;i<form.length;i++){
 				    var element=form.elements[i];
@@ -1403,7 +1403,7 @@ function editMaterials(editContent){
 				  }		  
 				  $("#configClose").attr("disabled",false);
 			}else{
-				$("#sapItemDeliveryAmount").val(itemObject.issuedQuantity);
+				$("#sapItemDeliveryAmount").val(itemObject.plannedIssueQuantity);
 				  $("#itemCategory").attr("disabled",true);
 			}
 		});
