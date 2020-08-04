@@ -1326,9 +1326,9 @@ function editMaterials(editContent){
 	if($("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
 		$.each(sapItemStatus,function(index,itemObject){
 			if(itemObject.rowNum==rowNumber){
-				var rejectCode = itemObject.rejectedCode;
-				var plannedOrder = itemObject.plannedOrder;
-				var productionOrder = itemObject.productionOrder;
+				var rejectCode = itemObject.rejectedCode?itemObject.rejectedCode:"";
+				var plannedOrder = itemObject.plannedOrder?itemObject.plannedOrder:"";
+				var productionOrder = itemObject.productionOrder?itemObject.productionOrder:"";
 				layer.alert('拒绝原因:'+rejectCode+" ;计划订单:"+plannedOrder+" ;生产工单:"+productionOrder);
 			}
 		});
@@ -1395,16 +1395,20 @@ function editMaterials(editContent){
 	var itemAmount = $("#amount").val();
 	if($("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
 		$.each(sapItemStatus,function(index,itemObject){
-			if(itemObject.rowNum==rowNumber&&itemObject.plannedIssueQuantity==itemAmount){
-				 var form=$("#subsidiaryForm")[0];
-				  for(var i=0;i<form.length;i++){
-				    var element=form.elements[i];
-				    element.disabled=true;
-				  }		  
-				  $("#configClose").attr("disabled",false);
-			}else{
-				$("#sapItemDeliveryAmount").val(itemObject.plannedIssueQuantity);
-				  $("#itemCategory").attr("disabled",true);
+			debugger
+			if(itemObject.rowNum==rowNumber){
+				if(itemObject.plannedIssueQuantity==itemAmount){
+					var form=$("#subsidiaryForm")[0];
+					  for(var i=0;i<form.length;i++){
+					    var element=form.elements[i];
+					    element.disabled=true;
+					  }		  
+					  $("#configClose").attr("disabled",false);
+				}else{
+					$("#sapItemDeliveryAmount").val(itemObject.plannedIssueQuantity);
+					$("#itemCategory").attr("disabled",true);
+				}
+				 
 			}
 		});
 	}
