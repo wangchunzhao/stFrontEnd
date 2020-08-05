@@ -1395,20 +1395,9 @@ function editMaterials(editContent){
 	var itemAmount = $("#amount").val();
 	if($("#hasSendSap").val()=='true'&&tableData.itemStatus=='10'){
 		$.each(sapItemStatus,function(index,itemObject){
-			debugger
-			if(itemObject.rowNum==rowNumber){
-				if(itemObject.plannedIssueQuantity==itemAmount){
-					var form=$("#subsidiaryForm")[0];
-					  for(var i=0;i<form.length;i++){
-					    var element=form.elements[i];
-					    element.disabled=true;
-					  }		  
-					  $("#configClose").attr("disabled",false);
-				}else{
-					$("#sapItemDeliveryAmount").val(itemObject.plannedIssueQuantity);
-					$("#itemCategory").attr("disabled",true);
-				}
-				 
+			if(itemObject.rowNum==rowNumber){	
+				$("#sapItemDeliveryAmount").val(itemObject.plannedIssueQuantity);
+				$("#itemCategory").attr("disabled",true);	 
 			}
 		});
 	}
