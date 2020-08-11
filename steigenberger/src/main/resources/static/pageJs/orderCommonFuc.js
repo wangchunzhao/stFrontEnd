@@ -1486,10 +1486,7 @@ function fillEditMaterailValue(data,index){
 
 //删除购销明细
 function removeMaterials(rowNum){
-	$('#materialsTable').bootstrapTable('remove', {
-        field: "rowNum",
-        values: rowNum
-    });
+	$('#materialsTable').bootstrapTable('removeByUniqueId', rowNum);
 	localStorage.removeItem(rowNum);
 	getAllCountFiled();
 }
