@@ -218,7 +218,7 @@ var materialsColumn = [{
 	    formatter: function(value, row, index) {
 	    	var config = row.isConfigurable+'';
 	    	if(config=='true'){
-	    		if(value=="ZHD1"||value=="ZHT1"){
+	    		if(value=="ZHD1"||value=="ZHT1"||value=="ZHM1"){
 		    		return "标准";
 		    	}else if(value=="ZHD3"||value=="ZHT3"){
 		    		return "免费";
@@ -228,7 +228,7 @@ var materialsColumn = [{
 		    		return value;
 		    	}
 	    	}else{
-	    		if(value=="ZHD2"||value=="ZHT2"){
+	    		if(value=="ZHD2"||value=="ZHT2"||value=="ZHM2"){
 		    		return "标准";
 		    	}else if(value=="ZHD4"||value=="ZHT4"){
 		    		return "免费";

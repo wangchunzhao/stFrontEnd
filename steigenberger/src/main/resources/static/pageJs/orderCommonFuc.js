@@ -390,7 +390,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 			$("#taxCode").append("<option value='"+item.code+"'>"+item.tax+"</option>");
 		});
 		
-	}else if(10){
+	}else if(saleType==10){
 		var rate = taxRate[10];
 		$.each(rate,function(index,item){
 			$("#taxCode").append("<option value='"+item.code+"'>"+item.tax+"</option>");
@@ -401,23 +401,44 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 			$("#taxCode").append("<option value='"+item.code+"'>"+item.tax+"</option>");
 		});
 	}
+	var stOrderType = $("#stOrderType").val();
 	if(saleType=="20"){
 		$("#exchangeRate").val("");
 		$("#contractAmount").val("");
 		$("#freightDiv").show();
 		$("#freightDiv1").show();
-		$('#selectProvince').val('');
-		$('#citySelect').val('');
-		$('#selectDistrict').val('');
-		$('#citySelect').attr("disabled",true);
-		$('#selectDistrict').attr("disabled",true);	
-		$('#selectProvince').attr("disabled",true);
+		if(stOrderType!=5){
+			$('#selectProvince').val('');
+			$('#citySelect').val('');
+			$('#selectDistrict').val('');
+			$('#citySelect').attr("disabled",true);
+			$('#selectDistrict').attr("disabled",true);	
+			$('#selectProvince').attr("disabled",true);
+			$("#transferType").val('01');
+			$('#transferType').attr("disabled",true);
+			var addressData = $("#addressTable").bootstrapTable("getData");
+			var shippingAddress = addressData.address
+			$("#addressTable").bootstrapTable('updateRow', {
+			    index: 0,
+			    row: {
+			    	seq:1,
+			    	pca: null,
+			    	provinceCode:null,
+			    	provinceName:null,
+			    	cityCode:null,
+			    	cityName:null,
+					districtCode:null,
+					districtName:null,
+			    	address:shippingAddress
+			    }
+			});
+			updateAddressInProd(0);
+		}		
 		$('#currency').attr('disabled',false);
 		$('#incoterm').attr("disabled",false);
 		$('#incotermContect').attr("readonly",false);
 		$('#installCode').val('');
 		$('#installCode').attr("readonly",true);
-		$('#transferType').attr("disabled",true);
 		$('#contactor1Id').attr("readonly",true);
 		$('#contactor2Id').attr("readonly",true);
 		$('#contactor3Id').attr("readonly",true);
@@ -430,24 +451,8 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#contactor1Tel').val('');
 		$('#contactor2Tel').val('');
 		$('#contactor3Tel').val('');
-		$("#transferType").val('01');
-		var addressData = $("#addressTable").bootstrapTable("getData");
-		var shippingAddress = addressData.address
-		$("#addressTable").bootstrapTable('updateRow', {
-		    index: 0,
-		    row: {
-		    	seq:1,
-		    	pca: null,
-		    	provinceCode:null,
-		    	provinceName:null,
-		    	cityCode:null,
-		    	cityName:null,
-				districtCode:null,
-				districtName:null,
-		    	address:shippingAddress
-		    }
-		});
-		updateAddressInProd(0);
+		
+		
 	}else{
 		$('#freightDiv').hide();
 		$('#freightDiv1').hide();
@@ -838,7 +843,8 @@ function searchMaterilType(){
 //行项目类别对应关系
 function getItemCategory(configure,data){
 	var code = data.code||data.materialCode;
-	if($("#stOrderType").val()=="3"||$("#stOrderType").val()=="4"){
+	var stOrderType =$("#stOrderType").val(); 
+	if(stOrderType=="3"||stOrderType=="4"){
 		if(configure=='true'&&(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X')){
 			// 大客户可配置
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHT1'>标准</option><option value='ZHT3'>免费</option><option value='ZHR1'>退货</option></select>");	
@@ -856,7 +862,7 @@ function getItemCategory(configure,data){
 			}
 			
 		}
-	}else{
+	}else if(stOrderType=="1"||stOrderType=="2"){
 		if(configure=='true'&&(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X')){
 			// 经销商可配置
 			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD1'>标准</option><option value='ZHD3'>免费</option><option value='ZHR3'>退货</option></select>");	
@@ -873,6 +879,13 @@ function getItemCategory(configure,data){
 				$("#itemCategory").attr("disabled",true);
 			}
 			
+		}
+	}else{
+		if(configure=='true'){
+			// 备货
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHM1'>标准</option></select>");	
+		}else{
+			$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHM2'>标准</option></select>");	
 		}
 	}
 }
