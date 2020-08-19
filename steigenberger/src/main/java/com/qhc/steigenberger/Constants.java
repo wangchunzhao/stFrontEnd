@@ -76,6 +76,10 @@ public class Constants {
 			  // 不可预估费，其他项目收付费
 			  put("ZH97","ZH97");
 			  put("ZH98","ZH98");
+			  // 备货 ZH0M/ZH01 可配置
+			  put("ZHM1","标准");
+			  // 备货 ZH0M/ZH02 不可配置
+			  put("ZHM2","标准");
 		  }
 	  };
 	  
