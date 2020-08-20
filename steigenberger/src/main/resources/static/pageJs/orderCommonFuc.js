@@ -416,6 +416,7 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 			$('#selectProvince').attr("disabled",true);
 			$("#transferType").val('01');
 			$('#transferType').attr("disabled",true);
+			
 			var addressData = $("#addressTable").bootstrapTable("getData");
 			var shippingAddress = addressData.address
 			$("#addressTable").bootstrapTable('updateRow', {
@@ -433,7 +434,10 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 			    }
 			});
 			updateAddressInProd(0);
-		}		
+		}
+		if(stOrderType==5){
+			$('#incotermContect').val('青岛');
+		}
 		$('#currency').attr('disabled',false);
 		$('#incoterm').attr("disabled",false);
 		$('#incotermContect').attr("readonly",false);
@@ -453,7 +457,8 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 		$('#contactor3Tel').val('');
 		
 		
-	}else{
+	}else{			
+		$('#incotermContect').val('');		
 		$('#freightDiv').hide();
 		$('#freightDiv1').hide();
 		$('#citySelect').attr("disabled",false);
