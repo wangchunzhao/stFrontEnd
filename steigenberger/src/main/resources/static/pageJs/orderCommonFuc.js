@@ -435,7 +435,9 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 			});
 			updateAddressInProd(0);
 		}
-		$('#incotermContect').val('青岛');
+        if(stOrderType==5){
+        	$('#incotermContect').val('青岛');
+        }
 		$('#currency').attr('disabled',false);
 		$('#incoterm').attr("disabled",false);
 		$('#incotermContect').attr("readonly",false);
@@ -2011,11 +2013,25 @@ function initOrderFormValidator(){
            }  
        },
        bodyDiscount: {
+      		validators: {
+      			callback: {
+                      message: '折扣录入有误',
+                      callback:function(value, validator,$field){
+                      	if(value==''||(parseFloat(value)<1&&parseFloat(value)!=0)||parseFloat(value)>100){
+                      		return false;
+                      	}else{
+                      		return true;
+                      	}
+                      }
+      			}
+      	    }
+       },
+       incotermContect: {
    		validators: {
    			callback: {
-                   message: '折扣录入有误',
+                   message: '请输入国际贸易条件',
                    callback:function(value, validator,$field){
-                   	if(value==''||(parseFloat(value)<1&&parseFloat(value)!=0)||parseFloat(value)>100){
+                   	if(!$("#incoterm").val()==''&&value==''){
                    		return false;
                    	}else{
                    		return true;
