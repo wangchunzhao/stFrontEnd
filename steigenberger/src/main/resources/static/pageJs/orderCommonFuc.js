@@ -435,9 +435,9 @@ function salesTypeChange(obj,offices,taxRate,exchangeRate){
 			});
 			updateAddressInProd(0);
 		}
-        if(stOrderType==5){
-        	$('#incotermContect').val('青岛');
-        }
+		if(orderOperationType=='1'){
+			$('#incotermContect').val('青岛');
+		}   
 		$('#currency').attr('disabled',false);
 		$('#incoterm').attr("disabled",false);
 		$('#incotermContect').attr("readonly",false);
