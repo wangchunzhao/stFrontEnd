@@ -64,6 +64,7 @@ public class Constants {
 			  put("ZHD2","标准");
 			  put("ZHD4","免费");
 			  put("ZHR4","退货");
+			  put("ZHDF","经销商直发");
 			  // ZH0T （大客户）/ZH01 可配置
 			  put("ZHT1","标准");
 			  put("ZHT3","免费");
