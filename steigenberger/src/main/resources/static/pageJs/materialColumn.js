@@ -236,6 +236,8 @@ var materialsColumn = [{
 		    		return "退货";
 		    	}else if(value=="ZHT6"){
 		    		return "供应商直发";
+		    	}else if (value=="ZHDF"){
+		    		return "经销商直发";
 		    	}else{ 
 		    		return value;
 		    	}

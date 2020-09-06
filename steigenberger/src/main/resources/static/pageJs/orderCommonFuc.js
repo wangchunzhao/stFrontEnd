@@ -874,7 +874,7 @@ function getItemCategory(configure,data){
 		}else{
 			// 经销商不可配置
 			if(code!='BG1R8R00000-X'&&code!='BG1R8L00000-X'&&code!='BG1GD1000000-X'){
-				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option></select>");
+				$("#itemCategoryContent").append("<select class='form-control' name='itemCategory' id='itemCategory' onchange='itemCategoryChange(this)'><option value='ZHD2'>标准</option><option value='ZHD4'>免费</option><option value='ZHR4'>退货</option><option value='ZHDF'>经销商直发</option></select>");
 			}else{
 				if(code=='BG1GD1000000-X'){
 					$("#itemCategoryContent").append("<input type='text' class='form-control' id='itemCategory'  name='itemCategory' value='ZH97'>")
