@@ -78,8 +78,8 @@ public class LoginController extends BaseController {
 				modelAndView.setViewName("main");
 				System.out.println("身份验证成功!");
 			} else {
-				String host = "utccgl.com";// AD域IP，必须填写正确
-				String domain = "utccgl\\";// 域名后缀，
+				String host = "carcgl.com";// AD域IP，必须填写正确
+				String domain = "carcgl\\";// 域名后缀，
 				String url = new String("ldap://" + host);//
 				String userN = userName.indexOf(domain) > 0 ? userName : domain + userName;// 网上有别的方法，但是在我这儿都不好使，建议这么使用
 				Hashtable env = new Hashtable();// 实例化一个Env
