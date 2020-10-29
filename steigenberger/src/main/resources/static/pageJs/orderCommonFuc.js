@@ -197,7 +197,7 @@ function fillItemToTableRow(data){
 			pcaAddress+=data.address
 		}
 	}
-	var discount = data.discount;
+	var discount = toDecimal2(data.discount);
 	var row = {
 			rowNum:data.rowNum,
 			materialName:data.materialName,
