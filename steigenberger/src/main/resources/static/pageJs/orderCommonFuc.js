@@ -2939,6 +2939,7 @@ function viewConfigPrice( type){
 	    	if(type=="view"){
 	    		if(res.status!="ok"){
 		    		$("#viewError").attr("style","display:block;");
+		    		$("#viewError").html("<font color=\"red\">查看物料失败！<br>" + res.msg + "</font>");
 		    	}else{
 		    		$("#moreConfig").attr("style","display:block;");
 			    	$("#viewOptionalTransactionPrice").val(res.data.transferPrice);
