@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.qhc.steigenberger.util.ItemDiscountSerializer;
 
 /**
  * @author Walker
@@ -45,6 +47,8 @@ public class Item {
 	private double actualAmountSum;// 实卖金额合计
 	private double transactionPriceSum;// 转移价合计
 	
+	// 自定义json序列化，保留两位小数，四舍五入
+	@JsonSerialize(using=ItemDiscountSerializer.class)
 	private double discount;//折扣，商品折扣，柜体和机组有，其他默认为100
 	
 	private String itemCategory;//行项目类别
