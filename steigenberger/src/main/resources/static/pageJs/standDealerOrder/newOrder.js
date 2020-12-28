@@ -67,7 +67,6 @@ $(function () {
 		    index: fileListLength,
 		    row: {
 		    	type:'fileList',
-		    	index:fileListLength,
 		    	fileName:attachment.fileName,
 		    	fileUrl:attachment.fileUrl
 		    }
@@ -89,7 +88,6 @@ $(function () {
 		    index: fileListLength,
 		    row: {
 		    	type:'itemFileList',
-		    	index:fileListLength,
 		    	fileName:attachment.fileName,
 		    	fileUrl:attachment.fileUrl
 		    }

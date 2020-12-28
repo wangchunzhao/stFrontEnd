@@ -278,9 +278,11 @@ function fillOrderAddress(){
 
 //修改查看订单时,回显上传附件列表
 function fillAttachments(){
+	
 	if(attachments){
 		for(var i=0;i<attachments.length;i++){
 			var row = attachments[i];
+			row.type = "fileList"
 			$("#fileList").bootstrapTable('insertRow', {
 			    index: i,
 			    row: attachments[i]
@@ -2619,10 +2621,10 @@ function setItemRequirementPlan(obj){
 //删除已上传文件
 function removeFile(type_index){
 	var type = type_index.split(',')[0];
-	var index = type_index.split(',')[1];
+	var fileUrl = type_index.split(',')[1];
 	$('#'+type).bootstrapTable('remove', {
-        field: "index",
-        values: index
+        field: "fileUrl",
+        values: fileUrl
     });
 }
 //下载已上传文件

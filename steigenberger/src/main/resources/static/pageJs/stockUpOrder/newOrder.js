@@ -43,6 +43,7 @@ $(function () {
 		$("#fileList").bootstrapTable('insertRow', {
 			index: fileListLength,
 			row: {
+				type:"fileList",
 				index:fileListLength,
 				fileName:attachment.fileName,
 				fileUrl:attachment.fileUrl

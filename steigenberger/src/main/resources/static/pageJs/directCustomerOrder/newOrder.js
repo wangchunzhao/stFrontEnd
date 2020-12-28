@@ -59,6 +59,7 @@ $(function () {
 		$("#fileList").bootstrapTable('insertRow', {
 			index: fileListLength,
 			row: {
+				type:"fileList",
 				index:fileListLength,
 				fileName:attachment.fileName,
 				fileUrl:attachment.fileUrl
@@ -70,6 +71,7 @@ $(function () {
 	
 	//调研表文件列表初始化
 	var itemFileListTable = new TableInit('itemFileList','','',fileListColumns)
+	
 	itemFileListTable.init();
 	
 	//订单文件上传成功处理方法
@@ -80,7 +82,7 @@ $(function () {
 		$("#itemFileList").bootstrapTable('insertRow', {
 		    index: fileListLength,
 		    row: {
-		    	type:'itemFileList',
+		    	type:"itemFileList",
 		    	index:fileListLength,
 		    	fileName:attachment.fileName,
 		    	fileUrl:attachment.fileUrl
