@@ -1608,7 +1608,7 @@ function getAllCountFiled(){
 	//工厂最早交货时间
 	var deliveryTime=[];
 	//要求发货时间
-	/*var  requiredDeliveryTime=[];*/
+	var  requiredDeliveryTime=[];
 	//购销明细金额
 	var itemsAmount = [];
 	$.each(tableData,function(index,item){
@@ -1617,9 +1617,9 @@ function getAllCountFiled(){
 			if(item.deliveryDate){
 				deliveryTime.push(moment(item.deliveryDate));
 			}
-			/*if(item.shippDate){
+			if(item.shippDate){
 				requiredDeliveryTime.push(moment(item.shippDate));
-			}*/
+			}
 			if(item.actualAmountSum){
 				itemsAmount.push(item.actualAmountSum);
 			}
@@ -1636,12 +1636,11 @@ function getAllCountFiled(){
 		var contractAmount =toDecimal2( totalAmount*parseFloat($("#exchangeRate").val()))
 		$("#contractAmount").val(contractAmount);
 	}
-	/*var earlyRequiredDeliveryTime = compareDate(requiredDeliveryTime);
+	var earlyRequiredDeliveryTime = compareDate(requiredDeliveryTime);
+	debugger
 	if(earlyRequiredDeliveryTime){
 		$("#requiredDeliveryTime").val(moment(earlyRequiredDeliveryTime).format('YYYY-MM-DD'));
-	}else{
-		$("#requiredDeliveryTime").val('');
-	}	*/
+	}
 	var earlyDeliveryTime = compareDate(deliveryTime);
 	if(earlyDeliveryTime){
 		$("#deliveryTime").val(moment(earlyDeliveryTime).format('YYYY-MM-DD'));
