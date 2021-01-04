@@ -2102,11 +2102,14 @@ function openConfig(configContent){
 		$("#mosaicImage").val(jsonObject.mosaicImage);
 		if(jsonObject.attachments){
 			$("#itemFileList").bootstrapTable("removeAll");
-			var jsonObject = JSON.parse(configData);
+			var jsonObject = JSON.parse(configData);	
 			for(var i=0;i<jsonObject.attachments.length;i++){
+				var rowData = jsonObject.attachments[i];
+				rowData['type'] = 'itemFileList';
 				$("#itemFileList").bootstrapTable('insertRow',{
 					index:i,
-					row:jsonObject.attachments[i]
+					type:'itemFileList',
+					row:rowData
 				});
 			}
 		}else{
@@ -3412,6 +3415,11 @@ var fileListColumns=[
 	},
 	{
 		 field: 'id',
+		 title: '',
+		 visible:false
+	},
+	{
+		 field: 'type',
 		 title: '',
 		 visible:false
 	},
