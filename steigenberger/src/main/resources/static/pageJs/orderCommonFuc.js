@@ -574,7 +574,14 @@ function getExchangeRate(obj,currencies){
 	var currency = currencies[salesType];
 	$.each(currency, function (index,item) {
 		if(item.code==currencyCode){
-			$('#exchangeRate').val(item.rate);
+			if(originalExchange){
+				$('#exchangeRate').val(originalExchange)
+				originalExchange=''
+				
+			}else{				
+				$('#exchangeRate').val(item.rate);
+			}
+			
 			getAmount('#orignalContractAmount');
 		}
 		
